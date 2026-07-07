@@ -46,7 +46,18 @@ class _ProviderCard extends StatelessWidget {
               ],
             ),
           ),
-          _RiskPill(level: provider.riskLevel),
+          VitAccentPill(
+            label: switch (provider.riskLevel) {
+              TradeCopyRiskLevel.low => 'Low',
+              TradeCopyRiskLevel.medium => 'Medium',
+              TradeCopyRiskLevel.high => 'High',
+            },
+            accentColor: switch (provider.riskLevel) {
+              TradeCopyRiskLevel.low => _configurationGreen,
+              TradeCopyRiskLevel.medium => AppColors.warn,
+              TradeCopyRiskLevel.high => _configurationRed,
+            },
+          ),
         ],
       ),
     );

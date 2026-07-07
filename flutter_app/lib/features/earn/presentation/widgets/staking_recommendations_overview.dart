@@ -36,7 +36,7 @@ class StakingRecommendationsHeroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
@@ -69,7 +69,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Profile của bạn', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {
               final itemWidth = (constraints.maxWidth - AppSpacing.x3) / 2;
@@ -117,7 +117,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: StakingRecommendationsKeys.riskButton,
             variant: VitCtaButtonVariant.secondary,
@@ -201,7 +201,7 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
             'Mô phỏng với số lượng khác',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           TextField(
             key: StakingRecommendationsKeys.amountField,
             keyboardType: TextInputType.number,

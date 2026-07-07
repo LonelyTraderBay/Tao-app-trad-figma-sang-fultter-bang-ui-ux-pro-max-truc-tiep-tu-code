@@ -23,6 +23,7 @@ class MarketListTopMovers extends StatelessWidget {
     final losers = pairs.where((pair) => pair.change24h < 0).toList()
       ..sort((a, b) => a.change24h.compareTo(b.change24h));
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _marketMoverStripHeight,
       padding: _marketMoverStripPadding,

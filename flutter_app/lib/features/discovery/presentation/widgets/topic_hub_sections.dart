@@ -157,7 +157,7 @@ class _SectionShell extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ..._withSectionGaps(children),
       ],
     );

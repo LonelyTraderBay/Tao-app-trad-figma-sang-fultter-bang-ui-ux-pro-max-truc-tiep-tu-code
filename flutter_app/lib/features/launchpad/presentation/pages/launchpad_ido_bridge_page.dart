@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -61,7 +62,7 @@ class LaunchpadIdoBridgePage extends ConsumerWidget {
           child: SingleChildScrollView(
             key: contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
+            child: VitPageContent(rhythm: VitPageRhythm.standard, 
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [
@@ -94,7 +95,7 @@ class _BridgeProjectNotFound extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Dự án không tồn tại',
             textAlign: TextAlign.center,
@@ -103,7 +104,7 @@ class _BridgeProjectNotFound extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Kiểm tra lại liên kết hoặc quay về Launchpad để chọn dự án khác.',
             textAlign: TextAlign.center,
@@ -132,24 +133,24 @@ class _BridgeParticipationFlow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _BridgeProjectHero(project: project),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _BridgeNetworksSection(networks: snapshot.sourceNetworks),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _BridgeRouteCard(route: recommendedRoute),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           onPressed: () => context.go(snapshot.bridgeCompareRoute),
           leading: const Icon(Icons.compare_arrows_rounded),
           child: const Text('So sánh routes'),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           variant: VitCtaButtonVariant.secondary,
           onPressed: () => context.go(snapshot.bridgeOrderRoute),
           leading: const Icon(Icons.receipt_long_outlined),
           child: const Text('Theo dõi đơn bridge'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _BridgeRiskDisclosure(),
       ],
     );
@@ -246,7 +247,7 @@ class _BridgeNetworksSection extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final network in networks) ...[
             Row(
               children: [
@@ -294,7 +295,7 @@ class _BridgeNetworksSection extends StatelessWidget {
                 ),
               ],
             ),
-            if (network != networks.last) const SizedBox(height: AppSpacing.x3),
+            if (network != networks.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -335,7 +336,7 @@ class _BridgeRouteCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -355,7 +356,7 @@ class _BridgeRouteCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Price impact ${_formatPercent(route.priceImpact)} · ${route.hops.length} bước',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

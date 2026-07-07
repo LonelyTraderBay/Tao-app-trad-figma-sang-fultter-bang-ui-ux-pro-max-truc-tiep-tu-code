@@ -60,7 +60,7 @@ class _CreateBatchSheet extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldGroup(
             label: 'Operation Type',
             child: _StaticField(
@@ -68,7 +68,7 @@ class _CreateBatchSheet extends StatelessWidget {
               trailing: Icons.expand_more_rounded,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldGroup(
             label: 'Upload CSV File',
             child: CustomPaint(
@@ -84,7 +84,7 @@ class _CreateBatchSheet extends StatelessWidget {
                         color: AppColors.text3,
                         size: AppSpacing.iconLg,
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         'Drop CSV or click to upload',
                         style: AppTextStyles.caption.copyWith(
@@ -104,7 +104,7 @@ class _CreateBatchSheet extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Submit for Approval'),
@@ -130,7 +130,7 @@ class _FieldGroup extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         child,
       ],
     );

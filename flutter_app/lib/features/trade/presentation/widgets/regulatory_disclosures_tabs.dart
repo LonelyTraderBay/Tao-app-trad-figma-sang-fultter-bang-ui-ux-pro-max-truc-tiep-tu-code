@@ -8,6 +8,7 @@ class _MifidTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -30,6 +31,7 @@ class _ProtectionTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -62,6 +64,7 @@ class _RestrictionsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -86,6 +89,7 @@ class _LiabilityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+     rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,

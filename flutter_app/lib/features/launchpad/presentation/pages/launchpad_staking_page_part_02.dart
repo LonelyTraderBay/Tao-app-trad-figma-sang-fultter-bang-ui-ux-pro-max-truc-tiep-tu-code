@@ -57,7 +57,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -75,7 +75,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -95,7 +95,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
@@ -120,7 +120,7 @@ class _PositionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -193,7 +193,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
           onChanged: (id) => setState(() => _poolId = id),
           variant: VitTabBarVariant.segment,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           key: LaunchpadStakingPage.calculatorKey,
           radius: VitCardRadius.large,
@@ -222,7 +222,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _StepperField(
                 label: 'Số tiền stake',
                 value: _formatUsd(_amount),
@@ -233,7 +233,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
                   () => _amount = (_amount + 500).clamp(100, 20000).toDouble(),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _StepperField(
                 label: 'Thời gian',
                 value: '$_days ngày',
@@ -242,7 +242,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
                 onPlus: () =>
                     setState(() => _days = (_days + 7).clamp(7, 90).toInt()),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 variant: VitCardVariant.inner,
                 borderColor: pool.accent.resolve().withValues(alpha: .24),
@@ -253,14 +253,14 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
                       label: 'APY hiệu lực',
                       value: '${_formatApy(apy)}%',
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     _ResultRow(
                       label: 'Phần thưởng ước tính',
                       value: '${_formatToken(rewards)} ${pool.rewardToken}',
                       valueColor: AppColors.warn,
                     ),
                     if (nextTier != null) ...[
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       Text(
                         'Stake thêm ${_formatUsd(nextTier.minStake - _amount)} để lên ${nextTier.label} (+${_formatApy(nextTier.apyBonus)}%).',
                         textAlign: TextAlign.center,
@@ -345,7 +345,7 @@ class _HeroMetric extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,
@@ -472,7 +472,7 @@ class _CapacityBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(

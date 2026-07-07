@@ -56,6 +56,7 @@ class VitServiceTile extends StatelessWidget {
     required this.accentColor,
     this.density = VitServiceTileDensity.standard,
     this.badgeLabel,
+    this.riskBadgeLabel,
     this.onTap,
   });
 
@@ -64,13 +65,53 @@ class VitServiceTile extends StatelessWidget {
   final Color accentColor;
   final VitServiceTileDensity density;
   final String? badgeLabel;
+
+  /// Risk disclosure label (e.g. 'Rủi ro cao') rendered as a second badge
+  /// in the corner opposite [badgeLabel], so leveraged/speculative products
+  /// keep their existing state label (New/Hot/Pro) while still surfacing a
+  /// distinct risk signal. Folded into the tile's Semantics label below so
+  /// assistive tech announces it even if nested Semantics get merged.
+  final String? riskBadgeLabel;
   final VoidCallback? onTap;
+
+  EdgeInsetsDirectional get _contentSafeInsets {
+    return EdgeInsetsDirectional.only(
+      top: badgeLabel != null ? AppSpacing.x2 : 0,
+      end: badgeLabel != null ? AppSpacing.x2 : 0,
+      bottom: riskBadgeLabel != null
+          ? AppSpacing.serviceTileBadgeReserveVertical
+          : 0,
+      start: riskBadgeLabel != null
+          ? AppSpacing.serviceTileBadgeReserveHorizontal
+          : 0,
+    );
+  }
+
+  bool get _useCompactedBody => riskBadgeLabel != null;
+
+  double get _bodyIconContainer =>
+      _useCompactedBody
+          ? AppSpacing.serviceTileIconContainerCompact
+          : density.iconContainer;
+
+  double get _bodyIconSize =>
+      _useCompactedBody
+          ? AppSpacing.serviceTileIconSizeCompact
+          : density.iconSize;
+
+  double get _bodyLabelGap =>
+      _useCompactedBody
+          ? AppSpacing.serviceTileLabelGapCompact
+          : density.labelGap;
+
+  TextStyle get _bodyLabelStyle =>
+      _useCompactedBody ? AppTextStyles.micro : density.labelStyle;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       button: onTap != null,
-      label: label,
+      label: riskBadgeLabel == null ? label : '$label, $riskBadgeLabel',
       child: VitCard(
         radius: VitCardRadius.standard,
         borderColor: accentColor.withValues(alpha: .18),
@@ -135,43 +176,90 @@ class VitServiceTile extends StatelessWidget {
                         ),
                       ),
                     ),
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: density.iconContainer,
-                          height: density.iconContainer,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: accentColor.withValues(alpha: .16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: AppRadii.mdRadius,
-                                side: BorderSide(
-                                  color: accentColor.withValues(alpha: .28),
+                  if (riskBadgeLabel != null)
+                    Positioned(
+                      bottom: -AppSpacing.serviceTileBadgeOffset,
+                      left: -AppSpacing.serviceTileBadgeOffset,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxWidth: AppSpacing.serviceTileRiskBadgeMaxWidth,
+                        ),
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: AppColors.riskWarning.withValues(alpha: .14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xsRadius,
+                              side: BorderSide(
+                                color: AppColors.riskWarning.withValues(
+                                  alpha: .28,
                                 ),
                               ),
                             ),
-                            child: Icon(
-                              icon,
-                              color: accentColor,
-                              size: density.iconSize,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal:
+                                  AppSpacing.serviceTileBadgePaddingHorizontal,
+                              vertical:
+                                  AppSpacing.serviceTileBadgePaddingVertical,
+                            ),
+                            child: Text(
+                              riskBadgeLabel!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.riskWarning,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(height: density.labelGap),
-                        Text(
-                          label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: density.labelStyle.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  Padding(
+                    padding: _contentSafeInsets,
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                          SizedBox(
+                            width: _bodyIconContainer,
+                            height: _bodyIconContainer,
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: accentColor.withValues(alpha: .16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: AppRadii.mdRadius,
+                                  side: BorderSide(
+                                    color: accentColor.withValues(alpha: .28),
+                                  ),
+                                ),
+                              ),
+                              child: Icon(
+                                icon,
+                                color: accentColor,
+                                size: _bodyIconSize,
+                              ),
+                            ),
                           ),
+                          SizedBox(height: _bodyLabelGap),
+                          Text(
+                            label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: _bodyLabelStyle.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -300,6 +388,7 @@ class VitModuleSectionHeader extends StatelessWidget {
     this.density = VitDensity.standard,
     this.actionLabel,
     this.onAction,
+    this.bottomGap,
   });
 
   final String title;
@@ -307,13 +396,20 @@ class VitModuleSectionHeader extends StatelessWidget {
   final VitDensity density;
   final String? actionLabel;
   final VoidCallback? onAction;
+  final double? bottomGap;
 
   bool get _isCompact =>
       density == VitDensity.compact || density == VitDensity.tool;
 
+  double get _resolvedBottomGap =>
+      bottomGap ??
+      (_isCompact
+          ? AppSpacing.pageRhythmCompactInnerGap
+          : AppSpacing.pageRhythmStandardInnerGap);
+
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final header = Row(
       children: [
         SizedBox(
           width: AppSpacing.serviceTileAccentBarThickness,
@@ -345,6 +441,15 @@ class VitModuleSectionHeader extends StatelessWidget {
         ),
         if (actionLabel != null && onAction != null)
           TextButton(onPressed: onAction, child: Text(actionLabel!)),
+      ],
+    );
+    final gap = _resolvedBottomGap;
+    if (gap <= 0) return header;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        header,
+        SizedBox(height: gap),
       ],
     );
   }

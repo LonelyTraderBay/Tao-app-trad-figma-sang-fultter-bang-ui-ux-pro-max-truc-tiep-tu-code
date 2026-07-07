@@ -64,7 +64,7 @@ class _SummaryMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -152,8 +152,8 @@ class _RoundActionButton extends StatelessWidget {
   }
 }
 
-class _FilterPanel extends StatelessWidget {
-  const _FilterPanel({
+class _HistoryFilterSection extends StatelessWidget {
+  const _HistoryFilterSection({
     super.key,
     required this.typeFilter,
     required this.statusFilter,
@@ -193,89 +193,48 @@ class _FilterPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
-          _FilterChips<_HistoryTypeFilter>(
-            label: 'Loại giao dịch',
-            active: typeFilter,
-            values: _HistoryTypeFilter.values,
-            labelFor: _typeFilterLabel,
-            onChanged: onTypeChanged,
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          Text(
+            'Loại giao dịch',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          _FilterChips<_HistoryStatusFilter>(
-            label: 'Trạng thái',
-            active: statusFilter,
-            values: _HistoryStatusFilter.values,
-            labelFor: _statusFilterLabel,
-            onChanged: onStatusChanged,
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
+            children: [
+              for (final value in _HistoryTypeFilter.values)
+                VitChoicePill(
+                  label: _typeFilterLabel(value),
+                  selected: value == typeFilter,
+                  onTap: () => onTypeChanged(value),
+                  tone: VitChoicePillTone.primary,
+                  padding: AppSpacing.earnPillPaddingLarge,
+                ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          Text(
+            'Trạng thái',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
+            children: [
+              for (final value in _HistoryStatusFilter.values)
+                VitChoicePill(
+                  label: _statusFilterLabel(value),
+                  selected: value == statusFilter,
+                  onTap: () => onStatusChanged(value),
+                  tone: VitChoicePillTone.primary,
+                  padding: AppSpacing.earnPillPaddingLarge,
+                ),
+            ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _FilterChips<T> extends StatelessWidget {
-  const _FilterChips({
-    required this.label,
-    required this.active,
-    required this.values,
-    required this.labelFor,
-    required this.onChanged,
-  });
-
-  final String label;
-  final T active;
-  final List<T> values;
-  final String Function(T value) labelFor;
-  final ValueChanged<T> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
-        const SizedBox(height: AppSpacing.x2),
-        Wrap(
-          spacing: AppSpacing.x2,
-          runSpacing: AppSpacing.x2,
-          children: [
-            for (final value in values)
-              _FilterChip(
-                label: labelFor(value),
-                selected: value == active,
-                onTap: () => onChanged(value),
-              ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      tone: VitChoicePillTone.primary,
-      padding: AppSpacing.earnPillPaddingLarge,
     );
   }
 }

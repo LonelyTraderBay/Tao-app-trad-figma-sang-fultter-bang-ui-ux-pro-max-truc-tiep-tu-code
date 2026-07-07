@@ -239,6 +239,7 @@ class _IndicatorOption extends StatelessWidget {
       ),
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.tradeReceiptStatusIcon,
             height: AppSpacing.tradeReceiptStatusIcon,
@@ -261,6 +262,7 @@ class _IndicatorOption extends StatelessWidget {
               ),
             ),
           ),
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.tradeBotCheckbox,
             height: AppSpacing.tradeBotCheckbox,

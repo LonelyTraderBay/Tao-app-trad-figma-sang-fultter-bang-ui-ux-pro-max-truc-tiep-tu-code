@@ -15,6 +15,7 @@ class _FeatureCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.inner,
                 width: _hubIconTile,
@@ -62,7 +63,7 @@ class _FeatureCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     item,
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       height: _hubLineBody,
                     ),
@@ -118,7 +119,7 @@ class _ComplianceCard extends StatelessWidget {
                     const SizedBox(height: _hubTinySpace),
                     Text(
                       compliance.description,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                         height: _hubLineBody,
                       ),
@@ -146,7 +147,7 @@ class _ComplianceCard extends StatelessWidget {
                 borderColor: _hubGreen.withValues(alpha: .24),
                 child: Text(
                   '${compliance.regulations[index]} v',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: _hubGreen,
                     fontWeight: AppTextStyles.bold,
                     height: _hubLineTight,

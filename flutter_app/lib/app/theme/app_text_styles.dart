@@ -11,6 +11,13 @@ final class AppTextStyles {
   static const FontWeight extraBold = FontWeight.w800;
   static const FontWeight heavy = FontWeight.w900;
 
+  // FONT-VI-01: bundled to cover Vietnamese diacritics consistently across
+  // weights — the platform default (Roboto on Android) falls back to a
+  // different font for some bold/extra-bold Vietnamese glyphs, producing
+  // visibly inconsistent headers. monoCode intentionally keeps its own
+  // monospace family below.
+  static const String fontFamily = 'Be Vietnam Pro';
+
   static const List<FontFeature> tabularFigures = [
     FontFeature.tabularFigures(),
   ];
@@ -22,6 +29,7 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle micro = TextStyle(
@@ -31,6 +39,7 @@ final class AppTextStyles {
     height: 1.5,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle caption = TextStyle(
@@ -40,8 +49,12 @@ final class AppTextStyles {
     height: 1.5,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
+  // TOKEN-TYPE-01: captionSm was identical to caption except for a 1px
+  // font-size difference that carried no perceptible hierarchy meaning.
+  @Deprecated('Superseded by AppTextStyles.caption after TOKEN-TYPE-01')
   static const TextStyle captionSm = TextStyle(
     color: AppColors.text2,
     fontSize: 12,
@@ -49,6 +62,7 @@ final class AppTextStyles {
     height: 1.5,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle body = TextStyle(
@@ -58,6 +72,7 @@ final class AppTextStyles {
     height: 1.5,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle base = TextStyle(
@@ -67,6 +82,7 @@ final class AppTextStyles {
     height: 1.5,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle baseMedium = TextStyle(
@@ -76,6 +92,7 @@ final class AppTextStyles {
     height: 1.5,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle sectionTitle = TextStyle(
@@ -85,6 +102,7 @@ final class AppTextStyles {
     height: 1.272,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle sectionTitleXs = TextStyle(
@@ -94,6 +112,7 @@ final class AppTextStyles {
     height: 1.272,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle sectionTitleSm = TextStyle(
@@ -103,6 +122,7 @@ final class AppTextStyles {
     height: 1.272,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle sectionTitleMd = TextStyle(
@@ -112,6 +132,7 @@ final class AppTextStyles {
     height: 1.272,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle pageTitle = TextStyle(
@@ -121,6 +142,7 @@ final class AppTextStyles {
     height: 1.272,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle heroNumber = TextStyle(
@@ -131,6 +153,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle monoCode = TextStyle(
@@ -151,6 +174,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle display = TextStyle(
@@ -160,6 +184,7 @@ final class AppTextStyles {
     height: 1.618,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle jumbo = TextStyle(
@@ -169,6 +194,7 @@ final class AppTextStyles {
     height: 1.618,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle badge = TextStyle(
@@ -178,6 +204,7 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle control = TextStyle(
@@ -187,6 +214,7 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle amountXs = TextStyle(
@@ -197,6 +225,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle amountBase = TextStyle(
@@ -207,6 +236,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle amountSm = TextStyle(
@@ -217,6 +247,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle amountMd = TextStyle(
@@ -227,6 +258,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle amountLg = TextStyle(
@@ -237,6 +269,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericMicro = TextStyle(
@@ -247,6 +280,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle chartLabelNano = TextStyle(
@@ -257,6 +291,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle chartLabelTiny = TextStyle(
@@ -267,6 +302,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle chartLabelXs = TextStyle(
@@ -277,6 +313,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplaySm = TextStyle(
@@ -287,6 +324,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplayMd = TextStyle(
@@ -297,6 +335,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplayLg = TextStyle(
@@ -307,6 +346,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplayXl = TextStyle(
@@ -317,6 +357,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplay2xl = TextStyle(
@@ -327,6 +368,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplay3xl = TextStyle(
@@ -337,6 +379,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplay4xl = TextStyle(
@@ -347,6 +390,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplayHeroXs = TextStyle(
@@ -357,6 +401,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplayHeroSm = TextStyle(
@@ -367,6 +412,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle numericDisplayHero = TextStyle(
@@ -377,6 +423,7 @@ final class AppTextStyles {
     letterSpacing: 0,
     decoration: TextDecoration.none,
     fontFeatures: tabularFigures,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle avatarSm = TextStyle(
@@ -386,6 +433,7 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle avatarMd = TextStyle(
@@ -395,6 +443,7 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle avatarLg = TextStyle(
@@ -404,6 +453,7 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 
   static const TextStyle navLabel = TextStyle(
@@ -413,5 +463,6 @@ final class AppTextStyles {
     height: 1,
     letterSpacing: 0,
     decoration: TextDecoration.none,
+    fontFamily: fontFamily,
   );
 }

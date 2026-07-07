@@ -129,6 +129,7 @@ class _RewardRow extends StatelessWidget {
               padding: AppSpacing.predictionRewardsTablePadding,
               child: Row(
                 children: [
+                  // card-tile: allow-start — fixed surface, not horizontal strip tile
                   VitCard(
                     key: PredictionsRewardsPage.favoriteKey(reward.id),
                     onTap: onFavoriteToggle,

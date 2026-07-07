@@ -103,76 +103,6 @@ class _UnreadSummaryBar extends StatelessWidget {
   }
 }
 
-class _NotificationsBody extends StatelessWidget {
-  const _NotificationsBody({
-    required this.screenState,
-    required this.notifications,
-    required this.filter,
-    required this.onRetry,
-    required this.onToggleFilter,
-    required this.onOpen,
-    required this.onDelete,
-  });
-
-  final NotificationsScreenState screenState;
-  final List<AppNotificationDraft> notifications;
-  final _NotificationFilter filter;
-  final VoidCallback onRetry;
-  final VoidCallback onToggleFilter;
-  final ValueChanged<AppNotificationDraft> onOpen;
-  final ValueChanged<String> onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (screenState) {
-      NotificationsScreenState.loading => const VitSkeletonList(
-        key: NotificationsPage.loadingKey,
-        rows: 5,
-      ),
-      NotificationsScreenState.error => VitErrorState(
-        key: NotificationsPage.errorKey,
-        title: 'Không tải được thông báo',
-        message: 'Kiểm tra kết nối và thử lại.',
-        actionLabel: 'Thử lại',
-        onAction: onRetry,
-      ),
-      NotificationsScreenState.empty ||
-      NotificationsScreenState.offline when notifications.isEmpty =>
-        VitEmptyState(
-          key: NotificationsPage.emptyKey,
-          title: filter == _NotificationFilter.unread
-              ? 'Không có thông báo chưa đọc'
-              : 'Chưa có thông báo nào',
-          message: screenState == NotificationsScreenState.offline
-              ? 'Kết nối lại để nhận cập nhật mới nhất.'
-              : 'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
-          icon: Icons.notifications_off_rounded,
-          actionLabel: filter == _NotificationFilter.unread
-              ? 'Xem tất cả'
-              : null,
-          onAction:
-              filter == _NotificationFilter.unread ? onToggleFilter : null,
-        ),
-      _ when notifications.isEmpty => VitEmptyState(
-        key: NotificationsPage.emptyKey,
-        title: filter == _NotificationFilter.unread
-            ? 'Không có thông báo chưa đọc'
-            : 'Chưa có thông báo nào',
-        message:
-            'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
-        icon: Icons.notifications_off_rounded,
-        actionLabel: filter == _NotificationFilter.unread ? 'Xem tất cả' : null,
-        onAction: filter == _NotificationFilter.unread ? onToggleFilter : null,
-      ),
-      _ => _NotificationFeed(
-        notifications: notifications,
-        onOpen: onOpen,
-        onDelete: onDelete,
-      ),
-    };
-  }
-}
-
 class _NotificationFeed extends StatelessWidget {
   const _NotificationFeed({
     required this.notifications,
@@ -192,6 +122,7 @@ class _NotificationFeed extends StatelessWidget {
         VitModuleSectionHeader(
           title: 'THÔNG BÁO GẦN ĐÂY',
           accentColor: AppModuleAccents.notifications,
+          density: VitDensity.compact,
         ),
         for (var i = 0; i < notifications.length; i++)
           _NotificationRow(
@@ -278,10 +209,10 @@ class _NotificationRow extends StatelessWidget {
                     height: AppSpacing.notificationsMessageLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
-                    _TypePill(label: style.label, color: style.color),
+                    VitAccentPill(label: style.label, accentColor: style.color),
                     const SizedBox(width: AppSpacing.x3),
                     Flexible(
                       child: Text(
@@ -328,18 +259,6 @@ class _TypeIcon extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _TypePill extends StatelessWidget {
-  const _TypePill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

@@ -143,7 +143,7 @@ class _KycSupportCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.supportBody,
                   style: AppTextStyles.caption.copyWith(
@@ -151,7 +151,7 @@ class _KycSupportCard extends StatelessWidget {
                     height: _p2pKycReadableLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 VitCtaButton(
                   onPressed: () {
                     HapticFeedback.selectionClick();

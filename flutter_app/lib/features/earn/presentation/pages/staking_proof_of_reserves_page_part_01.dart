@@ -40,6 +40,7 @@ class _StakingProofOfReservesPageState
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [
@@ -174,9 +175,9 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Center(child: _ReserveProgress(ratio: overall.reserveRatio)),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Row(
                     children: [
                       Expanded(
@@ -196,7 +197,7 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     'Last updated: ${overall.lastUpdated} - Live data',
                     textAlign: TextAlign.center,
@@ -224,7 +225,7 @@ class _OverviewTab extends StatelessWidget {
                       child: const SizedBox.expand(),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -353,7 +354,7 @@ class _VerifyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   VitCtaButton(
                     onPressed: onVerify,
                     leading: const Icon(Icons.verified_user_outlined),
@@ -437,7 +438,7 @@ class _ReserveProgress extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 '${ratio.toStringAsFixed(1)}%',
                 style: AppTextStyles.pageTitle.copyWith(

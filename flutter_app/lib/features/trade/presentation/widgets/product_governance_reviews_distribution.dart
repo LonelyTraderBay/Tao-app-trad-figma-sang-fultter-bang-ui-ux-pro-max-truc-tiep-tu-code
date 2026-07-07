@@ -17,7 +17,7 @@ class _ReviewsTab extends StatelessWidget {
               for (final product in products) ...[
                 _ReviewRow(product: product),
                 if (product != products.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),
@@ -103,6 +103,7 @@ class _DistributionTab extends StatelessWidget {
             padding: AppSpacing.cardPaddingCompact,
             child: Row(
               children: [
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,

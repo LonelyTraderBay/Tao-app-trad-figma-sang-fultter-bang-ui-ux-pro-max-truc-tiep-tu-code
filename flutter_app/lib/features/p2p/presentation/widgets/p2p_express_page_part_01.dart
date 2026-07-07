@@ -69,6 +69,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
               physics: const ClampingScrollPhysics(),
               bottomInset: scrollEndPadding,
               child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [

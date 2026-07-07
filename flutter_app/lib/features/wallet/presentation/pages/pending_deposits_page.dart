@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -86,6 +87,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                   bottomInset: bottomInset,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
@@ -96,20 +98,28 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                         lastRefreshLabel: _lastRefreshLabel,
                         onRefresh: _refreshDeposits,
                       ),
-                      _FilterChips(
+                      _PendingDepositFilters(
                         active: _filter,
                         pendingCount: snapshot.pendingCount,
                         onChanged: (filter) => setState(() => _filter = filter),
                       ),
-                      if (deposits.isEmpty)
-                        const _EmptyDeposits()
-                      else
-                        for (final deposit in deposits)
-                          _DepositCard(
-                            deposit: deposit,
-                            copied: _copiedId == deposit.id,
-                            onCopy: () => _copyHash(deposit),
-                          ),
+                      VitPageSection(
+                        label: 'Danh s\u00E1ch n\u1EA1p',
+                        headerIcon: Icons.pending_actions_outlined,
+                        headerVariant: VitSectionHeaderVariant.plain,
+                        innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                        children: [
+                          if (deposits.isEmpty)
+                            const _EmptyDeposits()
+                          else
+                            for (final deposit in deposits)
+                              _DepositCard(
+                                deposit: deposit,
+                                copied: _copiedId == deposit.id,
+                                onCopy: () => _copyHash(deposit),
+                              ),
+                        ],
+                      ),
                       const _InfoNotice(),
                     ],
                   ),

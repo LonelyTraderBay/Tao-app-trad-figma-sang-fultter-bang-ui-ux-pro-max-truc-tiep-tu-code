@@ -57,7 +57,7 @@ class _CalendarCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               for (final label in const [
@@ -81,7 +81,7 @@ class _CalendarCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           GridView.count(
             crossAxisCount: AppSpacing.stakingEarningsCalendarColumns,
             shrinkWrap: true,
@@ -209,7 +209,7 @@ class _LegendCard extends StatelessWidget {
             'Loại sự kiện:',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x7,
             runSpacing: AppSpacing.x3,

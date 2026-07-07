@@ -13,13 +13,13 @@ class _ComparisonChartCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Portfolio Value Over Time'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.dcaPerformanceCompareChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _PerformanceLinePainter(points)),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -52,7 +52,7 @@ class _MetricCompareCard extends StatelessWidget {
             metric.label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -145,18 +145,18 @@ class _ScenarioCard extends StatelessWidget {
             scenario.scenario,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             scenario.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _AdvantageBar(
             label: 'DCA Advantage',
             value: scenario.dcaAdvantage,
             color: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _AdvantageBar(
             label: 'Lump Sum Advantage',
             value: scenario.lumpSumAdvantage,
@@ -200,7 +200,7 @@ class _AdvantageBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
@@ -228,13 +228,13 @@ class _RadarCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Multi-Dimensional Comparison'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.dcaPerformanceCompareRadarHeight,
             width: double.infinity,
             child: CustomPaint(painter: _RadarPainter(metrics)),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -163,7 +163,7 @@ class _ComplianceNote extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.complianceTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.complianceBody,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),

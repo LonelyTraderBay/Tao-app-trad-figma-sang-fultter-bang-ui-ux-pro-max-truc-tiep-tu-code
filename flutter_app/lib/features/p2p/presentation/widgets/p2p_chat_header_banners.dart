@@ -199,23 +199,3 @@ class _E2EBanner extends StatelessWidget {
     );
   }
 }
-
-class _EncryptionPill extends StatelessWidget {
-  const _EncryptionPill({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      child: VitStatusPill(
-        label: label,
-        status: VitStatusPillStatus.success,
-        icon: Icons.lock_outline_rounded,
-        size: VitStatusPillSize.sm,
-        onTap: onTap,
-      ),
-    );
-  }
-}

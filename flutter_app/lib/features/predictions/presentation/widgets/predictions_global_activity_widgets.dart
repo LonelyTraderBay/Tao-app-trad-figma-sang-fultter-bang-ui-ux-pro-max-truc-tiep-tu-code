@@ -58,7 +58,7 @@ class _LiveStats extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -205,7 +205,6 @@ class _AmountChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _predictionPrimary,
-      height: VitDensity.compact.controlHeight - AppSpacing.x2,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x1,

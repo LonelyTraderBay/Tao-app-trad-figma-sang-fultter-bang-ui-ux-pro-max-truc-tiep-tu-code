@@ -20,7 +20,7 @@ class _ChallengeSummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.heavy,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x1,
@@ -182,14 +182,14 @@ class _RulesCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (var i = 0; i < visibleRules.length; i++) ...[
             _RuleLine(index: i + 1, text: visibleRules[i]),
             if (i != visibleRules.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           if (rules.length > visibleRules.length) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               '+${rules.length - visibleRules.length} luật khác',
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),

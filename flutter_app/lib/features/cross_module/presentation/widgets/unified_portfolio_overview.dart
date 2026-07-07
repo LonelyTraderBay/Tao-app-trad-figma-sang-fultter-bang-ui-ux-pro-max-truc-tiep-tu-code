@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -32,13 +33,13 @@ class UnifiedPortfolioOverview extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _TotalValueCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _DistributionCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Module Breakdown',
           accentColor: AppColors.primary,
-          customGap: AppSpacing.x4,
+          rhythm: VitPageRhythm.standard,
           children: [
             for (final module in snapshot.modules)
               _ModuleCard(
@@ -49,9 +50,9 @@ class UnifiedPortfolioOverview extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _RefreshButton(refreshKey: refreshKey, onPressed: onRefresh),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _BoundaryInfoCard(),
       ],
     );
@@ -76,7 +77,7 @@ class _TotalValueCard extends StatelessWidget {
             'Total Portfolio Value',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             spacing: AppSpacing.x3,
@@ -96,7 +97,7 @@ class _TotalValueCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -147,7 +148,7 @@ class _DistributionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x6,
             child: CustomPaint(
@@ -158,7 +159,7 @@ class _DistributionCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x6,
             runSpacing: AppSpacing.x3,
@@ -270,7 +271,7 @@ class _ModuleCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             if (module.pointsOnly)
               const UnifiedArenaBoundaryPill()
             else ...[
@@ -303,7 +304,7 @@ class _ModuleCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ClipRRect(
                 borderRadius: AppRadii.xlRadius,
                 child: LinearProgressIndicator(

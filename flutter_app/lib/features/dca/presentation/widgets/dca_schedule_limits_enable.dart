@@ -27,7 +27,7 @@ class _LimitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SliderField(
             key: DCAScheduleConfig.maxDelayKey,
             label: 'Trễ tối đa',
@@ -40,7 +40,7 @@ class _LimitsCard extends StatelessWidget {
             divisions: 23,
             onChanged: onDelayChanged,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _SliderField(
             key: DCAScheduleConfig.maxAdvanceKey,
             label: 'Sớm tối đa',
@@ -111,7 +111,7 @@ class _ThresholdCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SliderField(
             label: label,
             valueLabel: valueLabel,

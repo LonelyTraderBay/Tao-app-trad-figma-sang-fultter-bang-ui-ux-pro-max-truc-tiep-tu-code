@@ -147,6 +147,7 @@ class _MiniStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.marketCalendarMiniStatHeight,
       padding: AppSpacing.marketCalendarMiniStatPadding,
@@ -196,7 +197,6 @@ class MarketCalendarTypeFilters extends StatelessWidget {
               label: filter.label,
               active: filter.label == active.label,
               color: marketCalendarPrimary,
-              height: AppSpacing.marketCalendarFilterChipHeight,
               padding: AppSpacing.marketCalendarFilterChipPadding,
               onTap: () => onSelected(filter),
             ),
@@ -256,7 +256,6 @@ class _ImpactChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: cfg.color,
-      height: AppSpacing.marketCalendarFilterChipHeight,
       padding: AppSpacing.marketCalendarImpactChipPadding,
       leading: Icon(Icons.circle, size: AppSpacing.marketCalendarImpactDot),
     );

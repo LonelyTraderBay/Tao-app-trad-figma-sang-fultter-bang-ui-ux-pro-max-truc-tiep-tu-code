@@ -86,7 +86,7 @@ class _ProjectCard extends StatelessWidget {
                         height: _launchpadLineHeightLabel,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x1,
@@ -108,7 +108,7 @@ class _ProjectCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -124,10 +124,10 @@ class _ProjectCard extends StatelessWidget {
             ],
           ),
           if (project.status != LaunchpadProjectStatus.upcoming) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _ProjectProgressBar(project: project),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ProjectPrimaryAction(project: project),
         ],
       ),
@@ -230,11 +230,10 @@ class _ProjectProgressBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [

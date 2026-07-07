@@ -11,10 +11,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_payment_methods_page_sections.dart';
@@ -81,76 +79,64 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
 
     return Stack(
       children: [
-        VitPageLayout(
-          variant: VitPageVariant.flush,
+        VitP2PFlowScaffold(
           semanticLabel: 'SC-237 P2PPaymentMethodsPage',
-          child: Material(
-            type: MaterialType.transparency,
-            child: VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Phương thức thanh toán',
-                subtitle: 'Thanh toán · P2P',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.p2p),
-              ),
-              child: Column(
+          title: 'Phương thức thanh toán',
+          subtitle: 'Thanh toán · P2P',
+          onBack: () => context.go(AppRoutePaths.p2p),
+          contentKey: P2PPaymentMethodsPage.contentKey,
+          shellRenderMode: mode,
+          bottomInset: scrollEndPadding,
+          children: [
+            _AddMethodRow(snapshot: snapshot),
+            const _ComplianceLinksRow(),
+            if (bankMethods.isNotEmpty)
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: P2PPaymentMethodsPage.contentKey,
-                        physics: const ClampingScrollPhysics(),
-                        padding: AppSpacing.p2pPaymentScrollPadding(
-                          scrollEndPadding,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: _withP2PMethodsGaps([
-                            _AddMethodRow(snapshot: snapshot),
-                            const _ComplianceLinksRow(),
-                            if (bankMethods.isNotEmpty) ...[
-                              _SectionHeader(
-                                icon: Icons.credit_card_rounded,
-                                title:
-                                    'Tài khoản ngân hàng (${bankMethods.length})',
-                              ),
-                              for (final method in bankMethods)
-                                _PaymentMethodCard(
-                                  method: method,
-                                  onEdit: () => _openEdit(method),
-                                  onDelete: () => _requestDelete(method.id),
-                                  onSetDefault: () => _setDefault(method.id),
-                                ),
-                            ],
-                            if (ewalletMethods.isNotEmpty) ...[
-                              _SectionHeader(
-                                icon: Icons.phone_android_rounded,
-                                title: 'Ví điện tử (${ewalletMethods.length})',
-                              ),
-                              for (final method in ewalletMethods)
-                                _PaymentMethodCard(
-                                  method: method,
-                                  onEdit: () => _openEdit(method),
-                                  onDelete: () => _requestDelete(method.id),
-                                  onSetDefault: () => _setDefault(method.id),
-                                ),
-                            ],
-                            if (_methods.isEmpty)
-                              _EmptyPaymentMethods(snapshot: snapshot),
-                            _SecurityNotice(text: snapshot.securityNote),
-                          ]),
-                        ),
-                      ),
-                    ),
+                  _SectionHeader(
+                    icon: Icons.credit_card_rounded,
+                    title: 'Tài khoản ngân hàng (${bankMethods.length})',
                   ),
+                  for (var index = 0; index < bankMethods.length; index++) ...[
+                    if (index > 0)
+                      const SizedBox(
+                        height: AppSpacing.p2pPaymentMethodsListSectionGap,
+                      ),
+                    _PaymentMethodCard(
+                      method: bankMethods[index],
+                      onEdit: () => _openEdit(bankMethods[index]),
+                      onDelete: () => _requestDelete(bankMethods[index].id),
+                      onSetDefault: () => _setDefault(bankMethods[index].id),
+                    ),
+                  ],
                 ],
               ),
-            ),
-          ),
+            if (ewalletMethods.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _SectionHeader(
+                    icon: Icons.phone_android_rounded,
+                    title: 'Ví điện tử (${ewalletMethods.length})',
+                  ),
+                  for (var index = 0; index < ewalletMethods.length; index++) ...[
+                    if (index > 0)
+                      const SizedBox(
+                        height: AppSpacing.p2pPaymentMethodsListSectionGap,
+                      ),
+                    _PaymentMethodCard(
+                      method: ewalletMethods[index],
+                      onEdit: () => _openEdit(ewalletMethods[index]),
+                      onDelete: () => _requestDelete(ewalletMethods[index].id),
+                      onSetDefault: () => _setDefault(ewalletMethods[index].id),
+                    ),
+                  ],
+                ],
+              ),
+            if (_methods.isEmpty) _EmptyPaymentMethods(snapshot: snapshot),
+            _SecurityNotice(text: snapshot.securityNote),
+          ],
         ),
         if (pendingMethod != null)
           _DeleteConfirmation(
@@ -205,14 +191,4 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
     }
     return null;
   }
-}
-
-List<Widget> _withP2PMethodsGaps(List<Widget> children) {
-  return [
-    for (var index = 0; index < children.length; index++) ...[
-      if (index > 0)
-        const SizedBox(height: AppSpacing.p2pPaymentMethodsListSectionGap),
-      children[index],
-    ],
-  ];
 }

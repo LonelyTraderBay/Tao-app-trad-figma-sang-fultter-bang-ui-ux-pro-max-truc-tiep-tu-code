@@ -31,7 +31,7 @@ class _VerificationFlow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _CenteredMethodIntro(method: method),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           padding: AppSpacing.p2pPaymentCardPadding,
           child: Column(
@@ -39,12 +39,12 @@ class _VerificationFlow extends StatelessWidget {
               for (var i = 0; i < snapshot.microDepositSteps.length; i++) ...[
                 _StepRow(index: i + 1, text: snapshot.microDepositSteps[i]),
                 if (i != snapshot.microDepositSteps.length - 1)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.rowGap),
               ],
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitInput(
           controller: controller,
           fieldKey: P2PPaymentMethodVerificationPage.codeFieldKey,
@@ -55,7 +55,7 @@ class _VerificationFlow extends StatelessWidget {
           textInputAction: TextInputAction.done,
           onChanged: (_) => onChanged(),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           key: P2PPaymentMethodVerificationPage.submitButtonKey,
           loading: submitting,
@@ -90,7 +90,7 @@ class _CenteredMethodIntro extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Text(
           'Xác minh qua ${method.label}',
           textAlign: TextAlign.center,

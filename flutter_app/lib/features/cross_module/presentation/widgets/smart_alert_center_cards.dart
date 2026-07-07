@@ -44,7 +44,7 @@ class _SmartAlertCard extends StatelessWidget {
                         _StatusBadge(status: alert.status),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       alert.moduleName,
                       style: AppTextStyles.micro.copyWith(
@@ -70,11 +70,11 @@ class _SmartAlertCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _DetailBlock(label: 'Condition', value: alert.condition),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _DetailBlock(label: 'Action', value: alert.action),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(

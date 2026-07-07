@@ -35,7 +35,7 @@ class _PriceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -79,7 +79,7 @@ class _PriceMeta extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           maxLines: 2,
@@ -125,7 +125,7 @@ class _AmountCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Số tiền (VND)',
             style: AppTextStyles.caption.copyWith(
@@ -141,7 +141,7 @@ class _AmountCard extends StatelessWidget {
             suffix: 'VND',
             muted: fiatAmount == 0,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Số lượng (${ad.asset})',
             style: AppTextStyles.caption.copyWith(
@@ -155,7 +155,7 @@ class _AmountCard extends StatelessWidget {
             suffix: ad.asset,
             muted: cryptoAmount == 0,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitPresetChipRow<double>(
             selectedValue: selectedPercent?.toDouble(),
             onTap: (value) => onPercent(value.round()),
@@ -265,14 +265,18 @@ class _RequirementCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
               children: [
-                _RequirementPill(label: 'KYC cấp ${snapshot.minKycLevel}+'),
-                _RequirementPill(
+                VitAccentPill(
+                  label: 'KYC cấp ${snapshot.minKycLevel}+',
+                  accentColor: AppColors.accent,
+                ),
+                VitAccentPill(
                   label: '${snapshot.minCompletedTrades}+ giao dịch',
+                  accentColor: AppColors.accent,
                 ),
               ],
             ),
@@ -280,17 +284,6 @@ class _RequirementCard extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _RequirementPill extends StatelessWidget {
-  const _RequirementPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: AppColors.accent);
   }
 }
 

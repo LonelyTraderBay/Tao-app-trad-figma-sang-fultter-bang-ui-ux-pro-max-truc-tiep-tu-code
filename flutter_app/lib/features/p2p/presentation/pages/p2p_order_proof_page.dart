@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -100,7 +101,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const SizedBox(height: AppSpacing.x3),
+                              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                               _UploadSection(
                                 title: snapshot.uploadTitle,
                                 subtitle: snapshot.uploadSubtitle,
@@ -109,23 +110,23 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                                 onGallery: () => _addProof('gallery'),
                               ),
                               if (_proofs.isNotEmpty) ...[
-                                const SizedBox(height: AppSpacing.x3),
+                                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                                 _UploadedProofs(
                                   proofs: _proofs,
                                   onRemove: _removeProof,
                                 ),
                               ],
-                              const SizedBox(height: AppSpacing.x3),
+                              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                               _TipsCard(
                                 title: snapshot.tipsTitle,
                                 tips: snapshot.tips,
                               ),
-                              const SizedBox(height: AppSpacing.x3),
+                              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                               _ProofWarning(message: snapshot.warningMessage),
                             ],
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         VitCtaButton(
                           key: P2POrderProofPage.confirmKey,
                           onPressed: _proofs.isEmpty
@@ -136,6 +137,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                           child: Text('Xác nhận (${_proofs.length} ảnh)'),
                         ),
                         VitPageContent(
+       rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           children: const [
                             VitHighRiskStatePanel(

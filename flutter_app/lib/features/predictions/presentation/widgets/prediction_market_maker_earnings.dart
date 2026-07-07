@@ -22,7 +22,7 @@ class _EarningsTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               SizedBox(
                 height: VitDensity.compact.controlHeight * 3.5,
                 child: Row(

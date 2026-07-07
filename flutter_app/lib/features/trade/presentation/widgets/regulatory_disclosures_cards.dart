@@ -189,7 +189,7 @@ class _LeverageRules extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final rule in rules) ...[
             Text(
               rule.title,
@@ -200,7 +200,7 @@ class _LeverageRules extends StatelessWidget {
               rule.body,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            if (rule != rules.last) const SizedBox(height: AppSpacing.x2),
+            if (rule != rules.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

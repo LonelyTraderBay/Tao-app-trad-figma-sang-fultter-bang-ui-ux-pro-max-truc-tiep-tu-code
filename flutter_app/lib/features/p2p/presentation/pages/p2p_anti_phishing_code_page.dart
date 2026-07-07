@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -112,23 +113,26 @@ class _P2PAntiPhishingCodePageState
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _StatusCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _ExplainerCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
-                        _SectionTitle(
-                          _editing ? 'Thiết lập code' : 'Code hiện tại',
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        VitSectionHeader(
+                          title: _editing ? 'Thiết lập code' : 'Code hiện tại',
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                         ),
-                        const SizedBox(height: AppSpacing.x2),
                         _editing
                             ? _editCodeCard()
                             : _currentCodeCard(code: _code),
-                        const SizedBox(height: AppSpacing.x3),
-                        const _SectionTitle('Ví dụ email'),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const VitSectionHeader(
+                          title: 'Ví dụ email',
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _EmailExamples(examples: snapshot.examples),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _WarningCard(snapshot: snapshot),
                         VitPageContent(
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           children: const [
                             VitHighRiskStatePanel(
@@ -183,7 +187,7 @@ class _P2PAntiPhishingCodePageState
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -206,7 +210,7 @@ class _P2PAntiPhishingCodePageState
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -270,7 +274,7 @@ class _P2PAntiPhishingCodePageState
               }
             },
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _SoftActionButton(
             key: P2PAntiPhishingCodePage.generateKey,
             label: 'Tạo code ngẫu nhiên',
@@ -281,7 +285,7 @@ class _P2PAntiPhishingCodePageState
               _codeController.text = 'SEC8F2K9';
             },
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             key: P2PAntiPhishingCodePage.saveKey,
             variant: VitCtaButtonVariant.success,

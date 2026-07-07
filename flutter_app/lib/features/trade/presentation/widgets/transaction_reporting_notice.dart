@@ -36,7 +36,7 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
                     height: AppSpacing.transactionReportingLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'All transactions must be reported to ARM within T+1. Reports include 65+ RTS 22 fields. Auto-submission enabled.',
                   style: AppTextStyles.micro.copyWith(
@@ -90,7 +90,7 @@ class TransactionReportingNoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                   ),
                 ),

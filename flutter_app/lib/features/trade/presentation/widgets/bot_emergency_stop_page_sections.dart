@@ -16,6 +16,7 @@ class _WarningBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.x6,
             height: AppSpacing.x6,
@@ -63,6 +64,7 @@ class _BotCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profitColor = bot.profit >= 0 ? _stopGreen : _stopRed;
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
       padding: AppSpacing.tradeBotCompactCardPadding,
@@ -130,6 +132,7 @@ class _ReasonOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: BotEmergencyStopPage.reasonKey(reason.id),
       onTap: onTap,

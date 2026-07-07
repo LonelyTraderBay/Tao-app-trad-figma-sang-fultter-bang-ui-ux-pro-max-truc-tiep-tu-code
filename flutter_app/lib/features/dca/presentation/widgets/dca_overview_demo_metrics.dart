@@ -179,7 +179,7 @@ class _MetricTile extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,

@@ -66,6 +66,7 @@ class _ExportFooter extends StatelessWidget {
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // card-tile: allow-start — fixed surface, not horizontal strip tile
                   VitCard(
                     variant: VitCardVariant.inner,
                     height: VitDensity.compact.controlHeight,
@@ -94,7 +95,7 @@ class _ExportFooter extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Row(
                     children: [
                       Expanded(

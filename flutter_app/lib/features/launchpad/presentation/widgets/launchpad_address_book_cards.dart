@@ -82,7 +82,7 @@ class _AddressCard extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Wrap(
                         spacing: AppSpacing.x1,
                         runSpacing: AppSpacing.x1,
@@ -177,7 +177,7 @@ class _ExpandedAddress extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _DetailRow(label: 'Chain', value: address.chain),
                 if (address.lastUsed != null)
                   _DetailRow(
@@ -194,7 +194,7 @@ class _ExpandedAddress extends StatelessWidget {
                   value: address.verified ? 'Da xac minh' : 'Chua xac minh',
                 ),
                 if (address.notes != null) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     address.notes!,
                     style: AppTextStyles.caption.copyWith(
@@ -204,7 +204,7 @@ class _ExpandedAddress extends StatelessWidget {
                   ),
                 ],
                 if (!address.isDefault) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCtaButton(
                     key: LaunchpadAddressBookPage.defaultKey(address.id),
                     onPressed: onDefault,

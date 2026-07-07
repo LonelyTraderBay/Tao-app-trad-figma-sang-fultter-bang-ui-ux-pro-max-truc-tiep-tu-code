@@ -13,7 +13,7 @@ class _HistoryList extends StatelessWidget {
         for (final execution in executions) ...[
           _ExecutionCard(execution: execution),
           if (execution != executions.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -120,18 +120,18 @@ class _CreatePlanSheet extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               'Chọn sản phẩm linh hoạt để tự động gửi tiết kiệm theo lịch.',
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             for (final product in snapshot.products) ...[
               _ProductRow(product: product),
               if (product != snapshot.products.last)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
             VitCtaButton(
               variant: VitCtaButtonVariant.success,
               onPressed: () => Navigator.of(context).pop(),

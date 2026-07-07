@@ -64,9 +64,9 @@ class _RouteCard extends StatelessWidget {
                           if (route.recommended) const _RecommendedBadge(),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       _RouteTags(route: route, comparison: comparison),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _RouteMetrics(route: route, comparison: comparison),
                     ],
                   ),
@@ -490,7 +490,7 @@ class _ExpandedRouteDetails extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -520,7 +520,7 @@ class _ExpandedRouteDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _DetailsRow(
                   label: 'Gas cost',
                   value: '\$${route.gasCost.toStringAsFixed(2)}',

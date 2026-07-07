@@ -72,7 +72,7 @@ class _SignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -92,7 +92,7 @@ class _SignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -118,7 +118,7 @@ class _SignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final reason in signal.reasoning.take(2)) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,12 +140,12 @@ class _SignalCard extends StatelessWidget {
             if (reason != signal.reasoning.take(2).last)
               const SizedBox(height: AppSpacing.x1),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: AppSpacing.dividerHairline,
             child: ColoredBox(color: _advancedBorder.withValues(alpha: .72)),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               const Icon(

@@ -24,12 +24,12 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
         children: [
           Text(
             'Hien tai vs Muc tieu',
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -53,7 +53,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x3,
@@ -111,7 +111,7 @@ class _DonutBlock extends StatelessWidget {
           label,
           style: AppTextStyles.chartLabelXs.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SizedBox(
           width: AppSpacing.launchpadBox104,
           height: AppSpacing.launchpadBox104,

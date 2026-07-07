@@ -35,6 +35,7 @@ class _MarketDataAnalyticsPageState
                   key: MarketDataAnalyticsPage.contentKey,
                   bottomInset: scrollClearance,
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: tradeShellWithProductTabs(

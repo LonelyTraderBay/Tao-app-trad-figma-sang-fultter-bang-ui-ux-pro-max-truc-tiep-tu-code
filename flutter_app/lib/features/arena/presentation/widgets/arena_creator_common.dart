@@ -26,20 +26,20 @@ class _CompactStateCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.arenaCreatorEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             title,
             textAlign: TextAlign.center,
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             message,
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           if (actionLabel != null && onAction != null) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               onPressed: onAction,
               variant: VitCtaButtonVariant.secondary,

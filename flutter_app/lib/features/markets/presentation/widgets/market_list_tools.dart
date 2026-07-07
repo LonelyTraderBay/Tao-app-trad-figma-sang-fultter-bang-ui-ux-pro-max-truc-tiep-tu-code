@@ -7,8 +7,6 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_l
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const double _marketToolsCompactHeight = AppSpacing.buttonCompact;
-const double _marketToolCompactHeight =
-    AppSpacing.buttonCompact - AppSpacing.x1;
 const double _marketToolCompactGap = AppSpacing.x2;
 const EdgeInsets _marketToolCompactPadding =
     AppSpacing.marketListToolCompactPadding;
@@ -137,7 +135,6 @@ class _ToolChip extends StatelessWidget {
       selected: true,
       onTap: onTap,
       accentColor: tool.color,
-      height: _marketToolCompactHeight,
       padding: _marketToolCompactPadding,
       leading: Icon(tool.icon, color: tool.color, size: _marketToolCompactIcon),
     );

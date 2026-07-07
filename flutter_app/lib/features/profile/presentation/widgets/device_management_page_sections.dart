@@ -64,7 +64,7 @@ class _SecuritySummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -149,6 +149,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _devicesPrimary,
       density: VitDensity.compact,
@@ -236,12 +237,12 @@ class _DeviceCard extends StatelessWidget {
             ],
           ),
           if (showActions) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             const Divider(
               height: AppSpacing.dividerHairline,
               color: _devicesDivider,
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
                 Expanded(
@@ -309,7 +310,7 @@ class _DeviceDetails extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.profileDevicesMetaSpacing,
           runSpacing: AppSpacing.profileDevicesMetaRunSpacing,
@@ -324,7 +325,7 @@ class _DeviceDetails extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'IP: ${device.ip}',
           style: AppTextStyles.micro.copyWith(color: _devicesMuted),

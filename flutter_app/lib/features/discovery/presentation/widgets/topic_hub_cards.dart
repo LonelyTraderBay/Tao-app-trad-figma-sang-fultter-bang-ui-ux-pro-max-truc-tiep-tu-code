@@ -34,7 +34,7 @@ class _PredictionEventCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             event.title,
             style: AppTextStyles.caption.copyWith(
@@ -43,7 +43,7 @@ class _PredictionEventCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Text(
@@ -101,7 +101,7 @@ class _ArenaRoomCard extends StatelessWidget {
               _StatusMini(label: room.statusLabel, color: statusColor),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             room.title,
             style: AppTextStyles.body.copyWith(
@@ -109,7 +109,7 @@ class _ArenaRoomCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Text(
@@ -291,7 +291,7 @@ class _CreateRoomCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Padding(
             padding: AppSpacing.discoveryLeftIndentedCopyPadding,
             child: Text(

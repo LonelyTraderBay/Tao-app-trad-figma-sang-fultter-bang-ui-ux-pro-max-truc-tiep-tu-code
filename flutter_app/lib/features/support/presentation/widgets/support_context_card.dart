@@ -63,7 +63,7 @@ class _SupportContextCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -80,7 +80,7 @@ class _SupportContextCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < supportContext.timelineLabels.length; i++) ...[
             _TimelineRow(
               index: i + 1,

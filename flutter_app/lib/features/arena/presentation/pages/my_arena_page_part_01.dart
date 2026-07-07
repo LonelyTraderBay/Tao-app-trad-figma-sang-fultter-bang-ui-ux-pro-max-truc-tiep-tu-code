@@ -44,7 +44,7 @@ class _PointsHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -67,7 +67,7 @@ class _PointsHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     _TextIconButton(
@@ -119,11 +119,17 @@ class _PointsHero extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x4),
-                _AccentPillButton(
-                  icon: Icons.redeem_rounded,
+                VitChoicePill(
                   label: 'Kiếm Points',
-                  color: AppColors.accent,
+                  selected: true,
                   onTap: onEarn,
+                  accentColor: AppColors.accent,
+                  leading: Icon(
+                    Icons.redeem_rounded,
+                    color: AppColors.accent,
+                    size: AppSpacing.myArenaAccentPillIcon,
+                  ),
+                  padding: AppSpacing.arenaHorizontalPaddingX4,
                 ),
               ],
             ),
@@ -176,7 +182,7 @@ class _PointsDelta extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           style: AppTextStyles.base.copyWith(
@@ -267,7 +273,7 @@ class _InlineStat extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           maxLines: 1,
@@ -390,10 +396,17 @@ class _ArenaTabs extends StatelessWidget {
       child: Row(
         children: [
           for (final tab in _tabConfigs) ...[
-            _ArenaTabPill(
-              config: tab,
-              active: tab.tab == activeTab,
+            VitChoicePill(
+              key: MyArenaPage.tabKey(tab.id),
+              label: tab.label,
+              selected: tab.tab == activeTab,
               onTap: () => onChanged(tab.tab),
+              accentColor: _arenaAccent,
+              leading: Icon(
+                tab.icon,
+                size: AppSpacing.myArenaTabIcon,
+              ),
+              padding: AppSpacing.arenaHorizontalPaddingX4,
             ),
             if (tab != _tabConfigs.last) const SizedBox(width: AppSpacing.x2),
           ],
@@ -449,65 +462,3 @@ const _tabConfigs = [
     icon: Icons.history_rounded,
   ),
 ];
-
-class _ArenaTabPill extends StatelessWidget {
-  const _ArenaTabPill({
-    required this.config,
-    required this.active,
-    required this.onTap,
-  });
-
-  final _TabConfig config;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = active ? _arenaAccent : AppColors.text2;
-    return Material(
-      key: MyArenaPage.tabKey(config.id),
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: VitCard(
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: VitDensity.compact.controlHeight,
-          ),
-          child: Material(
-            color: active ? AppColors.warn08 : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-              side: BorderSide(
-                color: active ? AppColors.warningBorder : AppColors.cardBorder,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaHorizontalPaddingX4,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    config.icon,
-                    color: color,
-                    size: AppSpacing.myArenaTabIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    config.label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: color,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

@@ -25,13 +25,6 @@ class _AssetTransactions extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const VitSectionHeader(
-            title: 'Lịch sử giao dịch',
-            icon: Icons.receipt_long_outlined,
-            iconColor: _assetPrimary,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.x2),
           for (final tx in transactions)
             _AssetTransactionRow(tx: tx, onTap: () => onNavigate(tx.route)),
         ],
@@ -57,6 +50,7 @@ class _AssetTransactionRow extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,

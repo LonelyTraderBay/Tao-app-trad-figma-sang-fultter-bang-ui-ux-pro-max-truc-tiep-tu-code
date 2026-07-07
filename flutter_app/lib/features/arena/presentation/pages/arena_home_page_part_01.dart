@@ -54,6 +54,7 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                       bottom: scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -113,7 +114,9 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                                 templates: snapshot.templates,
                                 onTap: (_) => _go(AppRoutePaths.arenaStudio),
                               ),
-                              const SizedBox(height: AppSpacing.x2),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
                               _FeaturedModesSection(
                                 modes: snapshot.featuredModes,
                                 onViewAll: () =>
@@ -216,7 +219,7 @@ class _IntroBlock extends StatelessWidget {
           onChanged: onChanged,
           onClear: onClear,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -273,34 +276,37 @@ class _QuickChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: AppSpacing.arenaHomeQuickChipGapPadding,
-      child: VitCard(
-        onTap: onTap,
-        variant: VitCardVariant.inner,
-        radius: VitCardRadius.standard,
-        height: VitDensity.compact.controlHeight,
-        padding: AppSpacing.arenaPresetChipPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: AppColors.text2,
-              size: AppSpacing.arenaHomeQuickChipIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
+      child: IntrinsicWidth(
+        child: VitCard(
+          onTap: onTap,
+          variant: VitCardVariant.inner,
+          radius: VitCardRadius.standard,
+          height: VitDensity.compact.controlHeight,
+          contentAlign: VitCardContentAlign.center,
+          padding: AppSpacing.cardTilePadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
                 color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-                height: _arenaHomeCountBadgeLineHeight,
+                size: AppSpacing.arenaHomeQuickChipIcon,
               ),
-            ),
-            if (count > 0) ...[
               const SizedBox(width: AppSpacing.x2),
-              _MiniCountBadge(count: count),
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                  height: _arenaHomeCountBadgeLineHeight,
+                ),
+              ),
+              if (count > 0) ...[
+                const SizedBox(width: AppSpacing.x2),
+                _MiniCountBadge(count: count),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -346,7 +352,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -381,7 +387,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             key: ArenaHomePage.createChallengeKey,
             onPressed: onCreate,

@@ -33,7 +33,7 @@ class _RiskHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               _RiskScoreRing(score: diff.riskScore, color: riskColor),
@@ -61,7 +61,7 @@ class _RiskHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -227,7 +227,7 @@ class _SummaryStats extends StatelessWidget {
                     color: stat.$1.color,
                     size: AppSpacing.launchpadIconXl,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     '${stat.$2}',
                     style: AppTextStyles.base.copyWith(
@@ -315,7 +315,7 @@ class _UpgradeMetadata extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final row in rows)
             _MetaRow(
               row: row,

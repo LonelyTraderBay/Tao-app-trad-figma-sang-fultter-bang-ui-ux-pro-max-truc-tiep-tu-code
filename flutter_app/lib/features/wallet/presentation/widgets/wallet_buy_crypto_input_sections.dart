@@ -1,102 +1,96 @@
 part of 'wallet_buy_crypto_sections.dart';
 
-class BuyInputContent extends StatelessWidget {
-  const BuyInputContent({
-    super.key,
-    required this.snapshot,
-    required this.selectedCrypto,
-    required this.selectedPaymentId,
-    required this.amountController,
-    required this.amountVnd,
-    required this.receiveAmount,
-    required this.onAmountChanged,
-    required this.onPreset,
-    required this.onCryptoTap,
-    required this.onPaymentChanged,
-    required this.onBuy,
-  });
+class BuyInputContent {
+  const BuyInputContent._();
 
-  final WalletBuyCryptoSnapshot snapshot;
-  final WalletBuyCryptoOption selectedCrypto;
-  final String selectedPaymentId;
-  final TextEditingController amountController;
-  final int amountVnd;
-  final double receiveAmount;
-  final VoidCallback onAmountChanged;
-  final ValueChanged<int> onPreset;
-  final VoidCallback onCryptoTap;
-  final ValueChanged<String> onPaymentChanged;
-  final VoidCallback? onBuy;
-
-  @override
-  Widget build(BuildContext context) {
+  static List<Widget> sections({
+    required WalletBuyCryptoSnapshot snapshot,
+    required WalletBuyCryptoOption selectedCrypto,
+    required String selectedPaymentId,
+    required TextEditingController amountController,
+    required int amountVnd,
+    required double receiveAmount,
+    required VoidCallback onAmountChanged,
+    required ValueChanged<int> onPreset,
+    required VoidCallback onCryptoTap,
+    required ValueChanged<String> onPaymentChanged,
+    required VoidCallback? onBuy,
+  }) {
     final selectedPayment = snapshot.paymentMethods.firstWhere(
       (method) => method.id == selectedPaymentId,
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const _ZeroFeeBanner(),
-        const SizedBox(height: AppSpacing.walletBuyBannerGap),
-        const VitSectionHeader(
-          title: 'Số tiền & tài sản nhận',
-          icon: Icons.payments_outlined,
-          iconColor: _buyPrimary,
-          accentColor: _buyPrimary,
-        ),
-        _AmountCard(
-          snapshot: snapshot,
-          selectedCrypto: selectedCrypto,
-          amountController: amountController,
-          amountVnd: amountVnd,
-          receiveAmount: receiveAmount,
-          onAmountChanged: onAmountChanged,
-          onPreset: onPreset,
-          onCryptoTap: onCryptoTap,
-        ),
-        const SizedBox(height: AppSpacing.walletBuyAmountCardGap),
-        const VitSectionHeader(
-          title: 'Phương thức thanh toán',
-          icon: Icons.verified_user_outlined,
-          iconColor: _buyPrimary,
-          accentColor: _buyPrimary,
-        ),
-        _PaymentMethodGroup(
-          icon: Icons.account_balance_rounded,
-          label: 'Chuyển khoản ngân hàng',
-          methods: snapshot.paymentMethods
-              .where((method) => method.type == WalletPaymentMethodType.bank)
-              .toList(),
-          selectedId: selectedPaymentId,
-          onChanged: onPaymentChanged,
-        ),
-        const SizedBox(height: AppSpacing.walletBuySectionGap),
-        _PaymentMethodGroup(
-          icon: Icons.phone_android_rounded,
-          label: 'Ví điện tử',
-          methods: snapshot.paymentMethods
-              .where((method) => method.type != WalletPaymentMethodType.bank)
-              .toList(),
-          selectedId: selectedPaymentId,
-          onChanged: onPaymentChanged,
-        ),
-        const SizedBox(height: AppSpacing.walletBuySectionGap),
-        const VitSectionHeader(
-          title: 'Phí & hạn mức',
-          icon: Icons.receipt_long_outlined,
-          iconColor: _buyGreen,
-          accentColor: _buyGreen,
-        ),
-        _RateInfoCard(crypto: selectedCrypto, payment: selectedPayment),
-        const SizedBox(height: AppSpacing.walletBuySectionGap),
-        _BuyButton(
-          enabled: onBuy != null,
-          symbol: selectedCrypto.symbol,
-          onTap: onBuy,
-        ),
-      ],
-    );
+    return [
+      const _ZeroFeeBanner(),
+      VitPageSection(
+        label: 'Số tiền & tài sản nhận',
+        headerIcon: Icons.payments_outlined,
+        headerIconColor: _buyPrimary,
+        headerVariant: VitSectionHeaderVariant.plain,
+        accentColor: _buyPrimary,
+        innerGap: AppSpacing.pageRhythmFormInnerGap,
+        children: [
+          _AmountCard(
+            snapshot: snapshot,
+            selectedCrypto: selectedCrypto,
+            amountController: amountController,
+            amountVnd: amountVnd,
+            receiveAmount: receiveAmount,
+            onAmountChanged: onAmountChanged,
+            onPreset: onPreset,
+            onCryptoTap: onCryptoTap,
+          ),
+        ],
+      ),
+      VitPageSection(
+        label: 'Phương thức thanh toán',
+        headerIcon: Icons.verified_user_outlined,
+        headerIconColor: _buyPrimary,
+        headerVariant: VitSectionHeaderVariant.plain,
+        accentColor: _buyPrimary,
+        innerGap: AppSpacing.pageRhythmFormInnerGap,
+        children: [
+          _PaymentMethodGroup(
+            icon: Icons.account_balance_rounded,
+            label: 'Chuyển khoản ngân hàng',
+            methods: snapshot.paymentMethods
+                .where(
+                  (method) => method.type == WalletPaymentMethodType.bank,
+                )
+                .toList(),
+            selectedId: selectedPaymentId,
+            onChanged: onPaymentChanged,
+          ),
+          _PaymentMethodGroup(
+            icon: Icons.phone_android_rounded,
+            label: 'Ví điện tử',
+            methods: snapshot.paymentMethods
+                .where(
+                  (method) => method.type != WalletPaymentMethodType.bank,
+                )
+                .toList(),
+            selectedId: selectedPaymentId,
+            onChanged: onPaymentChanged,
+          ),
+        ],
+      ),
+      VitPageSection(
+        label: 'Phí & hạn mức',
+        headerIcon: Icons.receipt_long_outlined,
+        headerIconColor: _buyGreen,
+        headerVariant: VitSectionHeaderVariant.plain,
+        accentColor: _buyGreen,
+        innerGap: AppSpacing.pageRhythmFormInnerGap,
+        children: [
+          _RateInfoCard(crypto: selectedCrypto, payment: selectedPayment),
+          _BuyButton(
+            enabled: onBuy != null,
+            symbol: selectedCrypto.symbol,
+            onTap: onBuy,
+          ),
+        ],
+      ),
+    ];
   }
 }
 
@@ -156,6 +150,7 @@ class _AmountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.walletBuyAmountCardMinHeight,
@@ -177,7 +172,7 @@ class _AmountCard extends StatelessWidget {
               ),
               Text(
                 'Số dư: 0 VND',
-                style: AppTextStyles.captionSm.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
@@ -297,6 +292,7 @@ class _ReceivePanel extends StatelessWidget {
               ],
             ),
           ),
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             key: const Key('sc145_buy_crypto_selector'),
             onTap: onCryptoTap,

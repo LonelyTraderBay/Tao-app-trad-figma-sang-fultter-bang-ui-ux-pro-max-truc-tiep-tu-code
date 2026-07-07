@@ -53,7 +53,7 @@ class _ProfileHeader extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Row(
                     children: [
                       for (var i = 0; i < merchant.level; i++)
@@ -73,7 +73,7 @@ class _ProfileHeader extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     '${merchant.positiveRate.toStringAsFixed(1)}% tích cực · '
                     '${_formatInt(merchant.totalTrades)} giao dịch',
@@ -84,7 +84,7 @@ class _ProfileHeader extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     merchant.isOnline ? 'Đang hoạt động' : merchant.lastActive,
                     style: AppTextStyles.caption.copyWith(
@@ -240,7 +240,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(child: _StatCard(stat: stats[1])),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             Expanded(child: _StatCard(stat: stats[2])),
@@ -294,7 +294,7 @@ class _StatCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             stat.value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -343,7 +343,7 @@ class _ReputationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -353,7 +353,7 @@ class _ReputationCard extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation<Color>(AppColors.buy),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

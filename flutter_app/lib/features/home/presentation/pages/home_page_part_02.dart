@@ -10,8 +10,10 @@ class _HomeDiscoverySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(title: 'Dự đoán & Thách đấu'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+          title: 'Dự đoán & Thách đấu',
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+        ),
         VitDiscoveryActionCard(
           title: 'Prediction Markets',
           badgeLabel: 'Prediction Market',
@@ -28,29 +30,34 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/markets/predictions'),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.homeSectionInnerGap),
         VitDiscoveryActionCard(
           title: 'Open Arena',
           badgeLabel: 'Arena Points only',
           subtitle: 'Tạo mode chơi, mở room, dùng Arena Points',
           actionLabel: 'Vào Arena',
           icon: Icons.sports_esports_outlined,
-          accentColor: AppColors.warn,
+          accentColor: AppColors.riskWarning,
           borderColor: AppColors.warningBorder,
           badgeStatus: VitStatusPillStatus.warning,
           variant: VitDiscoveryActionCardVariant.compact,
           background: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColors.warn15, AppColors.warn10],
+            colors: [AppColors.riskWarning15, AppColors.riskWarning10],
           ),
           onTap: () => onNavigate('/arena'),
         ),
-        const SizedBox(height: AppSpacing.x2),
-        Text(
-          'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
-          textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        const SizedBox(height: AppSpacing.homeSectionInnerGap),
+        Semantics(
+          label:
+              'Lưu ý rủi ro: Predictions sử dụng vị thế thực. Arena sử dụng '
+              'Points (không phải tiền thật).',
+          child: Text(
+            'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
         ),
       ],
     );
@@ -77,10 +84,11 @@ class _MarketSection extends StatelessWidget {
       children: [
         VitSectionHeader(
           title: 'Thị trường',
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
           actionLabel: 'Xem tất cả',
+          actionSemanticLabel: 'Xem tất cả thị trường',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x3),
         VitTabBar(
           activeKey: activeTab,
           onChanged: onTabChanged,
@@ -103,7 +111,7 @@ class _MarketSection extends StatelessWidget {
             VitTabItem(key: 'new', label: 'Mới', icon: Icons.fiber_new_rounded),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.homeSectionInnerGap),
         VitCard(
           clip: true,
           child: Column(

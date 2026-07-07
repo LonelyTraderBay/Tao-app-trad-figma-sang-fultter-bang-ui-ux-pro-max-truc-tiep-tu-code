@@ -16,11 +16,11 @@ class _WaterfallCard extends StatelessWidget {
             icon: Icons.filter_alt_outlined,
             title: 'Funnel Waterfall',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < funnel.steps.length; i++) ...[
             _WaterfallStep(index: i + 1, step: funnel.steps[i]),
             if (i != funnel.steps.length - 1)
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -73,7 +73,7 @@ class _WaterfallStep extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.inputRadius,
           child: SizedBox(
@@ -97,7 +97,7 @@ class _WaterfallStep extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             const Icon(
@@ -134,7 +134,7 @@ class _DropoutChartCard extends StatelessWidget {
             icon: Icons.trending_down_rounded,
             title: 'Tỷ lệ rời bỏ theo bước',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.adminFunnelWaterfallHeight,
             child: Semantics(
@@ -148,7 +148,7 @@ class _DropoutChartCard extends StatelessWidget {
             ),
           ),
           if (!hasDropout) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             const AdminInlineEmptyState(
               icon: Icons.trending_down_rounded,
               title: 'No dropout data',
@@ -177,11 +177,11 @@ class _StepDetailsCard extends StatelessWidget {
             icon: Icons.bar_chart_rounded,
             title: 'Chi tiết từng bước',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < funnel.steps.length; i++) ...[
             _StepDetailRow(index: i + 1, step: funnel.steps[i]),
             if (i != funnel.steps.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -227,7 +227,7 @@ class _StepDetailRow extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(

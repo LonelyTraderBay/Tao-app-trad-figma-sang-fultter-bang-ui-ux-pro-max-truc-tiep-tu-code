@@ -70,12 +70,12 @@ class _YieldChartCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             height: AppSpacing.savingsConsumerYieldChartHeight,
             child: _YieldChart(points: points),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const _YieldLegend(),
         ],
       ),
@@ -150,15 +150,19 @@ class _MonthlyIncomeCard extends StatelessWidget {
                 size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Thu nhập hằng tháng',
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontWeight: AppTextStyles.bold,
+              Expanded(
+                child: Text(
+                  'Thu nhập hằng tháng',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.savingsConsumerMonthlyChartHeight,
             child: _MonthlyBars(points: points),
@@ -231,7 +235,7 @@ class _MetricCard extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(

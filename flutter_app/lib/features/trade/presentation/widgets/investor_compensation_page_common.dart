@@ -43,6 +43,7 @@ class _Eligibility extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -53,6 +54,7 @@ class _Eligibility extends StatelessWidget {
           children: [
             _Card(
               child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
                 density: VitDensity.compact,
@@ -114,6 +116,7 @@ class _ClaimStep extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.x6,
             height: AppSpacing.x6,

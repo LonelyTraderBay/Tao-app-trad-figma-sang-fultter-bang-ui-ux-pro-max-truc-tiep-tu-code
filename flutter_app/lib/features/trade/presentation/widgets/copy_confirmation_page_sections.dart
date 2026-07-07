@@ -187,7 +187,7 @@ class _SuitabilityReviewCard extends StatelessWidget {
                 label: 'Provider limit',
                 value: 'Max 20% portfolio per provider',
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Confirm this amount fits your risk tolerance, provider drawdown, and portfolio limit before cooling-off starts.',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),

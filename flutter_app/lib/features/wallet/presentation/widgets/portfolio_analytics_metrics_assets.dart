@@ -13,13 +13,6 @@ class _MetricsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const VitSectionHeader(
-            title: 'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
-            icon: Icons.speed_rounded,
-            iconColor: _analyticsPrimary,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.walletAnalyticsMetricsTitleGap),
           for (final metric in metrics)
             VitInfoRow(
               label: metric.label,
@@ -48,13 +41,6 @@ class _AssetsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const VitSectionHeader(
-            title: 'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
-            icon: Icons.account_balance_wallet_outlined,
-            iconColor: _analyticsPrimary,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < assets.length; i++)
             _AssetRow(
               asset: assets[i],
@@ -188,6 +174,7 @@ class _AssetAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: AppSpacing.walletAnalyticsAssetAvatar,
       height: AppSpacing.walletAnalyticsAssetAvatar,

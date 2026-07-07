@@ -65,6 +65,7 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       radius: VitCardRadius.standard,
       padding: AppSpacing.marketHeatmapSummaryPadding,
@@ -132,13 +133,16 @@ class MarketHeatmapControls extends StatelessWidget {
               child: Row(
                 children: [
                   for (final metric in metrics)
-                    _FilterChip(
+                    VitFilterChip(
                       key: metric == '7d'
                           ? MarketHeatmapKeys.metric7d
                           : MarketHeatmapKeys.metric24h,
                       label: metric,
                       active: metric == activeMetric,
                       onTap: () => onMetricSelected(metric),
+                      color: marketHeatmapPrimary,
+                      height: AppSpacing.marketHeatmapFilterHeight,
+                      padding: AppSpacing.marketHeatmapFilterPadding,
                     ),
                 ],
               ),
@@ -157,42 +161,20 @@ class MarketHeatmapControls extends StatelessWidget {
                   const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
               itemBuilder: (context, index) {
                 final category = categories[index];
-                return _FilterChip(
+                return VitFilterChip(
                   key: MarketHeatmapKeys.category(category),
                   label: category,
                   active: category == activeCategory,
                   onTap: () => onCategorySelected(category),
+                  color: marketHeatmapPrimary,
+                  height: AppSpacing.marketHeatmapFilterHeight,
+                  padding: AppSpacing.marketHeatmapFilterPadding,
                 );
               },
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: marketHeatmapPrimary,
-      height: AppSpacing.marketHeatmapFilterHeight,
-      padding: AppSpacing.marketHeatmapFilterPadding,
     );
   }
 }

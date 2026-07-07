@@ -33,7 +33,7 @@ class _ScenarioInputs extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Scenario Inputs', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FieldLabel(
             label: 'Stake Amount (USD)',
             child: _AmountInput(
@@ -41,7 +41,7 @@ class _ScenarioInputs extends StatelessWidget {
               onChanged: onAmountChanged,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FieldLabel(
             label: 'Asset',
             child: _RiskDropdown(
@@ -51,7 +51,7 @@ class _ScenarioInputs extends StatelessWidget {
               onChanged: onAssetChanged,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FieldLabel(
             label: 'Lock-up Period',
             child: _RiskDropdown(
@@ -61,7 +61,7 @@ class _ScenarioInputs extends StatelessWidget {
               onChanged: onDurationChanged,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ValidatorSlider(
             validators: validators,
             onChanged: onValidatorsChanged,
@@ -87,7 +87,7 @@ class _FieldLabel extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         child,
       ],
     );

@@ -23,26 +23,3 @@ class _PaymentChip extends StatelessWidget {
     );
   }
 }
-
-class _ChoiceChipButton extends StatelessWidget {
-  const _ChoiceChipButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
-      onTap: onTap,
-    );
-  }
-}

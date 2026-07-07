@@ -92,6 +92,7 @@ class KIDGeneratorPage extends ConsumerWidget {
               _KidPreviewCard(document: snapshot.document),
               const VitSectionHeader(
                 title: 'Document Sections',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 variant: VitSectionHeaderVariant.accentBar,
                 accentColor: _kidPrimary,
               ),
@@ -169,6 +170,7 @@ class _KidPreviewCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: _kidPreviewIconBox,
                 height: _kidPreviewIconBox,
@@ -193,7 +195,7 @@ class _KidPreviewCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       'Last updated: ${document.lastUpdated} • '
                       'Version ${document.version}',
@@ -238,6 +240,7 @@ class _DocumentMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _kidMetricHeight,
       variant: VitCardVariant.inner,
@@ -253,7 +256,7 @@ class _DocumentMetric extends StatelessWidget {
           const SizedBox(height: AppSpacing.x1),
           Text(
             value,
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),

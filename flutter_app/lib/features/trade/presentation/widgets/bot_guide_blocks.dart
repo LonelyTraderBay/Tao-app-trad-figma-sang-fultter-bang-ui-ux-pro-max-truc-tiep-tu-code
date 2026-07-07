@@ -9,6 +9,7 @@ class _StepsBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -19,14 +20,8 @@ class _StepsBlock extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        VitPageContent(
-          padding: VitContentPadding.none,
-          density: VitDensity.compact,
-          children: [
-            for (var i = 0; i < steps.length; i++)
-              _StepRow(index: i, color: color, text: steps[i]),
-          ],
-        ),
+        for (var i = 0; i < steps.length; i++)
+          _StepRow(index: i, color: color, text: steps[i]),
       ],
     );
   }
@@ -87,6 +82,7 @@ class _BulletsBlock extends StatelessWidget {
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
+     rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -97,14 +93,8 @@ class _BulletsBlock extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          VitPageContent(
-            padding: VitContentPadding.none,
-            density: VitDensity.compact,
-            children: [
-              for (final item in items)
-                _BulletRow(item: item, color: titleColor),
-            ],
-          ),
+          for (final item in items)
+            _BulletRow(item: item, color: titleColor),
         ],
       ),
     );

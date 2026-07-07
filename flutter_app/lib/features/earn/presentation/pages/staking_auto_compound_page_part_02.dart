@@ -130,7 +130,7 @@ class _PositionCard extends StatelessWidget {
             ],
           ),
           if (position.autoCompound) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Material(
               color: AppColors.buy10,
               borderRadius: AppRadii.inputRadius,
@@ -218,7 +218,7 @@ class _SimulationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           SizedBox(
             height: AppSpacing.stakingAutoCompoundChartHeight,
             child: Stack(
@@ -267,7 +267,7 @@ class _SimulationCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -289,7 +289,7 @@ class _SimulationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -300,7 +300,7 @@ class _SimulationCard extends StatelessWidget {
                   'Lợi thế compound',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   '+${_formatCurrency(simulation.difference)}',
                   style: AppTextStyles.sectionTitle.copyWith(
@@ -348,7 +348,7 @@ class _MiniInput extends StatelessWidget {
             fontWeight: AppTextStyles.medium,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Material(
           color: AppColors.surface2,
           shape: const RoundedRectangleBorder(
@@ -439,7 +439,7 @@ class _ResultCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,

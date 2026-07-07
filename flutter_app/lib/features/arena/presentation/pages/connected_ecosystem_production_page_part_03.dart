@@ -81,7 +81,7 @@ class _HandoffCard extends StatelessWidget {
             subtitle,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final child in children) ...[
             child,
             if (child != children.last)

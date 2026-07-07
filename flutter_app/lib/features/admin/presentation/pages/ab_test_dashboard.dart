@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -66,7 +67,7 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
                 physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
-                  customGap: AppSpacing.x4,
+                  rhythm: VitPageRhythm.standard,
                   children: [
                     AdminDashboardStateContent(
                       status: controller.state.status,
@@ -75,7 +76,10 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
                       gap: AppSpacing.x4,
                       children: [
                         _SummaryGrid(snapshot: snapshot),
-                        const _SectionTitle(title: 'Tất cả A/B Tests'),
+                        const VitSectionHeader(
+                          title: 'Tất cả A/B Tests',
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         if (snapshot.tests.isEmpty)
                           const AdminInlineEmptyState(
                             icon: Icons.science_outlined,

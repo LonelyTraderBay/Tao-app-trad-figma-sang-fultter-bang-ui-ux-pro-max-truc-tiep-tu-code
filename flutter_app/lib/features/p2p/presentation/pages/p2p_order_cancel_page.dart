@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -80,6 +81,7 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
                       bottomInset,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
@@ -169,7 +171,7 @@ class _CancelHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Hủy đơn hàng?',
             textAlign: TextAlign.center,
@@ -178,7 +180,7 @@ class _CancelHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: AppSpacing.p2pRiskControlsOrderHeroMaxWidth,
@@ -227,7 +229,7 @@ class _OrderSummary extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var index = 0; index < rows.length; index++)
             _SummaryRow(row: rows[index], showDivider: index < rows.length - 1),
         ],
@@ -308,7 +310,7 @@ class _ReasonSelector extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final reason in reasons)
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: AppSpacing.x1),

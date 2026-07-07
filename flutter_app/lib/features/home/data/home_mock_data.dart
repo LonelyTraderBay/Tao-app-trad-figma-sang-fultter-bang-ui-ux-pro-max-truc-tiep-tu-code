@@ -43,16 +43,19 @@ class HomeMockData {
       id: 'btc-fee-campaign',
       text: 'Phí giao dịch 0% cho BTC/USDT trong 7 ngày!',
       type: HomeAnnouncementType.campaign,
+      routePath: '/trade/btcusdt',
     ),
     HomeAnnouncement(
       id: 'p2p-launch-info',
       text: 'Ra mắt tính năng P2P - Mua bán USDT bằng VND ngay!',
       type: HomeAnnouncementType.info,
+      routePath: '/p2p',
     ),
     HomeAnnouncement(
       id: 'security-2fa',
       text: 'Bật 2FA để bảo vệ tài khoản VitTrade',
       type: HomeAnnouncementType.security,
+      routePath: '/settings/security',
     ),
   ];
 
@@ -112,6 +115,7 @@ class HomeMockData {
       routePath: '/launchpad',
       accentKey: 'riskHigh',
       stateLabel: 'Token',
+      riskBadge: 'Rủi ro cao',
     ),
     HomeQuickAction(
       icon: 'predictions',
@@ -147,6 +151,7 @@ class HomeMockData {
       routePath: '/trade/margin',
       accentKey: 'riskHigh',
       stateLabel: 'Pro',
+      riskBadge: 'Rủi ro cao',
     ),
     HomeQuickAction(
       icon: 'bot',
@@ -154,6 +159,7 @@ class HomeMockData {
       routePath: '/trade/bots',
       accentKey: 'caution',
       stateLabel: 'Auto',
+      riskBadge: 'Rủi ro cao',
     ),
     HomeQuickAction(
       icon: 'copyTrade',

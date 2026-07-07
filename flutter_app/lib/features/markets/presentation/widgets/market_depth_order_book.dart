@@ -20,24 +20,24 @@ class MarketDepthOrderBookView extends StatelessWidget {
     return Column(
       children: [
         _OrderBookHeader(pair: snapshot.pair),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         const MarketDepthSectionHeader(
           label: 'Lệnh bán (Ask)',
           accentColor: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _OrderBookRows(
           levels: snapshot.depth.asks.take(15).toList().reversed,
           side: MarketOrderSide.sell,
         ),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _MidPriceStrip(depth: snapshot.depth),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         const MarketDepthSectionHeader(
           label: 'Lệnh mua (Bid)',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _OrderBookRows(
           levels: snapshot.depth.bids.take(15).toList(),
           side: MarketOrderSide.buy,
@@ -186,7 +186,7 @@ class _BookCell extends StatelessWidget {
       child: Text(
         text,
         textAlign: alignRight ? TextAlign.right : TextAlign.left,
-        style: AppTextStyles.captionSm.copyWith(
+        style: AppTextStyles.caption.copyWith(
           color: color ?? AppColors.text1,
           fontFeatures: AppTextStyles.tabularFigures,
           height: AppSpacing.marketLineHeightTight,

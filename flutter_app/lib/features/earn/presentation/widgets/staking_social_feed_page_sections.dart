@@ -180,7 +180,7 @@ class _PostCard extends StatelessWidget {
               _TypeChip(meta: typeMeta),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             post.content,
             style: AppTextStyles.body.copyWith(
@@ -189,7 +189,7 @@ class _PostCard extends StatelessWidget {
             ),
           ),
           if (post.asset != null || post.apy != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -201,12 +201,12 @@ class _PostCard extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _ActionMetric(
@@ -339,7 +339,7 @@ class _CommunityStats extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Community Stats', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (var i = 0; i < stats.length; i++) ...[

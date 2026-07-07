@@ -43,7 +43,7 @@ class _VerifiedTeaser extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     'Sẽ mở trong tương lai cho challenge xác thực cao hơn',
                     maxLines: 2,
@@ -73,7 +73,7 @@ class _ArenaFooter extends StatelessWidget {
     return Column(
       children: [
         VitCommunityRulesLink(onTap: onRules),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           density: VitDensity.compact,
           child: Row(
@@ -149,13 +149,13 @@ class _SearchResults extends StatelessWidget {
               : '$total kết quả cho "$query"',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         if (modes.isNotEmpty) ...[
           VitModuleSectionHeader(
             title: 'Modes (${modes.length})',
             accentColor: AppColors.primary,
+            density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
           for (final mode in modes) ...[
             _SearchRow(
               icon: _templateIcon(_kindForMode(mode.templateId)),
@@ -164,15 +164,15 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.primary,
               onTap: () => onMode(mode.id),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
         if (rooms.isNotEmpty) ...[
           VitModuleSectionHeader(
             title: 'Phòng (${rooms.length})',
             accentColor: AppColors.warn,
+            density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
           for (final room in rooms) ...[
             _SearchRow(
               icon: Icons.groups_2_outlined,
@@ -182,15 +182,15 @@ class _SearchResults extends StatelessWidget {
               color: _challengeStateColor(room.state),
               onTap: () => onRoom(room.id),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
         if (creators.isNotEmpty) ...[
           VitModuleSectionHeader(
             title: 'Creators (${creators.length})',
             accentColor: AppColors.buy,
+            density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
           for (final creator in creators) ...[
             _SearchRow(
               icon: Icons.person_rounded,
@@ -200,7 +200,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.buy,
               onTap: () => onCreator(creator.id),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
         if (total == 0)

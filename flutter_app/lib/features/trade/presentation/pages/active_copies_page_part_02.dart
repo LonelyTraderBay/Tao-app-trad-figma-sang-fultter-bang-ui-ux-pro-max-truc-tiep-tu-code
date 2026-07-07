@@ -34,7 +34,7 @@ class _ReturnBar extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
@@ -84,9 +84,9 @@ class _ExpandedCopyDetails extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _MiniPerformanceStrip(points: copy.performanceHistory),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -104,7 +104,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -125,7 +125,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
                 ],
               ),
               if (copy.recentTrades.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Row(
                   children: [
                     Expanded(
@@ -156,14 +156,14 @@ class _ExpandedCopyDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final trade in copy.recentTrades.take(3)) ...[
                   _RecentTradeRow(trade: trade),
                   if (trade != copy.recentTrades.take(3).last)
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(

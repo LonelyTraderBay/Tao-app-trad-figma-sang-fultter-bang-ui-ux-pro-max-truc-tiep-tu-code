@@ -88,7 +88,7 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
             'Bước 1 · Chọn hướng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitSegmentedChoice<String>(
             selected: widget.side,
             onChanged: widget.onSideChanged,
@@ -109,17 +109,17 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Đòn bẩy ${widget.leverage}x · Chỉnh trong Chế độ Pro',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Bước 2 · Số lượng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -143,12 +143,12 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _OrderSummary(
             available: widget.snapshot.account.availableMargin,
             liquidationPrice: widget.snapshot.orderDraft.liquidationPriceLabel,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: MarginTradingPage.submitKey,
             density: VitDensity.compact,

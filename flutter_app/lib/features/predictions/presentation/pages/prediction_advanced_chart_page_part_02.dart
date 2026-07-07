@@ -59,6 +59,7 @@ class _RsiCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
+ rhythm: VitPageRhythm.flush,
         padding: VitContentPadding.none,
         fullBleed: true,
         gap: VitContentGap.tight,
@@ -173,7 +174,7 @@ class _IndicatorCard extends StatelessWidget {
               _SignalBadge(label: indicator.signal, color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -233,7 +234,7 @@ class _OverallSignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'BULLISH',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.buy),
@@ -259,6 +260,7 @@ class _OrderFlowCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
+ rhythm: VitPageRhythm.flush,
         padding: VitContentPadding.none,
         fullBleed: true,
         gap: VitContentGap.tight,
@@ -388,6 +390,7 @@ class _PatternRecognitionCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
+     rhythm: VitPageRhythm.flush,
         padding: VitContentPadding.none,
         fullBleed: true,
         gap: VitContentGap.tight,

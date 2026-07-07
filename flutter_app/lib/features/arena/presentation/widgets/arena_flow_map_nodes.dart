@@ -16,7 +16,7 @@ class _FlowGroupCard extends StatelessWidget {
           subtitle: group.subtitle,
           color: color,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           padding: AppSpacing.zeroInsets,
           clip: true,
@@ -145,7 +145,7 @@ class _SharedComponents extends StatelessWidget {
           title: 'Shared Components',
           color: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final component in components) ...[
           VitCard(
             density: VitDensity.compact,
@@ -167,12 +167,12 @@ class _SharedComponents extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   component.description,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
@@ -189,7 +189,7 @@ class _SharedComponents extends StatelessWidget {
             ),
           ),
           if (component != components.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -239,7 +239,7 @@ class _HandoffNotes extends StatelessWidget {
               ],
             ),
           ),
-          if (note != notes.last) const SizedBox(height: AppSpacing.x3),
+          if (note != notes.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

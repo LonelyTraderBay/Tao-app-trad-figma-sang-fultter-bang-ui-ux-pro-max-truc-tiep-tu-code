@@ -93,7 +93,7 @@ class _LiquidityOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -157,11 +157,11 @@ class _AddLiquidityForm extends StatelessWidget {
                   size: AppSpacing.predictionMarketMakerInputPrefixIcon,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _MarketInput(label: 'Select Event', controller: eventController),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _SpreadSelector(value: spreadBps, onChanged: onSpreadChanged),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _MarketInput(
                 label: 'Minimum Depth (USD)',
                 controller: minDepthController,
@@ -176,10 +176,10 @@ class _AddLiquidityForm extends StatelessWidget {
                 ),
               ),
               if (hasAmount) ...[
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 _EstimatedReturns(amount: amount),
               ],
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _AddLiquidityButton(enabled: hasAmount),
             ],
           ),
@@ -298,7 +298,6 @@ class _SpreadButton extends StatelessWidget {
       onTap: onTap,
       accentColor: _predictionPrimary,
       fullWidth: true,
-      height: VitDensity.compact.controlHeight - AppSpacing.x2,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
     );
   }

@@ -30,10 +30,10 @@ class _SecurityTips extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final tip in tips) ...[
             _TipRow(text: tip),
-            if (tip != tips.last) const SizedBox(height: AppSpacing.x2),
+            if (tip != tips.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

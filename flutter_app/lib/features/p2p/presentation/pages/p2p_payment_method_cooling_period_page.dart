@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -72,8 +73,8 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
-                      customGap: AppSpacing.x3,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,11 +83,8 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                               daysLeft: controller.daysLeft,
                               hoursLeft: controller.hoursLeft,
                             ),
-                            const SizedBox(height: AppSpacing.x3),
                             _TimelineCard(snapshot: snapshot),
-                            const SizedBox(height: AppSpacing.x3),
                             _ReasonCard(reasons: snapshot.reasons),
-                            const SizedBox(height: AppSpacing.x3),
                             _WaitingNote(
                               title: snapshot.waitTitle,
                               message: snapshot.waitMessage,
@@ -166,7 +164,7 @@ class _CoolingHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Material(
             color: AppColors.warn15,
             shape: const RoundedRectangleBorder(
@@ -288,7 +286,7 @@ class _ReasonCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (var index = 0; index < reasons.length; index++) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +308,7 @@ class _ReasonCard extends StatelessWidget {
               ],
             ),
             if (index != reasons.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

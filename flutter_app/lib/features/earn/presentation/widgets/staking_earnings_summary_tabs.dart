@@ -36,7 +36,7 @@ class _SummaryCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       '+${_formatUsd(snapshot.totalUpcomingUsd)}',
                       style: AppTextStyles.sectionTitle.copyWith(
@@ -63,7 +63,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               const Icon(

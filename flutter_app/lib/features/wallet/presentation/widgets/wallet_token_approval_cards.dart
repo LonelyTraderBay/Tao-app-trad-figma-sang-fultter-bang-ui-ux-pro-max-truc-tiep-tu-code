@@ -119,6 +119,7 @@ class WalletTokenCategoryIcon extends StatelessWidget {
       'lending' => Icons.attach_money_rounded,
       _ => Icons.shield_outlined,
     };
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: AppSpacing.walletTokenCategoryIcon,
       height: AppSpacing.walletTokenCategoryIcon,

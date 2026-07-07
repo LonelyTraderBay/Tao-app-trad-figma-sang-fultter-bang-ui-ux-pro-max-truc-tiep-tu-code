@@ -39,7 +39,7 @@ class _TradeOptionsCard extends StatelessWidget {
             selected: asset,
             onChanged: onAsset,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _OptionGroup(
             group: 'currency',
             label: 'Tiền tệ mặc định',
@@ -47,7 +47,7 @@ class _TradeOptionsCard extends StatelessWidget {
             selected: currency,
             onChanged: onCurrency,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _OptionGroup(
             group: 'window',
             label: 'Thời gian thanh toán mặc định',
@@ -57,7 +57,7 @@ class _TradeOptionsCard extends StatelessWidget {
             expanded: true,
             onChanged: onPaymentWindow,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _SettingToggleRow(
             toggle: const P2PSettingsToggleDraft(
               id: 'auto_confirm',
@@ -115,7 +115,7 @@ class _OptionGroup extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitPresetChipRow<String>(
           items: children,
           selectedValue: selected,
@@ -155,7 +155,7 @@ class _ToggleSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(icon: icon, label: label, color: color),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.p2pSettingsPageHorizontalCardPadding,
@@ -197,7 +197,7 @@ class _SecuritySection extends StatelessWidget {
           label: 'Bảo mật giao dịch',
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           key: P2PSettingsPage.securityKey,
           radius: VitCardRadius.large,

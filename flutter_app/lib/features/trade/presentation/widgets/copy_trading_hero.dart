@@ -65,7 +65,7 @@ class _CopyHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Cập nhật ${snapshot.lastUpdatedLabel}',
             style: AppTextStyles.micro.copyWith(

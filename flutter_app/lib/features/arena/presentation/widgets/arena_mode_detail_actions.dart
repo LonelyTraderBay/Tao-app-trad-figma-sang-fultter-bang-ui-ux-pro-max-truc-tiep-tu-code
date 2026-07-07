@@ -27,7 +27,7 @@ class ArenaModeActions extends StatelessWidget {
           onPressed: onUseMode,
           child: const Text('Dùng mode này'),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           key: createRoomKey,
           onPressed: onCreateRoom,

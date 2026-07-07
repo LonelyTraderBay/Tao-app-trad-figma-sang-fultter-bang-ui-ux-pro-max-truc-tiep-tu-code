@@ -419,6 +419,7 @@ class _CopyAvatarBadge extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.copyTradingV2TraderAvatarSize,
             height: AppSpacing.copyTradingV2TraderAvatarSize,
@@ -441,6 +442,7 @@ class _CopyAvatarBadge extends StatelessWidget {
           Positioned(
             right: -AppSpacing.dividerHairline,
             bottom: AppSpacing.hairlineStroke,
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             child: VitCard(
               width: AppSpacing.copyTradingV2TraderTierBadgeSize,
               height: AppSpacing.copyTradingV2TraderTierBadgeSize,
@@ -609,6 +611,7 @@ class _CopyDetailsButton extends StatelessWidget {
       );
     }
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: keys.detailKey(traderId),
       onTap: onOpen,
@@ -629,7 +632,7 @@ class _CopyDetailsButton extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text1,
-            size: AppSpacing.walletAssetSectionGap,
+            size: AppSpacing.tradeTpslIcon,
           ),
         ],
       ),

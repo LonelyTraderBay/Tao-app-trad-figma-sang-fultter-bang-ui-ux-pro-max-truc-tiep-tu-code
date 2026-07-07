@@ -14,7 +14,7 @@ class _ScoreOverviewCard extends StatelessWidget {
       child: Column(
         children: [
           _ScoreRing(snapshot: snapshot),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.gradeLabel,
             style: AppTextStyles.caption.copyWith(
@@ -33,7 +33,7 @@ class _ScoreOverviewCard extends StatelessWidget {
               height: AppTextStyles.numericMicro.height,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           DecoratedBox(
             decoration: BoxDecoration(
               color: AppColors.buy12,
@@ -160,7 +160,7 @@ class _FactorBreakdownCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var i = 0; i < snapshot.factors.length; i++) ...[
             _ScoreFactorRow(factor: snapshot.factors[i]),
             if (i != snapshot.factors.length - 1)
@@ -244,7 +244,7 @@ class _ScoreFactorRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Padding(
           padding: const EdgeInsetsDirectional.only(start: AppSpacing.x6),
           child: Row(
@@ -284,7 +284,7 @@ class _ScoreFactorRow extends StatelessWidget {
           ),
         ),
         if (factor.recommendation != null) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: AppSpacing.x6),
             child: VitCard(
@@ -351,7 +351,7 @@ class _QuickActionsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final action in actions) ...[
             _QuickActionRow(action: action),
             if (action != actions.last) const SizedBox(height: AppSpacing.x1),

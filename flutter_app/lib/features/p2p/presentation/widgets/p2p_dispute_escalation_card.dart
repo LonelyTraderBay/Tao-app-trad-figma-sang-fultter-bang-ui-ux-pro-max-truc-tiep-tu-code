@@ -47,7 +47,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
               P2PDisputeSmallPill(label: 'Cấp $currentLevel/4', color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -76,7 +76,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Material(
             color: color.withValues(alpha: .06),
             shape: RoundedRectangleBorder(
@@ -122,7 +122,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Row(
                           children: [
                             const Icon(
@@ -147,7 +147,8 @@ class P2PDisputeEscalationCard extends StatelessWidget {
             ),
           ),
           if (nextLevel != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             VitCard(
               key: escalateKey,
               onTap: onEscalate,
@@ -232,7 +233,7 @@ class _LevelNode extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             level.shortLabel,
             textAlign: TextAlign.center,

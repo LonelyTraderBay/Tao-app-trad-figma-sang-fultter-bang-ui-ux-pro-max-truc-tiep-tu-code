@@ -72,7 +72,7 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Text(
                     selected.description,
                     style: AppTextStyles.caption.copyWith(
@@ -80,15 +80,15 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                       height: AppSpacing.stakingApiEndpointBodyLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Text('Parameters', style: AppTextStyles.caption),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final param in selected.params) ...[
                     _ParameterCard(param: param),
                     if (param != selected.params.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Row(
                     children: [
                       Expanded(
@@ -104,7 +104,7 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   StakingApiDocumentationCodeBlock(text: selected.responseJson),
                 ],
               ),
@@ -153,7 +153,7 @@ class _EndpointSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             endpoint.description,
             maxLines: 2,
@@ -205,7 +205,7 @@ class _ParameterCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             param.description,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

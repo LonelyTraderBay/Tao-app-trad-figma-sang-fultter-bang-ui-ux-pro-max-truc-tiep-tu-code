@@ -12,9 +12,8 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_my_ads_stats_cards.dart';
@@ -84,106 +83,80 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
             : DeviceMetrics.nativeBottomChrome + _p2pMyAdsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
       semanticLabel: 'SC-225 P2PMyAdsPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Quảng cáo của tôi',
-            subtitle: 'Quảng cáo · P2P',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.p2p),
-            actions: [
-              VitHeaderActionItem(
-                key: P2PMyAdsPage.createButtonKey,
-                type: VitHeaderActionType.add,
-                tooltip: 'Tạo quảng cáo',
-                onPressed: () => context.go(AppRoutePaths.p2pCreate),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PMyAdsPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommercePageScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _StatsRow(
-                          activeCount: activeCount,
-                          pausedCount: pausedCount,
-                          totalVolume: totalVolume,
-                        ),
-                        const SizedBox(height: _p2pMyAdsMajorGap),
-                        VitTabBar(
-                          variant: VitTabBarVariant.segment,
-                          activeKey: _filter.name,
-                          onChanged: (key) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filter = _filterFromKey(key));
-                          },
-                          tabs: [
-                            VitTabItem(
-                              key: _MyAdsFilter.all.name,
-                              label: 'Tất cả (${ads.length})',
-                            ),
-                            VitTabItem(
-                              key: _MyAdsFilter.active.name,
-                              label: 'Hoạt động ($activeCount)',
-                            ),
-                            VitTabItem(
-                              key: _MyAdsFilter.paused.name,
-                              label: 'Tạm dừng ($pausedCount)',
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: _p2pMyAdsMajorGap),
-                        if (filtered.isEmpty)
-                          _EmptyMyAds(snapshot: snapshot)
-                        else
-                          for (final ad in filtered) ...[
-                            _MyAdCard(
-                              ad: ad,
-                              onAnalytics: () => context.go(
-                                AppRoutePaths.p2pAdAnalytics('sample'),
-                              ),
-                              onToggle: () => _toggleStatus(ad),
-                              onEdit: () => context.go(AppRoutePaths.p2pCreate),
-                              onDelete: () => _confirmDelete(context, ad),
-                            ),
-                            const SizedBox(height: _p2pMyAdsSectionGap),
-                          ],
-                        const SizedBox(height: _p2pMyAdsSectionGap),
-                        _QuickLinksCard(links: snapshot.quickLinks),
-                        const SizedBox(height: _p2pMyAdsSectionGap),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'My ads state review',
-                          message:
-                              'Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.',
-                          contractId: 'SC-225',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+      title: 'Quảng cáo của tôi',
+      subtitle: 'Quảng cáo · P2P',
+      onBack: () => context.go(AppRoutePaths.p2p),
+      contentKey: P2PMyAdsPage.contentKey,
+      shellRenderMode: mode,
+      bottomInset: scrollEndPadding,
+      headerActions: [
+        VitHeaderActionItem(
+          key: P2PMyAdsPage.createButtonKey,
+          type: VitHeaderActionType.add,
+          tooltip: 'Tạo quảng cáo',
+          onPressed: () => context.go(AppRoutePaths.p2pCreate),
         ),
-      ),
+      ],
+      children: [
+        _StatsRow(
+          activeCount: activeCount,
+          pausedCount: pausedCount,
+          totalVolume: totalVolume,
+        ),
+        VitTabBar(
+          variant: VitTabBarVariant.segment,
+          activeKey: _filter.name,
+          onChanged: (key) {
+            HapticFeedback.selectionClick();
+            setState(() => _filter = _filterFromKey(key));
+          },
+          tabs: [
+            VitTabItem(
+              key: _MyAdsFilter.all.name,
+              label: 'Tất cả (${ads.length})',
+            ),
+            VitTabItem(
+              key: _MyAdsFilter.active.name,
+              label: 'Hoạt động ($activeCount)',
+            ),
+            VitTabItem(
+              key: _MyAdsFilter.paused.name,
+              label: 'Tạm dừng ($pausedCount)',
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (filtered.isEmpty)
+              _EmptyMyAds(snapshot: snapshot)
+            else
+              for (var index = 0; index < filtered.length; index++) ...[
+                if (index > 0)
+                  const SizedBox(height: _p2pMyAdsSectionGap),
+                _MyAdCard(
+                  ad: filtered[index],
+                  onAnalytics: () => context.go(
+                    AppRoutePaths.p2pAdAnalytics('sample'),
+                  ),
+                  onToggle: () => _toggleStatus(filtered[index]),
+                  onEdit: () => context.go(AppRoutePaths.p2pCreate),
+                  onDelete: () => _confirmDelete(context, filtered[index]),
+                ),
+              ],
+          ],
+        ),
+        _QuickLinksCard(links: snapshot.quickLinks),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'My ads state review',
+          message:
+              'Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.',
+          contractId: 'SC-225',
+        ),
+      ],
     );
   }
 

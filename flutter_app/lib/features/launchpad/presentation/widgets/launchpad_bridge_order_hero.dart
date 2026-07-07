@@ -31,7 +31,7 @@ class _BridgeStatusHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Text(
             _heroTitle(order.status),
             textAlign: TextAlign.center,
@@ -45,7 +45,7 @@ class _BridgeStatusHero extends StatelessWidget {
             '${order.sourceChain} -> ${order.targetChain}',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -69,7 +69,7 @@ class _BridgeStatusHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: AppColors.surface3.withValues(alpha: .72),

@@ -25,11 +25,11 @@ class _SelectedProducts extends StatelessWidget {
         for (final product in selectedProducts) ...[
           _ProductChip(product: product, onRemove: () => onRemove(product.id)),
           if (product != selectedProducts.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
         if (canAdd) ...[
           if (selectedProducts.isNotEmpty)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _AddProductButton(
             selectedCount: selectedCount,
             maxCompare: maxCompare,
@@ -144,12 +144,12 @@ class _ProductPickerSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'Đã chọn $selectedCount/$maxCompare sản phẩm',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         if (availableProducts.isEmpty)
           VitCard(
             variant: VitCardVariant.inner,
@@ -167,7 +167,7 @@ class _ProductPickerSheet extends StatelessWidget {
               onTap: () => onAdd(product.id),
             ),
             if (product != availableProducts.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
       ],
     );
@@ -241,7 +241,7 @@ class _EmptyComparisonState extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text('Chọn ít nhất 2 sản phẩm', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.x1),
           Text(
@@ -249,7 +249,7 @@ class _EmptyComparisonState extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,

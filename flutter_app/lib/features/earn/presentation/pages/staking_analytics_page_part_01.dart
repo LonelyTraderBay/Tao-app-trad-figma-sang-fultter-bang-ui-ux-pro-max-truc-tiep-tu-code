@@ -42,6 +42,7 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
                     scrollEndPadding,
                   ),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
@@ -158,7 +159,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -225,7 +226,7 @@ class _SummaryMetric extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -292,7 +293,7 @@ class _CalculatorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -315,7 +316,7 @@ class _CalculatorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Tổng nhận về ${_formatUsd(finalValue)} sau 90 ngày. Đây là mô phỏng để kiểm UI, không phải cam kết lợi nhuận.',
             style: AppTextStyles.caption.copyWith(
@@ -454,7 +455,7 @@ class _EarningsChartCard extends StatelessWidget {
                           size: Size.infinite,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       _DateLabels(dates: points.map((p) => p.date).toList()),
                     ],
                   ),
@@ -462,7 +463,7 @@ class _EarningsChartCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const _LegendRow(
             entries: [
               _LegendEntry(label: 'BTC', color: _AssetPalette.btc),

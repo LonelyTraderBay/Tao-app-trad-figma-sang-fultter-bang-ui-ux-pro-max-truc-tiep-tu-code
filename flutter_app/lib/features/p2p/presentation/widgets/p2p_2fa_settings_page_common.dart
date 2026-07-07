@@ -33,7 +33,7 @@ class _SecurityRecommendation extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   text,
                   style: AppTextStyles.micro.copyWith(
@@ -46,20 +46,6 @@ class _SecurityRecommendation extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: AppTextStyles.baseMedium.copyWith(fontWeight: AppTextStyles.bold),
     );
   }
 }

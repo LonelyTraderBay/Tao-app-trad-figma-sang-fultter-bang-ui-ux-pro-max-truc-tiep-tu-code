@@ -163,7 +163,7 @@ class _RegulatoryNoticePanel extends StatelessWidget {
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCtaButton(
                   density: VitDensity.compact,
                   onPressed: onClose,

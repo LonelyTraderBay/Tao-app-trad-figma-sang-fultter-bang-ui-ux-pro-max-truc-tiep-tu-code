@@ -64,7 +64,7 @@ class _RiskDisclosure extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.riskTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.riskBody,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),

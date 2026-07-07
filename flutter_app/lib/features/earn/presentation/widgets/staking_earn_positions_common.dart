@@ -28,9 +28,9 @@ class _PositionsList extends StatelessWidget {
         for (final position in snapshot.positions) ...[
           _PositionCard(position: position),
           if (position != snapshot.positions.last)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4X3,
@@ -55,7 +55,7 @@ class _PositionsList extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   for (final item in snapshot.estimatedIncome) ...[
@@ -119,7 +119,7 @@ class _PositionCard extends StatelessWidget {
                             _productTypeLabel(position.type),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.captionSm.copyWith(
+                            style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
                               height: AppSpacing
                                   .stakingEarnPositionCaptionLineHeight,
@@ -144,7 +144,7 @@ class _PositionCard extends StatelessWidget {
                   ),
                   Text(
                     'APY uoc tinh',
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
                       height: AppSpacing.stakingEarnPositionCaptionLineHeight,
                     ),
@@ -153,7 +153,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _PositionStatRow(
             items: [
               _PositionMetric(label: 'Dang staking', value: position.amount),
@@ -164,7 +164,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _PositionStatRow(
             items: [
               _PositionMetric(label: 'Bat dau', value: position.startDate),
@@ -229,7 +229,7 @@ class _PositionMetric extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
                 height: AppSpacing.stakingEarnPositionMetricLabelLineHeight,
               ),
@@ -272,7 +272,7 @@ class _IncomeEstimate extends StatelessWidget {
               item.label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
                 height: AppSpacing.stakingEarnPositionMetricLabelLineHeight,
               ),
@@ -371,8 +371,7 @@ class _ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.xlRadius,
-      child: SizedBox(
-        height: AppSpacing.x2,
+      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           fit: StackFit.expand,
           children: [

@@ -146,8 +146,10 @@ class _TradePageState extends ConsumerState<TradePage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VitSectionHeader(title: 'Tiếp theo'),
-            const SizedBox(height: AppSpacing.x3),
+            const VitSectionHeader(
+              title: 'Tiếp theo',
+              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            ),
             VitNextActionCard(
               key: TradePage.nextActionKey,
               icon: nextAction.icon,

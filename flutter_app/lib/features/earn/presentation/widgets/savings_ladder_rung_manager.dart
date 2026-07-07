@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -38,7 +39,7 @@ class RungList extends StatelessWidget {
               color: AppColors.text3,
               size: AppSpacing.iconLg,
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               'Chưa có bậc ladder',
               style: savingsLadderCaptionBoldStyle.copyWith(
@@ -51,6 +52,7 @@ class RungList extends StatelessWidget {
     }
 
     return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.rungsKey,
       padding: VitContentPadding.none,
       fullBleed: true,

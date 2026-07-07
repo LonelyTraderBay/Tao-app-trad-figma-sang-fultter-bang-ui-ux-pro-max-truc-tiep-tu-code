@@ -24,7 +24,7 @@ class _CategorySection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         GridView.builder(
           padding: AppSpacing.zeroInsets,
           physics: const NeverScrollableScrollPhysics(),
@@ -79,7 +79,7 @@ class _CategoryTile extends StatelessWidget {
             color: iconColor,
             size: AppSpacing.supportCategoryIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             category.name,
             maxLines: 1,
@@ -129,7 +129,7 @@ class _ArticleSection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         if (articles.isEmpty)
           const VitEmptyState(
             key: HelpCenterPage.emptyKey,
@@ -141,7 +141,7 @@ class _ArticleSection extends StatelessWidget {
           Column(
             children: [
               for (var i = 0; i < articles.length; i++) ...[
-                if (i > 0) const SizedBox(height: AppSpacing.x3),
+                if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _ArticleTile(
                   article: articles[i],
                   category: categories.firstWhere(
@@ -200,7 +200,7 @@ class _ArticleTile extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     const Icon(
@@ -218,7 +218,7 @@ class _ArticleTile extends StatelessWidget {
                   ],
                 ),
                 if (expanded) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     article.summary,
                     style: AppTextStyles.caption.copyWith(

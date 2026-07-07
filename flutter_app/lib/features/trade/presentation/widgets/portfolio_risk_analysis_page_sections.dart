@@ -71,6 +71,7 @@ class _RiskSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _riskSummaryExtent,
       padding: AppSpacing.tradeBotCompactCardPadding,
@@ -189,6 +190,7 @@ class _ExposureTab extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Asset Allocation',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
         ),
         const SizedBox(height: _riskSectionSpace),
@@ -231,6 +233,7 @@ class _AssetExposureRow extends StatelessWidget {
       padding: AppSpacing.tradeBotMetricBoxPadding,
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
             width: _riskSwatchExtent,

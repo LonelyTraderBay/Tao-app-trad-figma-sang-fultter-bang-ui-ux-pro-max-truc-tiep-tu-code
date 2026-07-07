@@ -50,7 +50,7 @@ List<Widget> _withSectionGaps(List<Widget> children) {
   if (children.isEmpty) return const [];
   return [
     for (var i = 0; i < children.length; i++) ...[
-      if (i > 0) const SizedBox(height: AppSpacing.x3),
+      if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
       children[i],
     ],
   ];

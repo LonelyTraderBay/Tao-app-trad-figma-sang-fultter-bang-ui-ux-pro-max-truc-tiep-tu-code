@@ -224,6 +224,7 @@ class ArenaGovernanceGateHeader extends StatelessWidget {
         const VitModuleSectionHeader(
           title: 'Luật chơi — Governed Mode',
           accentColor: AppModuleAccents.arena,
+          bottomGap: 0,
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
@@ -233,6 +234,7 @@ class ArenaGovernanceGateHeader extends StatelessWidget {
             height: AppSpacing.arenaGovernanceSubtitleLineHeight,
           ),
         ),
+        const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
       ],
     );
   }

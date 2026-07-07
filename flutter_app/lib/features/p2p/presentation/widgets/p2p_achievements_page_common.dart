@@ -38,7 +38,7 @@ class _ProgressLine extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
@@ -49,51 +49,6 @@ class _ProgressLine extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _RewardPill extends StatelessWidget {
-  const _RewardPill({
-    required this.reward,
-    required this.color,
-    required this.unlocked,
-  });
-
-  final String reward;
-  final Color color;
-  final bool unlocked;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: unlocked ? AppColors.buy10 : AppColors.surface2,
-      borderRadius: AppRadii.smRadius,
-      child: Padding(
-        padding: AppSpacing.p2pTrustProgressTinyPillPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.star_border_rounded,
-              color: color,
-              size: AppSpacing.p2pTrustProgressTinyIcon,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Flexible(
-              child: Text(
-                reward,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

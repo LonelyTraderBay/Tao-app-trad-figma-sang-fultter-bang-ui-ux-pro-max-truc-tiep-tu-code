@@ -38,7 +38,7 @@ class _BotCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     VitStatusPill(
                       label: running ? 'Đang chạy' : 'Tạm dừng',
                       status: running
@@ -60,13 +60,13 @@ class _BotCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             '${bot.pair} · \$${_formatWholeNumber(bot.investment)} · ${bot.runtime}',
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -175,7 +175,7 @@ class _StrategiesTab extends StatelessWidget {
         for (final strategy in strategies) ...[
           _StrategyCard(strategy: strategy, onCreate: () => onCreate(strategy)),
           if (strategy != strategies.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

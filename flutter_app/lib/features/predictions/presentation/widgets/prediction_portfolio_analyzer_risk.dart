@@ -12,10 +12,11 @@ class _RiskMetricsSection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Risk Exposure',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           density: VitDensity.compact,
           child: Column(
@@ -63,9 +64,10 @@ class _CategoryRiskCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Risk by Category',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: AppSpacing.x7 * 4,
             child: Row(
@@ -127,7 +129,7 @@ class _DiversificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

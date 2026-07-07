@@ -156,7 +156,7 @@ class _OrderHistoryTile extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -202,7 +202,7 @@ class _OrderHistoryTile extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         _InfoColumn(label: 'Thời gian', value: order.createdAt),
         if (order.status == TradeOrderStatus.partial) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -214,7 +214,7 @@ class _OrderHistoryTile extends StatelessWidget {
           ),
         ],
         if (actionable) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             key: actionKey,
             onPressed: onCancel,

@@ -80,7 +80,7 @@ class WalletBalanceHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             hidden ? '••••••' : _formatUsd(snapshot.totalUsd),
             style: AppTextStyles.heroNumber.copyWith(
@@ -88,7 +88,7 @@ class WalletBalanceHero extends StatelessWidget {
               letterSpacing: 0,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             hidden
                 ? '••••• BTC'
@@ -98,7 +98,7 @@ class WalletBalanceHero extends StatelessWidget {
             ),
           ),
           if (!hidden) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(
@@ -119,7 +119,7 @@ class WalletBalanceHero extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _BreakdownRow(snapshot: snapshot, hidden: hidden),
           if (deposit != null || withdraw != null || hasOverflow) ...[
             const SizedBox(height: _walletHeroActionGap),

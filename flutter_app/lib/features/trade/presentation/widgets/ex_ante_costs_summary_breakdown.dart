@@ -88,6 +88,7 @@ class _CategoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
@@ -146,6 +147,7 @@ class _RiyCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
@@ -240,7 +242,7 @@ class _CostItemCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             cost.description,
             style: AppTextStyles.micro.copyWith(

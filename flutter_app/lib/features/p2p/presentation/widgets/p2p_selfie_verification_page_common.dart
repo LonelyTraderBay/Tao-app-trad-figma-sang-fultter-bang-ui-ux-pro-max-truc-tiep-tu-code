@@ -227,36 +227,6 @@ class _ScoreRow extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.title,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String title;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: AppSpacing.iconSm),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _ChecklistRow extends StatelessWidget {
   const _ChecklistRow({required this.text, required this.color});
 

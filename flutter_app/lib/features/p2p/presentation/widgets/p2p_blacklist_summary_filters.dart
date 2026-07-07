@@ -102,8 +102,8 @@ class _StatTile extends StatelessWidget {
   }
 }
 
-class _FilterRail extends StatelessWidget {
-  const _FilterRail({
+class _BlacklistReasonFilters extends StatelessWidget {
+  const _BlacklistReasonFilters({
     required this.snapshot,
     required this.entries,
     required this.activeId,
@@ -144,43 +144,21 @@ class _FilterRail extends StatelessWidget {
       child: Row(
         children: [
           for (final filter in filters) ...[
-            _FilterChip(
-              filter: filter,
-              selected: filter.id == activeId,
+            VitFilterChip(
+              key: P2PBlacklistPage.filterKey(filter.id),
+              label: filter.label,
+              active: filter.id == activeId,
               onTap: () => onChanged(filter.id),
+              color: filter.id == 'all'
+                  ? AppModuleAccents.p2p
+                  : _reasonColor(filter),
+              padding: AppSpacing.p2pBlacklistListFilterChipPadding,
+              semanticLabel: 'Blacklist filter ${filter.label}',
             ),
             const SizedBox(width: AppSpacing.x1),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.filter,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final P2PBlacklistReasonDraft filter;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = filter.id == 'all'
-        ? AppModuleAccents.p2p
-        : _reasonColor(filter);
-    return VitChoicePill(
-      key: P2PBlacklistPage.filterKey(filter.id),
-      label: filter.label,
-      selected: selected,
-      onTap: onTap,
-      padding: AppSpacing.p2pBlacklistListFilterChipPadding,
-      accentColor: color,
-      semanticLabel: 'Blacklist filter ${filter.label}',
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -12,9 +13,8 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -71,106 +71,92 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-157 EditProfilePage',
-      child: Material(
-        color: _editBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Ch\u1EC9nh s\u1EEDa h\u1ED3 s\u01A1',
-            subtitle: 'Ch\u1EC9nh s\u1EEDa \u00B7 Profile',
-            showBack: true,
-            onBack: _close,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: EditProfilePage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollClearance,
+      background: _editBackground,
+      header: VitHeader(
+        title: 'Ch\u1EC9nh s\u1EEDa h\u1ED3 s\u01A1',
+        subtitle: 'Ch\u1EC9nh s\u1EEDa \u00B7 Profile',
+        showBack: true,
+        onBack: _close,
+      ),
+      body: SingleChildScrollView(
+        key: EditProfilePage.contentKey,
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsetsDirectional.fromSTEB(
+          AppSpacing.contentPad,
+          AppSpacing.x3,
+          AppSpacing.contentPad,
+          scrollClearance,
+        ),
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.none,
+          density: VitDensity.compact,
+          fullBleed: true,
+          children: [
+            VitCard(
+              density: VitDensity.compact,
+              child: _AvatarEditor(
+                initial: snapshot.user.fullName.substring(0, 1),
+                selected: _cameraSelected,
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  setState(() => _cameraSelected = !_cameraSelected);
+                },
+              ),
+            ),
+            VitCard(
+              density: VitDensity.compact,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _EditProfileField(
+                    label: 'H\u1ECC V\u00C0 T\u00CAN',
+                    controller: _nameController,
+                    keyValue: EditProfilePage.fullNameFieldKey,
+                    onChanged: (_) => setState(() {}),
                   ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      VitCard(
-                        density: VitDensity.compact,
-                        child: _AvatarEditor(
-                          initial: snapshot.user.fullName.substring(0, 1),
-                          selected: _cameraSelected,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _cameraSelected = !_cameraSelected);
-                          },
-                        ),
-                      ),
-                      VitCard(
-                        density: VitDensity.compact,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _EditProfileField(
-                              label: 'H\u1ECC V\u00C0 T\u00CAN',
-                              controller: _nameController,
-                              keyValue: EditProfilePage.fullNameFieldKey,
-                              onChanged: (_) => setState(() {}),
-                            ),
-                            const SizedBox(height: AppSpacing.x3),
-                            _EditProfileField(
-                              label: 'EMAIL',
-                              controller: _emailController,
-                              readOnly: true,
-                              note:
-                                  'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
-                              muted: true,
-                            ),
-                            const SizedBox(height: AppSpacing.x3),
-                            _EditProfileField(
-                              label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
-                              controller: _phoneController,
-                              keyValue: EditProfilePage.phoneFieldKey,
-                              keyboardType: TextInputType.phone,
-                              onChanged: (_) => setState(() {}),
-                            ),
-                          ],
-                        ),
-                      ),
-                      KeyedSubtree(
-                        key: EditProfilePage.saveKey,
-                        child: VitCtaButton(
-                          variant: VitCtaButtonVariant.auth,
-                          density: VitDensity.compact,
-                          loading: _saving,
-                          onPressed: _canSave ? _save : null,
-                          leading: const Icon(Icons.save_rounded),
-                          child: Text(
-                            _saving
-                                ? '\u0110ang l\u01B0u...'
-                                : 'L\u01B0u thay \u0111\u1ED5i',
-                          ),
-                        ),
-                      ),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'X\u00E1c nh\u1EADn thay \u0111\u1ED5i h\u1ED3 s\u01A1',
-                        message:
-                            'Ki\u1EC3m tra h\u1ECD t\u00EAn, s\u1ED1 \u0111i\u1EC7n tho\u1EA1i v\u00E0 \u1EA3nh \u0111\u1EA1i di\u1EC7n tr\u01B0\u1EDBc khi l\u01B0u.',
-                        density: VitDensity.compact,
-                      ),
-                    ],
+                  _EditProfileField(
+                    label: 'EMAIL',
+                    controller: _emailController,
+                    readOnly: true,
+                    note: 'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
+                    muted: true,
                   ),
+                  _EditProfileField(
+                    label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
+                    controller: _phoneController,
+                    keyValue: EditProfilePage.phoneFieldKey,
+                    keyboardType: TextInputType.phone,
+                    onChanged: (_) => setState(() {}),
+                  ),
+                ],
+              ),
+            ),
+            KeyedSubtree(
+              key: EditProfilePage.saveKey,
+              child: VitCtaButton(
+                variant: VitCtaButtonVariant.auth,
+                density: VitDensity.compact,
+                loading: _saving,
+                onPressed: _canSave ? _save : null,
+                leading: const Icon(Icons.save_rounded),
+                child: Text(
+                  _saving
+                      ? '\u0110ang l\u01B0u...'
+                      : 'L\u01B0u thay \u0111\u1ED5i',
                 ),
               ),
-            ],
-          ),
+            ),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'X\u00E1c nh\u1EADn thay \u0111\u1ED5i h\u1ED3 s\u01A1',
+              message:
+                  'Ki\u1EC3m tra h\u1ECD t\u00EAn, s\u1ED1 \u0111i\u1EC7n tho\u1EA1i v\u00E0 \u1EA3nh \u0111\u1EA1i di\u1EC7n tr\u01B0\u1EDBc khi l\u01B0u.',
+              density: VitDensity.compact,
+            ),
+          ],
         ),
       ),
     );
@@ -240,7 +226,7 @@ class _AvatarEditor extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'Nh\u1EA5n v\u00E0o bi\u1EC3u t\u01B0\u1EE3ng camera \u0111\u1EC3 thay \u0111\u1ED5i',
           textAlign: TextAlign.center,

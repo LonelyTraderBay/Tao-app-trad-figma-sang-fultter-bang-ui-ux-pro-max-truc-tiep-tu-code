@@ -68,7 +68,7 @@ class _DynamicHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -131,7 +131,7 @@ class _DynamicHero extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: AppColors.surface2,
@@ -263,7 +263,7 @@ class _StrategyStrip extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -393,7 +393,7 @@ class _GenericStrategyCard extends StatelessWidget {
             subtitle: option.subtitle,
             color: accent,
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: _accentSoft(option.accent),

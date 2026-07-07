@@ -7,20 +7,10 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
-
-const double _p2pFundLockVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pFundLockNativeNavClearance =
-    _p2pFundLockVisualNavClearance - AppSpacing.x4;
-const double _p2pFundLockVisualClearance = AppSpacing.x3;
-const double _p2pFundLockNativeClearance = AppSpacing.x2;
 
 class P2PFundLockHistoryPage extends ConsumerWidget {
   const P2PFundLockHistoryPage({
@@ -40,67 +30,30 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pFundLockHistoryProvider(walletHistoryAlias));
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pFundLockVisualNavClearance + _p2pFundLockVisualClearance
-            : _p2pFundLockNativeNavClearance + _p2pFundLockNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: snapshot.title,
+      subtitle: snapshot.subtitle,
       semanticLabel: walletHistoryAlias
           ? 'SC-263 P2PFundLockHistoryPage'
           : 'SC-262 P2PFundLockHistoryPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFundLockScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _FundLockHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
-                        _FundLockList(records: snapshot.records),
-                        const SizedBox(height: AppSpacing.x3),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pFinancialSafetyInnerPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Fund lock history review',
-                            message:
-                                'Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.',
-                            contractId: 'p2p-fund-lock-history-review',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+      shellRenderMode: shellRenderMode,
+      onBack: () => context.go(snapshot.parentRoute),
+      children: [
+        _FundLockHero(snapshot: snapshot),
+        _FundLockList(records: snapshot.records),
+        const VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Fund lock history review',
+            message:
+                'Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.',
+            contractId: 'p2p-fund-lock-history-review',
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -178,7 +131,7 @@ class _FundLockList extends StatelessWidget {
         for (var index = 0; index < records.length; index++) ...[
           _FundLockRecordCard(record: records[index]),
           if (index != records.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -243,7 +196,7 @@ class _FundLockRecordCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   record.reason,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),

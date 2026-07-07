@@ -60,7 +60,7 @@ class AllocationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -186,7 +186,7 @@ class ResultsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -207,7 +207,7 @@ class ResultsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -239,9 +239,9 @@ class ResultsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _GrowthChart(points: result.points, initialAmount: amountUsd),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             Expanded(
@@ -265,7 +265,7 @@ class ResultsTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             Expanded(
@@ -287,7 +287,7 @@ class ResultsTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         EarnWarningBanner(
           text: snapshot.disclaimer,
           lineHeight: AppSpacing.savingsBacktestWarningLineHeight,
@@ -325,7 +325,7 @@ class _GrowthChart extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.savingsBacktestGrowthChartHeight,
             child: CustomPaint(

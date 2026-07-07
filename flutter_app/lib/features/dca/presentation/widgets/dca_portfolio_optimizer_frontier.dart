@@ -19,16 +19,24 @@ class _FrontierContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SectionTitle(
-          icon: Icons.adjust_rounded,
-          title: 'Efficient Frontier',
-          color: AppColors.accent,
-          trailing: _MiniButton(
-            label: 'So sánh',
-            icon: Icons.compare_arrows_rounded,
-            color: AppColors.text3,
-            onTap: onCompare,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: VitSectionHeader(
+                title: 'Efficient Frontier',
+                icon: Icons.adjust_rounded,
+                iconColor: AppColors.accent,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+              ),
+            ),
+            _MiniButton(
+              label: 'So sánh',
+              icon: Icons.compare_arrows_rounded,
+              color: AppColors.text3,
+              onTap: onCompare,
+            ),
+          ],
         ),
         if (showCompareHint) ...[
           const Padding(padding: AppSpacing.dcaTopPaddingX3),
@@ -240,44 +248,18 @@ class _FrontierChartLegend extends StatelessWidget {
       spacing: AppSpacing.x2,
       runSpacing: AppSpacing.x2,
       children: [
-        _FrontierLegendPill(
+        VitAccentPill(
           label:
               'Tối ưu: +${snapshot.optimalReturnPercent.toStringAsFixed(0)}% · Risk ${snapshot.optimalRiskPercent.toStringAsFixed(0)}%',
-          color: AppColors.accent,
+          accentColor: AppColors.accent,
+          size: VitStatusPillSize.sm,
         ),
-        _FrontierLegendPill(
+        VitAccentPill(
           label: '${snapshot.frontier.length} điểm frontier',
-          color: AppColors.text3,
+          accentColor: AppColors.text3,
+          size: VitStatusPillSize.sm,
         ),
       ],
-    );
-  }
-}
-
-class _FrontierLegendPill extends StatelessWidget {
-  const _FrontierLegendPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .10),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.dcaChipPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
-        ),
-      ),
     );
   }
 }

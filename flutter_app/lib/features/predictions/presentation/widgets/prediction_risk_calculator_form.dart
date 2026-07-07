@@ -79,9 +79,9 @@ class _PositionInfoCard extends StatelessWidget {
           child: Column(
             children: [
               _RiskInput(label: 'Event', controller: eventController),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _OutcomeToggle(value: outcome, onChanged: onOutcomeChanged),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -103,7 +103,7 @@ class _PositionInfoCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -244,7 +244,6 @@ class _OutcomeButton extends StatelessWidget {
         onTap: onTap,
         accentColor: selectedColor,
         fullWidth: true,
-        height: VitDensity.compact.controlHeight - AppSpacing.x2,
         padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x2,
         ),
@@ -277,7 +276,7 @@ class _PositionSummary extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -294,7 +293,7 @@ class _PositionSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

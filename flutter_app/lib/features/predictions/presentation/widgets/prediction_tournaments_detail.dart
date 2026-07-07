@@ -49,6 +49,7 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
                     footerPadding,
                   ),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     density: VitDensity.compact,
                     children: [
                       if (tournament == null)
@@ -115,7 +116,7 @@ class _TournamentDetailHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             tournament.name,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -129,7 +130,7 @@ class _TournamentDetailHero extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (tournament.isJoined && tournament.myRank != null) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitAnnouncementBanner(
               message:
                   'Hạng #${tournament.myRank} · ${tournament.myScore} điểm — '

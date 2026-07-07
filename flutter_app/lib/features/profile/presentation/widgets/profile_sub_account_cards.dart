@@ -67,7 +67,7 @@ class _SubAccountCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Row(
                         children: [
                           Icon(

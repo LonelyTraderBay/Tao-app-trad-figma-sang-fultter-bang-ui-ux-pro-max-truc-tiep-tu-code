@@ -26,6 +26,7 @@ class MarketHeatmapTreemap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.marketHeatmapTreemapHeight,
       clip: true,
@@ -214,7 +215,7 @@ class _HeatmapTile extends StatelessWidget {
               const SizedBox(height: AppSpacing.marketAnalyticsMicroGap),
               Text(
                 marketHeatmapFormatPercent(change),
-                style: (large ? AppTextStyles.captionSm : AppTextStyles.micro)
+                style: (large ? AppTextStyles.caption : AppTextStyles.micro)
                     .copyWith(
                       color: AppColors.onAccent.withValues(alpha: .92),
                       fontWeight: AppTextStyles.bold,

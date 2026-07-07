@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_announcement_banner.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_formatters.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_header.dart';
@@ -22,7 +23,7 @@ import 'package:vit_trade_flutter/features/home/presentation/widgets/home_produc
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_recent_products_section.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_scroll_shell.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_status_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';

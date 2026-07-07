@@ -29,7 +29,7 @@ class _IntroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Tạo, quản lý và giám sát bot qua REST API và WebSocket. '
                   'Dành cho người dùng Enterprise — đọc kỹ xác thực và '

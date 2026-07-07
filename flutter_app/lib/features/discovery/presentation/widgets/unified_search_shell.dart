@@ -122,7 +122,7 @@ class _ModuleCard extends StatelessWidget {
       borderColor: accent.withValues(alpha: .12),
       child: Row(
         children: [
-          _AccentIcon(icon: _iconForKey(module.iconKey), color: accent),
+          VitAccentIconBox(icon: _iconForKey(module.iconKey), color: accent),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(

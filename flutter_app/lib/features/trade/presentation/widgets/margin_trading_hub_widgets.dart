@@ -46,7 +46,7 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
               children: [
                 Text(
                   'Compliance controls',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.accent,
                     fontWeight: AppTextStyles.bold,
                     height: AppSpacing.marginTradingHubLineHeightTight,

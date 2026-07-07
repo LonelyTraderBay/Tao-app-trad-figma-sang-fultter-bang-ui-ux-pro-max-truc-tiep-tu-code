@@ -56,7 +56,7 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           isHidden
               ? '\u2022\u2022\u2022\u2022\u2022\u2022'
@@ -67,7 +67,7 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
           ),
         ),
         if (!isHidden) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Flexible(
@@ -88,7 +88,7 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
             ],
           ),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             Expanded(

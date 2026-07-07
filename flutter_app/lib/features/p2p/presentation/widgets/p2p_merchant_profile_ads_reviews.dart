@@ -19,7 +19,7 @@ class _AdsList extends StatelessWidget {
       children: [
         for (final ad in snapshot.ads) ...[
           _MerchantAdCard(ad: ad),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -70,7 +70,7 @@ class _MerchantAdCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -95,7 +95,7 @@ class _MerchantAdCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x3,
             runSpacing: AppSpacing.x2,
@@ -132,6 +132,7 @@ class _OutlineActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pMerchantActionHeight,
       variant: VitCardVariant.ghost,
@@ -181,7 +182,7 @@ class _ReviewsList extends StatelessWidget {
       children: [
         for (final review in snapshot.reviews) ...[
           _ReviewCard(review: review),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -240,7 +241,7 @@ class _ReviewCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             review.comment,
             style: AppTextStyles.caption.copyWith(
@@ -248,7 +249,7 @@ class _ReviewCard extends StatelessWidget {
               height: _p2pMerchantBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitStatusPill(
             label: review.positive ? 'Tích cực' : 'Tiêu cực',
             status: review.positive

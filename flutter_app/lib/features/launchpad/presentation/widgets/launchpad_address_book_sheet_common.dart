@@ -43,21 +43,21 @@ class _AddAddressSheet extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x5),
+                  const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                   Text(
                     'Them dia chi moi',
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     'Address mutation se can KYC submission-step va preview confirm truoc khi ghi len backend.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   VitCtaButton(
                     key: LaunchpadAddressBookPage.addSheetCloseKey,
                     onPressed: onClose,
@@ -110,32 +110,6 @@ class _InfoBanner extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      accentColor: color,
-      onTap: onTap,
-      padding: AppSpacing.launchpadPillPadding,
     );
   }
 }

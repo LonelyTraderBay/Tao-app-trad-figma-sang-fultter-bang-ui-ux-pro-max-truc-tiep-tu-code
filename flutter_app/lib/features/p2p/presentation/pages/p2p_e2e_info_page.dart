@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -88,21 +89,21 @@ class P2PE2EInfoPage extends ConsumerWidget {
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
                         _Hero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
                         _EncryptionDiagram(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         _InfoItems(items: snapshot.infoItems),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         _FingerprintCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         _HowItWorks(steps: snapshot.steps),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         _ServerInfo(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
                           padding: AppSpacing.p2pWalletNoticePadding,
@@ -150,13 +151,13 @@ class _Hero extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           snapshot.heroTitle,
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitleSm,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           snapshot.heroSubtitle,
           textAlign: TextAlign.center,
@@ -200,7 +201,7 @@ class _EncryptionDiagram extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.diagramCaption,
             textAlign: TextAlign.center,
@@ -291,7 +292,7 @@ class _InfoItems extends StatelessWidget {
       children: [
         for (var index = 0; index < items.length; index++) ...[
           _InfoItemCard(item: items[index]),
-          if (index != items.length - 1) const SizedBox(height: AppSpacing.x2),
+          if (index != items.length - 1) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -386,7 +387,7 @@ class _FingerprintCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.fingerprint,
             textAlign: TextAlign.center,
@@ -396,7 +397,7 @@ class _FingerprintCard extends StatelessWidget {
               height: _p2pE2EFingerprintLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.fingerprintHint,
             textAlign: TextAlign.center,
@@ -429,11 +430,11 @@ class _HowItWorks extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var index = 0; index < steps.length; index++) ...[
             _StepRow(step: steps[index]),
             if (index != steps.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

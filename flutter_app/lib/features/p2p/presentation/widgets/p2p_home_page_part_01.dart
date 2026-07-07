@@ -90,6 +90,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pHomeScrollPadding(scrollEndPadding),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -148,7 +149,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                           onChanged: (value) => setState(() => _query = value),
                         ),
                         if (_filtersOpen) ...[
-                          _FilterPanel(
+                          _HomeFilterSection(
                             merchantFilter: _merchantFilter,
                             paymentFilter: _paymentFilter,
                             paymentMethods: _paymentMethods(snapshot.ads),
@@ -252,7 +253,7 @@ class _KycComplianceBanner extends StatelessWidget {
           message: 'P2P yêu cầu xác minh KYC trước khi giao dịch',
           detail: 'Hoàn tất xác minh để mua/bán an toàn qua Escrow.',
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCtaButton(
           onPressed: () => context.go(snapshot.tradingLevelRoute),
           variant: VitCtaButtonVariant.secondary,
@@ -283,7 +284,7 @@ class _QuickHub extends StatelessWidget {
         children: [
           Row(
             children: [
-              _AccentIcon(
+              VitAccentIconBox(
                 icon: Icons.shield_outlined,
                 color: AppModuleAccents.p2p,
               ),
@@ -317,7 +318,7 @@ class _QuickHub extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -341,7 +342,7 @@ class _QuickHub extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (
@@ -440,11 +441,14 @@ class _AssetFiatRail extends StatelessWidget {
             child: Row(
               children: [
                 for (final asset in snapshot.assets) ...[
-                  _ChipButton(
+                  VitChoicePill(
                     key: P2PHomePage.assetKey(asset),
                     label: asset,
-                    active: asset == selectedAsset,
+                    selected: asset == selectedAsset,
                     onTap: () => onAsset(asset),
+                    padding: _p2pHomeFilterChipPadding,
+                    accentColor: AppModuleAccents.p2p,
+                    semanticLabel: 'P2P filter $asset',
                   ),
                   const SizedBox(width: AppSpacing.x2),
                 ],
@@ -454,11 +458,14 @@ class _AssetFiatRail extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x2),
         for (final fiat in snapshot.fiatCurrencies) ...[
-          _ChipButton(
+          VitChoicePill(
             key: P2PHomePage.fiatKey(fiat),
             label: fiat,
-            active: fiat == selectedFiat,
+            selected: fiat == selectedFiat,
             onTap: () => onFiat(fiat),
+            padding: _p2pHomeFilterChipPadding,
+            accentColor: AppModuleAccents.p2p,
+            semanticLabel: 'P2P filter $fiat',
           ),
           const SizedBox(width: AppSpacing.x1),
         ],

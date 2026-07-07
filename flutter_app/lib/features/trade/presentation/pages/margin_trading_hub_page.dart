@@ -82,7 +82,7 @@ class MarginTradingHubPage extends ConsumerWidget {
               for (final feature in snapshot.features) ...[
                 _FeatureCard(feature: feature),
                 if (feature != snapshot.features.last)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),

@@ -42,7 +42,7 @@ class _PositionTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -74,7 +74,7 @@ class _PositionTile extends StatelessWidget {
             ],
           ),
           if (position.takeProfit != null || position.stopLoss != null) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x3,
               runSpacing: AppSpacing.formFieldLabelGap,
@@ -213,8 +213,8 @@ class _EmptyPositions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: AppSpacing.zeroInsets.copyWith(
-        top: AppSpacing.x7 + AppSpacing.walletAssetSectionGap,
-        bottom: AppSpacing.x7 + AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.x7 + AppSpacing.pageRhythmFormSectionGap,
+        bottom: AppSpacing.x7 + AppSpacing.pageRhythmFormSectionGap,
       ),
       child: Column(
         children: [

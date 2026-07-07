@@ -37,7 +37,7 @@ class _FieldBlock extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         child,
       ],
     );
@@ -166,7 +166,7 @@ class _EdgeField extends StatelessWidget {
                 const _RequiredPill(text: 'PUBLIC', compact: true),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _DropdownCard(value: value, placeholder: placeholder, onTap: onTap),
         ],
       ),

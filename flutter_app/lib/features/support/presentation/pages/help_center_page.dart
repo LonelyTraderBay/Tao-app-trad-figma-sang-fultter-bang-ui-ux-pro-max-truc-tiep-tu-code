@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -114,23 +115,22 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.supportScrollPadding(bottomInset),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
                       gap: VitContentGap.relaxed,
-                      children: [
-                        _HelpCenterBody(
-                          snapshot: snapshot,
-                          articles: articles,
-                          searchController: _searchController,
-                          query: _query,
-                          selectedCategoryId: _selectedCategoryId,
-                          expandedArticleId: _expandedArticleId,
-                          sectionTitle: _sectionTitle(snapshot, articles.length),
-                          onSearchChanged: _updateSearch,
-                          onCategorySelected: _selectCategory,
-                          onArticleToggle: _toggleArticle,
-                          onRetry: () => setState(() {}),
-                        ),
-                      ],
+                      children: _helpCenterPageChildren(
+                        snapshot: snapshot,
+                        articles: articles,
+                        searchController: _searchController,
+                        query: _query,
+                        selectedCategoryId: _selectedCategoryId,
+                        expandedArticleId: _expandedArticleId,
+                        sectionTitle: _sectionTitle(snapshot, articles.length),
+                        onSearchChanged: _updateSearch,
+                        onCategorySelected: _selectCategory,
+                        onArticleToggle: _toggleArticle,
+                        onRetry: () => setState(() {}),
+                      ),
                     ),
                   ),
                 ),

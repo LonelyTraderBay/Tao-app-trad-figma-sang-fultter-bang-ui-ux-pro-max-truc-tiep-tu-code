@@ -49,9 +49,10 @@ class _StrategyCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x2),
-                        _TonePill(
+                        VitAccentPill(
                           label: _riskLabel(strategy.riskLevel),
-                          color: color,
+                          accentColor: color,
+                          size: VitStatusPillSize.sm,
                         ),
                         if (active) ...[
                           const SizedBox(width: AppSpacing.x2),
@@ -90,7 +91,7 @@ class _StrategyCard extends StatelessWidget {
             ],
           ),
           if (active) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ClipRRect(
               borderRadius: AppRadii.xlRadius,
               child: Row(
@@ -125,14 +126,15 @@ class _StrategyComparison extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
-      child: VitPageContent(
+      child: VitPageContent(rhythm: VitPageRhythm.standard, 
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
+            title: 'So sánh chiến lược',
             icon: Icons.info_outline_rounded,
             iconColor: AppColors.primary,
-            label: 'So sánh chiến lược',
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           for (final row in [
             ('APY', [for (final item in strategies) '${item.expectedApy}%']),
@@ -216,7 +218,11 @@ class _HistoryCard extends StatelessWidget {
                       style: _captionMedium.copyWith(color: AppColors.text1),
                     ),
                     const SizedBox(width: AppSpacing.x2),
-                    _TonePill(label: _historyLabel(event.status), color: color),
+                    VitAccentPill(
+                      label: _historyLabel(event.status),
+                      accentColor: color,
+                      size: VitStatusPillSize.sm,
+                    ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -250,7 +256,7 @@ class _SettingsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -355,7 +361,7 @@ class _PreviewSheet extends StatelessWidget {
                   value: _formatUsd(totalMove / 2),
                 ),
                 _PreviewRow(label: 'Số thao tác', value: '${actions.length}'),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final action in actions.take(3))
                   Padding(
                     padding: AppSpacing.earnBottomPaddingX2,
@@ -390,7 +396,7 @@ class _PreviewSheet extends StatelessWidget {
                       ],
                     ),
                   ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCtaButton(
                   onPressed: onClose,
                   variant: VitCtaButtonVariant.warning,
@@ -401,29 +407,6 @@ class _PreviewSheet extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.iconColor,
-    required this.label,
-  });
-
-  final IconData icon;
-  final Color iconColor;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: iconColor, size: _savingsRebalanceInlineIcon),
-        const SizedBox(width: AppSpacing.x2),
-        Text(label, style: _captionMedium.copyWith(color: AppColors.text1)),
-      ],
     );
   }
 }
@@ -449,7 +432,7 @@ class _MetricCard extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: _savingsRebalanceInlineIcon),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(value, style: _smBold.copyWith(color: AppColors.text1)),
@@ -462,31 +445,6 @@ class _MetricCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TonePill extends StatelessWidget {
-  const _TonePill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .12),
-      borderRadius: AppRadii.xsRadius,
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
       ),
     );
   }

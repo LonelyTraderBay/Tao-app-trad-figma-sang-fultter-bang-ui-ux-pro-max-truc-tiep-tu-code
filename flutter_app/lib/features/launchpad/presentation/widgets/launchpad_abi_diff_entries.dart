@@ -67,7 +67,7 @@ class _AbiEntryCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                           Wrap(
                             spacing: AppSpacing.x1,
                             runSpacing: AppSpacing.x1,

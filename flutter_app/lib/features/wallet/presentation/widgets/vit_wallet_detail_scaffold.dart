@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -38,6 +39,7 @@ class VitWalletDetailScaffold extends StatelessWidget {
     this.shellRenderMode,
     this.backgroundColor = AppColors.bg,
     this.contentGap = VitContentGap.defaultGap,
+    this.rhythm = VitPageRhythm.form,
     this.scrollChild,
   });
 
@@ -53,11 +55,13 @@ class VitWalletDetailScaffold extends StatelessWidget {
   final ShellRenderMode? shellRenderMode;
   final Color backgroundColor;
   final VitContentGap contentGap;
+  final VitPageRhythm rhythm;
   final Widget? scrollChild;
 
   @override
   Widget build(BuildContext context) {
-    final resolvedInset = bottomInset ??
+    final resolvedInset =
+        bottomInset ??
         walletScrollBottomInset(context, shellRenderMode: shellRenderMode);
 
     return VitPageLayout(
@@ -76,8 +80,10 @@ class VitWalletDetailScaffold extends StatelessWidget {
           child: VitInsetScrollView(
             key: contentKey,
             bottomInset: resolvedInset,
-            child: scrollChild ??
+            child:
+                scrollChild ??
                 VitPageContent(
+                  rhythm: rhythm,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   gap: contentGap,

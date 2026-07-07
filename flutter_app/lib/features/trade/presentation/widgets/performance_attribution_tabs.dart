@@ -7,7 +7,7 @@ class _DrawdownTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -57,7 +57,7 @@ class _ProjectionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -114,6 +114,7 @@ class _CorrelationTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -134,7 +135,7 @@ class _CorrelationTab extends StatelessWidget {
                 label: 'Correlation coefficient (R)',
                 value: math.sqrt(snapshot.rSquared).toStringAsFixed(2),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               _KeyValueRow(
                 label: 'R² (explained variance)',
                 value: '${(snapshot.rSquared * 100).toStringAsFixed(0)}%',
@@ -249,7 +250,7 @@ class _ContributionBar extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(

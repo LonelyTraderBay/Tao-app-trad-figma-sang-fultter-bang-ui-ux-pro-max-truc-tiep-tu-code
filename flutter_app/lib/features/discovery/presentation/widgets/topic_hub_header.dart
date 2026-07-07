@@ -69,64 +69,45 @@ class _TopicChip extends StatelessWidget {
   }
 }
 
-class _TopicContent extends StatelessWidget {
-  const _TopicContent({required this.snapshot, required this.onRetry});
-
-  final TopicHubSnapshot snapshot;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    if (snapshot.currentState == DiscoveryScreenState.loading) {
-      return const VitSkeletonList(
-        key: TopicHubPage.loadingKey,
-        rows: 5,
-      );
-    }
-
-    if (snapshot.currentState == DiscoveryScreenState.error) {
-      return VitErrorState(
+List<Widget> _topicHubPageChildren({
+  required TopicHubSnapshot snapshot,
+  required VoidCallback onRetry,
+}) {
+  return switch (snapshot.currentState) {
+    DiscoveryScreenState.loading => [
+      const VitSkeletonList(key: TopicHubPage.loadingKey, rows: 5),
+    ],
+    DiscoveryScreenState.error => [
+      VitErrorState(
         key: TopicHubPage.errorKey,
         title: 'Không tải được chủ đề',
         message: snapshot.staleMessage,
         actionLabel: 'Thử lại',
         onAction: onRetry,
-      );
-    }
+      ),
+    ],
+    DiscoveryScreenState.empty when !snapshot.hasContent => [
+      _TopicHero(snapshot: snapshot),
+      VitEmptyState(
+        title: 'Chưa có nội dung cho ${snapshot.selectedTopic.label}',
+        message: 'Hãy quay lại sau hoặc chọn chủ đề khác',
+        icon: Icons.search_rounded,
+      ),
+    ],
+    _ => _topicHubReadySections(snapshot),
+  };
+}
 
-    if (!snapshot.hasContent) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _TopicHero(snapshot: snapshot),
-          VitEmptyState(
-            title: 'Chưa có nội dung cho ${snapshot.selectedTopic.label}',
-            message: 'Hãy quay lại sau hoặc chọn chủ đề khác',
-            icon: Icons.search_rounded,
-          ),
-        ],
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _TopicHero(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
-        _PredictionSection(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
-        _ArenaRoomsSection(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
-        _ModesSection(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
-        _CreatorsSection(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
-        _CreateRoomCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
-        _DisclosureCard(notes: snapshot.contractNotes),
-      ],
-    );
-  }
+List<Widget> _topicHubReadySections(TopicHubSnapshot snapshot) {
+  return [
+    _TopicHero(snapshot: snapshot),
+    _PredictionSection(snapshot: snapshot),
+    _ArenaRoomsSection(snapshot: snapshot),
+    _ModesSection(snapshot: snapshot),
+    _CreatorsSection(snapshot: snapshot),
+    _CreateRoomCard(snapshot: snapshot),
+    _DisclosureCard(notes: snapshot.contractNotes),
+  ];
 }
 
 class _TopicHero extends StatelessWidget {
@@ -166,7 +147,7 @@ class _TopicHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(

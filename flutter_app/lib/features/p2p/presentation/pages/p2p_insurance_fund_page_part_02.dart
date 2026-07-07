@@ -17,7 +17,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
             icon: Icons.calculate_outlined,
             title: 'Tính toán bồi thường',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Nhập số tiền giao dịch (VND)',
             style: AppTextStyles.micro.copyWith(
@@ -25,7 +25,8 @@ class _ClaimCalculatorCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             height: _p2pInsuranceInputHeight,
             alignment: Alignment.centerLeft,
@@ -40,7 +41,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Tỷ lệ hiện tại: $coveragePct%',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -68,7 +69,7 @@ class _PlatformStatsCard extends StatelessWidget {
             icon: Icons.bar_chart_rounded,
             title: 'Thống kê nền tảng',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: const [
               Expanded(
@@ -88,7 +89,7 @@ class _PlatformStatsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: const [
               Expanded(
@@ -108,7 +109,7 @@ class _PlatformStatsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _TwoColumnInfo(label: 'Tổng đã xử lý', value: '2.14B'),
           _TwoColumnInfo(label: 'Yêu cầu trung bình', value: '15.200.000 đ'),
         ],
@@ -133,10 +134,10 @@ class _ClaimsContent extends StatelessWidget {
           density: VitDensity.compact,
           child: const Text('Gửi yêu cầu bồi thường'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final claim in snapshot.claims) ...[
           _ClaimCard(claim: claim),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -181,6 +182,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                     children: [
                       for (var i = 0; i < 5; i++) ...[
                         Expanded(
+                          // card-tile: allow-start — fixed surface, not horizontal strip tile
                           child: VitCard(
                             height: _p2pInsuranceTourStepHeight,
                             variant: VitCardVariant.ghost,
@@ -206,16 +208,17 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     '1 / 5',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Align(
                     alignment: Alignment.center,
+                    // card-tile: allow-start — fixed surface, not horizontal strip tile
                     child: VitCard(
                       width: _p2pInsuranceTourIconBox,
                       height: _p2pInsuranceTourIconBox,
@@ -230,7 +233,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Text(
                     'Chào mừng đến Quỹ Bảo Hiểm P2P',
                     textAlign: TextAlign.center,
@@ -238,7 +241,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     'Quỹ bảo hiểm P2P bảo vệ bạn khi giao dịch P2P gặp sự cố.\nMỗi giao dịch của bạn đều được trích một phần nhỏ vào quỹ để đảm bảo an toàn cho cộng đồng.',
                     textAlign: TextAlign.center,
@@ -247,7 +250,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       height: _p2pInsuranceBodyLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   _TourInfoCard(
                     title: 'Dành cho bạn',
                     icon: Icons.star_border_rounded,
@@ -257,7 +260,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       '180 ngày thành viên — cảm ơn bạn đã tin tưởng sử dụng',
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _TourInfoCard(
                     title: 'Thông tin chung',
                     icon: Icons.check_circle_outline_rounded,
@@ -268,7 +271,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       'Bảo vệ cả buyer và seller',
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Row(
                     children: [
                       VitCtaButton(
@@ -341,7 +344,7 @@ class _TourInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -371,7 +374,7 @@ class _TourInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -414,12 +417,12 @@ class _ClaimCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             '${claim.orderId} · ${claim.reason}',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _TwoColumnInfo(
             label: 'Số tiền',
             value: '${_formatVnd(claim.amount)} đ',

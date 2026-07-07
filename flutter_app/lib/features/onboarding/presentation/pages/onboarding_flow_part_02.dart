@@ -14,7 +14,7 @@ class _GoalsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.form, 
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
@@ -44,7 +44,7 @@ class _GoalsStep extends StatelessWidget {
               ? 'Bạn có thể bỏ qua bước này'
               : 'Đã chọn ${selectedGoals.length} mục tiêu',
           textAlign: TextAlign.center,
-          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -72,7 +72,7 @@ class _CompleteStep extends StatelessWidget {
         .take(3)
         .toList(growable: false);
 
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.form, 
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
@@ -87,7 +87,7 @@ class _CompleteStep extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.pageTitle,
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               selectedGoals.isEmpty
                   ? 'Bạn đã sẵn sàng khám phá toàn bộ nền tảng'
@@ -157,7 +157,7 @@ class _ProgressHeader extends StatelessWidget {
             backgroundColor: AppColors.divider,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             Text(
@@ -191,7 +191,7 @@ class _StepHeading extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           subtitle,
           textAlign: TextAlign.center,
@@ -354,12 +354,12 @@ class _BoundaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             boundary.subtitle,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           if (expanded)
             Column(
               children: [
@@ -370,7 +370,7 @@ class _BoundaryCard extends StatelessWidget {
                     icon: Icons.check_rounded,
                   ),
                   if (example != boundary.examples.last)
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
             )
@@ -414,7 +414,7 @@ class _TrustCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   pillar.description,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                   ),
                 ),

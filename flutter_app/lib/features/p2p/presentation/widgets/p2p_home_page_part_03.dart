@@ -59,25 +59,6 @@ class _HubStat extends StatelessWidget {
   }
 }
 
-class _AccentIcon extends StatelessWidget {
-  const _AccentIcon({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .16),
-      borderRadius: AppRadii.inputRadius,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
-        child: Icon(icon, color: color, size: AppSpacing.iconMd),
-      ),
-    );
-  }
-}
-
 class _Badge extends StatelessWidget {
   const _Badge({required this.label, this.color = AppColors.warn});
 

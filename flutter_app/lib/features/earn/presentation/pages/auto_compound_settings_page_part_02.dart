@@ -34,7 +34,7 @@ class _CalculatorPreview extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -211,9 +211,9 @@ class _SettingsSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _PositionSummary(position: position),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.cardPadding,
@@ -239,7 +239,7 @@ class _SettingsSheet extends StatelessWidget {
           ),
         ),
         if (position.autoCompound) ...[
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           Text(
             'Tần suất compound',
             style: AppTextStyles.caption.copyWith(
@@ -247,7 +247,7 @@ class _SettingsSheet extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final frequency in snapshot.frequencies) ...[
             _FrequencyTile(
               frequency: frequency,
@@ -255,9 +255,9 @@ class _SettingsSheet extends StatelessWidget {
               onTap: () => onFrequency(frequency.id),
             ),
             if (frequency != snapshot.frequencies.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           Text(
             'Ngưỡng tối thiểu',
             style: AppTextStyles.caption.copyWith(
@@ -265,7 +265,7 @@ class _SettingsSheet extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (final threshold in thresholds) ...[
@@ -283,7 +283,7 @@ class _SettingsSheet extends StatelessWidget {
             ],
           ),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.cardPadding,
@@ -307,7 +307,7 @@ class _SettingsSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         VitCtaButton(
           key: AutoCompoundSettingsPage.saveButtonKey,
           onPressed: onSave,

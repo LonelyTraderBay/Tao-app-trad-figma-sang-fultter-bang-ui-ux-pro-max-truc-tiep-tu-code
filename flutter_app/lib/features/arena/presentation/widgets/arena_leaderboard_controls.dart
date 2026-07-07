@@ -157,17 +157,21 @@ class _SeasonFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final filter in filters) ...[
-          _SeasonButton(
-            label: filter.label,
-            active: filter.id == activeSeason,
-            onTap: () => onChanged(filter.id),
-          ),
-          if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const ClampingScrollPhysics(),
+      child: Row(
+        children: [
+          for (final filter in filters) ...[
+            _SeasonButton(
+              label: filter.label,
+              active: filter.id == activeSeason,
+              onTap: () => onChanged(filter.id),
+            ),
+            if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
+          ],
         ],
-      ],
+      ),
     );
   }
 }

@@ -54,7 +54,7 @@ class _ArticleSheet extends StatelessWidget {
                         Row(
                           children: [
                             Text(type.emoji, style: AppTextStyles.sectionTitle),
-                            const SizedBox(width: AppSpacing.x3 + 2),
+                            const SizedBox(width: AppSpacing.rowGap),
                             VitAccentPill(
                               label: type.label,
                               accentColor: type.color,
@@ -62,14 +62,14 @@ class _ArticleSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Text(
                           article.title,
                           style: AppTextStyles.sectionTitle.copyWith(
                             height: AppSpacing.newsSheetTitleLineHeight,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         Row(
                           children: [
                             const Icon(
@@ -77,16 +77,16 @@ class _ArticleSheet extends StatelessWidget {
                               size: AppSpacing.newsSheetCalendarIconSize,
                               color: AppColors.text2,
                             ),
-                            const SizedBox(width: AppSpacing.x2 + 1),
+                            const SizedBox(width: AppSpacing.formFieldLabelGap),
                             Text(
                               article.publishedAtLabel,
-                              style: AppTextStyles.captionSm.copyWith(
+                              style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         VitCard(
                           width: double.infinity,
                           density: VitDensity.compact,
@@ -101,7 +101,7 @@ class _ArticleSheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         Text(
                           article.content,
                           style: AppTextStyles.body.copyWith(
@@ -122,7 +122,7 @@ class _ArticleSheet extends StatelessWidget {
                               ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                         VitCtaButton(
                           key: NewsPage.closeSheetKey,
                           height: VitDensity.compact.controlHeight,

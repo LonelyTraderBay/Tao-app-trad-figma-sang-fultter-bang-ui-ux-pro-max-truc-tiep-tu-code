@@ -63,7 +63,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Bối cảnh thị trường',
             style: AppTextStyles.micro.copyWith(
@@ -80,7 +80,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               height: _modePredictionTitleLineRatio,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(
@@ -104,7 +104,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -114,7 +114,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               color: color,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Align(
             alignment: Alignment.centerLeft,
             child: VitCtaButton(

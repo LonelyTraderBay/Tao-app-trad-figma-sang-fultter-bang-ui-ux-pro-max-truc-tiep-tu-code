@@ -97,7 +97,7 @@ class _ResultView extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 result.description,
                 style: AppTextStyles.caption.copyWith(
@@ -105,7 +105,7 @@ class _ResultView extends StatelessWidget {
                   height: AppTextStyles.caption.height,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _StrategyMatchCard(strategyMatch: result.strategyMatch),
             ],
           ),

@@ -83,7 +83,7 @@ class _MasterSoundHero extends StatelessWidget {
             ],
           ),
           if (masterEnabled) ...[
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
             Row(
               children: [
                 Expanded(
@@ -281,7 +281,7 @@ class _DndScheduleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

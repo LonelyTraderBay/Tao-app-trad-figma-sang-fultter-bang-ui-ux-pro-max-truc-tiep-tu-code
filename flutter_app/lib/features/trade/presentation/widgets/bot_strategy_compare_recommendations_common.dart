@@ -78,7 +78,7 @@ class _AnalysisPeriodCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             text,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),

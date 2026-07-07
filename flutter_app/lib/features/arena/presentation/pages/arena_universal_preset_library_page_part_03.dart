@@ -41,11 +41,11 @@ class _DemoFlowCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _DemoStep(step: '1', label: 'Domain', value: flow.domainLabel),
           _DemoStep(step: '2', label: 'Type', value: flow.typeLabel),
           _DemoSuggestions(values: flow.suggestions),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
@@ -164,7 +164,7 @@ class _DemoSuggestions extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,

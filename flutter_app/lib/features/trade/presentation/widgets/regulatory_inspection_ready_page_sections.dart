@@ -17,6 +17,7 @@ class _ComplianceScoreCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               const VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.standard,
@@ -42,7 +43,7 @@ class _ComplianceScoreCard extends StatelessWidget {
                         fontWeight: AppTextStyles.normal,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.alphabetic,
@@ -68,7 +69,7 @@ class _ComplianceScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
@@ -78,7 +79,7 @@ class _ComplianceScoreCard extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation(_inspectionGreen),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -152,7 +153,7 @@ class _QuickStatCard extends StatelessWidget {
             color: style.color,
             size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             stat.value,
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
@@ -209,7 +210,7 @@ class _FrameworkCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final requirement in framework.requirements) ...[
             _RequirementRow(requirement),
             if (requirement != framework.requirements.last)

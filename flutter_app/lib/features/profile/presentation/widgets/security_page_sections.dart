@@ -36,13 +36,12 @@ class _ScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (var i = 0; i < 4; i++) ...[
                 Expanded(
-                  child: SizedBox(
-                    height: AppSpacing.x2,
+                  child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
                     child: Material(
                       color: i < snapshot.score
                           ? scoreColor
@@ -58,7 +57,7 @@ class _ScoreCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Material(
             color: _securityAmber.withValues(alpha: .12),
             shape: RoundedRectangleBorder(
@@ -237,7 +236,7 @@ class _DeviceList extends StatelessWidget {
           'THI\u1EBET B\u1ECA \u0110\u0102NG NH\u1EACP',
           style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           borderColor: _securityBorder,
           clip: true,
@@ -310,7 +309,7 @@ class _DeviceRow extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     '${device.os} \u2022 ${device.location}',
                     maxLines: 1,

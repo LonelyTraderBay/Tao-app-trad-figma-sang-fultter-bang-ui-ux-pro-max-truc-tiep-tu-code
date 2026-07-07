@@ -87,6 +87,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         VitSectionHeader(
           title: 'Thống kê thị trường',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppAssetColors.forSymbol(pair.baseAsset),
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -133,6 +134,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Cung token',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -140,6 +142,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Phan bo cung',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppColors.accent,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -147,6 +150,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Ky luc gia',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppColors.warn,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -219,7 +223,14 @@ class _HeroCard extends StatelessWidget {
                   ),
                 ),
               ),
-              _ChangePill(change: pair.change24h),
+              VitAccentPill(
+                label:
+                    '${pair.change24h >= 0 ? '+' : ''}${pair.change24h.toStringAsFixed(2)}%',
+                accentColor: pair.change24h >= 0 ? AppColors.buy : AppColors.sell,
+                semanticStatus: pair.change24h >= 0
+                    ? VitStatusPillStatus.success
+                    : VitStatusPillStatus.error,
+              ),
             ],
           ),
         ],
@@ -241,25 +252,6 @@ class _TokenAvatar extends StatelessWidget {
       accentColor: color,
       size: _tokenInfoHeroAvatar,
       radius: AppRadii.cardRadius,
-    );
-  }
-}
-
-class _ChangePill extends StatelessWidget {
-  const _ChangePill({required this.change});
-
-  final double change;
-
-  @override
-  Widget build(BuildContext context) {
-    final positive = change >= 0;
-    final color = positive ? AppColors.buy : AppColors.sell;
-    return VitAccentPill(
-      label: '${positive ? '+' : ''}${change.toStringAsFixed(2)}%',
-      accentColor: color,
-      semanticStatus: positive
-          ? VitStatusPillStatus.success
-          : VitStatusPillStatus.error,
     );
   }
 }

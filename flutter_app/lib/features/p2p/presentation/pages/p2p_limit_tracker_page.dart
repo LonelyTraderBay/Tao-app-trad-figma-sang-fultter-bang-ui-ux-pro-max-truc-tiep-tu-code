@@ -8,20 +8,11 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
-const double _p2pLimitVisualClearance = AppSpacing.x3;
-const double _p2pLimitNativeClearance = AppSpacing.x2;
-const double _p2pLimitVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pLimitNativeNavClearance =
-    _p2pLimitVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
 const double _p2pLimitMajorGap = AppSpacing.x3;
 const double _p2pLimitSectionGap = AppSpacing.x2;
 
@@ -51,87 +42,47 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pLimitTrackerProvider);
     final usage = snapshot.usageFor(_period);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pLimitVisualNavClearance + _p2pLimitVisualClearance
-            : _p2pLimitNativeNavClearance + _p2pLimitNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: snapshot.title,
+      subtitle: snapshot.subtitle,
       semanticLabel: 'SC-265 P2PLimitTrackerPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pLimitTrackerScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        VitSegmentedChoice<String>(
-                          key: P2PLimitTrackerPage.periodTabsKey,
-                          selected: _period,
-                          height: AppSpacing.buttonCompact,
-                          padding: AppSpacing.p2pLimitTrackerPeriodTabPadding,
-                          options: [
-                            for (final usage in snapshot.usages)
-                              VitSegmentedChoiceOption(
-                                value: usage.period,
-                                label: usage.label,
-                                key: P2PLimitTrackerPage.periodKey(
-                                  usage.period,
-                                ),
-                                accentColor: AppModuleAccents.p2p,
-                              ),
-                          ],
-                          onChanged: (period) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _period = period);
-                          },
-                        ),
-                        const SizedBox(height: _p2pLimitSectionGap),
-                        _UsageHero(usage: usage),
-                        const SizedBox(height: _p2pLimitMajorGap),
-                        _LimitBreakdownList(items: snapshot.breakdown),
-                        const SizedBox(height: _p2pLimitSectionGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pLimitTrackerCompactPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'P2P limit review',
-                            message:
-                                'Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.',
-                            contractId: 'p2p-limit-tracker-review',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(snapshot.parentRoute),
+      children: [
+        VitSegmentedChoice<String>(
+          key: P2PLimitTrackerPage.periodTabsKey,
+          selected: _period,
+          height: AppSpacing.buttonCompact,
+          padding: AppSpacing.p2pLimitTrackerPeriodTabPadding,
+          options: [
+            for (final usage in snapshot.usages)
+              VitSegmentedChoiceOption(
+                value: usage.period,
+                label: usage.label,
+                key: P2PLimitTrackerPage.periodKey(usage.period),
+                accentColor: AppModuleAccents.p2p,
               ),
-            ],
+          ],
+          onChanged: (period) {
+            HapticFeedback.selectionClick();
+            setState(() => _period = period);
+          },
+        ),
+        _UsageHero(usage: usage),
+        _LimitBreakdownList(items: snapshot.breakdown),
+        const VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.p2pLimitTrackerCompactPadding,
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'P2P limit review',
+            message:
+                'Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.',
+            contractId: 'p2p-limit-tracker-review',
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -162,7 +113,7 @@ class _UsageHero extends StatelessWidget {
                 fontWeight: AppTextStyles.medium,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               '${_formatComma(usage.used, 0)} VND',
               maxLines: 1,
@@ -188,7 +139,7 @@ class _UsageHero extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               '${usage.percentage}% / ${_formatComma(usage.limit, 0)} VND',
               style: AppTextStyles.caption.copyWith(
@@ -263,7 +214,7 @@ class _DayBreakdownCard extends StatelessWidget {
               ),
               Text(
                 'Tổng: ${_formatMillions(item.total)}',
-                style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
             ],
           ),

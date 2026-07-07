@@ -61,7 +61,7 @@ class _SwapInputCard extends StatelessWidget {
               color: AppColors.onAccent.withValues(alpha: .72),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _TokenButton(token: fromToken, color: AppColors.buy),
@@ -83,7 +83,7 @@ class _SwapInputCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Center(
             child: VitIconButton(
               key: LaunchpadSwapAggregatorPage.flipKey,
@@ -94,14 +94,14 @@ class _SwapInputCard extends StatelessWidget {
               size: VitIconButtonSize.md,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'SANG',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.onAccent.withValues(alpha: .72),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _TokenButton(token: toToken, color: AppColors.accent),

@@ -101,6 +101,7 @@ class _YearTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       padding: AppSpacing.zeroInsets,
       constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
@@ -171,7 +172,7 @@ class _CostBreakdownCard extends StatelessWidget {
             ],
           ),
           if (note != null) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _VarianceNoteView(note: note!),
           ],
         ],

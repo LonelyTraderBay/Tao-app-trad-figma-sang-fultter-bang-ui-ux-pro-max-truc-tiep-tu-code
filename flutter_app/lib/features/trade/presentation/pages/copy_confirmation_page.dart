@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -91,7 +92,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
             child: VitInsetScrollView(
               key: CopyConfirmationPage.contentKey,
               bottomInset: scrollClearance,
-              child: VitPageContent(
+              child: VitPageContent(rhythm: VitPageRhythm.standard, 
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [
@@ -200,7 +201,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                     child: const Text('Xác nhận & Bắt đầu Copy'),
                   ),
                   if (!allRequiredAccepted) ...[
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Text(
                       'Bạn cần đồng ý với tất cả điều khoản để tiếp tục',
                       textAlign: TextAlign.center,

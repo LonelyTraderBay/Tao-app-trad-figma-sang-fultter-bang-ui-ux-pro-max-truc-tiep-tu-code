@@ -35,7 +35,7 @@ class _HealthCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class _HealthCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

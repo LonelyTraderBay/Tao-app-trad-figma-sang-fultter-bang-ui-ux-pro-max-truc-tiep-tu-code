@@ -33,7 +33,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitle: 'Q1 2026 (YTD)',
           ),
         ),
-        const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
         Expanded(
           child: _SummaryCard(
             icon: Icons.attach_money_rounded,
@@ -43,7 +43,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitle: 'Executed value',
           ),
         ),
-        const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
         Expanded(
           child: _SummaryCard(
             icon: Icons.workspace_premium_outlined,

@@ -73,7 +73,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'Tan suat mua',
             accentColor: AppColors.primary,
@@ -98,7 +98,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'So tien',
             accentColor: AppColors.primary,
@@ -118,7 +118,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       prefixIcon: Icons.attach_money_rounded,
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     _LabeledField(
                       fieldKey: budgetFieldKey,
                       label: 'Tong ngan sach (USD)',
@@ -130,7 +130,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       prefixIcon: Icons.attach_money_rounded,
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     _LabeledField(
                       fieldKey: startDateFieldKey,
                       label: 'Ngay bat dau',
@@ -145,7 +145,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             ],
           ),
           if (hasPreview) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _StrategyPreview(
               previewKey: previewKey,
               token: tokenController.text.trim(),
@@ -153,7 +153,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
               amount: amountController.text.trim(),
               totalBudget: budgetController.text.trim(),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitHighRiskStatePanel(
               key: reviewStateKey,
               state: VitHighRiskUiState.riskReview,
@@ -163,7 +163,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             ),
           ],
           if (submissionMessage != null) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               padding: AppSpacing.launchpadPaddingX3,
               borderColor: AppColors.buy20,
@@ -221,7 +221,7 @@ class _FrequencyChoice extends StatelessWidget {
             launchpadDcaFrequencyIcon(frequency),
             color: active ? AppColors.primary : AppColors.text3,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             launchpadDcaFrequencyLabel(frequency),
             textAlign: TextAlign.center,
@@ -307,7 +307,7 @@ class _StrategyPreview extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               _PreviewMetric(label: 'Token', value: token),
@@ -317,7 +317,7 @@ class _StrategyPreview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               _PreviewMetric(label: 'Per Order', value: '\$$amount'),

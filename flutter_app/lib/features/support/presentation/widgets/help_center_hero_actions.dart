@@ -38,7 +38,7 @@ class _HelpHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
@@ -46,7 +46,7 @@ class _HelpHero extends StatelessWidget {
               height: AppSpacing.supportLineHeightBody,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           VitSearchBar(
             key: HelpCenterPage.searchKey,
             controller: controller,
@@ -136,82 +136,91 @@ class _QuickActionButton extends StatelessWidget {
   }
 }
 
-class _HelpCenterBody extends StatelessWidget {
-  const _HelpCenterBody({
-    required this.snapshot,
-    required this.articles,
-    required this.searchController,
-    required this.query,
-    required this.selectedCategoryId,
-    required this.expandedArticleId,
-    required this.sectionTitle,
-    required this.onSearchChanged,
-    required this.onCategorySelected,
-    required this.onArticleToggle,
-    required this.onRetry,
-  });
-
-  final HelpCenterSnapshot snapshot;
-  final List<HelpArticleDraft> articles;
-  final TextEditingController searchController;
-  final String query;
-  final String? selectedCategoryId;
-  final String? expandedArticleId;
-  final String sectionTitle;
-  final ValueChanged<String> onSearchChanged;
-  final ValueChanged<String> onCategorySelected;
-  final ValueChanged<String> onArticleToggle;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.screenState) {
-      SupportScreenState.loading => const VitSkeletonList(
-        key: HelpCenterPage.loadingKey,
-        rows: 4,
-      ),
-      SupportScreenState.error => VitErrorState(
+List<Widget> _helpCenterPageChildren({
+  required HelpCenterSnapshot snapshot,
+  required List<HelpArticleDraft> articles,
+  required TextEditingController searchController,
+  required String query,
+  required String? selectedCategoryId,
+  required String? expandedArticleId,
+  required String sectionTitle,
+  required ValueChanged<String> onSearchChanged,
+  required ValueChanged<String> onCategorySelected,
+  required ValueChanged<String> onArticleToggle,
+  required VoidCallback onRetry,
+}) {
+  return switch (snapshot.screenState) {
+    SupportScreenState.loading => [
+      const VitSkeletonList(key: HelpCenterPage.loadingKey, rows: 4),
+    ],
+    SupportScreenState.error => [
+      VitErrorState(
         key: HelpCenterPage.errorKey,
         title: 'Không tải được trung tâm trợ giúp',
         message: 'Kiểm tra kết nối và thử lại.',
         actionLabel: 'Thử lại',
         onAction: onRetry,
       ),
-      SupportScreenState.empty ||
-      SupportScreenState.offline when snapshot.articles.isEmpty =>
+    ],
+    SupportScreenState.empty ||
+    SupportScreenState.offline when snapshot.articles.isEmpty =>
+      [
         const VitEmptyState(
           key: HelpCenterPage.emptyKey,
           title: 'Chưa có bài viết trợ giúp',
           message: 'Nội dung hướng dẫn sẽ được cập nhật tại đây.',
           icon: Icons.menu_book_outlined,
         ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _HelpHero(
-            snapshot: snapshot,
-            controller: searchController,
-            onChanged: onSearchChanged,
-          ),
-          _QuickActions(
-            chatRoute: snapshot.chatRoute,
-            ticketRoute: snapshot.ticketRoute,
-          ),
-          if (query.isEmpty)
-            _CategorySection(
-              categories: snapshot.categories,
-              selectedCategoryId: selectedCategoryId,
-              onSelected: onCategorySelected,
-            ),
-          _ArticleSection(
-            title: sectionTitle,
-            articles: articles,
-            categories: snapshot.categories,
-            expandedArticleId: expandedArticleId,
-            onToggle: onArticleToggle,
-          ),
-        ],
+      ],
+    _ => _helpCenterReadySections(
+      snapshot: snapshot,
+      articles: articles,
+      searchController: searchController,
+      query: query,
+      selectedCategoryId: selectedCategoryId,
+      expandedArticleId: expandedArticleId,
+      sectionTitle: sectionTitle,
+      onSearchChanged: onSearchChanged,
+      onCategorySelected: onCategorySelected,
+      onArticleToggle: onArticleToggle,
+    ),
+  };
+}
+
+List<Widget> _helpCenterReadySections({
+  required HelpCenterSnapshot snapshot,
+  required List<HelpArticleDraft> articles,
+  required TextEditingController searchController,
+  required String query,
+  required String? selectedCategoryId,
+  required String? expandedArticleId,
+  required String sectionTitle,
+  required ValueChanged<String> onSearchChanged,
+  required ValueChanged<String> onCategorySelected,
+  required ValueChanged<String> onArticleToggle,
+}) {
+  return [
+    _HelpHero(
+      snapshot: snapshot,
+      controller: searchController,
+      onChanged: onSearchChanged,
+    ),
+    _QuickActions(
+      chatRoute: snapshot.chatRoute,
+      ticketRoute: snapshot.ticketRoute,
+    ),
+    if (query.isEmpty)
+      _CategorySection(
+        categories: snapshot.categories,
+        selectedCategoryId: selectedCategoryId,
+        onSelected: onCategorySelected,
       ),
-    };
-  }
+    _ArticleSection(
+      title: sectionTitle,
+      articles: articles,
+      categories: snapshot.categories,
+      expandedArticleId: expandedArticleId,
+      onToggle: onArticleToggle,
+    ),
+  ];
 }

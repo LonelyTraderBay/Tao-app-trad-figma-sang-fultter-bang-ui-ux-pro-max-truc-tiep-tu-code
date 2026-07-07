@@ -11,7 +11,7 @@ class _ProductList extends StatelessWidget {
       children: [
         for (final product in products) ...[
           _ProductCard(product: product),
-          if (product != products.last) const SizedBox(height: AppSpacing.x3),
+          if (product != products.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -79,7 +79,7 @@ class _ProductCard extends StatelessWidget {
                       '${product.lockLabel} · ${product.participants}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                       ),
                     ),
@@ -113,7 +113,7 @@ class _ProductCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -129,9 +129,9 @@ class _ProductCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressBar(progress: product.progress, color: accent),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             height: AppSpacing.inputHeight - AppSpacing.x1,
             variant: VitCtaButtonVariant.secondary,

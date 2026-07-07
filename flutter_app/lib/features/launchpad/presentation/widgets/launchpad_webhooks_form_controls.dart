@@ -27,7 +27,7 @@ class _SheetInputField extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitInput(
           controller: controller,
           onChanged: onChanged,
@@ -69,17 +69,18 @@ class _ChoiceGroup extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
               for (final item in items) ...[
-                _SelectablePill(
+                VitChoicePill(
                   label: item,
-                  color: colorFor(item),
-                  active: active == item,
+                  accentColor: colorFor(item),
+                  selected: active == item,
                   onTap: () => onChanged(item),
+                  padding: AppSpacing.launchpadPillPadding,
                 ),
                 const SizedBox(width: AppSpacing.x2),
               ],
@@ -87,32 +88,6 @@ class _ChoiceGroup extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SelectablePill extends StatelessWidget {
-  const _SelectablePill({
-    super.key,
-    required this.label,
-    required this.color,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color color;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      padding: AppSpacing.launchpadPillPadding,
     );
   }
 }

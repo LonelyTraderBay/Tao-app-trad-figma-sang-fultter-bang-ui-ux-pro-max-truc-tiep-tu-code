@@ -69,6 +69,7 @@ class _SelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: AppSpacing.launchpadBox18,
       height: AppSpacing.launchpadBox18,

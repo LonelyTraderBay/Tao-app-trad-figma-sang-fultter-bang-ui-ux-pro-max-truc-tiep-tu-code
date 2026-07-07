@@ -19,7 +19,7 @@ class _ValueSummary extends StatelessWidget {
             'T\u1ED5ng gi\u00E1 tr\u1ECB danh m\u1EE5c',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             width: double.infinity,
             child: FittedBox(
@@ -36,7 +36,7 @@ class _ValueSummary extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               SizedBox(
@@ -59,7 +59,7 @@ class _ValueSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

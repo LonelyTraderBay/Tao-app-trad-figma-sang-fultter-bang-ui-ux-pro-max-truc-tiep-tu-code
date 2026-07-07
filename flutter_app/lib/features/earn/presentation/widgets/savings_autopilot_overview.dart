@@ -75,27 +75,27 @@ class OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _MetricGrid(metrics: snapshot.metrics),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const SectionTitle(label: 'Modules đang hoạt động'),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final module in snapshot.modules) ...[
           _ModuleTile(
             module: module,
             enabled: moduleStates[module.id] ?? module.enabled,
             onTap: () => onOpenModule(module.route),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const SectionTitle(label: 'Hành động gần đây'),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final action in snapshot.actions.take(3)) ...[
           ActionTile(
             action: action,
             status: actionStatusFor(action),
             onTap: () => onOpenAction(action),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         VitCtaButton(
           onPressed: onShowActions,
@@ -104,7 +104,7 @@ class OverviewTab extends StatelessWidget {
           trailing: const Icon(Icons.chevron_right_rounded),
           child: const Text('Xem tất cả'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         InfoCallout(text: snapshot.disclaimer, tone: EarnRiskLevel.medium),
       ],
     );
@@ -155,7 +155,7 @@ class _MetricGrid extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 metric.value,
                 maxLines: 1,

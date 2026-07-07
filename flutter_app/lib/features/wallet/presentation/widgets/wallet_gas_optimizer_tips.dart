@@ -8,19 +8,24 @@ class _TipsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      density: VitDensity.compact,
-      children: [
-        const _SectionLabel(label: 'Gas Optimization Tips'),
-        for (var i = 0; i < snapshot.tips.length; i++) ...[
-          _TipCard(tip: snapshot.tips[i]),
-        ],
-        _QuickActionsCard(onAction: onQuickAction),
-      ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: sectionChildren,
     );
   }
+
+  List<Widget> get sectionChildren => [
+    VitPageSection(
+      label: 'Gas Optimization Tips',
+      accentColor: _gasPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [
+        for (var i = 0; i < snapshot.tips.length; i++)
+          _TipCard(tip: snapshot.tips[i]),
+        _QuickActionsCard(onAction: onQuickAction),
+      ],
+    ),
+  ];
 }
 
 class _TipCard extends StatelessWidget {
@@ -42,6 +47,7 @@ class _TipCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: 32,
             height: 32,
@@ -84,10 +90,13 @@ class _TipCard extends StatelessWidget {
                     height: 1.28,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
-                    _CategoryPill(label: tip.category),
+                    VitAccentPill(
+                      label: tip.category,
+                      accentColor: AppColors.textSoftBlue,
+                    ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Align(
@@ -134,17 +143,6 @@ class _SmallBadge extends StatelessWidget {
   }
 }
 
-class _CategoryPill extends StatelessWidget {
-  const _CategoryPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: AppColors.textSoftBlue);
-  }
-}
-
 class _QuickActionsCard extends StatelessWidget {
   const _QuickActionsCard({required this.onAction});
 
@@ -169,7 +167,7 @@ class _QuickActionsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var i = 0; i < _actions.length; i++) ...[
             VitServiceTile(
               icon: Icons.bolt_outlined,

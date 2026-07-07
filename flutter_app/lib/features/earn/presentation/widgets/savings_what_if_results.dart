@@ -27,7 +27,12 @@ class _ResultsTab extends StatelessWidget {
       key: SavingsWhatIfPage.resultsKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionTitle(label: 'Kết quả mô phỏng'),
+        VitSectionHeader(
+          title: 'Kết quả mô phỏng',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppModuleAccents.earn,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
@@ -62,7 +67,7 @@ class _ResultsTab extends StatelessWidget {
                   _ImpactBadge(value: result.differencePct),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -83,7 +88,7 @@ class _ResultsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -105,12 +110,17 @@ class _ResultsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ComparisonChart(result: result),
-        const SizedBox(height: AppSpacing.x4),
-        const _SectionTitle(label: 'Ảnh hưởng theo tài sản'),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        const VitSectionHeader(
+          title: 'Ảnh hưởng theo tài sản',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppModuleAccents.earn,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         _AssetImpactList(result: result),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Expanded(
@@ -154,18 +164,18 @@ class _EmptyResults extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.savingsWhatIfEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Chưa chạy mô phỏng',
             style: _captionBold.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Chọn kịch bản và bấm "Chạy mô phỏng" để xem kết quả.',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             onPressed: onRun,
             leading: const Icon(Icons.play_arrow_rounded),
@@ -194,7 +204,7 @@ class _ComparisonChart extends StatelessWidget {
             'Baseline vs kịch bản',
             style: _captionBold.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.savingsWhatIfComparisonChartHeight,
             width: double.infinity,
@@ -202,7 +212,7 @@ class _ComparisonChart extends StatelessWidget {
               painter: _LineChartPainter(points: result.monthlyData),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [

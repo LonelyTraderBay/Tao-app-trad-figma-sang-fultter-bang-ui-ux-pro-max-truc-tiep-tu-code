@@ -62,7 +62,7 @@ class AutoPilotHero extends StatelessWidget {
               _StatusButton(status: status, onPressed: onToggleStatus),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -110,7 +110,7 @@ class AutoPilotHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

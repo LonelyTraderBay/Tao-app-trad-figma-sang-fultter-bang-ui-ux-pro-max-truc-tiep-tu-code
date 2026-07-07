@@ -156,7 +156,7 @@ class MarketDerivativesPairLogo extends StatelessWidget {
     final base = pair.symbol.split('/').first;
     final labelStyle = size <= 30
         ? AppTextStyles.micro
-        : AppTextStyles.captionSm;
+        : AppTextStyles.caption;
     return CircleAvatar(
       radius: size / 2,
       backgroundColor: AppAssetColors.forSymbol(

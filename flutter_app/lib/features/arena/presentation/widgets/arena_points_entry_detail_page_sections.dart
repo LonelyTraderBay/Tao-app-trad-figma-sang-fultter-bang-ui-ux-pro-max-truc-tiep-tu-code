@@ -37,7 +37,7 @@ class _AmountHero extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x2,
@@ -258,7 +258,7 @@ class _EntryActions extends StatelessWidget {
             ),
             child: const Text('Xem challenge'),
           ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           key: ArenaPointsEntryDetailPage.supportKey,
           variant: VitCtaButtonVariant.secondary,
@@ -316,7 +316,7 @@ class _Section extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         child,
       ],
     );

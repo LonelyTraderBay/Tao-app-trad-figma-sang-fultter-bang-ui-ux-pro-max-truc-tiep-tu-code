@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -82,6 +83,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -163,17 +165,17 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         SavingsGuideProgressHeader(
                           stepIndex: stepIndex,
                           total: tutorial.steps.length,
                           progress: progress,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                         SavingsGuideStepDetail(step: step),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                         SavingsGuideTipPanel(tips: step.tips),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                         Row(
                           children: [
                             Expanded(

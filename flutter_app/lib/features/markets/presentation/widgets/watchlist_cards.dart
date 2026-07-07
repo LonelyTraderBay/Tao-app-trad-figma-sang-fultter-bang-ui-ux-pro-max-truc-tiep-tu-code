@@ -82,16 +82,16 @@ class _WatchlistCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: _watchlistSparklineExtent,
             child: VitSparkline(values: pair.sparklineData, color: changeColor),
           ),
           if (entry.note != null) ...[
-            const SizedBox(height: AppSpacing.x3),
-            _NotePill(note: entry.note!),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            _WatchlistNoteRow(note: entry.note!),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -151,8 +151,8 @@ class _AssetAvatar extends StatelessWidget {
   }
 }
 
-class _NotePill extends StatelessWidget {
-  const _NotePill({required this.note});
+class _WatchlistNoteRow extends StatelessWidget {
+  const _WatchlistNoteRow({required this.note});
 
   final String note;
 

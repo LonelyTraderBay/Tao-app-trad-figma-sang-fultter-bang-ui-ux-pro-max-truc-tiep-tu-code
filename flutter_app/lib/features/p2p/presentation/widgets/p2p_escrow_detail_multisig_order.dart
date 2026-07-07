@@ -36,7 +36,7 @@ class _MultiSigCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Escrow yêu cầu tối thiểu 2/3 chữ ký để giải phóng coin. Platform luôn ký khi tạo escrow (1/3).',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

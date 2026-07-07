@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 
@@ -26,6 +25,7 @@ class WithdrawBalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
@@ -75,6 +75,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
           button: true,
           label:
               'Withdraw network selector ${network.name}, fee ${formatWithdrawNetworkFee(network.fee)} $asset, minimum ${formatWithdrawCompact(network.minWithdraw)}',
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           child: VitCard(
             key: withdrawNetworkSelectorKey,
             onTap: onTap,
@@ -118,7 +119,9 @@ class WithdrawNetworkSelector extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+        const SizedBox(
+          height: AppSpacing.pageRhythmCompactInnerGap + AppSpacing.x1,
+        ),
         Row(
           children: [
             const SizedBox(
@@ -126,7 +129,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
               height: AppSpacing.x2,
               child: ClipOval(child: ColoredBox(color: withdrawGreen)),
             ),
-            const SizedBox(width: AppSpacing.x3 - AppSpacing.x1),
+            const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
             Expanded(
               child: Text(
                 'Mạng hoạt động tốt  ·  Phí: ${formatWithdrawNetworkFee(network.fee)} $asset',
@@ -147,7 +150,6 @@ class WithdrawAddressInput extends StatelessWidget {
     required this.asset,
     required this.network,
     required this.controller,
-    required this.onScan,
     required this.onChanged,
     super.key,
   });
@@ -155,57 +157,24 @@ class WithdrawAddressInput extends StatelessWidget {
   final String asset;
   final WalletWithdrawNetwork network;
   final TextEditingController controller;
-  final VoidCallback onScan;
   final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: Semantics(
-            button: true,
-            label: 'Scan withdrawal address QR code',
-            child: VitCtaButton(
-              onPressed: onScan,
-              variant: VitCtaButtonVariant.ghost,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              padding: AppSpacing.walletWithdrawScanButtonPadding,
-              leading: const Icon(
-                Icons.qr_code_scanner_rounded,
-                color: withdrawPrimary,
-                size: AppSpacing.iconSm,
-              ),
-              child: Text(
-                'Quét QR',
-                style: AppTextStyles.control.copyWith(
-                  color: withdrawPrimary,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
+    return VitInput(
+      fieldKey: withdrawAddressFieldKey,
+      controller: controller,
+      hintText: 'Nhập địa chỉ $asset (${network.name.split(' ').first})',
+      semanticLabel: 'Withdrawal destination address',
+      textStyle: AppTextStyles.control,
+      onChanged: onChanged,
+      suffix: Padding(
+        padding: AppSpacing.walletWithdrawInputSuffixPadding,
+        child: Text(
+          asset,
+          style: AppTextStyles.control.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.formFieldLabelGap),
-        VitInput(
-          fieldKey: withdrawAddressFieldKey,
-          controller: controller,
-          hintText: 'Nhập địa chỉ $asset (${network.name.split(' ').first})',
-          semanticLabel: 'Withdrawal destination address',
-          textStyle: AppTextStyles.control,
-          onChanged: onChanged,
-          suffix: Padding(
-            padding: AppSpacing.walletWithdrawInputSuffixPadding,
-            child: Text(
-              asset,
-              style: AppTextStyles.control.copyWith(color: AppColors.text3),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

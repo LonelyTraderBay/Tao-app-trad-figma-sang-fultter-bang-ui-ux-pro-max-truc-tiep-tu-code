@@ -28,13 +28,13 @@ class MarketDepthChartView extends StatelessWidget {
     return Column(
       children: [
         _DepthMiniStats(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _DepthChartCard(
           snapshot: snapshot,
           levels: levels,
           onLevelSelected: onLevelSelected,
         ),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _DepthRatioCard(depth: snapshot.depth),
       ],
     );

@@ -83,7 +83,7 @@ class _WatchingSection extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -101,7 +101,7 @@ class _WatchingSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 SizedBox(
                   height: VitDensity.compact.controlHeight,
                   width: double.infinity,

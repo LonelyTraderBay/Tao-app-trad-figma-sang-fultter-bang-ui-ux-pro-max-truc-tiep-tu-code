@@ -15,6 +15,7 @@ class _AuditEntryCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.tradeToolIconTileSm,
             height: AppSpacing.tradeToolIconTileSm,
@@ -36,7 +37,7 @@ class _AuditEntryCard extends StatelessWidget {
                         entry.action,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.captionSm.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
                         ),

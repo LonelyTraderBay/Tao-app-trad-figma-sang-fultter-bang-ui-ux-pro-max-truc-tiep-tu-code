@@ -41,7 +41,7 @@ class VitAnnouncementBanner extends StatelessWidget {
   EdgeInsetsGeometry get _padding {
     return switch (variant) {
       VitAnnouncementBannerVariant.standard =>
-        AppSpacing.homeAnnouncementCardPadding,
+        AppSpacing.homeCardPaddingDefault,
       VitAnnouncementBannerVariant.compact =>
         AppSpacing.homeAnnouncementCardPaddingCompact,
     };

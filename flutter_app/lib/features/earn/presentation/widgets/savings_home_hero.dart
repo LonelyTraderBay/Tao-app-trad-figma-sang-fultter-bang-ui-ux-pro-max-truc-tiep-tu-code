@@ -52,7 +52,7 @@ class _SavingsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(
@@ -192,7 +192,7 @@ class _InsightList extends StatelessWidget {
                       ),
                       Text(
                         insight.subtitle,
-                        style: AppTextStyles.captionSm.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
                         ),
                       ),
@@ -207,7 +207,7 @@ class _InsightList extends StatelessWidget {
               ],
             ),
           ),
-          if (insight != insights.last) const SizedBox(height: AppSpacing.x3),
+          if (insight != insights.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

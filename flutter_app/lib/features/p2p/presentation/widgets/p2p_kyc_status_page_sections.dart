@@ -134,8 +134,7 @@ class _ProgressTrack extends StatelessWidget {
       borderRadius: AppRadii.xsRadius,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return SizedBox(
-            height: AppSpacing.x2,
+          return SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: ColoredBox(
               color: AppColors.surface3,
               child: Align(

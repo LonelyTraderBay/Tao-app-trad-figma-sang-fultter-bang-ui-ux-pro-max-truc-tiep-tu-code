@@ -46,7 +46,7 @@ class _BridgeDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final row in rows) _DetailsRow(row: row),
         ],
       ),

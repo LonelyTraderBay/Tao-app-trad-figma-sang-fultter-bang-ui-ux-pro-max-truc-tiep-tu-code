@@ -30,7 +30,6 @@ const _depositSelectorHeight = 60.0;
 const _depositQrSize = 132.0;
 const _depositStatusDotSize = AppSpacing.x2 - AppSpacing.dividerHairline * 2;
 const _depositCopyButtonHeight = 44.0;
-const _depositRefreshHeight = 44.0;
 
 class DepositPage extends ConsumerStatefulWidget {
   const DepositPage({
@@ -76,48 +75,61 @@ class _DepositPageState extends ConsumerState<DepositPage> {
           ? 'SC-138 DepositPage Asset'
           : 'SC-137 DepositPage',
       contentKey: DepositPage.contentKey,
-      contentGap: VitContentGap.tight,
       shellRenderMode: mode,
       onBack: () => context.go(AppRoutePaths.wallet),
       children: [
-        const VitSectionHeader(
-          title: 'M\u1EA1ng n\u1EA1p',
-          icon: Icons.hub_outlined,
-          iconColor: _depositPrimary,
+        VitPageSection(
+          label: 'Mạng nạp',
+          headerIcon: Icons.hub_outlined,
+          headerIconColor: _depositPrimary,
+          headerVariant: VitSectionHeaderVariant.plain,
           accentColor: _depositPrimary,
+          innerGap: AppSpacing.pageRhythmFormInnerGap,
+          children: [
+            _NetworkSelector(
+              asset: snapshot.asset,
+              selected: selected,
+              onTap: () => _openNetworkPicker(snapshot.networks),
+            ),
+          ],
         ),
-        _NetworkSelector(
-          asset: snapshot.asset,
-          selected: selected,
-          onTap: () => _openNetworkPicker(snapshot.networks),
-        ),
-        const VitSectionHeader(
-          title: '\u0110\u1ECBa ch\u1EC9 n\u1EA1p',
-          icon: Icons.qr_code_2_rounded,
-          iconColor: _depositPrimary,
+        VitPageSection(
+          label: 'Địa chỉ nạp',
+          headerIcon: Icons.qr_code_2_rounded,
+          headerIconColor: _depositPrimary,
+          headerVariant: VitSectionHeaderVariant.plain,
           accentColor: _depositPrimary,
+          innerGap: AppSpacing.pageRhythmFormInnerGap,
+          children: [
+            _QrAddressCard(
+              asset: snapshot.asset,
+              network: selected,
+              copied: _copied,
+              onCopy: () => _copyAddress(selected.address),
+            ),
+          ],
         ),
-        _QrAddressCard(
-          asset: snapshot.asset,
-          network: selected,
-          copied: _copied,
-          onCopy: () => _copyAddress(selected.address),
-        ),
-        const VitSectionHeader(
-          title: 'An to\u00E0n',
-          icon: Icons.shield_outlined,
-          iconColor: _depositRed,
+        VitPageSection(
+          label: 'An toàn',
+          headerIcon: Icons.shield_outlined,
+          headerIconColor: _depositRed,
+          headerVariant: VitSectionHeaderVariant.plain,
           accentColor: _depositRed,
+          innerGap: AppSpacing.pageRhythmFormInnerGap,
+          children: [_WarningCard(asset: snapshot.asset, network: selected)],
         ),
-        _WarningCard(asset: snapshot.asset, network: selected),
-        const VitSectionHeader(
-          title: 'Chi ti\u1EBFt n\u1EA1p',
-          icon: Icons.receipt_long_outlined,
-          iconColor: _depositPrimary,
+        VitPageSection(
+          label: 'Chi tiết nạp',
+          headerIcon: Icons.receipt_long_outlined,
+          headerIconColor: _depositPrimary,
+          headerVariant: VitSectionHeaderVariant.plain,
           accentColor: _depositPrimary,
+          innerGap: AppSpacing.pageRhythmFormInnerGap,
+          children: [
+            _DepositInfoCard(asset: snapshot.asset, network: selected),
+            _RefreshButton(onTap: _refreshDepositIntent),
+          ],
         ),
-        _DepositInfoCard(asset: snapshot.asset, network: selected),
-        _RefreshButton(onTap: _refreshDepositIntent),
       ],
     );
   }

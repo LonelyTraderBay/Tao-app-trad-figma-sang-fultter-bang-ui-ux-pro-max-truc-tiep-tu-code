@@ -52,9 +52,9 @@ class _QaChecklist extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _MiniProgress(value: percent, color: AppColors.buy),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitCard(
                 key: ArenaFlowMapPage.checkAllKey,
                 variant: VitCardVariant.inner,
@@ -74,7 +74,7 @@ class _QaChecklist extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final entry in grouped.entries) ...[
           _QaCategory(
             category: entry.key,
@@ -82,7 +82,7 @@ class _QaChecklist extends StatelessWidget {
             checkedIds: checkedIds,
             onToggle: onToggle,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -112,7 +112,7 @@ class _QaCategory extends StatelessWidget {
           subtitle: '$checked/${items.length}',
           color: checked == items.length ? AppColors.buy : AppColors.text3,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,

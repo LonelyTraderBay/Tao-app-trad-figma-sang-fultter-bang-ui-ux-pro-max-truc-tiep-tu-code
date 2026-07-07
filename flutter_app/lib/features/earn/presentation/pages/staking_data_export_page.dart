@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -82,6 +83,7 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.tight,
                     children: [
@@ -133,7 +135,7 @@ class _ExportHero extends StatelessWidget {
             snapshot.heroTitle,
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
@@ -215,7 +217,7 @@ class _QuickExportCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.stakingDataExportQuickIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             item.name,
             maxLines: 1,
@@ -265,7 +267,7 @@ class _CustomExport extends StatelessWidget {
                 snapshot.dateRangeLabel,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -283,18 +285,18 @@ class _CustomExport extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 snapshot.formatLabel,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               _FormatSelect(
                 format: format,
                 options: snapshot.formatOptions,
                 onChanged: onFormatChanged,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitCtaButton(
                 key: StakingDataExportPage.exportKey,
                 onPressed: () {},
@@ -368,6 +370,7 @@ class _FormatSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: StakingDataExportPage.formatKey,
       variant: VitCardVariant.inner,

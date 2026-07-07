@@ -23,7 +23,7 @@ class _AcknowledgementStack extends StatelessWidget {
           label: 'Tôi đã đọc luật chơi và hiểu các điều kiện của challenge này',
           onTap: onRules,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _AcknowledgementRow(
           key: ArenaJoinPage.pointsCheckboxKey,
           checked: understandPoints,
@@ -129,7 +129,7 @@ class _ActionStack extends StatelessWidget {
           onPressed: canJoin ? onConfirm : null,
           child: Text('Xác nhận tham gia · ${_formatPoints(entryPoints)} pts'),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         SizedBox(
           width: double.infinity,
           child: VitCtaButton(

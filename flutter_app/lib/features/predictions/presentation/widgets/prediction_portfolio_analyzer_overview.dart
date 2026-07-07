@@ -61,7 +61,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.homePortfolioCardPadding,
+      padding: AppSpacing.homeCardPaddingDefault,
       background: const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +73,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             _formatMoney(snapshot.totalPortfolioValue),
             style: AppTextStyles.heroNumber.copyWith(
@@ -81,7 +81,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
               letterSpacing: 0,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Flexible(
@@ -93,7 +93,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -119,7 +119,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -230,7 +230,7 @@ class _StatsGrid extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 stat.value,
                 style: AppTextStyles.amountSm.copyWith(
@@ -261,9 +261,10 @@ class _CategoryCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Portfolio by Category',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Center(
             child: SizedBox(
               height: AppSpacing.x7 * 4,
@@ -273,7 +274,7 @@ class _CategoryCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

@@ -23,7 +23,7 @@ class _ReportList extends StatelessWidget {
             onDownload: () => onDownload(report),
             onView: () => onView(report),
           ),
-          if (report != reports.last) const SizedBox(height: AppSpacing.x3),
+          if (report != reports.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -92,7 +92,7 @@ class _ReportCard extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: _SmallPill(
@@ -105,7 +105,7 @@ class _ReportCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Text(
               report.summary,
               style: AppTextStyles.caption.copyWith(
@@ -114,13 +114,13 @@ class _ReportCard extends StatelessWidget {
               ),
             ),
             if (isPublished && report.findings.resolvedFindings > 0) ...[
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _FindingsSummary(findings: report.findings),
             ],
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _ScopeList(scope: report.scope),
             if (isPublished && report.pdfUrl != null) ...[
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.rowGap),
               Row(
                 children: [
                   Expanded(
@@ -146,7 +146,7 @@ class _ReportCard extends StatelessWidget {
               ),
             ],
             if (!isPublished) ...[
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _ProgressNote(report: report),
             ],
           ],
@@ -181,7 +181,7 @@ class _FindingsSummary extends StatelessWidget {
             'Findings Summary',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(children: [for (final item in items) Expanded(child: item)]),
         ],
       ),
@@ -227,7 +227,7 @@ class _ScopeList extends StatelessWidget {
           'Scope',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x2,

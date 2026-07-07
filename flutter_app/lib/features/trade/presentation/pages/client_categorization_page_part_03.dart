@@ -16,6 +16,7 @@ class _QuickLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
@@ -66,7 +67,7 @@ class _MetricBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,
@@ -95,6 +96,7 @@ class _CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: size,
       height: size,
@@ -105,25 +107,6 @@ class _CategoryIcon extends StatelessWidget {
       borderColor: style.color.withValues(alpha: .24),
       alignment: Alignment.center,
       child: Icon(style.icon, color: style.color, size: iconSize),
-    );
-  }
-}
-
-class _CurrentPill extends StatelessWidget {
-  const _CurrentPill({required this.color});
-
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      label: 'CURRENT',
-      status: color == _clientAmber
-          ? VitStatusPillStatus.warning
-          : color == _clientPrimary
-          ? VitStatusPillStatus.info
-          : VitStatusPillStatus.success,
-      size: VitStatusPillSize.sm,
     );
   }
 }

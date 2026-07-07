@@ -32,9 +32,9 @@ class _FaqPanel extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (var i = 0; i < items.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.x3),
+          if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FaqCard(
             index: i,
             item: items[i],
@@ -42,7 +42,7 @@ class _FaqPanel extends StatelessWidget {
             onTap: () => onToggle(i),
           ),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.supportCardPadding,
@@ -110,7 +110,7 @@ class _FaqCard extends StatelessWidget {
             ],
           ),
           if (expanded) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               item.answer,
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -118,22 +118,6 @@ class _FaqCard extends StatelessWidget {
           ],
         ],
       ),
-    );
-  }
-}
-
-class _MiniPill extends StatelessWidget {
-  const _MiniPill({required this.label, required this.style});
-
-  final String label;
-  final _SupportLabelStyle style;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: label,
-      accentColor: style.color,
-      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -158,21 +142,6 @@ class _StatusLabel extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _CategoryPill extends StatelessWidget {
-  const _CategoryPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: label,
-      accentColor: AppColors.text2,
-      size: VitStatusPillSize.sm,
     );
   }
 }

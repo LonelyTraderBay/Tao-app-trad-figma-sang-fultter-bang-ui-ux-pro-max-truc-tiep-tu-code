@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -70,6 +71,7 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
                   child: Column(
                     children: [
                       VitPageContent(
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.defaultPadding,
                         gap: VitContentGap.defaultGap,
                         children: [
@@ -85,7 +87,7 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
                           _VotingPowerNote(snapshot: snapshot),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       VitStickyFooter(
                         child: VitCtaButton(
                           key: StakingVotingPage.submitKey,
@@ -120,10 +122,14 @@ class _ProposalSummary extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Pill(label: snapshot.category),
-          const SizedBox(height: AppSpacing.x4),
+          VitAccentPill(
+            label: snapshot.category,
+            accentColor: AppColors.text3,
+            size: VitStatusPillSize.sm,
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(snapshot.proposalTitle, style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Padding(
             padding: AppSpacing.earnContentHorizontalPadding.copyWith(
               left: AppSpacing.zero,
@@ -139,7 +145,7 @@ class _ProposalSummary extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
@@ -151,7 +157,7 @@ class _ProposalSummary extends StatelessWidget {
                   snapshot.proposedByLabel,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.proposedBy,
                   style: AppTextStyles.caption.copyWith(
@@ -189,7 +195,7 @@ class _ResultsSection extends StatelessWidget {
               for (var index = 0; index < results.length; index++) ...[
                 _ResultRow(result: results[index]),
                 if (index != results.length - 1)
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.rowGap),
               ],
             ],
           ),
@@ -226,11 +232,10 @@ class _ResultRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.smRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Align(
               alignment: Alignment.centerLeft,
               child: FractionallySizedBox(
@@ -319,7 +324,7 @@ class _VoteOptionCard extends StatelessWidget {
             color: selected ? color : AppColors.text3,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             option.label,
             textAlign: TextAlign.center,
@@ -375,29 +380,6 @@ class _VotingPowerNote extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _Pill extends StatelessWidget {
-  const _Pill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
       ),
     );
   }

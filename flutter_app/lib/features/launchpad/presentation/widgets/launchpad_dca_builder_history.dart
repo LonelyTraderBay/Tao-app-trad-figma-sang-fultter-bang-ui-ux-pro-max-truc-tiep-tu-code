@@ -41,12 +41,12 @@ class LaunchpadDcaHistorySection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 _ExecutionBars(executions: executions),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'Lich su mua',
             accentColor: AppColors.buy,
@@ -106,7 +106,7 @@ class _ExecutionBars extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     execution.date.split(' ').first,
                     style: AppTextStyles.chartLabelXs.copyWith(

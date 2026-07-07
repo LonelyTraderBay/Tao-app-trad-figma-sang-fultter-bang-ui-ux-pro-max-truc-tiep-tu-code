@@ -75,7 +75,7 @@ class ArenaChallengePointsReviewCard extends StatelessWidget {
             trailing: 'Arena',
             color: AppModuleAccents.arena,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _MetricRow(label: 'Entry point cost', value: review.entryPointsLabel),
           _MetricRow(label: 'Points pool', value: review.poolLabel),
           _MetricRow(label: 'Net Points pool', value: review.netPoolLabel),

@@ -7,7 +7,7 @@ class _ProvidersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -39,7 +39,6 @@ class _ProvidersTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -79,7 +78,7 @@ class _HistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -119,7 +118,7 @@ class _HistoryTab extends StatelessWidget {
                   ],
                 ),
                 if (point != history.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),
@@ -135,6 +134,7 @@ class _AlertsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -207,7 +207,7 @@ class _AlertSetting extends StatelessWidget {
               _SwitchVisual(enabled: enabled),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,

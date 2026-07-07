@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -64,6 +65,7 @@ class StakingWebhooksPage extends ConsumerWidget {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -121,7 +123,7 @@ class _WebhooksHero extends StatelessWidget {
             snapshot.heroTitle,
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
@@ -183,7 +185,7 @@ class _WebhookCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         Icon(
@@ -220,7 +222,7 @@ class _WebhookCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -366,7 +368,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitInput(
             controller: _controller,
             fieldKey: StakingWebhooksPage.urlFieldKey,
@@ -375,12 +377,12 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
             keyboardType: TextInputType.url,
             textInputAction: TextInputAction.done,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             widget.snapshot.eventsLabel,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -402,7 +404,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(widget.snapshot.createLabel),

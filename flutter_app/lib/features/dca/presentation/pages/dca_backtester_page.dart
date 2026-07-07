@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_analysis.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_results.dart';
@@ -81,6 +82,7 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
                   physics: const ClampingScrollPhysics(),
                   bottomInset: scrollEndPadding,
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [

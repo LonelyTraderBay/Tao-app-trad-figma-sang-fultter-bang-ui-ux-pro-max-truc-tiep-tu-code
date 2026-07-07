@@ -184,6 +184,7 @@ class _IndicatorToggle extends StatelessWidget {
       button: true,
       selected: active,
       label: active ? 'Tắt chỉ báo' : 'Bật chỉ báo',
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       child: VitCard(
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
@@ -387,6 +388,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: accentColor,
     );

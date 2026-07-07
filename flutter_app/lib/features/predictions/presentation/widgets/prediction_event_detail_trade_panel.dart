@@ -59,7 +59,7 @@ class _TradeSection extends StatelessWidget {
                 ],
               ),
               if (event.outcomes.length > 2) ...[
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   'Outcome',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -86,7 +86,7 @@ class _TradeSection extends StatelessWidget {
                   ),
                 ),
               ],
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 'Order Type',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -115,14 +115,14 @@ class _TradeSection extends StatelessWidget {
                     : 'Set your desired entry price',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 'Amount',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const SizedBox(height: AppSpacing.x1),
               _TradeAmountInput(amount: amount, onChanged: onAmountChanged),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitPresetChipRow<String>(
                 selectedValue: amount,
                 onTap: onAmountChanged,
@@ -137,15 +137,15 @@ class _TradeSection extends StatelessWidget {
                   VitPresetChipItem(value: '100', label: r'$100'),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               PredictionOrderPreviewCard(preview: preview),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Đây không phải lời khuyên đầu tư. Xác suất không phải sự chắc chắn.',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitCtaButton(
                 density: VitDensity.compact,
                 variant: isBuy

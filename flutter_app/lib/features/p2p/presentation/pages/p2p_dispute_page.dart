@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -96,12 +97,16 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
                       children: [
                         _DisputeHero(snapshot: snapshot),
-                        _SectionTitle(label: 'Lý do tranh chấp'),
+                        const VitSectionHeader(
+                          title: 'Lý do tranh chấp',
+                          bottomGap: AppSpacing.pageRhythmFormInnerGap,
+                        ),
                         LayoutBuilder(
                           builder: (context, constraints) {
                             final tileWidth =
@@ -238,23 +243,6 @@ class _DisputeHero extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.caption.copyWith(
-        color: AppColors.text1,
-        fontWeight: AppTextStyles.bold,
-      ),
-    );
-  }
-}
-
 class _ReasonTile extends StatelessWidget {
   const _ReasonTile({
     super.key,
@@ -269,6 +257,7 @@ class _ReasonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
@@ -341,7 +330,7 @@ class _EvidenceUploadBox extends StatelessWidget {
               color: color,
               size: AppSpacing.iconSm,
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               uploaded ? 'evidence_p2p001.png' : title,
               maxLines: 1,

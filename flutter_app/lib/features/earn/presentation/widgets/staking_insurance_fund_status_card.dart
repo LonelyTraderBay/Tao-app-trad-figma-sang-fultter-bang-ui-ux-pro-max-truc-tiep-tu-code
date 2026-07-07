@@ -44,7 +44,7 @@ class StakingInsuranceFundStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox.square(
             dimension: 160,
             child: CustomPaint(
@@ -73,7 +73,7 @@ class StakingInsuranceFundStatusCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -93,7 +93,7 @@ class StakingInsuranceFundStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Last updated: ${snapshot.lastUpdated}',
             textAlign: TextAlign.center,
@@ -135,7 +135,7 @@ class StakingInsuranceFundMetricBlock extends StatelessWidget {
           textAlign: alignRight ? TextAlign.right : TextAlign.left,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: alignRight ? Alignment.centerRight : Alignment.centerLeft,

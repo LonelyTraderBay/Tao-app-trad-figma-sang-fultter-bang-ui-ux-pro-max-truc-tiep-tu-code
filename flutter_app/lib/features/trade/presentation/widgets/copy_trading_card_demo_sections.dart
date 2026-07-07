@@ -31,7 +31,7 @@ class _AnalysisHeader extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Below are 3 variants designed to address enterprise-level fintech standards: visual hierarchy, trust-first principles, and regulatory compliance.',
             style: AppTextStyles.body.copyWith(
@@ -39,7 +39,7 @@ class _AnalysisHeader extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
@@ -55,7 +55,7 @@ class _AnalysisHeader extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 for (final item in snapshot.improvements)
                   _BulletLine(text: item, compact: true),
               ],
@@ -88,7 +88,7 @@ class _ComparisonMatrix extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               _ScoreCard(
@@ -117,10 +117,10 @@ class _ComparisonMatrix extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _MatrixHeader(),
           for (final issue in issues) _IssueRow(issue: issue),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x5,
@@ -285,12 +285,12 @@ class _Recommendation extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             for (final item in snapshot.recommendationReasons)
               _IconLine(icon: Icons.check_rounded, text: item),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Copy trading disclosure checkpoint',
@@ -324,7 +324,7 @@ class _Guidelines extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < guidelines.length; i++)
             Padding(
               padding: AppSpacing.tradeBotCopyDemoSectionBottomPadding,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -10,7 +11,6 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/wallet_dust_converter_hero.dart';
@@ -60,13 +60,15 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
         .toList(growable: false);
     final selectedTotal = _sumUsd(selectedAssets);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final selectedAll =
+        assets.isNotEmpty && _selectedIds.length == assets.length;
+    const formInnerGap = AppSpacing.pageRhythmFormInnerGap;
 
     return VitWalletDetailScaffold(
       title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
       subtitle: 'D\u1ECDn d\u1EB9p \u00b7 Wallet',
       semanticLabel: 'SC-154 DustConverterPage',
       contentKey: DustConverterPage.contentKey,
-      contentGap: VitContentGap.tight,
       shellRenderMode: mode,
       onBack: () => context.go(AppRoutePaths.wallet),
       children: [
@@ -87,53 +89,64 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
           selectedCount: _selectedIds.length,
           selectedValue: selectedTotal,
         ),
-        VitSectionHeader(
-          title: 'Chuy\u1EC3n \u0111\u1ED5i sang',
-          density: VitDensity.compact,
-        ),
-        _TargetSelector(
-          targets: snapshot.targets,
-          selected: _targetSymbol,
-          onSelected: (symbol) => setState(() {
-            _targetSymbol = symbol;
-            _selectedIds.clear();
-            _converted = false;
-          }),
-        ),
-        VitSectionHeader(
-          title: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
-          density: VitDensity.compact,
-        ),
-        if (assets.isEmpty)
-          const VitEmptyState(
-            title: 'Kh\u00F4ng c\u00F3 s\u1ED1 d\u01B0 nh\u1ECF',
-            message:
-                'C\u00E1c t\u00E0i s\u1EA3n d\u01B0\u1EDBi ng\u01B0\u1EE1ng dust s\u1EBD hi\u1EC3n th\u1ECB t\u1EA1i \u0111\u00E2y.',
-            icon: Icons.auto_awesome_outlined,
-          )
-        else ...[
-          _SelectAllRow(
-            selectedAll: _selectedIds.length == assets.length,
-            selectedCount: _selectedIds.length,
-            totalCount: assets.length,
-            onTap: () => setState(() {
-              _converted = false;
-              if (_selectedIds.length == assets.length) {
+        VitPageSection(
+          label: 'Chuy\u1EC3n \u0111\u1ED5i sang',
+          headerVariant: VitSectionHeaderVariant.plain,
+          headerDensity: VitDensity.compact,
+          innerGap: formInnerGap,
+          children: [
+            _TargetSelector(
+              targets: snapshot.targets,
+              selected: _targetSymbol,
+              onSelected: (symbol) => setState(() {
+                _targetSymbol = symbol;
                 _selectedIds.clear();
-              } else {
-                _selectedIds
-                  ..clear()
-                  ..addAll(assets.map((asset) => asset.id));
-              }
-            }),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          _DustAssetList(
-            assets: assets,
-            selectedIds: _selectedIds,
-            onToggle: _toggleAsset,
-          ),
-        ],
+                _converted = false;
+              }),
+            ),
+          ],
+        ),
+        VitPageSection(
+          label: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
+          headerVariant: VitSectionHeaderVariant.plain,
+          headerDensity: VitDensity.compact,
+          actionLabel: assets.isEmpty
+              ? null
+              : selectedAll
+              ? 'B\u1ECF ch\u1ECDn t\u1EA5t c\u1EA3'
+              : 'Ch\u1ECDn t\u1EA5t c\u1EA3',
+          actionKey: assets.isEmpty ? null : DustConverterPage.selectAllKey,
+          actionShowChevron: false,
+          actionSemanticLabel: 'Toggle all dust assets',
+          onAction: assets.isEmpty
+              ? null
+              : () => setState(() {
+                  _converted = false;
+                  if (selectedAll) {
+                    _selectedIds.clear();
+                  } else {
+                    _selectedIds
+                      ..clear()
+                      ..addAll(assets.map((asset) => asset.id));
+                  }
+                }),
+          innerGap: formInnerGap,
+          children: [
+            if (assets.isEmpty)
+              const VitEmptyState(
+                title: 'Kh\u00F4ng c\u00F3 s\u1ED1 d\u01B0 nh\u1ECF',
+                message:
+                    'C\u00E1c t\u00E0i s\u1EA3n d\u01B0\u1EDBi ng\u01B0\u1EE1ng dust s\u1EBD hi\u1EC3n th\u1ECB t\u1EA1i \u0111\u00E2y.',
+                icon: Icons.auto_awesome_outlined,
+              )
+            else
+              _DustAssetList(
+                assets: assets,
+                selectedIds: _selectedIds,
+                onToggle: _toggleAsset,
+              ),
+          ],
+        ),
         _PrimaryButton(
           key: DustConverterPage.ctaKey,
           enabled: _selectedIds.isNotEmpty,
@@ -212,7 +225,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(

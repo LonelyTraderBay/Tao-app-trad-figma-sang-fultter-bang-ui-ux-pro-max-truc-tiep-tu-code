@@ -44,25 +44,30 @@ class _CurrentGasTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      density: VitDensity.compact,
-      children: [
-        _GasStatusCard(snapshot: snapshot),
-        const _SectionLabel(label: 'Chọn tốc độ giao dịch'),
-        for (var i = 0; i < snapshot.levels.length; i++) ...[
-          _GasLevelCard(
-            level: snapshot.levels[i],
-            selected: selectedSpeed == snapshot.levels[i].speed,
-            onTap: () => onSelectSpeed(snapshot.levels[i].speed),
-          ),
-        ],
-        _ComparisonCard(comparisons: snapshot.comparisons),
-        _RefreshButton(onPressed: onRefresh),
-      ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: sectionChildren,
     );
   }
+
+  List<Widget> get sectionChildren => [
+        _GasStatusCard(snapshot: snapshot),
+        VitPageSection(
+          label: 'Ch\u1ECDn t\u1ED1c \u0111\u1ED9 giao d\u1ECBch',
+          accentColor: _gasPrimary,
+          innerGap: AppSpacing.pageRhythmStandardInnerGap,
+          children: [
+            for (var i = 0; i < snapshot.levels.length; i++)
+              _GasLevelCard(
+                level: snapshot.levels[i],
+                selected: selectedSpeed == snapshot.levels[i].speed,
+                onTap: () => onSelectSpeed(snapshot.levels[i].speed),
+              ),
+          ],
+        ),
+        _ComparisonCard(comparisons: snapshot.comparisons),
+        _RefreshButton(onPressed: onRefresh),
+      ];
 }
 
 class _GasStatusCard extends StatelessWidget {
@@ -112,7 +117,7 @@ class _GasStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text.rich(
             TextSpan(
               text: 'Current gas is estimated ',
@@ -134,22 +139,6 @@ class _GasStatusCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _gasPrimary,
-      density: VitDensity.compact,
     );
   }
 }
@@ -236,7 +225,7 @@ class _GasLevelCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.hairlineRadius,
             child: LinearProgressIndicator(
@@ -288,11 +277,11 @@ class _ComparisonCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var i = 0; i < comparisons.length; i++) ...[
             _ComparisonRow(comparison: comparisons[i]),
             if (i != comparisons.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

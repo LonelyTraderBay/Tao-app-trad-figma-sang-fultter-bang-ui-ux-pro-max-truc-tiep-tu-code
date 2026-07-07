@@ -82,7 +82,7 @@ class _CategorySection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final alert in alerts) ...[
           _AlertCard(
             alert: alert,
@@ -90,9 +90,9 @@ class _CategorySection extends StatelessWidget {
             disabled: !masterEnabled,
             onToggle: () => onToggle(alert.id),
           ),
-          if (alert != alerts.last) const SizedBox(height: AppSpacing.x2),
+          if (alert != alerts.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
       ],
     );
   }

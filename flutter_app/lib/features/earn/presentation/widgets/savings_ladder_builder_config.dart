@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -28,6 +29,7 @@ class AmountSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.amountKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -106,6 +108,7 @@ class TemplateList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.templatesKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -156,6 +159,7 @@ class _TemplateCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
+       rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
               fullBleed: true,
               gap: VitContentGap.tight,

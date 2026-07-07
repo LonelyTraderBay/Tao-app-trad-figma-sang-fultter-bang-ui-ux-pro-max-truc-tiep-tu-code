@@ -29,14 +29,14 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Text(
                 'Tom tat rebalance',
-                style: AppTextStyles.captionSm.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           LaunchpadRebalanceSummaryRow(
             label: 'So giao dich can thuc hien',
             value: '$txCount tx',

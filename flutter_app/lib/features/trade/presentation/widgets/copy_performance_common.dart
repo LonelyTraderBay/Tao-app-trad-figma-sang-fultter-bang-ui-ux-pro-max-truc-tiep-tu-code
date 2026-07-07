@@ -228,7 +228,7 @@ class _TradeColumn extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: AppTextStyles.micro.copyWith(color: color)),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _MiniRow(label: 'Entry', value: '\$${entry.toStringAsFixed(0)}'),
           _MiniRow(label: 'Exit', value: '\$${exit.toStringAsFixed(0)}'),
           const Divider(color: AppColors.divider, height: AppSpacing.rowPy),

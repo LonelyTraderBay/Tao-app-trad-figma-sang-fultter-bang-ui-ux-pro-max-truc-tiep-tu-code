@@ -38,7 +38,7 @@ class _BatchSummaryHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -63,7 +63,7 @@ class _BatchSummaryHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,

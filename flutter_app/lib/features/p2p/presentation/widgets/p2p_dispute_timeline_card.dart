@@ -19,7 +19,7 @@ class P2PDisputeTimelineCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var index = 0; index < timeline.length; index++)
             _TimelineItem(
               item: timeline[index],

@@ -93,7 +93,7 @@ class _TierPathCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var i = 0; i < snapshot.tierRequirements.length; i++) ...[
             _TierCard(
               tier: snapshot.tierRequirements[i],
@@ -169,7 +169,7 @@ class _TierCard extends StatelessWidget {
             ],
           ),
           if (!tier.isUnlocked) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
                 Text(
@@ -208,7 +208,7 @@ class _TierCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,

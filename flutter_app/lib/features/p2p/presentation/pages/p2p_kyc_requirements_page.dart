@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -83,9 +84,9 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _KycHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _KycNotice(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         for (final tier in snapshot.tiers) ...[
                           _KycTierCard(
                             tier: tier,
@@ -99,11 +100,12 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                                 : null,
                           ),
                           if (tier != snapshot.tiers.last)
-                            const SizedBox(height: AppSpacing.x3),
+                            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         ],
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _KycSupportCard(snapshot: snapshot),
                         VitPageContent(
+       rhythm: VitPageRhythm.form,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: const [

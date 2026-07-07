@@ -12,9 +12,9 @@ class _InfoBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _AccentIcon(
+          const VitAccentIconBox(
             icon: Icons.auto_awesome_outlined,
-            accent: AppColors.primary,
+            color: AppColors.primary,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -28,12 +28,12 @@ class _InfoBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Tự động điều chỉnh thời điểm DCA theo volatility, gas hoặc khối lượng — giữ kỷ luật mua định kỳ.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                   ),
                 ),
@@ -62,8 +62,12 @@ class _StrategySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle(icon: Icons.flash_on_outlined, title: 'Chiến lược'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+          title: 'Chiến lược',
+          icon: Icons.flash_on_outlined,
+          iconColor: AppColors.text1,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -135,11 +139,12 @@ class _TimePreferenceSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle(
-          icon: Icons.schedule_outlined,
+        const VitSectionHeader(
           title: 'Khung giờ ưu tiên',
+          icon: Icons.schedule_outlined,
+          iconColor: AppColors.text1,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
         ),
-        const SizedBox(height: AppSpacing.x3),
         LayoutBuilder(
           builder: (context, constraints) {
             final availableWidth = constraints.maxWidth.isFinite

@@ -80,7 +80,7 @@ class _SecurityScoreCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Điểm bảo mật', style: AppTextStyles.sectionTitle),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.scoreSubtitle,
                       style: AppTextStyles.micro.copyWith(
@@ -97,7 +97,7 @@ class _SecurityScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Center(
             child: SizedBox(
               width: _p2pSecurityScoreBox,
@@ -138,7 +138,7 @@ class _SecurityScoreCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Material(
             type: MaterialType.transparency,
             color: AppColors.buy10,
@@ -172,8 +172,10 @@ class _SecurityFeatures extends StatelessWidget {
       key: P2PSecurityCenterPage.featuresKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle('Tính năng bảo mật'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+          title: 'Tính năng bảo mật',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,

@@ -85,9 +85,9 @@ class _LimitOrderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _OrderMetricsGrid(order: order),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -114,12 +114,12 @@ class _LimitOrderCard extends StatelessWidget {
                 ? AppColors.warn
                 : AppColors.primary,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.border,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(

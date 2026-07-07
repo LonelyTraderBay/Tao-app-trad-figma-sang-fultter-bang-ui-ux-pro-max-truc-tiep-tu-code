@@ -43,7 +43,7 @@ class _OrderPreview extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 _PreviewMetric(label: 'Type', value: '$sideLabel $token'),
@@ -53,7 +53,7 @@ class _OrderPreview extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 _PreviewMetric(label: 'Expires', value: '$expiryDays days'),

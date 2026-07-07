@@ -15,13 +15,27 @@ class _ProgressSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SectionTitle(
-          title: 'Tiến trình & Phần thưởng',
-          trailing: summary.tierLabel,
-          icon: Icons.workspace_premium_outlined,
-          color: AppModuleAccents.rewards,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: VitSectionHeader(
+                title: 'Tiến trình & Phần thưởng',
+                icon: Icons.workspace_premium_outlined,
+                iconColor: AppModuleAccents.rewards,
+                accentColor: AppModuleAccents.rewards,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+              ),
+            ),
+            Text(
+              summary.tierLabel,
+              style: AppTextStyles.micro.copyWith(
+                color: AppModuleAccents.rewards,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x2),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -29,7 +43,7 @@ class _ProgressSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const _AccentIcon(
+                  const VitAccentIconBox(
                     icon: Icons.workspace_premium_outlined,
                     color: AppModuleAccents.rewards,
                   ),
@@ -63,9 +77,9 @@ class _ProgressSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               const _ProgressBar(value: .56, color: AppModuleAccents.rewards),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Bảng xếp hạng',
                 style: AppTextStyles.body.copyWith(
@@ -84,7 +98,7 @@ class _ProgressSection extends StatelessWidget {
                   onTap: onLeaderboardTap,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               for (final entry in leaderboard) ...[
                 _LeaderboardRow(entry: entry),
                 if (entry != leaderboard.last)
@@ -171,74 +185,6 @@ class _RewardsDisclaimer extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.title,
-    required this.icon,
-    required this.color,
-    this.trailing,
-  });
-
-  final String title;
-  final IconData icon;
-  final Color color;
-  final String? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: AppSpacing.arenaPointsInlineIcon),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-        if (trailing != null)
-          Text(
-            trailing!,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _TaskStatusPill extends StatelessWidget {
-  const _TaskStatusPill({required this.status});
-
-  final RewardTaskStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (status) {
-      RewardTaskStatus.completed => const VitStatusPill(
-        label: 'Nhận',
-        status: VitStatusPillStatus.orange,
-        size: VitStatusPillSize.sm,
-      ),
-      RewardTaskStatus.claimed => const VitStatusPill(
-        label: 'Đã nhận',
-        status: VitStatusPillStatus.success,
-        size: VitStatusPillSize.sm,
-      ),
-      RewardTaskStatus.active => const VitStatusPill(
-        label: 'Đang làm',
-        status: VitStatusPillStatus.neutral,
-        size: VitStatusPillSize.sm,
-      ),
-    };
   }
 }
 
@@ -374,33 +320,6 @@ class _MiniBadge extends StatelessWidget {
   }
 }
 
-class _AccentIcon extends StatelessWidget {
-  const _AccentIcon({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: .14),
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: color.withValues(alpha: .24)),
-            borderRadius: AppRadii.mdRadius,
-          ),
-        ),
-        child: Center(
-          child: Icon(icon, color: color, size: AppSpacing.iconMd),
-        ),
-      ),
-    );
-  }
-}
-
 Color _accentColor(RewardAccentKind kind) {
   return switch (kind) {
     RewardAccentKind.daily => AppColors.primary,
@@ -426,5 +345,13 @@ IconData _accentIcon(RewardAccentKind kind) {
     RewardAccentKind.p2p => Icons.handshake_outlined,
     RewardAccentKind.referral => Icons.group_add_outlined,
     RewardAccentKind.neutral => Icons.task_alt_outlined,
+  };
+}
+
+VitTaskCardStatus _vitTaskCardStatus(RewardTaskStatus status) {
+  return switch (status) {
+    RewardTaskStatus.active => VitTaskCardStatus.active,
+    RewardTaskStatus.completed => VitTaskCardStatus.completed,
+    RewardTaskStatus.claimed => VitTaskCardStatus.claimed,
   };
 }

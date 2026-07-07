@@ -30,7 +30,7 @@ class _SideChoice extends StatelessWidget {
             isBuy ? Icons.south_rounded : Icons.north_rounded,
             color: active ? color : AppColors.text3,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             isBuy ? 'Buy' : 'Sell',
             style: AppTextStyles.base.copyWith(
@@ -76,7 +76,7 @@ class _LabeledField extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitInput(
           fieldKey: fieldKey,
           controller: controller,

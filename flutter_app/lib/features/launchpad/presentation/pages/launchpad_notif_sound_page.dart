@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -96,7 +97,7 @@ class _LaunchpadNotifSoundPageState
           child: SingleChildScrollView(
             key: LaunchpadNotifSoundPage.contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
+            child: VitPageContent(rhythm: VitPageRhythm.standard, 
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [

@@ -27,7 +27,7 @@ class _RequirementsStep extends StatelessWidget {
           inactiveLabel: 'Hoàn thành KYC ngay',
           onTap: () => onChanged(draft.copyWith(hasKyc: !draft.hasKyc)),
         ),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         _NumberPanel(
           title: 'Trading History',
           description: 'Tài khoản phải có lịch sử giao dịch ít nhất 6 tháng',
@@ -61,7 +61,7 @@ class _DisclosureStep extends StatelessWidget {
             draft.copyWith(agreedToDisclosure: !draft.agreedToDisclosure),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         _ConsentTile(
           tileKey: ProviderApplicationPage.fiduciaryKey,
           checked: draft.agreedToFiduciary,
@@ -99,7 +99,7 @@ class _FeesStep extends StatelessWidget {
           description:
               'Bạn nhận ${draft.performanceFee}% từ lợi nhuận của copiers, chỉ khi copier có lời theo high-water mark.',
         ),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         TextField(
           key: ProviderApplicationPage.strategyFieldKey,
           controller: strategyController,
@@ -110,7 +110,7 @@ class _FeesStep extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text1),
           decoration: _inputDecoration('Mô tả chiến lược tối thiểu 100 ký tự'),
         ),
-        const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Text(
           '${draft.strategyDescription.length}/100 ký tự',
           style: AppTextStyles.caption.copyWith(
@@ -143,14 +143,14 @@ class _ReviewStep extends StatelessWidget {
               'Preview fee, disclosure, copier impact, limits, and next step before submitting this provider application.',
           contractId: 'SC-069 provider review',
         ),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         _InfoPanel(
           icon: Icons.fact_check_outlined,
           title: 'Thông tin cơ bản',
           description:
               'Trading history ${draft.tradingMonths} tháng, vốn \$${draft.minCapital}, performance fee ${draft.performanceFee}%.',
         ),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         _ConsentTile(
           tileKey: ProviderApplicationPage.termsKey,
           checked: draft.agreedToTerms,

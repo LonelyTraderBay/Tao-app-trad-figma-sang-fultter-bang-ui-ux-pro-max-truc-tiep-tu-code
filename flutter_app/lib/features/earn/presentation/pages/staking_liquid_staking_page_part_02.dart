@@ -48,7 +48,7 @@ class _SwapTab extends StatelessWidget {
                 onSelected: onFromChanged,
                 onAmountChanged: onAmountChanged,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Center(
                 child: VitCtaButton(
                   variant: VitCtaButtonVariant.secondary,
@@ -62,7 +62,7 @@ class _SwapTab extends StatelessWidget {
                   child: const Icon(Icons.swap_vert_rounded),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _ReceiveRow(
                 label: 'Sang',
                 selected: swapTo,
@@ -71,7 +71,7 @@ class _SwapTab extends StatelessWidget {
                 onSelected: onToChanged,
               ),
               if (canSwap) ...[
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 _SwapSummary(
                   key: StakingLiquidStakingPage.swapSummaryKey,
                   swapFrom: swapFrom,
@@ -85,12 +85,12 @@ class _SwapTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           onPressed: canSwap ? () {} : null,
           child: Text('Swap $swapFrom → $swapTo'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
@@ -233,7 +233,7 @@ class _FieldGroup extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         child,
       ],
     );
@@ -384,7 +384,7 @@ class _HoldingsTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Text(
                           _formatUsd(snapshot.holdingsValue),
                           style: AppTextStyles.numericDisplayXl,
@@ -413,7 +413,7 @@ class _HoldingsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: const [
                   Expanded(child: _HoldingMetric(label: 'stETH Balance')),
@@ -424,7 +424,7 @@ class _HoldingsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _EmptyHoldings(onStakeNow: onStakeNow),
       ],
     );
@@ -472,12 +472,12 @@ class _EmptyHoldings extends StatelessWidget {
           color: AppColors.text3,
           size: AppSpacing.x7,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
           'Bạn chưa có liquid token nào',
           style: AppTextStyles.body.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           fullWidth: false,
           onPressed: onStakeNow,

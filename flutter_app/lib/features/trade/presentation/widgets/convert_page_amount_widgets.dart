@@ -69,7 +69,7 @@ class _ConvertHeroCard extends StatelessWidget {
               VitAccentPill(label: countdown, accentColor: _tradePrimary),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _AmountSection(
             label: 'Từ',
             asset: fromAsset,
@@ -102,7 +102,7 @@ class _ConvertHeroCard extends StatelessWidget {
             ),
           ),
           if (favoritePairs.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             SizedBox(
               height: AppSpacing.convertFavoriteChipHeight,
               child: ListView.separated(
@@ -184,7 +184,7 @@ class _AmountSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             _AssetButton(
@@ -228,7 +228,7 @@ class _AmountSection extends StatelessWidget {
           ],
         ),
         if (input) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitPresetChipRow.percentBalance(
             onTap: onPercent!,
             keyFor: ConvertPage.pctKey,
@@ -236,7 +236,7 @@ class _AmountSection extends StatelessWidget {
             height: AppSpacing.convertChipHeight,
             padding: AppSpacing.zeroInsets,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Text(
@@ -269,6 +269,7 @@ class _AssetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,

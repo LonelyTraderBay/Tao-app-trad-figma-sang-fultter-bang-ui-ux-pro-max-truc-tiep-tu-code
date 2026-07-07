@@ -7,13 +7,13 @@ import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dar
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -67,45 +67,39 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-156 ProfilePage',
-      child: Material(
-        color: _profileBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: const VitTopChrome(
-            type: VitTopChromeType.rootModule,
-            title: 'T\u00E0i kho\u1EA3n',
-          ),
-          child: SingleChildScrollView(
-            key: ProfilePage.contentKey,
-            padding: AppSpacing.profileScrollPadding(bottomInset),
-            physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
-              padding: VitContentPadding.none,
-              density: VitDensity.compact,
-              fullBleed: true,
-              children: [
-                _ProfileBody(
-                  snapshot: snapshot,
-                  copiedReferral: _copiedReferral,
-                  onEdit: () => context.go(AppRoutePaths.profileEdit),
-                  onCopyReferral: () {
-                    Clipboard.setData(
-                      ClipboardData(text: snapshot.user.referralCode),
-                    );
-                    setState(() => _copiedReferral = true);
-                  },
-                  onOpenVip: () => context.go(AppRoutePaths.profileVip),
-                  onOpenPredictions: () =>
-                      context.go(AppRoutePaths.profilePredictions),
-                  onOpenArena: () => context.go(AppRoutePaths.profileArena),
-                  onOpenActivity: () =>
-                      context.go(AppRoutePaths.profileActivity),
-                  onLogout: () => context.go(AppRoutePaths.authLogin),
-                ),
-              ],
-            ),
+      background: _profileBackground,
+      header: const VitTopChrome(
+        type: VitTopChromeType.rootModule,
+        title: 'T\u00E0i kho\u1EA3n',
+      ),
+      body: SingleChildScrollView(
+        key: ProfilePage.contentKey,
+        padding: AppSpacing.profileScrollPadding(bottomInset),
+        physics: const ClampingScrollPhysics(),
+        child: VitPageContent(
+          rhythm: VitPageRhythm.compact,
+          padding: VitContentPadding.none,
+          density: VitDensity.compact,
+          fullBleed: true,
+          children: _profilePageChildren(
+            context: context,
+            snapshot: snapshot,
+            copiedReferral: _copiedReferral,
+            onEdit: () => context.go(AppRoutePaths.profileEdit),
+            onCopyReferral: () {
+              Clipboard.setData(
+                ClipboardData(text: snapshot.user.referralCode),
+              );
+              setState(() => _copiedReferral = true);
+            },
+            onOpenVip: () => context.go(AppRoutePaths.profileVip),
+            onOpenPredictions: () =>
+                context.go(AppRoutePaths.profilePredictions),
+            onOpenArena: () => context.go(AppRoutePaths.profileArena),
+            onOpenActivity: () => context.go(AppRoutePaths.profileActivity),
+            onLogout: () => context.go(AppRoutePaths.authLogin),
           ),
         ),
       ),

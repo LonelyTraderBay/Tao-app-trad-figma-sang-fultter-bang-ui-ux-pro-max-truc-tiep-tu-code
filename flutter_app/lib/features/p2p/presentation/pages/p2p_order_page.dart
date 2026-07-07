@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -32,8 +33,6 @@ const double _p2pOrderVisualClearance = AppSpacing.x3;
 const double _p2pOrderNativeClearance = AppSpacing.x2;
 const double _p2pOrderDividerHeight = AppSpacing.dividerHairline;
 const double _p2pOrderStepperConnectorHeight = AppSpacing.hairlineStroke;
-const double _p2pOrderSmallButtonHeight = AppSpacing.buttonCompact;
-const double _p2pOrderQuickButtonHeight = AppSpacing.buttonCompact;
 const double _p2pOrderTimelineNodeSize = AppSpacing.x6;
 const double _p2pOrderTimelineConnectorHeight = AppSpacing.x5;
 const double _p2pOrderSafetyIconBox = AppSpacing.x5;

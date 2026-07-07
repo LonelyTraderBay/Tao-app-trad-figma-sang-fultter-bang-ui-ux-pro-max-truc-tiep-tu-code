@@ -50,7 +50,7 @@ class _TermsList extends StatelessWidget {
               ],
             ),
             if (i < snapshot.terms.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -82,7 +82,7 @@ class _FaqList extends StatelessWidget {
             index: i,
           ),
           if (i < snapshot.faqs.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

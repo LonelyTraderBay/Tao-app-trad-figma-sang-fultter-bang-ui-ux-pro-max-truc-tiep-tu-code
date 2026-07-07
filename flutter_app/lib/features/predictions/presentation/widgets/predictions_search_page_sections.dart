@@ -32,8 +32,8 @@ class _SearchControl extends StatelessWidget {
   }
 }
 
-class _FilterPanel extends StatelessWidget {
-  const _FilterPanel({
+class _SearchFilterSection extends StatelessWidget {
+  const _SearchFilterSection({
     required this.sort,
     required this.status,
     required this.categories,
@@ -109,7 +109,7 @@ class _FilterPanel extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const _FilterLabel('Trạng thái'),
         const SizedBox(height: AppSpacing.x1),
         VitSegmentedChoice<PredictionStatusFilter>(
@@ -133,7 +133,7 @@ class _FilterPanel extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const _FilterLabel('Danh mục'),
         const SizedBox(height: AppSpacing.x1),
         SingleChildScrollView(
@@ -160,7 +160,7 @@ class _FilterPanel extends StatelessWidget {
           ),
         ),
         if (hasActiveFilters) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: PredictionsSearchPage.clearFiltersKey,
             onPressed: onClear,

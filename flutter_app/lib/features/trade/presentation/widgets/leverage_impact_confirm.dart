@@ -53,7 +53,7 @@ class _ImpactCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: _tradePrimary,
-                size: AppSpacing.walletAssetSectionGap,
+                size: AppSpacing.tradeTpslIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -68,7 +68,7 @@ class _ImpactCard extends StatelessWidget {
           const SizedBox(height: _leverageSpace),
           Text(
             'Với ký quỹ \$${_formatWholeNumber(margin)} USDT',
-            style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: _leverageSpace),
           for (final row in rows)
@@ -104,7 +104,7 @@ class _ImpactRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                     height: _leverageImpactRowLineHeight,
                   ),
@@ -171,7 +171,7 @@ class _RiskTipsCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.sell,
-                size: AppSpacing.walletAssetSectionGap,
+                size: AppSpacing.tradeTpslIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -200,7 +200,7 @@ class _RiskTipsCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     tip,
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       height: 1.4,
                     ),
@@ -208,7 +208,7 @@ class _RiskTipsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (tip != _tips.last) const SizedBox(height: AppSpacing.x3),
+            if (tip != _tips.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

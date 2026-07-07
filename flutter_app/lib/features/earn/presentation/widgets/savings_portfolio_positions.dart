@@ -45,10 +45,10 @@ class PositionsTab extends StatelessWidget {
             VitTabItem(key: 'locked', label: 'Cố định'),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final position in positions) ...[
           _PositionCard(position: position),
-          if (position != positions.last) const SizedBox(height: AppSpacing.x3),
+          if (position != positions.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -154,14 +154,14 @@ class EarningsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 hideBalance ? '••••••' : '+\$77.72',
                 style: AppTextStyles.numericDisplayXl.copyWith(
                   color: AppColors.buy,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'APY ${snapshot.weightedApy} - Lãi tiết kiệm',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -169,9 +169,9 @@ class EarningsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         SectionLabel(label: 'Lãi theo tài sản', color: AppColors.accent),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: savingsPortfolioCardPadding,
@@ -180,7 +180,7 @@ class EarningsTab extends StatelessWidget {
               for (final position in snapshot.positions) ...[
                 AllocationRow(position: position),
                 if (position != snapshot.positions.last)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),

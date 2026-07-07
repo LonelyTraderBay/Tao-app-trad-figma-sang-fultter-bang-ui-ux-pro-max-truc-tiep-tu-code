@@ -272,7 +272,6 @@ class _ChoiceChip extends StatelessWidget {
       label: label,
       selected: selected,
       onTap: onTap,
-      height: AppSpacing.buttonCompact,
       padding: AppSpacing.devChipPadding,
     );
   }
@@ -298,7 +297,6 @@ class _ToggleChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: color,
-      height: AppSpacing.buttonCompact,
       padding: AppSpacing.devChipPadding,
       leading: Icon(
         active ? Icons.check_box_rounded : Icons.check_box_outline_blank,

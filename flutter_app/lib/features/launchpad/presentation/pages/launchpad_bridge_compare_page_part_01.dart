@@ -39,7 +39,7 @@ class _InputSummaryHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -103,7 +103,7 @@ class _ChainAmount extends StatelessWidget {
           accent: accent,
           size: AppSpacing.launchpadIconHuge,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           amount,
           maxLines: 1,
@@ -157,21 +157,21 @@ class _QuickComparisonCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _MetricBars(
             title: 'Output (${comparison.outputToken})',
             routes: comparison.routes,
             metric: _BridgeMetric.output,
             bestRouteId: comparison.bestOutput,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _MetricBars(
             title: 'Tổng phí (USD)',
             routes: comparison.routes,
             metric: _BridgeMetric.fee,
             bestRouteId: comparison.bestFee,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _MetricBars(
             title: 'Thời gian',
             routes: comparison.routes,
@@ -214,7 +214,7 @@ class _MetricBars extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final route in routes)
           _MetricBarRow(
             route: route,

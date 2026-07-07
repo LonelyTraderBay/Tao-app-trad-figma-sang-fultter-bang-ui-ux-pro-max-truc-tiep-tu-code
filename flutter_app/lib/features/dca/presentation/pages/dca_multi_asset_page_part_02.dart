@@ -38,14 +38,14 @@ class _RebalancingCard extends StatelessWidget {
             ],
           ),
           if (enabled) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitInput(
               controller: controller,
               fieldKey: DCAMultiAssetPage.thresholdFieldKey,
               label: 'Rebalance Threshold (%)',
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               'Rebalance when allocation deviates by this %',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -65,6 +65,7 @@ class _TokenSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: DCAMultiAssetPage.rebalanceToggleKey,
       onTap: onToggle,
@@ -124,7 +125,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Portfolio Overview'),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -144,7 +145,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -163,7 +164,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             height: AppSpacing.dcaMultiAllocationChartHeight,
             child: CustomPaint(
@@ -235,7 +236,7 @@ class _AssetDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -253,7 +254,7 @@ class _AssetDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -289,13 +290,13 @@ class _GrowthCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Investment Growth by Asset'),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             height: AppSpacing.dcaMultiGrowthChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _StackedBarsPainter(points: points)),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x4,
             runSpacing: AppSpacing.x3,
@@ -465,7 +466,7 @@ class _WarningCallout extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),

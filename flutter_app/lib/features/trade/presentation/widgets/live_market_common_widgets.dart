@@ -100,6 +100,7 @@ class LiveMarketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: variant,
       radius: radius,
@@ -130,6 +131,7 @@ class LiveMarketMetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: bg == liveMarketPanel2
           ? VitCardVariant.inner

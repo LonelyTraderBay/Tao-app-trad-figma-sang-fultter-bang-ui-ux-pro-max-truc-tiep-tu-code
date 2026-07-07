@@ -91,7 +91,15 @@ class _MarketTicker extends StatelessWidget {
                 style: AppTextStyles.numericDisplaySm,
               ),
               const SizedBox(width: AppSpacing.x2),
-              _ChangePill(value: market.changePct),
+              VitMetricDeltaPill(
+                label: _formatChange(market.changePct),
+                tone: market.changePct >= 0
+                    ? VitMetricDeltaTone.positive
+                    : VitMetricDeltaTone.negative,
+                icon: market.changePct >= 0
+                    ? Icons.arrow_outward_rounded
+                    : Icons.south_east_rounded,
+              ),
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
@@ -181,23 +189,6 @@ class _MarketTicker extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ChangePill extends StatelessWidget {
-  const _ChangePill({required this.value});
-
-  final double value;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitMetricDeltaPill(
-      label: _formatChange(value),
-      tone: value >= 0
-          ? VitMetricDeltaTone.positive
-          : VitMetricDeltaTone.negative,
-      icon: value >= 0 ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
     );
   }
 }

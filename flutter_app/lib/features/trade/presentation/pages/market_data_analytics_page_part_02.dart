@@ -9,6 +9,7 @@ class _TopTradersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AnalyticsCard(
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -105,6 +106,7 @@ class _FundingRateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AnalyticsCard(
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -200,6 +202,7 @@ class _LiquidationsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final stats = snapshot.liquidationStats;
     return VitPageContent(
+   rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,

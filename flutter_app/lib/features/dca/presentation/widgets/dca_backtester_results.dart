@@ -19,11 +19,11 @@ class DcaBacktesterResults extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _ResultSummary(result: snapshot.result),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _GrowthChartCard(points: snapshot.historicalData),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _MetricsCard(result: snapshot.result),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _DcaAdvantageCard(result: snapshot.result),
       ],
     );
@@ -80,7 +80,7 @@ class _ResultSummary extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         item.$2,
                         style: AppTextStyles.sectionTitle.copyWith(
@@ -112,7 +112,7 @@ class _GrowthChartCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const DcaCardTitle('Portfolio Growth (DCA vs Lump Sum)'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.buttonHero * 2 + AppSpacing.x6,
             child: CustomPaint(
@@ -161,7 +161,7 @@ class _MetricsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const DcaSectionLabel(label: 'Performance Metrics'),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final metric in metrics) ...[
             Row(
               children: [
@@ -190,7 +190,7 @@ class _MetricsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (metric != metrics.last) const SizedBox(height: AppSpacing.x3),
+            if (metric != metrics.last) const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),

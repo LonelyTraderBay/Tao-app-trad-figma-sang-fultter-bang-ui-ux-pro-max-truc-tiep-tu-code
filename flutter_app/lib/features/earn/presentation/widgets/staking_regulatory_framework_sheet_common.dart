@@ -27,7 +27,7 @@ class _LicenseDetailSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.earnCardPaddingX4,
@@ -47,9 +47,9 @@ class _LicenseDetailSheet extends StatelessWidget {
                   _StatusPill(status: license.status),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(license.regulator, style: AppTextStyles.baseMedium),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _SheetRow(label: 'License Number', value: license.licenseNumber),
               _SheetRow(label: 'Issued Date', value: license.issuedDate),
               if (license.expiryDate != null)
@@ -57,7 +57,7 @@ class _LicenseDetailSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
           'Authorized Scope',
           style: AppTextStyles.caption.copyWith(
@@ -65,7 +65,7 @@ class _LicenseDetailSheet extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final scope in license.scope) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,9 +88,9 @@ class _LicenseDetailSheet extends StatelessWidget {
             ],
           ),
           if (scope != license.scope.last)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           key: StakingRegulatoryFrameworkPage.detailCtaKey,
           variant: VitCtaButtonVariant.secondary,

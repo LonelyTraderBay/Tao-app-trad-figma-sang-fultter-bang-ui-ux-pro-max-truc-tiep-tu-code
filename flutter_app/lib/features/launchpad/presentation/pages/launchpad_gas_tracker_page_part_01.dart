@@ -38,10 +38,19 @@ class _FeaturedGasCard extends StatelessWidget {
                   ),
                 ),
               ),
-              _TrendPill(price: price),
+              VitStatusPill(
+                label: _formatChange(price.change24h),
+                icon: _trendIcon(price.trend),
+                status: switch (price.trend) {
+                  LaunchpadGasTrend.up => VitStatusPillStatus.success,
+                  LaunchpadGasTrend.down => VitStatusPillStatus.error,
+                  _ => VitStatusPillStatus.neutral,
+                },
+                size: VitStatusPillSize.sm,
+              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               _TierValue(
@@ -66,7 +75,7 @@ class _FeaturedGasCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
@@ -202,13 +211,13 @@ class _PricesTab extends StatelessWidget {
           selectedChain: selectedChain,
           onSelected: onSelected,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _GasChartCard(price: selectedGas),
         if (selectedGas.baseFee != null && selectedGas.priorityFee != null) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _Eip1559Card(price: selectedGas),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _AllChainsSection(
           prices: prices,
           selectedChain: selectedChain,
@@ -238,12 +247,13 @@ class _ChainSelector extends StatelessWidget {
       child: Row(
         children: [
           for (final price in prices) ...[
-            _SelectablePill(
+            VitChoicePill(
               key: LaunchpadGasTrackerPage.chainKey(price.chain),
               label: price.chain,
-              color: price.accent.resolve(),
-              active: selectedChain == price.chain,
+              accentColor: price.accent.resolve(),
+              selected: selectedChain == price.chain,
               onTap: () => onSelected(price.chain),
+              padding: AppSpacing.launchpadPillPadding,
             ),
             const SizedBox(width: AppSpacing.x2),
           ],
@@ -268,12 +278,12 @@ class _GasChartCard extends StatelessWidget {
         children: [
           Text(
             'Gas 24h - ${price.chain}',
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
               color: AppColors.text1,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             height: _gasChartExtent,
             child: CustomPaint(
@@ -302,12 +312,12 @@ class _Eip1559Card extends StatelessWidget {
         children: [
           Text(
             'EIP-1559',
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -435,7 +445,7 @@ class _ChainComparisonCard extends StatelessWidget {
               children: [
                 Text(
                   price.chain,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),

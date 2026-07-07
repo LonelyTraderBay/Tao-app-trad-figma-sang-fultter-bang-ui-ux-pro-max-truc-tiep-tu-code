@@ -77,9 +77,9 @@ class VitCtaButton extends StatelessWidget {
         );
       case VitCtaButtonVariant.warning:
         return const _CtaStyle(
-          background: AppColors.warn,
+          background: AppColors.riskWarning,
           foreground: AppColors.onAccent,
-          shadow: AppColors.warn15,
+          shadow: AppColors.riskWarning15,
         );
       case VitCtaButtonVariant.ghost:
         return const _CtaStyle(

@@ -50,6 +50,7 @@ class _FormatCard extends StatelessWidget {
         ? Icons.table_chart_outlined
         : Icons.description_outlined;
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       height: _exportFormatExtent,
@@ -129,7 +130,6 @@ class _PeriodChip extends StatelessWidget {
       label: period.label,
       selected: active,
       onTap: onTap,
-      height: VitDensity.compact.controlHeight,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       accentColor: _tradePrimary,
     );
@@ -174,6 +174,7 @@ class _IncludeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,

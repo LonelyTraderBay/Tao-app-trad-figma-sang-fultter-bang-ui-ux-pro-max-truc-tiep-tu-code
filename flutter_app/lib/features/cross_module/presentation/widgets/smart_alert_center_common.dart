@@ -1,28 +1,5 @@
 part of '../pages/smart_alert_center.dart';
 
-class _ModulePill extends StatelessWidget {
-  const _ModulePill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.crossModulePillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-        ),
-      ),
-    );
-  }
-}
-
 class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
@@ -68,6 +45,7 @@ class _SmallIconAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,

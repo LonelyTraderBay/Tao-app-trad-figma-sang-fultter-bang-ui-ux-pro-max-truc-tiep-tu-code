@@ -293,6 +293,7 @@ class _PickerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: ComparisonToolKeys.pickerToken(pair.id),
       variant: VitCardVariant.ghost,

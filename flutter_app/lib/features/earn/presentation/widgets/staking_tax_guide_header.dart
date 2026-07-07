@@ -53,7 +53,7 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.disclaimerBody,
                       style: AppTextStyles.caption.copyWith(

@@ -44,7 +44,7 @@ class _ClaimSheet extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Row(
                     children: [
                       Expanded(
@@ -65,7 +65,7 @@ class _ClaimSheet extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Text(
                     '${_formatNumber(entry.amount)} ${entry.token}',
                     textAlign: TextAlign.center,
@@ -81,11 +81,11 @@ class _ClaimSheet extends StatelessWidget {
                       color: AppColors.text3,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   _DetailLine(row: _DetailRow('Đợt', entry.label)),
                   _DetailLine(row: _DetailRow('Chain', receipt.chain)),
                   _DetailLine(row: const _DetailRow('Gas ước tính', r'~$0.15')),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   VitHighRiskStatePanel(
                     key: LaunchpadClaimReceiptPage.claimSheetReviewStateKey,
                     state: VitHighRiskUiState.riskReview,
@@ -94,7 +94,7 @@ class _ClaimSheet extends StatelessWidget {
                         'Check reward token, chain, gas, and claim amount.',
                     contractId: 'SC-302 / ${receipt.positionId}',
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   VitCtaButton(
                     onPressed: onClose,
                     variant: VitCtaButtonVariant.success,

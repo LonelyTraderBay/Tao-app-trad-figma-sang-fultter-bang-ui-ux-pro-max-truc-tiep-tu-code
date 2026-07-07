@@ -90,7 +90,7 @@ class _ActionButton extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 spec.label,
                 maxLines: 1,
@@ -140,13 +140,13 @@ class _OverviewSkeleton extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: AppSpacing.x5),
+        SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitSkeleton(
           width: null,
           height: AppSpacing.x6,
           borderRadius: AppRadii.inputRadius,
         ),
-        SizedBox(height: AppSpacing.x4),
+        SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             VitSkeleton(
@@ -161,7 +161,7 @@ class _OverviewSkeleton extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: AppSpacing.x5),
+        SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Expanded(
@@ -189,13 +189,13 @@ class _OverviewSkeleton extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: AppSpacing.x4),
+        SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitSkeleton(
           width: null,
           height: AppSpacing.x7,
           borderRadius: AppRadii.cardRadius,
         ),
-        SizedBox(height: AppSpacing.x4),
+        SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Expanded(

@@ -62,7 +62,7 @@ class _ScenariosTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 _RiskMetricRow(
                   label: 'Settlement value',
                   value: _formatMoney(scenario.settlementValue),

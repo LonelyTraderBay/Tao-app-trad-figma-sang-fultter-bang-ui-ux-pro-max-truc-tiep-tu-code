@@ -57,6 +57,7 @@ class _NetworkCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   width: _networkActionIconBoxSize,
                   height: _networkActionIconBoxSize,
@@ -185,6 +186,7 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       height: _networkStatHeight,
@@ -261,6 +263,7 @@ class _AvailabilityChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _networkAvailabilityHeight,
       variant: VitCardVariant.ghost,

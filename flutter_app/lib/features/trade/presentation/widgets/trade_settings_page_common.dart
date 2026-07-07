@@ -1,33 +1,5 @@
 part of '../pages/trade_settings_page.dart';
 
-class _ChoiceChipButton extends StatelessWidget {
-  const _ChoiceChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.height,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final double height;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      height: height,
-      fullWidth: true,
-      accentColor: _tradePrimary,
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
-    );
-  }
-}
-
 class _SettingRow extends StatelessWidget {
   const _SettingRow({
     required this.label,

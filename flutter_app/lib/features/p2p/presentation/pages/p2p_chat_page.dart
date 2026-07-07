@@ -5,12 +5,15 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -91,24 +94,34 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
                 behavior: ScrollConfiguration.of(
                   context,
                 ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: P2PChatPage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.p2pChatScrollPadding,
-                  child: Column(
+                  bottomInset: AppSpacing.x4,
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
-                      _EncryptionPill(
-                        label: snapshot.encryptionPill,
-                        onTap: () => context.go(AppRoutePaths.p2pE2EInfo),
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      const _DateSeparator(),
-                      const SizedBox(height: AppSpacing.x4),
-                      for (final message in messages)
-                        _MessageBubble(
-                          message: message,
-                          merchantInitial: snapshot.merchantInitial,
+                      Align(
+                        child: VitStatusPill(
+                          label: snapshot.encryptionPill,
+                          status: VitStatusPillStatus.success,
+                          icon: Icons.lock_outline_rounded,
+                          size: VitStatusPillSize.sm,
+                          onTap: () => context.go(AppRoutePaths.p2pE2EInfo),
                         ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const _DateSeparator(),
+                          for (final message in messages)
+                            _MessageBubble(
+                              message: message,
+                              merchantInitial: snapshot.merchantInitial,
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

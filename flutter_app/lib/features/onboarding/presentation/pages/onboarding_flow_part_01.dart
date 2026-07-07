@@ -70,7 +70,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                     width: constraints.maxWidth,
                     borderRadius: AppRadii.cardLargeRadius,
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   const VitSkeletonList(rows: 3),
                 ],
               ),
@@ -216,7 +216,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
               onPressed: () => _advance(snapshot),
               child: Text(snapshot.welcome.ctaLabel),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               snapshot.welcome.helperText,
               textAlign: TextAlign.center,
@@ -331,6 +331,7 @@ class _WelcomeStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
@@ -343,13 +344,12 @@ class _WelcomeStep extends StatelessWidget {
           child: Column(
             children: [
               const _HeroIcon(icon: Icons.auto_awesome_rounded),
-              const SizedBox(height: AppSpacing.x4),
               Text(
                 welcome.title,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.pageTitle,
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 welcome.subtitle,
                 textAlign: TextAlign.center,
@@ -363,11 +363,8 @@ class _WelcomeStep extends StatelessWidget {
           radius: VitCardRadius.standard,
           child: Column(
             children: [
-              for (final feature in welcome.features) ...[
+              for (final feature in welcome.features)
                 _FeatureRow(feature: feature),
-                if (feature != welcome.features.last)
-                  const SizedBox(height: AppSpacing.x3),
-              ],
             ],
           ),
         ),
@@ -394,6 +391,7 @@ class _ModulesStep extends StatelessWidget {
     final accent = _accentForId(module.id);
 
     return VitPageContent(
+ rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
@@ -409,7 +407,7 @@ class _ModulesStep extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.sectionTitle.copyWith(color: accent),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               module.description,
               textAlign: TextAlign.center,
@@ -422,11 +420,8 @@ class _ModulesStep extends StatelessWidget {
           radius: VitCardRadius.large,
           child: Column(
             children: [
-              for (final feature in module.features) ...[
+              for (final feature in module.features)
                 _BulletRow(text: feature, color: accent),
-                if (feature != module.features.last)
-                  const SizedBox(height: AppSpacing.x3),
-              ],
             ],
           ),
         ),
@@ -460,6 +455,7 @@ class _BoundariesStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
@@ -497,11 +493,10 @@ class _BoundariesStep extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
               for (final rule in separationRules) ...[
                 _BulletRow(text: rule, color: AppColors.warningText),
                 if (rule != separationRules.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),
@@ -524,6 +519,7 @@ class _TrustStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+     rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
@@ -546,7 +542,6 @@ class _TrustStep extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
               for (final item in commitments) ...[
                 _BulletRow(
                   text: item,
@@ -554,7 +549,7 @@ class _TrustStep extends StatelessWidget {
                   icon: Icons.check_circle_outline_rounded,
                 ),
                 if (item != commitments.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),

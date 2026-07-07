@@ -22,7 +22,7 @@ class _StepDetail extends StatelessWidget {
             Expanded(child: Text(step.title, style: AppTextStyles.baseMedium)),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
           step.description,
           style: AppTextStyles.caption.copyWith(
@@ -65,7 +65,7 @@ class _TipPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final tip in tips) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +95,7 @@ class _TipPanel extends StatelessWidget {
                 ),
               ],
             ),
-            if (tip != tips.last) const SizedBox(height: AppSpacing.x2),
+            if (tip != tips.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

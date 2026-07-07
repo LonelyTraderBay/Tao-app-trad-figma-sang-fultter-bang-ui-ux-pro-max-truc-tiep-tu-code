@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+
+/// Module accent icon container for list rows, bonus rows, and task cards.
+///
+/// One visual family app-wide — 34px box, tinted fill, accent border.
+/// See Accent-Icon-Box-Standard.md.
+class VitAccentIconBox extends StatelessWidget {
+  const VitAccentIconBox({
+    super.key,
+    required this.icon,
+    required this.color,
+    this.muted = false,
+    this.iconSize,
+  });
+
+  final IconData icon;
+  final Color color;
+  final bool muted;
+  final double? iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final resolvedIconSize = iconSize ?? AppSpacing.iconMd;
+
+    if (muted) {
+      return SizedBox(
+        width: AppSpacing.accentIconBoxSize,
+        height: AppSpacing.accentIconBoxSize,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.surface2,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          ),
+          child: Center(
+            child: Icon(icon, size: resolvedIconSize, color: color),
+          ),
+        ),
+      );
+    }
+
+    return SizedBox(
+      width: AppSpacing.accentIconBoxSize,
+      height: AppSpacing.accentIconBoxSize,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: AppSpacing.accentIconFillAlpha),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: color.withValues(alpha: AppSpacing.accentIconBorderAlpha),
+            ),
+            borderRadius: AppRadii.mdRadius,
+          ),
+        ),
+        child: Center(
+          child: Icon(icon, size: resolvedIconSize, color: color),
+        ),
+      ),
+    );
+  }
+}

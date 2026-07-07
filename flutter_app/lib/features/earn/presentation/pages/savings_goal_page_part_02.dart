@@ -72,7 +72,7 @@ class _TipCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   tip.description,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                   ),
                 ),
@@ -124,12 +124,12 @@ class _CreateGoalSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'Chọn mẫu mục tiêu để thiết lập nhanh số tiền, thời hạn và milestone rewards.',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final template in snapshot.templates) ...[
           _TemplateTile(
             template: template,
@@ -137,9 +137,9 @@ class _CreateGoalSheet extends StatelessWidget {
             onTap: () => onTemplate(template.id),
           ),
           if (template != snapshot.templates.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.earnCardPaddingX4,
@@ -164,7 +164,7 @@ class _CreateGoalSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           variant: VitCtaButtonVariant.success,
           leading: const Icon(Icons.flag_outlined),
@@ -271,7 +271,7 @@ class _GoalDetailSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             _ProgressRing(
@@ -310,7 +310,7 @@ class _GoalDetailSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.earnCardPaddingX4,
@@ -338,24 +338,24 @@ class _GoalDetailSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _SheetHeading(
           icon: Icons.emoji_events_outlined,
           label: 'Milestone Rewards',
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final milestone in goal.milestones) ...[
           _MilestoneRow(milestone: milestone, color: accent),
           if (milestone != goal.milestones.last)
             const Divider(color: AppColors.divider, height: AppSpacing.x1),
         ],
         if (goal.contributions.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _SheetHeading(
             icon: Icons.arrow_upward_rounded,
             label: 'Đóng góp gần đây',
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final contribution in goal.contributions)
             _ContributionRow(contribution: contribution),
         ],

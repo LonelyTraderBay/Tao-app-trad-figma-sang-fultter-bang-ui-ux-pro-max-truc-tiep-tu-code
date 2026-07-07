@@ -34,8 +34,9 @@ This document defines how VitTrade Flutter screens can keep module-specific char
 
 - Use `AppModuleAccents` for module accent tokens.
 - Use `VitServiceTile` for Home/service grids and primary shortcut grids.
-- Use `VitModuleHeroCard`, `VitMetricCard`, `VitStatusPill`, and `VitModuleSectionHeader` for repeated module patterns before creating local equivalents.
-- Keep card backgrounds neutral; apply module character through accent icon color, border alpha, pill color, chart series, or copy.
+- Corner badges (`badgeLabel`, `riskBadgeLabel`) follow [Service-Tile-Badge-Standard.md](./Service-Tile-Badge-Standard.md).
+- Use `VitModuleHeroCard`, `VitMetricCard`, `VitStatusPill`, `VitModuleSectionHeader`, and `VitAccentIconBox` for repeated module patterns before creating local equivalents.
+- Keep card backgrounds neutral; apply module character through `VitAccentIconBox` color, pill color, chart series, or copy.
 
 ## Review Checklist
 

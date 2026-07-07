@@ -54,7 +54,7 @@ class _LongShortCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.sectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -102,7 +102,7 @@ class _ToggleBar extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'By Accounts',
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -115,7 +115,7 @@ class _ToggleBar extends StatelessWidget {
             child: Center(
               child: Text(
                 'By Volume',
-                style: AppTextStyles.captionSm.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
                   fontWeight: AppTextStyles.medium,
                 ),
@@ -148,7 +148,7 @@ class _TrendLabel extends StatelessWidget {
       const SizedBox(width: AppSpacing.statusPillGapMd),
       Text(
         text,
-        style: AppTextStyles.captionSm.copyWith(
+        style: AppTextStyles.caption.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
         ),

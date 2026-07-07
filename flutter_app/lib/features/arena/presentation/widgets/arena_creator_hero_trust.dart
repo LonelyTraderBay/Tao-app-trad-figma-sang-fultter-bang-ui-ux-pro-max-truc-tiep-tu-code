@@ -48,7 +48,7 @@ class _CreatorHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -77,7 +77,7 @@ class _CreatorHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(
@@ -98,7 +98,7 @@ class _CreatorHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             '${creator.modesCreated} modes · ${creator.totalClones} clone',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -174,7 +174,7 @@ class _TrustSection extends StatelessWidget {
     return Column(
       children: [
         _TrustHeader(onDetails: onDetails),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           padding: AppSpacing.arenaCreatorCardPadding,
           child: Column(

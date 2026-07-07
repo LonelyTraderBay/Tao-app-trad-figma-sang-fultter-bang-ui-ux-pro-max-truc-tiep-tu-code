@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -122,12 +123,18 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
                       _ExportHero(snapshot: snapshot),
                       if (activeTab == 'create') ...[
-                        _SectionTitle(label: 'Loại báo cáo'),
+                        VitSectionHeader(
+                          title: 'Loại báo cáo',
+                          variant: VitSectionHeaderVariant.accentBar,
+                          accentColor: AppModuleAccents.earn,
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _ReportTypeList(
                           reports: snapshot.reportTypes,
                           selected: selectedReport,
@@ -139,7 +146,12 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        _SectionTitle(label: 'Định dạng file'),
+                        VitSectionHeader(
+                          title: 'Định dạng file',
+                          variant: VitSectionHeaderVariant.accentBar,
+                          accentColor: AppModuleAccents.earn,
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _FormatCards(
                           formats: snapshot.formats,
                           selected: selectedFormat,
@@ -151,7 +163,12 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        _SectionTitle(label: 'Khoảng thời gian'),
+                        VitSectionHeader(
+                          title: 'Khoảng thời gian',
+                          variant: VitSectionHeaderVariant.accentBar,
+                          accentColor: AppModuleAccents.earn,
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _PeriodChips(
                           periods: snapshot.periods,
                           selected: selectedPeriod,
@@ -163,7 +180,12 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        _SectionTitle(label: 'Loại giao dịch'),
+                        VitSectionHeader(
+                          title: 'Loại giao dịch',
+                          variant: VitSectionHeaderVariant.accentBar,
+                          accentColor: AppModuleAccents.earn,
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _ScopeChips(
                           scopes: snapshot.scopes,
                           selected: selectedScope,
@@ -175,7 +197,12 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        _SectionTitle(label: 'Tùy chọn thêm'),
+                        VitSectionHeader(
+                          title: 'Tùy chọn thêm',
+                          variant: VitSectionHeaderVariant.accentBar,
+                          accentColor: AppModuleAccents.earn,
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _OptionsList(
                           options: snapshot.options,
                           enabled: enabledOptions,

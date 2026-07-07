@@ -45,7 +45,7 @@ class _SpeedTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -113,9 +113,9 @@ class _TrendsTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (trend != trends.last) const SizedBox(height: AppSpacing.x2),
+                if (trend != trends.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitCard(
                 variant: VitCardVariant.inner,
                 density: VitDensity.compact,
@@ -146,8 +146,7 @@ class _TrendBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
-      child: SizedBox(
-        height: AppSpacing.x2,
+      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           children: [
             const ColoredBox(color: _venuePanel2),
@@ -199,8 +198,7 @@ class _ProgressMetric extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               children: [
                 const ColoredBox(color: _venuePanel2),

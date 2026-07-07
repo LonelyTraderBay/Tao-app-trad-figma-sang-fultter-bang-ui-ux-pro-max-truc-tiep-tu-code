@@ -12,16 +12,17 @@ class _VolumeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.bar_chart_rounded,
+          const VitSectionHeader(
             title: 'Volume giao dịch',
-            color: AppColors.primary,
+            icon: Icons.bar_chart_rounded,
+            iconColor: AppColors.primary,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           Text(
             'Tổng giá trị giao dịch theo ngày (VND)',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: _p2pAdAnalyticsChartTallExtent,
             child: CustomPaint(
@@ -52,16 +53,17 @@ class _HeatmapCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.monitor_heart_outlined,
+          const VitSectionHeader(
             title: 'Heatmap theo giờ',
-            color: AppColors.buy,
+            icon: Icons.monitor_heart_outlined,
+            iconColor: AppColors.buy,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           Text(
             'Số đơn hàng phân bổ theo giờ trong ngày (0-23h)',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           LayoutBuilder(
             builder: (context, constraints) {
               final gap = AppSpacing.x2;
@@ -90,7 +92,7 @@ class _HeatmapCard extends StatelessWidget {
                               ),
                             ),
                           ] else
-                            const SizedBox(height: AppSpacing.x3),
+                            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         ],
                       ),
                     ),
@@ -98,7 +100,7 @@ class _HeatmapCard extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -140,12 +142,12 @@ class _PaymentBreakdownCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.credit_card_rounded,
+          const VitSectionHeader(
             title: 'Thanh toán phân bổ',
-            color: AppColors.warn,
+            icon: Icons.credit_card_rounded,
+            iconColor: AppColors.warn,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < snapshot.paymentBreakdown.length; i++) ...[
             _PaymentRow(
               item: snapshot.paymentBreakdown[i],
@@ -153,7 +155,7 @@ class _PaymentBreakdownCard extends StatelessWidget {
               color: i.isEven ? AppColors.accent : AppColors.primary,
             ),
             if (i < snapshot.paymentBreakdown.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -204,7 +206,7 @@ class _PaymentRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.smRadius,
           child: LinearProgressIndicator(
@@ -231,16 +233,17 @@ class _CompetitorCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.emoji_events_outlined,
+          const VitSectionHeader(
             title: 'So sánh đối thủ',
-            color: AppColors.warn,
+            icon: Icons.emoji_events_outlined,
+            iconColor: AppColors.warn,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           Text(
             'So với trung bình thị trường & top merchant',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             height: _p2pAdAnalyticsRadarExtent,
             child: CustomPaint(
@@ -258,7 +261,7 @@ class _CompetitorCard extends StatelessWidget {
               _LegendDot(color: AppColors.buy, label: 'Top'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.ghost,
             borderColor: AppColors.divider,
@@ -402,15 +405,15 @@ class _TipsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.bolt_rounded,
+          const VitSectionHeader(
             title: 'Gợi ý tối ưu',
-            color: AppColors.warn,
+            icon: Icons.bolt_rounded,
+            iconColor: AppColors.warn,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < tips.length; i++) ...[
             _TipRow(tip: tips[i]),
-            if (i < tips.length - 1) const SizedBox(height: AppSpacing.x3),
+            if (i < tips.length - 1) const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -452,39 +455,6 @@ class _TipRow extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.title,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String title;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: AppSpacing.iconSm),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

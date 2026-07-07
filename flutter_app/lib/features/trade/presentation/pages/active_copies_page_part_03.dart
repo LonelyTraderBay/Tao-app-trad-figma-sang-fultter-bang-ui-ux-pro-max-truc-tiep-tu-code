@@ -96,7 +96,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const VitSheetHandle(),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     const SizedBox.square(
@@ -144,7 +144,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   'Nhập STOP để xác nhận',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -157,7 +157,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                   textInputAction: TextInputAction.done,
                   onChanged: widget.onTextChanged,
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(

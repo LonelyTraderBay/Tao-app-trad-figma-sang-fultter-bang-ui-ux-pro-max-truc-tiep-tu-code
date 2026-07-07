@@ -14,7 +14,7 @@ class _SummarySection extends StatelessWidget {
           padding: AppSpacing.copyAuditSummaryTitlePadding,
           child: Text(
             'Thống kê tổng quan',
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
             ),
@@ -85,6 +85,7 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,

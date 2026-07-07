@@ -54,7 +54,7 @@ class BacktestHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -98,7 +98,7 @@ class BacktestHero extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(

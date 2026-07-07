@@ -28,95 +28,6 @@ class _AddAlertNotice extends StatelessWidget {
   }
 }
 
-class _FilterTabs extends StatelessWidget {
-  const _FilterTabs({
-    required this.activeFilter,
-    required this.onFilterSelected,
-  });
-
-  final _AlertFilter activeFilter;
-  final ValueChanged<_AlertFilter> onFilterSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: _alertsFilterHeaderPadding,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 8,
-                  child: _FilterTab(
-                    key: PriceAlertsPage.allFilterKey,
-                    label: 'T\u1EA5t c\u1EA3',
-                    active: activeFilter == _AlertFilter.all,
-                    onTap: () => onFilterSelected(_AlertFilter.all),
-                  ),
-                ),
-                const SizedBox(width: _alertsFilterGap),
-                Expanded(
-                  flex: 15,
-                  child: _FilterTab(
-                    key: PriceAlertsPage.activeFilterKey,
-                    label: '\u0110ang ho\u1EA1t \u0111\u1ED9ng',
-                    active: activeFilter == _AlertFilter.active,
-                    onTap: () => onFilterSelected(_AlertFilter.active),
-                  ),
-                ),
-                const SizedBox(width: _alertsFilterGap),
-                Expanded(
-                  flex: 14,
-                  child: _FilterTab(
-                    key: PriceAlertsPage.triggeredFilterKey,
-                    label: '\u0110\u00E3 k\u00EDch ho\u1EA1t',
-                    active: activeFilter == _AlertFilter.triggered,
-                    onTap: () => onFilterSelected(_AlertFilter.triggered),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            height: AppSpacing.hairlineStroke,
-            thickness: AppSpacing.hairlineStroke,
-            color: AppColors.divider,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FilterTab extends StatelessWidget {
-  const _FilterTab({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _marketPrimary,
-      fullWidth: true,
-      height: _alertsFilterHeight,
-      padding: _alertsFilterTabPadding,
-    );
-  }
-}
-
 class _StatsSummary extends StatelessWidget {
   const _StatsSummary({
     required this.total,
@@ -187,7 +98,7 @@ class _StatBox extends StatelessWidget {
           children: [
             Text(
               label,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
                 height: _alertsLineHeightTight,
               ),

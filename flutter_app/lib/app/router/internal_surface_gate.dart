@@ -98,6 +98,7 @@ class _InternalSurfaceRestrictedPage extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.relaxed,
                 children: [
                   VitCard(

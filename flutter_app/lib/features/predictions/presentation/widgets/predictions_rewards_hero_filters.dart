@@ -52,7 +52,7 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               const Icon(
@@ -119,67 +119,41 @@ class _CategoryFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: VitDensity.compact.controlHeight - AppSpacing.x3,
+      height: VitDensity.compact.controlHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           if (index == 0) {
-            return _FilterChip(
+            return VitChoicePill(
               key: PredictionsRewardsPage.favoritesFilterKey,
               label: 'Favs',
-              active: favoritesOnly,
-              icon: Icons.favorite_rounded,
-              activeColor: AppColors.sell,
+              selected: favoritesOnly,
               onTap: onFavoritesToggle,
+              accentColor: AppColors.sell,
+              padding: AppSpacing.predictionRewardsFilterPadding,
+              leading: Icon(
+                Icons.favorite_rounded,
+                size: AppSpacing.predictionRewardsFilterIcon,
+              ),
             );
           }
           final category = categories[index - 1];
-          return _FilterChip(
+          return VitChoicePill(
             key: category == 'All'
                 ? PredictionsRewardsPage.allFilterKey
                 : category == 'Live Crypto'
                 ? PredictionsRewardsPage.liveCryptoFilterKey
                 : Key('sc032_filter_$category'),
             label: category,
-            active: activeCategory == category,
+            selected: activeCategory == category,
             onTap: () => onCategoryChanged(category),
+            accentColor: _predictionPrimary,
+            padding: AppSpacing.predictionRewardsFilterPadding,
           );
         },
         separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x2),
         itemCount: categories.length + 1,
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-    this.icon,
-    this.activeColor = _predictionPrimary,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-  final IconData? icon;
-  final Color activeColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: activeColor,
-      height: VitDensity.compact.controlHeight - AppSpacing.x3,
-      padding: AppSpacing.predictionRewardsFilterPadding,
-      leading: icon == null
-          ? null
-          : Icon(icon, size: AppSpacing.predictionRewardsFilterIcon),
     );
   }
 }

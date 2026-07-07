@@ -102,7 +102,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
                 contractId: 'copy-provider-detail-review',
                 density: VitDensity.compact,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitCtaButton(
                 key: assessmentKey,
                 onPressed: () => context.go(
@@ -190,10 +190,10 @@ class _ProviderCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   '${provider.totalTrades} lệnh · giữ trung bình ${provider.avgHoldingTime}',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                   ),
                 ),

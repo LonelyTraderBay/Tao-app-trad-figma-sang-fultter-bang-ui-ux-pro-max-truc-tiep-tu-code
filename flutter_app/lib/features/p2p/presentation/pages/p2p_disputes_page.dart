@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -65,6 +66,7 @@ class P2PDisputesPage extends ConsumerWidget {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDisputesScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -78,7 +80,7 @@ class P2PDisputesPage extends ConsumerWidget {
                           for (final dispute in snapshot.disputes) ...[
                             _DisputeListTile(dispute: dispute),
                             if (dispute != snapshot.disputes.last)
-                              const SizedBox(height: AppSpacing.x2),
+                              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                           ],
                         _GuideCard(snapshot: snapshot),
                       ],
@@ -296,7 +298,7 @@ class _EmptyDisputes extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.emptyTitle,
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
@@ -378,14 +380,14 @@ class _DisputeListTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             dispute.reason,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _MetaItem(
@@ -457,7 +459,7 @@ class _GuideCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var index = 0; index < snapshot.guideSteps.length; index++) ...[
             Text(
               '${index + 1}. ${snapshot.guideSteps[index]}',

@@ -21,7 +21,6 @@ class _InlineActionButton extends StatelessWidget {
       selected: true,
       onTap: onTap,
       fullWidth: true,
-      height: _p2pWalletActionMinHeight,
       accentColor: color,
       leading: Icon(icon),
       semanticLabel: 'P2P wallet action $label',
@@ -196,7 +195,7 @@ class _TransactionRow extends StatelessWidget {
                   _statusLabel(tx.status),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: _statusColor(tx.status),
                   ),
                 ),

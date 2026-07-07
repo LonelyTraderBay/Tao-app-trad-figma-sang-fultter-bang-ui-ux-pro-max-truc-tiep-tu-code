@@ -70,6 +70,7 @@ class _StakingAutoCompoundPageState
                       physics: const ClampingScrollPhysics(),
                       padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                       child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.defaultGap,
                         children: [
@@ -277,7 +278,7 @@ class _SummaryCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       '$active/${positions.length}',
                       style: AppTextStyles.numericDisplayXl,
@@ -311,7 +312,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           Row(
             children: [
               Expanded(
@@ -394,7 +395,7 @@ class _SettingsCard extends StatelessWidget {
             'Tần suất tái đầu tư',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (var i = 0; i < snapshot.frequencies.length; i++) ...[
@@ -410,7 +411,7 @@ class _SettingsCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           VitInput(
             fieldKey: StakingAutoCompoundPage.thresholdKey,
             controller: thresholdController,
@@ -418,17 +419,17 @@ class _SettingsCard extends StatelessWidget {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: onThresholdChanged,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Chỉ tái đầu tư khi phần thưởng >= ${_formatCurrency(_parseDouble(thresholdController.text, 10), compact: true)}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           _GasOptimizationTile(
             enabled: gasOptimization,
             onTap: onGasOptimizationChanged,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.primary20,

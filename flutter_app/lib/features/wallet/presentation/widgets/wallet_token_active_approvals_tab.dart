@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
@@ -33,20 +34,26 @@ class WalletTokenActiveApprovalsTab extends StatelessWidget {
       children: [
         WalletTokenCriticalAlert(count: snapshot.criticalCount),
         const SizedBox(height: AppSpacing.walletTokenAlertGap),
-        const WalletTokenApprovalSectionLabel(
+        VitPageSection(
           label: 'Active Approvals',
-          icon: Icons.shield_outlined,
+          headerIcon: Icons.shield_outlined,
+          accentColor: walletTokenApprovalPrimary,
+          innerGap: AppSpacing.pageRhythmFormInnerGap,
+          children: [
+            for (var i = 0; i < approvals.length; i++) ...[
+              WalletTokenApprovalCard(
+                approval: approvals[i],
+                onRevoke: onRevoke,
+              ),
+              if (i != approvals.length - 1)
+                const SizedBox(height: AppSpacing.walletTokenCardGap),
+            ],
+            const SizedBox(height: AppSpacing.walletTokenAlertGap),
+            WalletTokenApprovalRevokeAllButton(onTap: onRevokeAll),
+            const SizedBox(height: AppSpacing.walletTokenNoticeGap),
+            const WalletTokenApprovalInfoNotice(),
+          ],
         ),
-        const SizedBox(height: AppSpacing.walletTokenLabelGap),
-        for (var i = 0; i < approvals.length; i++) ...[
-          WalletTokenApprovalCard(approval: approvals[i], onRevoke: onRevoke),
-          if (i != approvals.length - 1)
-            const SizedBox(height: AppSpacing.walletTokenCardGap),
-        ],
-        const SizedBox(height: AppSpacing.walletTokenAlertGap),
-        WalletTokenApprovalRevokeAllButton(onTap: onRevokeAll),
-        const SizedBox(height: AppSpacing.walletTokenNoticeGap),
-        const WalletTokenApprovalInfoNotice(),
       ],
     );
   }
@@ -67,6 +74,7 @@ class WalletTokenSecurityOverview extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: AppSpacing.walletTokenHeroIcon,
                 height: AppSpacing.walletTokenHeroIcon,

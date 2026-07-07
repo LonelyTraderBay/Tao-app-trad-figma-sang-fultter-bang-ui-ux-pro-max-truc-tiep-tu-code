@@ -145,7 +145,7 @@ class _LevelCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     'Yêu cầu:',
                     style: AppTextStyles.micro.copyWith(
@@ -153,7 +153,7 @@ class _LevelCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final requirement in level.requirements) ...[
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,12 +179,12 @@ class _LevelCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                   ],
                   if (locked && level.id == currentLevel + 1) ...[
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     const Divider(
                       color: AppColors.divider,
                       height: AppSpacing.dividerHairline,
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     VitCtaButton(
                       key: P2PTradingLevelPage.upgradeButtonKey,
                       variant: VitCtaButtonVariant.warning,

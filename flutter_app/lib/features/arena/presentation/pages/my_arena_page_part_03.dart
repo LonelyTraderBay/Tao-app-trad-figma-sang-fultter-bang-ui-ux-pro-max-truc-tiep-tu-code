@@ -17,6 +17,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
         const VitModuleSectionHeader(
           title: 'Phân tích phần thưởng',
           accentColor: AppColors.warn,
+          density: VitDensity.compact,
         ),
         VitCard(
           density: VitDensity.compact,
@@ -50,7 +51,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'TỈ LỆ THẮNG THEO LOẠI CHIA THƯỞNG',
                 style: AppTextStyles.micro.copyWith(
@@ -58,16 +59,16 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               for (var i = 0; i < history.distribution.length; i++) ...[
                 _DistributionRow(
                   item: history.distribution[i],
                   color: _distributionColor(i),
                 ),
                 if (i < history.distribution.length - 1)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.rowGap),
               ],
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 onTap: onViewChallenge,
                 variant: VitCardVariant.ghost,
@@ -134,7 +135,7 @@ class _RewardMetric extends StatelessWidget {
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               label,
               maxLines: 1,
@@ -219,6 +220,7 @@ class _SafetySection extends StatelessWidget {
         const VitModuleSectionHeader(
           title: 'An toàn & quản lý',
           accentColor: AppColors.buy,
+          density: VitDensity.compact,
         ),
         _SafetyActionCard(
           key: MyArenaPage.reportsKey,
@@ -286,7 +288,7 @@ class _SafetyActionCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -317,7 +319,7 @@ class _ArenaFooter extends StatelessWidget {
     return Column(
       children: [
         VitCommunityRulesLink(onTap: onRules),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           density: VitDensity.compact,
           child: Row(
@@ -363,7 +365,7 @@ class _EmptyCard extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: _arenaAccent, size: AppSpacing.myArenaEmptyIcon),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             title,
             style: AppTextStyles.body.copyWith(
@@ -371,12 +373,18 @@ class _EmptyCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
-          _AccentPillButton(
-            icon: Icons.add_rounded,
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          VitChoicePill(
             label: actionLabel,
-            color: _arenaAccent,
+            selected: true,
             onTap: onAction,
+            accentColor: _arenaAccent,
+            leading: Icon(
+              Icons.add_rounded,
+              color: _arenaAccent,
+              size: AppSpacing.myArenaAccentPillIcon,
+            ),
+            padding: AppSpacing.arenaHorizontalPaddingX4,
           ),
         ],
       ),

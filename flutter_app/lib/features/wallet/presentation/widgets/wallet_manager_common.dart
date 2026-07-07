@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -18,26 +17,6 @@ const walletManagerRed = AppColors.sell;
 const walletManagerTabAll = 'T\u1EA5t c\u1EA3';
 const walletManagerTabGroups = 'Nh\u00F3m';
 const walletManagerTabActivity = 'Ho\u1EA1t \u0111\u1ED9ng';
-
-class WalletManagerSectionLabel extends StatelessWidget {
-  const WalletManagerSectionLabel({
-    super.key,
-    required this.label,
-    this.icon = Icons.account_balance_wallet_outlined,
-  });
-
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      icon: icon,
-      density: VitDensity.compact,
-    );
-  }
-}
 
 class WalletManagerTinyIconButton extends StatelessWidget {
   const WalletManagerTinyIconButton({
@@ -75,7 +54,7 @@ class WalletManagerDefaultBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _WalletManagerCompactPill(
+    return _WalletManagerBadge(
       height: AppSpacing.walletManagerDefaultBadgeHeight,
       label: 'DEFAULT',
       textColor: walletManagerGreen,
@@ -93,7 +72,7 @@ class WalletManagerAssetChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _WalletManagerCompactPill(
+    return _WalletManagerBadge(
       height: AppSpacing.walletManagerAssetChipHeight,
       label: symbol,
       textColor: AppColors.textSoftBlue,
@@ -116,7 +95,7 @@ class WalletManagerTypeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _WalletManagerCompactPill(
+    return _WalletManagerBadge(
       height: AppSpacing.walletManagerTypeBadgeHeight,
       label: label,
       textColor: color,
@@ -127,8 +106,8 @@ class WalletManagerTypeBadge extends StatelessWidget {
   }
 }
 
-class _WalletManagerCompactPill extends StatelessWidget {
-  const _WalletManagerCompactPill({
+class _WalletManagerBadge extends StatelessWidget {
+  const _WalletManagerBadge({
     required this.height,
     required this.label,
     required this.textColor,
@@ -195,6 +174,7 @@ class WalletManagerSecurityNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: const Key('sc148_multi_manager_security_note'),
       constraints: const BoxConstraints(

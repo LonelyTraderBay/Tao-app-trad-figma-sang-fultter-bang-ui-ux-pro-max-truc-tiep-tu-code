@@ -34,7 +34,7 @@ class StakingCustodyHeroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
@@ -124,7 +124,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Wrap(
                           spacing: AppSpacing.x2,
                           runSpacing: AppSpacing.x2,
@@ -144,7 +144,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -171,7 +171,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 variant: VitCardVariant.inner,
                 borderColor: AppColors.buy20,
@@ -196,7 +196,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                           Text(
                             custodian.insurance,
                             style: AppTextStyles.caption.copyWith(
@@ -209,12 +209,12 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Licenses & Certifications',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,

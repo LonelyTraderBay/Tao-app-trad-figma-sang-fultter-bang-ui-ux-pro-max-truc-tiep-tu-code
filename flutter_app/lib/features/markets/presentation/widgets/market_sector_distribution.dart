@@ -26,6 +26,7 @@ class MarketSectorDistributionCard extends StatelessWidget {
         .where((sector) => _allocation(sector, total) >= 1)
         .toList();
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.marketSectorDistributionHeight,
       padding: AppSpacing.marketSectorCardPadding,
@@ -63,7 +64,7 @@ class MarketSectorDistributionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSectorCardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Material(
             color: AppColors.surface3,
             borderRadius: AppRadii.pillRadius,

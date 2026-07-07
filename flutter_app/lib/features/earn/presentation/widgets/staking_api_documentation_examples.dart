@@ -47,7 +47,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Code Examples',
           accentColor: AppColors.primarySoft,
@@ -134,7 +134,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                               'Sandbox Environment',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                             Text(
                               'Test your integration with fake data before going live. No real funds involved.',
                               style: AppTextStyles.caption.copyWith(
@@ -147,7 +147,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   VitCard(
                     variant: VitCardVariant.inner,
                     padding: AppSpacing.earnCardPaddingX3,
@@ -160,7 +160,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Row(
                           children: [
                             Expanded(
@@ -183,7 +183,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCtaButton(
                     height: AppSpacing.ctaHeight,
                     onPressed: () {},

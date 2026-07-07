@@ -186,7 +186,7 @@ class _BulletSection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final item in items) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +215,7 @@ class _BulletSection extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.x2),
+          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

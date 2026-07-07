@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/widgets/design_system_color_section.dart';
@@ -107,6 +108,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.flush,
                     gap: VitContentGap.loose,
                     children: [
                       _DevStateBar(

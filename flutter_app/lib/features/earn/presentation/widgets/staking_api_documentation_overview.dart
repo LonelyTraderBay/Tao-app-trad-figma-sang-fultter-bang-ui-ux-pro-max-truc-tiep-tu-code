@@ -34,7 +34,7 @@ class StakingApiDocumentationInfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
@@ -147,7 +147,7 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     TweenAnimationBuilder<double>(
                       duration: const Duration(milliseconds: 160),
                       tween: Tween<double>(

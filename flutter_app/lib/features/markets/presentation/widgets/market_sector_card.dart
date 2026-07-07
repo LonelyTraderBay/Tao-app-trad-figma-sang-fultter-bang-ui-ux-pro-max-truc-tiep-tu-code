@@ -75,7 +75,7 @@ class MarketSectorCard extends StatelessWidget {
               MarketSectorChangePill(value: change),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSectorCardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(

@@ -26,7 +26,7 @@ class _IntroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   '3 công cụ nâng cao cho pro traders: trade nhanh hơn với ladder, quản lý nhiều lệnh cùng lúc, và shortcuts để tăng tốc 3x.',
                   style: AppTextStyles.caption.copyWith(

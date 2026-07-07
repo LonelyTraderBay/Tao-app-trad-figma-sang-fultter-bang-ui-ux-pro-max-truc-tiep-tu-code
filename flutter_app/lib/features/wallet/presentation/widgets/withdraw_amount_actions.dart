@@ -30,14 +30,14 @@ class WithdrawRecentAddresses extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.rowGap),
-        for (final address in addresses) ...[
+        for (var i = 0; i < addresses.length; i++) ...[
           Semantics(
             button: true,
-            label: 'Use recent withdrawal address ${address.label}',
-            hint: address.address,
+            label: 'Use recent withdrawal address ${addresses[i].label}',
+            hint: addresses[i].address,
             child: VitCard(
-              key: withdrawRecentAddressKey(address.label),
-              onTap: () => onSelect(address),
+              key: withdrawRecentAddressKey(addresses[i].label),
+              onTap: () => onSelect(addresses[i]),
               variant: VitCardVariant.ghost,
               borderColor: AppColors.divider,
               padding: AppSpacing.walletWithdrawRecentAddressPadding,
@@ -49,7 +49,7 @@ class WithdrawRecentAddresses extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          address.label,
+                          addresses[i].label,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
@@ -59,7 +59,7 @@ class WithdrawRecentAddresses extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.x1),
                         Text(
-                          maskWithdrawAddress(address.address),
+                          maskWithdrawAddress(addresses[i].address),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
@@ -71,14 +71,15 @@ class WithdrawRecentAddresses extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
-                    address.lastUsed,
+                    addresses[i].lastUsed,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          if (i < addresses.length - 1)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -88,59 +89,33 @@ class WithdrawRecentAddresses extends StatelessWidget {
 class WithdrawAmountInput extends StatelessWidget {
   const WithdrawAmountInput({
     required this.asset,
-    required this.available,
     required this.controller,
     required this.onChanged,
-    required this.onAll,
     super.key,
   });
 
   final String asset;
-  final double available;
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
-  final VoidCallback onAll;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          children: [
-            const Spacer(),
-            VitChoicePill(
-              key: withdrawAllAmountKey,
-              label: 'Tất cả',
-              selected: false,
-              onTap: onAll,
-              height: AppSpacing.buttonCompact,
-              accentColor: withdrawPrimary,
-              semanticLabel: 'Use full withdrawable balance',
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.rowGap),
-        VitInput(
-          fieldKey: withdrawAmountFieldKey,
-          controller: controller,
-          semanticLabel: 'Withdrawal amount',
-          hintText: '0.00',
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-          ],
-          textStyle: AppTextStyles.amountSm.copyWith(
-            fontFeatures: AppTextStyles.tabularFigures,
-            fontWeight: AppTextStyles.bold,
-          ),
-          onChanged: onChanged,
-          suffix: Text(
-            asset,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ),
-      ],
+    return VitInput(
+      fieldKey: withdrawAmountFieldKey,
+      controller: controller,
+      semanticLabel: 'Withdrawal amount',
+      hintText: '0.00',
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+      textStyle: AppTextStyles.amountSm.copyWith(
+        fontFeatures: AppTextStyles.tabularFigures,
+        fontWeight: AppTextStyles.bold,
+      ),
+      onChanged: onChanged,
+      suffix: Text(
+        asset,
+        style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+      ),
     );
   }
 }

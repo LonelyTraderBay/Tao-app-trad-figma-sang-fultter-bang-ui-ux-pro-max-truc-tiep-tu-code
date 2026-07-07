@@ -126,6 +126,37 @@ void main() {
     ]);
   });
 
+  testWidgets('VitCard centers content in fixed-height tile surfaces', (
+    tester,
+  ) async {
+    const cardHeight = 86.0;
+    const contentHeight = 40.0;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitCard(
+          height: cardHeight,
+          contentAlign: VitCardContentAlign.center,
+          padding: AppSpacing.cardTilePadding,
+          child: const SizedBox(height: contentHeight, width: double.infinity),
+        ),
+      ),
+    );
+
+    final cardBox = tester.getRect(find.byType(VitCard));
+    final contentBox = tester.getRect(
+      find.byWidgetPredicate(
+        (widget) => widget is SizedBox && widget.height == contentHeight,
+      ),
+    );
+
+    expect(cardBox.height, cardHeight);
+    expect(
+      (contentBox.top - cardBox.top).round(),
+      (cardBox.bottom - contentBox.bottom).round(),
+    );
+  });
+
   testWidgets('shared primitives expose opt-in compact density', (
     tester,
   ) async {
@@ -903,6 +934,7 @@ void main() {
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text('Recent'), findsOneWidget);
     expect(find.byType(VitTogglePill), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('View Markets')), findsOneWidget);
 
     await tester.tap(find.text('View'));
     await tester.ensureVisible(find.text('Swap'));
@@ -1112,6 +1144,147 @@ void main() {
     expect(find.text('Action 2'), findsNothing);
   });
 
+  testWidgets('VitServiceTile corner badges keep clear of centered label', (
+    tester,
+  ) async {
+    const tileWidth =
+        (360 -
+            AppSpacing.contentPad * 2 -
+            AppSpacing.gridGap * (AppSpacing.serviceTileCrossAxisCount - 1)) /
+        AppSpacing.serviceTileCrossAxisCount;
+
+    for (final aspectRatio in [
+      AppSpacing.serviceTileGridAspectStandard,
+      AppSpacing.serviceTileGridAspectCompact,
+    ]) {
+      final tileHeight = tileWidth / aspectRatio;
+      final density = aspectRatio == AppSpacing.serviceTileGridAspectCompact
+          ? VitServiceTileDensity.compact
+          : VitServiceTileDensity.standard;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: SizedBox(
+                width: tileWidth,
+                height: tileHeight,
+                child: VitServiceTile(
+                  icon: Icons.rocket_launch_outlined,
+                  label: 'Launchpad',
+                  accentColor: AppColors.warn,
+                  density: density,
+                  badgeLabel: 'Token',
+                  riskBadgeLabel: 'R\u1EE7i ro cao',
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final labelRect = tester.getRect(find.text('Launchpad'));
+      final riskRect = tester.getRect(find.text('R\u1EE7i ro cao'));
+      final stateRect = tester.getRect(find.text('Token'));
+
+      expect(
+        labelRect.overlaps(riskRect),
+        isFalse,
+        reason: 'risk badge overlaps label at aspect $aspectRatio',
+      );
+      expect(
+        labelRect.overlaps(stateRect),
+        isFalse,
+        reason: 'state badge overlaps label at aspect $aspectRatio',
+      );
+    }
+  });
+
+  testWidgets('VitAccentIconBox renders 34px bordered accent container', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        const VitAccentIconBox(
+          icon: Icons.task_alt_outlined,
+          color: AppColors.primary,
+        ),
+      ),
+    );
+
+    final box = tester.getSize(find.byType(VitAccentIconBox));
+    expect(box.width, AppSpacing.accentIconBoxSize);
+    expect(box.height, AppSpacing.accentIconBoxSize);
+    expect(find.byType(DecoratedBox), findsWidgets);
+    expect(find.byIcon(Icons.task_alt_outlined), findsOneWidget);
+  });
+
+  testWidgets(
+    'VitAccentIconBox muted variant uses surface2 without accent border',
+    (tester) async {
+      await tester.pumpWidget(
+        _wrap(
+          const VitAccentIconBox(
+            icon: Icons.flash_on_rounded,
+            color: AppColors.text3,
+            muted: true,
+          ),
+        ),
+      );
+
+      final decorated = tester.widget<DecoratedBox>(
+        find.descendant(
+          of: find.byType(VitAccentIconBox),
+          matching: find.byType(DecoratedBox),
+        ),
+      );
+      final decoration = decorated.decoration as ShapeDecoration;
+      expect(decoration.color, AppColors.surface2);
+      expect(
+        (decoration.shape as RoundedRectangleBorder).side,
+        BorderSide.none,
+      );
+    },
+  );
+
+  testWidgets(
+    'VitTaskCard intrinsic height fits claimed task without dead space',
+    (tester) async {
+      const legacyMinHeight =
+          AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: SizedBox(
+                width: 320,
+                child: VitTaskCard(
+                  title: 'Giao d\u1ecbch \u0111\u1ea7u ti\u00ean',
+                  subtitle:
+                      'Ho\u00e0n th\u00e0nh l\u1ec7nh giao d\u1ecbch \u0111\u1ea7u ti\u00ean tr\u00ean s\u00e0n.',
+                  progress: 1,
+                  rewardLabel: '+500 \u0111i\u1ec3m',
+                  status: VitTaskCardStatus.claimed,
+                  accentColor: AppColors.buy,
+                  icon: Icons.task_alt_outlined,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final cardHeight = tester.getSize(find.byType(VitCard)).height;
+      expect(
+        cardHeight,
+        lessThan(legacyMinHeight - 20),
+        reason: 'Task card must not reserve legacy CTA minHeight dead space',
+      );
+      expect(cardHeight, greaterThan(90));
+    },
+  );
+
   testWidgets('Vit module cards render labels and dispatch actions', (
     tester,
   ) async {
@@ -1157,6 +1330,45 @@ void main() {
 
     expect(heroTaps, 1);
     expect(actionTaps, 1);
+  });
+
+  testWidgets('VitModuleSectionHeader applies default bottomGap by density', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const VitModuleSectionHeader(title: 'Standard section'),
+            const Text('Body'),
+            const SizedBox(height: 16),
+            const VitModuleSectionHeader(
+              title: 'Compact section',
+              density: VitDensity.compact,
+            ),
+            const Text('Compact body'),
+          ],
+        ),
+      ),
+    );
+
+    final standardTop = tester.getTopLeft(find.text('Standard section'));
+    final standardSize = tester.getSize(find.text('Standard section'));
+    final body = tester.getTopLeft(find.text('Body'));
+    expect(
+      body.dy - (standardTop.dy + standardSize.height),
+      AppSpacing.pageRhythmStandardInnerGap,
+    );
+
+    final compactTop = tester.getTopLeft(find.text('Compact section'));
+    final compactSize = tester.getSize(find.text('Compact section'));
+    final compactBody = tester.getTopLeft(find.text('Compact body'));
+    expect(
+      compactBody.dy - (compactTop.dy + compactSize.height),
+      AppSpacing.pageRhythmCompactInnerGap,
+    );
   });
 
   testWidgets('VitAnnouncementBanner supports compact, dots, and dismiss', (

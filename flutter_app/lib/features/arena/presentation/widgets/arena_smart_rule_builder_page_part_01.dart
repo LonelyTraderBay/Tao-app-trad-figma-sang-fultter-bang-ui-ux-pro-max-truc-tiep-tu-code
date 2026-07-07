@@ -97,7 +97,7 @@ class _ClarityScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -107,7 +107,7 @@ class _ClarityScoreCard extends StatelessWidget {
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             score >= 35
                 ? 'Rule đã ổn, thêm edge rules sẽ rõ ràng hơn'
@@ -197,7 +197,7 @@ class _TitleField extends StatelessWidget {
             hintText: 'VD: BTC Weekly Predict - Tuan 10',
             onChanged: onChanged,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x5,
             runSpacing: AppSpacing.x3,

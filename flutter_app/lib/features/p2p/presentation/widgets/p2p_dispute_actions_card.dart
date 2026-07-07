@@ -38,7 +38,7 @@ class P2PDisputeActionsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ActionTile(
             key: manageEvidenceKey,
             icon: Icons.upload_outlined,
@@ -48,7 +48,7 @@ class P2PDisputeActionsCard extends StatelessWidget {
             color: AppModuleAccents.p2p,
             onTap: onManageEvidence,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ActionTile(
             key: disputesKey,
             icon: Icons.balance_rounded,
@@ -81,6 +81,7 @@ class _ActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,

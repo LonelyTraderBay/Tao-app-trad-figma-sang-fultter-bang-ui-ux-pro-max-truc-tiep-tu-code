@@ -178,14 +178,14 @@ class _DimensionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _CriteriaGroup(
             label: 'Suitable for:',
             color: _targetGreen,
             icon: Icons.check_circle_outline,
             values: dimension.suitableFor,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _CriteriaGroup(
             label: 'Not suitable for:',
             color: _targetRed,

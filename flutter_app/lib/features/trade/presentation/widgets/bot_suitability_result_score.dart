@@ -20,7 +20,7 @@ class _ResultView extends StatelessWidget {
     final result = _resultForPercent(percent);
     final color = _colorForResult(result.outcome);
 
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -117,7 +117,7 @@ class _ScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
@@ -127,7 +127,7 @@ class _ScoreCard extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             '${(percent * 100).toStringAsFixed(0)}% proficiency',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),

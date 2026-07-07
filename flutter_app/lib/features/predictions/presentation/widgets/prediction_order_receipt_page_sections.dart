@@ -41,6 +41,7 @@ class _ReceiptContent extends StatelessWidget {
         key: PredictionOrderReceiptPage.contentKey,
         padding: AppSpacing.predictionReceiptScrollPadding(scrollEndPadding),
         child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
           density: VitDensity.compact,
           children: [
             _ReceiptHero(receipt: receipt),
@@ -97,7 +98,7 @@ class _ReceiptHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             receipt.outcome,
             textAlign: TextAlign.center,
@@ -310,7 +311,7 @@ class _ReceiptActions extends StatelessWidget {
           variant: VitCtaButtonVariant.auth,
           child: const Text('Xem sự kiện'),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCtaButton(
           key: PredictionOrderReceiptPage.viewPortfolioKey,
           onPressed: () => context.go(AppRoutePaths.profilePredictions),

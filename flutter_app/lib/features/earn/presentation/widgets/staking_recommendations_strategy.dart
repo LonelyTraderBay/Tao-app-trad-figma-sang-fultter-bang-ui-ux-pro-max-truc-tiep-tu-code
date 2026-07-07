@@ -45,7 +45,7 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,7 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {
               final itemWidth =
@@ -106,7 +106,7 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               StakingRecommendationsSmallPill(

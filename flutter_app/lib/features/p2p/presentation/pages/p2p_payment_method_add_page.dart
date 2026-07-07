@@ -9,11 +9,9 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
@@ -22,12 +20,6 @@ part '../widgets/p2p_payment_method_add_page_common.dart';
 
 enum P2PPaymentAddType { bank, ewallet }
 
-const double _p2pPaymentAddVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pPaymentAddNativeNavClearance =
-    _p2pPaymentAddVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
-const double _p2pPaymentAddScrollEnd = AppSpacing.x3;
-const double _p2pPaymentAddMajorGap = AppSpacing.p2pPaymentSectionGap;
 const double _p2pPaymentAddSectionGap = AppSpacing.p2pPaymentCardGap;
 const double _p2pPaymentAddTypeExtent = AppSpacing.searchBarCompactHeight;
 const double _p2pPaymentAddIconBox = AppSpacing.buttonCompact;
@@ -91,137 +83,97 @@ class _P2PPaymentMethodAddPageState
       bankType: _type == P2PPaymentAddType.bank,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final footerInset =
-        (mode.usesVisualQaFrame
-            ? _p2pPaymentAddVisualNavClearance
-            : _p2pPaymentAddNativeNavClearance) +
-        MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title:
+          'Thêm ${_type == P2PPaymentAddType.bank ? 'ngân hàng' : 'ví điện tử'}',
+      subtitle: 'Thanh toán · P2P',
       semanticLabel: 'SC-232 P2PPaymentMethodAddPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title:
-                'Thêm ${_type == P2PPaymentAddType.bank ? 'ngân hàng' : 'ví điện tử'}',
-            subtitle: 'Thanh toán · P2P',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+      contentKey: P2PPaymentMethodAddPage.contentKey,
+      shellRenderMode: mode,
+      rhythm: VitPageRhythm.form,
+      bottomInset: p2pFlowScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+        visualClearance: 0,
+        nativeClearance: 0,
+      ),
+      onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+      children: [
+        _TypeSelector(value: _type, onChanged: _changeType),
+        _SectionLabel(
+          _type == P2PPaymentAddType.bank
+              ? 'Chọn ngân hàng'
+              : 'Chọn ví điện tử',
+        ),
+        _PaymentOptionWrap(
+          options: options,
+          selected: _selectedMethod,
+          onSelected: (value) {
+            HapticFeedback.selectionClick();
+            setState(() => _selectedMethod = value);
+          },
+        ),
+        VitInput(
+          controller: _accountController,
+          fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
+          semanticLabel: 'P2P payment account',
+          label: _type == P2PPaymentAddType.bank
+              ? 'Số tài khoản'
+              : 'Số điện thoại / tài khoản ví',
+          hintText: _type == P2PPaymentAddType.bank
+              ? snapshot.defaultBankAccountHint
+              : snapshot.defaultEwalletAccountHint,
+          prefix: const Icon(Icons.account_balance_wallet_outlined),
+          keyboardType: TextInputType.number,
+          textInputAction: TextInputAction.next,
+          onChanged: (_) => setState(() {}),
+        ),
+        VitInput(
+          controller: _ownerController,
+          fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
+          semanticLabel: 'P2P payment account owner',
+          label: 'Tên chủ tài khoản',
+          hintText: snapshot.ownerNameHint,
+          prefix: const Icon(Icons.person_outline_rounded),
+          textCapitalization: TextCapitalization.characters,
+          inputFormatters: [_UppercaseTextFormatter()],
+          textInputAction: TextInputAction.done,
+          onChanged: (_) => setState(() {}),
+        ),
+        _SecurityNote(note: snapshot.securityNote),
+        if (_isValidFor(controller))
+          _PaymentPreview(
+            preview: controller.preview(
+              selectedMethod: _selectedMethod!,
+              account: _accountController.text,
+              ownerName: _ownerController.text,
+            ),
+            type: _type,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Flexible(
-                fit: FlexFit.loose,
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PPaymentMethodAddPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentAddFormScrollPadding(
-                      _p2pPaymentAddScrollEnd,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _TypeSelector(value: _type, onChanged: _changeType),
-                        const SizedBox(height: _p2pPaymentAddMajorGap),
-                        _SectionLabel(
-                          _type == P2PPaymentAddType.bank
-                              ? 'Chọn ngân hàng'
-                              : 'Chọn ví điện tử',
-                        ),
-                        const SizedBox(height: _p2pPaymentAddSectionGap),
-                        _PaymentOptionWrap(
-                          options: options,
-                          selected: _selectedMethod,
-                          onSelected: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedMethod = value);
-                          },
-                        ),
-                        const SizedBox(height: _p2pPaymentAddMajorGap),
-                        VitInput(
-                          controller: _accountController,
-                          fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
-                          semanticLabel: 'P2P payment account',
-                          label: _type == P2PPaymentAddType.bank
-                              ? 'Số tài khoản'
-                              : 'Số điện thoại / tài khoản ví',
-                          hintText: _type == P2PPaymentAddType.bank
-                              ? snapshot.defaultBankAccountHint
-                              : snapshot.defaultEwalletAccountHint,
-                          prefix: const Icon(
-                            Icons.account_balance_wallet_outlined,
-                          ),
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          onChanged: (_) => setState(() {}),
-                        ),
-                        const SizedBox(height: _p2pPaymentAddMajorGap),
-                        VitInput(
-                          controller: _ownerController,
-                          fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
-                          semanticLabel: 'P2P payment account owner',
-                          label: 'Tên chủ tài khoản',
-                          hintText: snapshot.ownerNameHint,
-                          prefix: const Icon(Icons.person_outline_rounded),
-                          textCapitalization: TextCapitalization.characters,
-                          inputFormatters: [_UppercaseTextFormatter()],
-                          textInputAction: TextInputAction.done,
-                          onChanged: (_) => setState(() {}),
-                        ),
-                        const SizedBox(height: _p2pPaymentAddMajorGap),
-                        _SecurityNote(note: snapshot.securityNote),
-                        if (_isValidFor(controller)) ...[
-                          const SizedBox(height: _p2pPaymentAddMajorGap),
-                          _PaymentPreview(
-                            preview: controller.preview(
-                              selectedMethod: _selectedMethod!,
-                              account: _accountController.text,
-                              ownerName: _ownerController.text,
-                            ),
-                            type: _type,
-                          ),
-                        ],
-                        const SizedBox(height: _p2pPaymentAddSectionGap),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Payment method add state review',
-                          message:
-                              'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
-                          contractId: 'SC-232',
-                        ),
-                        const SizedBox(height: _p2pPaymentAddMajorGap),
-                        Semantics(
-                          label: 'Preview and add P2P payment method',
-                          button: true,
-                          enabled: _isValidFor(controller) && !_submitting,
-                          child: VitCtaButton(
-                            key: P2PPaymentMethodAddPage.saveButtonKey,
-                            loading: _submitting,
-                            onPressed: _isValidFor(controller) && !_submitting
-                                ? () => _confirmSave(context, controller)
-                                : null,
-                            child: Text(
-                              _submitting ? 'Đang lưu...' : 'Thêm phương thức',
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: footerInset),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Payment method add state review',
+          message:
+              'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
+          contractId: 'SC-232',
+        ),
+        Semantics(
+          label: 'Preview and add P2P payment method',
+          button: true,
+          enabled: _isValidFor(controller) && !_submitting,
+          child: VitCtaButton(
+            key: P2PPaymentMethodAddPage.saveButtonKey,
+            loading: _submitting,
+            onPressed: _isValidFor(controller) && !_submitting
+                ? () => _confirmSave(context, controller)
+                : null,
+            child: Text(
+              _submitting ? 'Đang lưu...' : 'Thêm phương thức',
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -270,7 +222,7 @@ class _P2PPaymentMethodAddPageState
             _ConfirmRow(label: 'Chủ tài khoản', value: preview.ownerName),
             _ConfirmRow(label: 'Sở hữu', value: preview.ownershipRiskMessage),
             _ConfirmRow(label: 'Giới hạn', value: preview.limitMessage),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               preview.confirmMessage,
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),

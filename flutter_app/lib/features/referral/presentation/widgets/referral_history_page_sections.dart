@@ -68,7 +68,7 @@ class _StatCard extends StatelessWidget {
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               label,
               textAlign: TextAlign.center,
@@ -81,8 +81,8 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-class _FilterRail extends StatelessWidget {
-  const _FilterRail({
+class _ReferralFriendFilters extends StatelessWidget {
+  const _ReferralFriendFilters({
     required this.filters,
     required this.active,
     required this.onChanged,
@@ -100,40 +100,19 @@ class _FilterRail extends StatelessWidget {
       child: Row(
         children: [
           for (final item in filters) ...[
-            _FilterChip(
-              item: item,
-              active: item.filter == active,
+            VitChoicePill(
+              key: ReferralHistoryPage.filterKey(item.filter),
+              label: '${item.label} (${item.count})',
+              selected: item.filter == active,
               onTap: () => onChanged(item.filter),
+              accentColor: AppColors.primary,
+              height: AppSpacing.referralHistoryFilterHeight,
+              padding: AppSpacing.referralFilterChipPadding,
             ),
             const SizedBox(width: AppSpacing.x3),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.item,
-    required this.active,
-    required this.onTap,
-  });
-
-  final ReferralFilterDraft item;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: ReferralHistoryPage.filterKey(item.filter),
-      label: '${item.label} (${item.count})',
-      selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primary,
-      height: AppSpacing.referralHistoryFilterHeight,
-      padding: AppSpacing.referralFilterChipPadding,
     );
   }
 }

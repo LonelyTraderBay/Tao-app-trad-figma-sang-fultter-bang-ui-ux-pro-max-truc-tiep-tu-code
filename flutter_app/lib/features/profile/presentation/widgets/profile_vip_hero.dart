@@ -1,86 +1,96 @@
 part of '../pages/vip_page.dart';
 
-class _VipBody extends StatelessWidget {
-  const _VipBody({
-    required this.snapshot,
-    required this.selectedTab,
-    required this.onTabChanged,
-    required this.onTrade,
-  });
-
-  final ProfileVipSnapshot snapshot;
-  final _VipTab selectedTab;
-  final ValueChanged<_VipTab> onTabChanged;
-  final VoidCallback onTrade;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.screenState) {
-      ProfileScreenState.loading => const VitSkeletonList(
-        key: VIPPage.loadingKey,
-        rows: 4,
-      ),
-      ProfileScreenState.error => VitErrorState(
+List<Widget> _vipPageChildren({
+  required BuildContext context,
+  required ProfileVipSnapshot snapshot,
+  required _VipTab selectedTab,
+  required ValueChanged<_VipTab> onTabChanged,
+  required VoidCallback onTrade,
+}) {
+  return switch (snapshot.screenState) {
+    ProfileScreenState.loading => [
+      const VitSkeletonList(key: VIPPage.loadingKey, rows: 4),
+    ],
+    ProfileScreenState.error => [
+      VitErrorState(
         key: VIPPage.errorKey,
         title: 'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c ch\u01B0\u01A1ng tr\u00ECnh VIP',
         message: 'Ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
         actionLabel: 'Th\u1EED l\u1EA1i',
         onAction: () => context.go(AppRoutePaths.profileVip),
       ),
-      ProfileScreenState.empty => const VitEmptyState(
+    ],
+    ProfileScreenState.empty => [
+      const VitEmptyState(
         key: VIPPage.emptyKey,
         title: 'Ch\u01B0a c\u00F3 d\u1EEF li\u1EC7u VIP',
         message:
             'Th\u00F4ng tin h\u1EA1ng VIP s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
         icon: Icons.workspace_premium_outlined,
       ),
-      ProfileScreenState.offline => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const VitOfflineBanner(
-            key: VIPPage.offlineKey,
-            message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
-            detail: 'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u VIP \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
-          ),
-          SizedBox(height: VitDensity.compact.pageContentGap),
-          ..._readyChildren(),
-        ],
+    ],
+    ProfileScreenState.offline => [
+      const VitOfflineBanner(
+        key: VIPPage.offlineKey,
+        message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
+        detail: 'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u VIP \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
       ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _readyChildren(),
-      ),
-    };
-  }
-
-  List<Widget> _readyChildren() {
-    return [
-      _VipHero(snapshot: snapshot),
-      _VipTabs(active: selectedTab, onChanged: onTabChanged),
-      AnimatedSwitcher(
-        duration: const Duration(milliseconds: 180),
-        child: _tabContent(),
-      ),
-    ];
-  }
-
-  Widget _tabContent() {
-    return switch (selectedTab) {
-      _VipTab.overview => _OverviewTab(
-        key: const ValueKey('overview'),
+      ..._vipReadySections(
         snapshot: snapshot,
+        selectedTab: selectedTab,
+        onTabChanged: onTabChanged,
+        onTrade: onTrade,
       ),
-      _VipTab.benefits => _BenefitsTab(
-        key: const ValueKey('benefits'),
+    ],
+    _ => _vipReadySections(
+      snapshot: snapshot,
+      selectedTab: selectedTab,
+      onTabChanged: onTabChanged,
+      onTrade: onTrade,
+    ),
+  };
+}
+
+List<Widget> _vipReadySections({
+  required ProfileVipSnapshot snapshot,
+  required _VipTab selectedTab,
+  required ValueChanged<_VipTab> onTabChanged,
+  required VoidCallback onTrade,
+}) {
+  return [
+    _VipHero(snapshot: snapshot),
+    _VipTabs(active: selectedTab, onChanged: onTabChanged),
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 180),
+      child: _vipTabContent(
+        selectedTab: selectedTab,
         snapshot: snapshot,
         onTrade: onTrade,
       ),
-      _VipTab.history => VipHistoryTab(
-        key: const ValueKey('history'),
-        snapshot: snapshot,
-      ),
-    };
-  }
+    ),
+  ];
+}
+
+Widget _vipTabContent({
+  required _VipTab selectedTab,
+  required ProfileVipSnapshot snapshot,
+  required VoidCallback onTrade,
+}) {
+  return switch (selectedTab) {
+    _VipTab.overview => _OverviewTab(
+      key: const ValueKey('overview'),
+      snapshot: snapshot,
+    ),
+    _VipTab.benefits => _BenefitsTab(
+      key: const ValueKey('benefits'),
+      snapshot: snapshot,
+      onTrade: onTrade,
+    ),
+    _VipTab.history => VipHistoryTab(
+      key: const ValueKey('history'),
+      snapshot: snapshot,
+    ),
+  };
 }
 
 class _VipHero extends StatelessWidget {

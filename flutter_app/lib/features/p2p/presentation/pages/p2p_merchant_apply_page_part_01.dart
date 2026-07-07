@@ -73,6 +73,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                             onBackToP2P: () => context.go(AppRoutePaths.p2p),
                           )
                         : VitPageContent(
+         rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.none,
                             fullBleed: true,
                             density: VitDensity.compact,
@@ -380,7 +381,7 @@ class _BenefitCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _IconBadge(icon: _iconFor(benefit.iconKey), color: tone),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             benefit.title,
             maxLines: 1,
@@ -425,11 +426,11 @@ class _RequirementChecklist extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final requirement in requirements) ...[
             _RequirementRow(requirement: requirement),
             if (requirement != requirements.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

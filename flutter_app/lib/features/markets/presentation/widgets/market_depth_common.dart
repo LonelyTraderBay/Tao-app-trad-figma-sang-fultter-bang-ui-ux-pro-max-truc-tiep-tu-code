@@ -83,11 +83,16 @@ class MarketDepthPairSummary extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            '\$${formatMarketDepthPrice(pair.price)}',
-            style: AppTextStyles.sectionTitle.copyWith(
-              fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightCaption,
+          Flexible(
+            child: Text(
+              '\$${formatMarketDepthPrice(pair.price)}',
+              style: AppTextStyles.sectionTitle.copyWith(
+                fontFeatures: AppTextStyles.tabularFigures,
+                height: AppSpacing.marketLineHeightCaption,
+              ),
+              textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
         ],
@@ -110,6 +115,7 @@ class MarketDepthSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: accentColor,
     );

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
@@ -70,29 +71,58 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
       semanticLabel: 'SC-141 TransactionDetailPage',
       contentKey: TransactionDetailPage.contentKey,
       contentGap: VitContentGap.tight,
+      rhythm: VitPageRhythm.standard,
       shellRenderMode: mode,
       backgroundColor: _detailBackground,
       onBack: () => context.go(AppRoutePaths.walletHistory),
       children: [
-        snapshot.transaction == null
-            ? _MissingTransaction(
-                onBack: () => context.go(AppRoutePaths.walletHistory),
-              )
-            : _TransactionDetailContent(
-                tx: snapshot.transaction!,
+        if (snapshot.transaction == null)
+          _MissingTransaction(
+            onBack: () => context.go(AppRoutePaths.walletHistory),
+          )
+        else ...[
+          _SummaryCard(
+            tx: snapshot.transaction!,
+            type: _DetailTypeMeta.from(snapshot.transaction!),
+            status: _DetailStatusMeta.from(snapshot.transaction!.status),
+          ),
+          VitPageSection(
+            label: 'Ti\u1EBFn tr\u00ECnh',
+            headerIcon: Icons.timeline_rounded,
+            headerIconColor: _detailPrimary,
+            innerGap: AppSpacing.pageRhythmStandardInnerGap,
+            children: [_ProgressCard(tx: snapshot.transaction!)],
+          ),
+          VitPageSection(
+            label: 'Th\u00F4ng tin chi ti\u1EBFt',
+            headerIcon: Icons.article_outlined,
+            headerIconColor: _detailPrimary,
+            innerGap: AppSpacing.pageRhythmStandardInnerGap,
+            children: [
+              _DetailsCard(
+                rows: _detailsFor(
+                  snapshot.transaction!,
+                  _DetailTypeMeta.from(snapshot.transaction!).isDebit,
+                ),
                 copiedValue: _copiedValue,
                 onCopy: _copyValue,
-                onSupport: () => context.go(
-                  ContextualSupportContracts.supportRouteFor(
-                    ContextualSupportFlow.withdrawal,
-                    referenceId: snapshot.transaction!.id,
-                    sourceRoute: AppRoutePaths.walletTransaction(
-                      snapshot.transaction!.id,
-                    ),
-                    issueLabel: 'Wallet transaction support',
-                  ),
-                ),
               ),
+            ],
+          ),
+          if (snapshot.transaction!.txHash != null) const _ExplorerButton(),
+          _SupportButton(
+            onTap: () => context.go(
+              ContextualSupportContracts.supportRouteFor(
+                ContextualSupportFlow.withdrawal,
+                referenceId: snapshot.transaction!.id,
+                sourceRoute: AppRoutePaths.walletTransaction(
+                  snapshot.transaction!.id,
+                ),
+                issueLabel: 'Wallet transaction support',
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }

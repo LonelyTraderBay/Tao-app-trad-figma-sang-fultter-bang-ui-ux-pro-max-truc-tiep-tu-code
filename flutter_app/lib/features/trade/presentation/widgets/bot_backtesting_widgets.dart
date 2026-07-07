@@ -71,7 +71,7 @@ class _StrategyButton extends StatelessWidget {
               strategy.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: selected ? color : AppColors.text1,
                 fontWeight: AppTextStyles.bold,
               ),
@@ -101,12 +101,12 @@ class _PairGrid extends StatelessWidget {
       runSpacing: AppSpacing.tradeBotRowGap,
       children: [
         for (final pair in pairs)
-          _ChoicePill(
-            widgetKey: BotBacktestingPage.pairKey(pair),
+          VitChoicePill(
+            key: BotBacktestingPage.pairKey(pair),
             label: pair,
             selected: pair == selectedPair,
-            width: AppSpacing.buttonHero + AppSpacing.x6,
             onTap: () => onChanged(pair),
+            accentColor: _backtestPrimary,
           ),
       ],
     );
@@ -130,53 +130,19 @@ class _DateRangeGrid extends StatelessWidget {
       children: [
         for (final range in ranges) ...[
           Expanded(
-            child: _ChoicePill(
-              widgetKey: BotBacktestingPage.rangeKey(range.id),
+            child: VitChoicePill(
+              key: BotBacktestingPage.rangeKey(range.id),
               label: range.label,
               selected: range.id == selectedId,
               onTap: () => onChanged(range.id),
+              accentColor: _backtestPrimary,
+              fullWidth: true,
             ),
           ),
           if (range != ranges.last)
             const SizedBox(width: AppSpacing.tradeBotSmallGap),
         ],
       ],
-    );
-  }
-}
-
-class _ChoicePill extends StatelessWidget {
-  const _ChoicePill({
-    required this.widgetKey,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-    this.width,
-  });
-
-  final Key widgetKey;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  final double? width;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: widgetKey,
-      onTap: onTap,
-      width: width,
-      height: AppSpacing.buttonCompact,
-      alignment: Alignment.center,
-      variant: selected ? VitCardVariant.ghost : VitCardVariant.inner,
-      borderColor: selected ? _backtestPrimary : AppColors.borderSolid,
-      child: Text(
-        label,
-        style: AppTextStyles.captionSm.copyWith(
-          color: selected ? _backtestPrimary : AppColors.text1,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
     );
   }
 }
@@ -195,7 +161,7 @@ class _CapitalInput extends StatelessWidget {
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       suffix: Text(
         'USDT',
-        style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+        style: AppTextStyles.caption.copyWith(color: AppColors.text3),
       ),
     );
   }
@@ -234,7 +200,7 @@ class _BacktestPeriodCard extends StatelessWidget {
               children: [
                 Text(
                   'Backtest Period',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),
@@ -242,7 +208,7 @@ class _BacktestPeriodCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   'Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                   ),
                 ),
@@ -262,6 +228,7 @@ class _RunFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.tradeBotControlTall,
       padding: AppSpacing.tradeBotFooterPadding,

@@ -1,33 +1,5 @@
 part of '../pages/launchpad_webhooks_page.dart';
 
-class _MiniPill extends StatelessWidget {
-  const _MiniPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .14),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadCompactChipPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.chartLabelXs.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: _launchpadWebhooksLineHeightTight,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _CopyButton extends StatelessWidget {
   const _CopyButton({
     super.key,
@@ -70,7 +42,7 @@ class _EmptySubscriptions extends StatelessWidget {
             color: AppColors.text3,
             size: _launchpadWebhooksEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Chua co webhook nao',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),

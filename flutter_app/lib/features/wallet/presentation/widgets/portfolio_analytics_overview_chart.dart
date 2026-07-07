@@ -15,21 +15,43 @@ class _OverviewContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+      children: sectionChildren,
+    );
+  }
+
+  List<Widget> get sectionChildren => [
         _PeriodSelector(
           periods: snapshot.periods,
           active: activePeriod,
           onChanged: onPeriodChanged,
         ),
-        const SizedBox(height: AppSpacing.walletAnalyticsOverviewPeriodGap),
-        _ChartCard(points: snapshot.history),
-        const SizedBox(height: AppSpacing.walletAnalyticsOverviewChartGap),
-        _MetricsCard(metrics: snapshot.metrics),
-        const SizedBox(height: AppSpacing.walletAnalyticsOverviewMetricsGap),
-        _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
-      ],
-    );
-  }
+        VitPageSection(
+          label: 'Bi\u1EC3u \u0111\u1ED3 danh m\u1EE5c',
+          headerIcon: Icons.area_chart_rounded,
+          headerIconColor: _analyticsGreen,
+          accentColor: _analyticsGreen,
+          innerGap: AppSpacing.pageRhythmStandardInnerGap,
+          children: [_ChartCard(points: snapshot.history)],
+        ),
+        VitPageSection(
+          label: 'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
+          headerIcon: Icons.speed_rounded,
+          headerIconColor: _analyticsPrimary,
+          accentColor: _analyticsPrimary,
+          innerGap: AppSpacing.pageRhythmStandardInnerGap,
+          children: [_MetricsCard(metrics: snapshot.metrics)],
+        ),
+        VitPageSection(
+          label: 'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
+          headerIcon: Icons.account_balance_wallet_outlined,
+          headerIconColor: _analyticsPrimary,
+          accentColor: _analyticsPrimary,
+          innerGap: AppSpacing.pageRhythmStandardInnerGap,
+          children: [
+            _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
+          ],
+        ),
+      ];
 }
 
 class _PeriodSelector extends StatelessWidget {
@@ -75,14 +97,6 @@ class _ChartCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const VitSectionHeader(
-            title: 'Bi\u1EC3u \u0111\u1ED3 danh m\u1EE5c',
-            icon: Icons.area_chart_rounded,
-            iconColor: _analyticsGreen,
-            accentColor: _analyticsGreen,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.x2),
           SizedBox(
             height: AppSpacing.walletAnalyticsChartHeight,
             child: CustomPaint(

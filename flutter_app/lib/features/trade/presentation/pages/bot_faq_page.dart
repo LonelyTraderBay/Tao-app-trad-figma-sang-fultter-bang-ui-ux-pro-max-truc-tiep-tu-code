@@ -122,7 +122,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                         }),
                       ),
                       if (i != items.length - 1)
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     ],
                   ],
                 ),

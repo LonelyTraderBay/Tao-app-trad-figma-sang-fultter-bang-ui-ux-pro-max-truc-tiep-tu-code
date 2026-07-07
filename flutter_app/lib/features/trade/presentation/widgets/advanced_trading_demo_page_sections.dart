@@ -155,6 +155,7 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: AdvancedTradingDemoPage.actionKey(action.id),
       onTap: onTap,

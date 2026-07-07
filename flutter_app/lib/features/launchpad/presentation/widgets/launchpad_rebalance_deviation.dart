@@ -22,12 +22,12 @@ class LaunchpadRebalanceDeviationCard extends StatelessWidget {
         children: [
           Text(
             'Do lech phan bo',
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Column(
             children: [for (final asset in assets) _DeviationRow(asset: asset)],
           ),

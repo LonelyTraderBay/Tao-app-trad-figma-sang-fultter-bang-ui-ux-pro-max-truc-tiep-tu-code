@@ -219,6 +219,7 @@ class _AssetSelection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Chọn tài sản',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           icon: Icons.account_balance_wallet_outlined,
           accentColor: AppModuleAccents.p2p,
           density: VitDensity.compact,
@@ -258,6 +259,7 @@ class _AssetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _assetColor(asset.symbol);
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: P2PWalletTransferPage.assetKey(asset.symbol),
       radius: VitCardRadius.standard,
@@ -281,7 +283,7 @@ class _AssetTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _AssetMark(symbol: asset.symbol, color: color),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             asset.symbol,
             maxLines: 1,

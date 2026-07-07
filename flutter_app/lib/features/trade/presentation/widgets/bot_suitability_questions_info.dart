@@ -20,7 +20,7 @@ class _QuestionView extends StatelessWidget {
     final progress = answers.length / totalQuestions;
     final selected = answers[question.id];
 
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -38,7 +38,7 @@ class _QuestionView extends StatelessWidget {
             onTap: () => onAnswer(option.id),
           ),
           if (option != question.options.last)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         _InfoCard(snapshot: snapshot),
       ],
@@ -78,7 +78,7 @@ class _ProgressBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: LinearProgressIndicator(
@@ -103,6 +103,7 @@ class _QuestionHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           width: AppSpacing.buttonCompact,
           height: AppSpacing.buttonCompact,
@@ -124,7 +125,7 @@ class _QuestionHeader extends StatelessWidget {
                 question.category.name.toUpperCase(),
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 question.question,
                 style: AppTextStyles.baseMedium.copyWith(

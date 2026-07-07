@@ -96,7 +96,7 @@ class _StrategyCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             strategy.name,
             maxLines: 1,

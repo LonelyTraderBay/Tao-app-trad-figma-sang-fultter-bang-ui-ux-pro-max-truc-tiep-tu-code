@@ -195,7 +195,7 @@ class _NavCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const Align(
             alignment: Alignment.centerRight,
             child: Icon(

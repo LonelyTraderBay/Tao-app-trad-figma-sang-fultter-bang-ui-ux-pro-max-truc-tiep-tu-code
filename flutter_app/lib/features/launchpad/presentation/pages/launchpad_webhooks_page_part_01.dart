@@ -380,9 +380,10 @@ class _SubscriptionSummary extends StatelessWidget {
           runSpacing: AppSpacing.x1,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            _MiniPill(
+            VitAccentPill(
               label: subscription.chain,
-              color: subscription.accent.resolve(),
+              accentColor: subscription.accent.resolve(),
+              size: VitStatusPillSize.sm,
             ),
             Text(
               '${subscription.eventTypes.length} events',

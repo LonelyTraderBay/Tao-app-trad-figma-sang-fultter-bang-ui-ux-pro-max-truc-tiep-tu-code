@@ -14,6 +14,7 @@ class _DocumentCard extends StatelessWidget {
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           const VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -76,6 +77,7 @@ class _InspectorPortalCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               const VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.standard,
@@ -113,7 +115,7 @@ class _InspectorPortalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: RegulatoryInspectionReadyPage.portalKey,
             onPressed: () {},
@@ -177,6 +179,7 @@ class _SectionLabel extends StatelessWidget {
         Expanded(
           child: VitSectionHeader(
             title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             variant: VitSectionHeaderVariant.accentBar,
             accentColor: _inspectionPrimary,
           ),

@@ -102,7 +102,7 @@ class _AppealNotice extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           if (!state.canAppeal)
             const VitStatusPill(
               label: 'Đã gửi yêu cầu xem xét',

@@ -44,6 +44,7 @@ class _KycTierCard extends StatelessWidget {
             : AppColors.overlayStroke,
         child: Row(
           children: [
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             VitCard(
               width: _limitsIconBox,
               height: _limitsIconBox,
@@ -138,24 +139,16 @@ class _FaqCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
-            children: [
-              Expanded(
-                child: VitSectionHeader(
-                  title: 'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
-                  icon: Icons.help_outline_rounded,
-                  density: VitDensity.compact,
-                ),
-              ),
-              VitStatusPill(
-                label: 'FAQ t\u0129nh',
-                icon: Icons.article_outlined,
-                status: VitStatusPillStatus.neutral,
-                size: VitStatusPillSize.sm,
-              ),
-            ],
+          const Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: VitStatusPill(
+              label: 'FAQ t\u0129nh',
+              icon: Icons.article_outlined,
+              status: VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.sm,
+            ),
           ),
-          const SizedBox(height: _limitsGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           for (var i = 0; i < faqs.length; i++) ...[
             Text(
               faqs[i].question,

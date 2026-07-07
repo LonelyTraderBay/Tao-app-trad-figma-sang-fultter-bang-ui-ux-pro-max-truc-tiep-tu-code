@@ -16,6 +16,7 @@ class WalletManagerDistributionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.walletManagerDistributionHeight,
       padding: AppSpacing.walletManagerDistributionPadding,

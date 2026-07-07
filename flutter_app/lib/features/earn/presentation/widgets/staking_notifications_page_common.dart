@@ -53,31 +53,6 @@ class _ToggleSwitch extends StatelessWidget {
   }
 }
 
-class _PriorityPill extends StatelessWidget {
-  const _PriorityPill();
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.sell15,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          'Quan trọng',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.sell,
-            fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingNotificationsPillLineHeight,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _RoundIcon extends StatelessWidget {
   const _RoundIcon({required this.icon, required this.color});
 

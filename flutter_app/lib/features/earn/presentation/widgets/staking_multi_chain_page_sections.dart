@@ -51,7 +51,7 @@ class _TotalStats extends StatelessWidget {
             'Total Portfolio Value',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -68,7 +68,7 @@ class _TotalStats extends StatelessWidget {
               const _GainPill(label: '+12.4%'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -174,7 +174,7 @@ class _AllocationCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Chain Allocation', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.stakingProductDonutChartHeight,
             child: CustomPaint(
@@ -185,7 +185,7 @@ class _AllocationCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x5,
             runSpacing: AppSpacing.x2,

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -106,6 +107,7 @@ class _ProviderApplicationPageState
                 key: ProviderApplicationPage.contentKey,
                 bottomInset: scrollClearance,
                 child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   gap: VitContentGap.tight,
                   children: tradeShellWithProductTabs(
@@ -148,7 +150,6 @@ class _ProviderApplicationPageState
                                 draft: draft,
                                 onChanged: _updateDraft,
                               ),
-                              const SizedBox(height: AppSpacing.x4),
                               VitFinancialSafetySummary(
                                 title: 'Xem lại đơn đăng ký provider',
                                 contractId: 'SC-069 Provider application',

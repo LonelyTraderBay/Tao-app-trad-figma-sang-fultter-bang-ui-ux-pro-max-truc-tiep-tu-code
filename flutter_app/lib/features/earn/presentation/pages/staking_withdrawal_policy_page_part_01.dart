@@ -38,6 +38,7 @@ class _StakingWithdrawalPolicyPageState
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
@@ -132,7 +133,7 @@ class _InfoBanner extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.infoBody,
                       style: AppTextStyles.caption.copyWith(
@@ -195,7 +196,7 @@ class _TimelineTab extends StatelessWidget {
           density: VitDensity.compact,
           children: [_ProcessCard(steps: snapshot.processSteps)],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitPageSection(
           label: snapshot.timelineTitle,
           density: VitDensity.compact,
@@ -204,7 +205,7 @@ class _TimelineTab extends StatelessWidget {
               _TimelineCard(timeline: timeline),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _NoteCard(text: snapshot.timelineNote),
       ],
     );
@@ -226,7 +227,7 @@ class _ProcessCard extends StatelessWidget {
         children: [
           for (final step in steps) ...[
             _ProcessStepRow(step: step),
-            if (step != steps.last) const SizedBox(height: AppSpacing.x3),
+            if (step != steps.last) const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -284,7 +285,7 @@ class _ProcessStepRow extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 step.description,
                 style: AppTextStyles.caption.copyWith(
@@ -307,6 +308,7 @@ class _TimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: StakingWithdrawalPolicyPage.timelineKey(timeline.product),
       radius: VitCardRadius.large,
@@ -326,7 +328,7 @@ class _TimelineCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -345,7 +347,7 @@ class _TimelineCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -431,7 +433,7 @@ class _PenaltiesTab extends StatelessWidget {
                       height: _stakingWithdrawalPenaltyBodyLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Material(
                     color: AppColors.surface2,
                     borderRadius: AppRadii.lgRadius,
@@ -479,7 +481,7 @@ class _PenaltiesTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitPageSection(
           label: 'Ví dụ Tính toán',
           children: [
@@ -487,14 +489,14 @@ class _PenaltiesTab extends StatelessWidget {
               _PenaltyExampleCard(example: example),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           key: StakingWithdrawalPolicyPage.calculatorCtaKey,
           onPressed: onOpenCalculator,
           leading: const Icon(Icons.calculate_rounded),
           child: Text(snapshot.calculatorCta),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _NoteCard(
           text:
               'Số lượng gốc không bị ảnh hưởng. Chỉ phần thưởng staking bị phạt; bạn luôn nhận lại 100% số tiền gốc đã stake.',

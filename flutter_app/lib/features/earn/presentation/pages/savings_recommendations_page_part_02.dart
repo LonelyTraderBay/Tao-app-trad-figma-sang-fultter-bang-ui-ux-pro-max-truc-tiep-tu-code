@@ -37,7 +37,7 @@ class _StrategyCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,9 +78,9 @@ class _StrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _AllocationBar(allocation: strategy.allocation),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -89,7 +89,7 @@ class _StrategyCard extends StatelessWidget {
                 _AllocationChip(item: item),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               _SmallPill(
@@ -141,7 +141,7 @@ class _AllocationBar extends StatelessWidget {
               flex: item.percentage,
               child: ColoredBox(
                 color: _assetColor(item.asset),
-                child: const SizedBox(height: AppSpacing.x2),
+                child: const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ),
             ),
         ],
@@ -291,7 +291,7 @@ class _StrategyDetailSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x2,
@@ -308,7 +308,7 @@ class _StrategyDetailSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.earnPaddingX3,
@@ -334,7 +334,7 @@ class _StrategyDetailSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
           'Phân bổ chi tiết',
           style: AppTextStyles.caption.copyWith(
@@ -342,33 +342,33 @@ class _StrategyDetailSheet extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final item in strategy.allocation) ...[
           _AllocationDetailRow(item: item, amount: amount),
           if (item != strategy.allocation.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.rowGap),
         _AllocationBar(allocation: strategy.allocation),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _BulletSection(
           title: 'Ưu điểm',
           items: strategy.pros,
           color: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _BulletSection(
           title: 'Lưu ý / Nhược điểm',
           items: strategy.cons,
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _BulletSection(
           title: 'Phù hợp với',
           items: strategy.bestFor,
           color: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           key: SavingsRecommendationsPage.detailCtaKey,
           onPressed: () {
@@ -412,7 +412,7 @@ class _CompareSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _CompareRow(
           label: '',
           values: [for (final strategy in strategies) strategy.title],

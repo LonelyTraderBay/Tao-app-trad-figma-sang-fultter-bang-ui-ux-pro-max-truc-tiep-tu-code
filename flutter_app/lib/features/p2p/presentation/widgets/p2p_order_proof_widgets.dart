@@ -96,7 +96,7 @@ class _UploadSection extends StatelessWidget {
           subtitle,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             Expanded(
@@ -149,6 +149,7 @@ class _UploadSourceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
@@ -160,7 +161,7 @@ class _UploadSourceCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             label,
             textAlign: TextAlign.center,
@@ -169,7 +170,7 @@ class _UploadSourceCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             caption,
             textAlign: TextAlign.center,
@@ -199,7 +200,7 @@ class _UploadedProofs extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x3,
           runSpacing: AppSpacing.x3,
@@ -224,6 +225,7 @@ class _ProofThumb extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           width: AppSpacing.p2pFinancialSafetyProofThumb,
           height: AppSpacing.p2pFinancialSafetyProofThumb,
@@ -240,7 +242,7 @@ class _ProofThumb extends StatelessWidget {
                 color: AppColors.buy,
                 size: AppSpacing.iconMd,
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Ảnh ${index + 1}',
                 style: AppTextStyles.micro.copyWith(
@@ -293,7 +295,7 @@ class _TipsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final tip in tips) P2PHelpBullet(text: tip),
         ],
       ),

@@ -67,6 +67,7 @@ class _ActionStack extends StatelessWidget {
       children: [
         Row(
           children: [
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             VitCard(
               width: _challengeShareSize,
               height: _challengeShareSize,

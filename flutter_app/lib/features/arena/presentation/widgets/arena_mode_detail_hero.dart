@@ -70,13 +70,13 @@ class ArenaModeHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           _CreatorRow(
             creatorKey: creatorKey,
             snapshot: snapshot,
             onTap: onCreator,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Align(
             alignment: Alignment.centerLeft,
             child: VitStatusPill(
@@ -88,7 +88,7 @@ class ArenaModeHero extends StatelessWidget {
               onTap: onTrust,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -111,7 +111,7 @@ class ArenaModeHero extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(

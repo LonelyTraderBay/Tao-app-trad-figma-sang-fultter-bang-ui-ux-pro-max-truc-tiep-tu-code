@@ -18,7 +18,7 @@ class _ChartSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const _ChartPeriodTabs(),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               SizedBox(
                 height: AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x5,
                 child: CustomPaint(

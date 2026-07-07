@@ -1,7 +1,12 @@
 part of '../pages/p2p_home_page.dart';
 
-class _FilterPanel extends StatelessWidget {
-  const _FilterPanel({
+const _p2pHomeFilterChipPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+
+class _HomeFilterSection extends StatelessWidget {
+  const _HomeFilterSection({
     required this.merchantFilter,
     required this.paymentFilter,
     required this.paymentMethods,
@@ -33,34 +38,46 @@ class _FilterPanel extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             children: [
-              _ChipButton(
+              VitChoicePill(
                 label: 'Tất cả',
-                active: merchantFilter == 'all',
+                selected: merchantFilter == 'all',
                 onTap: () => onMerchant('all'),
+                padding: _p2pHomeFilterChipPadding,
+                accentColor: AppModuleAccents.p2p,
+                semanticLabel: 'P2P filter Tất cả',
               ),
-              _ChipButton(
+              VitChoicePill(
                 label: 'Elite',
-                active: merchantFilter == 'elite',
+                selected: merchantFilter == 'elite',
                 onTap: () => onMerchant('elite'),
+                padding: _p2pHomeFilterChipPadding,
+                accentColor: AppModuleAccents.p2p,
+                semanticLabel: 'P2P filter Elite',
               ),
-              _ChipButton(
+              VitChoicePill(
                 label: 'Pro',
-                active: merchantFilter == 'pro',
+                selected: merchantFilter == 'pro',
                 onTap: () => onMerchant('pro'),
+                padding: _p2pHomeFilterChipPadding,
+                accentColor: AppModuleAccents.p2p,
+                semanticLabel: 'P2P filter Pro',
               ),
-              _ChipButton(
+              VitChoicePill(
                 label: 'Xác minh',
-                active: merchantFilter == 'verified',
+                selected: merchantFilter == 'verified',
                 onTap: () => onMerchant('verified'),
+                padding: _p2pHomeFilterChipPadding,
+                accentColor: AppModuleAccents.p2p,
+                semanticLabel: 'P2P filter Xác minh',
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Thanh toán',
             style: AppTextStyles.caption.copyWith(
@@ -68,26 +85,32 @@ class _FilterPanel extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             children: [
-              _ChipButton(
+              VitChoicePill(
                 label: 'Tất cả',
-                active: paymentFilter.isEmpty,
+                selected: paymentFilter.isEmpty,
                 onTap: () => onPayment(''),
+                padding: _p2pHomeFilterChipPadding,
+                accentColor: AppModuleAccents.p2p,
+                semanticLabel: 'P2P filter Tất cả',
               ),
               for (final method in paymentMethods)
-                _ChipButton(
+                VitChoicePill(
                   label: method,
-                  active: paymentFilter == method,
+                  selected: paymentFilter == method,
                   onTap: () => onPayment(method),
+                  padding: _p2pHomeFilterChipPadding,
+                  accentColor: AppModuleAccents.p2p,
+                  semanticLabel: 'P2P filter $method',
                 ),
             ],
           ),
           if (merchantFilter != 'all' || paymentFilter.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCtaButton(
               onPressed: onClear,
               variant: VitCtaButtonVariant.ghost,
@@ -237,15 +260,19 @@ class _OfferCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                _formatVnd(ad.price),
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.text1,
-                  fontFeatures: AppTextStyles.tabularFigures,
+              Flexible(
+                child: Text(
+                  _formatVnd(ad.price),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: AppColors.text1,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -261,12 +288,17 @@ class _OfferCard extends StatelessWidget {
                 const _Badge(label: 'Thả nổi', color: AppColors.accent),
               ],
               const Spacer(),
-              Text(
-                '${_formatAmount(ad.available)} ${ad.asset}',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
+              Flexible(
+                child: Text(
+                  '${_formatAmount(ad.available)} ${ad.asset}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ),
             ],
@@ -278,7 +310,7 @@ class _OfferCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -309,14 +341,14 @@ class _OfferCard extends StatelessWidget {
             ],
           ),
           if (ad.isNewMerchant) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             const VitBanner(
               variant: VitBannerVariant.warning,
               icon: Icons.warning_amber_rounded,
               message: 'Merchant mới - kiểm tra kỹ trước khi giao dịch',
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ActionButton(
             label: tradeType == P2PTradeType.buy ? 'Mua' : 'Bán',
             color: actionColor,
@@ -343,34 +375,6 @@ class _EmptyOffers extends StatelessWidget {
       actionLabel: 'Xem hướng dẫn P2P',
       actionKey: P2PHomePage.guideLinkKey,
       onAction: () => context.go(AppRoutePaths.p2pGuide),
-    );
-  }
-}
-
-class _ChipButton extends StatelessWidget {
-  const _ChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      accentColor: AppModuleAccents.p2p,
-      semanticLabel: 'P2P filter $label',
     );
   }
 }

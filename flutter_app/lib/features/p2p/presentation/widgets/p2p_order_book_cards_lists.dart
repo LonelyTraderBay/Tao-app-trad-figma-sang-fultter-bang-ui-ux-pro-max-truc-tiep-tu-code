@@ -258,7 +258,7 @@ class _OrderBookSide extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final entry in entries)
             _OrderBookRow(entry: entry, maxTotal: maxTotal, tone: tone),
         ],

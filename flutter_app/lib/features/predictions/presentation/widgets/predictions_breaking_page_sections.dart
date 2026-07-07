@@ -143,7 +143,6 @@ class _CategoryTabButton extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _predictionPrimary,
-      height: VitDensity.compact.controlHeight - AppSpacing.x3,
       padding: AppSpacing.predictionHomeCategoryPadding,
     );
   }

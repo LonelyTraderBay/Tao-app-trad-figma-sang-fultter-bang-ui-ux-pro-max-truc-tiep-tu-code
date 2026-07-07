@@ -60,14 +60,14 @@ class _FormatCard extends StatelessWidget {
             color: color,
             size: AppSpacing.earnExportFormatIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             format.label,
             style: _captionBold.copyWith(
               color: selected ? AppModuleAccents.earn : AppColors.text2,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             format.description,
             textAlign: TextAlign.center,
@@ -166,7 +166,7 @@ class _OptionsList extends StatelessWidget {
             enabled: enabled.contains(option.id),
             onTap: () => onToggle(option.id),
           ),
-          if (option != options.last) const SizedBox(height: AppSpacing.x3),
+          if (option != options.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

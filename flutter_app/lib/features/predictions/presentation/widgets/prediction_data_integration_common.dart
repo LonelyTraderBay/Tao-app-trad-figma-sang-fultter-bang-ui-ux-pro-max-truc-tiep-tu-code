@@ -119,6 +119,7 @@ class _InlineIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: AppSpacing.predictionDataInlineButtonSize,
       height: AppSpacing.predictionDataInlineButtonSize,

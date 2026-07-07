@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -13,9 +14,8 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 
@@ -99,61 +99,44 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                   AppSpacing.x1) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: _semanticLabel,
-      child: Material(
-        color: _securityBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'B\u1EA3o m\u1EADt',
-            subtitle: _headerSubtitle,
-            showBack: true,
-            onBack: _close,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: SecurityPage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.securityScrollPadding(scrollClearance),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _ScoreCard(snapshot: snapshot),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title:
-                            'R\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
-                        message:
-                            'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc c\u00E1c thao t\u00E1c nh\u1EA1y c\u1EA3m.',
-                        contractId:
-                            '\u0110i\u1EC3m b\u1EA3o m\u1EADt: ${snapshot.score}/4',
-                        density: VitDensity.compact,
-                      ),
-                      _SecurityList(
-                        items: snapshot.items,
-                        onItemTap: _handleItemTap,
-                      ),
-                      if (_showDevices) ...[
-                        _DeviceList(devices: snapshot.devices),
-                      ],
-                      _AntiPhishingCard(
-                        controller: _antiPhishingController,
-                        saving: _saving,
-                        onSave: _saveAntiPhishingCode,
-                      ),
-                      _SecuritySupportCard(supportRoute: snapshot.supportRoute),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+      background: _securityBackground,
+      header: VitHeader(
+        title: 'B\u1EA3o m\u1EADt',
+        subtitle: _headerSubtitle,
+        showBack: true,
+        onBack: _close,
+      ),
+      body: SingleChildScrollView(
+        key: SecurityPage.contentKey,
+        physics: const ClampingScrollPhysics(),
+        padding: AppSpacing.securityScrollPadding(scrollClearance),
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.none,
+          density: VitDensity.compact,
+          fullBleed: true,
+          children: [
+            _ScoreCard(snapshot: snapshot),
+            VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'R\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
+              message:
+                  'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc c\u00E1c thao t\u00E1c nh\u1EA1y c\u1EA3m.',
+              contractId:
+                  '\u0110i\u1EC3m b\u1EA3o m\u1EADt: ${snapshot.score}/4',
+              density: VitDensity.compact,
+            ),
+            _SecurityList(items: snapshot.items, onItemTap: _handleItemTap),
+            if (_showDevices) ...[_DeviceList(devices: snapshot.devices)],
+            _AntiPhishingCard(
+              controller: _antiPhishingController,
+              saving: _saving,
+              onSave: _saveAntiPhishingCode,
+            ),
+            _SecuritySupportCard(supportRoute: snapshot.supportRoute),
+          ],
         ),
       ),
     );

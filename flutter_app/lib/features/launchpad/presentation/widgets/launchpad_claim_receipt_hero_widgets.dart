@@ -73,7 +73,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(
@@ -94,7 +94,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: SizedBox(
@@ -117,7 +117,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -138,7 +138,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(

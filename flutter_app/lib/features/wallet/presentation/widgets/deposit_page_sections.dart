@@ -16,6 +16,7 @@ class _NetworkSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           key: DepositPage.networkSelectorKey,
           variant: VitCardVariant.inner,

@@ -63,7 +63,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       Row(
                         children: [
                           Expanded(
@@ -84,14 +84,14 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _SheetInputField(
                         label: 'Ten webhook',
                         hint: 'VD: Staking Monitor',
                         controller: _labelController,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _SheetInputField(
                         label: 'Webhook URL',
                         hint: 'https://api.example.com/webhooks',
@@ -99,7 +99,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                         monospace: true,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _SheetInputField(
                         label: 'Contract Address',
                         hint: '0x...',
@@ -107,7 +107,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                         monospace: true,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _ChoiceGroup(
                         label: 'Chain',
                         items: const ['BSC', 'Ethereum', 'Polygon', 'Arbitrum'],
@@ -115,7 +115,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                         colorFor: _chainColor,
                         onChanged: (value) => setState(() => _chain = value),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       Text(
                         'Events (${_selectedEvents.length})',
                         style: AppTextStyles.micro.copyWith(
@@ -123,26 +123,27 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Wrap(
                         spacing: AppSpacing.x2,
                         runSpacing: AppSpacing.x2,
                         children: [
                           for (final event in widget.eventTypes)
-                            _SelectablePill(
+                            VitChoicePill(
                               key: LaunchpadWebhooksPage.eventKey(event.type),
                               label: event.label,
-                              color: event.accent.resolve(),
-                              active: _selectedEvents.contains(event.type),
+                              accentColor: event.accent.resolve(),
+                              selected: _selectedEvents.contains(event.type),
                               onTap: () => setState(() {
                                 if (!_selectedEvents.add(event.type)) {
                                   _selectedEvents.remove(event.type);
                                 }
                               }),
+                              padding: AppSpacing.launchpadPillPadding,
                             ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _ChoiceGroup(
                         label: 'Retry Policy',
                         items: const ['none', 'linear', 'exponential'],
@@ -156,7 +157,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           };
                         }),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       VitCtaButton(
                         key: LaunchpadWebhooksPage.createSubmitKey,
                         onPressed: _canSubmit ? _submit : null,

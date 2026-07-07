@@ -7,13 +7,14 @@ class _ProcessContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'How We Handle Complaints',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -23,13 +24,14 @@ class _ProcessContent extends StatelessWidget {
               for (final step in snapshot.processSteps) ...[
                 _ProcessStep(step: step),
                 if (step != snapshot.processSteps.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),
         ),
         const VitSectionHeader(
           title: 'Financial Ombudsman Service',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -94,7 +96,7 @@ class _OmbudsmanCard extends StatelessWidget {
             ombudsman.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             density: VitDensity.compact,
@@ -118,7 +120,7 @@ class _OmbudsmanCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyOmbudsmanReferral),

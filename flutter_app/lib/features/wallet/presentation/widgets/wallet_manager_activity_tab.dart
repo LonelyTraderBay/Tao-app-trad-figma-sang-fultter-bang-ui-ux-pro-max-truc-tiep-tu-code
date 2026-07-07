@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletActivityTab extends StatelessWidget {
@@ -15,14 +16,12 @@ class WalletActivityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Recent Activity',
+      headerIcon: Icons.history_rounded,
+      accentColor: walletManagerPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
       children: [
-        const WalletManagerSectionLabel(
-          label: 'Recent Activity',
-          icon: Icons.history_rounded,
-        ),
-        const SizedBox(height: AppSpacing.walletManagerActivitySectionGap),
         for (var i = 0; i < snapshot.wallets.length; i++) ...[
           _ActivityRow(wallet: snapshot.wallets[i]),
           if (i != snapshot.wallets.length - 1)
@@ -44,6 +43,7 @@ class _ActivityRow extends StatelessWidget {
     final parts = wallet.lastActiveLabel.split(' ');
     final time = parts.isNotEmpty ? parts.first : wallet.lastActiveLabel;
     final date = parts.length > 1 ? parts.skip(1).join(' ') : '';
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.walletManagerActivityRowHeight,
       padding: AppSpacing.walletManagerActivityRowPadding,

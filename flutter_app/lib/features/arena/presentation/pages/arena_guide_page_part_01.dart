@@ -80,7 +80,7 @@ class _GuideHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.heroTitle,
             style: AppTextStyles.body.copyWith(
@@ -237,8 +237,8 @@ class _StepRow extends StatelessWidget {
                     height: _guideStepBodyLineRatio,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
-                _TipPill(text: step.tip, color: color),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                _GuideTipCallout(text: step.tip, color: color),
               ],
             ),
           ),
@@ -258,7 +258,7 @@ class _GuideFooter extends StatelessWidget {
     return Column(
       children: [
         VitCommunityRulesLink(onTap: onRules),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'Arena Points chỉ dùng trong Open Arena — completion và fair play, không phải tài sản tài chính.',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -328,7 +328,7 @@ class _StartCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             key: ArenaGuidePage.ctaKey,
             onPressed: onPressed,

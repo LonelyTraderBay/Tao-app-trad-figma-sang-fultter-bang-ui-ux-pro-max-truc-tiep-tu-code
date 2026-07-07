@@ -19,12 +19,12 @@ class _CorrelationContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.hub_outlined,
+          const VitSectionHeader(
             title: 'Ma trận tương quan',
-            color: AppColors.primary,
+            icon: Icons.hub_outlined,
+            iconColor: AppColors.primary,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           Text(
             'Tương quan càng thấp = diversification tốt. Càng cao = di chuyển cùng hướng.',
             style: AppTextStyles.caption.copyWith(
@@ -90,12 +90,12 @@ class _BacktestContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const _SectionTitle(
-                icon: Icons.bar_chart_rounded,
+              const VitSectionHeader(
                 title: 'DCA vs HODL (12 tháng)',
-                color: AppColors.buy,
+                icon: Icons.bar_chart_rounded,
+                iconColor: AppColors.buy,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX4),
               SizedBox(
                 height: _dcaPortfolioBacktestChartHeight,
                 width: double.infinity,
@@ -173,12 +173,12 @@ class _RiskContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const _SectionTitle(
-                icon: Icons.shield_outlined,
+              const VitSectionHeader(
                 title: 'Đánh giá rủi ro',
-                color: AppColors.sell,
+                icon: Icons.shield_outlined,
+                iconColor: AppColors.sell,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX4),
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

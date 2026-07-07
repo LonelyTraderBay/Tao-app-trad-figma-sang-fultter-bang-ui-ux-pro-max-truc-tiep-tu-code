@@ -183,7 +183,7 @@ class _FuturesSimpleForm extends ConsumerWidget {
             'Bước 1 · Chọn hướng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitSegmentedChoice<TradeFuturesSide>(
             selected: side,
             onChanged: onSideChanged,
@@ -211,25 +211,25 @@ class _FuturesSimpleForm extends ConsumerWidget {
                 : 'Kỳ vọng giá sẽ giảm',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Đòn bẩy ${leverage}x',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Bước 2 · Số tiền ký quỹ',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _MarginInput(controller: marginController, onChanged: onChanged),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _PercentRow(onPercent: onPercent),
           if (margin > 0) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _PreviewCard(pair: snapshot.pair, preview: preview),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: FuturesPage.submitKey,
             onPressed: preview.canOpen

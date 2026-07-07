@@ -61,6 +61,7 @@ class ExecutionQualityIconTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: size,
       height: size,

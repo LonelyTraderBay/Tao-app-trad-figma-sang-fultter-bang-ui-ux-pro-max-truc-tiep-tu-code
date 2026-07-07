@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -103,6 +104,7 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -239,14 +241,14 @@ class _ReasonSelector extends StatelessWidget {
           'Lý do chặn *',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final reason in reasons) ...[
           _ReasonTile(
             reason: reason,
             selected: reason.id == selectedReasonId,
             onTap: () => onChanged(reason.id),
           ),
-          if (reason != reasons.last) const SizedBox(height: AppSpacing.x2),
+          if (reason != reasons.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -267,6 +269,7 @@ class _ReasonTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _reasonColor(reason.toneKey);
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: P2PBlacklistAddPage.reasonKey(reason.id),
       onTap: onTap,
@@ -340,7 +343,7 @@ class _NoteField extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SizedBox(
           height: AppSpacing.ctaHeight + AppSpacing.x4,
           child: Material(

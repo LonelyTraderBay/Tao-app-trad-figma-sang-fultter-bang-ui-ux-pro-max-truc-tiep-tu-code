@@ -49,7 +49,7 @@ class _AmountCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -102,7 +102,7 @@ class _AmountCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitPresetChipRow<int>(
             items: [
               for (final quickAmount in quickAmounts)
@@ -160,7 +160,7 @@ class _PaymentCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -175,7 +175,7 @@ class _PaymentCard extends StatelessWidget {
                 _SmallTextChip('+${paymentMethods.length - 3} phương thức'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               const Icon(
@@ -270,9 +270,9 @@ class _BestOfferCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _MerchantOfferRow(ad: ad, onMerchant: onMerchant),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -296,7 +296,7 @@ class _BestOfferCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -310,7 +310,7 @@ class _BestOfferCard extends StatelessWidget {
           ),
         ),
         if (topOfferCount > 1) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             onTap: onMarketplace,
             padding: AppSpacing.p2pExpressTightCardPadding,
@@ -434,7 +434,7 @@ class _HowItWorksCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final step in steps)
             Padding(
               padding: AppSpacing.p2pExpressHowStepPadding,

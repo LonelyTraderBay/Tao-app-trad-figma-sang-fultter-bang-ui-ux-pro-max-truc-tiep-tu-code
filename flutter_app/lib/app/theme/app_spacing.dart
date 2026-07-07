@@ -48,6 +48,32 @@ final class AppSpacing {
   static const double pageContentGapDefault = 16;
   static const double pageContentGapRelaxed = 24;
   static const double pageContentGapLoose = 32;
+
+  // Page rhythm — cross-app section / inner gaps (see VitPageRhythm).
+  /// Feed / tab root: Home, Markets list, Predictions feed, Arena leaderboard.
+  static const double pageRhythmCompactSectionGap = x3;
+
+  /// Title → body on compact feed pages.
+  static const double pageRhythmCompactInnerGap = x2;
+
+  /// Standard scroll pages: Wallet, Profile, Earn, P2P lists.
+  static const double pageRhythmStandardSectionGap = x4;
+
+  /// Title → body on standard scroll pages.
+  static const double pageRhythmStandardInnerGap = x3;
+
+  /// Hero / onboarding / marketing blocks.
+  static const double pageRhythmRelaxedSectionGap = pageContentGapRelaxed;
+
+  /// Title → body on relaxed hero pages.
+  static const double pageRhythmRelaxedInnerGap = x4;
+
+  /// Long forms, wizards, KYC flows.
+  static const double pageRhythmFormSectionGap = pageContentGapDefault;
+
+  /// Label → field groups on form pages.
+  static const double pageRhythmFormInnerGap = x3;
+
   static const double pageSectionAccentWidth = x1 + dividerHairline;
   static const double rowGap = 8;
   static const double pageSectionAccentHeight = rowPy;
@@ -63,6 +89,33 @@ final class AppSpacing {
   static const EdgeInsets cardPaddingCompact = EdgeInsets.all(12);
   static const EdgeInsets cardPadding = EdgeInsets.all(16);
   static const EdgeInsets cardPaddingHero = EdgeInsets.fromLTRB(20, 24, 20, 20);
+
+  /// Fixed-height tile cards (recent product, market ticker strips).
+  /// Pair with [VitCardContentAlign.center] on [VitCard].
+  static const EdgeInsetsDirectional cardTilePadding =
+      EdgeInsetsDirectional.symmetric(
+    horizontal: 12,
+    vertical: x2,
+  );
+
+  /// Row gap inside fixed-height tile cards (icon → title → subtitle).
+  static const double cardTileInnerGap = pageRhythmCompactInnerGap;
+
+  /// Module accent icon box ([VitAccentIconBox]) — list/bonus/task row icons.
+  static const double accentIconBoxSize = buttonCompact;
+  static const double accentIconFillAlpha = 0.14;
+  static const double accentIconBorderAlpha = 0.24;
+
+  /// Tier E task cards ([VitTaskCard]) — intrinsic-height mission list rows.
+  static const EdgeInsets taskCardPadding = EdgeInsets.all(x4);
+  static const double taskCardIconSize = accentIconBoxSize;
+  static const double taskCardProgressHeight = x3;
+  static const int taskCardSubtitleMaxLines = 3;
+  static const double taskCardTitleSubtitleGap = x1;
+  static const double taskCardProgressSectionGap = pageRhythmStandardSectionGap;
+  static const double taskCardRewardRowGap = x3;
+  static const double taskCardListGap = x3;
+
   static const double pageHorizontalPadding = contentPad;
   static const EdgeInsets pageHorizontal = EdgeInsets.symmetric(
     horizontal: pageHorizontalPadding,
@@ -110,15 +163,26 @@ final class AppSpacing {
   static const double serviceTileContentPaddingCompact = 6;
   static const double serviceTileBadgeOffset = 2;
   static const double serviceTileBadgeMaxWidth = 52;
+  // Wider than serviceTileBadgeMaxWidth: risk labels ('Rủi ro cao') run
+  // longer than the single-word state labels (New/Hot/Pro) the narrower
+  // badge was sized for.
+  static const double serviceTileRiskBadgeMaxWidth = 76;
   static const double serviceTileBadgePaddingHorizontal = 5;
   static const double serviceTileBadgePaddingVertical = 2;
   static const double serviceTileBadgeFont = 8;
+  // Clears corner badges for the centered icon + label stack (Tier B tiles).
+  static const double serviceTileBadgeReserveVertical =
+      serviceTileBadgePaddingVertical * 2 +
+      serviceTileBadgeFont +
+      serviceTileBadgeOffset;
+  // Minimal horizontal nudge — not half badge width (over-shrinks the label cell).
+  static const double serviceTileBadgeReserveHorizontal = x3;
   static const double serviceTileIconContainer = 26;
   static const double serviceTileIconContainerCompact = 22;
   static const double serviceTileIconSize = 20;
   static const double serviceTileIconSizeCompact = 16;
-  static const double serviceTileGridAspectStandard = 1.68;
-  static const double serviceTileGridAspectCompact = 1.88;
+  static const double serviceTileGridAspectStandard = 1.42;
+  static const double serviceTileGridAspectCompact = 1.40;
   static const double serviceTileLabelGap = 3;
   static const double serviceTileLabelGapCompact = 2;
   static const int serviceTileCrossAxisCount = 3;
@@ -244,7 +308,8 @@ final class AppSpacing {
   static const double walletHistoryFilterGap = 12;
   static const double walletTransactionSummaryBadgePadH = 13;
   static const double walletTransactionSummarySectionVPad = 21;
-  static const double walletAssetSectionGap = 16;
+  @Deprecated('Use AppSpacing.pageRhythmFormSectionGap')
+  static const double walletAssetSectionGap = pageRhythmFormSectionGap;
   static const double walletAssetTransactionsTopPad = 19;
   static const EdgeInsets walletTransactionSummaryPadding = EdgeInsets.fromLTRB(
     20,
@@ -262,7 +327,8 @@ final class AppSpacing {
   static const double walletTransactionStepSpacing = 23;
   static const double walletTransactionStepLineHeight = 36;
   static const double walletDepositWarningCardMinHeight = 129;
-  static const double walletDepositSectionGap = 16;
+  @Deprecated('Use AppSpacing.pageRhythmFormSectionGap')
+  static const double walletDepositSectionGap = pageRhythmFormSectionGap;
   static const double walletDepositTitleGap = 12;
   static const EdgeInsets walletDepositSelectorPadding = EdgeInsets.symmetric(
     horizontal: 16,
@@ -308,7 +374,8 @@ final class AppSpacing {
   static const double walletBuyAmountCardMinHeight = 252;
   static const double walletBuyAmountCardGap = 19;
   static const double walletBuyPaymentTitleGap = 18;
-  static const double walletBuySectionGap = 16;
+  @Deprecated('Use AppSpacing.pageRhythmFormSectionGap')
+  static const double walletBuySectionGap = pageRhythmFormSectionGap;
   static const double walletBuyAmountLabelGap = 21;
   static const double walletBuyPresetGap = 24;
   static const double walletBuyReceiveGap = 17;
@@ -1247,7 +1314,8 @@ final class AppSpacing {
   /// Home-aligned section rhythm for L2 trade pages (8px).
   static const double tradePageContentGap = x3;
 
-  static const double tradeSectionGap = 20;
+  @Deprecated('Use AppSpacing.sectionGap or pageRhythmStandardSectionGap')
+  static const double tradeSectionGap = sectionGap;
   static const double tradeHeaderLogo = 32;
   static const EdgeInsets tradeHeaderBodyPadding = EdgeInsets.symmetric(
     horizontal: 6,
@@ -4760,6 +4828,7 @@ final class AppSpacing {
   static const double watchlistSmallGap = 6;
   static const double watchlistCountGap = 7;
   static const double watchlistActionGap = 8;
+  @Deprecated('Use AppSpacing.pageRhythmStandardInnerGap or x3')
   static const double watchlistSectionGap = 12;
   static const double watchlistSparklineHeight = 42;
   static const double watchlistAvatar = 44;
@@ -4860,7 +4929,8 @@ final class AppSpacing {
   static const int marketHeatmapTreemapColumns = 5;
   static const double marketHeatmapTreemapCellHeight = 50;
   static const double marketHeatmapTreemapGap = 4;
-  static const double marketDepthSectionGap = 16;
+  @Deprecated('Use AppSpacing.pageRhythmFormSectionGap')
+  static const double marketDepthSectionGap = pageRhythmFormSectionGap;
   static const double marketDepthTabsHeight = 54;
   static const double marketDepthTabIndicatorHeight = hairlineStroke;
   static const double marketDepthAvatar = 40;
@@ -9518,6 +9588,7 @@ final class AppSpacing {
   static const double dcaRebalanceToggleThumb = dcaMultiToggleThumb;
   static const double dcaScheduleSectionIcon = dcaMainInlineIcon;
   static const double dcaScheduleSectionTitleFontSize = dcaMainInlineIcon;
+  /// Deprecated: use [accentIconBoxSize] for module accent icon boxes.
   static const double dcaScheduleAccentIconBox = 40;
   static const double dcaScheduleSelectedDot = dcaMultiToggleThumb;
   static const double dcaScheduleSelectedDotInner =
@@ -9853,6 +9924,7 @@ final class AppSpacing {
     left: x7,
   );
   static const double discoveryCreatorAvatarBox = launchpadBox24;
+  /// Deprecated: use [accentIconBoxSize] for module accent icon boxes.
   static const double discoveryAccentIconBox = launchpadBox42;
   static const double discoveryPredictionTitleLineHeight = 1.32;
   static const double referralChartHeight = 140;
@@ -10165,12 +10237,27 @@ final class AppSpacing {
   static const double homeAnnouncementDotInactiveWidth = 5;
   static const double homeAnnouncementDotHeight = 5;
   static const double homeAnnouncementDotRadius = 3;
-  static const double homeAnnouncementCardVerticalPadding = 10;
-  static const double homeAnnouncementCardHorizontalPadding = 14;
-  static const EdgeInsets homeAnnouncementCardPadding = EdgeInsets.symmetric(
-    horizontal: homeAnnouncementCardHorizontalPadding,
-    vertical: homeAnnouncementCardVerticalPadding,
+  // TOKEN-SPACING-01: homeAnnouncementCardPadding and homePortfolioCardPadding
+  // used to share this pair of raw doubles by coincidence, not by design
+  // relationship. homeCardPaddingDefault is now the single canonical source.
+  static const double homeCardPaddingVerticalDefault = 10;
+  static const double homeCardPaddingHorizontalDefault = 14;
+  static const EdgeInsets homeCardPaddingDefault = EdgeInsets.symmetric(
+    horizontal: homeCardPaddingHorizontalDefault,
+    vertical: homeCardPaddingVerticalDefault,
   );
+  @Deprecated(
+    'Superseded by homeCardPaddingVerticalDefault after TOKEN-SPACING-01',
+  )
+  static const double homeAnnouncementCardVerticalPadding =
+      homeCardPaddingVerticalDefault;
+  @Deprecated(
+    'Superseded by homeCardPaddingHorizontalDefault after TOKEN-SPACING-01',
+  )
+  static const double homeAnnouncementCardHorizontalPadding =
+      homeCardPaddingHorizontalDefault;
+  @Deprecated('Superseded by homeCardPaddingDefault after TOKEN-SPACING-01')
+  static const EdgeInsets homeAnnouncementCardPadding = homeCardPaddingDefault;
   static const EdgeInsets homeAnnouncementCardPaddingCompact =
       EdgeInsets.symmetric(horizontal: 12, vertical: 8);
   static const double homeActionRowGap = 8;
@@ -10179,10 +10266,8 @@ final class AppSpacing {
   static const double homePortfolioBadgeHorizontalPadding = 10;
   static const double homePortfolioBadgeVerticalPadding = 4;
   static const double homePortfolioBadgeIcon = 12;
-  static const EdgeInsets homePortfolioCardPadding = EdgeInsets.symmetric(
-    horizontal: homeAnnouncementCardHorizontalPadding,
-    vertical: homeAnnouncementCardVerticalPadding,
-  );
+  @Deprecated('Superseded by homeCardPaddingDefault after TOKEN-SPACING-01')
+  static const EdgeInsets homePortfolioCardPadding = homeCardPaddingDefault;
   static const double homePortfolioActionSpacing = 10;
   static const double homeRecentProductWidth = 146;
   static const double homeRecentProductHeight = 86;
@@ -10199,7 +10284,11 @@ final class AppSpacing {
   static const double homeNextActionIconSize = 20;
   static const double homeRecentProductIcon = 28;
   static const double homeRecentProductIconText = 15;
-  static const double homeSectionInnerGap = 6;
+  /// Gap between major Home blocks. Wire once via [VitPageContent.customGap].
+  static const double homeSectionGap = pageRhythmCompactSectionGap;
+
+  /// Gap from section title to body and between stacked items in a section.
+  static const double homeSectionInnerGap = pageRhythmCompactInnerGap;
   static const double homeChevronGap = 4;
   static const double homeMoreProductsSheetHandleWidth = 36;
   static const double homeMoreProductsSheetHandleHeight = 4;
@@ -10210,7 +10299,10 @@ final class AppSpacing {
     homeSectionCtaGap,
   );
   static const double sheetPanelMaxHeightFactor = 0.72;
-  static const double homeDiscoverySectionGap = 10;
+  @Deprecated('Use AppSpacing.pageRhythmCompactSectionGap')
+  static const double homeDiscoverySectionGap = pageRhythmCompactSectionGap;
+
+  /// Horizontal inset on compact market product cards — not a section rhythm gap.
   static const double homeMarketSectionGap = 12;
   static const double homeSectionHeaderIconGap = 6;
   static const double homeSectionHeaderChevronSize = 14;
@@ -10230,7 +10322,8 @@ final class AppSpacing {
   static const double homeMarketTickerCardWidth = 146;
   static const double homeMarketTickerCardMinHeight = 74;
   static const double homeMarketTickerStripGap = x3;
-  static const EdgeInsets homeMarketTickerCardPadding = EdgeInsets.all(12);
+  /// Legacy alias — Tier A strip tiles use [cardTilePadding].
+  static const EdgeInsetsDirectional homeMarketTickerCardPadding = cardTilePadding;
   static const double homeDividerHeight = 1;
   static const double homeListRowPadding = 14;
   static const double homeRankedRowRankChipWidth = 20;
@@ -10265,7 +10358,8 @@ final class AppSpacing {
   static const EdgeInsets authTopGapX4 = EdgeInsets.only(top: x4);
   static const EdgeInsets authTopGapX5 = EdgeInsets.only(top: x5);
   static const EdgeInsets authTopGapX6 = EdgeInsets.only(top: x6);
-  static const double authPageContentGap = 16;
+  @Deprecated('Use AppSpacing.pageRhythmFormSectionGap')
+  static const double authPageContentGap = pageRhythmFormSectionGap;
   static const double authHeroFormGap = 49;
   static const double authFormFooterGap = 52;
   static const EdgeInsets authHeroFormTopPadding = EdgeInsets.only(

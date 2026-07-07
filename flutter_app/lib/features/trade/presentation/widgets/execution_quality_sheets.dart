@@ -77,7 +77,7 @@ class ExecutionQualityAmendmentSheet extends StatelessWidget {
             label: 'Queue position',
             value: '#${order.queuePosition} / ${order.totalInQueue}',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ExecutionQualityGradientButton(
             key: executionQualityAmendmentSaveKey,
             label: 'Modify Order',
@@ -104,7 +104,7 @@ class _ExecutionQualitySlippageSheetState
         children: [
           Text(
             'Set max slippage tolerance before the order is rejected.',
-            style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.tradeToolPageTopGap),
           Row(
@@ -122,7 +122,7 @@ class _ExecutionQualitySlippageSheetState
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ExecutionQualityGradientButton(
             key: executionQualitySlippageSaveKey,
             label: 'Save Slippage Settings',
@@ -171,6 +171,7 @@ class _ToleranceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: executionQualityToleranceKey(value),
       height: AppSpacing.tradeToolRiskTabHeight,
@@ -242,7 +243,7 @@ class _SheetRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
           Flexible(

@@ -147,38 +147,16 @@ class _ChipGroup extends StatelessWidget {
           runSpacing: AppSpacing.x2,
           children: [
             for (final value in values)
-              _ChoiceChipButton(
+              VitChoicePill(
                 key: keyBuilder(value),
                 label: value,
                 selected: selected == value,
                 onTap: () => onSelected(value),
+                padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
               ),
           ],
         ),
       ],
-    );
-  }
-}
-
-class _ChoiceChipButton extends StatelessWidget {
-  const _ChoiceChipButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
-      onTap: onTap,
     );
   }
 }
@@ -198,7 +176,7 @@ class _InputBlock extends StatelessWidget {
         _SectionLabel(label),
         child,
         if (hint != null) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             hint!,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

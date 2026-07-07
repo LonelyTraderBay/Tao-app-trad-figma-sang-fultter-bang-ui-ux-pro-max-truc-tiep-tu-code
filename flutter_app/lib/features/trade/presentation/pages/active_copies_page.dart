@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -89,13 +90,20 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
             ),
             VitTradeSection(
               title: 'Trạng thái',
-              child: _SegmentedTabs(
-                tabs: snapshot.tabs,
-                activeTab: _activeTab,
+              child: VitSegmentedTabBar(
+                activeKey: _activeTab,
                 onChanged: (id) => setState(() {
                   _activeTab = id;
                   _expandedCopyId = null;
                 }),
+                tabs: [
+                  for (final tab in snapshot.tabs)
+                    VitTabItem(
+                      key: tab.id,
+                      label: tab.label,
+                      widgetKey: ActiveCopiesPage.tabKey(tab.id),
+                    ),
+                ],
               ),
             ),
             VitTradeSection(

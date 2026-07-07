@@ -55,7 +55,7 @@ class P2PCreateAdLivePreviewCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             P2PCreateAdConfirmRow(
               label: preview.typeLabel,
               value: preview.totalAmountLabel,
@@ -140,7 +140,7 @@ class P2PCreateAdInputBlock extends StatelessWidget {
         ),
         child,
         if (hint != null) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             hint!,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

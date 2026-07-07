@@ -130,6 +130,9 @@ void main() {
   testWidgets('SC-025 filters by status and category', (tester) async {
     await pumpSignals(tester);
 
+    await tester.ensureVisible(
+      find.byKey(SocialSignalsPage.statusTargetHitKey),
+    );
     await tester.tap(find.byKey(SocialSignalsPage.statusTargetHitKey));
     await tester.pumpAndSettle();
 
@@ -137,8 +140,10 @@ void main() {
     expect(find.byKey(SocialSignalsPage.signalCardKey('s1')), findsNothing);
     expect(find.text('LINK/USDT'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(SocialSignalsPage.statusAllKey));
     await tester.tap(find.byKey(SocialSignalsPage.statusAllKey));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(SocialSignalsPage.categoryScalpKey));
     await tester.tap(find.byKey(SocialSignalsPage.categoryScalpKey));
     await tester.pumpAndSettle();
 

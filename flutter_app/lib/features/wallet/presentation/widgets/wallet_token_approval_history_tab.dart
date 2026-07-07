@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
@@ -16,14 +17,12 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Revoked Approvals',
+      headerIcon: Icons.history_rounded,
+      accentColor: walletTokenApprovalPrimary,
+      innerGap: AppSpacing.pageRhythmFormInnerGap,
       children: [
-        const WalletTokenApprovalSectionLabel(
-          label: 'Revoked Approvals',
-          icon: Icons.history_rounded,
-        ),
-        const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         for (final revoked in snapshot.revokedApprovals) ...[
           VitCard(
             density: VitDensity.compact,
@@ -49,7 +48,7 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: AppSpacing.walletAddressSectionGap,
+                        height: AppSpacing.pageRhythmFormSectionGap,
                       ),
                       Text(
                         revoked.reason,
@@ -71,7 +70,6 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         ],
-        const SizedBox(height: AppSpacing.x1),
         VitCard(
           density: VitDensity.compact,
           borderColor: walletTokenApprovalBorder,

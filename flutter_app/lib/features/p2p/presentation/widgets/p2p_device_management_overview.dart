@@ -76,7 +76,7 @@ class _DeviceStat extends StatelessWidget {
             child: Icon(icon, color: color, size: AppSpacing.iconMd),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(value, style: AppTextStyles.amountSm.copyWith(color: color)),
         const SizedBox(height: AppSpacing.x1),
         Text(

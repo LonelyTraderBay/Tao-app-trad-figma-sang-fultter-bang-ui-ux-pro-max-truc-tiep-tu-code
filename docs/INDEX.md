@@ -31,6 +31,15 @@ Load docs **on demand** — do not paste large audit output into chat. Shared ru
 | [Flutter-Migration-Execution-Runbook.md](02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md) | Standard workflow |
 | [Flutter-Design-Tokens.md](02_FLUTTER_MIGRATION/Flutter-Design-Tokens.md) | Token file map |
 | [Flutter-Component-Mapping.md](02_FLUTTER_MIGRATION/Flutter-Component-Mapping.md) | Vit* widget ladder |
+| [Page-Rhythm-Standard.md](02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md) | Mandatory page spacing / rhythm |
+| [Page-Rhythm-Visual-QA-Checklist.md](02_FLUTTER_MIGRATION/Page-Rhythm-Visual-QA-Checklist.md) | 360px visual QA flows (Phase 6 — 12 flows) |
+| [Card-Tile-Standard.md](02_FLUTTER_MIGRATION/Card-Tile-Standard.md) | Mandatory fixed-height card tiles |
+| [Service-Tile-Badge-Standard.md](02_FLUTTER_MIGRATION/Service-Tile-Badge-Standard.md) | Mandatory Tier B corner badge safe inset |
+| [Task-Card-Standard.md](02_FLUTTER_MIGRATION/Task-Card-Standard.md) | Mandatory Tier E mission task rows (`VitTaskCard`) |
+| [Accent-Icon-Box-Standard.md](02_FLUTTER_MIGRATION/Accent-Icon-Box-Standard.md) | Mandatory module accent icon boxes (`VitAccentIconBox`) |
+| [Segment-Pill-Standard.md](02_FLUTTER_MIGRATION/Segment-Pill-Standard.md) | Mandatory segment/tab/filter pill tiers (S1–S4) |
+| [Segment-Pill-Migration-Execution-Plan.md](02_FLUTTER_MIGRATION/Segment-Pill-Migration-Execution-Plan.md) | Segment pill migration status (0 locals, 0 warn) |
+| [Card-Tile-Migration-Execution-Plan.md](02_FLUTTER_MIGRATION/Card-Tile-Migration-Execution-Plan.md) | Card tile audit status (993/993 pass) |
 | [Guidelines.md](03_DESIGN_SYSTEM/Guidelines.md) | Product + design rules |
 
 ## Ponytail audit (over-engineering)

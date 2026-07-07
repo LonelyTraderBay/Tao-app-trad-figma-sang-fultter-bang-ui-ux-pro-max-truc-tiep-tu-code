@@ -7,7 +7,7 @@ class _RealtimeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -34,6 +34,7 @@ class _SlippageEventCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
             width: AppSpacing.inputHeight - AppSpacing.x4,
@@ -84,7 +85,7 @@ class _SlippageEventCard extends StatelessWidget {
                     _SeverityPill(style: style),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -110,7 +111,7 @@ class _SlippageEventCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   density: VitDensity.compact,

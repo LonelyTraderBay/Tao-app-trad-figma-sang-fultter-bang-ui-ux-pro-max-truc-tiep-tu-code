@@ -164,7 +164,7 @@ class _BreakingEmptyState extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: onShowAll,
             variant: VitCtaButtonVariant.secondary,

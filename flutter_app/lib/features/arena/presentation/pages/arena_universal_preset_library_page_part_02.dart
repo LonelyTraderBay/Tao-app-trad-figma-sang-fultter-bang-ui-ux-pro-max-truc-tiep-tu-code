@@ -21,7 +21,7 @@ class _TitlesSection extends StatelessWidget {
           subtitle: 'Gợi ý title thông minh theo domain + type',
           accentColor: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -32,7 +32,7 @@ class _TitlesSection extends StatelessWidget {
                 label: 'AutoTitleSuggestionRow',
                 count: titles.length,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -49,7 +49,7 @@ class _TitlesSection extends StatelessWidget {
           ),
         ),
         if (selectedTitle != null) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             borderColor: AppColors.sell20,
             padding: AppSpacing.arenaPaddingX4,
@@ -60,7 +60,7 @@ class _TitlesSection extends StatelessWidget {
                   icon: Icons.visibility_outlined,
                   label: 'Title đã chọn',
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   selectedTitle!,
                   style: AppTextStyles.base.copyWith(
@@ -72,7 +72,7 @@ class _TitlesSection extends StatelessWidget {
             ),
           ),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -94,7 +94,7 @@ class _TitlesSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _PresetEngineNote(),
       ],
     );
@@ -214,47 +214,6 @@ class _ExampleRow extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _DomainFilterChip extends StatelessWidget {
-  const _DomainFilterChip({
-    required this.pack,
-    required this.active,
-    required this.onTap,
-  });
-
-  final ArenaDomainPackDraft pack;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
-      borderColor: active ? AppColors.warn : AppColors.borderSolid,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.arenaPresetChipPadding,
-      onTap: onTap,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            _domainIcon(pack.id),
-            color: active ? AppColors.warn : AppColors.text3,
-            size: AppSpacing.arenaPresetSmallIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            pack.title,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? AppColors.warn : AppColors.text3,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -419,7 +378,7 @@ class _DropdownPreview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             selected,
             style: AppTextStyles.base.copyWith(
@@ -428,7 +387,7 @@ class _DropdownPreview extends StatelessWidget {
             ),
           ),
           if (group.options.length > 1) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,

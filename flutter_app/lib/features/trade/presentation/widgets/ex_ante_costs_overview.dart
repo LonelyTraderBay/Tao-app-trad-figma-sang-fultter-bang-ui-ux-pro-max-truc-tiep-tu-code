@@ -30,7 +30,7 @@ class _RegulatoryNotice extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   'This document shows all costs you will pay before investing. '
                   'Required by EU regulation for retail clients.',
@@ -122,6 +122,7 @@ class _Tabs extends StatelessWidget {
       ('breakdown', 'Breakdown'),
       ('scenarios', 'Scenarios'),
     ];
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _costTabExtent,
       density: VitDensity.compact,

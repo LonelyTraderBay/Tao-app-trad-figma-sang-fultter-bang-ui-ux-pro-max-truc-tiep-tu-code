@@ -8,20 +8,11 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
-const double _p2pSuspiciousVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pSuspiciousNativeNavClearance =
-    _p2pSuspiciousVisualNavClearance - AppSpacing.x4;
-const double _p2pSuspiciousVisualClearance = AppSpacing.x3;
-const double _p2pSuspiciousNativeClearance = AppSpacing.x2;
 const double _p2pSuspiciousIconBox = AppSpacing.buttonCompact + AppSpacing.x1;
 
 class P2PSuspiciousActivityPage extends ConsumerStatefulWidget {
@@ -55,88 +46,42 @@ class _P2PSuspiciousActivityPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pSuspiciousActivityProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pSuspiciousVisualNavClearance + _p2pSuspiciousVisualClearance
-            : _p2pSuspiciousNativeNavClearance +
-                  _p2pSuspiciousNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
     final unreviewedCount = _alerts.where((alert) => !alert.reviewed).length;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: 'Hoạt động đáng ngờ',
+      subtitle: 'An toàn · P2P',
       semanticLabel: 'SC-258 P2PSuspiciousActivityPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Hoạt động đáng ngờ',
-            subtitle: 'An toàn · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(snapshot.parentRoute),
+      onRefresh: () async {
+        HapticFeedback.selectionClick();
+        await Future<void>.delayed(const Duration(milliseconds: 120));
+      },
+      children: [
+        _SummaryCard(
+          unreviewedCount: unreviewedCount,
+          subtitle: snapshot.summarySubtitle,
+        ),
+        if (_alerts.isEmpty)
+          _EmptyState(snapshot: snapshot)
+        else
+          _AlertList(
+            alerts: _alerts,
+            onDismiss: _markReviewed,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: RefreshIndicator(
-                  color: AppModuleAccents.p2p,
-                  backgroundColor: AppColors.surface2,
-                  onRefresh: () async {
-                    HapticFeedback.selectionClick();
-                    await Future<void>.delayed(
-                      const Duration(milliseconds: 120),
-                    );
-                  },
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(
-                        parent: ClampingScrollPhysics(),
-                      ),
-                      padding: AppSpacing.p2pSuspiciousActivityScrollPadding(
-                        scrollEndPadding,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _SummaryCard(
-                            unreviewedCount: unreviewedCount,
-                            subtitle: snapshot.summarySubtitle,
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                          if (_alerts.isEmpty)
-                            _EmptyState(snapshot: snapshot)
-                          else
-                            _AlertList(
-                              alerts: _alerts,
-                              onDismiss: _markReviewed,
-                            ),
-                          const SizedBox(height: AppSpacing.x3),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            padding: AppSpacing.p2pComplianceCompactCardPadding,
-                            child: VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Suspicious activity review',
-                              message:
-                                  'Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.',
-                              contractId: 'p2p-suspicious-activity-review',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        const VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.p2pComplianceCompactCardPadding,
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Suspicious activity review',
+            message:
+                'Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.',
+            contractId: 'p2p-suspicious-activity-review',
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -221,7 +166,7 @@ class _AlertList extends StatelessWidget {
       children: [
         for (var index = 0; index < alerts.length; index++) ...[
           _AlertCard(alert: alerts[index], onDismiss: onDismiss),
-          if (index != alerts.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (index != alerts.length - 1) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -272,7 +217,7 @@ class _AlertCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     const Icon(
@@ -291,7 +236,7 @@ class _AlertCard extends StatelessWidget {
                   ],
                 ),
                 if (alert.reviewed) ...[
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   const _ReviewedBadge(),
                 ],
               ],
@@ -359,7 +304,7 @@ class _EmptyState extends StatelessWidget {
             color: AppColors.buy,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.emptyTitle,
             textAlign: TextAlign.center,

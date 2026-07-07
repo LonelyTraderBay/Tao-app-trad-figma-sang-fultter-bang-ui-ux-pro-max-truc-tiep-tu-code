@@ -10,6 +10,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       accentColor: accentColor,
       variant: VitSectionHeaderVariant.accentBar,
     );
@@ -221,65 +222,19 @@ class _SortChips extends StatelessWidget {
       child: Row(
         children: [
           for (final entry in chips.entries) ...[
-            _ChipButton(
+            VitFilterChip(
               key: PortfolioTrackerPage.sortKey(entry.key),
               label: entry.value,
               active: active == entry.key,
               onTap: () => onSelected(entry.key),
+              color: _marketPrimary,
+              padding: _portfolioChipPadding,
             ),
             if (entry.key != chips.keys.last)
               const SizedBox(width: _portfolioChipGap),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _TimeFilterChips extends StatelessWidget {
-  const _TimeFilterChips({required this.active, required this.onSelected});
-
-  final String active;
-  final ValueChanged<String> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    const filters = ['24h', '7d', '30d', 'Tất cả'];
-    return Row(
-      children: [
-        for (final filter in filters) ...[
-          _ChipButton(
-            label: filter,
-            active: active == filter,
-            onTap: () => onSelected(filter),
-          ),
-          if (filter != filters.last) const SizedBox(width: _portfolioChipGap),
-        ],
-      ],
-    );
-  }
-}
-
-class _ChipButton extends StatelessWidget {
-  const _ChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _marketPrimary,
-      padding: _portfolioChipPadding,
     );
   }
 }

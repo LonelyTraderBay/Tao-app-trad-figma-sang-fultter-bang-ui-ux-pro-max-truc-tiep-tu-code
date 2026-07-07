@@ -42,7 +42,7 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -113,7 +113,7 @@ class _ChartCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           child,
         ],
       ),
@@ -168,7 +168,7 @@ class _DetailsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {
               final itemWidth = (constraints.maxWidth - AppSpacing.x2) / 2;

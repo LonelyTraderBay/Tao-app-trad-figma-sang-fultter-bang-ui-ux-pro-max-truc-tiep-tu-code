@@ -6,10 +6,12 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -87,47 +89,54 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
       semanticLabel: 'SC-055 AdvancedChartPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
+        child: VitPageContent(
+          rhythm: VitPageRhythm.flush,
+          padding: VitContentPadding.none,
+          fullBleed: true,
           children: [
-            Column(
+            Stack(
               children: [
-                VitTradeTerminalHeader(
-                  symbol: pair.symbol,
-                  showBack: true,
-                  onBack: () => context.go(AppRoutePaths.tradePair(pair.id)),
-                  pairTapKey: AdvancedChartPage.pairSelectorKey,
-                  onPairTap: () => context.go(AppRoutePaths.markets),
-                  priceLabel: formatTradePrice(pair.price),
-                  changePct: pair.changePct,
+                Column(
+                  children: [
+                    VitTradeTerminalHeader(
+                      symbol: pair.symbol,
+                      showBack: true,
+                      onBack: () => context.go(AppRoutePaths.tradePair(pair.id)),
+                      pairTapKey: AdvancedChartPage.pairSelectorKey,
+                      onPairTap: () => context.go(AppRoutePaths.markets),
+                      priceLabel: formatTradePrice(pair.price),
+                      changePct: pair.changePct,
+                    ),
+                    ...productTabs,
+                    _OhlcvBar(ohlcv: snapshot.ohlcv),
+                    _ChartToolbar(
+                      timeframes: snapshot.timeframes,
+                      activeTimeframe: _timeframe,
+                      activeChartType: _chartType,
+                      activeIndicatorCount: enabledIndicators.length,
+                      onTimeframeChanged: (value) =>
+                          setState(() => _timeframe = value),
+                      onChartTypeChanged: (value) =>
+                          setState(() => _chartType = value),
+                      onIndicators: () => setState(() => _showIndicators = true),
+                    ),
+                    _ChartArea(
+                      candles: snapshot.candles,
+                      indicators: _indicators,
+                      chartType: _chartType,
+                    ),
+                    _ActionBar(pairId: pair.id),
+                    const Expanded(child: SizedBox.expand()),
+                  ],
                 ),
-                ...productTabs,
-                _OhlcvBar(ohlcv: snapshot.ohlcv),
-                _ChartToolbar(
-                  timeframes: snapshot.timeframes,
-                  activeTimeframe: _timeframe,
-                  activeChartType: _chartType,
-                  activeIndicatorCount: enabledIndicators.length,
-                  onTimeframeChanged: (value) =>
-                      setState(() => _timeframe = value),
-                  onChartTypeChanged: (value) =>
-                      setState(() => _chartType = value),
-                  onIndicators: () => setState(() => _showIndicators = true),
-                ),
-                _ChartArea(
-                  candles: snapshot.candles,
-                  indicators: _indicators,
-                  chartType: _chartType,
-                ),
-                _ActionBar(pairId: pair.id),
-                const Expanded(child: SizedBox.expand()),
+                if (_showIndicators)
+                  _IndicatorSheet(
+                    indicators: _indicators,
+                    onToggle: _toggleIndicator,
+                    onClose: () => setState(() => _showIndicators = false),
+                  ),
               ],
             ),
-            if (_showIndicators)
-              _IndicatorSheet(
-                indicators: _indicators,
-                onToggle: _toggleIndicator,
-                onClose: () => setState(() => _showIndicators = false),
-              ),
           ],
         ),
       ),

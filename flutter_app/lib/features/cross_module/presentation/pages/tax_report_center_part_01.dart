@@ -154,13 +154,13 @@ class _GenerateTaxReportTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _TaxSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _TaxPeriodCard(
           startDate: startDate,
           endDate: endDate,
           onPresetSelected: onPresetSelected,
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Module Breakdown',
           children: [
@@ -168,22 +168,22 @@ class _GenerateTaxReportTab extends StatelessWidget {
               _TaxActivityCard(activity: activity),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ExportFormatCard(selected: format, onChanged: onFormatChanged),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _JurisdictionCard(
           jurisdiction: jurisdiction,
           jurisdictions: snapshot.jurisdictions,
           onChanged: onJurisdictionChanged,
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _GenerateReportButton(
           format: format,
           queued: exportQueued,
           onTap: onGenerate,
         ),
         if (exportQueued) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const _InfoPanel(
             icon: Icons.check_circle_outline_rounded,
             color: AppColors.buy,
@@ -192,7 +192,7 @@ class _GenerateTaxReportTab extends StatelessWidget {
                 'Export request queued locally. Production wiring will post to /exports with the selected period and format.',
           ),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _InfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
@@ -249,7 +249,7 @@ class _TaxSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -267,7 +267,7 @@ class _TaxSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -314,7 +314,7 @@ class _MetricBlock extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           style:
@@ -356,7 +356,7 @@ class _TaxPeriodCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -368,7 +368,7 @@ class _TaxPeriodCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               _PresetButton(
@@ -408,7 +408,7 @@ class _DateField extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         DecoratedBox(
           decoration: const ShapeDecoration(
             color: AppColors.bg,

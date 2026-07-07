@@ -11,10 +11,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
@@ -85,72 +83,46 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
       _asset = selectedAsset;
     }
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
       semanticLabel: 'SC-245 P2PEscrowBalancePage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pEscrowBalanceScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _EscrowHeroCard(balance: selectedBalance),
-                        const SizedBox(height: _p2pEscrowBalanceSectionGap),
-                        _EscrowInfoCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pEscrowBalanceSectionGap),
-                        _AssetTabs(
-                          assets: snapshot.assets,
-                          selectedAsset: selectedAsset,
-                          onChanged: (asset) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _asset = asset);
-                          },
-                        ),
-                        const SizedBox(height: _p2pEscrowBalanceTightGap),
-                        if (orders.isEmpty)
-                          _EscrowEmptyState(snapshot: snapshot)
-                        else
-                          _OrdersList(orders: orders),
-                        if (orders.isNotEmpty) ...[
-                          const SizedBox(height: _p2pEscrowBalanceSectionGap),
-                          _EscrowHelpCard(snapshot: snapshot),
-                        ],
-                        const SizedBox(height: _p2pEscrowBalanceTightGap),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại số dư escrow',
-                          message:
-                              'Tài sản, số tiền đang giữ, đơn mở, trạng thái rỗng và hướng dẫn escrow được xem lại trước quyết định P2P.',
-                          contractId: 'SC-245',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+      title: snapshot.title,
+      subtitle: snapshot.subtitle,
+      onBack: () => context.go(snapshot.parentRoute),
+      shellRenderMode: mode,
+      bottomInset: scrollEndPadding,
+      children: [
+        _EscrowHeroCard(balance: selectedBalance),
+        _EscrowInfoCard(snapshot: snapshot),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _AssetTabs(
+              assets: snapshot.assets,
+              selectedAsset: selectedAsset,
+              onChanged: (asset) {
+                HapticFeedback.selectionClick();
+                setState(() => _asset = asset);
+              },
+            ),
+            const SizedBox(height: _p2pEscrowBalanceTightGap),
+            if (orders.isEmpty)
+              _EscrowEmptyState(snapshot: snapshot)
+            else
+              _OrdersList(orders: orders),
+            if (orders.isNotEmpty) ...[
+              const SizedBox(height: _p2pEscrowBalanceSectionGap),
+              _EscrowHelpCard(snapshot: snapshot),
             ],
-          ),
+          ],
         ),
-      ),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Xem lại số dư escrow',
+          message:
+              'Tài sản, số tiền đang giữ, đơn mở, trạng thái rỗng và hướng dẫn escrow được xem lại trước quyết định P2P.',
+          contractId: 'SC-245',
+        ),
+      ],
     );
   }
 }

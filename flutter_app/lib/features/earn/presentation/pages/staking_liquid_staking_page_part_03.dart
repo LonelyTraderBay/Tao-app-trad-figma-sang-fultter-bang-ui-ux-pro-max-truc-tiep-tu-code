@@ -127,7 +127,7 @@ class _TokenDetailSheet extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.cardPadding,
@@ -152,13 +152,13 @@ class _TokenDetailSheet extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _BulletSection(
             title: 'Lợi ích',
             items: token.benefits,
             success: true,
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _BulletSection(title: 'Rủi ro', items: token.risks, success: false),
         ],
       ),
@@ -228,7 +228,7 @@ class _BulletSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: AppTextStyles.caption),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final item in items)
           Padding(
             padding: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x2),

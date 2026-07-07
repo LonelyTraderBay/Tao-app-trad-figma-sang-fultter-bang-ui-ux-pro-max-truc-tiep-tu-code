@@ -83,7 +83,7 @@ class _SignalCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     _TinyBadge(
@@ -119,7 +119,7 @@ class _SignalCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -235,7 +235,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Text(
@@ -262,12 +262,12 @@ class _ExpandedSignalDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 signal.reasoning,
-                style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   const Icon(
@@ -426,7 +426,7 @@ class _ProviderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSocialSectionGap),
+              const SizedBox(width: AppSpacing.rowGap),
               Text(
                 provider.avatar,
                 style: AppTextStyles.micro.copyWith(
@@ -434,7 +434,7 @@ class _ProviderCard extends StatelessWidget {
                   height: AppTextStyles.numericMicro.height,
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSocialSectionGap),
+              const SizedBox(width: AppSpacing.rowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,12 +502,12 @@ class _ProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

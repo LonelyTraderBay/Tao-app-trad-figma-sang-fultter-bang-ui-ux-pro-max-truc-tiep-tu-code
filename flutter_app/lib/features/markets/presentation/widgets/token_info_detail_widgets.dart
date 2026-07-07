@@ -77,6 +77,7 @@ class _OnchainTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Thông tin mạng lưới',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -179,6 +180,7 @@ class _ProjectTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Liên kết',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -186,6 +188,7 @@ class _ProjectTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Chi so quan trong',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppColors.buy,
           variant: VitSectionHeaderVariant.accentBar,
         ),

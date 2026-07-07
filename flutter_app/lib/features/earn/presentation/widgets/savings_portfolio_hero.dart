@@ -61,14 +61,14 @@ class PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             balance,
             style: AppTextStyles.numericDisplayLg.copyWith(
               color: AppColors.text1,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x3,
             runSpacing: AppSpacing.x1,
@@ -100,7 +100,7 @@ class PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -121,7 +121,7 @@ class PortfolioHero extends StatelessWidget {
               Expanded(child: _HeroPositionStat(snapshot: snapshot)),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

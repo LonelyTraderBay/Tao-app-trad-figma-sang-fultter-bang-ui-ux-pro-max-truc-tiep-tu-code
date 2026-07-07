@@ -29,7 +29,7 @@ class UnifiedPortfolioSummaryMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(

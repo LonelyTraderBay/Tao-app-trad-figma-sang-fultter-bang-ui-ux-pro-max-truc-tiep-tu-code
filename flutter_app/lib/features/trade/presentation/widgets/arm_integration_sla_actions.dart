@@ -18,12 +18,12 @@ class _LatencyCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             height: AppSpacing.armIntegrationDividerHeight,
             color: _armBorder,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -56,13 +56,13 @@ class _SlaCard extends StatelessWidget {
             value: '${sla.uptime.toStringAsFixed(2)}%',
             factor: sla.uptime / 100,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ProgressRow(
             label: 'Latency Target (<100ms)',
             value: '${sla.latencyAvg}ms avg',
             factor: sla.latencyAvg / 100,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ProgressRow(
             label: 'Failover Readiness',
             value: '${sla.failoverReadiness}%',
@@ -107,7 +107,7 @@ class _ProgressRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: SizedBox(
@@ -212,6 +212,7 @@ class _SectionLabel extends StatelessWidget {
         Expanded(
           child: VitSectionHeader(
             title: text,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             variant: VitSectionHeaderVariant.accentBar,
             accentColor: _armPrimary,
           ),

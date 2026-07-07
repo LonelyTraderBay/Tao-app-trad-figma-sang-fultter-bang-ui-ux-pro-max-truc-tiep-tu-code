@@ -38,7 +38,7 @@ class StakingInsuranceFundHistoryTab extends StatelessWidget {
                       child: const SizedBox.expand(),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Row(
                     children: [
                       const Expanded(

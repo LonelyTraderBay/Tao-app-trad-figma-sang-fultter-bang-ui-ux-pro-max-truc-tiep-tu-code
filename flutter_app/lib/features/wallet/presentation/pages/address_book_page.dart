@@ -5,15 +5,15 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -81,106 +81,101 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
     final favorites = filtered.where((address) => address.isFavorite).toList();
     final others = filtered.where((address) => !address.isFavorite).toList();
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-144 AddressBookPage',
-      child: Material(
-        color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Sổ địa chỉ',
-            subtitle: 'Quản lý · Wallet',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.wallet),
-            actions: [
-              VitHeaderActionItem(
-                key: AddressBookPage.addKey,
-                type: VitHeaderActionType.add,
-                tooltip: 'Thêm địa chỉ',
-                onPressed: () => context.go(AppRoutePaths.walletAddressBookAdd),
-              ),
-            ],
+      header: VitHeader(
+        title: 'Sổ địa chỉ',
+        subtitle: 'Quản lý · Wallet',
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.wallet),
+        actions: [
+          VitHeaderActionItem(
+            key: AddressBookPage.addKey,
+            type: VitHeaderActionType.add,
+            tooltip: 'Thêm địa chỉ',
+            onPressed: () => context.go(AppRoutePaths.walletAddressBookAdd),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: AddressBookPage.contentKey,
-                  bottomInset: bottomInset,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _WhitelistModeCard(
-                        enabled: _whitelistOnly,
-                        onTap: () =>
-                            setState(() => _whitelistOnly = !_whitelistOnly),
+        ],
+      ),
+      body: VitInsetScrollView(
+        key: AddressBookPage.contentKey,
+        bottomInset: bottomInset,
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.compact,
+          density: VitDensity.compact,
+          gap: VitContentGap.tight,
+          children: [
+            _WhitelistModeCard(
+              enabled: _whitelistOnly,
+              onTap: () => setState(() => _whitelistOnly = !_whitelistOnly),
+            ),
+            _AddressStats(addresses: _addresses),
+            _SearchBox(
+              controller: _searchController,
+              onChanged: () => setState(() {}),
+            ),
+            _NetworkFilterBar(
+              filters: snapshot.networkFilters,
+              active: _networkFilter,
+              onChanged: (filter) => setState(() => _networkFilter = filter),
+            ),
+            if (favorites.isNotEmpty)
+              VitPageSection(
+                label: 'Yêu thích',
+                headerIcon: Icons.star_rounded,
+                headerIconColor: AppColors.caution,
+                accentColor: AppColors.caution,
+                headerVariant: VitSectionHeaderVariant.plain,
+                headerDensity: VitDensity.compact,
+                innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                children: [
+                  for (final address in favorites)
+                    _AddressCard(
+                      address: address,
+                      copied: _copiedId == address.id,
+                      onCopy: () => _copyAddress(address),
+                      onFavorite: () => _toggleFavorite(address.id),
+                      onEdit: () => _showActionNotice(
+                        'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
                       ),
-                      _AddressStats(addresses: _addresses),
-                      _SearchBox(
-                        controller: _searchController,
-                        onChanged: () => setState(() {}),
-                      ),
-                      _NetworkFilterBar(
-                        filters: snapshot.networkFilters,
-                        active: _networkFilter,
-                        onChanged: (filter) =>
-                            setState(() => _networkFilter = filter),
-                      ),
-                      if (favorites.isNotEmpty) ...[
-                        const VitSectionHeader(
-                          title: 'Yêu thích',
-                          icon: Icons.star_rounded,
-                          iconColor: AppColors.caution,
-                          accentColor: AppColors.caution,
-                          density: VitDensity.compact,
-                        ),
-                        for (final address in favorites) ...[
-                          _AddressCard(
-                            address: address,
-                            copied: _copiedId == address.id,
-                            onCopy: () => _copyAddress(address),
-                            onFavorite: () => _toggleFavorite(address.id),
-                            onEdit: () => _showActionNotice(
-                              'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
-                            ),
-                            onDelete: () => _confirmDelete(address),
-                          ),
-                        ],
-                      ],
-                      if (others.isNotEmpty) ...[
-                        const VitSectionHeader(
-                          title: 'Tất cả địa chỉ',
-                          icon: Icons.list_alt_rounded,
-                          density: VitDensity.compact,
-                        ),
-                        for (final address in others) ...[
-                          _AddressCard(
-                            address: address,
-                            copied: _copiedId == address.id,
-                            onCopy: () => _copyAddress(address),
-                            onFavorite: () => _toggleFavorite(address.id),
-                            onEdit: () => _showActionNotice(
-                              'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
-                            ),
-                            onDelete: () => _confirmDelete(address),
-                          ),
-                        ],
-                      ],
-                      if (filtered.isEmpty)
-                        _EmptyAddressState(
-                          onAdd: () =>
-                              context.go(AppRoutePaths.walletAddressBookAdd),
-                        ),
-                      const _SecurityTip(),
-                    ],
-                  ),
-                ),
+                      onDelete: () => _confirmDelete(address),
+                    ),
+                ],
               ),
-            ],
-          ),
+            if (others.isNotEmpty)
+              VitPageSection(
+                label: 'Tất cả địa chỉ',
+                headerIcon: Icons.list_alt_rounded,
+                headerVariant: VitSectionHeaderVariant.plain,
+                headerDensity: VitDensity.compact,
+                innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                children: [
+                  for (final address in others)
+                    _AddressCard(
+                      address: address,
+                      copied: _copiedId == address.id,
+                      onCopy: () => _copyAddress(address),
+                      onFavorite: () => _toggleFavorite(address.id),
+                      onEdit: () => _showActionNotice(
+                        'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
+                      ),
+                      onDelete: () => _confirmDelete(address),
+                    ),
+                ],
+              ),
+            if (filtered.isEmpty)
+              _EmptyAddressState(
+                onAdd: () => context.go(AppRoutePaths.walletAddressBookAdd),
+              ),
+            VitPageSection(
+              label: 'B\u1EA3o m\u1EADt \u0111\u1ECBa ch\u1EC9',
+              headerIcon: Icons.shield_outlined,
+              headerIconColor: AppColors.primary,
+              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+              children: const [_SecurityTip()],
+            ),
+          ],
         ),
       ),
     );

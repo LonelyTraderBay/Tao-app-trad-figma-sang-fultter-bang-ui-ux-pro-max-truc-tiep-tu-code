@@ -75,7 +75,7 @@ class _ValidationCard extends StatelessWidget {
           Expanded(
             child: Text(
               item.message,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: color,
                 height: _configurationDescriptionLineHeight,
               ),
@@ -115,30 +115,6 @@ class _SummaryRow extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _RiskPill extends StatelessWidget {
-  const _RiskPill({required this.level});
-
-  final TradeCopyRiskLevel level;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = switch (level) {
-      TradeCopyRiskLevel.low => _configurationGreen,
-      TradeCopyRiskLevel.medium => AppColors.warn,
-      TradeCopyRiskLevel.high => _configurationRed,
-    };
-
-    return VitAccentPill(
-      label: switch (level) {
-        TradeCopyRiskLevel.low => 'Low',
-        TradeCopyRiskLevel.medium => 'Medium',
-        TradeCopyRiskLevel.high => 'High',
-      },
-      accentColor: color,
     );
   }
 }

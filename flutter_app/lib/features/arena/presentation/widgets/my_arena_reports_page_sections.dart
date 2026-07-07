@@ -87,8 +87,8 @@ class _SummaryMetric extends StatelessWidget {
   }
 }
 
-class _FilterRail extends StatelessWidget {
-  const _FilterRail({
+class _ReportsFilterRow extends StatelessWidget {
+  const _ReportsFilterRow({
     required this.filters,
     required this.activeFilter,
     required this.onChanged,
@@ -110,103 +110,16 @@ class _FilterRail extends StatelessWidget {
         itemBuilder: (context, index) {
           final filter = filters[index];
           final active = filter.id == activeFilter;
-          return _FilterChip(
+          return VitFilterChip(
             key: MyArenaReportsPage.filterKey(filter.id),
-            filter: filter,
+            label: filter.label,
             active: active,
             onTap: () => onChanged(filter.id),
+            color: _filterColor(filter),
+            count: filter.count > 0 ? filter.count : null,
+            padding: AppSpacing.myArenaReportsFilterPadding,
           );
         },
-      ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    super.key,
-    required this.filter,
-    required this.active,
-    required this.onTap,
-  });
-
-  final MyArenaReportsFilterDraft filter;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final accentColor = _filterColor(filter);
-    return Material(
-      color: AppColors.transparent,
-      child: VitCard(
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        child: SizedBox(
-          height: _reportsFilterExtent,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: active ? AppColors.primary12 : AppColors.cardBg,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.inputRadius,
-                side: BorderSide(
-                  color: active ? AppColors.primary : AppColors.cardBorder,
-                  width: active ? 1.5 : 1,
-                ),
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.myArenaReportsFilterPadding,
-              child: Row(
-                children: [
-                  Text(
-                    filter.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: active ? AppColors.primary : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  if (filter.count > 0) ...[
-                    const SizedBox(width: AppSpacing.x2),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minWidth: AppSpacing.myArenaReportsBadgeMinWidth,
-                      ),
-                      child: SizedBox(
-                        height: _reportsBadgeExtent,
-                        child: DecoratedBox(
-                          decoration: ShapeDecoration(
-                            color: active
-                                ? accentColor.withValues(alpha: 0.18)
-                                : AppColors.surface2,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: AppRadii.smRadius,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: AppSpacing.myArenaReportsBadgePadding,
-                            child: Center(
-                              child: Text(
-                                '${filter.count}',
-                                style: AppTextStyles.micro.copyWith(
-                                  color: active ? accentColor : AppColors.text3,
-                                  fontWeight: AppTextStyles.bold,
-                                  height: AppSpacing
-                                      .myArenaReportsCompactLineHeight,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -33,7 +33,7 @@ class _PerformanceScoreCard extends StatelessWidget {
                     ),
                     Text(
                       snapshot.subtitle,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
@@ -42,7 +42,7 @@ class _PerformanceScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               for (final metric in snapshot.summaryMetrics) ...[
@@ -138,7 +138,7 @@ class _VitalRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   metric.label,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                   ),
                 ),

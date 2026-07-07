@@ -80,7 +80,7 @@ class _DeleteConfirmation extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Text(
                       method.name,
                       style: AppTextStyles.baseMedium.copyWith(
@@ -95,7 +95,7 @@ class _DeleteConfirmation extends StatelessWidget {
                         fontWeight: AppTextStyles.medium,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.p2pPaymentSectionGap),
+                    const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                     Row(
                       children: [
                         Expanded(

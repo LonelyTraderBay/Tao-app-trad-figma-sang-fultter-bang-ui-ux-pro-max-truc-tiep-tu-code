@@ -24,9 +24,9 @@ class DcaBacktesterAnalysis extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _DrawdownCard(points: snapshot.drawdowns),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _RiskMetricCard(result: snapshot.result),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           onPressed: onDownloadReport,
           variant: VitCtaButtonVariant.ghost,
@@ -55,7 +55,7 @@ class _DrawdownCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const DcaCardTitle('Drawdown Analysis'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.buttonHero * 2,
             child: CustomPaint(
@@ -104,7 +104,7 @@ class _RiskMetricCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const DcaSectionLabel(label: 'Risk Analysis'),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final metric in metrics) ...[
           VitCard(
             padding: AppSpacing.dcaPaddingX4,
@@ -129,7 +129,7 @@ class _RiskMetricCard extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         metric.$2,
                         style: AppTextStyles.baseMedium.copyWith(
@@ -144,7 +144,7 @@ class _RiskMetricCard extends StatelessWidget {
               ],
             ),
           ),
-          if (metric != metrics.last) const SizedBox(height: AppSpacing.x3),
+          if (metric != metrics.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

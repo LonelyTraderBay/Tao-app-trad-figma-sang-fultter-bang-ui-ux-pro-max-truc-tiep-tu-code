@@ -59,25 +59,93 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                         physics: const ClampingScrollPhysics(),
                         bottomInset: scrollEndPadding,
                         child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
-                          children: [
-                            _DcaDashboardBody(
-                              snapshot: snapshot,
-                              activeTab: _activeTab,
-                              onCreate: _openCreateSheet,
-                              onPauseAll: _showPausedState,
-                              onChart: () =>
-                                  setState(() => _activeTab = _DcaTab.history),
-                              onHistory: () =>
-                                  setState(() => _activeTab = _DcaTab.history),
-                              onTabChanged: (tab) =>
-                                  setState(() => _activeTab = tab),
-                              onPause: _showPausedState,
-                              onOpenTool: _go,
-                              onRetry: _close,
-                            ),
-                          ],
+                          children: switch (snapshot.screenState) {
+                            DcaScreenState.loading => [
+                              const VitSkeletonList(
+                                key: DCAPage.loadingKey,
+                                rows: 4,
+                              ),
+                            ],
+                            DcaScreenState.error => [
+                              VitErrorState(
+                                key: DCAPage.errorKey,
+                                title: 'Không tải được kế hoạch DCA',
+                                message:
+                                    'Thử lại sau hoặc quay lại màn giao dịch.',
+                                actionLabel: 'Thử lại',
+                                onAction: _close,
+                              ),
+                            ],
+                            DcaScreenState.empty => [
+                              VitEmptyState(
+                                key: DCAPage.emptyKey,
+                                icon: Icons.sync_rounded,
+                                title: 'Chưa có kế hoạch DCA',
+                                message:
+                                    'Tạo kế hoạch mua định kỳ để đầu tư có kỷ luật.',
+                                actionLabel: 'Tạo kế hoạch',
+                                actionKey: DCAPage.overviewCreateKey,
+                                onAction: _openCreateSheet,
+                              ),
+                            ],
+                            DcaScreenState.offline
+                                when snapshot.plans.isEmpty => [
+                              VitEmptyState(
+                                key: DCAPage.offlineKey,
+                                icon: Icons.wifi_off_rounded,
+                                title: 'Đang ngoại tuyến',
+                                message:
+                                    'Kết nối lại để xem kế hoạch DCA mới nhất.',
+                              ),
+                            ],
+                            _ => [
+                              _DcaOverviewCard(
+                                snapshot: snapshot,
+                                onCreate: _openCreateSheet,
+                                onPauseAll: _showPausedState,
+                                onChart: () => setState(
+                                  () => _activeTab = _DcaTab.history,
+                                ),
+                                onHistory: () => setState(
+                                  () => _activeTab = _DcaTab.history,
+                                ),
+                              ),
+                              _DcaTabs(
+                                active: _activeTab,
+                                planCount: snapshot.plans.length,
+                                onChanged: (tab) =>
+                                    setState(() => _activeTab = tab),
+                              ),
+                              AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 180),
+                                child: _activeTab == _DcaTab.plans
+                                    ? _PlansList(
+                                        key: const ValueKey('plans'),
+                                        plans: snapshot.plans,
+                                        onPause: _showPausedState,
+                                        onCreate: _openCreateSheet,
+                                      )
+                                    : _HistoryPanel(
+                                        key: const ValueKey('history'),
+                                        snapshot: snapshot,
+                                      ),
+                              ),
+                              _AdvancedTools(
+                                tools: snapshot.tools,
+                                onOpen: _go,
+                              ),
+                              const VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Xem lại kế hoạch DCA',
+                                message:
+                                    'Tạo, tạm dừng và chỉnh lịch mua đều cần xem lại trước khi áp dụng.',
+                                contractId: 'SC-169',
+                              ),
+                            ],
+                          },
                         ),
                       ),
                     ),
@@ -122,103 +190,6 @@ class _DCAPageState extends ConsumerState<DCAPage> {
       fallbackPath: AppRoutePaths.trade,
       mode: BackNavigationMode.historyThenFallback,
     );
-  }
-}
-
-class _DcaDashboardBody extends StatelessWidget {
-  const _DcaDashboardBody({
-    required this.snapshot,
-    required this.activeTab,
-    required this.onCreate,
-    required this.onPauseAll,
-    required this.onChart,
-    required this.onHistory,
-    required this.onTabChanged,
-    required this.onPause,
-    required this.onOpenTool,
-    required this.onRetry,
-  });
-
-  final DcaDashboardSnapshot snapshot;
-  final _DcaTab activeTab;
-  final VoidCallback onCreate;
-  final VoidCallback onPauseAll;
-  final VoidCallback onChart;
-  final VoidCallback onHistory;
-  final ValueChanged<_DcaTab> onTabChanged;
-  final VoidCallback onPause;
-  final ValueChanged<String> onOpenTool;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.screenState) {
-      DcaScreenState.loading => const VitSkeletonList(
-        key: DCAPage.loadingKey,
-        rows: 4,
-      ),
-      DcaScreenState.error => VitErrorState(
-        key: DCAPage.errorKey,
-        title: 'Không tải được kế hoạch DCA',
-        message: 'Thử lại sau hoặc quay lại màn giao dịch.',
-        actionLabel: 'Thử lại',
-        onAction: onRetry,
-      ),
-      DcaScreenState.empty => VitEmptyState(
-        key: DCAPage.emptyKey,
-        icon: Icons.sync_rounded,
-        title: 'Chưa có kế hoạch DCA',
-        message: 'Tạo kế hoạch mua định kỳ để đầu tư có kỷ luật.',
-        actionLabel: 'Tạo kế hoạch',
-        actionKey: DCAPage.overviewCreateKey,
-        onAction: onCreate,
-      ),
-      DcaScreenState.offline when snapshot.plans.isEmpty => VitEmptyState(
-        key: DCAPage.offlineKey,
-        icon: Icons.wifi_off_rounded,
-        title: 'Đang ngoại tuyến',
-        message: 'Kết nối lại để xem kế hoạch DCA mới nhất.',
-      ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _DcaOverviewCard(
-            snapshot: snapshot,
-            onCreate: onCreate,
-            onPauseAll: onPauseAll,
-            onChart: onChart,
-            onHistory: onHistory,
-          ),
-          _DcaTabs(
-            active: activeTab,
-            planCount: snapshot.plans.length,
-            onChanged: onTabChanged,
-          ),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 180),
-            child: activeTab == _DcaTab.plans
-                ? _PlansList(
-                    key: const ValueKey('plans'),
-                    plans: snapshot.plans,
-                    onPause: onPause,
-                    onCreate: onCreate,
-                  )
-                : _HistoryPanel(
-                    key: const ValueKey('history'),
-                    snapshot: snapshot,
-                  ),
-          ),
-          _AdvancedTools(tools: snapshot.tools, onOpen: onOpenTool),
-          const VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Xem lại kế hoạch DCA',
-            message:
-                'Tạo, tạm dừng và chỉnh lịch mua đều cần xem lại trước khi áp dụng.',
-            contractId: 'SC-169',
-          ),
-        ],
-      ),
-    };
   }
 }
 
@@ -267,7 +238,7 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -293,28 +264,32 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
                 child: Text(
                   'Tổng lãi/lỗ · 90 ngày',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.portfolioTextMuted,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
               ),
-              VitMetricDeltaPill(
-                label:
-                    '${isProfit ? '+' : ''}${_formatFullVnd(overview.profitLossVnd.abs())} (${isProfit ? '+' : ''}${_formatPercent(overview.profitLossPercent.abs())})',
-                tone: isProfit
-                    ? VitMetricDeltaTone.positive
-                    : VitMetricDeltaTone.negative,
+              Flexible(
+                child: VitMetricDeltaPill(
+                  label:
+                      '${isProfit ? '+' : ''}${_formatFullVnd(overview.profitLossVnd.abs())} (${isProfit ? '+' : ''}${_formatPercent(overview.profitLossPercent.abs())})',
+                  tone: isProfit
+                      ? VitMetricDeltaTone.positive
+                      : VitMetricDeltaTone.negative,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -348,9 +323,9 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _NextPurchaseRow(overview: overview),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -455,7 +430,7 @@ class _OverviewMetric extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,

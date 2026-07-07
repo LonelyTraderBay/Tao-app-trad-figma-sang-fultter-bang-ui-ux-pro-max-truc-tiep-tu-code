@@ -27,7 +27,7 @@ class _CaseSummaryCard extends StatelessWidget {
               _ReportStatusPill(status: reportCase.status),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               _ToneIcon(
@@ -259,7 +259,7 @@ class _ActionTakenCard extends StatelessWidget {
               ],
             ),
             if (reportCase.systemNote != null) ...[
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _SystemNotePanel(note: reportCase.systemNote!),
             ],
           ],

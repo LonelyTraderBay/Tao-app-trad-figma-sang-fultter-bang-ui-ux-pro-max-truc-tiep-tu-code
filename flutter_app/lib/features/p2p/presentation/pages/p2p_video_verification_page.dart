@@ -8,19 +8,11 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
-const _p2pVideoVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const _p2pVideoNativeNavClearance = _p2pVideoVisualNavClearance - AppSpacing.x4;
-const _p2pVideoVisualClearance = AppSpacing.x3;
-const _p2pVideoNativeClearance = AppSpacing.x2;
 const _p2pVideoMajorGap = AppSpacing.x3;
 const _p2pVideoSectionGap = AppSpacing.x2;
 const _p2pVideoTightGap = AppSpacing.x1;
@@ -49,85 +41,48 @@ class _P2PVideoVerificationPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pVideoVerificationProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pVideoVisualNavClearance + _p2pVideoVisualClearance
-            : _p2pVideoNativeNavClearance + _p2pVideoNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: 'Xác minh video',
+      subtitle: 'KYC · P2P',
       semanticLabel: 'SC-252 P2PVideoVerificationPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Xác minh video',
-            subtitle: 'KYC · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pVideoScrollPadding(scrollEndPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _VideoHero(snapshot: snapshot),
-                        const SizedBox(height: _p2pVideoMajorGap),
-                        _PreparationCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pVideoMajorGap),
-                        _SlotPicker(
-                          slots: snapshot.timeSlots,
-                          selectedSlotId: _selectedSlotId,
-                          onSelected: (slot) {
-                            if (!slot.available) return;
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedSlotId = slot.id);
-                          },
-                        ),
-                        const SizedBox(height: _p2pVideoMajorGap),
-                        VitCtaButton(
-                          key: P2PVideoVerificationPage.submitKey,
-                          onPressed: _selectedSlotId == null
-                              ? null
-                              : () {
-                                  HapticFeedback.selectionClick();
-                                  context.go(snapshot.statusRoute);
-                                },
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          child: const Text('Đặt lịch'),
-                        ),
-                        const SizedBox(height: _p2pVideoSectionGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pVideoCompactCardPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Video verification review',
-                            message:
-                                'Preparation checklist, slot availability, selected time, verification status route and next KYC step are reviewed before booking.',
-                            contractId: 'p2p-video-verification-review',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(snapshot.parentRoute),
+      children: [
+        _VideoHero(snapshot: snapshot),
+        _PreparationCard(snapshot: snapshot),
+        _SlotPicker(
+          slots: snapshot.timeSlots,
+          selectedSlotId: _selectedSlotId,
+          onSelected: (slot) {
+            if (!slot.available) return;
+            HapticFeedback.selectionClick();
+            setState(() => _selectedSlotId = slot.id);
+          },
+        ),
+        VitCtaButton(
+          key: P2PVideoVerificationPage.submitKey,
+          onPressed: _selectedSlotId == null
+              ? null
+              : () {
+                  HapticFeedback.selectionClick();
+                  context.go(snapshot.statusRoute);
+                },
+          trailing: const Icon(Icons.chevron_right_rounded),
+          child: const Text('Đặt lịch'),
+        ),
+        const VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.p2pVideoCompactCardPadding,
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Video verification review',
+            message:
+                'Preparation checklist, slot availability, selected time, verification status route and next KYC step are reviewed before booking.',
+            contractId: 'p2p-video-verification-review',
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -208,6 +163,7 @@ class _PreparationCard extends StatelessWidget {
           const VitSectionHeader(
             icon: Icons.info_outline_rounded,
             title: 'Chuẩn bị',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             iconColor: AppModuleAccents.p2p,
             accentColor: AppModuleAccents.p2p,
           ),

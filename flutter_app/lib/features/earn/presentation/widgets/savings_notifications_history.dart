@@ -63,7 +63,7 @@ class _HistoryTab extends StatelessWidget {
           unreadCount: unreadCount,
           onMarkAllRead: onMarkAllRead,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         if (history.isEmpty)
           const _EmptyHistory()
         else
@@ -79,12 +79,12 @@ class _HistoryTab extends StatelessWidget {
                   onTap: () => onMarkRead(notification.id),
                 ),
                 if (notification != history.last)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),
         if (history.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ClearAllButton(onTap: onClearAll),
         ],
       ],
@@ -207,7 +207,7 @@ class _NotificationCard extends StatelessWidget {
                     height: AppSpacing.savingsNotificationHistoryBodyLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   notification.time,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

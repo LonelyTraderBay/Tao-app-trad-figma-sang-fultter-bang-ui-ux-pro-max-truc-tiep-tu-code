@@ -132,6 +132,7 @@ class _WalletIcon extends StatelessWidget {
       'futures' => Icons.account_balance_outlined,
       _ => Icons.bar_chart_rounded,
     };
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: _transferIconBox,
       height: _transferIconBox,

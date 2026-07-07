@@ -23,7 +23,7 @@ class ArenaModeDescriptionCard extends StatelessWidget {
           title: 'Mô tả',
           accentColor: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Text(
@@ -54,7 +54,7 @@ class ArenaModeRulesSummary extends StatelessWidget {
           title: 'Tóm tắt luật chơi',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -62,7 +62,7 @@ class ArenaModeRulesSummary extends StatelessWidget {
               for (var index = 0; index < rows.length; index++) ...[
                 _RuleRow(row: rows[index]),
                 if (index != rows.length - 1)
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.rowGap),
               ],
             ],
           ),

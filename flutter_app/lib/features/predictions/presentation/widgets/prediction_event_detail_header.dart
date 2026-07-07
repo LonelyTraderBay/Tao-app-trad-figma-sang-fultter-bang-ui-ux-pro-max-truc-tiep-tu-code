@@ -40,14 +40,14 @@ class _EventHeader extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           event.title,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.sectionTitle,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x3,
           runSpacing: AppSpacing.x1,
@@ -68,7 +68,7 @@ class _EventHeader extends StatelessWidget {
             _ChangeLabel(value: event.change24h),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         if (event.outcomes.length == 2)
           Row(
             children: [
@@ -92,7 +92,7 @@ class _EventHeader extends StatelessWidget {
             onOutcomeSelected: onOutcomeSelected,
           ),
         if (event.outcomes.length == 2) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProbabilityBar(outcomes: outcomes),
         ],
       ],
@@ -209,7 +209,7 @@ class _MultiOutcomeList extends StatelessWidget {
             onTap: () => onOutcomeSelected(event.outcomes[index].label),
           ),
           if (index != event.outcomes.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -285,8 +285,7 @@ class _ProbabilityBar extends StatelessWidget {
     final no = outcomes.last;
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
-      child: SizedBox(
-        height: AppSpacing.x2,
+      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
         child: Row(
           children: [
             Expanded(

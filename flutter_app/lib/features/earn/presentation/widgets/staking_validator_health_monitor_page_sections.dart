@@ -70,7 +70,7 @@ class _SummaryTile extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -161,7 +161,7 @@ class _ValidatorCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Wrap(
                       spacing: AppSpacing.x2,
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -194,7 +194,7 @@ class _ValidatorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -223,12 +223,12 @@ class _ValidatorCard extends StatelessWidget {
             ],
           ),
           if (selected) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             const Divider(
               color: AppColors.borderSolid,
               height: AppSpacing.dividerHairline,
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(
@@ -246,7 +246,7 @@ class _ValidatorCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(child: _SmallButton(label: 'View Details')),
@@ -334,7 +334,7 @@ class _TrendSection extends StatelessWidget {
                   child: const SizedBox.expand(),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               const Wrap(
                 alignment: WrapAlignment.center,
                 spacing: AppSpacing.x3,

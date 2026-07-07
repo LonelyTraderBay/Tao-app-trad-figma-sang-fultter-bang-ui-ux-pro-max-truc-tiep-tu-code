@@ -12,6 +12,7 @@ class _OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -50,6 +51,7 @@ class _CategoryCard extends StatelessWidget {
       key: ClientCategorizationPage.categoryKey(category.id),
       density: VitDensity.compact,
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -134,6 +136,7 @@ class _OptUpCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -303,35 +306,28 @@ class _ListCard extends StatelessWidget {
               ),
             ],
           ),
-          VitPageContent(
-            padding: VitContentPadding.none,
-            fullBleed: true,
-            density: VitDensity.compact,
-            children: [
-              for (final value in values)
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      requirementMode
-                          ? Icons.track_changes_outlined
-                          : Icons.check_circle_outline,
-                      color: requirementMode ? AppColors.text3 : style.color,
-                      size: AppSpacing.x4,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Expanded(
-                      child: Text(
-                        value,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
-                        ),
-                      ),
-                    ),
-                  ],
+          for (final value in values)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  requirementMode
+                      ? Icons.track_changes_outlined
+                      : Icons.check_circle_outline,
+                  color: requirementMode ? AppColors.text3 : style.color,
+                  size: AppSpacing.x4,
                 ),
-            ],
-          ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    value,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

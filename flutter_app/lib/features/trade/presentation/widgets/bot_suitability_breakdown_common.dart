@@ -74,7 +74,7 @@ class _CategoryScoreCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             '$score/$maxScore',
             style: AppTextStyles.baseMedium.copyWith(
@@ -82,7 +82,7 @@ class _CategoryScoreCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
@@ -116,7 +116,7 @@ class _RecommendationsCard extends StatelessWidget {
               icon: _iconForResult(result.outcome),
             ),
             if (recommendation != result.recommendations.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -164,7 +164,7 @@ class _RegulatoryCard extends StatelessWidget {
       density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
-      child: VitPageContent(
+      child: VitPageContent(rhythm: VitPageRhythm.standard, 
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -194,6 +194,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.plain,
     );
   }

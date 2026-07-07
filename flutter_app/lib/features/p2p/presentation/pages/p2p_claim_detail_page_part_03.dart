@@ -51,7 +51,7 @@ class _ReviewerNoteCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   note.content,
                   style: AppTextStyles.caption.copyWith(
@@ -59,7 +59,7 @@ class _ReviewerNoteCard extends StatelessWidget {
                     height: _p2pClaimBodyLine,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   note.timestamp,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -119,7 +119,7 @@ class _NotificationsCard extends StatelessWidget {
                       : 'Đang tắt thông báo claim này',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 const _CheckBullet(text: 'Thay đổi trạng thái claim'),
                 const _CheckBullet(text: 'Ghi chú mới từ reviewer'),
                 const _CheckBullet(text: 'Yêu cầu bổ sung bằng chứng'),

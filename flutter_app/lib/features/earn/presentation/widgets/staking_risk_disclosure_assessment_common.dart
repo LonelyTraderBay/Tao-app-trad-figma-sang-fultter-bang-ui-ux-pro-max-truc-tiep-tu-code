@@ -62,7 +62,7 @@ class _AssessmentTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 snapshot.assessmentBody,
                 style: AppTextStyles.caption.copyWith(
@@ -70,7 +70,7 @@ class _AssessmentTab extends StatelessWidget {
                   height: _stakingRiskBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCtaButton(
                 key: StakingRiskDisclosurePage.assessmentCtaKey,
                 height: _stakingRiskCtaHeight,
@@ -81,9 +81,9 @@ class _AssessmentTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _SectionLabel(snapshot.faqTitle),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final faq in snapshot.faqs) ...[
           VitCard(
             radius: VitCardRadius.large,
@@ -98,7 +98,7 @@ class _AssessmentTab extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   faq.answer,
                   style: AppTextStyles.caption.copyWith(
@@ -109,7 +109,7 @@ class _AssessmentTab extends StatelessWidget {
               ],
             ),
           ),
-          if (faq != snapshot.faqs.last) const SizedBox(height: AppSpacing.x3),
+          if (faq != snapshot.faqs.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

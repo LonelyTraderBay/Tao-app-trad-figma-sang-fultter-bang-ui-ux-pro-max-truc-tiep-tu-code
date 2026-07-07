@@ -42,12 +42,12 @@ class _BusinessInfoStep extends StatelessWidget {
                 textCapitalization: TextCapitalization.words,
                 onChanged: (_) => onNameChanged(),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Loại hình *',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitPresetChipRow<String>(
                 items: [
                   for (final type in snapshot.businessTypes)
@@ -61,7 +61,7 @@ class _BusinessInfoStep extends StatelessWidget {
                 accentColor: AppModuleAccents.p2p,
                 onTap: onTypeChanged,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _MultilineInput(
                 controller: descriptionController,
                 fieldKey: P2PMerchantApplyPage.businessDescriptionFieldKey,
@@ -106,7 +106,7 @@ class _DocumentsStep extends StatelessWidget {
             uploaded: uploadedDocuments.contains(document.id),
             onTap: () => onToggle(document),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
         _InfoBanner(
           icon: Icons.shield_outlined,
@@ -328,7 +328,7 @@ class _FinalStep extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               for (final row in rows) _SummaryRow(data: row),
             ],
           ),
@@ -356,25 +356,25 @@ class _SuccessState extends StatelessWidget {
       key: const ValueKey('sc227_success'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         const Icon(
           Icons.verified_rounded,
           color: AppColors.buy,
           size: AppSpacing.x7,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         Text(
           'Đơn đã gửi thành công!',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Text(
           'Đội ngũ VitTrade sẽ xem xét trong vòng 1-3 ngày làm việc. Bạn sẽ nhận thông báo khi có kết quả.',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         VitCard(
           padding: VitDensity.compact.cardPadding,
           child: Column(
@@ -399,7 +399,7 @@ class _SuccessState extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               for (var i = 0; i < reviewSteps.length; i++) ...[
                 Row(
                   children: [
@@ -417,12 +417,12 @@ class _SuccessState extends StatelessWidget {
                   ],
                 ),
                 if (i != reviewSteps.length - 1)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           key: P2PMerchantApplyPage.successCtaKey,
           onPressed: onBackToP2P,

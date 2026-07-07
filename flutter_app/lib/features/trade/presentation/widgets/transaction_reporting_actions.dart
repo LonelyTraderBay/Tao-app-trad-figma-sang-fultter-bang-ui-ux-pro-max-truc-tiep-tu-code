@@ -64,6 +64,7 @@ class _QuickActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
@@ -78,13 +79,13 @@ class _QuickActionCard extends StatelessWidget {
           const Spacer(),
           Text(
             title,
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               height: AppSpacing.transactionReportingLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             subtitle,
             maxLines: 1,

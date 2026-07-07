@@ -41,7 +41,7 @@ class _DcaSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Tổng đã gửi (USD)',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -52,12 +52,14 @@ class _DcaSummaryCard extends StatelessWidget {
               color: AppColors.text1,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
-              _GainPill(
-                icon: Icons.trending_up_rounded,
+              VitStatusPill(
                 label: snapshot.gainUsd,
+                status: VitStatusPillStatus.success,
+                icon: Icons.trending_up_rounded,
+                size: VitStatusPillSize.sm,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -69,7 +71,7 @@ class _DcaSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -97,7 +99,7 @@ class _DcaSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -135,34 +137,6 @@ class _DcaSummaryCard extends StatelessWidget {
   }
 }
 
-class _GainPill extends StatelessWidget {
-  const _GainPill({required this.icon, required this.label});
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.buy10,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnPillPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: AppColors.buy, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x1),
-            Text(label, style: _microBold.copyWith(color: AppColors.buy)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _HeroMetric extends StatelessWidget {
   const _HeroMetric({
     required this.label,
@@ -189,7 +163,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               if (icon != null) ...[

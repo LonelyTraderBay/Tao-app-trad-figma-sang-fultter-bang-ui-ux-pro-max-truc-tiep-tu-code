@@ -85,7 +85,7 @@ class _SelfieHero extends StatelessWidget {
                     color: AppModuleAccents.p2p,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
@@ -136,7 +136,7 @@ class _SampleCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 snapshot.sampleBody,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -165,7 +165,7 @@ class _GuidelinesCard extends StatelessWidget {
           for (final guide in snapshot.guidelines) ...[
             _ChecklistRow(text: guide, color: AppColors.buy),
             if (guide != snapshot.guidelines.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -187,16 +187,16 @@ class _TipsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
-            icon: Icons.info_outline_rounded,
+          const VitSectionHeader(
             title: 'Mẹo để thành công',
-            color: AppModuleAccents.p2p,
+            icon: Icons.info_outline_rounded,
+            iconColor: AppModuleAccents.p2p,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: _p2pSelfieSectionGap),
           for (final tip in snapshot.tips) ...[
             _ChecklistRow(text: tip, color: AppColors.warn),
             if (tip != snapshot.tips.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -298,7 +298,7 @@ class _LivenessStep extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.sectionTitle,
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Làm theo hướng dẫn để tiếp tục',
                 textAlign: TextAlign.center,

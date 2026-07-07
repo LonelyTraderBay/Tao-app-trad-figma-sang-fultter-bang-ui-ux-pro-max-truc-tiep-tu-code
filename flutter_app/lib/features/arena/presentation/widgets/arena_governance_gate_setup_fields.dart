@@ -161,7 +161,7 @@ class _WinConditionCard extends StatelessWidget {
               if (publicRoom) const _RequiredPill(text: 'BẮT BUỘC'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           GridView.count(
             crossAxisCount: AppSpacing.arenaGovernanceGridColumns,
             shrinkWrap: true,
@@ -188,13 +188,13 @@ class _WinConditionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _BuilderField(
             label: 'E. Thời điểm',
             value: deadlineContext,
             onTap: onDeadlineContext,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           TextFormField(
             initialValue: customWinCondition,
             onChanged: onCustomWinChanged,

@@ -39,7 +39,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               SizedBox(
                 height: AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x6,
                 child: CustomPaint(
@@ -50,7 +50,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Performance Ranking',
           children: [
@@ -58,7 +58,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
               _RankingRow(rank: i + 1, module: ranked[i]),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.crossModuleCardPadding,
@@ -72,11 +72,11 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               for (final module in modules) ...[
                 _AllocationRow(module: module, totalValue: snapshot.totalValue),
                 if (module != modules.last)
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               ],
             ],
           ),
@@ -200,7 +200,7 @@ class _AllocationRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: LinearProgressIndicator(

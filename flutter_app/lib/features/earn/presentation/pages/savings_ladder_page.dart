@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -100,6 +101,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     density: VitDensity.compact,
                     children: [
                       LadderHero(
@@ -337,7 +339,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   DetailRow(
                     label: 'Tổng vốn',
                     value: savingsLadderMoney(amountUsd),
@@ -355,12 +357,12 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                         '+${savingsLadderMoney(savingsLadderAnnualInterest(rungs))}',
                     color: AppColors.buy,
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   EarnDisclaimerBanner(
                     text: snapshot.disclaimer,
                     lineHeight: _disclaimerLineHeight,
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   VitCtaButton(
                     onPressed: () {
                       HapticFeedback.lightImpact();

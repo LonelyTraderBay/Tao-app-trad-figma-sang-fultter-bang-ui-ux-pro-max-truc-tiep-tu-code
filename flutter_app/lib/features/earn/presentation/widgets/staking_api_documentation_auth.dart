@@ -46,7 +46,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                               'API Key Authentication',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                             Text(
                               'Include your API key in the X-API-Key header with every request.',
                               style: AppTextStyles.caption.copyWith(
@@ -59,11 +59,11 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   StakingApiDocumentationCodeBlock(
                     text: snapshot.authHeaderExample,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCtaButton(
                     variant: VitCtaButtonVariant.ghost,
                     height: AppSpacing.ctaHeight,
@@ -94,7 +94,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                   for (final error in snapshot.errorCodes) ...[
                     _ErrorCodeRow(error: error),
                     if (error != snapshot.errorCodes.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
                 ],
               ),
@@ -144,7 +144,7 @@ class _RateLimitCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.earnCardPaddingX3,
@@ -181,7 +181,7 @@ class _RateLimitCard extends StatelessWidget {
             ),
           ),
           if (tier.tier == 'Enterprise') ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCtaButton(
               height: AppSpacing.ctaHeight,
               onPressed: () {},

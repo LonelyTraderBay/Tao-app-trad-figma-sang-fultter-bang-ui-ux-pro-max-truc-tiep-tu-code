@@ -31,7 +31,7 @@ class _GoalTile extends StatelessWidget {
                 color: accent,
                 background: _backgroundForGoal(goal.id),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 goal.label,
                 maxLines: 2,
@@ -48,8 +48,8 @@ class _GoalTile extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               if (goal.disclosure != null) ...[
-                const SizedBox(height: AppSpacing.x2),
-                _DisclosurePill(text: goal.disclosure!, color: accent),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                VitAccentPill(label: goal.disclosure!, accentColor: accent),
               ],
             ],
           ),
@@ -73,18 +73,6 @@ class _GoalTile extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _DisclosurePill extends StatelessWidget {
-  const _DisclosurePill({required this.text, required this.color});
-
-  final String text;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: text, accentColor: color);
   }
 }
 
@@ -119,7 +107,7 @@ class _RecommendationCard extends StatelessWidget {
                 Text(recommendation.title, style: AppTextStyles.baseMedium),
                 Text(
                   recommendation.description,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                   ),
                 ),
@@ -164,7 +152,7 @@ class _BulletRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -179,6 +167,7 @@ class _BackControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: OnboardingFlow.backButtonKey,
       width: AppSpacing.ctaHeight,

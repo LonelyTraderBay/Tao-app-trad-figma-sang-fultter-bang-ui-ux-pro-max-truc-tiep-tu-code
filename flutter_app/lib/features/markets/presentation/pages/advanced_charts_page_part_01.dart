@@ -50,6 +50,7 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                     key: AdvancedChartsPage.contentKey,
                     padding: AppSpacing.marketScrollPadding(scrollEndClearance),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.flush,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
@@ -224,6 +225,7 @@ class _ActiveIndicatorSummary extends StatelessWidget {
           ),
         ),
         if (onClearAll != null)
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             key: AdvancedChartsPage.clearAllKey,
             onTap: onClearAll,
@@ -281,6 +283,7 @@ class _ActiveIndicatorChips extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: _advancedSmallGap),
+                  // card-tile: allow-start — fixed surface, not horizontal strip tile
                   VitCard(
                     onTap: () => onRemove(indicator.id),
                     variant: VitCardVariant.ghost,

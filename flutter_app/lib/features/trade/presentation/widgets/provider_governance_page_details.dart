@@ -27,7 +27,7 @@ class _ModificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Change:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -59,7 +59,7 @@ class _ModificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               const Icon(
@@ -87,7 +87,7 @@ class _ModificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const VitAccentPill(
             label: 'Notification sent 24h before implementation',
             accentColor: AppColors.buy,
@@ -124,7 +124,7 @@ class _CommunicationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,
@@ -148,7 +148,7 @@ class _FeesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,
@@ -177,6 +177,7 @@ class _ComplianceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,

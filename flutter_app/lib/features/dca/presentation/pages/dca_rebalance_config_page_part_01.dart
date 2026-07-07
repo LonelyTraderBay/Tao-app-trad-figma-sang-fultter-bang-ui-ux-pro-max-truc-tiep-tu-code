@@ -12,10 +12,14 @@ class _InfoBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _AccentIcon(icon: Icons.verified_user_outlined),
+          const VitAccentIconBox(
+            icon: Icons.verified_user_outlined,
+            color: AppModuleAccents.trade,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
               gap: VitContentGap.tight,
               fullBleed: true,
@@ -69,15 +73,22 @@ class _AllocationSummary extends StatelessWidget {
           _SectionHeader(
             icon: Icons.bar_chart_rounded,
             title: 'Phân bổ mục tiêu',
-            trailing: _PillButton(
+            trailing: VitChoicePill(
               key: DCARebalanceConfig.addTargetKey,
-              icon: Icons.add_rounded,
               label: 'Thêm',
+              selected: true,
               onTap: onAdd,
               enabled: targets.length < 4,
+              accentColor: AppColors.accent,
+              leading: Icon(
+                Icons.add_rounded,
+                color: AppColors.accent,
+                size: AppSpacing.dcaRebalanceIconSm,
+              ),
+              padding: AppSpacing.dcaPrimaryChipPadding,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               SizedBox(
@@ -125,7 +136,7 @@ class _AllocationSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: _valid ? AppColors.buy10 : AppColors.sell10,
@@ -209,7 +220,7 @@ class _TargetList extends StatelessWidget {
                 onToleranceChanged(targets[index].id, value),
             onRemove: () => onRemove(targets[index].id),
           ),
-          if (index < targets.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (index < targets.length - 1) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -306,7 +317,7 @@ class _TargetCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Tỷ lệ mục tiêu',
                   style: AppTextStyles.caption.copyWith(
@@ -406,7 +417,7 @@ class _StrategySection extends StatelessWidget {
           icon: Icons.track_changes_rounded,
           title: 'Chiến lược',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),

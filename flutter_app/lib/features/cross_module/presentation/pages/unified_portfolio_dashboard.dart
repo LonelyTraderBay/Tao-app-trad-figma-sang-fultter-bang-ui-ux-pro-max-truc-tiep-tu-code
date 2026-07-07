@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/cross_module_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_analysis.dart';
@@ -74,6 +75,7 @@ class _UnifiedPortfolioDashboardState
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.crossModuleScrollPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     gap: VitContentGap.defaultGap,
                     children: [
                       if (_activeTab == UnifiedPortfolioTab.overview)

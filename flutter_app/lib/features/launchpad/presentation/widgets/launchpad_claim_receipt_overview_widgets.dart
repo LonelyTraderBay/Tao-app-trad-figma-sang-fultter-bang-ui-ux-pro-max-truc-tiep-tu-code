@@ -99,7 +99,7 @@ class _NextUnlockCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(
@@ -179,7 +179,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final row in rows) _DetailLine(row: row),
         ],
       ),
@@ -228,7 +228,7 @@ class _VestingPreviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final entry in receipt.vestingSchedule.take(4))
             _VestingMiniRow(entry: entry),
           if (receipt.vestingSchedule.length > 4)

@@ -1,7 +1,7 @@
 part of '../pages/savings_history_page.dart';
 
-class _SummaryPills extends StatelessWidget {
-  const _SummaryPills({required this.snapshot});
+class _SummaryMetrics extends StatelessWidget {
+  const _SummaryMetrics({required this.snapshot});
 
   final SavingsHistorySnapshot snapshot;
 
@@ -10,14 +10,14 @@ class _SummaryPills extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _SummaryPill(
+          child: _SummaryMetricTile(
             label: 'Tổng gửi',
             value: snapshot.totalSubscribed,
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
-          child: _SummaryPill(
+          child: _SummaryMetricTile(
             label: 'Tổng lãi',
             value: snapshot.totalInterest,
             color: AppColors.accent,
@@ -25,7 +25,7 @@ class _SummaryPills extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
-          child: _SummaryPill(
+          child: _SummaryMetricTile(
             label: 'Đã rút',
             value: snapshot.totalRedeemed,
             color: AppColors.primary,
@@ -36,8 +36,8 @@ class _SummaryPills extends StatelessWidget {
   }
 }
 
-class _SummaryPill extends StatelessWidget {
-  const _SummaryPill({
+class _SummaryMetricTile extends StatelessWidget {
+  const _SummaryMetricTile({
     required this.label,
     required this.value,
     this.color = AppColors.buy,

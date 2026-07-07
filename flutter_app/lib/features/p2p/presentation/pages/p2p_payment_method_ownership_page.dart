@@ -9,21 +9,12 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
-const double _p2pOwnershipVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pOwnershipNativeNavClearance =
-    _p2pOwnershipVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
-const double _p2pOwnershipVisualClearance = AppSpacing.x3;
-const double _p2pOwnershipNativeClearance = AppSpacing.x2;
-const double _p2pOwnershipMajorGap = AppSpacing.p2pPaymentSectionGap;
 const double _p2pOwnershipSectionGap = AppSpacing.p2pPaymentCardGap;
 const double _p2pOwnershipHeroIconBox = AppSpacing.searchBarCompactHeight;
 const double _p2pOwnershipDocumentIconBox = AppSpacing.buttonCompact;
@@ -62,86 +53,48 @@ class _P2PPaymentMethodOwnershipPageState
       p2pPaymentMethodOwnershipControllerProvider(widget.methodId),
     );
     final snapshot = controller.state.snapshot;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pOwnershipVisualNavClearance + _p2pOwnershipVisualClearance
-            : _p2pOwnershipNativeNavClearance + _p2pOwnershipNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
     final canSubmit = controller.canSubmit(_uploaded) && !_submitting;
 
-    return VitPageLayout(
+    return VitP2PFlowScaffold(
+      title: 'Xác minh sở hữu',
+      subtitle: 'Thanh toán · P2P',
       semanticLabel: 'SC-234 P2PPaymentMethodOwnershipPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Xác minh sở hữu',
-            subtitle: 'Thanh toán · P2P',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PPaymentMethodOwnershipPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentOwnershipScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const _OwnershipHero(),
-                        const SizedBox(height: _p2pOwnershipMajorGap),
-                        Text(
-                          'Tài liệu cần thiết',
-                          style: AppTextStyles.baseMedium.copyWith(
-                            color: AppColors.text1,
-                          ),
-                        ),
-                        const SizedBox(height: _p2pOwnershipSectionGap),
-                        for (final document in snapshot.documents) ...[
-                          _OwnershipDocumentCard(
-                            document: document,
-                            uploaded: _uploaded.contains(document.id),
-                            onUpload: () => _markUploaded(document.id),
-                            onRemove: () => _removeUpload(document.id),
-                          ),
-                          const SizedBox(height: _p2pOwnershipSectionGap),
-                        ],
-                        const SizedBox(height: _p2pOwnershipSectionGap),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Payment ownership submission review',
-                          message:
-                              'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
-                          contractId: 'SC-234',
-                        ),
-                        VitCtaButton(
-                          key: P2PPaymentMethodOwnershipPage.submitButtonKey,
-                          loading: _submitting,
-                          onPressed: canSubmit
-                              ? () => _confirmSubmit(context, controller)
-                              : null,
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          child: const Text('Gửi xác minh'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+      contentKey: P2PPaymentMethodOwnershipPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      rhythm: VitPageRhythm.form,
+      onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+      children: [
+        const _OwnershipHero(),
+        Text(
+          'Tài liệu cần thiết',
+          style: AppTextStyles.baseMedium.copyWith(
+            color: AppColors.text1,
           ),
         ),
-      ),
+        for (final document in snapshot.documents)
+          _OwnershipDocumentCard(
+            document: document,
+            uploaded: _uploaded.contains(document.id),
+            onUpload: () => _markUploaded(document.id),
+            onRemove: () => _removeUpload(document.id),
+          ),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Payment ownership submission review',
+          message:
+              'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
+          contractId: 'SC-234',
+        ),
+        VitCtaButton(
+          key: P2PPaymentMethodOwnershipPage.submitButtonKey,
+          loading: _submitting,
+          onPressed: canSubmit
+              ? () => _confirmSubmit(context, controller)
+              : null,
+          trailing: const Icon(Icons.chevron_right_rounded),
+          child: const Text('Gửi xác minh'),
+        ),
+      ],
     );
   }
 

@@ -29,7 +29,7 @@ class _FileComplaintTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.form, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -80,7 +80,7 @@ class _FileComplaintTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Padding(
           padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
           child: _UploadEvidenceButton(
@@ -88,7 +88,7 @@ class _FileComplaintTab extends StatelessWidget {
             onPressed: onUpload,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _SubmitButton(enabled: canSubmit, onPressed: onSubmit),
       ],
     );
@@ -153,6 +153,7 @@ class _ComplaintTypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: DisputeResolutionPage.complaintTypeKey(option.value),
       variant: VitCardVariant.inner,
@@ -203,6 +204,7 @@ class _ProviderSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: DisputeResolutionPage.providerKey,
       variant: VitCardVariant.inner,

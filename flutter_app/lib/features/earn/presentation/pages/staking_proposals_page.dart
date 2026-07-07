@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -58,6 +59,7 @@ class StakingProposalsPage extends ConsumerWidget {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -123,13 +125,17 @@ class _ProposalCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(proposal.title, style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              _CategoryPill(label: proposal.category),
+              VitAccentPill(
+                label: proposal.category,
+                accentColor: AppColors.text3,
+                size: VitStatusPillSize.sm,
+              ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -147,7 +153,7 @@ class _ProposalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -167,9 +173,9 @@ class _ProposalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _VoteRatioBar(yesPercent: proposal.yesPercent),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -196,32 +202,6 @@ class _ProposalCard extends StatelessWidget {
   }
 }
 
-class _CategoryPill extends StatelessWidget {
-  const _CategoryPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.stakingCommunityPillLineHeight,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _VoteRatioBar extends StatelessWidget {
   const _VoteRatioBar({required this.yesPercent});
 
@@ -231,8 +211,7 @@ class _VoteRatioBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.smRadius,
-      child: SizedBox(
-        height: AppSpacing.x2,
+      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
         child: ColoredBox(
           color: AppColors.surface2,
           child: Align(

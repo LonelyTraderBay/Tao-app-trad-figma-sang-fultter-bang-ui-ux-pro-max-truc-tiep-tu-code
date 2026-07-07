@@ -28,7 +28,7 @@ class _IntroCard extends StatelessWidget {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   'Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -67,7 +67,7 @@ class _TargetCard extends StatelessWidget {
               selected: target.id == selectedId,
               onTap: () => onChanged(target.id),
             ),
-            if (target != targets.last) const SizedBox(height: AppSpacing.x2),
+            if (target != targets.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -89,6 +89,7 @@ class _TargetTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
@@ -117,7 +118,7 @@ class _TargetTile extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   target.description,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -162,7 +163,7 @@ class _RangeCard extends StatelessWidget {
             value: gridCount,
             onChanged: onGridCountChanged,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _RangeSliderRow(
             key: BotOptimizationPage.rangeKey(rangePct.id),
             range: rangePct,
@@ -209,7 +210,7 @@ class _RangeSliderRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
             trackHeight: AppSpacing.x3,
@@ -257,7 +258,7 @@ class _HowItWorksCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final step in steps) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +279,7 @@ class _HowItWorksCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (step != steps.last) const SizedBox(height: AppSpacing.x2),
+            if (step != steps.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

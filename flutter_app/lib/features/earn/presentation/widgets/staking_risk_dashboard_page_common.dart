@@ -27,7 +27,7 @@ class _MiniRiskMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(

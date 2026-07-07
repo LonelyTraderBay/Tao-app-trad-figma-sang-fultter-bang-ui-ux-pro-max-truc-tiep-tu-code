@@ -57,14 +57,15 @@ class P2PCreateAdFloatingPriceBlock extends StatelessWidget {
             suffix: Text('%', style: AppTextStyles.caption),
             onChanged: (_) => onChanged(),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             children: [
               for (final value in const [-1, -0.5, 0, .5, 1, 2])
-                _ChoiceChipButton(
+                VitChoicePill(
                   label: '${value >= 0 ? '+' : ''}$value%',
                   selected: controller.text == value.toString(),
+                  padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
                   onTap: () {
                     controller.text = value.toString();
                     onChanged();
@@ -132,10 +133,11 @@ class P2PCreateAdPaymentWindowBlock extends StatelessWidget {
         children: [
           for (final value in values) ...[
             Expanded(
-              child: _ChoiceChipButton(
+              child: VitChoicePill(
                 key: P2PCreateAdUiKeys.paymentWindowKey(value),
                 label: '$value phút',
                 selected: selected == value,
+                padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
                 onTap: () => onSelected(value),
               ),
             ),
@@ -195,7 +197,7 @@ class P2PCreateAdRequirementCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -213,27 +215,28 @@ class P2PCreateAdRequirementCard extends StatelessWidget {
             ],
           ),
           if (requireKyc) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               children: [
                 for (final level in const ['1', '2', '3'])
-                  _ChoiceChipButton(
+                  VitChoicePill(
                     label: 'Cấp $level',
                     selected: requiredKycLevel == level,
+                    padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
                     onTap: () => onLevelChanged(level),
                   ),
               ],
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitInput(
             controller: minTradesController,
             label: 'Số đơn tối thiểu',
             hintText: '0',
             keyboardType: TextInputType.number,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitInput(
             controller: minDaysController,
             label: 'Số ngày tối thiểu',
@@ -265,6 +268,7 @@ class P2PCreateAdMultilineBlock extends StatelessWidget {
     return P2PCreateAdInputBlock(
       label: label,
       hint: hint,
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       child: VitCard(
         constraints: const BoxConstraints(
           minHeight: AppSpacing.p2pMerchantCommerceTextAreaMinHeight,

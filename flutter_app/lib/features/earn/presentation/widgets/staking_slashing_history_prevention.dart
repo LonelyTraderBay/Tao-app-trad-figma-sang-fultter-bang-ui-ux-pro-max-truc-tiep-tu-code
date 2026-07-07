@@ -116,7 +116,7 @@ class _PreventionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   measure.description,
                   style: AppTextStyles.caption.copyWith(

@@ -145,6 +145,7 @@ class _SimpleStepScaffold extends StatelessWidget {
                   ),
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,
@@ -185,7 +186,6 @@ class _SuccessIcon extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
         Text(
           title,
           textAlign: TextAlign.center,

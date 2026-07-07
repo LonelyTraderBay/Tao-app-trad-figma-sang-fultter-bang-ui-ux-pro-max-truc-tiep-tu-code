@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -69,6 +70,7 @@ class VerifiedChallengesPage extends ConsumerWidget {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
@@ -126,13 +128,13 @@ class _VerifiedHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             snapshot.title,
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: AppSpacing.arenaVerifiedHeroTextMaxWidth,
@@ -146,7 +148,7 @@ class _VerifiedHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitStatusPill(
             label: snapshot.statusLabel,
             status: VitStatusPillStatus.purple,
@@ -188,7 +190,7 @@ class _VerifiedInfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 for (final feature in snapshot.features) ...[
                   _FeatureRow(feature: feature),
                   if (feature != snapshot.features.last)

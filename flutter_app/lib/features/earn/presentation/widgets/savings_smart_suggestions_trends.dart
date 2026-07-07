@@ -20,7 +20,7 @@ class SavingsSmartTrendList extends StatelessWidget {
       children: [
         for (final trend in trends) ...[
           SavingsSmartTrendCard(trend: trend),
-          if (trend != trends.last) const SizedBox(height: AppSpacing.x4),
+          if (trend != trends.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -71,7 +71,7 @@ class SavingsSmartTrendCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.buttonHero,
             child: CustomPaint(
@@ -81,7 +81,7 @@ class SavingsSmartTrendCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -153,7 +153,7 @@ class SavingsSmartSignalList extends StatelessWidget {
       children: [
         for (final signal in signals) ...[
           SavingsSmartSignalCard(signal: signal),
-          if (signal != signals.last) const SizedBox(height: AppSpacing.x4),
+          if (signal != signals.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -202,12 +202,12 @@ class SavingsSmartSignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             signal.impact,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,

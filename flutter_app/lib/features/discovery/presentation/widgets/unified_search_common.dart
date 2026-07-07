@@ -1,43 +1,37 @@
 part of '../pages/unified_search_page.dart';
 
-class _UnifiedSearchBody extends StatelessWidget {
-  const _UnifiedSearchBody({
-    required this.snapshot,
-    required this.onQuerySelected,
-    required this.onRetry,
-  });
-
-  final UnifiedSearchSnapshot snapshot;
-  final ValueChanged<String> onQuerySelected;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.currentState) {
-      DiscoveryScreenState.loading => const VitSkeletonList(
-        key: UnifiedSearchPage.loadingKey,
-        rows: 4,
-      ),
-      DiscoveryScreenState.error => VitErrorState(
+List<Widget> _unifiedSearchPageChildren({
+  required UnifiedSearchSnapshot snapshot,
+  required ValueChanged<String> onQuerySelected,
+  required VoidCallback onRetry,
+}) {
+  return switch (snapshot.currentState) {
+    DiscoveryScreenState.loading => [
+      const VitSkeletonList(key: UnifiedSearchPage.loadingKey, rows: 4),
+    ],
+    DiscoveryScreenState.error => [
+      VitErrorState(
         key: UnifiedSearchPage.errorKey,
         title: 'Không tải được dữ liệu khám phá',
         message: snapshot.staleMessage,
         actionLabel: 'Thử lại',
         onAction: onRetry,
       ),
-      DiscoveryScreenState.empty when !snapshot.hasCachedContent =>
-        const VitEmptyState(
-          icon: Icons.explore_rounded,
-          title: 'Chưa có gợi ý khám phá',
-          message: 'Hãy thử lại sau hoặc tìm kiếm trực tiếp.',
-        ),
-      _ when snapshot.hasQuery => _ResultsState(snapshot: snapshot),
-      _ => _NoQueryState(
-        snapshot: snapshot,
-        onQuerySelected: onQuerySelected,
+    ],
+    DiscoveryScreenState.empty when !snapshot.hasCachedContent => [
+      const VitEmptyState(
+        icon: Icons.explore_rounded,
+        title: 'Chưa có gợi ý khám phá',
+        message: 'Hãy thử lại sau hoặc tìm kiếm trực tiếp.',
       ),
-    };
-  }
+    ],
+    _ when snapshot.hasQuery => [
+      _ResultsState(snapshot: snapshot),
+    ],
+    _ => [
+      _NoQueryState(snapshot: snapshot, onQuerySelected: onQuerySelected),
+    ],
+  };
 }
 
 class _BoundaryDisclosure extends StatelessWidget {
@@ -55,30 +49,6 @@ class _BoundaryDisclosure extends StatelessWidget {
         'Lưu ý: Prediction Markets sử dụng USDT thật. Arena Challenges chỉ dùng Arena Points (không liên quan ví). Đây là trang khám phá, không phải trang giao dịch.\n$notes',
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-      ),
-    );
-  }
-}
-
-class _AccentIcon extends StatelessWidget {
-  const _AccentIcon({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.discoveryAccentIconBox,
-      height: AppSpacing.discoveryAccentIconBox,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: .13),
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-        ),
-        child: Center(child: Icon(icon, color: color, size: 19)),
       ),
     );
   }

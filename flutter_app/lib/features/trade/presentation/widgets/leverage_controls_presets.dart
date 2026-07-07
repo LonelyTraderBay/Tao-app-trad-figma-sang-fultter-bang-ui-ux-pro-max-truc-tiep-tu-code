@@ -20,7 +20,7 @@ class _LeverageSlider extends StatelessWidget {
       children: [
         Text(
           'Kéo để điều chỉnh',
-          style: AppTextStyles.captionSm.copyWith(
+          style: AppTextStyles.caption.copyWith(
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -48,7 +48,7 @@ class _LeverageSlider extends StatelessWidget {
             onChanged: (value) => onChanged(value.round()),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitPresetChipRow<int>(
           selectedValue: leverage,
           onTap: onChanged,
@@ -88,7 +88,7 @@ class _PresetGrid extends StatelessWidget {
       children: [
         Text(
           'Chọn nhanh',
-          style: AppTextStyles.captionSm.copyWith(
+          style: AppTextStyles.caption.copyWith(
             fontWeight: AppTextStyles.bold,
           ),
         ),

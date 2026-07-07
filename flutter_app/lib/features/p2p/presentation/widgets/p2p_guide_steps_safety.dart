@@ -35,12 +35,12 @@ class _HowItWorksTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final step in steps) ...[
           _StepRow(step: step),
           if (step.id != steps.last.id) const SizedBox(height: AppSpacing.x1),
         ],
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
@@ -68,7 +68,7 @@ class _HowItWorksTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitCtaButton(
                 key: P2PGuidePage.startKey,
                 variant: VitCtaButtonVariant.success,
@@ -78,7 +78,7 @@ class _HowItWorksTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _ConceptList(),
       ],
     );
@@ -110,7 +110,11 @@ class _StepRow extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _TonePill(label: 'Bước ${step.step}', color: color),
+                    VitAccentPill(
+                      label: 'Bước ${step.step}',
+                      accentColor: color,
+                      size: VitStatusPillSize.sm,
+                    ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Text(
@@ -175,7 +179,7 @@ class _SafetyTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'VitTrade bảo vệ giao dịch của bạn qua Escrow. Hãy luôn cẩn thận và tuân thủ các nguyên tắc an toàn.',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -183,10 +187,10 @@ class _SafetyTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final tip in snapshot.safetyTips) ...[
           _SafetyTipCard(tip: tip),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         VitCard(
           radius: VitCardRadius.large,
@@ -212,12 +216,12 @@ class _SafetyTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Nếu bạn nghi ngờ giao dịch có dấu hiệu lừa đảo, hãy mở tranh chấp ngay lập tức. Không giải phóng crypto cho đến khi đã nhận đủ tiền.',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitCtaButton(
                 key: P2PGuidePage.supportKey,
                 variant: VitCtaButtonVariant.danger,

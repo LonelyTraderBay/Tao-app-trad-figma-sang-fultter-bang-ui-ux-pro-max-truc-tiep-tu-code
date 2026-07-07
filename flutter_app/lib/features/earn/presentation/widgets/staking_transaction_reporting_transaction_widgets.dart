@@ -120,12 +120,12 @@ class _TransactionCard extends StatelessWidget {
             ],
           ),
           if (tx.costBasis != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             const Divider(
               color: AppColors.borderSolid,
               height: _transactionReportingDividerExtent,
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(
@@ -208,7 +208,7 @@ class _ExportTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Important Tax Notice', style: AppTextStyles.caption),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.taxNotice,
                       style: AppTextStyles.micro.copyWith(

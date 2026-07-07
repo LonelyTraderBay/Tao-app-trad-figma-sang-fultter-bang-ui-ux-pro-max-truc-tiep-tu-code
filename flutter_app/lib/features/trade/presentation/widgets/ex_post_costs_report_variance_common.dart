@@ -110,7 +110,7 @@ class _VarianceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,
@@ -138,6 +138,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: text,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _reportPrimary,
     );

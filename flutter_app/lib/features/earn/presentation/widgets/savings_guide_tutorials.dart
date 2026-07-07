@@ -32,13 +32,13 @@ class SavingsGuideTutorialsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _HeroCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _LearningProgressCard(
           completed: completedTutorials.length,
           total: snapshot.tutorials.length,
           progress: progress,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         VitPageSection(
           label: 'Bài hướng dẫn',
           accentColor: AppColors.buy,
@@ -56,19 +56,21 @@ class SavingsGuideTutorialsTab extends StatelessWidget {
                     onTap: () => onTutorialTap(tutorial),
                   ),
                   if (tutorial != snapshot.tutorials.last)
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                 ],
               ],
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         VitPageSection(
           label: 'Mẹo nhanh',
           accentColor: AppColors.warn,
           children: [_QuickTipsGrid(tips: snapshot.quickTips)],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _StartSavingsCard(snapshot: snapshot),
       ],
     );
@@ -111,7 +113,7 @@ class _HeroCard extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     snapshot.heroSubtitle,
                     style: AppTextStyles.caption.copyWith(
@@ -169,7 +171,7 @@ class _LearningProgressCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -179,7 +181,7 @@ class _LearningProgressCard extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation<Color>(AppColors.buy),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Icon(
@@ -262,7 +264,7 @@ class _TutorialCard extends StatelessWidget {
                       height: AppSpacing.earnGuideCardLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x1,
@@ -303,7 +305,13 @@ class _QuickTipsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final itemWidth = (constraints.maxWidth - AppSpacing.x2) / 2;
+        final maxWidth = constraints.hasBoundedWidth && constraints.maxWidth > 0
+            ? constraints.maxWidth
+            : MediaQuery.sizeOf(context).width - (AppSpacing.contentPad * 2);
+        if (maxWidth <= AppSpacing.x2) {
+          return const SizedBox.shrink();
+        }
+        final itemWidth = (maxWidth - AppSpacing.x2) / 2;
         return Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x2,
@@ -338,7 +346,7 @@ class _QuickTipCard extends StatelessWidget {
             icon: savingsGuideIcon(tip.iconKey),
             color: color,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             tip.title,
             maxLines: 1,
@@ -348,7 +356,7 @@ class _QuickTipCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             tip.description,
             maxLines: 3,
@@ -378,7 +386,7 @@ class _StartSavingsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Sẵn sàng bắt đầu?', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Khám phá các sản phẩm tiết kiệm đang có lãi suất hấp dẫn.',
             style: AppTextStyles.caption.copyWith(
@@ -386,7 +394,7 @@ class _StartSavingsCard extends StatelessWidget {
               height: AppSpacing.earnGuideTipLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             key: SavingsGuideKeys.startButton,
             onPressed: () {

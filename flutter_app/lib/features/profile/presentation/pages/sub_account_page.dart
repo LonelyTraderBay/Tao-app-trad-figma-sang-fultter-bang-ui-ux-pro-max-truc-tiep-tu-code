@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -12,8 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
@@ -65,47 +65,32 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-166 SubAccountPage',
-      child: Material(
-        color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'T\u00E0i kho\u1EA3n ph\u1EE5',
-            subtitle: 'T\u00E0i kho\u1EA3n \u00B7 Profile',
-            showBack: true,
-            onBack: _close,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: SubAccountPage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.profileSubAccountScrollPadding(
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _SubAccountBody(
-                        snapshot: snapshot,
-                        isBalanceHidden: _isBalanceHidden,
-                        showCreate: _showCreate,
-                        expandedId: _expandedId,
-                        onToggleBalance: _toggleBalance,
-                        onToggleCreateForm: _toggleCreateForm,
-                        onToggleExpanded: _toggleExpanded,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      header: VitHeader(
+        title: 'T\u00E0i kho\u1EA3n ph\u1EE5',
+        subtitle: 'T\u00E0i kho\u1EA3n \u00B7 Profile',
+        showBack: true,
+        onBack: _close,
+      ),
+      body: SingleChildScrollView(
+        key: SubAccountPage.contentKey,
+        physics: const ClampingScrollPhysics(),
+        padding: AppSpacing.profileSubAccountScrollPadding(scrollClearance),
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.none,
+          density: VitDensity.compact,
+          fullBleed: true,
+          children: _subAccountPageChildren(
+            context: context,
+            snapshot: snapshot,
+            isBalanceHidden: _isBalanceHidden,
+            showCreate: _showCreate,
+            expandedId: _expandedId,
+            onToggleBalance: _toggleBalance,
+            onToggleCreateForm: _toggleCreateForm,
+            onToggleExpanded: _toggleExpanded,
           ),
         ),
       ),

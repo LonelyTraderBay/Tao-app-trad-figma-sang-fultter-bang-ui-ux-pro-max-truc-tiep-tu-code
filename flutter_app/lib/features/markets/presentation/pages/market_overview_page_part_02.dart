@@ -133,7 +133,7 @@ class _QuickNavItem extends StatelessWidget {
             size: AppSpacing.marketOverviewQuickNavIcon,
             iconSize: AppSpacing.marketOverviewQuickNavGlyph,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             label,
             maxLines: 1,
@@ -246,7 +246,7 @@ class _MoverListCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final mover in movers) ...[
             _QuickMoverRow(mover: mover),
             if (mover != movers.last) const SizedBox(height: AppSpacing.x1),

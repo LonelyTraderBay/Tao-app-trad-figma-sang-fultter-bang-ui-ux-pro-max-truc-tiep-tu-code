@@ -20,7 +20,7 @@ class _DetailsBlock extends StatelessWidget {
           title,
           style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final line in lines) ...[
           Row(
             children: [
@@ -82,7 +82,7 @@ class _PrivacyCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Th\u00F4ng tin KYC \u0111\u01B0\u1EE3c m\u00E3 h\u00F3a AES-256. Ch\u00FAng t\u00F4i kh\u00F4ng chia\n'
                   's\u1EBB v\u1EDBi b\u00EAn th\u1EE9 ba.',

@@ -25,7 +25,7 @@ class _InfoSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.earnCardPaddingX3,
@@ -36,9 +36,9 @@ class _InfoSheet extends StatelessWidget {
                 color: AppColors.buy,
                 size: AppSpacing.iconLg,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text('Auto-Compound', style: AppTextStyles.baseMedium),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Lãi kép tự động cộng phần lãi kiếm được vào số gốc, giúp bạn kiếm lãi trên cả lãi theo thời gian.',
                 textAlign: TextAlign.center,
@@ -50,13 +50,13 @@ class _InfoSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final item in snapshot.infoItems) ...[
           _InfoItem(item: item),
           if (item != snapshot.infoItems.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.rowGap),
         _NoteCard(text: snapshot.note),
       ],
     );

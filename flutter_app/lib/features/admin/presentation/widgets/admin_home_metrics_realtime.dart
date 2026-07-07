@@ -62,7 +62,7 @@ class _MetricCard extends StatelessWidget {
                     : AppColors.text1,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x1,
@@ -107,11 +107,12 @@ class _RealTimeMetricsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle(
-          icon: Icons.bolt_rounded,
+        const VitSectionHeader(
           title: 'Real-Time Metrics',
+          icon: Icons.bolt_rounded,
+          iconColor: AppColors.text1,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
         ),
-        const SizedBox(height: AppSpacing.x4),
         Row(
           children: [
             const _LiveDot(),
@@ -127,9 +128,9 @@ class _RealTimeMetricsSection extends StatelessWidget {
             _PauseButton(isLive: isLive, onPressed: onToggleLive),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _MetricGrid(metrics: snapshot.liveStats),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.adminCardPadding,
           child: Column(
@@ -158,17 +159,17 @@ class _RealTimeMetricsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x6),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Không có sự kiện mới',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

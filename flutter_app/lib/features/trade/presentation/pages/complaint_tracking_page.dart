@@ -303,7 +303,7 @@ class _TimelineStepRow extends StatelessWidget {
               children: [
                 Text(
                   step.title,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                     height: _trackingLineTight,
@@ -390,7 +390,7 @@ class _TrackingActionButton extends StatelessWidget {
       trailing: const Icon(Icons.chevron_right_rounded, size: AppSpacing.x4),
       child: Text(
         action.label,
-        style: AppTextStyles.captionSm.copyWith(
+        style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
           height: _trackingLineTight,

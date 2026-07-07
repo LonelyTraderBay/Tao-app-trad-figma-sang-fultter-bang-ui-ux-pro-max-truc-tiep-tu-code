@@ -15,7 +15,7 @@ class _ComplianceLinksRow extends StatelessWidget {
             child: const Text('Lịch sử'),
           ),
         ),
-        const SizedBox(width: AppSpacing.p2pPaymentMethodsListSectionGap),
+        const SizedBox(width: AppSpacing.rowGap),
         Expanded(
           child: VitCtaButton(
             variant: VitCtaButtonVariant.secondary,
@@ -54,7 +54,7 @@ class _AddMethodRow extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(width: AppSpacing.p2pPaymentMethodsListSectionGap),
+        const SizedBox(width: AppSpacing.rowGap),
         Expanded(
           child: _AddMethodButton(
             key: P2PPaymentMethodsPage.addEwalletKey,
@@ -154,6 +154,7 @@ class _PaymentMethodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: P2PPaymentMethodsPage.methodKey(method.id),
       radius: VitCardRadius.standard,
@@ -169,7 +170,7 @@ class _PaymentMethodCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _MethodIcon(isBank: _isBank, tone: _tone),
-              const SizedBox(width: AppSpacing.p2pPaymentMethodsListSectionGap),
+              const SizedBox(width: AppSpacing.rowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +200,7 @@ class _PaymentMethodCard extends StatelessWidget {
                           ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       method.accountNumber,
                       style: AppTextStyles.caption.copyWith(
@@ -243,11 +244,11 @@ class _PaymentMethodCard extends StatelessWidget {
             ],
           ),
           if (!method.isDefault) ...[
-            const SizedBox(height: AppSpacing.p2pPaymentMethodsListSectionGap),
+            const SizedBox(height: AppSpacing.rowGap),
             _SetDefaultButton(methodId: method.id, onTap: onSetDefault),
           ],
           if (!method.isVerified) ...[
-            const SizedBox(height: AppSpacing.p2pPaymentMethodsListSectionGap),
+            const SizedBox(height: AppSpacing.rowGap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

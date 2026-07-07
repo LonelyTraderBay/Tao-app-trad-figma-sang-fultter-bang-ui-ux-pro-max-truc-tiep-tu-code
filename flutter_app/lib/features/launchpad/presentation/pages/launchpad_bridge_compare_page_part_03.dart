@@ -174,7 +174,7 @@ class _SelectedRouteFooter extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: onConfirm,
             child: const Text('Chọn route này'),
@@ -234,7 +234,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       Row(
                         children: [
                           Expanded(
@@ -255,13 +255,13 @@ class _RouteConfirmOverlay extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _ProviderBadge(
                         label: route.providerIcon,
                         accent: route.accent.resolve(),
                         size: AppSpacing.launchpadBox56,
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       Text(
                         route.provider,
                         style: AppTextStyles.baseMedium.copyWith(
@@ -275,7 +275,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       VitCard(
                         variant: VitCardVariant.inner,
                         radius: VitCardRadius.large,
@@ -307,7 +307,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _DetailsRow(
                         label: 'Price impact',
                         value: '${_trimDouble(route.priceImpact)}%',
@@ -317,7 +317,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                         label: 'Security',
                         value: '${route.securityScore}/100',
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       VitHighRiskStatePanel(
                         key: LaunchpadBridgeComparePage.confirmStateKey,
                         state: VitHighRiskUiState.riskReview,
@@ -326,7 +326,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                             'Review output, fee, speed, security, and chain.',
                         contractId: 'SC-305 / ${route.provider}',
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       VitCtaButton(
                         onPressed: onExecute,
                         child: Text('Xác nhận Bridge qua ${route.provider}'),

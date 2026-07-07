@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -78,6 +79,7 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
                       bottomInset,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -343,7 +345,7 @@ class _ReviewList extends StatelessWidget {
       children: [
         for (final review in reviews) ...[
           _ReviewCard(review: review, tab: tab),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -409,7 +411,7 @@ class _ReviewCard extends StatelessWidget {
               _StarStrip(rating: review.rating, size: AppSpacing.iconSm),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             review.comment,
             maxLines: 1,
@@ -420,7 +422,7 @@ class _ReviewCard extends StatelessWidget {
             ),
           ),
           if (review.reply != null) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -457,7 +459,7 @@ class _ReviewCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             review.createdAt,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

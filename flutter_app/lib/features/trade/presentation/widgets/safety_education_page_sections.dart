@@ -12,6 +12,7 @@ class _HeroBanner extends StatelessWidget {
       borderColor: _safetyPrimary,
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           const VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.large,
@@ -97,7 +98,7 @@ class _ScamsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -135,6 +136,7 @@ class _ScamCard extends StatelessWidget {
       density: VitDensity.compact,
       child: Column(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             key: SafetyEducationPage.scamKey(scam.id),
             onTap: onTap,
@@ -224,7 +226,7 @@ class _ScamExpandedContent extends StatelessWidget {
             items: examples,
             color: AppColors.text3,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ExpandedList(
             title: 'Cách tránh:',
             items: howToAvoid,
@@ -282,7 +284,7 @@ class _RedFlagsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,

@@ -1,0 +1,509 @@
+import 'dart:io';
+
+/// Maps page widgets to shared layout shells that own [VitPageContent].
+
+/// Shell widget class → lib-relative VPC owner file.
+const shellWidgetToVpcPath = <String, String>{
+  'VitWalletDetailScaffold':
+      'features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+  'VitP2PFlowScaffold':
+      'features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+  'VitTradeHubScaffold':
+      'features/trade/presentation/widgets/trade_module_layout.dart',
+  'VitTradeSimpleShell':
+      'features/trade/presentation/widgets/trade_module_layout.dart',
+  'VitTradeWorkspaceScaffold':
+      'features/trade/presentation/widgets/trade_module_layout.dart',
+  'VitTradeDetailScaffold':
+      'features/trade/presentation/widgets/trade_module_layout.dart',
+  'CrossModuleTabbedPageShell':
+      'features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
+};
+
+/// Rhythm tier owned by each shell when a layout file declares multiple tiers.
+const shellWidgetRhythmTier = <String, String>{
+  'VitTradeWorkspaceScaffold': 'compact',
+  'VitTradeHubScaffold': 'compact',
+  'VitTradeDetailScaffold': 'standard',
+  'VitTradeSimpleShell': 'standard',
+  'VitWalletDetailScaffold': 'form',
+  'VitP2PFlowScaffold': 'standard',
+  'CrossModuleTabbedPageShell': 'compact',
+};
+
+String? shellWidgetUsedInSource(String? source) {
+  if (source == null) return null;
+  for (final shell in shellWidgetToVpcPath.keys) {
+    if (source.contains('$shell(')) return shell;
+  }
+  return null;
+}
+
+String? shellRhythmTierForSource(String? source) {
+  final shell = shellWidgetUsedInSource(source);
+  if (shell == null) return null;
+  return shellWidgetRhythmTier[shell];
+}
+
+/// Page base names whose chart/terminal VPC lives in a linked part file.
+const chartPartPageBases = <String>{
+  'futures_page',
+  'prediction_advanced_chart_page',
+  'market_depth_page',
+  'trade_terminal_page',
+  'cross_module_chart_page',
+};
+
+const gateShellWidgets = {'InternalSurfaceGate'};
+
+/// Route truth-table widget → page file when not under `presentation/pages/`.
+const widgetClassPageOverrides = <String, String>{
+  'ClientOptUpRequestPage':
+      'features/trade/presentation/pages/client_categorization_page.dart',
+  'PredictionTournamentDetailPage':
+      'features/predictions/presentation/pages/prediction_tournaments_page.dart',
+  'P2PWhitelistModePage':
+      'features/p2p/presentation/pages/p2p_security_center_page.dart',
+  'PredictionAdvancedChartPage':
+      'features/predictions/presentation/pages/prediction_advanced_chart_page.dart',
+};
+
+/// Auth routes list `_AuthRouteShell`; child pages own [VitPageContent].
+const authRouteNameToPage = <String, String>{
+  'AppRouteNames.sc001Login':
+      'features/auth/presentation/pages/login_page.dart',
+  'AppRouteNames.sc002Register':
+      'features/auth/presentation/pages/register_page.dart',
+  'AppRouteNames.sc003Otp': 'features/auth/presentation/pages/otp_page.dart',
+  'AppRouteNames.sc004TwoFaSetup':
+      'features/auth/presentation/pages/two_fa_setup_page.dart',
+  'AppRouteNames.sc005ForgotPassword':
+      'features/auth/presentation/pages/forgot_password_page.dart',
+  'AppRouteNames.sc006ResetPassword':
+      'features/auth/presentation/pages/reset_password_page.dart',
+};
+
+/// [InternalSurfaceGate] routes → gated child page (rollup / audit target).
+const gateRouteNameToPage = <String, String>{
+  'AppRouteNames.sc180AdminHome':
+      'features/admin/presentation/pages/admin_home.dart',
+  'AppRouteNames.sc181AnalyticsDashboard':
+      'features/admin/presentation/pages/analytics_dashboard.dart',
+  'AppRouteNames.sc182AbTestDashboard':
+      'features/admin/presentation/pages/ab_test_dashboard.dart',
+  'AppRouteNames.sc183FunnelDashboard':
+      'features/admin/presentation/pages/funnel_dashboard.dart',
+  'AppRouteNames.sc410AdminSettings':
+      'features/admin/presentation/pages/admin_settings_page.dart',
+  'AppRouteNames.sc325RouteChecker':
+      'features/dev/presentation/pages/route_checker_page.dart',
+  'AppRouteNames.sc326PerformanceMonitor':
+      'features/dev/presentation/pages/performance_monitor.dart',
+  'AppRouteNames.sc398MissingScreensShowcase':
+      'features/dev/presentation/pages/missing_screens_showcase_page.dart',
+  'AppRouteNames.sc399DesignSystem':
+      'features/dev/presentation/pages/design_system_page.dart',
+  'AppRouteNames.sc400DcaOverviewDemo':
+      'features/dca/presentation/pages/dca_overview_demo.dart',
+  'AppRouteNames.sc401CopyTradingCardDemo':
+      'features/trade/presentation/pages/copy_trading_card_demo.dart',
+};
+
+/// Product-intent tier: declared tier matches UX role though path heuristics differ.
+const tierProductRouteOverrides = <String, String>{
+  'AppRouteNames.sc221P2PDispute': 'form',
+  'AppRouteNames.sc220P2PDisputeResolution': 'form',
+  'AppRouteNames.sc232P2PPaymentMethodAdd': 'form',
+  'AppRouteNames.sc218P2PDisputeDetail': 'form',
+  'AppRouteNames.sc003Otp': 'form',
+  'AppRouteNames.sc004TwoFaSetup': 'form',
+  'AppRouteNames.sc005ForgotPassword': 'form',
+  'AppRouteNames.sc006ResetPassword': 'form',
+  'AppRouteNames.sc001Login': 'form',
+  'AppRouteNames.sc002Register': 'form',
+  'AppRouteNames.sc071PreCopyAssessment': 'form',
+  'AppRouteNames.sc226P2PCreateAd': 'form',
+  'AppRouteNames.sc233P2PPaymentMethodVerification': 'form',
+  'AppRouteNames.sc235P2PPaymentMethodCoolingPeriod': 'form',
+  'AppRouteNames.sc213P2POrderRate': 'form',
+  'AppRouteNames.sc249P2PIdentityVerification': 'form',
+  'AppRouteNames.sc251P2PSelfieVerification': 'form',
+  'AppRouteNames.sc402P2PKycVerify': 'form',
+  'AppRouteNames.sc403P2PKycFaceMatch': 'form',
+  'AppRouteNames.sc143AddressAdd': 'form',
+  'AppRouteNames.sc153WithdrawLimits': 'form',
+  'AppRouteNames.sc355StakingWithdrawalPolicy': 'form',
+  'AppRouteNames.sc188ArenaGovernanceGate': 'form',
+  'AppRouteNames.sc023AdvancedCharts': 'flush',
+};
+
+final flushChartWidgetPatterns = RegExp(
+  r'(Chart|Depth|Terminal|Candlestick|OrderBook)Page$',
+);
+
+enum LayoutPattern {
+  directVpc('direct_vpc'),
+  sharedShell('shared_shell'),
+  flushChart('flush_chart'),
+  gateShell('gate_shell'),
+  bottomSheet('bottom_sheet'),
+  customScroll('custom_scroll'),
+  unmapped('unmapped');
+
+  const LayoutPattern(this.label);
+  final String label;
+}
+
+String auditLibKey(String relativeLibPath) =>
+    'flutter_app/lib/$relativeLibPath';
+
+String normalizeLibPath(String path, String appRoot) {
+  final normalized = path.replaceAll('\\', '/');
+  final prefix = '${appRoot.replaceAll('\\', '/')}/lib/';
+  if (normalized.startsWith(prefix)) {
+    return 'flutter_app/lib/${normalized.substring(prefix.length)}';
+  }
+  if (normalized.startsWith('flutter_app/lib/')) return normalized;
+  return 'flutter_app/lib/$normalized';
+}
+
+/// Collects all lib-relative files that may contain rhythm for [pagePath].
+List<String> collectVpcFilesForPage(
+  Directory appRoot,
+  String pagePath,
+  Set<String> auditRelativePaths,
+) {
+  final normalizedPage = pagePath.replaceAll('\\', '/');
+  final libPrefix = '${appRoot.path}/lib/'.replaceAll('\\', '/');
+  final relativePage = normalizedPage.startsWith(libPrefix)
+      ? normalizedPage.substring(libPrefix.length)
+      : normalizedPage.split('/lib/').last;
+
+  final pageDir = relativePage.substring(0, relativePage.lastIndexOf('/'));
+  final pageBase = relativePage.split('/').last.replaceAll('.dart', '');
+  final files = <String>{relativePage};
+
+  for (final rel in auditRelativePaths) {
+    if (!rel.startsWith('$pageDir/')) continue;
+    final name = rel.split('/').last;
+    if (name == '$pageBase.dart' || name.startsWith('${pageBase}_part_')) {
+      files.add(rel);
+    }
+  }
+
+  final pageFile = File(
+    normalizedPage.startsWith(libPrefix)
+        ? normalizedPage
+        : '${appRoot.path}/lib/$relativePage',
+  );
+  var pageSource = '';
+  if (pageFile.existsSync()) {
+    pageSource = pageFile.readAsStringSync();
+    for (final match in RegExp(r"part\s+'([^']+)'").allMatches(pageSource)) {
+      final partRel = resolvePartRelativePath(pageDir, match.group(1)!);
+      if (auditRelativePaths.contains(partRel)) {
+        files.add(partRel);
+      }
+    }
+  }
+
+  if (relativePage.endsWith('trade/presentation/pages/trade_page.dart')) {
+    const layout =
+        'features/trade/presentation/widgets/trade_module_layout.dart';
+    if (auditRelativePaths.contains(layout)) files.add(layout);
+  }
+
+  if (relativePage.endsWith('home/presentation/pages/home_page.dart')) {
+    for (final rel in auditRelativePaths) {
+      if (rel.contains('home/presentation/pages/home_page_part_')) {
+        files.add(rel);
+      }
+    }
+  }
+
+  final combinedSource = combinedPageSource(appRoot, pagePath);
+  for (final entry in shellWidgetToVpcPath.entries) {
+    if (_sourceUsesShell(combinedSource, entry.key) &&
+        auditRelativePaths.contains(entry.value)) {
+      files.add(entry.value);
+    }
+  }
+
+  if (chartPartPageBases.contains(pageBase)) {
+    for (final rel in auditRelativePaths) {
+      if (rel.startsWith('$pageDir/${pageBase}_part_')) {
+        files.add(rel);
+      }
+    }
+  }
+
+  final sorted = files.toList()..sort();
+  return sorted;
+}
+
+bool _sourceUsesShell(String source, String shellName) =>
+    source.contains('$shellName(');
+
+String combinedPageSource(Directory appRoot, String pagePath) {
+  final normalizedPage = pagePath.replaceAll('\\', '/');
+  final libPrefix = '${appRoot.path}/lib/'.replaceAll('\\', '/');
+  final relativePage = normalizedPage.startsWith(libPrefix)
+      ? normalizedPage.substring(libPrefix.length)
+      : normalizedPage.split('/lib/').last;
+  final pageDir = relativePage.substring(0, relativePage.lastIndexOf('/'));
+  final pageFile = File(
+    normalizedPage.startsWith(libPrefix)
+        ? normalizedPage
+        : '${appRoot.path}/lib/$relativePage',
+  );
+  if (!pageFile.existsSync()) return '';
+  final buffer = StringBuffer(pageFile.readAsStringSync());
+  for (final match in RegExp(
+    r"part\s+'([^']+)'",
+  ).allMatches(pageFile.readAsStringSync())) {
+    final partPath = File(
+      '${appRoot.path}/lib/${resolvePartRelativePath(pageDir, match.group(1)!)}',
+    );
+    if (partPath.existsSync()) {
+      buffer.writeln(partPath.readAsStringSync());
+    }
+  }
+  return buffer.toString();
+}
+
+String? resolvePageFilePath({
+  required Directory appRoot,
+  required String pageWidget,
+  required String routeName,
+  required Map<String, String> widgetToPage,
+}) {
+  if (pageWidget == 'InternalSurfaceGate') {
+    final gated = gateRouteNameToPage[routeName];
+    if (gated != null) {
+      return '${appRoot.path}/lib/$gated'.replaceAll('\\', '/');
+    }
+  }
+  if (pageWidget == '_AuthRouteShell') {
+    final rel = authRouteNameToPage[routeName];
+    if (rel != null) {
+      return '${appRoot.path}/lib/$rel'.replaceAll('\\', '/');
+    }
+  }
+  final override = widgetClassPageOverrides[pageWidget];
+  if (override != null) {
+    return '${appRoot.path}/lib/$override'.replaceAll('\\', '/');
+  }
+  return widgetToPage[pageWidget];
+}
+
+LayoutPattern classifyLayoutPattern({
+  required String pageWidget,
+  required String routePath,
+  required String routeName,
+  required String pageFile,
+  required List<String> vpcFiles,
+  String? pageSource,
+}) {
+  if (pageSource != null && pageSource.contains('VitPageContent(')) {
+    return LayoutPattern.directVpc;
+  }
+
+  for (final shell in shellWidgetToVpcPath.keys) {
+    if (pageSource != null && pageSource.contains('$shell(')) {
+      return LayoutPattern.sharedShell;
+    }
+  }
+
+  if (vpcFiles.any((f) => shellWidgetToVpcPath.values.contains(f))) {
+    return LayoutPattern.sharedShell;
+  }
+
+  if (gateShellWidgets.contains(pageWidget) &&
+      !gateRouteNameToPage.containsKey(routeName)) {
+    return LayoutPattern.gateShell;
+  }
+
+  if (pageSource != null &&
+      pageSource.contains('VitPageLayout') &&
+      (pageSource.contains('VitAutoHideHeaderScaffold') ||
+          pageSource.contains('VitPageVariant.flush'))) {
+    return LayoutPattern.customScroll;
+  }
+
+  if (flushChartWidgetPatterns.hasMatch(pageWidget) ||
+      routePath.contains('/chart') ||
+      routePath.contains('/depth') ||
+      routePath.contains('/terminal')) {
+    return LayoutPattern.flushChart;
+  }
+
+  if (vpcFiles.isNotEmpty) {
+    return LayoutPattern.directVpc;
+  }
+
+  if (routePath.contains('/sheet') || pageWidget.endsWith('Sheet')) {
+    return LayoutPattern.bottomSheet;
+  }
+
+  return LayoutPattern.unmapped;
+}
+
+String complianceNote({
+  required LayoutPattern pattern,
+  required String l1Status,
+  required String l2Status,
+  required int innerGapViolations,
+  required String declaredTier,
+  required String suggestedTier,
+}) {
+  if (pattern == LayoutPattern.flushChart) {
+    return 'exception:flush_chart';
+  }
+  if (pattern == LayoutPattern.gateShell) {
+    return 'exception:gate_shell';
+  }
+  if (pattern == LayoutPattern.bottomSheet) {
+    return 'exception:bottom_sheet';
+  }
+  if (pattern == LayoutPattern.customScroll) {
+    return 'exception:custom_scroll';
+  }
+  if (l1Status == 'pass' && l2Status == 'pass' && innerGapViolations == 0) {
+    return 'compliant';
+  }
+  if (innerGapViolations > 0) {
+    return 'debt:inner_gap';
+  }
+  if (declaredTier.isNotEmpty &&
+      suggestedTier.isNotEmpty &&
+      declaredTier != suggestedTier &&
+      !declaredTier.contains('|')) {
+    return 'debt:tier_mismatch';
+  }
+  if (l1Status == 'unknown' || l2Status == 'unknown') {
+    return 'unmapped';
+  }
+  return 'compliant';
+}
+
+String tierStatus(
+  String declaredTier,
+  String suggestedTier, {
+  String? routeName,
+}) {
+  if (routeName != null && tierProductRouteOverrides.containsKey(routeName)) {
+    final productTier = tierProductRouteOverrides[routeName]!;
+    final declared = declaredTier.split('|').toSet();
+    if (declared.contains(productTier)) {
+      return 'aligned';
+    }
+  }
+  if (declaredTier.isEmpty || suggestedTier.isEmpty) return '';
+  final declared = declaredTier.split('|').toSet();
+  final suggested = suggestedTier.split('|').toSet();
+  if (declared.length == 1 &&
+      suggested.length == 1 &&
+      declared.first == suggested.first) {
+    return 'aligned';
+  }
+  if (declared.intersection(suggested).isNotEmpty) {
+    return 'aligned';
+  }
+  return 'exception';
+}
+
+String resolveDeclaredTierForPattern({
+  required LayoutPattern pattern,
+  required List<String> vpcFiles,
+  required Map<String, String> declaredTierByLibKey,
+}) {
+  if (vpcFiles.isEmpty) return '';
+  final tiers = <String>{};
+  for (final file in vpcFiles) {
+    if (pattern == LayoutPattern.sharedShell &&
+        !shellWidgetToVpcPath.values.contains(file)) {
+      continue;
+    }
+    final tier = declaredTierByLibKey[auditLibKey(file)];
+    if (tier != null && tier.isNotEmpty) tiers.add(tier);
+  }
+  if (tiers.isEmpty) {
+    for (final file in vpcFiles) {
+      final tier = declaredTierByLibKey[auditLibKey(file)];
+      if (tier != null && tier.isNotEmpty) tiers.add(tier);
+    }
+  }
+  return tiers.join('|');
+}
+
+String resolveSuggestedTierForPattern({
+  required LayoutPattern pattern,
+  required List<String> vpcFiles,
+  required Map<String, String> suggestedTierByLibKey,
+}) {
+  if (vpcFiles.isEmpty) return '';
+  final tiers = <String>{};
+  for (final file in vpcFiles) {
+    if (pattern == LayoutPattern.sharedShell &&
+        !shellWidgetToVpcPath.values.contains(file)) {
+      continue;
+    }
+    final tier = suggestedTierByLibKey[auditLibKey(file)];
+    if (tier != null && tier.isNotEmpty) tiers.add(tier);
+  }
+  if (tiers.isEmpty) {
+    for (final file in vpcFiles) {
+      final tier = suggestedTierByLibKey[auditLibKey(file)];
+      if (tier != null && tier.isNotEmpty) tiers.add(tier);
+    }
+  }
+  return tiers.join('|');
+}
+
+String resolvePartRelativePath(String pageDir, String partUri) {
+  final segments = pageDir.split('/');
+  for (final segment in partUri.split('/')) {
+    if (segment == '..') {
+      if (segments.isNotEmpty) segments.removeLast();
+    } else if (segment != '.') {
+      segments.add(segment);
+    }
+  }
+  return segments.join('/');
+}
+
+String rulesStatus({
+  required String l1,
+  required String l2,
+  required int innerGapViolations,
+  required String tierStatusValue,
+}) {
+  final parts = <String>[];
+  parts.add('R1:${l1 == 'pass' || l1 == 'unknown' ? 'pass' : 'warn'}');
+  parts.add(
+    'R2:${l2 == 'pass'
+        ? 'pass'
+        : l2 == 'unknown'
+        ? 'pass'
+        : 'warn'}',
+  );
+  parts.add(
+    'R3:${l1 == 'pass'
+        ? 'pass'
+        : l1 == 'unknown'
+        ? 'pass'
+        : 'warn'}',
+  );
+  parts.add(
+    'R4:${l1 == 'pass'
+        ? 'pass'
+        : l1 == 'unknown'
+        ? 'pass'
+        : 'warn'}',
+  );
+  parts.add('R5:${innerGapViolations == 0 ? 'pass' : 'warn'}');
+  parts.add(
+    'R6:${tierStatusValue == 'aligned' || tierStatusValue.isEmpty ? 'pass' : 'warn'}',
+  );
+  return parts.join('|');
+}

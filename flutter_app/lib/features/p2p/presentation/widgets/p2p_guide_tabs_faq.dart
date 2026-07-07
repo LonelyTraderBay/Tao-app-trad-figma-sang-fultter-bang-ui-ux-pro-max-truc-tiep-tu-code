@@ -36,42 +36,6 @@ class _GuideTabs extends StatelessWidget {
   }
 }
 
-class _GuideBody extends StatelessWidget {
-  const _GuideBody({
-    required this.snapshot,
-    required this.activeTab,
-    required this.mode,
-    required this.expandedFaqId,
-    required this.onModeChanged,
-    required this.onFaqToggle,
-  });
-
-  final P2PGuideSnapshot snapshot;
-  final String activeTab;
-  final String mode;
-  final String? expandedFaqId;
-  final ValueChanged<String> onModeChanged;
-  final ValueChanged<String> onFaqToggle;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (activeTab) {
-      'guide' => _HowItWorksTab(
-        snapshot: snapshot,
-        mode: mode,
-        onModeChanged: onModeChanged,
-      ),
-      'safety' => _SafetyTab(snapshot: snapshot),
-      'video' => _VideoTab(snapshot: snapshot),
-      _ => _FaqTab(
-        snapshot: snapshot,
-        expandedFaqId: expandedFaqId,
-        onFaqToggle: onFaqToggle,
-      ),
-    };
-  }
-}
-
 class _FaqTab extends StatelessWidget {
   const _FaqTab({
     required this.snapshot,
@@ -95,7 +59,7 @@ class _FaqTab extends StatelessWidget {
           '${snapshot.faqItems.length} câu hỏi',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (var index = 0; index < snapshot.faqItems.length; index++) ...[
           _FaqCard(
             faq: snapshot.faqItems[index],
@@ -103,7 +67,7 @@ class _FaqTab extends StatelessWidget {
             onTap: () => onFaqToggle(snapshot.faqItems[index].id),
           ),
           if (index != snapshot.faqItems.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

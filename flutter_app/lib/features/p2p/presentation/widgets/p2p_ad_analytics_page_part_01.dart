@@ -12,6 +12,7 @@ class _AdIdentityCard extends StatelessWidget {
         : AppColors.buy;
     final typeLabel = snapshot.tradeType == P2PTradeType.sell ? 'BÁN' : 'MUA';
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pAdAnalyticsIdentityExtent,
       padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
@@ -119,7 +120,7 @@ class _KpiGrid extends StatelessWidget {
               Expanded(child: _MetricCard(item: cards[i + 1])),
             ],
           ),
-          if (i < cards.length - 2) const SizedBox(height: AppSpacing.x3),
+          if (i < cards.length - 2) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -149,6 +150,7 @@ class _MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pAdAnalyticsMetricCardExtent,
       padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
@@ -181,7 +183,7 @@ class _MetricCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             item.value,
             maxLines: 1,
@@ -238,6 +240,7 @@ class _QuickStats extends StatelessWidget {
       ),
     ];
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pAdAnalyticsQuickStatsExtent,
       padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
@@ -273,7 +276,7 @@ class _QuickStatView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(item.icon, color: item.color, size: AppSpacing.iconSm),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           item.value,
           maxLines: 1,
@@ -331,22 +334,22 @@ class _ConversionFunnel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.bar_chart_rounded,
+          const VitSectionHeader(
             title: 'Phễu chuyển đổi',
-            color: AppColors.accent,
+            icon: Icons.bar_chart_rounded,
+            iconColor: AppColors.accent,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < stages.length; i++) ...[
             _FunnelBar(stage: stages[i], showPct: i > 0),
-            if (i < stages.length - 1) const SizedBox(height: AppSpacing.x3),
+            if (i < stages.length - 1) const SizedBox(height: AppSpacing.rowGap),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.rowGap),
           const Divider(
             height: _p2pAdAnalyticsDividerExtent,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -421,7 +424,7 @@ class _FunnelBar extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.smRadius,
           child: LinearProgressIndicator(
@@ -448,16 +451,17 @@ class _PerformanceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.trending_up_rounded,
+          const VitSectionHeader(
             title: 'Hiệu suất 7 ngày',
-            color: AppColors.buy,
+            icon: Icons.trending_up_rounded,
+            iconColor: AppColors.buy,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           Text(
             'Lượt xem & Đơn hàng theo ngày',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: _p2pAdAnalyticsChartLargeExtent,
             child: CustomPaint(
@@ -465,7 +469,7 @@ class _PerformanceCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

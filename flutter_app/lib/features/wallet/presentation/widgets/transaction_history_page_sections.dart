@@ -16,7 +16,7 @@ class _HistorySummaryBar extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         if (exportNotice != null) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,35 +40,6 @@ class _HistorySummaryBar extends StatelessWidget {
   }
 }
 
-class _FilterTabs extends StatelessWidget {
-  const _FilterTabs({
-    required this.filters,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final List<WalletTransactionFilter> filters;
-  final String active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitTabBar(
-      tabs: [
-        for (final filter in filters)
-          VitTabItem(
-            key: filter.id,
-            label: filter.label,
-            widgetKey: TransactionHistoryPage.filterKey(filter.id),
-          ),
-      ],
-      activeKey: active,
-      onChanged: onChanged,
-      variant: VitTabBarVariant.pill,
-    );
-  }
-}
-
 final class _TransactionDateGroup {
   const _TransactionDateGroup({required this.date, required this.transactions});
 
@@ -87,19 +58,16 @@ class _TransactionGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: _formatDate(group.date),
+      headerIcon: Icons.calendar_today_outlined,
+      headerIconColor: AppColors.text2,
+      headerVariant: VitSectionHeaderVariant.plain,
+      headerDensity: VitDensity.compact,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
       children: [
-        VitSectionHeader(
-          title: _formatDate(group.date),
-          icon: Icons.calendar_today_outlined,
-          iconColor: AppColors.text2,
-          density: VitDensity.compact,
-        ),
-        const SizedBox(height: AppSpacing.x1),
         for (final tx in group.transactions)
           _TransactionRow(tx: tx, onTap: () => onTransactionTap(tx)),
-        const SizedBox(height: AppSpacing.x2),
       ],
     );
   }
@@ -115,6 +83,7 @@ class _TransactionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final meta = _TransactionMeta.from(tx);
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: TransactionHistoryPage.transactionKey(tx.id),
       onTap: onTap,
@@ -144,7 +113,7 @@ class _TransactionRow extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const Divider(
             height: AppSpacing.walletHistoryDividerHeight,
             thickness: AppSpacing.walletHistoryDividerHeight,
@@ -164,6 +133,7 @@ class _TransactionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (meta.isTrade) {
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       return VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.standard,
@@ -179,6 +149,7 @@ class _TransactionIcon extends StatelessWidget {
       );
     }
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,

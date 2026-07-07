@@ -43,7 +43,7 @@ class _WarningBanner extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.warningBody,
                       style: AppTextStyles.caption.copyWith(
@@ -103,17 +103,17 @@ class _OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(snapshot.summaryTitle),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _RiskSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _SectionLabel(snapshot.productSectionTitle),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final product in snapshot.products) ...[
           _RiskProductCard(product: product),
           if (product != snapshot.products.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.large,
@@ -152,7 +152,7 @@ class _RiskSummaryCard extends StatelessWidget {
               height: _stakingRiskSummaryLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               for (final count in snapshot.riskCounts) ...[
@@ -220,6 +220,7 @@ class _RiskProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: StakingRiskDisclosurePage.productKey(product.name),
       radius: VitCardRadius.large,
@@ -246,7 +247,7 @@ class _RiskProductCard extends StatelessWidget {
               _RiskLevelBadge(level: product.level, prefix: true),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,

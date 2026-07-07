@@ -51,22 +51,181 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                     key: SocialSignalsPage.contentKey,
                     padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
                       children: [
                         const _RiskDisclaimerCard(),
                         if (_tab == 'signals') ...[
-                          _StatusFilterChips(
-                            statusFilter: _statusFilter,
-                            statusConfigs: snapshot.statusConfigs,
-                            onSelected: (value) => setState(() {
-                              _statusFilter = value;
-                            }),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                VitFilterChip(
+                                  key: SocialSignalsPage.statusAllKey,
+                                  label: 'Tất cả',
+                                  active: _statusFilter == null,
+                                  onTap: () => setState(() {
+                                    _statusFilter = null;
+                                  }),
+                                  color: AppAssetColors.neutralChain,
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                VitFilterChip(
+                                  key: SocialSignalsPage.statusActiveKey,
+                                  label: snapshot
+                                      .statusConfigs[TradingSignalStatus
+                                          .active]!
+                                      .label,
+                                  active: _statusFilter ==
+                                      TradingSignalStatus.active,
+                                  onTap: () => setState(() {
+                                    _statusFilter = TradingSignalStatus.active;
+                                  }),
+                                  color: snapshot
+                                      .statusConfigs[TradingSignalStatus
+                                          .active]!
+                                      .color
+                                      .resolve(),
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                VitFilterChip(
+                                  key: SocialSignalsPage.statusTargetHitKey,
+                                  label: snapshot
+                                      .statusConfigs[TradingSignalStatus
+                                          .targetHit]!
+                                      .label,
+                                  active: _statusFilter ==
+                                      TradingSignalStatus.targetHit,
+                                  onTap: () => setState(() {
+                                    _statusFilter =
+                                        TradingSignalStatus.targetHit;
+                                  }),
+                                  color: snapshot
+                                      .statusConfigs[TradingSignalStatus
+                                          .targetHit]!
+                                      .color
+                                      .resolve(),
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                VitFilterChip(
+                                  key: SocialSignalsPage.statusStoppedKey,
+                                  label: snapshot
+                                      .statusConfigs[TradingSignalStatus
+                                          .stopped]!
+                                      .label,
+                                  active: _statusFilter ==
+                                      TradingSignalStatus.stopped,
+                                  onTap: () => setState(() {
+                                    _statusFilter = TradingSignalStatus.stopped;
+                                  }),
+                                  color: snapshot
+                                      .statusConfigs[TradingSignalStatus
+                                          .stopped]!
+                                      .color
+                                      .resolve(),
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
-                          _CategoryFilterChips(
-                            categoryFilter: _categoryFilter,
-                            onSelected: (value) => setState(() {
-                              _categoryFilter = value;
-                            }),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                VitFilterChip(
+                                  key: SocialSignalsPage.categoryAllKey,
+                                  label: 'Tất cả',
+                                  active: _categoryFilter == null,
+                                  onTap: () => setState(() {
+                                    _categoryFilter = null;
+                                  }),
+                                  color: _marketPrimary,
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                VitFilterChip(
+                                  key: SocialSignalsPage.categoryScalpKey,
+                                  label: 'Scalp',
+                                  active: _categoryFilter ==
+                                      TradingSignalCategory.scalp,
+                                  onTap: () => setState(() {
+                                    _categoryFilter =
+                                        TradingSignalCategory.scalp;
+                                  }),
+                                  color: _marketPrimary,
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                VitFilterChip(
+                                  key: SocialSignalsPage.categorySwingKey,
+                                  label: 'Swing',
+                                  active: _categoryFilter ==
+                                      TradingSignalCategory.swing,
+                                  onTap: () => setState(() {
+                                    _categoryFilter =
+                                        TradingSignalCategory.swing;
+                                  }),
+                                  color: _marketPrimary,
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                VitFilterChip(
+                                  key: SocialSignalsPage.categoryPositionKey,
+                                  label: 'Position',
+                                  active: _categoryFilter ==
+                                      TradingSignalCategory.position,
+                                  onTap: () => setState(() {
+                                    _categoryFilter =
+                                        TradingSignalCategory.position;
+                                  }),
+                                  color: _marketPrimary,
+                                  padding: AppSpacing.marketSocialFilterPadding
+                                      .add(
+                                        const EdgeInsetsDirectional.symmetric(
+                                          vertical: AppSpacing.x2,
+                                        ),
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                           if (snapshot.signals.isEmpty)
                             const _SignalsEmptyState()
@@ -273,212 +432,6 @@ class _RiskDisclaimerCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _StatusFilterChips extends StatelessWidget {
-  const _StatusFilterChips({
-    required this.statusFilter,
-    required this.statusConfigs,
-    required this.onSelected,
-  });
-
-  final TradingSignalStatus? statusFilter;
-  final Map<TradingSignalStatus, SignalStatusConfig> statusConfigs;
-  final ValueChanged<TradingSignalStatus?> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          _FilterChipButton(
-            key: SocialSignalsPage.statusAllKey,
-            label: 'Tất cả',
-            active: statusFilter == null,
-            color: AppAssetColors.neutralChain,
-            onTap: () => onSelected(null),
-          ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
-          _FilterChipButton(
-            key: SocialSignalsPage.statusActiveKey,
-            label: statusConfigs[TradingSignalStatus.active]!.label,
-            active: statusFilter == TradingSignalStatus.active,
-            color: statusConfigs[TradingSignalStatus.active]!.color.resolve(),
-            onTap: () => onSelected(TradingSignalStatus.active),
-          ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
-          _FilterChipButton(
-            key: SocialSignalsPage.statusTargetHitKey,
-            label: statusConfigs[TradingSignalStatus.targetHit]!.label,
-            active: statusFilter == TradingSignalStatus.targetHit,
-            color: statusConfigs[TradingSignalStatus.targetHit]!.color
-                .resolve(),
-            onTap: () => onSelected(TradingSignalStatus.targetHit),
-          ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
-          _FilterChipButton(
-            key: SocialSignalsPage.statusStoppedKey,
-            label: statusConfigs[TradingSignalStatus.stopped]!.label,
-            active: statusFilter == TradingSignalStatus.stopped,
-            color: statusConfigs[TradingSignalStatus.stopped]!.color.resolve(),
-            onTap: () => onSelected(TradingSignalStatus.stopped),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CategoryFilterChips extends StatelessWidget {
-  const _CategoryFilterChips({
-    required this.categoryFilter,
-    required this.onSelected,
-  });
-
-  final TradingSignalCategory? categoryFilter;
-  final ValueChanged<TradingSignalCategory?> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          _CategoryChip(
-            key: SocialSignalsPage.categoryAllKey,
-            label: 'Tất cả',
-            active: categoryFilter == null,
-            onTap: () => onSelected(null),
-          ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
-          _CategoryChip(
-            key: SocialSignalsPage.categoryScalpKey,
-            label: 'Scalp',
-            active: categoryFilter == TradingSignalCategory.scalp,
-            onTap: () => onSelected(TradingSignalCategory.scalp),
-          ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
-          _CategoryChip(
-            key: SocialSignalsPage.categorySwingKey,
-            label: 'Swing',
-            active: categoryFilter == TradingSignalCategory.swing,
-            onTap: () => onSelected(TradingSignalCategory.swing),
-          ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
-          _CategoryChip(
-            key: SocialSignalsPage.categoryPositionKey,
-            label: 'Position',
-            active: categoryFilter == TradingSignalCategory.position,
-            onTap: () => onSelected(TradingSignalCategory.position),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.mdRadius,
-            side: BorderSide(
-              color: active
-                  ? color.withValues(alpha: .30)
-                  : AppColors.transparent,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.marketSocialFilterPadding.add(
-            const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.captionSm.copyWith(
-                color: active ? color : AppColors.text3,
-                fontWeight: AppTextStyles.medium,
-                height: AppTextStyles.numericMicro.height,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active
-              ? _marketPrimary.withValues(alpha: .12)
-              : AppColors.transparent,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        ),
-        child: Padding(
-          padding: AppSpacing.marketSocialFilterPadding.add(
-            const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? _marketPrimary : AppColors.text3,
-                fontWeight: AppTextStyles.medium,
-                height: AppTextStyles.numericMicro.height,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -33,7 +33,7 @@ class ArenaModeRelatedRooms extends StatelessWidget {
           title: 'Phòng đang mở',
           accentColor: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           clip: true,
           child: Column(
@@ -140,7 +140,7 @@ class ArenaModeRelatedModes extends StatelessWidget {
           title: 'Mode tương tự',
           accentColor: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -182,12 +182,14 @@ class _RelatedModeCard extends StatelessWidget {
     return VitCard(
       key: cardKey,
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: AppSpacing.cardTilePadding,
+      contentAlign: VitCardContentAlign.center,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaModeRelatedCardMinHeight,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -210,7 +212,7 @@ class _RelatedModeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             mode.description,
             maxLines: 2,
@@ -220,7 +222,7 @@ class _RelatedModeCard extends StatelessWidget {
               height: _modeRelatedDescriptionLineRatio,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             '${mode.cloneCount} clone · ${mode.completionRate}%',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

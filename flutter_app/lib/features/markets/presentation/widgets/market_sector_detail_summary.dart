@@ -65,7 +65,7 @@ class MarketSectorDetailSummary extends StatelessWidget {
               MarketSectorChangePill(value: sector.change24h),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSectorCardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(

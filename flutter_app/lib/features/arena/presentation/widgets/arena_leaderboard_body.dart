@@ -26,7 +26,7 @@ class _LeaderboardBody extends StatelessWidget {
           entries: snapshot.topCreators,
           onCreator: onCreator,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _EntrySection(
           title: 'Rising Creators',
           accentColor: AppColors.warn,
@@ -126,7 +126,7 @@ class _PodiumItem extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           '#${entry.rank}',
           style: AppTextStyles.caption.copyWith(
@@ -181,7 +181,7 @@ class _EntrySection extends StatelessWidget {
     return Column(
       children: [
         _SectionLabel(title: title, accentColor: accentColor),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,

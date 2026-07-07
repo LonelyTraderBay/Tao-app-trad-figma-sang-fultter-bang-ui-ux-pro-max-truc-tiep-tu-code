@@ -45,7 +45,7 @@ class _InfoPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ...children,
         ],
       ),
@@ -88,7 +88,7 @@ class _ScoreCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               '$score',
               style: AppTextStyles.sectionTitle.copyWith(color: color),

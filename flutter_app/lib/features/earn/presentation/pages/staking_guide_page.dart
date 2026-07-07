@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -79,6 +80,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -163,17 +165,17 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _ProgressHeader(
                           stepIndex: stepIndex,
                           total: tutorial.steps.length,
                           progress: progress,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                         _StepDetail(step: step),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                         _TipPanel(tips: step.tips),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                         Row(
                           children: [
                             Expanded(

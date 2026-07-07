@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -134,6 +135,7 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
                       children: [
                         _PredictionsHero(
@@ -152,11 +154,48 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                             _searchQuery = '';
                           }),
                         ),
-                        _FilterTabs(
-                          active: _filter,
-                          onSelected: (value) => setState(() {
-                            _filter = value;
-                          }),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: VitTabBar(
+                            variant: VitTabBarVariant.pill,
+                            activeKey: _filter.name,
+                            onChanged: (key) => setState(
+                              () => _filter =
+                                  PredictionFilterTab.values.byName(key),
+                            ),
+                            tabs: const [
+                              VitTabItem(
+                                key: 'trending',
+                                label: 'Xu hướng',
+                                icon: Icons.trending_up_outlined,
+                                widgetKey: PredictionsHomePage.trendingFilterKey,
+                              ),
+                              VitTabItem(
+                                key: 'newEvents',
+                                label: 'Mới',
+                                icon: Icons.fiber_new_outlined,
+                                widgetKey: PredictionsHomePage.newFilterKey,
+                              ),
+                              VitTabItem(
+                                key: 'popular',
+                                label: 'Phổ biến',
+                                icon: Icons.group_outlined,
+                                widgetKey: Key('sc027_filter_popular'),
+                              ),
+                              VitTabItem(
+                                key: 'liquid',
+                                label: 'Thanh khoản',
+                                icon: Icons.bar_chart_outlined,
+                                widgetKey: Key('sc027_filter_liquid'),
+                              ),
+                              VitTabItem(
+                                key: 'ending',
+                                label: 'Sắp đóng',
+                                icon: Icons.schedule_outlined,
+                                widgetKey: Key('sc027_filter_ending'),
+                              ),
+                            ],
+                          ),
                         ),
                         _CategoryChips(
                           categories: snapshot.categories,

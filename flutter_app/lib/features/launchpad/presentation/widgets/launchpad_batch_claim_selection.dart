@@ -119,7 +119,7 @@ class _BatchPositionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 DecoratedBox(
                   decoration: const ShapeDecoration(
                     color: AppColors.surface2,
@@ -192,7 +192,7 @@ class _BatchPositionCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Wrap(

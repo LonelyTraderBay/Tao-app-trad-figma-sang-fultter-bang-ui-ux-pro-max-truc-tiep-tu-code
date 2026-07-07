@@ -18,18 +18,18 @@ class MarketDepthWhaleAlertsView extends StatelessWidget {
     return Column(
       children: [
         const _WhaleWarningCard(),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         const MarketDepthSectionHeader(
           label: 'Lệnh lớn gần đây',
           accentColor: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         for (final order in snapshot.whaleOrders) ...[
           _WhaleOrderCard(order: order, baseAsset: snapshot.pair.baseAsset),
           if (order != snapshot.whaleOrders.last)
-            const SizedBox(height: AppSpacing.marketDepthSectionGap),
+            const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         ],
-        const SizedBox(height: AppSpacing.marketDepthSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         _WhaleSummary(orders: snapshot.whaleOrders),
       ],
     );

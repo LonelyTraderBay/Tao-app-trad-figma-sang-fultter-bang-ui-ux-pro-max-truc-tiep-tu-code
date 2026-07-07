@@ -36,7 +36,7 @@ class StakingValidatorSelectionValidatorList extends StatelessWidget {
             validator: validators[i],
             onTap: () => onTap(validators[i]),
           ),
-          if (i != validators.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (i != validators.length - 1) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -96,16 +96,21 @@ class _ValidatorCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x1,
                       children: [
-                        _TierPill(tier: validator.tier),
+                        VitAccentPill(
+                          label: stakingValidatorTierLabel(validator.tier),
+                          accentColor: stakingValidatorTierColor(validator.tier),
+                          size: VitStatusPillSize.sm,
+                        ),
                         if (validator.slashingHistory == 0)
-                          const _StatusPill(
+                          const VitAccentPill(
                             label: 'No Slashing',
-                            color: AppColors.buy,
+                            accentColor: AppColors.buy,
+                            size: VitStatusPillSize.sm,
                           ),
                       ],
                     ),
@@ -131,7 +136,7 @@ class _ValidatorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -157,7 +162,7 @@ class _ValidatorCard extends StatelessWidget {
             ],
           ),
           if (validator.slashingHistory > 0) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.sell10,
@@ -258,46 +263,6 @@ class _ValidatorMetric extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TierPill extends StatelessWidget {
-  const _TierPill({required this.tier});
-
-  final StakingValidatorTier tier;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = stakingValidatorTierColor(tier);
-    return _StatusPill(label: stakingValidatorTierLabel(tier), color: color);
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: 0.14),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingValidatorSelectionPillLineHeight,
-          ),
-        ),
       ),
     );
   }

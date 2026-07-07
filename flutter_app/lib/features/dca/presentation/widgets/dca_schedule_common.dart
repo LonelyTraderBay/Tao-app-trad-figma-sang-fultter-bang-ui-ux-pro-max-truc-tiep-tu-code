@@ -1,59 +1,5 @@
 part of '../pages/dca_schedule_config_page.dart';
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.icon, required this.title});
-
-  final IconData icon;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: AppColors.text1,
-          size: AppSpacing.dcaScheduleSectionIcon,
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _AccentIcon extends StatelessWidget {
-  const _AccentIcon({required this.icon, required this.accent});
-
-  final IconData icon;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.dcaScheduleAccentIconBox,
-      height: AppSpacing.dcaScheduleAccentIconBox,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: accent.withValues(alpha: .14),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-        ),
-        child: Icon(icon, color: accent, size: AppSpacing.iconMd),
-      ),
-    );
-  }
-}
-
 IconData _iconForOption(DcaScheduleOptionIcon icon) {
   switch (icon) {
     case DcaScheduleOptionIcon.clock:

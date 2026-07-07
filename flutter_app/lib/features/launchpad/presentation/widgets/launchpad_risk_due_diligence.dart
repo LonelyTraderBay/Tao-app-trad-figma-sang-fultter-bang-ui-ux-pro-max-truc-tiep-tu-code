@@ -34,7 +34,7 @@ class _DueDiligenceTab extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'Security Audit',
             accentColor: AppColors.primary,
@@ -53,7 +53,7 @@ class _DueDiligenceTab extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'Tokenomics Analysis',
             accentColor: AppColors.warn,
@@ -126,7 +126,7 @@ class _DueDiligenceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final row in rows) ...[
             Row(
               children: [
@@ -149,7 +149,7 @@ class _DueDiligenceCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: AppSpacing.x2),
+            if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

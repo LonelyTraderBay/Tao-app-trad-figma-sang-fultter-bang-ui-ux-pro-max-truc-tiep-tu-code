@@ -137,8 +137,7 @@ class _CapacityValue extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -256,7 +255,7 @@ class _FeatureCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,

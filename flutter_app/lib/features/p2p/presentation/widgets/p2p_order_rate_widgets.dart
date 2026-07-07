@@ -69,7 +69,7 @@ class _RatingCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -82,7 +82,7 @@ class _RatingCard extends StatelessWidget {
             ],
           ),
           if (rating > 0) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               _ratingLabel(rating),
               textAlign: TextAlign.center,
@@ -302,7 +302,7 @@ class _SuccessView extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Text(
               title,
               style: AppTextStyles.sectionTitle.copyWith(
@@ -310,7 +310,7 @@ class _SuccessView extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 260),
               child: Text(
@@ -319,7 +319,7 @@ class _SuccessView extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCtaButton(
               key: P2POrderRatePage.backToP2PKey,
               onPressed: onBackToP2P,

@@ -155,12 +155,12 @@ class _CompactLeaderboardState extends StatelessWidget {
             color: AppColors.text3,
             size: _leaderboardCompactIcon,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             label,
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Bảng xếp hạng đang dùng cùng bộ lọc Fair Play và mùa.',
             textAlign: TextAlign.center,
@@ -186,7 +186,7 @@ class _ArenaFooter extends StatelessWidget {
           key: ArenaLeaderboardPage.rulesKey,
           onTap: onRules,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           density: VitDensity.compact,
           child: Row(

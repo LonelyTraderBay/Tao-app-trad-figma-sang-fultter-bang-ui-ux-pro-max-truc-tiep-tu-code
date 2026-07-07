@@ -16,6 +16,7 @@ class _MessagePanel extends StatelessWidget {
             radius: VitCardRadius.large,
             density: VitDensity.compact,
             child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
               density: VitDensity.compact,
               fullBleed: true,

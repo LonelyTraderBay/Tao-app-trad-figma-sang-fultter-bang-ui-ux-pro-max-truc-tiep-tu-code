@@ -20,7 +20,7 @@ class _PenaltyExampleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Material(
             color: AppColors.surface2,
             borderRadius: AppRadii.lgRadius,
@@ -33,7 +33,7 @@ class _PenaltyExampleCard extends StatelessWidget {
                       const Divider(color: AppColors.divider),
                     _CalculationRow(row: row),
                     if (row != example.rows.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
                 ],
               ),
@@ -149,7 +149,7 @@ class _EmergencyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   for (final reason in snapshot.emergencyReasons) ...[
                     _BulletLine(text: reason, color: AppColors.sell),
                     if (reason != snapshot.emergencyReasons.last)
@@ -160,7 +160,7 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitPageSection(
           label: 'Quy trình Rút khẩn cấp',
           children: [
@@ -179,7 +179,7 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitPageSection(
           label: 'Phí Rút khẩn cấp',
           children: [
@@ -196,7 +196,7 @@ class _EmergencyTab extends StatelessWidget {
                       height: _stakingWithdrawalInfoLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Wrap(
                     spacing: AppSpacing.x3,
                     runSpacing: AppSpacing.x3,
@@ -210,9 +210,9 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _WarningBox(text: snapshot.emergencyWarning),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _SupportCard(contacts: snapshot.supportContacts),
       ],
     );
@@ -315,7 +315,7 @@ class _EmergencyFeeTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   fee.fee,
                   style: AppTextStyles.caption.copyWith(
@@ -353,10 +353,10 @@ class _SupportCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final contact in contacts) ...[
             _SupportRow(contact: contact),
-            if (contact != contacts.last) const SizedBox(height: AppSpacing.x2),
+            if (contact != contacts.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

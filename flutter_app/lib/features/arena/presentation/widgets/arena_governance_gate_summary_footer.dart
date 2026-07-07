@@ -29,7 +29,7 @@ class _GovernanceSummary extends StatelessWidget {
             label: 'Governance Summary',
             pill: 'TỰ SINH',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SummaryRow(label: 'Rule clarity', value: '${result.clarity} / 100'),
           _SummaryRow(
             label: 'Publish eligibility',
@@ -41,7 +41,7 @@ class _GovernanceSummary extends StatelessWidget {
             value: resolutionSource.isEmpty ? '-' : resolutionSource,
           ),
           _SummaryRow(label: 'Privacy', value: privacyLabel),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
@@ -69,7 +69,7 @@ class _GovernanceSummary extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _NextActionChip(text: result.nextAction),
         ],
       ),
@@ -108,6 +108,7 @@ class _GovernanceFooter extends StatelessWidget {
           children: [
             Row(
               children: [
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   variant: VitCardVariant.inner,
                   width: _governanceActionExtent,
@@ -142,7 +143,7 @@ class _GovernanceFooter extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
                 VitCard(

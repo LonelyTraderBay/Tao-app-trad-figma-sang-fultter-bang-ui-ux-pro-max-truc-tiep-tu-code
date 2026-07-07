@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -22,7 +23,6 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 part '../widgets/my_arena_reports_page_sections.dart';
 part '../widgets/my_arena_reports_page_common.dart';
 
-const _reportsBadgeExtent = AppSpacing.myArenaReportsBadgeHeight;
 const _reportsBodyLineRatio = AppSpacing.myArenaReportsBodyLineHeight;
 const _reportsDividerExtent = AppSpacing.myArenaReportsDividerHeight;
 const _reportsFilterExtent = AppSpacing.myArenaReportsFilterHeight;
@@ -85,11 +85,12 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
                         _ReportsSummary(summary: snapshot.summary),
-                        _FilterRail(
+                        _ReportsFilterRow(
                           filters: snapshot.filters,
                           activeFilter: _activeFilter,
                           onChanged: (id) {

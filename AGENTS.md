@@ -84,6 +84,35 @@ search/discovery, and profile surfaces with clearly separated sections.
 - Delete local `_SegmentButton` duplicates after migration; use shared primitives.
 - Open Arena community rules footer chip uses `VitCommunityRulesLink`; do not
   duplicate local `_CommunityRules*` widgets.
+- **Page rhythm:** new/changed presentation pages must pass
+  `page_rhythm_audit.dart --check` and `page_rhythm_guardrail_test.dart`.
+  Phone-first layout @ 360×800: `page_rhythm_phone_visual_qa_test.dart`.
+  Tab roots use `VitPageRhythm.compact` with major sections as direct
+  `VitPageContent` children — see
+  `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md`.
+- **Card tiles:** Tier A strip tiles use `VitCard.height` / `minHeight` with
+  `contentAlign: VitCardContentAlign.center`, `cardTilePadding`, and
+  `cardTileInnerGap` — see
+  `docs/02_FLUTTER_MIGRATION/Card-Tile-Standard.md` and
+  `card_tile_audit.dart --check --strict-full`.
+- **Service tile badges:** Tier B `VitServiceTile` corner badges (`badgeLabel`,
+  `riskBadgeLabel`) must use the shared safe-inset contract — see
+  `docs/02_FLUTTER_MIGRATION/Service-Tile-Badge-Standard.md` and
+  `flutter test test/quality/service_tile_badge_guardrail_test.dart`.
+- **Task cards:** Tier E mission rows use `VitTaskCard` with intrinsic height —
+  no `buttonHero + x7 + x5` minHeight — see
+  `docs/02_FLUTTER_MIGRATION/Task-Card-Standard.md` and
+  `flutter test test/quality/task_card_guardrail_test.dart`.
+- **Accent icon boxes:** module row icons use `VitAccentIconBox` (34px, shared
+  fill/border) — no page-local `_AccentIcon` — see
+  `docs/02_FLUTTER_MIGRATION/Accent-Icon-Box-Standard.md` and
+  `flutter test test/quality/accent_icon_box_guardrail_test.dart`.
+- **Segment pills:** view tabs, binary toggles, preset rows, and filter chips
+  use the tier decision tree — no P0 local `_FilterButton` / `_FilterTabs` /
+  `_SegmentedTabs` — see
+  `docs/02_FLUTTER_MIGRATION/Segment-Pill-Standard.md` and
+  `dart run tool/segment_pill_audit.dart --check --strict-full` +
+  `flutter test test/quality/segment_pill_guardrail_test.dart`.
 
 ### Radius rules
 
@@ -101,6 +130,11 @@ Canonical tiers (see `AppRadii` in `app_radii.dart`):
   icon buttons use `inputRadius` only.
 - `VitCard` uses `VitCardRadius.standard` (16) by default and
   `VitCardRadius.large` (24) for hero/large surfaces.
+- **Fixed-height tile cards** (horizontal strips, product tiles): set
+  `VitCard.height` (or `constraints.minHeight`) with
+  `contentAlign: VitCardContentAlign.center`; use `AppSpacing.cardTilePadding`
+  and `AppSpacing.cardTileInnerGap` for row gaps. Do not hand-roll Column
+  centering on individual pages.
 - Avatars, delta chips, and icon backgrounds use `smRadius` (micro).
 - `VitStatusPill` / `VitAccentPill` use `pillRadius` only.
 - Do not use `BorderRadius.circular()` outside `app_radii.dart`.

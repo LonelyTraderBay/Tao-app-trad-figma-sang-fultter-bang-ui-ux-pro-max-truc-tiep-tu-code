@@ -363,8 +363,8 @@ class _MetaChip extends StatelessWidget {
   }
 }
 
-class _TipPill extends StatelessWidget {
-  const _TipPill({required this.text, required this.color});
+class _GuideTipCallout extends StatelessWidget {
+  const _GuideTipCallout({required this.text, required this.color});
 
   final String text;
   final Color color;

@@ -30,7 +30,6 @@ class ChoicePill extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       fullWidth: true,
-      height: AppSpacing.buttonCompact,
     );
   }
 }
@@ -165,7 +164,7 @@ class EmptyTab extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: AppColors.text3, size: AppSpacing.iconLg),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             title,
             textAlign: TextAlign.center,
@@ -173,7 +172,7 @@ class EmptyTab extends StatelessWidget {
               color: AppColors.text2,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(fullWidth: false, onPressed: () {}, child: Text(cta)),
         ],
       ),

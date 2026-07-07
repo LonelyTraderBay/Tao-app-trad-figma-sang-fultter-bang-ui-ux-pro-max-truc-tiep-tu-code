@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
@@ -41,7 +42,7 @@ class ReferralFriendDetailPage extends ConsumerWidget {
             children: [
               Expanded(
                 key: ReferralFriendDetailPage.contentKey,
-                child: VitPageContent(
+                child: VitPageContent(rhythm: VitPageRhythm.standard, 
                   padding: VitContentPadding.compact,
                   children: [
                     VitEmptyState(

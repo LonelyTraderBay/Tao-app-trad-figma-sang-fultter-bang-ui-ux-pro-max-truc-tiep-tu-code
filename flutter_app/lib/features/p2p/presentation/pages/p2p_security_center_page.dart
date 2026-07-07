@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -104,7 +105,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _SecurityScoreCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _SecurityFeatures(
                           features: snapshot.features,
                           onOpen: (route) {
@@ -119,9 +120,9 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                             context.go(route);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                         _RecentEvents(events: snapshot.recentEvents),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         VitCard(
                           key: P2PSecurityCenterPage.viewAllKey,
                           radius: VitCardRadius.large,
@@ -154,6 +155,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                           ),
                         ),
                         VitPageContent(
+       rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: const [
@@ -243,12 +245,12 @@ class P2PWhitelistModePage extends ConsumerWidget {
                               icon: Icons.shield_outlined,
                               color: AppModuleAccents.p2p,
                             ),
-                            const SizedBox(height: AppSpacing.x3),
+                            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                             Text(
                               'Danh sách thiết bị tin cậy',
                               style: AppTextStyles.sectionTitle,
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                             Text(
                               'Chỉ thiết bị đã rà soát và phiên thanh toán được bảo vệ mới tiếp tục các thao tác P2P nhạy cảm.',
                               style: AppTextStyles.caption.copyWith(
@@ -259,7 +261,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _WhitelistAction(
                         key: devicesKey,
                         icon: Icons.desktop_windows_rounded,
@@ -271,7 +273,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           context.go(trustedDevicesRoute);
                         },
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       _WhitelistAction(
                         key: antiPhishingKey,
                         icon: Icons.gpp_good_outlined,
@@ -283,7 +285,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           context.go(antiPhishingRoute);
                         },
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                       VitCtaButton(
                         density: VitDensity.compact,
                         onPressed: () {

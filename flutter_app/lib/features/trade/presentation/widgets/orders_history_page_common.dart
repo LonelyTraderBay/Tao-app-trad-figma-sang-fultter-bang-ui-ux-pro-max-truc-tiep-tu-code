@@ -80,7 +80,7 @@ class _EmptyState extends StatelessWidget {
             color: AppColors.borderSolid,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             activeTab == 'open'
                 ? 'Không có lệnh đang mở'

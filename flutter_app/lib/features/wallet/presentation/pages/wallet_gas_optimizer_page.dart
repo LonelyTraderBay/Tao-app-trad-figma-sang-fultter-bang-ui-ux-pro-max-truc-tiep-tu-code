@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -99,22 +100,23 @@ class _WalletGasOptimizerPageState
   }
 
   Widget _contentForTab(WalletGasOptimizerSnapshot snapshot) {
-    final tabContent = switch (_tab) {
-      _tabTrends => _TrendsTab(snapshot: snapshot),
+    final tabSections = switch (_tab) {
+      _tabTrends => _TrendsTab(snapshot: snapshot).sectionChildren,
       _tabTips => _TipsTab(
         snapshot: snapshot,
         onQuickAction: (label) =>
             _showGasNotice('$label is not connected yet.'),
-      ),
+      ).sectionChildren,
       _ => _CurrentGasTab(
         snapshot: snapshot,
         selectedSpeed: _selectedSpeed,
         onSelectSpeed: (speed) => setState(() => _selectedSpeed = speed),
         onRefresh: _refreshGasPrices,
-      ),
+      ).sectionChildren,
     };
 
     return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.compact,
       density: VitDensity.compact,
       gap: VitContentGap.tight,
@@ -134,7 +136,7 @@ class _WalletGasOptimizerPageState
               size: VitStatusPillSize.sm,
             ),
           ),
-        tabContent,
+        ...tabSections,
       ],
     );
   }

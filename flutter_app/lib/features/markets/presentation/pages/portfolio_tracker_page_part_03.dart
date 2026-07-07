@@ -165,7 +165,7 @@ class _TokenBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = size <= 28
         ? AppTextStyles.numericMicro
-        : AppTextStyles.captionSm;
+        : AppTextStyles.caption;
 
     final color = AppAssetColors.forSymbol(holding.symbol);
     return CircleAvatar(

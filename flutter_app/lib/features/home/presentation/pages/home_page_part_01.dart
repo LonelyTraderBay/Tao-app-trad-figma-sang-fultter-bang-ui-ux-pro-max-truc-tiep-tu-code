@@ -146,101 +146,99 @@ class _HomePageState extends ConsumerState<HomePage> {
         (nativeShell ? _nativeScrollClearance : _framedScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
+    return VitAutoHidePageScaffold(
       variant: nativeShell ? VitPageVariant.flush : VitPageVariant.defaultPage,
       semanticLabel: 'SC-007 HomePage',
-      child: VitAutoHideHeaderScaffold(
-        headerKey: HomePage.headerKey,
-        hideThreshold: AppSpacing.homeScrollHideThreshold,
-        showAtTopThreshold: AppSpacing.homeScrollShowThreshold,
-        slideOffset: AppSpacing.homeSlideOffsetUp,
-        header: HomeHeader(
-          notifications: notificationUnreadCount,
-          onNavigate: _go,
+      headerKey: HomePage.headerKey,
+      header: HomeHeader(
+        notifications: notificationUnreadCount,
+        onNavigate: _go,
+      ),
+      body: homeAsync.when(
+        loading: () => HomeScrollShell(
+          scrollEndClearance: scrollEndClearance,
+          onRefresh: _refreshHome,
+          visibleAnnouncements: const [],
+          onScrollNotification: _handleHomeScrollNotification,
+          child: const HomeLoadingContent(),
         ),
-        child: homeAsync.when(
-          loading: () => HomeScrollShell(
+        error: (error, stackTrace) => HomeErrorContent(onRetry: _refreshHome),
+        data: (snapshot) {
+          final controller = HomeController(
+            state: HomeViewState(snapshot: snapshot),
+          );
+          final screenWidth = MediaQuery.sizeOf(context).width;
+          final homeVariant = _homeDensityVariant(screenWidth);
+          final homeDensity = _tileDensity(homeVariant);
+          final homePrimaryQuickActionCount = _primaryQuickActionCount(
+            homeVariant,
+          );
+          final visibleAnnouncements = _visibleAnnouncements(snapshot);
+          final gridQuickActions = _gridQuickActions(snapshot.quickActions);
+          final moreQuickActions = gridQuickActions
+              .skip(homePrimaryQuickActionCount)
+              .toList(growable: false);
+          final visibleNextAction = _visibleNextAction(snapshot.nextAction);
+
+          return HomeScrollShell(
             scrollEndClearance: scrollEndClearance,
             onRefresh: _refreshHome,
-            visibleAnnouncements: const [],
+            visibleAnnouncements: visibleAnnouncements,
             onScrollNotification: _handleHomeScrollNotification,
-            child: const HomeLoadingContent(),
-          ),
-          error: (error, stackTrace) => HomeErrorContent(onRetry: _refreshHome),
-          data: (snapshot) {
-            final controller = HomeController(
-              state: HomeViewState(snapshot: snapshot),
-            );
-            final screenWidth = MediaQuery.sizeOf(context).width;
-            final homeVariant = _homeDensityVariant(screenWidth);
-            final homeDensity = _tileDensity(homeVariant);
-            final homePrimaryQuickActionCount = _primaryQuickActionCount(
-              homeVariant,
-            );
-            final visibleAnnouncements = _visibleAnnouncements(snapshot);
-            final gridQuickActions = _gridQuickActions(snapshot.quickActions);
-            final moreQuickActions = gridQuickActions
-                .skip(homePrimaryQuickActionCount)
-                .toList(growable: false);
-            final visibleNextAction = _visibleNextAction(snapshot.nextAction);
-
-            return HomeScrollShell(
-              scrollEndClearance: scrollEndClearance,
-              onRefresh: _refreshHome,
-              visibleAnnouncements: visibleAnnouncements,
-              onScrollNotification: _handleHomeScrollNotification,
-              child: VitPageContent(
-                padding: VitContentPadding.compact,
-                density: VitDensity.compact,
-                children: [
-                  if (visibleAnnouncements.isNotEmpty)
-                    HomeAnnouncementBanner(
-                      announcements: visibleAnnouncements,
-                      onDismiss: _dismissAnnouncement,
-                    ),
-                  HomePortfolioCard(
-                    snapshot: snapshot,
-                    balanceHidden: _balanceHidden,
-                    onToggleBalance: _toggleBalanceHidden,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              rhythm: VitPageRhythm.compact,
+              children: [
+                if (visibleAnnouncements.isNotEmpty)
+                  HomeAnnouncementBanner(
+                    announcements: visibleAnnouncements,
+                    onDismiss: _dismissAnnouncement,
                     onNavigate: _go,
                   ),
-                  if (visibleNextAction != null)
-                    HomeNextActionSection(
-                      nextAction: visibleNextAction,
-                      onNavigate: _go,
-                      onDismiss: () => _dismissNextAction(visibleNextAction),
-                    ),
-                  HomeMarketTickerSection(
-                    pairs: controller.hotPairs.take(3).toList(),
+                HomePortfolioCard(
+                  snapshot: snapshot,
+                  balanceHidden: _balanceHidden,
+                  onToggleBalance: _toggleBalanceHidden,
+                  onNavigate: _go,
+                ),
+                if (visibleNextAction != null)
+                  HomeNextActionSection(
+                    nextAction: visibleNextAction,
                     onNavigate: _go,
+                    onDismiss: () => _dismissNextAction(visibleNextAction),
                   ),
-                  HomeProductsSection(
-                    actions: gridQuickActions,
-                    maxVisibleItems: homePrimaryQuickActionCount,
-                    moreActions: moreQuickActions,
-                    onNavigate: _go,
-                    onMore: moreQuickActions.isEmpty
-                        ? null
-                        : () =>
-                              _showMoreProducts(moreQuickActions, homeDensity),
-                    density: homeDensity,
-                  ),
-                  HomeRecentProductsSection(
-                    recentProducts: snapshot.recentProducts,
-                    onNavigate: _go,
-                  ),
-                  _HomeDiscoverySection(onNavigate: _go),
-                  _MarketSection(
-                    activeTab: _marketTab,
-                    pairs: controller.tabPairs(_marketTab),
-                    onTabChanged: _setTab,
-                    onNavigate: _go,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                // Distinct from the Market section below (default tab
+                // "Hot"): the ticker previews top movers so the two blocks
+                // don't show the exact same three pairs back to back.
+                HomeMarketTickerSection(
+                  pairs: controller.gainers.take(3).toList(),
+                  onNavigate: _go,
+                ),
+                HomeProductsSection(
+                  actions: gridQuickActions,
+                  maxVisibleItems: homePrimaryQuickActionCount,
+                  moreActions: moreQuickActions,
+                  onNavigate: _go,
+                  onMore: moreQuickActions.isEmpty
+                      ? null
+                      : () => _showMoreProducts(moreQuickActions, homeDensity),
+                  density: homeDensity,
+                ),
+                HomeRecentProductsSection(
+                  recentProducts: snapshot.recentProducts,
+                  onNavigate: _go,
+                ),
+                _HomeDiscoverySection(onNavigate: _go),
+                _MarketSection(
+                  activeTab: _marketTab,
+                  pairs: controller.tabPairs(_marketTab),
+                  onTabChanged: _setTab,
+                  onNavigate: _go,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

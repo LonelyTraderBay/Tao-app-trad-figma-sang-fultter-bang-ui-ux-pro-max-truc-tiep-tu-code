@@ -30,8 +30,9 @@ class PredictionPortfolioHistorySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(title: 'L\u1ecbch s\u1eed l\u1ec7nh'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,title: 'L\u1ecbch s\u1eed l\u1ec7nh'),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           clip: true,
           padding: EdgeInsets.zero,

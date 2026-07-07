@@ -159,7 +159,7 @@ class _OrdersList extends StatelessWidget {
       children: [
         for (var i = 0; i < orders.length; i++) ...[
           _EscrowOrderCard(order: orders[i]),
-          if (i != orders.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (i != orders.length - 1) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -218,7 +218,7 @@ class _EscrowOrderCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         const Icon(
@@ -272,7 +272,7 @@ class _EscrowOrderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(
@@ -295,7 +295,7 @@ class _EscrowOrderCard extends StatelessWidget {
             ],
           ),
           if (order.warning != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.standard,
@@ -323,9 +323,10 @@ class _EscrowOrderCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Align(
             alignment: Alignment.centerLeft,
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             child: VitCard(
               width: _p2pEscrowBalanceAccentLineWidth,
               height: _p2pEscrowBalanceAccentLineHeight,

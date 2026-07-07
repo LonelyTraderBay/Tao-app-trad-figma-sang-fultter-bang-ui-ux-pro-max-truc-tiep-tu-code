@@ -53,16 +53,16 @@ class _ActiveAlertsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SmartAlertSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Canh bao hoat dong',
           children: [
             for (final alert in snapshot.alerts) _SmartAlertCard(alert: alert),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _CreateAlertButton(),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _InfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
@@ -119,7 +119,7 @@ class _SmartAlertSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -169,7 +169,7 @@ class _MetricColumn extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(

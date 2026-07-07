@@ -22,9 +22,10 @@ class _DexList extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'So s\u00E1nh DEX',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             clip: true,
             padding: AppSpacing.zeroInsets,
@@ -143,7 +144,7 @@ class _DexQuoteCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   _Metric(
@@ -168,7 +169,7 @@ class _DexQuoteCard extends StatelessWidget {
                 ],
               ),
               if (expanded) ...[
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _RouteDetails(quote: quote),
               ],
               const SizedBox(height: AppSpacing.x1),
@@ -264,7 +265,7 @@ class _RouteDetails extends StatelessWidget {
             'Route',
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -284,7 +285,7 @@ class _RouteDetails extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Icon(

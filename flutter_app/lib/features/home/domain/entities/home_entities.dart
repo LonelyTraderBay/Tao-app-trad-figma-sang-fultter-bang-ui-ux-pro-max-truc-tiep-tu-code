@@ -17,12 +17,17 @@ final class HomeAnnouncement {
     required this.text,
     required this.type,
     this.active = true,
+    this.routePath,
   });
 
   final String id;
   final String text;
   final HomeAnnouncementType type;
   final bool active;
+
+  /// Destination for the single-announcement case, where tapping the banner
+  /// has nothing left to cycle to. Null means the banner stays cycle-only.
+  final String? routePath;
 }
 
 final class HomeQuickAction {
@@ -32,6 +37,7 @@ final class HomeQuickAction {
     required this.routePath,
     required this.accentKey,
     this.stateLabel,
+    this.riskBadge,
   });
 
   final String icon;
@@ -39,6 +45,12 @@ final class HomeQuickAction {
   final String routePath;
   final String accentKey;
   final String? stateLabel;
+
+  /// Directly-renderable risk disclosure label (e.g. 'Rủi ro cao') for
+  /// leveraged/speculative products. Null when the action carries no
+  /// elevated risk. Mirrors [stateLabel]'s pattern of a display-ready
+  /// string rather than an enum, keeping the domain entity resolver-free.
+  final String? riskBadge;
 }
 
 final class HomeNextAction {

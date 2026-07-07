@@ -147,7 +147,6 @@ class _IndicatorChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       accentColor: _marketPrimary,
-      height: VitDensity.compact.controlHeight,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       semanticLabel: label,
     );
@@ -166,7 +165,6 @@ class _AdvancedChip extends StatelessWidget {
       selected: true,
       onTap: onTap,
       tone: VitChoicePillTone.warning,
-      height: VitDensity.compact.controlHeight,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       semanticLabel: 'Nâng cao',
     );

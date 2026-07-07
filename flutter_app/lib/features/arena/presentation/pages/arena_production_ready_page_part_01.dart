@@ -45,6 +45,7 @@ class _ArenaProductionReadyPageState
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -136,7 +137,7 @@ class _ProductionHero extends StatelessWidget {
                     height: AppSpacing.arenaProductionMetricLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   'QA/Dev handoff — kiểm tra release Open Arena. Chỉ điểm Arena, không phải claim production end-user.',
                   style: AppTextStyles.micro.copyWith(
@@ -168,9 +169,15 @@ class _SectionTabs extends StatelessWidget {
       child: Row(
         children: [
           for (final config in _sectionConfigs) ...[
-            _SectionTabPill(
-              config: config,
-              active: config.section == active,
+            VitStatusPill(
+              key: ArenaProductionReadyPage.tabKey(config.id),
+              label: config.label,
+              icon: config.icon,
+              status: config.section == active
+                  ? VitStatusPillStatus.info
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.md,
+              outline: config.section != active,
               onTap: () => onChanged(config.section),
             ),
             if (config != _sectionConfigs.last)
@@ -178,31 +185,6 @@ class _SectionTabs extends StatelessWidget {
           ],
         ],
       ),
-    );
-  }
-}
-
-class _SectionTabPill extends StatelessWidget {
-  const _SectionTabPill({
-    required this.config,
-    required this.active,
-    required this.onTap,
-  });
-
-  final _SectionConfig config;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      key: ArenaProductionReadyPage.tabKey(config.id),
-      label: config.label,
-      icon: config.icon,
-      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
-      size: VitStatusPillSize.md,
-      outline: !active,
-      onTap: onTap,
     );
   }
 }
@@ -337,7 +319,7 @@ class _ScreensSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   _SummaryMetric(
@@ -394,7 +376,7 @@ class _ProductionScreenCard extends StatelessWidget {
               _StatusPill(status: screen.status),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _MiniPill(label: screen.version, color: AppColors.accent),
@@ -413,7 +395,7 @@ class _ProductionScreenCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             screen.notes,
             style: AppTextStyles.micro.copyWith(
@@ -421,7 +403,7 @@ class _ProductionScreenCard extends StatelessWidget {
               height: AppSpacing.arenaProductionBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -430,7 +412,7 @@ class _ProductionScreenCard extends StatelessWidget {
                 _StateMiniPill(label: _stateLabel(state)),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             fullWidth: false,
             height: VitDensity.compact.controlHeight,
@@ -502,7 +484,7 @@ class _StatesSection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,

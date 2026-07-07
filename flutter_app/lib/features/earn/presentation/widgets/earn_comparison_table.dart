@@ -195,7 +195,7 @@ class _ComparisonHeader extends StatelessWidget {
                 asset: product.asset,
                 color: _assetColor(product.asset),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 product.name,
                 maxLines: 2,

@@ -15,6 +15,7 @@ class _ProtectionCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: AppSpacing.x7 + AppSpacing.x1,
                 height: AppSpacing.x7 + AppSpacing.x1,
@@ -53,7 +54,7 @@ class _ProtectionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -168,6 +169,7 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       key: InvestorCompensationPage.overviewKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -191,7 +193,7 @@ class _Overview extends StatelessWidget {
                   for (final item in snapshot.overviewItems) ...[
                     _InfoRow(item: item),
                     if (item != snapshot.overviewItems.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
                 ],
               ),
@@ -235,7 +237,7 @@ class _InfoRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -261,9 +263,9 @@ class _CoverageCard extends StatelessWidget {
           for (final coverage in snapshot.coverageItems) ...[
             _CoverageBox(coverage: coverage),
             if (coverage != snapshot.coverageItems.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _WarningBox(text: snapshot.warning),
         ],
       ),

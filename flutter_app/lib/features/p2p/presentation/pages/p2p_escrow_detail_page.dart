@@ -11,10 +11,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
@@ -76,92 +74,56 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
             : _p2pEscrowNativeNavClearance + _p2pEscrowNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
       semanticLabel: 'SC-246 P2PEscrowDetailPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Chi tiết Escrow',
-            subtitle: 'Escrow · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pEscrowDetailScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _EscrowStatusHero(snapshot: snapshot),
-                        const SizedBox(height: _p2pEscrowSectionGap),
-                        _EscrowAddressCard(
-                          snapshot: snapshot,
-                          showFullAddress: _showFullAddress,
-                          onReveal: () {
-                            HapticFeedback.selectionClick();
-                            setState(
-                              () => _showFullAddress = !_showFullAddress,
-                            );
-                          },
-                          onCopy: () {
-                            HapticFeedback.selectionClick();
-                            Clipboard.setData(
-                              ClipboardData(text: snapshot.escrowAddress),
-                            );
-                            setState(
-                              () => _feedback = 'Đã copy địa chỉ escrow',
-                            );
-                          },
-                          onExplorer: () {
-                            HapticFeedback.selectionClick();
-                            setState(
-                              () => _feedback = 'Đã mở Blockchain Explorer',
-                            );
-                          },
-                        ),
-                        if (_feedback != null) ...[
-                          const SizedBox(height: _p2pEscrowTightGap),
-                          _FeedbackBanner(message: _feedback!),
-                        ],
-                        const SizedBox(height: _p2pEscrowSectionGap),
-                        _MultiSigCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pEscrowSectionGap),
-                        _OrderInfoCard(order: order),
-                        const SizedBox(height: _p2pEscrowSectionGap),
-                        _EscrowTimelineCard(events: snapshot.timeline),
-                        const SizedBox(height: _p2pEscrowSectionGap),
-                        _SecurityNotice(snapshot: snapshot),
-                        const SizedBox(height: _p2pEscrowSectionGap),
-                        _OrderLink(orderId: widget.orderId),
-                        const SizedBox(height: _p2pEscrowTightGap),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại chi tiết escrow',
-                          message:
-                              'Địa chỉ escrow đã che, thao tác hiện/copy, trạng thái multisig, liên kết đơn, timeline và bước an toàn tiếp theo được xem lại trước thao tác tiền.',
-                          contractId: 'p2p-escrow-detail-review',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+      title: 'Chi tiết Escrow',
+      subtitle: 'Escrow · P2P',
+      onBack: () => context.go(snapshot.parentRoute),
+      shellRenderMode: mode,
+      bottomInset: scrollEndPadding,
+      children: [
+        _EscrowStatusHero(snapshot: snapshot),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _EscrowAddressCard(
+              snapshot: snapshot,
+              showFullAddress: _showFullAddress,
+              onReveal: () {
+                HapticFeedback.selectionClick();
+                setState(() => _showFullAddress = !_showFullAddress);
+              },
+              onCopy: () {
+                HapticFeedback.selectionClick();
+                Clipboard.setData(
+                  ClipboardData(text: snapshot.escrowAddress),
+                );
+                setState(() => _feedback = 'Đã copy địa chỉ escrow');
+              },
+              onExplorer: () {
+                HapticFeedback.selectionClick();
+                setState(() => _feedback = 'Đã mở Blockchain Explorer');
+              },
+            ),
+            if (_feedback != null) ...[
+              const SizedBox(height: _p2pEscrowTightGap),
+              _FeedbackBanner(message: _feedback!),
             ],
-          ),
+          ],
         ),
-      ),
+        _MultiSigCard(snapshot: snapshot),
+        _OrderInfoCard(order: order),
+        _EscrowTimelineCard(events: snapshot.timeline),
+        _SecurityNotice(snapshot: snapshot),
+        _OrderLink(orderId: widget.orderId),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Xem lại chi tiết escrow',
+          message:
+              'Địa chỉ escrow đã che, thao tác hiện/copy, trạng thái multisig, liên kết đơn, timeline và bước an toàn tiếp theo được xem lại trước thao tác tiền.',
+          contractId: 'p2p-escrow-detail-review',
+        ),
+      ],
     );
   }
 }

@@ -62,7 +62,7 @@ class _CreateOrderSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'Chi tiet lenh',
             accentColor: AppColors.primary,
@@ -78,7 +78,7 @@ class _CreateOrderSection extends StatelessWidget {
                       hintText: 'ARB',
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     _LabeledField(
                       fieldKey: LaunchpadLimitOrdersPage.targetFieldKey,
                       label: 'Target Price (USD)',
@@ -89,7 +89,7 @@ class _CreateOrderSection extends StatelessWidget {
                       ),
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     _LabeledField(
                       fieldKey: LaunchpadLimitOrdersPage.amountFieldKey,
                       label: 'Amount',
@@ -100,7 +100,7 @@ class _CreateOrderSection extends StatelessWidget {
                       ),
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -110,7 +110,7 @@ class _CreateOrderSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         for (final value in ['1', '7', '14', '30']) ...[
@@ -126,12 +126,12 @@ class _CreateOrderSection extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     const Divider(
                       height: AppSpacing.dividerHairline,
                       color: AppColors.border,
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Row(
                       children: [
                         Expanded(
@@ -168,7 +168,7 @@ class _CreateOrderSection extends StatelessWidget {
             ],
           ),
           if (hasPreview) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _OrderPreview(
               side: orderSide,
               token: tokenController.text.trim(),
@@ -179,7 +179,7 @@ class _CreateOrderSection extends StatelessWidget {
             ),
           ],
           if (submissionMessage != null) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               padding: AppSpacing.launchpadPaddingX3,
               borderColor: AppColors.buy20,

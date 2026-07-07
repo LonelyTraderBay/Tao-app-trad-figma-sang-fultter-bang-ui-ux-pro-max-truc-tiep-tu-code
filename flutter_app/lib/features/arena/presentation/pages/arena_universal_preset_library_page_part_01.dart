@@ -101,7 +101,7 @@ class _DomainPacksSection extends StatelessWidget {
           subtitle: '10 lĩnh vực bao phủ mọi loại challenge',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final pack in packs) ...[
           _DomainPackCard(
             pack: pack,
@@ -187,7 +187,7 @@ class _DomainPackCard extends StatelessWidget {
                     color: AppColors.borderSolid,
                     height: _presetDividerExtent,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     'CHALLENGE TYPES HỖ TRỢ',
                     style: AppTextStyles.micro.copyWith(
@@ -195,7 +195,7 @@ class _DomainPackCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -204,7 +204,7 @@ class _DomainPackCard extends StatelessWidget {
                         _SmallPill(label: type, accentColor: _arenaAccent),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     'GỢI Ý MẪU',
                     style: AppTextStyles.micro.copyWith(
@@ -212,7 +212,7 @@ class _DomainPackCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final example in pack.examples)
                     Padding(
                       padding: AppSpacing.arenaBottomPaddingX2,
@@ -263,24 +263,33 @@ class _SuggestionsSection extends StatelessWidget {
           subtitle: '6-8 gợi ý cho mỗi lĩnh vực',
           accentColor: _arenaAccent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final pack in packs.take(6)) ...[
-                _DomainFilterChip(
-                  pack: pack,
+                VitFilterChip(
+                  label: pack.title,
                   active: pack.id == activeDomainId,
                   onTap: () => onDomainChanged(pack.id),
+                  color: AppColors.warn,
+                  padding: AppSpacing.arenaPresetChipPadding,
+                  leading: Icon(
+                    _domainIcon(pack.id),
+                    color: pack.id == activeDomainId
+                        ? AppColors.warn
+                        : AppColors.text3,
+                    size: AppSpacing.arenaPresetSmallIcon,
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.x2),
               ],
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -291,7 +300,7 @@ class _SuggestionsSection extends StatelessWidget {
                 label: 'Gợi ý — ${activePack.title}',
                 count: suggestions.length,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -307,7 +316,7 @@ class _SuggestionsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -317,9 +326,9 @@ class _SuggestionsSection extends StatelessWidget {
                 icon: Icons.search_rounded,
                 label: 'SmartAutocompleteList',
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               const _SearchBox(text: 'Gõ để tìm gợi ý...'),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               for (final item in suggestions.take(3))
                 _AutocompleteRow(
                   item: item,
@@ -329,7 +338,7 @@ class _SuggestionsSection extends StatelessWidget {
           ),
         ),
         if (selectedSuggestion != null) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             key: ArenaUniversalPresetLibraryPage.selectedSuggestionKey,
             variant: VitCardVariant.inner,
@@ -364,7 +373,7 @@ class _DropdownsSection extends StatelessWidget {
           subtitle: 'Component set có đầy đủ states',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final group in groups) ...[
           VitCard(
             padding: AppSpacing.arenaPaddingX4,
@@ -380,12 +389,12 @@ class _DropdownsSection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 _DropdownPreview(group: group),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -414,7 +423,7 @@ class _DemoFlowsSection extends StatelessWidget {
           subtitle: 'Demo mini-flow minh họa end-to-end',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -431,9 +440,9 @@ class _DemoFlowsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _DemoFlowCard(flow: activeFlow),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.arenaPaddingX4,
           child: Column(
@@ -443,7 +452,7 @@ class _DemoFlowsSection extends StatelessWidget {
                 icon: Icons.menu_book_outlined,
                 label: 'Tổng quan demo flows',
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               for (var i = 0; i < flows.length; i++)
                 _DemoSummaryRow(
                   flow: flows[i],

@@ -7,7 +7,7 @@ class _TradesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -71,12 +71,12 @@ class _TradeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
                 child: Wrap(
-                  spacing: AppSpacing.x4 - AppSpacing.x1,
+                  spacing: AppSpacing.pageRhythmStandardInnerGap,
                   runSpacing: AppSpacing.x2,
                   children: [
                     _TradePrice(

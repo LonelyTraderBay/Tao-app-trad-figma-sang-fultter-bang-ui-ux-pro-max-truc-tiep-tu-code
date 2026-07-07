@@ -24,7 +24,7 @@ class _PlanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(plan.name, style: AppTextStyles.baseMedium),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -60,7 +60,7 @@ class _PlanCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -224,11 +224,15 @@ class _PositionCard extends StatelessWidget {
                   ],
                 )
               else
-                const _NeutralPill(label: 'No Insurance'),
+                const VitAccentPill(
+                  label: 'No Insurance',
+                  accentColor: AppColors.text3,
+                  size: VitStatusPillSize.sm,
+                ),
             ],
           ),
           if (position.insured && plan != null) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.standard,
@@ -251,7 +255,7 @@ class _PositionCard extends StatelessWidget {
             ),
           ],
           if (!position.insured) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               key: StakingInsurancePage.addInsuranceKey(position.id),
               height: AppSpacing.buttonCompact,
@@ -260,30 +264,6 @@ class _PositionCard extends StatelessWidget {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class _NeutralPill extends StatelessWidget {
-  const _NeutralPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.smRadius,
-      child: Padding(
-        padding: AppSpacing.earnPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
       ),
     );
   }
@@ -315,10 +295,10 @@ class _ClaimsTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final claim in snapshot.claims) ...[
           _ClaimCard(claim: claim),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -360,7 +340,7 @@ class _ClaimCard extends StatelessWidget {
               const _StatusPill(label: 'Approved', color: AppColors.buy),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(

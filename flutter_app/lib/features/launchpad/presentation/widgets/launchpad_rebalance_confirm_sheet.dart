@@ -62,7 +62,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     Row(
                       children: [
                         const Icon(
@@ -79,22 +79,22 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     for (final suggestion in executable)
                       _ConfirmActionRow(suggestion: suggestion),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     LaunchpadRebalanceSummaryRow(
                       label: 'Gas tong',
                       value: '~\$${totalGas.toStringAsFixed(2)}',
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     VitCtaButton(
                       key: confirmKey,
                       variant: VitCtaButtonVariant.success,
                       onPressed: onClose,
                       child: const Text('Xac nhan Rebalance (Mo phong)'),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     VitCtaButton(
                       key: cancelKey,
                       onPressed: onClose,

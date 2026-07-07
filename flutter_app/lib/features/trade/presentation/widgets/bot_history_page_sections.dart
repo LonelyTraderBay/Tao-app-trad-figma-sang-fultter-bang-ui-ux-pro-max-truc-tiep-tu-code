@@ -77,6 +77,7 @@ class _SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       height: VitDensity.compact.controlHeight,
@@ -105,45 +106,3 @@ class _SearchBox extends StatelessWidget {
   }
 }
 
-class _FilterTabs extends StatelessWidget {
-  const _FilterTabs({
-    required this.filter,
-    required this.trades,
-    required this.onChanged,
-  });
-
-  final _HistoryFilter filter;
-  final List<TradeBotHistoryTrade> trades;
-  final ValueChanged<_HistoryFilter> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final tabs = [
-      (_HistoryFilter.all, 'All (${trades.length})'),
-      (
-        _HistoryFilter.buy,
-        'Buy (${trades.where((t) => t.side == TradeBotHistorySide.buy).length})',
-      ),
-      (
-        _HistoryFilter.sell,
-        'Sell (${trades.where((t) => t.side == TradeBotHistorySide.sell).length})',
-      ),
-    ];
-
-    return VitTabBar(
-      tabs: [
-        for (final tab in tabs)
-          VitTabItem(
-            key: tab.$1.name,
-            label: tab.$2,
-            widgetKey: BotHistoryPage.filterKey(tab.$1.name),
-          ),
-      ],
-      activeKey: filter.name,
-      onChanged: (key) => onChanged(
-        _HistoryFilter.values.firstWhere((filter) => filter.name == key),
-      ),
-      variant: VitTabBarVariant.segment,
-    );
-  }
-}

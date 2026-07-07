@@ -43,14 +43,14 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(validator.name, style: AppTextStyles.sectionTitle),
           const SizedBox(height: AppSpacing.x1),
           Text(
             validator.address,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             validator.description,
             style: AppTextStyles.caption.copyWith(
@@ -58,7 +58,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
               height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -70,13 +70,13 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             onPressed: () {},
             leading: const Icon(Icons.check_circle_outline_rounded),
             child: const Text('Chọn Validator này'),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,

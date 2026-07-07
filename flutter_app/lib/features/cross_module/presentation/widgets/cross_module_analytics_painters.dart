@@ -21,7 +21,7 @@ class _ChartCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x6,
             child: child,

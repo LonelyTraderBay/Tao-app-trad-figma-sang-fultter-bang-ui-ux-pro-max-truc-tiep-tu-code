@@ -16,6 +16,7 @@ class _HeroCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               const VitCard(
                 variant: VitCardVariant.inner,
                 width: _hubHeroIconTile,
@@ -179,6 +180,7 @@ class _MenuItem extends StatelessWidget {
       borderColor: color.withValues(alpha: .28),
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
             width: _hubIconTile,

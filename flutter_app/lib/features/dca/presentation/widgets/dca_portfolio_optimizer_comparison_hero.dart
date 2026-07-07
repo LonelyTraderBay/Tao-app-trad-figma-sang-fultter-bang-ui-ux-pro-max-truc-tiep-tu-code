@@ -185,12 +185,12 @@ class _AllocationDeltaCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionTitle(
-            icon: Icons.swap_horiz_rounded,
+          const VitSectionHeader(
             title: 'Thay đổi phân bổ',
-            color: AppColors.accent,
+            icon: Icons.swap_horiz_rounded,
+            iconColor: AppColors.accent,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           for (final allocation in snapshot.currentAllocations) ...[
             _AllocationRow(allocation: allocation),
             if (allocation != snapshot.currentAllocations.last)

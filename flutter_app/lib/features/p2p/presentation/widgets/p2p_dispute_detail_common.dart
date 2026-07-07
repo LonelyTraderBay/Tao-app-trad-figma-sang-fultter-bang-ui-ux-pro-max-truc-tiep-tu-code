@@ -36,7 +36,6 @@ class P2PDisputeSmallButton extends StatelessWidget {
       label: label,
       selected: true,
       onTap: onPressed,
-      height: AppSpacing.buttonCompact,
       padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
       accentColor: color,
       leading: Icon(icon),

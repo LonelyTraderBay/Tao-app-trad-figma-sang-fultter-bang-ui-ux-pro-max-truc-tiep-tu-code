@@ -72,7 +72,7 @@ class _ConditionBuilder extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x3,
@@ -111,7 +111,7 @@ class _ConditionBuilder extends StatelessWidget {
                   ],
                 ),
                 if (preview.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCard(
                     variant: VitCardVariant.inner,
                     borderColor: AppColors.accent20,
@@ -129,12 +129,12 @@ class _ConditionBuilder extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Hoặc tự nhập điều kiện thắng:',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitInput(
             controller: customWinController,
             semanticLabel: 'Arena custom win condition',
@@ -265,7 +265,7 @@ class _QuickSuggestions extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Wrap(
           spacing: AppSpacing.x3,
           runSpacing: AppSpacing.x3,
@@ -340,7 +340,7 @@ class _TimingRulesCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldBlock(
             label: 'Thời hạn kết thúc',
             required: true,
@@ -374,7 +374,7 @@ class _TimingRulesCard extends StatelessWidget {
             value: resultDeadline,
             onTap: onResultDeadline,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _SwitchRow(
             label: 'Cho phép rematch',
             description: 'Người chơi có thể yêu cầu chơi lại',

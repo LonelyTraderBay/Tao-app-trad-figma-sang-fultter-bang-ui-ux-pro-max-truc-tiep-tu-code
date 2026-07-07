@@ -88,7 +88,7 @@ class _TaxSettingsTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.crossModuleCardPadding,
           radius: VitCardRadius.large,
@@ -102,7 +102,7 @@ class _TaxSettingsTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               for (final resource in const [
                 'IRS Publication 544 - Sales and Other Dispositions',
                 'Form 8949 - Sales and Dispositions of Capital Assets',
@@ -134,9 +134,9 @@ class _TaxSettingsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _ImportantNoticeCard(),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _InfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
@@ -187,7 +187,7 @@ class _ImportantNoticeCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         'This platform does not provide tax advice. Tax reports are generated for your convenience only. Please consult a qualified tax professional or accountant for accurate tax filing guidance specific to your jurisdiction.',
                         style: AppTextStyles.micro.copyWith(
@@ -199,7 +199,7 @@ class _ImportantNoticeCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             for (final note in const [
               'Reports may not include all taxable events',
               'Tax laws vary by jurisdiction',
@@ -244,6 +244,7 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
@@ -324,6 +325,7 @@ class _IconAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,

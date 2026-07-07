@@ -44,21 +44,21 @@ class DcaBacktesterSetup extends StatelessWidget {
           selected: asset,
           onChanged: onAssetChanged,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _DateRangeCard(
           startDate: snapshot.startDate,
           endDate: snapshot.endDate,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _InvestmentCard(
           amountUsd: snapshot.investmentAmountUsd,
           frequencies: snapshot.frequencies,
           selected: frequency,
           onChanged: onFrequencyChanged,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const DcaSectionLabel(label: 'Chiến lược'),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _StrategyCards(
           strategies: snapshot.strategies,
           selected: strategy,
@@ -66,10 +66,10 @@ class DcaBacktesterSetup extends StatelessWidget {
           onChanged: onStrategyChanged,
         ),
         if (strategy == DcaBacktestStrategy.buyDips) ...[
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const _DipThresholdCard(),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           key: runKey,
           onPressed: onRun,
@@ -80,7 +80,7 @@ class DcaBacktesterSetup extends StatelessWidget {
           ),
           child: const Text('Run Backtest'),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _BacktestDisclaimer(),
       ],
     );
@@ -106,7 +106,7 @@ class _AssetCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const DcaCardTitle('Chọn tài sản'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               for (final asset in assets) ...[
@@ -141,7 +141,7 @@ class _DateRangeCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const DcaCardTitle('Khung thời gian'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -191,12 +191,12 @@ class _InvestmentCard extends StatelessWidget {
             label: 'Investment Amount per Period (USD)',
             value: amountUsd.toString(),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Frequency',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {
               final width = (constraints.maxWidth - AppSpacing.x3) / 2;
@@ -248,7 +248,7 @@ class _StrategyCards extends StatelessWidget {
             onTap: () => onChanged(strategy.strategy),
           ),
           if (strategy != strategies.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

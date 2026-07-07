@@ -32,7 +32,7 @@ class _MetricGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             Expanded(
@@ -87,7 +87,7 @@ class _MetricCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: iconColor, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -132,7 +132,7 @@ class _UnderwaterCard extends StatelessWidget {
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Below zero = in drawdown (underwater)',
             textAlign: TextAlign.center,
@@ -175,7 +175,7 @@ class _EventsList extends StatelessWidget {
       children: [
         for (final event in events) ...[
           _EventCard(event: event),
-          if (event != events.last) const SizedBox(height: AppSpacing.x3),
+          if (event != events.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -227,7 +227,7 @@ class _EventCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

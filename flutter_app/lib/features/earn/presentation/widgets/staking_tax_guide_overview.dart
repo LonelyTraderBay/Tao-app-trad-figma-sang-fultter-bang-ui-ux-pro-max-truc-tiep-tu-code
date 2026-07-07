@@ -37,18 +37,18 @@ class StakingTaxOverviewTab extends StatelessWidget {
                       height: AppSpacing.stakingTaxOverviewLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   for (final event in snapshot.incomeEvents) ...[
                     _IncomeEventCard(event: event),
                     if (event != snapshot.incomeEvents.last)
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: snapshot.summaryTitle,
           children: [
@@ -61,14 +61,14 @@ class StakingTaxOverviewTab extends StatelessWidget {
                   for (final summary in snapshot.countrySummaries) ...[
                     _CountrySummaryRow(summary: summary),
                     if (summary != snapshot.countrySummaries.last)
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: snapshot.toolsTitle,
           children: [
@@ -84,7 +84,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
                     subtitle: 'Xem tất cả giao dịch staking',
                     onTap: () => context.go(snapshot.historyRoute),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   _ToolRow(
                     key: StakingTaxGuideKeys.taxReportsTool,
                     icon: Icons.file_download_outlined,
@@ -97,7 +97,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         StakingTaxFooterCard(text: snapshot.footer),
       ],
     );
@@ -128,15 +128,15 @@ class _IncomeEventCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               event.description,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
                 height: AppSpacing.stakingTaxEventLineHeight,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               event.example,
               style: AppTextStyles.micro.copyWith(

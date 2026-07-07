@@ -15,6 +15,7 @@ class _ProviderRankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final redFlags = _redFlags(provider);
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: ProviderLeaderboardPage.providerKey(provider.id),
       height: redFlags.isEmpty
@@ -39,12 +40,13 @@ class _ProviderRankCard extends StatelessWidget {
                 const SizedBox(height: _leaderTinySpace),
                 _FollowersLabel(count: provider.copiers),
                 if (redFlags.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Wrap(
                     spacing: AppSpacing.x1 + AppSpacing.hairlineStroke,
                     runSpacing: AppSpacing.x1 + AppSpacing.hairlineStroke,
                     children: [
-                      for (final flag in redFlags) _RedFlagPill(flag: flag),
+                      for (final flag in redFlags)
+                        VitAccentPill(label: flag, accentColor: AppColors.sell),
                     ],
                   ),
                 ],
@@ -57,7 +59,7 @@ class _ProviderRankCard extends StatelessWidget {
             child: Icon(
               Icons.visibility_outlined,
               color: AppColors.text3,
-              size: AppSpacing.x4 + AppSpacing.x1,
+              size: AppSpacing.iconSm,
             ),
           ),
         ],
@@ -226,7 +228,7 @@ class _FollowersLabel extends StatelessWidget {
           color: AppColors.text3,
           size: AppSpacing.providerLeaderboardFollowersIcon,
         ),
-        const SizedBox(width: AppSpacing.x1 + AppSpacing.hairlineStroke),
+        const SizedBox(width: AppSpacing.x1),
         Text(
           '${_formatInteger(count)} followers',
           style: AppTextStyles.micro.copyWith(
@@ -237,16 +239,5 @@ class _FollowersLabel extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class _RedFlagPill extends StatelessWidget {
-  const _RedFlagPill({required this.flag});
-
-  final String flag;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: flag, accentColor: AppColors.sell);
   }
 }

@@ -88,10 +88,33 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
         VitTradeSection(title: 'Search', child: const _SearchBox()),
         VitTradeSection(
           title: 'Filter',
-          child: _FilterTabs(
-            filter: _filter,
-            trades: snapshot.trades,
-            onChanged: (filter) => setState(() => _filter = filter),
+          child: VitTabBar(
+            tabs: [
+              VitTabItem(
+                key: _HistoryFilter.all.name,
+                label: 'All (${snapshot.trades.length})',
+                widgetKey: BotHistoryPage.filterKey(_HistoryFilter.all.name),
+              ),
+              VitTabItem(
+                key: _HistoryFilter.buy.name,
+                label:
+                    'Buy (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.buy).length})',
+                widgetKey: BotHistoryPage.filterKey(_HistoryFilter.buy.name),
+              ),
+              VitTabItem(
+                key: _HistoryFilter.sell.name,
+                label:
+                    'Sell (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.sell).length})',
+                widgetKey: BotHistoryPage.filterKey(_HistoryFilter.sell.name),
+              ),
+            ],
+            activeKey: _filter.name,
+            onChanged: (key) => setState(
+              () => _filter = _HistoryFilter.values.firstWhere(
+                (filter) => filter.name == key,
+              ),
+            ),
+            variant: VitTabBarVariant.segment,
           ),
         ),
         VitTradeSection(

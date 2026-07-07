@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -61,6 +62,7 @@ class DCAScheduleAnalytics extends ConsumerWidget {
             physics: const ClampingScrollPhysics(),
             bottomInset: scrollEndPadding,
             child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: [
@@ -157,7 +159,7 @@ class _MissingConfigPanel extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       'Chưa có cấu hình lịch mua để phân tích. Thiết lập lịch trình trước khi xem cadence và chất lượng thực thi.',
                       style: AppTextStyles.caption.copyWith(
@@ -169,7 +171,7 @@ class _MissingConfigPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             key: DCAScheduleAnalytics.configureKey,
             onPressed: onConfigure,

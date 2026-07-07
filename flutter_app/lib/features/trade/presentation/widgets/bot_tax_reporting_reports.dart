@@ -56,7 +56,7 @@ class _ReportTypeCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   report.description,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -86,7 +86,7 @@ class _BreakdownCard extends StatelessWidget {
             description: breakdown.shortTermDescription,
             value: '+${_formatUsd(summary.shortTermGains)}',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _BreakdownRow(
             title: breakdown.longTermLabel,
             description: breakdown.longTermDescription,
@@ -161,7 +161,7 @@ class _TaxNotesCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final note in notes) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +180,7 @@ class _TaxNotesCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (note != notes.last) const SizedBox(height: AppSpacing.x2),
+            if (note != notes.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

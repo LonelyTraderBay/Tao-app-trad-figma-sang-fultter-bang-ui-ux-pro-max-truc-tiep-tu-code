@@ -25,7 +25,7 @@ class _RiskScoreCard extends StatelessWidget {
             'Calculated Risk Score',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             width: AppSpacing.x7 * 2,
             height: AppSpacing.x7 * 2,
@@ -61,7 +61,7 @@ class _RiskScoreCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: color.withValues(alpha: 0.16),
@@ -91,7 +91,7 @@ class _RiskScoreCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             key: StakingRiskScoreCalculatorPage.radarKey,
             height: AppSpacing.x7 * 3,

@@ -16,6 +16,7 @@ class _PlaceholderAnalyticsView extends StatelessWidget {
       borderColor: AppColors.cardBorder,
       child: VitSectionHeader(
         title: title,
+        bottomGap: AppSpacing.pageRhythmStandardInnerGap,
         icon: view == 'allocation'
             ? Icons.pie_chart_outline_rounded
             : Icons.trending_up_rounded,

@@ -79,35 +79,6 @@ class _ImpactBadge extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: AppSpacing.savingsWhatIfSectionMarkerWidth,
-          height: AppSpacing.savingsWhatIfSectionMarkerHeight,
-          child: Material(
-            color: AppModuleAccents.earn,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            label,
-            style: _captionBold.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _RiskPill extends StatelessWidget {
   const _RiskPill({required this.level});
 

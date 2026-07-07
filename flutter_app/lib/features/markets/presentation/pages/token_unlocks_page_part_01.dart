@@ -49,6 +49,7 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                     key: TokenUnlocksPage.contentKey,
                     padding: AppSpacing.marketScrollPadding(scrollEndClearance),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,

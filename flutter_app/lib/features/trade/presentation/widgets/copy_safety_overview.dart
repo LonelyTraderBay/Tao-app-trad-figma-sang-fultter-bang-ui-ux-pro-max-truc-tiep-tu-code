@@ -14,6 +14,7 @@ class _HeroBanner extends StatelessWidget {
       borderColor: _safetyPrimary,
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           const VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
@@ -41,7 +42,7 @@ class _HeroBanner extends StatelessWidget {
                     height: _safetyHeroLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroDescription,
                   maxLines: 2,
@@ -73,6 +74,7 @@ class _SafetyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
@@ -166,6 +168,7 @@ class _VerificationTierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(tier.colorHex);
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       density: VitDensity.compact,
       constraints: BoxConstraints(minHeight: _safetyTierMinHeight),

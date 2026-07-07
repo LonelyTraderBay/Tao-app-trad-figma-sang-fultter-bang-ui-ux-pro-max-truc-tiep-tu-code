@@ -70,7 +70,7 @@ class _ApiKeyCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     VitStatusPill(
@@ -91,7 +91,7 @@ class _ApiKeyCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Last used: ${apiKey.lastUsed}',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -161,6 +161,7 @@ class _ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -223,6 +224,7 @@ class _SecurityTipsCard extends StatelessWidget {
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -234,12 +236,7 @@ class _SecurityTipsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          VitPageContent(
-            padding: VitContentPadding.none,
-            fullBleed: true,
-            density: VitDensity.compact,
-            children: [for (final tip in tips) _SecurityTipRow(tip: tip)],
-          ),
+          for (final tip in tips) _SecurityTipRow(tip: tip),
         ],
       ),
     );

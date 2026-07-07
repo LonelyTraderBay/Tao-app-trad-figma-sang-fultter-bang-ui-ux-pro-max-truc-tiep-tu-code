@@ -86,11 +86,11 @@ class _TopicMappingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _InlineTitle(icon: Icons.topic_outlined, title: topic.label),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _MiniMetric(label: 'Prediction', value: topic.predictionUsage),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _MiniMetric(label: 'Arena', value: topic.arenaUsage),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _MiniMetric(label: 'Bridge', value: topic.bridgeUsage),
         ],
       ),
@@ -137,7 +137,7 @@ class _BoundarySection extends StatelessWidget {
               for (final row in snapshot.infoRows) ...[
                 _InfoRow(text: row.text, tone: row.tone),
                 if (row != snapshot.infoRows.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ],
           ),
@@ -256,7 +256,7 @@ class _ComponentDemoCard extends StatelessWidget {
               _bridgeBadge(label: component.badgeLabel, tone: component.tone),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             component.description,
             style: AppTextStyles.micro.copyWith(
@@ -264,7 +264,7 @@ class _ComponentDemoCard extends StatelessWidget {
               height: _bridgeBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _DemoFrame(
             title: component.sampleTitle,
             meta: component.sampleMeta,
@@ -299,7 +299,7 @@ class _DualStatsCard extends StatelessWidget {
             icon: Icons.account_tree_outlined,
             title: 'DualModuleStatCard - separated profile blocks',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -325,7 +325,7 @@ class _DualStatsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const _InfoRow(
             text: 'Hai khối stats mở hai module riêng. Không tổng hợp số liệu.',
             tone: ArenaBridgeTone.disclosure,
@@ -378,7 +378,7 @@ class _ModuleStatButton extends StatelessWidget {
                   color: color,
                   size: AppSpacing.arenaBridgeActionIcon,
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   label,
                   maxLines: 1,

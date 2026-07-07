@@ -113,10 +113,18 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
         ),
         VitTradeSection(
           title: 'Bộ lọc',
-          child: _AuditFilterTabs(
-            tabs: snapshot.tabs,
-            activeId: _activeFilter,
+          child: VitTabBar(
+            variant: VitTabBarVariant.segment,
+            activeKey: _activeFilter,
             onChanged: (id) => setState(() => _activeFilter = id),
+            tabs: [
+              for (final tab in snapshot.tabs)
+                VitTabItem(
+                  key: tab.id,
+                  label: tab.label,
+                  widgetKey: CopyAuditLogPage.tabKey(tab.id),
+                ),
+            ],
           ),
         ),
         VitTradeSection(
@@ -184,7 +192,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const VitSheetHandle(),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Text(
                   'Export Audit Log',
                   style: AppTextStyles.baseMedium.copyWith(
@@ -195,11 +203,11 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Chọn định dạng export',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 for (final format in snapshot.exportFormats) ...[
                   _ExportFormatButton(
                     key: CopyAuditLogPage.exportFormatKey(format.id),
@@ -219,7 +227,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                     },
                   ),
                   if (format != snapshot.exportFormats.last)
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 ],
                 const SizedBox(height: AppSpacing.rowPy),
                 VitCtaButton(

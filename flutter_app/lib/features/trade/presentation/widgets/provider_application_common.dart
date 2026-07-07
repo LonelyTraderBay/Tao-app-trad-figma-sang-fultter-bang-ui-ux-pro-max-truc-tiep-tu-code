@@ -10,6 +10,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: color,
     );
@@ -58,9 +59,9 @@ class _TogglePanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _PanelHeader(icon: icon, title: title),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(description, style: _panelDescriptionStyle),
-          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           VitCtaButton(
             height: AppSpacing.buttonCompact,
             variant: active
@@ -97,14 +98,14 @@ class _NumberPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _PanelHeader(icon: Icons.schedule_rounded, title: title),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(description, style: _panelDescriptionStyle),
-          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitInput(
             fieldKey: ProviderApplicationPage.monthsFieldKey,
             controller: controller,
@@ -150,7 +151,7 @@ class _ConsentTile extends StatelessWidget {
             color: checked ? _providerPrimary : AppColors.text3,
             size: 22,
           ),
-          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
           Expanded(
             child: Text(
               text,
@@ -184,7 +185,7 @@ class _InfoPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _PanelHeader(icon: icon, title: title),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(description, style: _panelDescriptionStyle),
         ],
       ),

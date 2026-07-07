@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletGroupsTab extends StatelessWidget {
@@ -15,14 +16,12 @@ class WalletGroupsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Wallet Groups',
+      headerIcon: Icons.folder_outlined,
+      accentColor: walletManagerPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
       children: [
-        const WalletManagerSectionLabel(
-          label: 'Wallet Groups',
-          icon: Icons.folder_outlined,
-        ),
-        const SizedBox(height: AppSpacing.walletManagerGroupsSectionGap),
         for (var i = 0; i < snapshot.groups.length; i++) ...[
           _GroupCard(
             group: snapshot.groups[i],
@@ -33,7 +32,7 @@ class WalletGroupsTab extends StatelessWidget {
           if (i != snapshot.groups.length - 1)
             const SizedBox(height: AppSpacing.walletManagerGroupCardGap),
         ],
-        const SizedBox(height: AppSpacing.walletManagerGroupCreateTopGap),
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           height: AppSpacing.walletManagerGroupCreateHeight,
           alignment: Alignment.center,
@@ -155,6 +154,7 @@ class _GroupWalletRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: AppSpacing.walletManagerGroupWalletRowHeight,
       padding: AppSpacing.walletManagerGroupWalletRowPadding,

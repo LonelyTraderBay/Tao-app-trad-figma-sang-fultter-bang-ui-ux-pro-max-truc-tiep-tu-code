@@ -80,6 +80,7 @@ class _PredictionAdvancedChartPageState
                       footerPadding,
                     ),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.flush,
                       density: VitDensity.compact,
                       children: [
                         ...switch (_activeTab) {
@@ -242,7 +243,6 @@ class _TimeframeButton extends StatelessWidget {
       onTap: onTap,
       accentColor: _predictionPrimary,
       fullWidth: true,
-      height: VitDensity.compact.controlHeight,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
     );
   }

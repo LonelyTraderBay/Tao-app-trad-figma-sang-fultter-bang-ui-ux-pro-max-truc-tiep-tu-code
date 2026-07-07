@@ -29,7 +29,7 @@ class _IntroBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Tìm hiểu từng chiến lược bot, khi nào nên dùng và cách '
                   'tránh sai lầm phổ biến — phù hợp người mới và trader có '

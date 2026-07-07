@@ -27,7 +27,7 @@ class _StateKitSection extends StatelessWidget {
               height: AppSpacing.enterpriseStatesLineHeightBody,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPresetChipRow<EnterprisePreviewState>(
             items: [
               for (final state in snapshot.previewStates)
@@ -41,13 +41,13 @@ class _StateKitSection extends StatelessWidget {
             onTap: onStateChanged,
             accentColor: AppModuleAccents.enterpriseStates,
           ),
-          const SizedBox(height: AppSpacing.x6),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _PreviewFrame(
             activeState: activeState,
             onMarkets: onMarkets,
             onKyc: onKyc,
           ),
-          const SizedBox(height: AppSpacing.x6),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Banner Variants',
             style: AppTextStyles.baseMedium.copyWith(
@@ -55,11 +55,11 @@ class _StateKitSection extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final banner in snapshot.banners) ...[
             _ReferenceBanner(banner: banner),
             if (banner != snapshot.banners.last)
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
     );
@@ -140,7 +140,7 @@ class _SkeletonPreview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const VitSkeleton(width: 150, height: AppSpacing.x4),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: const [
               VitSkeleton(width: 76, height: AppSpacing.x5),
@@ -152,12 +152,12 @@ class _SkeletonPreview extends StatelessWidget {
               VitSkeleton(width: 52, height: AppSpacing.x5),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < 5; i++) ...[
             const _SkeletonMarketRow(),
-            if (i < 4) const SizedBox(height: AppSpacing.x5),
+            if (i < 4) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const VitSkeleton(width: double.infinity, height: AppSpacing.x6),
         ],
       ),
@@ -183,7 +183,7 @@ class _SkeletonMarketRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               VitSkeleton(width: 130, height: AppSpacing.x4),
-              SizedBox(height: AppSpacing.x3),
+              SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitSkeleton(width: 82, height: AppSpacing.x3),
             ],
           ),
@@ -193,7 +193,7 @@ class _SkeletonMarketRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             VitSkeleton(width: 74, height: AppSpacing.x4),
-            SizedBox(height: AppSpacing.x3),
+            SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitSkeleton(width: 52, height: AppSpacing.x4),
           ],
         ),
@@ -249,7 +249,7 @@ class _OfflinePreview extends StatelessWidget {
       child: Column(
         children: [
           VitOfflineBanner(message: 'Mất kết nối. Đang hiển thị dữ liệu cũ.'),
-          SizedBox(height: AppSpacing.x5),
+          SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Opacity(opacity: .55, child: VitSkeletonList(rows: 2)),
         ],
       ),
@@ -283,7 +283,7 @@ class _GatePreview extends StatelessWidget {
                 color: AppColors.warn,
                 size: AppSpacing.iconLg,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Cần KYC để tiếp tục',
                 style: AppTextStyles.baseMedium.copyWith(
@@ -291,13 +291,13 @@ class _GatePreview extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Hoàn tất xác minh danh tính để mở khóa tính năng này.',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCtaButton(
                 key: EnterpriseStatesPage.kycCtaKey,
                 onPressed: onKyc,

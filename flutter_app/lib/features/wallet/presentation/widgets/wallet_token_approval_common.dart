@@ -6,7 +6,6 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
 const walletTokenApprovalBackground = AppColors.bg;
@@ -91,28 +90,6 @@ String walletTokenApprovalRiskLabel(String risk) {
     'low' => 'LOW',
     _ => risk.toUpperCase(),
   };
-}
-
-class WalletTokenApprovalSectionLabel extends StatelessWidget {
-  const WalletTokenApprovalSectionLabel({
-    required this.label,
-    this.icon = Icons.security_rounded,
-    super.key,
-  });
-
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      icon: icon,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: walletTokenApprovalPrimary,
-      density: VitDensity.compact,
-    );
-  }
 }
 
 class WalletTokenApprovalRevokeAllButton extends StatelessWidget {

@@ -97,13 +97,13 @@ class _LicensesTab extends StatelessWidget {
                     onTap: () => onLicenseTap(license),
                   ),
                   if (license != snapshot.licenses.last)
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _InfoNote(text: snapshot.licenseNote, icon: Icons.verified_outlined),
       ],
     );
@@ -155,7 +155,7 @@ class _LicenseCard extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x1,

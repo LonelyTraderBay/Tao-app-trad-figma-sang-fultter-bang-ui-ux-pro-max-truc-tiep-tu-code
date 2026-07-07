@@ -1,123 +1,136 @@
 part of '../pages/profile_page.dart';
 
-class _ProfileBody extends StatelessWidget {
-  const _ProfileBody({
-    required this.snapshot,
-    required this.copiedReferral,
-    required this.onEdit,
-    required this.onCopyReferral,
-    required this.onOpenVip,
-    required this.onOpenPredictions,
-    required this.onOpenArena,
-    required this.onOpenActivity,
-    required this.onLogout,
-  });
-
-  final ProfileSnapshot snapshot;
-  final bool copiedReferral;
-  final VoidCallback onEdit;
-  final VoidCallback onCopyReferral;
-  final VoidCallback onOpenVip;
-  final VoidCallback onOpenPredictions;
-  final VoidCallback onOpenArena;
-  final VoidCallback onOpenActivity;
-  final VoidCallback onLogout;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.screenState) {
-      ProfileScreenState.loading => const VitSkeletonList(
-        key: ProfilePage.loadingKey,
-        rows: 4,
-      ),
-      ProfileScreenState.error => VitErrorState(
+List<Widget> _profilePageChildren({
+  required BuildContext context,
+  required ProfileSnapshot snapshot,
+  required bool copiedReferral,
+  required VoidCallback onEdit,
+  required VoidCallback onCopyReferral,
+  required VoidCallback onOpenVip,
+  required VoidCallback onOpenPredictions,
+  required VoidCallback onOpenArena,
+  required VoidCallback onOpenActivity,
+  required VoidCallback onLogout,
+}) {
+  return switch (snapshot.screenState) {
+    ProfileScreenState.loading => [
+      const VitSkeletonList(key: ProfilePage.loadingKey, rows: 4),
+    ],
+    ProfileScreenState.error => [
+      VitErrorState(
         key: ProfilePage.errorKey,
         title: 'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c h\u1ED3 s\u01A1',
         message: 'Ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
         actionLabel: 'Th\u1EED l\u1EA1i',
         onAction: () => context.go(AppRoutePaths.profile),
       ),
-      ProfileScreenState.empty => const VitEmptyState(
+    ],
+    ProfileScreenState.empty => [
+      const VitEmptyState(
         key: ProfilePage.emptyKey,
         title: 'Ch\u01B0a c\u00F3 d\u1EEF li\u1EC7u t\u00E0i kho\u1EA3n',
         message:
             'H\u1ED3 s\u01A1 s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u0103ng nh\u1EADp v\u00E0 \u0111\u1ED3ng b\u1ED9.',
         icon: Icons.account_circle_outlined,
       ),
-      ProfileScreenState.offline => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const VitOfflineBanner(
-            key: ProfilePage.offlineKey,
-            message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
-            detail: 'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u t\u00E0i kho\u1EA3n \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
-          ),
-          SizedBox(height: VitDensity.compact.pageContentGap),
-          ..._contentChildren(),
-        ],
+    ],
+    ProfileScreenState.offline => [
+      const VitOfflineBanner(
+        key: ProfilePage.offlineKey,
+        message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
+        detail:
+            'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u t\u00E0i kho\u1EA3n \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
       ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _contentChildren(),
-      ),
-    };
-  }
-
-  List<Widget> _contentChildren() {
-    return [
-      _ProfileHero(
-        user: snapshot.user,
+      ..._profileReadySections(
+        snapshot: snapshot,
         copiedReferral: copiedReferral,
         onEdit: onEdit,
         onCopyReferral: onCopyReferral,
+        onOpenVip: onOpenVip,
+        onOpenPredictions: onOpenPredictions,
+        onOpenArena: onOpenArena,
+        onOpenActivity: onOpenActivity,
+        onLogout: onLogout,
       ),
-      _VipCard(vip: snapshot.vip, onTap: onOpenVip),
-      const _SectionLabel(
-        label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
-        accent: _profilePurple,
-      ),
-      _PredictionCard(
-        prediction: snapshot.prediction,
-        onTap: onOpenPredictions,
-      ),
-      _ArenaCard(arena: snapshot.arena, onTap: onOpenArena),
-      const _SectionLabel(
-        label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
-        accent: _profileAmber,
-      ),
-      if (snapshot.productShortcuts.isEmpty)
-        const VitEmptyState(
-          title: 'Ch\u01B0a c\u00F3 s\u1EA3n ph\u1EA9m',
-          message:
-              'C\u00E1c shortcut s\u1EA3n ph\u1EA9m s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
-          icon: Icons.explore_outlined,
-        )
-      else
-        _ProfileProductHub(shortcuts: snapshot.productShortcuts),
-      if (snapshot.sections.isEmpty)
-        const VitEmptyState(
-          title: 'Ch\u01B0a c\u00F3 m\u1EE5c t\u00E0i kho\u1EA3n',
-          message:
-              'C\u00E1c c\u00E0i \u0111\u1EB7t profile s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
-          icon: Icons.account_circle_outlined,
-        )
-      else
-        for (final section in snapshot.sections) ...[
-          _SectionLabel(
-            label: section.label,
-            accent: Color(section.accentHex),
-          ),
-          _MenuSection(section: section),
-        ],
-      _ActivityButton(onTap: onOpenActivity),
-      _LogoutButton(onTap: onLogout),
-      Text(
-        'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
-        textAlign: TextAlign.center,
-        style: AppTextStyles.micro.copyWith(color: _profileMuted),
-      ),
-    ];
-  }
+    ],
+    _ => _profileReadySections(
+      snapshot: snapshot,
+      copiedReferral: copiedReferral,
+      onEdit: onEdit,
+      onCopyReferral: onCopyReferral,
+      onOpenVip: onOpenVip,
+      onOpenPredictions: onOpenPredictions,
+      onOpenArena: onOpenArena,
+      onOpenActivity: onOpenActivity,
+      onLogout: onLogout,
+    ),
+  };
+}
+
+List<Widget> _profileReadySections({
+  required ProfileSnapshot snapshot,
+  required bool copiedReferral,
+  required VoidCallback onEdit,
+  required VoidCallback onCopyReferral,
+  required VoidCallback onOpenVip,
+  required VoidCallback onOpenPredictions,
+  required VoidCallback onOpenArena,
+  required VoidCallback onOpenActivity,
+  required VoidCallback onLogout,
+}) {
+  return [
+    _ProfileHero(
+      user: snapshot.user,
+      copiedReferral: copiedReferral,
+      onEdit: onEdit,
+      onCopyReferral: onCopyReferral,
+    ),
+    _VipCard(vip: snapshot.vip, onTap: onOpenVip),
+    const _SectionLabel(
+      label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
+      accent: _profilePurple,
+    ),
+    _PredictionCard(
+      prediction: snapshot.prediction,
+      onTap: onOpenPredictions,
+    ),
+    _ArenaCard(arena: snapshot.arena, onTap: onOpenArena),
+    const _SectionLabel(
+      label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
+      accent: _profileAmber,
+    ),
+    if (snapshot.productShortcuts.isEmpty)
+      const VitEmptyState(
+        title: 'Ch\u01B0a c\u00F3 s\u1EA3n ph\u1EA9m',
+        message:
+            'C\u00E1c shortcut s\u1EA3n ph\u1EA9m s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
+        icon: Icons.explore_outlined,
+      )
+    else
+      _ProfileProductHub(shortcuts: snapshot.productShortcuts),
+    if (snapshot.sections.isEmpty)
+      const VitEmptyState(
+        title: 'Ch\u01B0a c\u00F3 m\u1EE5c t\u00E0i kho\u1EA3n',
+        message:
+            'C\u00E1c c\u00E0i \u0111\u1EB7t profile s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
+        icon: Icons.account_circle_outlined,
+      )
+    else
+      for (final section in snapshot.sections) ...[
+        _SectionLabel(
+          label: section.label,
+          accent: Color(section.accentHex),
+        ),
+        _MenuSection(section: section),
+      ],
+    _ActivityButton(onTap: onOpenActivity),
+    _LogoutButton(onTap: onLogout),
+    Text(
+      'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
+      textAlign: TextAlign.center,
+      style: AppTextStyles.micro.copyWith(color: _profileMuted),
+    ),
+  ];
 }
 
 class _MenuSection extends StatelessWidget {
@@ -285,7 +298,7 @@ class _MenuRow extends StatelessWidget {
                       ),
                     ),
                     if (item.subtitle != null) ...[
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         item.subtitle!,
                         maxLines: 1,
@@ -394,6 +407,7 @@ class _SectionLabel extends StatelessWidget {
       accentColor: accent,
       variant: VitSectionHeaderVariant.accentBar,
       density: VitDensity.compact,
+      bottomGap: AppSpacing.pageRhythmCompactInnerGap,
     );
   }
 }

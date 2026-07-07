@@ -9,12 +9,14 @@ class _RiskAnalysisTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final risk = snapshot.risk;
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         _Card(
           child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
             fullBleed: true,
             density: VitDensity.compact,
@@ -122,6 +124,7 @@ class _TradeJournalTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final journal = snapshot.journal;
     return VitPageContent(
+     rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,

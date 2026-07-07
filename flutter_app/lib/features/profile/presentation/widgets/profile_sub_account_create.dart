@@ -50,12 +50,12 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const _FormFieldPreview(
             label: 'T\u00EAn t\u00E0i kho\u1EA3n',
             value: 'VD: Grid Bot #2',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -63,7 +63,7 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
                 'Lo\u1EA1i t\u00E0i kho\u1EA3n',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitPresetChipRow<String>(
                 gap: AppSpacing.profileSubAccountFormPillGap,
                 selectedValue: _accountType,
@@ -75,9 +75,9 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const _FormPermissionPreview(),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: () {},
             density: VitDensity.compact,
@@ -142,7 +142,7 @@ class _FormFieldPreview extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: VitDensity.compact.controlHeight,

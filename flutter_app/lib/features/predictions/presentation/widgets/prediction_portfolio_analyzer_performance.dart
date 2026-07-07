@@ -14,9 +14,10 @@ class _PerformanceChartCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'P/L Over Time',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: AppSpacing.x7 * 5,
             child: CustomPaint(
@@ -42,10 +43,11 @@ class _TradeStatsSection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Trade Statistics',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           density: VitDensity.compact,
           child: Column(
@@ -71,7 +73,7 @@ class _TradeStatsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -90,7 +92,7 @@ class _TradeStatsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ClipRRect(
                 borderRadius: AppRadii.pillRadius,
                 child: LinearProgressIndicator(
@@ -122,10 +124,11 @@ class _AttributionSection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Performance Attribution',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final position in closed)
           VitCard(
             density: VitDensity.compact,

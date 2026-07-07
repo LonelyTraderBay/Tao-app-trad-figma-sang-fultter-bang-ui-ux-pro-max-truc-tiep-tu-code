@@ -11,6 +11,7 @@ class _UnreadSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed summary row, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
       height: AppSpacing.tradeBotSheetActionHeight,
@@ -27,117 +28,38 @@ class _UnreadSummary extends StatelessWidget {
           Expanded(
             child: Text(
               '$unreadCount thông báo chưa đọc',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: _notificationPrimary,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
-          VitCtaButton(
-            key: CopyNotificationsPage.markAllReadKey,
-            onPressed: onMarkAllRead,
-            variant: VitCtaButtonVariant.ghost,
-            height: AppSpacing.buttonCompact,
-            fullWidth: false,
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x2,
-            ),
-            child: Text(
-              'Đánh dấu tất cả đã đọc',
-              style: AppTextStyles.caption.copyWith(
-                color: _notificationPrimary,
-                fontWeight: AppTextStyles.bold,
+          Flexible(
+            child: VitCtaButton(
+              key: CopyNotificationsPage.markAllReadKey,
+              onPressed: onMarkAllRead,
+              variant: VitCtaButtonVariant.ghost,
+              height: AppSpacing.buttonCompact,
+              fullWidth: false,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x2,
+              ),
+              child: Text(
+                'Đánh dấu tất cả đã đọc',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: _notificationPrimary,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
           ),
         ],
       ),
     );
-  }
-}
-
-class _FilterTabs extends StatelessWidget {
-  const _FilterTabs({
-    required this.tabs,
-    required this.activeTab,
-    required this.onChanged,
-  });
-
-  final List<TradeCopyNotificationTab> tabs;
-  final String activeTab;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.buttonStandard,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: tabs.length,
-        separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.statusPillHorizontalPaddingMd),
-        itemBuilder: (context, index) {
-          final tab = tabs[index];
-          final active = tab.id == activeTab;
-          return _FilterPill(
-            key: CopyNotificationsPage.tabKey(tab.id),
-            tab: tab,
-            active: active,
-            onTap: () => onChanged(tab.id),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _FilterPill extends StatelessWidget {
-  const _FilterPill({
-    super.key,
-    required this.tab,
-    required this.active,
-    required this.onTap,
-  });
-
-  final TradeCopyNotificationTab tab;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.large,
-      width: AppSpacing.buttonStandard - AppSpacing.hairlineStroke,
-      height: AppSpacing.buttonStandard - AppSpacing.hairlineStroke,
-      alignment: Alignment.center,
-      padding: AppSpacing.zeroInsets,
-      borderColor: active ? _notificationPrimary : AppColors.transparent,
-      background: ColoredBox(
-        color: active
-            ? _notificationPrimary.withValues(alpha: .16)
-            : _notificationChip,
-      ),
-      onTap: onTap,
-      child: Text(
-        _tabLabel(tab.label),
-        textAlign: TextAlign.center,
-        style: AppTextStyles.caption.copyWith(
-          color: active ? _notificationPrimary : _notificationMuted,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
-  }
-
-  String _tabLabel(String label) {
-    return switch (label) {
-      'Tất cả' => 'Tất\ncả',
-      'Chưa đọc' => 'Chưa\nđọc',
-      'Cập nhật' => 'Cập\nnhật',
-      'Hệ thống' => 'Hệ\nthống',
-      _ => label,
-    };
   }
 }
 
@@ -207,7 +129,7 @@ class _NotificationCard extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     notification.message,
                     style: AppTextStyles.caption.copyWith(
@@ -215,7 +137,7 @@ class _NotificationCard extends StatelessWidget {
                       fontWeight: AppTextStyles.normal,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Wrap(
                     spacing: AppSpacing.statusPillHorizontalPaddingMd,
                     runSpacing: AppSpacing.statusPillGapMd,
@@ -243,7 +165,7 @@ class _NotificationCard extends StatelessWidget {
                     ],
                   ),
                   if (notification.pair != null) ...[
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     _PairChip(notification: notification, color: color),
                   ],
                 ],

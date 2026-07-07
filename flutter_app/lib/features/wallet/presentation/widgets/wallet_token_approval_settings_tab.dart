@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
@@ -27,14 +28,12 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Security Settings',
+      headerIcon: Icons.tune_rounded,
+      accentColor: walletTokenApprovalPrimary,
+      innerGap: AppSpacing.pageRhythmFormInnerGap,
       children: [
-        const WalletTokenApprovalSectionLabel(
-          label: 'Security Settings',
-          icon: Icons.tune_rounded,
-        ),
-        const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         WalletTokenApprovalSettingsRow(
           title: 'Auto-revoke Unused Approvals',
           description: 'Automatically revoke approvals unused for 90+ days',
@@ -101,7 +100,7 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletAddressSectionGap),
+                  const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
                   Text(
                     description,
                     style: AppTextStyles.caption.copyWith(

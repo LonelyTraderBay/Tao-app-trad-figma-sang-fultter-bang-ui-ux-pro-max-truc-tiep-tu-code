@@ -19,8 +19,6 @@ part '../widgets/copy_notifications_page_sections.dart';
 part '../widgets/copy_notifications_page_common.dart';
 
 const _notificationPrimary = AppColors.primary;
-const _notificationChip = AppColors.surface3;
-const _notificationMuted = AppColors.text3;
 
 class CopyNotificationsPage extends ConsumerStatefulWidget {
   const CopyNotificationsPage({super.key, this.shellRenderMode});
@@ -81,10 +79,26 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
           ),
         VitTradeSection(
           title: 'Bộ lọc',
-          child: _FilterTabs(
-            tabs: tabs,
-            activeTab: activeTab,
-            onChanged: (id) => setState(() => _activeTab = id),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final tab in tabs) ...[
+                  VitFilterChip(
+                    key: CopyNotificationsPage.tabKey(tab.id),
+                    label: tab.label,
+                    active: tab.id == activeTab,
+                    onTap: () => setState(() => _activeTab = tab.id),
+                    color: _notificationPrimary,
+                    count: tab.badge,
+                  ),
+                  if (tab != tabs.last)
+                    const SizedBox(
+                      width: AppSpacing.statusPillHorizontalPaddingMd,
+                    ),
+                ],
+              ],
+            ),
           ),
         ),
         VitTradeSection(
@@ -102,7 +116,7 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                         onTap: () => _handleNotificationTap(notification),
                       ),
                       if (notification != filteredNotifications.last)
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     ],
                   ],
                 ),

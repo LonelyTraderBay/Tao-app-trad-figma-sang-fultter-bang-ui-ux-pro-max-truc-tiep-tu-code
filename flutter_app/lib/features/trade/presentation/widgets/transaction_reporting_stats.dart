@@ -69,7 +69,7 @@ class TransactionReportingStatsTab extends StatelessWidget {
             height: AppSpacing.transactionReportingLineHeightTight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.standard,
@@ -103,7 +103,7 @@ class TransactionReportingStatsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           key: transactionReportingActionKey('dashboard-primary'),
           onPressed: () =>
@@ -179,6 +179,7 @@ class _StatCard extends StatelessWidget {
               ],
             ),
           ),
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -225,7 +226,7 @@ class _StatColumn extends StatelessWidget {
                   row.$1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     height: AppSpacing.transactionReportingLineHeightTight,
                   ),
@@ -241,7 +242,7 @@ class _StatColumn extends StatelessWidget {
               ),
             ],
           ),
-          if (row != rows.last) const SizedBox(height: AppSpacing.x4),
+          if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );

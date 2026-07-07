@@ -23,7 +23,7 @@ class _LoginEventList extends StatelessWidget {
             expanded: expandedEventId == events[index].id,
             onTap: () => onToggle(events[index].id),
           ),
-          if (index != events.length - 1) const SizedBox(height: AppSpacing.x2),
+          if (index != events.length - 1) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -131,7 +131,7 @@ class _EventMainInfo extends StatelessWidget {
           '${event.os} · ${event.browser}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.x1),
         Wrap(
@@ -171,7 +171,7 @@ class _EventTrailing extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           _StatusBadge(event: event),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           AnimatedRotation(
             turns: expanded ? .5 : 0,
             duration: const Duration(milliseconds: 180),
@@ -221,7 +221,7 @@ class _ExpandedDetails extends StatelessWidget {
                 ],
               ),
               if (event.status == 'suspicious') ...[
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Material(
                   type: MaterialType.transparency,
                   color: AppColors.warn10,

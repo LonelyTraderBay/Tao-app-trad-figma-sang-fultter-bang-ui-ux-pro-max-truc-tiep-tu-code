@@ -65,7 +65,7 @@ class _SlashingEventCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.earnCardPaddingX3,
@@ -90,7 +90,7 @@ class _SlashingEventCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -119,7 +119,7 @@ class _SlashingEventCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(

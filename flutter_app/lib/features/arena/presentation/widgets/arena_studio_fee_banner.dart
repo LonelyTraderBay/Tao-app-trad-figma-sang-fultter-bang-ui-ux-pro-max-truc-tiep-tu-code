@@ -80,7 +80,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
@@ -117,7 +117,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
             ),
           ),
           if (_expanded) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             const _FeeDetailRow(
               icon: Icons.verified_user_outlined,
               label: 'Kiểm duyệt tự động',

@@ -33,7 +33,7 @@ class _ExampleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             example.title,
             style: AppTextStyles.body.copyWith(
@@ -49,17 +49,17 @@ class _ExampleCard extends StatelessWidget {
               height: _bridgeBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _DemoFrame(
             title: example.frameTitle,
             meta: example.evidenceRows.first,
             tone: tone,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final row in example.evidenceRows) ...[
             _InfoRow(text: row, tone: tone),
             if (row != example.evidenceRows.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

@@ -62,7 +62,7 @@ class _SubscriptionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -83,7 +83,7 @@ class _SubscriptionCard extends StatelessWidget {
           ),
           if (subscription.allocationRatio > 0 &&
               subscription.allocationRatio < 1) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _InlineNotice(
               icon: Icons.info_outline_rounded,
               label:
@@ -91,10 +91,10 @@ class _SubscriptionCard extends StatelessWidget {
               color: AppColors.warn,
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _VestingProgress(subscription: subscription),
           if (hasClaimable || hasRefund) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             if (hasClaimable)
               VitCtaButton(
                 key: LaunchpadPortfolioPage.claimKey(subscription.id),
@@ -105,7 +105,7 @@ class _SubscriptionCard extends StatelessWidget {
                 child: const Text('Có token sẵn sàng nhận'),
               ),
             if (hasClaimable && hasRefund)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             if (hasRefund)
               VitCtaButton(
                 key: LaunchpadPortfolioPage.refundKey(subscription.id),
@@ -220,11 +220,10 @@ class _VestingProgress extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -241,7 +240,7 @@ class _VestingProgress extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           '${subscription.vestingProgress}% đã mở khóa · Tiếp theo: ${subscription.nextUnlockDate}',
           maxLines: 2,

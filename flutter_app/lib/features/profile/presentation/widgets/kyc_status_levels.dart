@@ -271,14 +271,14 @@ class _ExpandedLevelDetails extends StatelessWidget {
           title: 'Gi\u1EDBi h\u1EA1n giao d\u1ECBch:',
           lines: level.limits,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _DetailsBlock(
           title: 'T\u00EDnh n\u0103ng m\u1EDF kh\u00F3a:',
           lines: level.features,
           done: done,
         ),
         if (canStart) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: KYCPage.startKey(level.level),
             onPressed: submitting ? null : onStart,

@@ -33,11 +33,11 @@ class _EscrowHelpCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final bullet in snapshot.helpBullets) ...[
             P2PHelpBullet(text: bullet),
             if (bullet != snapshot.helpBullets.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -58,6 +58,7 @@ class _EscrowEmptyState extends StatelessWidget {
       padding: AppSpacing.p2pEscrowBalanceLargePadding,
       child: Column(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: _p2pEscrowBalanceEmptyIconBox,
             height: _p2pEscrowBalanceEmptyIconBox,
@@ -69,7 +70,7 @@ class _EscrowEmptyState extends StatelessWidget {
               size: AppSpacing.iconMd,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.emptyTitle,
             textAlign: TextAlign.center,

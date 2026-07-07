@@ -32,7 +32,7 @@ class _FlowHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Flow map hoàn chỉnh cho toàn bộ module Open Arena — 10 pages, 10 routes, 4 shared component files, 12+ challenge states.',
             style: AppTextStyles.caption.copyWith(
@@ -40,7 +40,7 @@ class _FlowHero extends StatelessWidget {
               height: _flowMapHeroLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (final stat in stats) ...[
@@ -181,10 +181,10 @@ class _FlowMapBody extends StatelessWidget {
     return Column(
       children: [
         _RouteRegistry(routes: snapshot.routes),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final group in snapshot.groups) ...[
           _FlowGroupCard(group: group, onRoute: onRoute),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
         _SharedComponents(components: snapshot.components),
       ],
@@ -202,7 +202,7 @@ class _RouteRegistry extends StatelessWidget {
     return Column(
       children: [
         const _SectionLabel(title: 'Route Registry', color: AppColors.primary),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,

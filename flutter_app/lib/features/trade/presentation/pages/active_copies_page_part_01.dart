@@ -64,6 +64,7 @@ class _PortfolioOverview extends StatelessWidget {
       density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
       child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -180,34 +181,6 @@ class _PortfolioMetric extends StatelessWidget {
   }
 }
 
-class _SegmentedTabs extends StatelessWidget {
-  const _SegmentedTabs({
-    required this.tabs,
-    required this.activeTab,
-    required this.onChanged,
-  });
-
-  final List<TradeActiveCopiesTab> tabs;
-  final String activeTab;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSegmentedTabBar(
-      activeKey: activeTab,
-      onChanged: onChanged,
-      tabs: [
-        for (final tab in tabs)
-          VitTabItem(
-            key: tab.id,
-            label: tab.label,
-            widgetKey: ActiveCopiesPage.tabKey(tab.id),
-          ),
-      ],
-    );
-  }
-}
-
 class _ActiveCopyCard extends StatelessWidget {
   const _ActiveCopyCard({
     super.key,
@@ -268,7 +241,7 @@ class _ActiveCopyCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         _StatusPill(style: status),
@@ -306,7 +279,7 @@ class _ActiveCopyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -332,10 +305,10 @@ class _ActiveCopyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ReturnBar(value: copy.pnlPct),
           if (expanded) ...[
-            const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _ExpandedCopyDetails(
               copy: copy,
               onViewDetails: onViewDetails,

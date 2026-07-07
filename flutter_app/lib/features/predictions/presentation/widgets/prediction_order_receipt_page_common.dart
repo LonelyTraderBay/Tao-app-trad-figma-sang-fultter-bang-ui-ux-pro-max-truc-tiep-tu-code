@@ -71,12 +71,12 @@ class _FillProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         const SizedBox(
           height: AppSpacing.predictionReceiptTimelineLineWidth,
           child: ColoredBox(color: AppColors.divider),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             Text(
@@ -169,7 +169,7 @@ class _TimelineStep extends StatelessWidget {
                     step.date,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                if (!isLast) const SizedBox(height: AppSpacing.x2),
+                if (!isLast) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ),
           ),

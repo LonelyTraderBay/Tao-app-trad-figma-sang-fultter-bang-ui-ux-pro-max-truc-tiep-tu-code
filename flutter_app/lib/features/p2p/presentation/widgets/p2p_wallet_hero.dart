@@ -82,7 +82,7 @@ class _WalletHero extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(
@@ -129,6 +129,7 @@ class _HeroActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
@@ -182,7 +183,7 @@ class _WalletInfoBanner extends StatelessWidget {
       borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
       padding: AppSpacing.p2pWalletNoticePadding,
       iconSize: AppSpacing.p2pWalletInfoIcon,
-      messageStyle: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
+      messageStyle: AppTextStyles.caption.copyWith(color: AppColors.text2),
     );
   }
 }

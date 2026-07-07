@@ -40,7 +40,7 @@ class _ExportSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -156,7 +156,7 @@ class _HistoryList extends StatelessWidget {
       children: [
         for (final item in history) ...[
           _HistoryCard(item: item),
-          if (item != history.last) const SizedBox(height: AppSpacing.x3),
+          if (item != history.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -207,7 +207,7 @@ class _HistoryCard extends StatelessWidget {
               _StatusPill(label: _statusLabel(item.status), color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -219,7 +219,7 @@ class _HistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Tạo ${item.createdAt} · Hết hạn ${item.expiresAt}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

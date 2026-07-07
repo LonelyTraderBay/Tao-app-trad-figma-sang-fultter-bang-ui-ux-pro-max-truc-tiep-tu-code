@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -109,24 +110,58 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
-                      gap: VitContentGap.tight,
                       fullBleed: true,
                       density: VitDensity.compact,
                       children: [
-                        _FilterRail(
+                        _AnnouncementTypeFilters(
                           filters: snapshot.filters,
                           activeFilterId: _activeFilterId,
                           onChanged: _setFilter,
                         ),
-                        _AnnouncementsBody(
-                          screenState: snapshot.screenState,
-                          pinned: pinned,
-                          regular: regular,
-                          expandedId: _expandedId,
-                          onToggle: _toggleExpanded,
-                          onRetry: () => setState(() {}),
-                        ),
+                        ...switch (snapshot.screenState) {
+                          SupportScreenState.loading => [
+                            const VitSkeletonList(
+                              key: AnnouncementsPage.loadingKey,
+                              rows: 4,
+                            ),
+                          ],
+                          SupportScreenState.error => [
+                            VitErrorState(
+                              key: AnnouncementsPage.errorKey,
+                              title: 'Không tải được thông báo',
+                              message: 'Kiểm tra kết nối và thử lại.',
+                              actionLabel: 'Thử lại',
+                              onAction: () => setState(() {}),
+                            ),
+                          ],
+                          SupportScreenState.empty ||
+                          SupportScreenState.offline
+                              when pinned.isEmpty && regular.isEmpty => [
+                            const VitEmptyState(
+                              key: AnnouncementsPage.emptyKey,
+                              title: 'Không có thông báo nào',
+                              message:
+                                  'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
+                              icon: Icons.notifications_none_rounded,
+                            ),
+                          ],
+                          _ => [
+                            if (pinned.isNotEmpty)
+                              _PinnedSection(
+                                announcements: pinned,
+                                expandedId: _expandedId,
+                                onToggle: _toggleExpanded,
+                              ),
+                            _AnnouncementList(
+                              announcements: regular,
+                              showEmpty: pinned.isEmpty && regular.isEmpty,
+                              expandedId: _expandedId,
+                              onToggle: _toggleExpanded,
+                            ),
+                          ],
+                        },
                       ],
                     ),
                   ),

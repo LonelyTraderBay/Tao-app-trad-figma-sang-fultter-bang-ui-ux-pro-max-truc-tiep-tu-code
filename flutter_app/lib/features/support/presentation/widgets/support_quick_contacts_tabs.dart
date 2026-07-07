@@ -1,87 +1,95 @@
 part of '../pages/support_page.dart';
 
-class _SupportHubBody extends StatelessWidget {
-  const _SupportHubBody({
-    required this.snapshot,
-    required this.supportContext,
-    required this.showFaq,
-    required this.expandedFaqIndex,
-    required this.activeTickets,
-    required this.doneTickets,
-    required this.onShowTickets,
-    required this.onShowFaq,
-    required this.onToggleFaq,
-    required this.onRetry,
-  });
-
-  final SupportHubSnapshot snapshot;
-  final ProductSupportContext? supportContext;
-  final bool showFaq;
-  final int? expandedFaqIndex;
-  final List<SupportTicketDraft> activeTickets;
-  final List<SupportTicketDraft> doneTickets;
-  final VoidCallback onShowTickets;
-  final VoidCallback onShowFaq;
-  final ValueChanged<int> onToggleFaq;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.screenState) {
-      SupportScreenState.loading => const VitSkeletonList(
-        key: SupportPage.loadingKey,
-        rows: 4,
-      ),
-      SupportScreenState.error => VitErrorState(
+List<Widget> _supportHubPageChildren({
+  required SupportHubSnapshot snapshot,
+  required ProductSupportContext? supportContext,
+  required bool showFaq,
+  required int? expandedFaqIndex,
+  required List<SupportTicketDraft> activeTickets,
+  required List<SupportTicketDraft> doneTickets,
+  required VoidCallback onShowTickets,
+  required VoidCallback onShowFaq,
+  required ValueChanged<int> onToggleFaq,
+  required VoidCallback onRetry,
+}) {
+  return switch (snapshot.screenState) {
+    SupportScreenState.loading => [
+      const VitSkeletonList(key: SupportPage.loadingKey, rows: 4),
+    ],
+    SupportScreenState.error => [
+      VitErrorState(
         key: SupportPage.errorKey,
         title: 'Không tải được hub hỗ trợ',
         message: 'Kiểm tra kết nối và thử lại.',
         actionLabel: 'Thử lại',
         onAction: onRetry,
       ),
-      SupportScreenState.empty ||
-      SupportScreenState.offline when snapshot.tickets.isEmpty &&
-          snapshot.faqItems.isEmpty =>
+    ],
+    SupportScreenState.empty ||
+    SupportScreenState.offline when snapshot.tickets.isEmpty &&
+        snapshot.faqItems.isEmpty =>
+      [
         const VitEmptyState(
           title: 'Chưa có nội dung hỗ trợ',
           message: 'Ticket và FAQ sẽ hiển thị tại đây khi có dữ liệu.',
           icon: Icons.support_agent_rounded,
         ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (supportContext != null)
-            Padding(
-              padding: AppSpacing.supportContentPadding,
-              child: _SupportContextCard(supportContext: supportContext!),
-            ),
-          _QuickContactGrid(snapshot: snapshot),
-          Padding(
-            padding: AppSpacing.supportContentPadding,
-            child: _SupportTabs(
-              ticketCount: snapshot.tickets.length,
-              showFaq: showFaq,
-              onShowTickets: onShowTickets,
-              onShowFaq: onShowFaq,
-            ),
-          ),
-          Padding(
-            padding: AppSpacing.supportContentPadding,
-            child: showFaq
-                ? _FaqPanel(
-                    items: snapshot.faqItems,
-                    expandedIndex: expandedFaqIndex,
-                    onToggle: onToggleFaq,
-                  )
-                : _TicketsPanel(
-                    activeTickets: activeTickets,
-                    doneTickets: doneTickets,
-                  ),
-          ),
-        ],
+      ],
+    _ => _supportHubReadySections(
+      snapshot: snapshot,
+      supportContext: supportContext,
+      showFaq: showFaq,
+      expandedFaqIndex: expandedFaqIndex,
+      activeTickets: activeTickets,
+      doneTickets: doneTickets,
+      onShowTickets: onShowTickets,
+      onShowFaq: onShowFaq,
+      onToggleFaq: onToggleFaq,
+    ),
+  };
+}
+
+List<Widget> _supportHubReadySections({
+  required SupportHubSnapshot snapshot,
+  required ProductSupportContext? supportContext,
+  required bool showFaq,
+  required int? expandedFaqIndex,
+  required List<SupportTicketDraft> activeTickets,
+  required List<SupportTicketDraft> doneTickets,
+  required VoidCallback onShowTickets,
+  required VoidCallback onShowFaq,
+  required ValueChanged<int> onToggleFaq,
+}) {
+  return [
+    if (supportContext != null)
+      Padding(
+        padding: AppSpacing.supportContentPadding,
+        child: _SupportContextCard(supportContext: supportContext),
       ),
-    };
-  }
+    _QuickContactGrid(snapshot: snapshot),
+    Padding(
+      padding: AppSpacing.supportContentPadding,
+      child: _SupportTabs(
+        ticketCount: snapshot.tickets.length,
+        showFaq: showFaq,
+        onShowTickets: onShowTickets,
+        onShowFaq: onShowFaq,
+      ),
+    ),
+    Padding(
+      padding: AppSpacing.supportContentPadding,
+      child: showFaq
+          ? _FaqPanel(
+              items: snapshot.faqItems,
+              expandedIndex: expandedFaqIndex,
+              onToggle: onToggleFaq,
+            )
+          : _TicketsPanel(
+              activeTickets: activeTickets,
+              doneTickets: doneTickets,
+            ),
+    ),
+  ];
 }
 
 class _QuickContactGrid extends StatelessWidget {
@@ -121,7 +129,7 @@ class _QuickContactGrid extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

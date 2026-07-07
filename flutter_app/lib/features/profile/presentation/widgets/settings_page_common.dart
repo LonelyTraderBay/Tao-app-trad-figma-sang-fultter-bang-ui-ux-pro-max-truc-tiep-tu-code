@@ -22,7 +22,7 @@ class _AppInfoCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final row in rows) ...[
             Row(
               children: [
@@ -46,7 +46,7 @@ class _AppInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: AppSpacing.x2),
+            if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

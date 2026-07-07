@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -18,7 +19,6 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
-const _blockedActionExtent = AppSpacing.arenaBlockedActionHeight;
 const _blockedBodyLineRatio = AppSpacing.arenaBlockedBodyLineHeight;
 const _blockedDialogLineRatio = AppSpacing.arenaBlockedDialogLineHeight;
 const _blockedDividerExtent = AppSpacing.arenaPointsDividerHeight;
@@ -93,6 +93,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                     padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: _blockedUsers.isEmpty
                         ? VitPageContent(
+         rhythm: VitPageRhythm.standard,
                             key: ArenaBlockedUsersPage.emptyKey,
                             padding: VitContentPadding.none,
                             children: [
@@ -303,7 +304,7 @@ class _BlockedUserRow extends StatelessWidget {
                     accentColor: AppColors.warn,
                     onTap: onUnblock,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _SmallActionButton(
                     key: ArenaBlockedUsersPage.viewProfileKey(user.id),
                     label: 'Xem hồ sơ',
@@ -381,7 +382,6 @@ class _SmallActionButton extends StatelessWidget {
         selected: true,
         onTap: onTap,
         accentColor: accentColor,
-        height: _blockedActionExtent,
         padding: AppSpacing.arenaBlockedActionPadding,
       ),
     );

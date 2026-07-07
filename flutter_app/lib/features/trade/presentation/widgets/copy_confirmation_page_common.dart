@@ -33,7 +33,7 @@ class _ConsentTile extends StatelessWidget {
           Expanded(
             child: Text(
               item.label,
-              style: AppTextStyles.captionSm.copyWith(color: AppColors.text1),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text1),
             ),
           ),
         ],
@@ -65,7 +65,7 @@ class _CoolingOffCard extends StatelessWidget {
           Expanded(
             child: Text(
               'Sau khi xác nhận, bạn có $hours giờ cooling-off để review lại quyết định trước khi copy chính thức kích hoạt.',
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: _confirmationPrimary,
               ),
             ),
@@ -100,7 +100,7 @@ class _NextStepsCard extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var index = 0; index < steps.length; index++) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +120,7 @@ class _NextStepsCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     steps[index],
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                     ),
                   ),
@@ -128,7 +128,7 @@ class _NextStepsCard extends StatelessWidget {
               ],
             ),
             if (index != steps.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

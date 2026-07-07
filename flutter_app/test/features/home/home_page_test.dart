@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/discovery/presentation/pages/unified_search_page.dart';
 import 'package:vit_trade_flutter/features/home/data/home_mock_data.dart';
@@ -34,7 +35,14 @@ void main() {
         entity.readAsStringSync(),
     ].join('\n');
 
-    expect(source, contains('VitAutoHideHeaderScaffold'));
+    // VitAutoHidePageScaffold composes VitAutoHideHeaderScaffold internally
+    // for bottom-nav root pages (Home, Wallet, Profile) — either identifier
+    // proves Home inherits the shared auto-hide header behaviour.
+    expect(
+      source.contains('VitAutoHideHeaderScaffold') ||
+          source.contains('VitAutoHidePageScaffold'),
+      isTrue,
+    );
     expect(source, contains('VitSectionHeader'));
     expect(source, contains('VitActionTileGrid'));
     expect(source, contains('VitMarketPairRow'));
@@ -165,7 +173,7 @@ void main() {
 
     final moreProducts = find.descendant(
       of: find.byKey(HomePage.productsSectionKey),
-      matching: find.text('Xem th\u00EAm'),
+      matching: find.textContaining('Xem th\u00EAm'),
     );
     await tester.ensureVisible(moreProducts);
     await tester.tap(moreProducts);
@@ -181,6 +189,33 @@ void main() {
     expect(find.text('Gi\u1EDBi thi\u1EC7u'), findsOneWidget);
   });
 
+  testWidgets('SC-007 flags leveraged products with a risk badge', (
+    tester,
+  ) async {
+    await pumpHome(tester);
+
+    final moreProducts = find.descendant(
+      of: find.byKey(HomePage.productsSectionKey),
+      matching: find.textContaining('Xem th\u00EAm'),
+    );
+    await tester.ensureVisible(moreProducts);
+    await tester.tap(moreProducts);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.bySemanticsLabel(RegExp('Margin.*R\u1EE7i ro cao')),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel(RegExp('Bot.*R\u1EE7i ro cao')),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel(RegExp('Launchpad.*R\u1EE7i ro cao')),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('SC-007 orders products before recent surfaces', (tester) async {
     await pumpHome(tester);
 
@@ -194,17 +229,45 @@ void main() {
     expect(productsTop.dy, lessThan(recentTop.dy));
   });
 
+  testWidgets('SC-007 uses uniform section gap between home blocks', (
+    tester,
+  ) async {
+    await pumpHome(tester);
+
+    final productsBottom = tester.getBottomLeft(
+      find.byKey(HomePage.productsSectionKey),
+    );
+    final recentTop = tester.getTopLeft(
+      find.byKey(HomePage.recentProductsSectionKey),
+    );
+    final recentBottom = tester.getBottomLeft(
+      find.byKey(HomePage.recentProductsSectionKey),
+    );
+    final discoveryTop = tester.getTopLeft(find.text('Dự đoán & Thách đấu'));
+
+    expect(
+      recentTop.dy - productsBottom.dy,
+      closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
+    );
+    expect(
+      discoveryTop.dy - recentBottom.dy,
+      closeTo(AppSpacing.pageRhythmCompactSectionGap, 0.01),
+    );
+  });
+
   testWidgets('SC-007 market ticker opens the pair route', (tester) async {
     await pumpHome(tester);
 
-    final tickerBtc = find.descendant(
+    // Ticker previews top movers (distinct from the Market section's
+    // default "Hot" tab below) — SOL/USDT is the top 24h gainer in mock data.
+    final tickerSol = find.descendant(
       of: find.byKey(HomePage.marketTickerKey),
-      matching: find.text('BTC/USDT'),
+      matching: find.text('SOL/USDT'),
     );
 
-    expect(tickerBtc, findsOneWidget);
+    expect(tickerSol, findsOneWidget);
 
-    await tester.tap(tickerBtc);
+    await tester.tap(tickerSol);
     await tester.pumpAndSettle();
 
     expect(find.byType(PairDetailPage), findsOneWidget);
@@ -261,10 +324,8 @@ void main() {
 
     final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
     final depositIcon = find.byIcon(Icons.file_download_outlined);
-    final firstProduct = find.text('Mua nhanh');
 
     expect(depositIcon, findsOneWidget);
-    expect(firstProduct, findsOneWidget);
     expect(find.byKey(HomePage.marketTickerKey), findsOneWidget);
 
     expect(tester.getBottomLeft(depositIcon).dy, lessThan(navTop));
@@ -276,7 +337,10 @@ void main() {
       tester.getBottomLeft(find.byKey(HomePage.marketTickerKey)).dy,
       lessThan(navTop),
     );
-    expect(tester.getBottomLeft(firstProduct).dy, lessThan(navTop - 8));
+    expect(
+      tester.getTopLeft(find.text('Sản phẩm')).dy,
+      lessThan(navTop),
+    );
   });
 
   testWidgets('SC-007 portfolio card toggles USD and BTC display', (

@@ -73,7 +73,7 @@ class _ModesTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Expanded(
@@ -215,14 +215,14 @@ class _AboutTab extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           padding: AppSpacing.arenaCreatorCardPadding,
           child: Column(
             children: [
               for (final row in rows) ...[
                 _AboutRow(row: row),
-                if (row != rows.last) const SizedBox(height: AppSpacing.x3),
+                if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),

@@ -16,18 +16,24 @@ class _FeaturedModesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitModuleSectionHeader(
-          title: 'Mode nổi bật',
-          accentColor: AppColors.primary,
-          actionLabel: 'Xem tất cả',
-          onAction: onViewAll,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitModuleSectionHeader(
+              title: 'Mode nổi bật',
+              accentColor: AppColors.primary,
+              actionLabel: 'Xem tất cả',
+              onAction: onViewAll,
+              density: VitDensity.compact,
+              bottomGap: 0,
+            ),
+            Text(
+              'Được cộng đồng yêu thích',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x1),
-        Text(
-          'Được cộng đồng yêu thích',
-          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -153,8 +159,8 @@ class _LiveRoomsSection extends StatelessWidget {
           const VitModuleSectionHeader(
             title: 'Phòng đang mở',
             accentColor: AppColors.warn,
+            density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
           VitEmptyState(
             title: 'Chưa có phòng mở',
             message: 'Tạo thử thách mới hoặc tham gia mode nổi bật bên dưới.',
@@ -174,11 +180,14 @@ class _LiveRoomsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(
+            Expanded(
               child: VitModuleSectionHeader(
                 title: 'Phòng đang mở',
                 accentColor: AppColors.warn,
+                density: VitDensity.compact,
+                bottomGap: 0,
               ),
             ),
             VitStatusPill(
@@ -194,7 +203,7 @@ class _LiveRoomsSection extends StatelessWidget {
           'Tham gia ngay hoặc xem',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,
@@ -339,8 +348,8 @@ class _CreatorSpotlightSection extends StatelessWidget {
         const VitModuleSectionHeader(
           title: 'Creator nổi bật',
           accentColor: AppColors.buy,
+          density: VitDensity.compact,
         ),
-        const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
@@ -470,7 +479,7 @@ class _PredictionBridge extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -490,14 +499,14 @@ class _PredictionBridge extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Theo dõi các prediction events liên quan',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Xem Prediction Markets',
                   style: AppTextStyles.micro.copyWith(

@@ -17,7 +17,7 @@ class _SubAccountDetails extends StatelessWidget {
             height: AppSpacing.profileSubAccountDetailsDividerHeight,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -43,7 +43,7 @@ class _SubAccountDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Quy\u1EC1n h\u1EA1n:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -60,7 +60,7 @@ class _SubAccountDetails extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text.rich(
             TextSpan(
               text: 'Email: ',
@@ -73,7 +73,7 @@ class _SubAccountDetails extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -132,7 +132,7 @@ class _DetailMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           value,
           maxLines: 1,

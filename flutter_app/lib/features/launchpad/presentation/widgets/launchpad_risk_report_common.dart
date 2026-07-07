@@ -20,9 +20,9 @@ class _ReportTab extends StatelessWidget {
                 _ComparisonProjectCard(project: project),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _RiskDistributionCard(projects: snapshot.comparisonProjects),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitPageSection(
             label: 'Tai lieu tham khao',
             accentColor: AppColors.primary,
@@ -31,7 +31,7 @@ class _ReportTab extends StatelessWidget {
                 _ResourceRow(resource: resource),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           DecoratedBox(
             decoration: const ShapeDecoration(
               color: AppColors.primary08,
@@ -120,7 +120,7 @@ class _ComparisonProjectCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ScoreProgress(value: project.score.overall, color: color),
         ],
       ),
@@ -149,7 +149,7 @@ class _RiskDistributionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ClipRRect(
             borderRadius: AppRadii.inputRadius,
             child: SizedBox(
@@ -165,7 +165,7 @@ class _RiskDistributionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           GridView.count(
             crossAxisCount: AppSpacing.launchpadGridColumns,
             mainAxisSpacing: AppSpacing.x2,

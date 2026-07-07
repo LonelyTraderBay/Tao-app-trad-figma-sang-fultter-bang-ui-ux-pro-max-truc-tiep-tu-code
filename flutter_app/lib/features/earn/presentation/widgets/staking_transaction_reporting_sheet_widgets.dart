@@ -20,16 +20,16 @@ class _MethodSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const _SheetTitle(title: 'Select Cost Basis Method'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final method in methods) ...[
             _MethodOption(
               method: method,
               selected: method.value == selected,
               onTap: () => onChanged(method.value),
             ),
-            if (method != methods.last) const SizedBox(height: AppSpacing.x3),
+            if (method != methods.last) const SizedBox(height: AppSpacing.rowGap),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
@@ -95,7 +95,7 @@ class _MethodOption extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(method.label, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   method.description,
                   style: AppTextStyles.caption.copyWith(
@@ -126,14 +126,14 @@ class _ExportSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const _SheetTitle(title: 'Export Options'),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ExportGroup(title: 'Tax Forms (PDF)', options: snapshot.taxForms),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ExportGroup(
             title: 'Third-Party Integrations',
             options: snapshot.integrations,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ExportGroup(title: 'Raw Data', options: snapshot.rawDataFormats),
         ],
       ),

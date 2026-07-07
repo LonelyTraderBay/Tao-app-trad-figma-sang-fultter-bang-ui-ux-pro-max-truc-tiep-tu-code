@@ -31,7 +31,7 @@ class ArenaModeQualitySection extends StatelessWidget {
           title: 'Chất lượng & Tin cậy',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -47,7 +47,7 @@ class ArenaModeQualitySection extends StatelessWidget {
             return _QualityMetricCard(metric: metric);
           },
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Align(
           alignment: Alignment.centerLeft,
           child: VitCtaButton(
@@ -160,10 +160,10 @@ class ArenaModeTrustSheet extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             for (final metric in snapshot.qualityMetrics) ...[
               _TrustSheetRow(metric: metric),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
             VitCard(
               variant: VitCardVariant.inner,

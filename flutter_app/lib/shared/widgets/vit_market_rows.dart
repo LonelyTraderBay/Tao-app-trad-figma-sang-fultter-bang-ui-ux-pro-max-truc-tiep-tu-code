@@ -115,7 +115,7 @@ class VitMarketPairRow extends StatelessWidget {
                   ),
                 ),
               ],
-\            ),
+            ),
           ),
         ],
       ),

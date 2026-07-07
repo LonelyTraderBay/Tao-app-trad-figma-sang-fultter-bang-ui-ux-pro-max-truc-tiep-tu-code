@@ -40,11 +40,10 @@ class _ProgressHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -98,7 +97,7 @@ class _QuestionCard extends StatelessWidget {
                   children: [
                     Text(question.question, style: AppTextStyles.baseMedium),
                     if (question.helpText != null) ...[
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         question.helpText!,
                         style: AppTextStyles.caption.copyWith(
@@ -112,7 +111,7 @@ class _QuestionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final option in question.options) ...[
             _RiskOptionTile(
               key: option.value == 0
@@ -127,10 +126,10 @@ class _QuestionCard extends StatelessWidget {
               onTap: () => onSelected(question, option.value),
             ),
             if (option != question.options.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           if (index > 0) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               key: SavingsRiskAssessmentPage.previousButtonKey,
               variant: VitCtaButtonVariant.ghost,

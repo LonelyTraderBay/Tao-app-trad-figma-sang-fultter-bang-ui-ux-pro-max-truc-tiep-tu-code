@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -80,6 +81,7 @@ class _StakingRecommendationsPageState
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -104,7 +106,7 @@ class _StakingRecommendationsPageState
                           Column(
                             key: StakingRecommendationsKeys.strategyList,
                             children: [
-                              for (final strategy in snapshot.strategies) ...[
+                              for (final strategy in snapshot.strategies)
                                 StakingRecommendationsStrategyCard(
                                   key: StakingRecommendationsKeys.strategy(
                                     strategy.id,
@@ -116,9 +118,6 @@ class _StakingRecommendationsPageState
                                     snapshot.stakingRoute,
                                   ),
                                 ),
-                                if (strategy != snapshot.strategies.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
                             ],
                           ),
                         ],
@@ -130,11 +129,8 @@ class _StakingRecommendationsPageState
                         children: [
                           Column(
                             children: [
-                              for (final tip in snapshot.tips) ...[
+                              for (final tip in snapshot.tips)
                                 StakingRecommendationsTipCard(tip: tip),
-                                if (tip != snapshot.tips.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
                             ],
                           ),
                         ],

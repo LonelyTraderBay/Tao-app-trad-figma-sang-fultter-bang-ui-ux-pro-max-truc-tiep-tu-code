@@ -32,6 +32,7 @@ class _SummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: _networkSummaryIconSize,
                 height: _networkSummaryIconSize,
@@ -120,46 +121,6 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-class _NetworkFilterTabs extends StatelessWidget {
-  const _NetworkFilterTabs({
-    required this.active,
-    required this.snapshot,
-    required this.onChanged,
-  });
-
-  final _NetworkStatusFilter active;
-  final WalletNetworkStatusSnapshot snapshot;
-  final ValueChanged<_NetworkStatusFilter> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitTabBar(
-      variant: VitTabBarVariant.segment,
-      activeKey: active.key,
-      onChanged: (key) => onChanged(_networkFilterFromKey(key)),
-      tabs: [
-        for (final filter in _NetworkStatusFilter.values)
-          VitTabItem(
-            key: filter.key,
-            label: _filterLabel(filter),
-            icon: filter.icon,
-            widgetKey: NetworkStatusPage.filterKey(filter.key),
-          ),
-      ],
-    );
-  }
-
-  String _filterLabel(_NetworkStatusFilter filter) {
-    return switch (filter) {
-      _NetworkStatusFilter.all => '${filter.label} ${snapshot.networks.length}',
-      _NetworkStatusFilter.issues =>
-        '${filter.label} ${snapshot.issueCount + snapshot.downCount}',
-      _NetworkStatusFilter.maintenance =>
-        '${filter.label} ${snapshot.downCount}',
-    };
-  }
-}
-
 class _SummaryStat extends StatelessWidget {
   const _SummaryStat({
     required this.value,
@@ -174,6 +135,7 @@ class _SummaryStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       child: VitCard(
         variant: VitCardVariant.inner,
         height: _networkSummaryStatHeight,

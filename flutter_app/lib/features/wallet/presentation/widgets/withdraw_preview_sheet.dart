@@ -71,7 +71,7 @@ class WithdrawPreviewSheet extends StatelessWidget {
                   onTap: () => Navigator.of(context).pop(),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3 - AppSpacing.x1),
+              const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
               Expanded(
                 child: WithdrawConfirmActionButton(
                   key: withdrawConfirmWithdrawKey,

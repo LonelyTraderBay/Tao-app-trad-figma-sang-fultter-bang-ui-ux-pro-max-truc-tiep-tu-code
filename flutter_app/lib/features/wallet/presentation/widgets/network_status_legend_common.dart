@@ -84,6 +84,7 @@ class _TokenLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _networkLogoSize,
       width: _networkLogoSize,

@@ -59,6 +59,7 @@ class _BalanceCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: AppSpacing.tradeBotClientMoneyBalanceIcon,
                 height: AppSpacing.tradeBotClientMoneyBalanceIcon,
@@ -100,7 +101,7 @@ class _BalanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -160,6 +161,7 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -171,6 +173,7 @@ class _Overview extends StatelessWidget {
           children: [
             _Card(
               child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
                 density: VitDensity.compact,
@@ -221,7 +224,6 @@ class _Overview extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
                   Text(
                     snapshot.insolvencyDetail,
                     style: AppTextStyles.caption.copyWith(

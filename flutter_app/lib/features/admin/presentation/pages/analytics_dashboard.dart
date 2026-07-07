@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -72,7 +73,7 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
                 physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
-                  customGap: AppSpacing.x5,
+                  rhythm: VitPageRhythm.standard,
                   children: [
                     AdminDashboardStateContent(
                       status: controller.state.status,

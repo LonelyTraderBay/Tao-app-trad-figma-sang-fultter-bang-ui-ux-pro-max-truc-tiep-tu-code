@@ -136,7 +136,7 @@ class _ChallengeRow extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Wrap(
                           spacing: AppSpacing.x2,
                           runSpacing: AppSpacing.x1,
@@ -168,7 +168,7 @@ class _ChallengeRow extends StatelessWidget {
                         label: _stateLabel(challenge.state),
                         color: statusColor,
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Text(
                         'Xem',
                         style: AppTextStyles.micro.copyWith(
@@ -246,7 +246,7 @@ class _SavedModesList extends StatelessWidget {
                                     fontWeight: AppTextStyles.bold,
                                   ),
                                 ),
-                                const SizedBox(height: AppSpacing.x2),
+                                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                                 Wrap(
                                   spacing: AppSpacing.x2,
                                   runSpacing: AppSpacing.x1,
@@ -352,7 +352,7 @@ class _DraftList extends StatelessWidget {
                                     fontWeight: AppTextStyles.bold,
                                   ),
                                 ),
-                                const SizedBox(height: AppSpacing.x2),
+                                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                                 Row(
                                   children: [
                                     _MetaText(drafts[i].format),
@@ -403,6 +403,7 @@ class _CreatedModesSection extends StatelessWidget {
         VitModuleSectionHeader(
           title: 'Mode đã tạo (${snapshot.stats.modesCreated})',
           accentColor: AppColors.accent,
+          density: VitDensity.compact,
         ),
         VitCard(
           onTap: onTap,
@@ -424,7 +425,7 @@ class _CreatedModesSection extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       'Quản lý modes và xem thống kê',
                       style: AppTextStyles.micro.copyWith(

@@ -21,7 +21,7 @@ class _ExpandedDetails extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         DecoratedBox(
           decoration: const ShapeDecoration(
             color: AppColors.warn08,
@@ -62,7 +62,7 @@ class _ExpandedDetails extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Text(
@@ -79,7 +79,7 @@ class _ExpandedDetails extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: const SizedBox(

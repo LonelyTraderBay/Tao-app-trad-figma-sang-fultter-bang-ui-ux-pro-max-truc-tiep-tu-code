@@ -26,7 +26,7 @@ class _PaymentMethodGroup extends StatelessWidget {
             const SizedBox(width: AppSpacing.walletBuyGroupIconGap),
             Text(
               label,
-              style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ],
         ),
@@ -69,6 +69,7 @@ class _PaymentMethodCard extends StatelessWidget {
       background: ColoredBox(color: selected ? AppColors.primary08 : _buyPanel),
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: AppSpacing.walletBuyPaymentLogoSize,
             height: AppSpacing.walletBuyPaymentLogoSize,
@@ -101,7 +102,7 @@ class _PaymentMethodCard extends StatelessWidget {
                         method.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.captionSm,
+                        style: AppTextStyles.caption,
                       ),
                     ),
                     if (method.isPopular) ...[

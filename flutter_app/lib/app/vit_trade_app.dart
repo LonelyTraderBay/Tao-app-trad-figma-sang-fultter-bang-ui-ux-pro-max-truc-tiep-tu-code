@@ -73,7 +73,7 @@ class _VitTradeMaterialApp extends StatelessWidget {
           titleLarge: AppTextStyles.sectionTitle,
           titleMedium: AppTextStyles.baseMedium,
           titleSmall: AppTextStyles.sectionTitleSm,
-          bodySmall: AppTextStyles.captionSm,
+          bodySmall: AppTextStyles.caption,
           bodyMedium: AppTextStyles.body,
           bodyLarge: AppTextStyles.base,
           labelSmall: AppTextStyles.micro,

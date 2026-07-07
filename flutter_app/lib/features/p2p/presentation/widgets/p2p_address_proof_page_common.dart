@@ -14,12 +14,12 @@ class _AddressConfirmCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SectionTitle(
-            icon: Icons.location_on_outlined,
+          VitSectionHeader(
             title: 'Xác nhận địa chỉ',
-            color: AppModuleAccents.p2p,
+            icon: Icons.location_on_outlined,
+            iconColor: AppModuleAccents.p2p,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: _p2pAddressProofSectionGap),
           Text(
             address,
             style: AppTextStyles.baseMedium.copyWith(
@@ -67,12 +67,12 @@ class _SecurityCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
-            icon: Icons.verified_user_outlined,
+          const VitSectionHeader(
             title: 'Bảo mật thông tin',
-            color: AppColors.buy,
+            icon: Icons.verified_user_outlined,
+            iconColor: AppColors.buy,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: _p2pAddressProofSectionGap),
           for (final note in snapshot.securityNotes) ...[
             _ChecklistRow(text: note, color: AppColors.buy),
             if (note != snapshot.securityNotes.last)
@@ -80,36 +80,6 @@ class _SecurityCard extends StatelessWidget {
           ],
         ],
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.title,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String title;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: AppSpacing.iconSm),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

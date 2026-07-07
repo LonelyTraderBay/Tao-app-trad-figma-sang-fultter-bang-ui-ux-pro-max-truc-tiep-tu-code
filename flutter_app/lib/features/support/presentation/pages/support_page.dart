@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -123,24 +124,23 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        _SupportHubBody(
-                          snapshot: snapshot,
-                          supportContext: widget.supportContext,
-                          showFaq: _showFaq,
-                          expandedFaqIndex: _expandedFaqIndex,
-                          activeTickets: activeTickets,
-                          doneTickets: doneTickets,
-                          onShowTickets: () => _setFaq(false),
-                          onShowFaq: () => _setFaq(true),
-                          onToggleFaq: _toggleFaq,
-                          onRetry: () => setState(() {}),
-                        ),
-                      ],
+                      children: _supportHubPageChildren(
+                        snapshot: snapshot,
+                        supportContext: widget.supportContext,
+                        showFaq: _showFaq,
+                        expandedFaqIndex: _expandedFaqIndex,
+                        activeTickets: activeTickets,
+                        doneTickets: doneTickets,
+                        onShowTickets: () => _setFaq(false),
+                        onShowFaq: () => _setFaq(true),
+                        onToggleFaq: _toggleFaq,
+                        onRetry: () => setState(() {}),
+                      ),
                     ),
                   ),
                 ),

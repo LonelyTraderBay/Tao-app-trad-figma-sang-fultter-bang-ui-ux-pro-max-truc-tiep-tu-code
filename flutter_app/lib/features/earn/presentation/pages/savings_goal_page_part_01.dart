@@ -39,6 +39,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -53,14 +54,11 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
                         label: 'Đang thực hiện',
                         accentColor: AppColors.primary,
                         children: [
-                          for (final goal in activeGoals) ...[
+                          for (final goal in activeGoals)
                             _GoalCard(
                               goal: goal,
                               onTap: () => _openGoalDetail(goal),
                             ),
-                            if (goal != activeGoals.last)
-                              const SizedBox(height: AppSpacing.x3),
-                          ],
                         ],
                       ),
                       VitPageSection(
@@ -78,11 +76,8 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
                         label: 'Mẹo tiết kiệm',
                         accentColor: AppColors.accent,
                         children: [
-                          for (final tip in snapshot.tips) ...[
+                          for (final tip in snapshot.tips)
                             _TipCard(tip: tip),
-                            if (tip != snapshot.tips.last)
-                              const SizedBox(height: AppSpacing.x3),
-                          ],
                         ],
                       ),
                       const SavingsToolsYieldFooter(),
@@ -215,7 +210,7 @@ class _GoalSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -365,7 +360,7 @@ class _GoalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -386,11 +381,11 @@ class _GoalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ProgressBar(progress: progress, color: accent),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _MilestoneRail(goal: goal, color: accent, unlocked: unlocked),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           if (completed)
             Row(
               children: [

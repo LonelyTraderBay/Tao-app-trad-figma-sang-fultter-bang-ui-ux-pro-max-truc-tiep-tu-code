@@ -90,7 +90,7 @@ class _LiquidationRow extends StatelessWidget {
           ),
           Text(
             formatLiveMarketCompactUsd(liquidation.size),
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,

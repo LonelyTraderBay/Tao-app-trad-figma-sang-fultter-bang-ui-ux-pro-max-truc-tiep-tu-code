@@ -159,6 +159,7 @@ class _VerifiedToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: ProviderLeaderboardPage.verifiedToggleKey,
       height: _leaderControlExtent,

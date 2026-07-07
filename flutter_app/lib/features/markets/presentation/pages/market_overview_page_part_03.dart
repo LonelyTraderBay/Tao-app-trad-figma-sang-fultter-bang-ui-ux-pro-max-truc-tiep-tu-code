@@ -35,7 +35,7 @@ class _FearGreedHistory extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -153,7 +153,7 @@ class _MarketTools extends StatelessWidget {
                 Expanded(child: tools[1]),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
                 Expanded(child: tools[2]),
@@ -231,7 +231,7 @@ class _MiniHeader extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
               height: AppTextStyles.badge.height,
@@ -266,26 +266,6 @@ class _IconBubble extends StatelessWidget {
         child: Center(
           child: Icon(icon, color: color, size: iconSize),
         ),
-      ),
-    );
-  }
-}
-
-class _ChangePill extends StatelessWidget {
-  const _ChangePill({required this.value});
-
-  final double value;
-
-  @override
-  Widget build(BuildContext context) {
-    final positive = value >= 0;
-    return Padding(
-      padding: AppSpacing.marketMetricDeltaPillPadding,
-      child: VitMetricDeltaPill(
-        label: '${value.abs().toStringAsFixed(2)}%',
-        tone: positive
-            ? VitMetricDeltaTone.positive
-            : VitMetricDeltaTone.negative,
       ),
     );
   }

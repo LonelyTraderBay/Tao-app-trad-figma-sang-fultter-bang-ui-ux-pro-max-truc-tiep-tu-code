@@ -97,6 +97,7 @@ class _MistakeCard extends StatelessWidget {
       density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -126,6 +127,7 @@ class _MistakeCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x6),
               Expanded(
                 child: VitPageContent(
+       rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.none,
                   density: VitDensity.compact,
                   children: [

@@ -12,10 +12,12 @@ class HomeAnnouncementBanner extends StatefulWidget {
     super.key,
     required this.announcements,
     required this.onDismiss,
+    required this.onNavigate,
   });
 
   final List<HomeAnnouncement> announcements;
   final ValueChanged<HomeAnnouncement> onDismiss;
+  final ValueChanged<String> onNavigate;
 
   @override
   State<HomeAnnouncementBanner> createState() => _HomeAnnouncementBannerState();
@@ -70,6 +72,21 @@ class _HomeAnnouncementBannerState extends State<HomeAnnouncementBanner> {
     _startAutoAdvance();
   }
 
+  /// With more than one announcement, tapping cycles the carousel (there is
+  /// somewhere else to go: the next item). With exactly one announcement,
+  /// cycling is a dead end, so tapping should act on it instead — otherwise
+  /// e.g. a lone "Bật 2FA" security prompt would be untappable.
+  void _handleTap(HomeAnnouncement announcement) {
+    if (widget.announcements.length > 1) {
+      _showNextAnnouncement();
+      return;
+    }
+    final routePath = announcement.routePath;
+    if (routePath != null) {
+      widget.onNavigate(routePath);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final announcement = widget.announcements[_activeIndex];
@@ -82,7 +99,7 @@ class _HomeAnnouncementBannerState extends State<HomeAnnouncementBanner> {
       showCompactDots: true,
       icon: _announcementIcon(announcement.type),
       accentColor: _announcementColor(announcement.type),
-      onTap: _showNextAnnouncement,
+      onTap: () => _handleTap(announcement),
       onDismiss: () => widget.onDismiss(announcement),
     );
   }
@@ -99,7 +116,7 @@ class _HomeAnnouncementBannerState extends State<HomeAnnouncementBanner> {
   Color _announcementColor(HomeAnnouncementType type) {
     return switch (type) {
       HomeAnnouncementType.security => AppColors.info,
-      HomeAnnouncementType.risk => AppColors.warn,
+      HomeAnnouncementType.risk => AppColors.riskWarning,
       HomeAnnouncementType.campaign => AppColors.primary,
       HomeAnnouncementType.info => AppColors.text2,
     };

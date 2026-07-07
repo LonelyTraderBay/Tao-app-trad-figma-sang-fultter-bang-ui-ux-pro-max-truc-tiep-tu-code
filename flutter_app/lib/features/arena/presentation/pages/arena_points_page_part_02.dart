@@ -68,27 +68,48 @@ class _CheckInSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SectionTitle(
-          title: 'Check-in hằng ngày',
-          icon: Icons.calendar_month_outlined,
-          trailing: '4/7',
-          color: AppColors.accent,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: const VitSectionHeader(
+                title: 'Check-in hằng ngày',
+                icon: Icons.calendar_month_outlined,
+                iconColor: AppColors.accent,
+                accentColor: AppColors.accent,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+              ),
+            ),
+            Text(
+              '4/7',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.accent,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x2),
         VitCard(
           padding: AppSpacing.arenaPaddingX3,
           child: Column(
             children: [
-              Row(
-                children: [
-                  for (final item in checkIns) ...[
-                    Expanded(child: _CheckInTile(item: item)),
-                    if (item != checkIns.last)
-                      const SizedBox(width: AppSpacing.x2),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const ClampingScrollPhysics(),
+                child: Row(
+                  children: [
+                    for (final item in checkIns) ...[
+                      SizedBox(
+                        width: AppSpacing.x7 + AppSpacing.x4,
+                        child: _CheckInTile(item: item),
+                      ),
+                      if (item != checkIns.last)
+                        const SizedBox(width: AppSpacing.cardTileInnerGap),
+                    ],
                   ],
-                ],
+                ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   const Icon(
@@ -147,7 +168,7 @@ class _CheckInTile extends StatelessWidget {
                 color: item.today ? AppColors.accent : AppColors.text3,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Icon(
               item.claimed ? Icons.check_circle_outline : Icons.circle_outlined,
               color: color,
@@ -182,7 +203,7 @@ class _ReferralBanner extends StatelessWidget {
       padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
-          _AccentIcon(icon: Icons.group_add_outlined, color: AppColors.buy),
+          VitAccentIconBox(icon: Icons.group_add_outlined, color: AppColors.buy),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -234,23 +255,41 @@ class _TaskSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const _SectionTitle(
-          title: 'Nhiệm vụ',
-          trailing: '5/24 hoàn thành',
-          icon: Icons.task_alt_outlined,
-          color: AppColors.primary,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: const VitSectionHeader(
+                title: 'Nhiệm vụ',
+                icon: Icons.task_alt_outlined,
+                iconColor: AppColors.primary,
+                accentColor: AppColors.primary,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+              ),
+            ),
+            Text(
+              '5/24 hoàn thành',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.primary,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final filter in filters) ...[
-                _FilterButton(
+                VitFilterChip(
+                  key: filter == activeFilter
+                      ? ArenaPointsPage.activeFilterKey(filter)
+                      : ArenaPointsPage.filterKey(filter),
                   label: filter,
                   active: filter == activeFilter,
                   onTap: () => onFilter(filter),
+                  color: AppModuleAccents.arena,
                 ),
                 if (filter != filters.last)
                   const SizedBox(width: AppSpacing.x2),
@@ -258,7 +297,7 @@ class _TaskSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         if (tasks.isEmpty)
           const VitEmptyState(
             icon: Icons.redeem_outlined,
@@ -269,144 +308,22 @@ class _TaskSection extends StatelessWidget {
           Column(
             children: [
               for (final task in tasks) ...[
-                _TaskCard(task: task),
-                if (task != tasks.last) const SizedBox(height: AppSpacing.x3),
+                VitTaskCard(
+                  key: ArenaPointsPage.taskKey(task.id),
+                  title: task.title,
+                  subtitle: task.subtitle,
+                  progress: task.progress,
+                  rewardLabel: task.rewardLabel,
+                  status: _vitTaskCardStatus(task.status),
+                  accentColor: _accentColor(task.kind),
+                  icon: _accentIcon(task.kind),
+                ),
+                if (task != tasks.last)
+                  const SizedBox(height: AppSpacing.taskCardListGap),
               ],
             ],
           ),
       ],
-    );
-  }
-}
-
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: VitCard(
-        key: ArenaPointsPage.filterKey(label),
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        child: DecoratedBox(
-          key: active ? ArenaPointsPage.activeFilterKey(label) : null,
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary12 : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active ? AppColors.primary30 : AppColors.borderSolid,
-              ),
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.arenaPointsFilterPadding,
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.primary : AppColors.text2,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TaskCard extends StatelessWidget {
-  const _TaskCard({required this.task});
-
-  final ArenaRewardTaskDraft task;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = _accentColor(task.kind);
-
-    return VitCard(
-      key: ArenaPointsPage.taskKey(task.id),
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5,
-      ),
-      padding: AppSpacing.arenaPaddingX4,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _AccentIcon(icon: _accentIcon(task.kind), color: color),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        task.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.body.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    _TaskStatusPill(status: task.status),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  task.subtitle,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: AppSpacing.x5),
-                _ProgressBar(value: task.progress, color: color),
-                const SizedBox(height: AppSpacing.x3),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        task.rewardLabel,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: task.status == ArenaRewardTaskStatus.claimed
-                              ? AppColors.buy
-                              : AppColors.warn,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      '${(task.progress * 100).round()}%',
-                      style: AppTextStyles.micro.copyWith(
-                        color: color,
-                        fontWeight: AppTextStyles.bold,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -420,13 +337,27 @@ class _BonusSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const _SectionTitle(
-          title: 'Khu vực Bonus',
-          trailing: '1 lượt quay',
-          icon: Icons.auto_awesome_outlined,
-          color: AppColors.warn,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: const VitSectionHeader(
+                title: 'Khu vực Bonus',
+                icon: Icons.auto_awesome_outlined,
+                iconColor: AppColors.warn,
+                accentColor: AppColors.warn,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+              ),
+            ),
+            Text(
+              '1 lượt quay',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.warn,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x2),
         VitCard(
           padding: AppSpacing.zeroInsets,
           clip: true,
@@ -460,7 +391,7 @@ class _BonusRow extends StatelessWidget {
       padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
-          _AccentIcon(icon: _accentIcon(row.kind), color: color),
+          VitAccentIconBox(icon: _accentIcon(row.kind), color: color),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(

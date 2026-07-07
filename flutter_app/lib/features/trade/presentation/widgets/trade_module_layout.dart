@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -203,6 +204,7 @@ class VitTradeDetailScaffold extends StatelessWidget {
                 key: contentKey,
                 bottomInset: resolvedInset,
                 child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   children: tradeShellWithProductTabs(
@@ -290,6 +292,7 @@ class VitTradeHubScaffold extends StatelessWidget {
             key: contentKey,
             bottomInset: scrollEndClearance,
             child: VitPageContent(
+             rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: tradeShellWithProductTabs(
@@ -342,6 +345,7 @@ class VitTradeWorkspaceScaffold extends StatelessWidget {
           key: contentKey,
           bottomInset: resolvedInset,
           child: VitPageContent(
+            rhythm: VitPageRhythm.compact,
             padding: VitContentPadding.compact,
             density: VitDensity.compact,
             children: children,
@@ -459,14 +463,14 @@ class VitBotRiskReviewFooter extends StatelessWidget {
           density: VitDensity.compact,
         ),
         if (statusLabel != null) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitStatusPill(
             label: statusLabel!,
             status: status,
             size: VitStatusPillSize.sm,
           ),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const VitBotRiskDisclaimer(),
       ],
     );

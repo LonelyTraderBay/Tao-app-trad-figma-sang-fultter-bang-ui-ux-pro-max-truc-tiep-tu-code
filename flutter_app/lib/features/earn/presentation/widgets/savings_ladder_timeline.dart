@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -36,7 +37,7 @@ class TimelineTab extends StatelessWidget {
     }
 
     final sorted = [...rungs]..sort((a, b) => a.lockDays.compareTo(b.lockDays));
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       key: SavingsLadderPage.timelineKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -45,12 +46,7 @@ class TimelineTab extends StatelessWidget {
         const SectionTitle(label: 'Lịch đáo hạn'),
         _TimelineChart(rungs: sorted),
         const SectionTitle(label: 'Lịch trình đáo hạn'),
-        VitPageContent(
-          padding: VitContentPadding.none,
-          fullBleed: true,
-          gap: VitContentGap.tight,
-          children: [for (final rung in sorted) _MaturityTile(rung: rung)],
-        ),
+        for (final rung in sorted) _MaturityTile(rung: rung),
         const SectionTitle(label: 'Dự kiến dòng tiền'),
         _CashFlowCard(rungs: sorted),
         EarnDisclaimerBanner(
@@ -89,12 +85,12 @@ class _TimelineChart extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final rung in rungs) ...[
             _TimelineBar(rung: rung, maxDays: maxDays),
-            if (rung != rungs.last) const SizedBox(height: AppSpacing.x2),
+            if (rung != rungs.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,

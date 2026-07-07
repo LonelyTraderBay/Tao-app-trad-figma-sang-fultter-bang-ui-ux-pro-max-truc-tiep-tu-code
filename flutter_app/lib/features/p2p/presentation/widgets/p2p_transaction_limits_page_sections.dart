@@ -149,6 +149,7 @@ class _CurrentUsage extends StatelessWidget {
             const Expanded(
               child: VitSectionHeader(
                 title: 'Sử dụng hiện tại',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 icon: Icons.bar_chart_rounded,
                 accentColor: AppModuleAccents.p2p,
                 density: VitDensity.compact,
@@ -169,7 +170,7 @@ class _CurrentUsage extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.p2pTransactionLimitsCardPadding,
@@ -211,7 +212,7 @@ class _UsageLimitRow extends StatelessWidget {
                 item.label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.captionSm.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -225,13 +226,12 @@ class _UsageLimitRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: ColoredBox(
             color: AppColors.surface2,
-            child: SizedBox(
-              height: AppSpacing.x2,
+            child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
               child: FractionallySizedBox(
                 widthFactor: item.percentage.clamp(0, 100) / 100,
                 alignment: Alignment.centerLeft,
@@ -276,6 +276,7 @@ class _LimitDetails extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Chi tiết giới hạn',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           icon: Icons.tune_rounded,
           accentColor: AppModuleAccents.p2p,
           density: VitDensity.compact,

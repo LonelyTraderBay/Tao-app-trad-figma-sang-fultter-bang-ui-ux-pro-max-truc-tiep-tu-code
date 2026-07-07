@@ -133,7 +133,7 @@ class _MyBotsTab extends StatelessWidget {
       children: [
         for (final bot in bots) ...[
           _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
-          if (bot != bots.last) const SizedBox(height: AppSpacing.x3),
+          if (bot != bots.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

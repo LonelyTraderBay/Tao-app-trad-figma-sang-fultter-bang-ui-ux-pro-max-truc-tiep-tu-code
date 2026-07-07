@@ -11,7 +11,11 @@ class _StepIntro extends StatelessWidget {
     return VitPageSection(
       density: VitDensity.compact,
       children: [
-        VitModuleSectionHeader(title: title, accentColor: AppModuleAccents.p2p),
+        VitModuleSectionHeader(
+          title: title,
+          accentColor: AppModuleAccents.p2p,
+          density: VitDensity.compact,
+        ),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -45,7 +49,7 @@ class _MultilineInput extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Material(
           color: AppColors.surface2,
           shape: RoundedRectangleBorder(

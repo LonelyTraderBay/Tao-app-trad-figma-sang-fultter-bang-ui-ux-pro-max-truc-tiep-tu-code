@@ -19,7 +19,6 @@ class _CategoryChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _predictionPrimary,
-      height: VitDensity.compact.controlHeight - AppSpacing.x3,
       padding: AppSpacing.predictionHomeCategoryPadding,
     );
   }
@@ -69,7 +68,7 @@ class _SearchResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             event.title,
             maxLines: 2,
@@ -79,7 +78,7 @@ class _SearchResultCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           if (isMulti)
             _MultiOutcomeRow(event: event)
           else
@@ -125,8 +124,7 @@ class _BinaryOutcomeBar extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Row(
               children: [
                 Expanded(
@@ -228,7 +226,7 @@ class _SearchEmptyState extends StatelessWidget {
             color: AppColors.text3.withValues(alpha: .40),
             size: AppSpacing.predictionHomeEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Không có sự kiện phù hợp',
             style: AppTextStyles.body.copyWith(
@@ -243,13 +241,13 @@ class _SearchEmptyState extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           if (hasActiveFilters) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCtaButton(
               onPressed: onClearFilters,
               child: const Text('Xóa bộ lọc'),
             ),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           TextButton(
             onPressed: onBreaking,
             child: Text(

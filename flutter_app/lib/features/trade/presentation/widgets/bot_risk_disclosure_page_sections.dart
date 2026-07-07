@@ -115,6 +115,7 @@ class _RiskCategoryCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: _riskIconTile,
                 height: _riskIconTile,

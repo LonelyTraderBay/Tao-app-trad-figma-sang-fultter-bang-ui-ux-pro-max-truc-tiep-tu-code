@@ -25,7 +25,7 @@ class _HeroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
@@ -120,7 +120,7 @@ class _FAQList extends StatelessWidget {
             expanded: expandedIds.contains(item.id),
             onTap: () => onToggle(item.id),
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.x2),
+          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -191,12 +191,12 @@ class _FAQCard extends StatelessWidget {
                       height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   const Divider(
                     color: AppColors.divider,
                     height: AppSpacing.dividerHairline,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Row(
                     children: [
                       Text(

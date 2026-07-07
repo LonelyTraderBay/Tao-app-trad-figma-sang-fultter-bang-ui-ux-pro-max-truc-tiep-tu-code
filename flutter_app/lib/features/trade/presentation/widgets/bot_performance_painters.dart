@@ -164,7 +164,7 @@ class _WinLossChartPainter extends CustomPainter {
       canvas,
       'Wins',
       Offset(size.width / 2 - 20, legendY - 8),
-      AppTextStyles.captionSm.copyWith(color: _analyticsGreen),
+      AppTextStyles.caption.copyWith(color: _analyticsGreen),
       width: 38,
     );
     canvas.drawRect(
@@ -175,7 +175,7 @@ class _WinLossChartPainter extends CustomPainter {
       canvas,
       'Losses',
       Offset(size.width / 2 + 36, legendY - 8),
-      AppTextStyles.captionSm.copyWith(color: _analyticsRed),
+      AppTextStyles.caption.copyWith(color: _analyticsRed),
       width: 54,
     );
   }

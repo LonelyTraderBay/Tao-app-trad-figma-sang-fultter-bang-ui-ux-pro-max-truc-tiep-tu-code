@@ -41,7 +41,7 @@ class _FlowCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var i = 0; i < flow.steps.length; i++)
             _FlowStepRow(
               flowId: flow.id,
@@ -275,10 +275,10 @@ class _RegistryBoard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final item in items) ...[
             _RegistryItemRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.x2),
+            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -372,7 +372,7 @@ class _ForbiddenPatternCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   pattern.reason,
                   style: AppTextStyles.micro.copyWith(

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart';
@@ -78,6 +79,7 @@ class _WalletTokenApprovalPageState
                   bottomInset: scrollEndClearance,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,

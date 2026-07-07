@@ -26,7 +26,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
@@ -73,7 +73,7 @@ class _Selectors extends StatelessWidget {
                   'Tax Year',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.standard,
@@ -126,7 +126,7 @@ class _Selectors extends StatelessWidget {
                     'Cost Basis',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Row(
                     children: [
                       Expanded(
@@ -186,7 +186,7 @@ class _ReportingTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     SizedBox(
                       width: AppSpacing.buttonHero,
                       height: _transactionReportingIndicatorExtent,
@@ -240,9 +240,9 @@ class _SummaryTab extends StatelessWidget {
                     body:
                         'Taxed as ordinary income at your marginal tax rate (reported on Form 1099-MISC)',
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   _GainsPanel(summary: summary),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   _CostBasisPanel(summary: summary, method: costBasis),
                 ],
               ),
@@ -263,7 +263,7 @@ class _SummaryTab extends StatelessWidget {
                   for (final reward in summary.rewardsByAsset) ...[
                     _RewardAssetRow(reward: reward),
                     if (reward != summary.rewardsByAsset.last)
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   ],
                 ],
               ),
@@ -310,7 +310,7 @@ class _SummaryPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             body,
             style: AppTextStyles.micro.copyWith(
@@ -354,7 +354,7 @@ class _GainsPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -374,7 +374,7 @@ class _GainsPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Reported on Form 8949 and Schedule D. Long-term gains taxed at lower rates.',
             style: AppTextStyles.micro.copyWith(
@@ -420,7 +420,7 @@ class _CostBasisPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Using $method method',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

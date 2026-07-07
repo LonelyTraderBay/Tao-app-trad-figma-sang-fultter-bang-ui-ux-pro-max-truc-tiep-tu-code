@@ -29,12 +29,12 @@ class VitCompactProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.homeMarketSectionGap,
-        vertical: AppSpacing.x2,
-      ),
+      height: AppSpacing.homeRecentProductHeight,
+      contentAlign: VitCardContentAlign.center,
+      padding: AppSpacing.cardTilePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -62,7 +62,7 @@ class VitCompactProductCard extends StatelessWidget {
                 VitAccentPill(label: badgeLabel!, accentColor: accentColor),
             ],
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: AppSpacing.cardTileInnerGap),
           Text(
             title,
             maxLines: 1,
@@ -72,7 +72,7 @@ class VitCompactProductCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.homeSectionInnerGap),
+          const SizedBox(height: AppSpacing.cardTileInnerGap),
           Text(
             subtitle,
             maxLines: 1,

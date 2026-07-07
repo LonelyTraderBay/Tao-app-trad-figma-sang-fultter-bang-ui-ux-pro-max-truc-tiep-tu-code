@@ -26,7 +26,7 @@ class _ActionRequiredCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(snapshot.actionTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.actionBody,
                   style: AppTextStyles.caption.copyWith(
@@ -34,7 +34,7 @@ class _ActionRequiredCard extends StatelessWidget {
                     height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 DecoratedBox(
                   decoration: const ShapeDecoration(
                     color: AppColors.primarySoft,

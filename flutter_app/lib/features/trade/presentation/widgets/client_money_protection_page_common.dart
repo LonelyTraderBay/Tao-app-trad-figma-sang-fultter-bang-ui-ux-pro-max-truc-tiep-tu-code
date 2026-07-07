@@ -27,7 +27,7 @@ class _Reconciliation extends StatelessWidget {
                   const _MatchedPill(),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               const _ReconciliationRow(
                 label: 'Client Ledger Balance',
                 value: '\$45,230.50',
@@ -43,7 +43,7 @@ class _Reconciliation extends StatelessWidget {
                 value: '\$0.00',
                 success: true,
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Last reconciled: Today at 09:00 UTC - Next: Tomorrow at 09:00 UTC',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -102,6 +102,7 @@ class _Documents extends StatelessWidget {
           _Card(
             child: Row(
               children: [
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   width: AppSpacing.tradeBotClientMoneyDocumentIcon,
                   height: AppSpacing.tradeBotClientMoneyDocumentIcon,

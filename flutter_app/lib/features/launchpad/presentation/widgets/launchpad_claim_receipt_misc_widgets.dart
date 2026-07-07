@@ -79,7 +79,7 @@ class _HistoryEntry extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               '${entry.claimedAt} · Gas: ${entry.gasUsed} · ${entry.txHash}',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),

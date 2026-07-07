@@ -80,7 +80,7 @@ class _InlineSaveActions extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
           VitCtaButton(
             key: LaunchpadNotifSoundPage.saveKey,
@@ -127,6 +127,7 @@ class _SoundSwitch extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: enabled,
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,

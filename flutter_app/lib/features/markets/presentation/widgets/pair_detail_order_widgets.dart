@@ -31,7 +31,7 @@ class _OrderBookPanel extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             for (final level in snapshot.depth.asks.take(4).toList().reversed)
               _DepthRow(level: level, side: MarketOrderSide.sell),
             const Divider(

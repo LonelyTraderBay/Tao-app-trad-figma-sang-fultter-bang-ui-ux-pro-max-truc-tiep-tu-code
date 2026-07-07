@@ -30,7 +30,7 @@ class _StepBody extends StatelessWidget {
           )
         else ...[
           VitModuleSectionHeader(title: title, accentColor: _arenaAccent),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             padding: AppSpacing.arenaStudioCardPadding,
             child: Row(
@@ -75,7 +75,7 @@ class _StepBody extends StatelessWidget {
                           height: _studioDescriptionLineRatio,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       Wrap(
                         spacing: AppSpacing.x2,
                         runSpacing: AppSpacing.x2,
@@ -97,7 +97,7 @@ class _StepBody extends StatelessWidget {
                         ],
                       ),
                       if (step == 3) ...[
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         VitCtaButton(
                           key: ArenaStudioPage.smartRuleBuilderKey,
                           onPressed: onOpenSmartRules,
@@ -113,7 +113,7 @@ class _StepBody extends StatelessWidget {
             ),
           ),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCommunityRulesLink(
           onTap: () => context.go(AppRoutePaths.arenaSafety),
         ),
@@ -142,7 +142,7 @@ class _StepBody extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x1,
@@ -209,14 +209,14 @@ class _TemplateStep extends StatelessWidget {
           title: 'Chọn template',
           accentColor: _arenaAccent,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final template in templates) ...[
           _TemplateCard(
             template: template,
             selected: selectedTemplateId == template.id,
             onTap: () => onTemplateSelected(template.id),
           ),
-          if (template != templates.last) const SizedBox(height: AppSpacing.x2),
+          if (template != templates.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -304,7 +304,7 @@ class _TemplateCard extends StatelessWidget {
                     height: _studioTemplateLineRatio,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,

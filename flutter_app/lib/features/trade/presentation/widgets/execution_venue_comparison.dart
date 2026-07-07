@@ -35,6 +35,7 @@ class _VenueCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
@@ -65,7 +66,7 @@ class _VenueCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Text(
                       '${_formatInt(venue.volume)} orders • ${_formatUsd(venue.value)}',
                       maxLines: 1,
@@ -85,7 +86,7 @@ class _VenueCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -195,33 +196,33 @@ class _CostCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressMetric(
             label: 'Trading Fee',
             value: '${venue.avgFee.toStringAsFixed(2)}%',
             factor: venue.avgFee / .12,
             color: _venuePrimary,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressMetric(
             label: 'Spread Cost',
             value: '${venue.avgSpread.toStringAsFixed(1)} bps',
             factor: venue.avgSpread / 3.2,
             color: _venueGreen,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressMetric(
             label: 'Market Impact',
             value: '${venue.marketImpact.toStringAsFixed(1)} bps',
             factor: venue.marketImpact / 1.6,
             color: _venueAmber,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: _venueBorder,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

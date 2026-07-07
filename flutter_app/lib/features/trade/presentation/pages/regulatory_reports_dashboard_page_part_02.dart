@@ -9,6 +9,7 @@ class _DistributionLegend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -21,6 +22,7 @@ class _DistributionLegend extends StatelessWidget {
             ),
             child: Row(
               children: [
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   variant: VitCardVariant.ghost,
                   width: AppSpacing.x3,
@@ -99,6 +101,7 @@ class _ProviderCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
                 width: AppSpacing.tradeBotCorrelationLegendDot,
@@ -123,7 +126,7 @@ class _ProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -229,6 +232,7 @@ class _ComplianceTab extends StatelessWidget {
         _Card(
           padding: AppSpacing.tradeBotCardPadding,
           child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
             density: VitDensity.compact,
             children: [
@@ -330,6 +334,7 @@ class _ExportCard extends StatelessWidget {
       padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
             width: AppSpacing.tradeBotQuestionIconBox,
@@ -345,6 +350,7 @@ class _ExportCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
+             rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
               density: VitDensity.compact,
               children: [
@@ -407,7 +413,8 @@ class _ProgressMetric extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           variant: VitCardVariant.ghost,
           height: AppSpacing.x2,

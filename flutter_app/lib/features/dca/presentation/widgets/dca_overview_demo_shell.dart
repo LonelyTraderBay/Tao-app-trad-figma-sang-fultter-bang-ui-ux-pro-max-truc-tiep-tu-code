@@ -71,26 +71,26 @@ class _DcaOverviewCardPreviewState extends State<_DcaOverviewCardPreview> {
                     setState(() => _balanceHidden = !_balanceHidden);
                   },
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _ValueRow(
                   data: widget.scenario.data,
                   sparkline: widget.scenario.sparkline,
                   balanceHidden: _balanceHidden,
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _ProfitRow(
                   data: widget.scenario.data,
                   balanceHidden: _balanceHidden,
                 ),
-                const SizedBox(height: AppSpacing.x5),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 _MetricGrid(
                   data: widget.scenario.data,
                   balanceHidden: _balanceHidden,
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 _NextExecutionRow(data: widget.scenario.data),
                 if (widget.scenario.showActions) ...[
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   _ActionRow(scenarioId: widget.scenario.id),
                 ],
               ],

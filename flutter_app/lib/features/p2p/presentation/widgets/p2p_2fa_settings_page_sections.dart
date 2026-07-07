@@ -43,7 +43,7 @@ class _TwoFactorStatusCard extends StatelessWidget {
                     color: AppColors.onAccent,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Phương thức chính: $primaryMethod',
                   style: AppTextStyles.caption.copyWith(
@@ -77,8 +77,10 @@ class _MethodSection extends StatelessWidget {
       key: P2P2FASettingsPage.methodsKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle('Phương thức xác thực'),
-        const SizedBox(height: AppSpacing.x4),
+        const VitSectionHeader(
+          title: 'Phương thức xác thực',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
@@ -176,14 +178,14 @@ class _MethodRow extends StatelessWidget {
             ],
           ),
           if (method.setupRequired && !method.enabled) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _InlineNotice(
               text: 'Cần setup Authenticator App trước khi sử dụng',
               color: AppColors.warn,
             ),
           ],
           if (method.enabled && !method.isPrimary) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCard(
               radius: VitCardRadius.standard,
               variant: VitCardVariant.inner,
@@ -219,8 +221,14 @@ class _ThresholdSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(child: _SectionTitle('Ngưỡng giao dịch')),
+            const Expanded(
+              child: VitSectionHeader(
+                title: 'Ngưỡng giao dịch',
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+              ),
+            ),
             const Icon(
               Icons.info_outline_rounded,
               color: AppColors.text3,
@@ -228,7 +236,6 @@ class _ThresholdSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,

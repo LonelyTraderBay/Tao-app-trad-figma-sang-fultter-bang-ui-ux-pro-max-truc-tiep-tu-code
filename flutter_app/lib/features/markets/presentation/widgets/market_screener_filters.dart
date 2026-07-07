@@ -37,6 +37,7 @@ class _PresetScroller extends StatelessWidget {
             padding: EdgeInsets.zero,
             width: chipWidth,
             height: _presetHeight,
+            contentAlign: VitCardContentAlign.center,
             borderColor: AppColors.transparent,
             clip: true,
             child: DecoratedBox(
@@ -150,7 +151,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Danh mục',
             style: AppTextStyles.micro.copyWith(
@@ -174,7 +175,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -196,7 +197,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -247,7 +248,6 @@ class _CategoryChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _marketPrimary,
-      height: _categoryChipHeight,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
       semanticLabel: label,
     );

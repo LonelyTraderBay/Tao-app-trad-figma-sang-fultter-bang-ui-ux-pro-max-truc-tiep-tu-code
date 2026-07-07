@@ -29,7 +29,7 @@ class _SafeInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _DetailRow(label: 'Address', value: safe.address),
           _DetailRow(label: 'Chain', value: safe.chain),
           _DetailRow(
@@ -156,7 +156,7 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     Row(
                       children: [
                         Expanded(
@@ -179,42 +179,42 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                       ],
                     ),
                     _SafeSheetBadge(safe: widget.safe),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     VitInput(
                       label: 'Tên giao dịch',
                       hintText: 'VD: Withdraw rewards',
                       controller: _labelController,
                       onChanged: (_) => setState(() {}),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     VitInput(
                       label: 'Mô tả',
                       hintText: 'Chi tiết giao dịch...',
                       controller: _descriptionController,
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     VitInput(
                       label: 'Contract Address',
                       hintText: '0x...',
                       controller: _contractController,
                       onChanged: (_) => setState(() {}),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     VitInput(
                       label: 'Function Name',
                       hintText: 'VD: transfer, approve, claimRewards',
                       controller: _functionController,
                       onChanged: (_) => setState(() {}),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     VitInput(
                       label: 'Value (native token)',
                       hintText: '0',
                       controller: _valueController,
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     _CreateWarning(safe: widget.safe),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     VitCtaButton(
                       key: LaunchpadMultisigPage.submitCreateKey,
                       onPressed: canSubmit ? _submit : null,

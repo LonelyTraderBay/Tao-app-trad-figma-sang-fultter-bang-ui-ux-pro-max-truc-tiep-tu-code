@@ -36,7 +36,7 @@ class _CommentsContent extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _CommentRow(
           name: 'MacroAlpha',
           side: 'Yes',
@@ -49,7 +49,7 @@ class _CommentsContent extends StatelessWidget {
           text: 'Watch macro rates and exchange liquidity before sizing up.',
           likes: 9,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SizedBox(
           height: VitDensity.compact.controlHeight,
           child: Material(

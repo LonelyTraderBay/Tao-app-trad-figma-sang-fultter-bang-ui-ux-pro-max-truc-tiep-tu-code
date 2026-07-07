@@ -64,7 +64,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldGroup(
             label: 'Order Type',
             child: Row(
@@ -90,7 +90,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldGroup(
             label: 'Liquid Staking Token',
             child: _StaticField(
@@ -98,7 +98,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
               trailing: Icons.expand_more_rounded,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldGroup(
             label: _triggerLabel(_selected),
             child: _InputPreview(
@@ -110,22 +110,22 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
                   : 'ETH',
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             widget.snapshot.currentPriceLabel,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _FieldGroup(
             label: 'Amount',
             child: const _InputPreview(hint: '0.00', suffix: 'Max'),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             widget.snapshot.availableLabel,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
@@ -148,7 +148,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text('Create ${_orderTypeLabel(_selected)}'),
@@ -198,7 +198,7 @@ class _FieldGroup extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         child,
       ],
     );

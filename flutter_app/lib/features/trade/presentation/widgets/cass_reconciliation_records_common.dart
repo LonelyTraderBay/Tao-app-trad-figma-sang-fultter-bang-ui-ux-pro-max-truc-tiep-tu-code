@@ -18,6 +18,7 @@ class _RecordCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: _recordIconTile,
                 height: _recordIconTile,
@@ -144,7 +145,7 @@ class _MetricBox extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
             ),
@@ -188,6 +189,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: text,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _cassPrimary,
     );

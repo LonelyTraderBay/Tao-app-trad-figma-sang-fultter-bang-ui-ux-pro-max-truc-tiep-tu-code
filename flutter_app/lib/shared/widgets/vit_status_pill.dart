@@ -50,8 +50,8 @@ class VitStatusPill extends StatelessWidget {
       case VitStatusPillStatus.warning:
       case VitStatusPillStatus.orange:
         return const _StatusPalette(
-          background: AppColors.warn15,
-          foreground: AppColors.warn,
+          background: AppColors.riskWarning15,
+          foreground: AppColors.riskWarning,
           border: AppColors.warningBorder,
         );
       case VitStatusPillStatus.error:

@@ -14,9 +14,10 @@ class _HistorySection extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Giao d\u1ECBch g\u1EA7n \u0111\u00E2y',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             clip: true,
             padding: AppSpacing.zeroInsets,
@@ -55,7 +56,7 @@ class _HistorySection extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Row(
                           children: [
                             Expanded(
@@ -75,7 +76,7 @@ class _HistorySection extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Row(
                           children: [
                             Expanded(
@@ -161,9 +162,10 @@ class _SettingsSection extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Slippage & Gas',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             padding: AppSpacing.cardPadding,
             child: Column(
@@ -173,7 +175,7 @@ class _SettingsSection extends StatelessWidget {
                   '\u0110\u1ED9 tr\u01B0\u1EE3t gi\u00E1 (%)',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 VitSegmentedChoice.withPrimaryAccent<String>(
                   selected: slippage,
                   onChanged: onSlippageChanged,
@@ -187,7 +189,7 @@ class _SettingsSection extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Row(
                   children: [
                     Expanded(
@@ -221,12 +223,13 @@ class _SettingsSection extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const VitSectionHeader(
             title: 'An to\u00E0n',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             borderColor: AppColors.accent20,
             background: const ColoredBox(color: AppColors.accent08),

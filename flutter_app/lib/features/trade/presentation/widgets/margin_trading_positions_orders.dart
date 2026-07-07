@@ -10,9 +10,9 @@ class _PositionsTab extends StatelessWidget {
     if (positions.isEmpty) {
       return _Panel(
         padding: AppSpacing.zeroInsets.copyWith(
-          left: AppSpacing.walletAssetSectionGap,
+          left: AppSpacing.pageRhythmFormSectionGap,
           top: AppSpacing.searchBarCompactHeight,
-          right: AppSpacing.walletAssetSectionGap,
+          right: AppSpacing.pageRhythmFormSectionGap,
           bottom: AppSpacing.searchBarCompactHeight,
         ),
         child: Column(
@@ -22,7 +22,7 @@ class _PositionsTab extends StatelessWidget {
               color: AppColors.text3,
               size: AppSpacing.iconLg,
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               'Chưa có vị thế',
               style: AppTextStyles.caption.copyWith(
@@ -37,7 +37,7 @@ class _PositionsTab extends StatelessWidget {
       children: [
         for (final position in positions) ...[
           _PositionCard(position: position),
-          if (position != positions.last) const SizedBox(height: AppSpacing.x3),
+          if (position != positions.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -67,7 +67,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

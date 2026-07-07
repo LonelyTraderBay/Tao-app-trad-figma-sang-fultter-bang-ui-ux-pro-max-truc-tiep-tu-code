@@ -50,7 +50,7 @@ class _TransactionDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _DetailRow(label: 'Số lượng', value: '${tx.amountLabel} ${tx.asset}'),
           _DetailRow(label: 'Giá trị USD', value: _formatUsd(tx.usdValue)),
           _DetailRow(label: 'Thời gian', value: '${tx.date} ${tx.time}'),
@@ -127,7 +127,7 @@ class _TransactionList extends StatelessWidget {
             onTap: () => onTap(transactions[i]),
           ),
           if (i != transactions.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

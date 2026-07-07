@@ -33,6 +33,7 @@ class AddressWhitelistCard extends StatelessWidget {
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             VitCard(
               width: AppSpacing.buttonCompact,
               height: AppSpacing.buttonCompact,
@@ -75,28 +76,17 @@ class AddressWhitelistCard extends StatelessWidget {
                 ],
               ),
             ),
-            _SwitchPill(enabled: enabled),
+            VitTogglePill(
+              enabled: enabled,
+              activeColor: addressAddGreen,
+              width: AppSpacing.walletAddressAddSwitchWidth,
+              height: AppSpacing.walletAddressAddSwitchHeight,
+              knobSize: AppSpacing.walletAddressAddSwitchKnob,
+              knobMargin: AppSpacing.walletAddressAddSwitchKnobMargin,
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SwitchPill extends StatelessWidget {
-  const _SwitchPill({required this.enabled});
-
-  final bool enabled;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitTogglePill(
-      enabled: enabled,
-      activeColor: addressAddGreen,
-      width: AppSpacing.walletAddressAddSwitchWidth,
-      height: AppSpacing.walletAddressAddSwitchHeight,
-      knobSize: AppSpacing.walletAddressAddSwitchKnob,
-      knobMargin: AppSpacing.walletAddressAddSwitchKnobMargin,
     );
   }
 }
@@ -142,6 +132,7 @@ class AddressAgreementRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             VitCard(
               width: AppSpacing.walletAddressAddAgreementBox,
               height: AppSpacing.walletAddressAddAgreementBox,

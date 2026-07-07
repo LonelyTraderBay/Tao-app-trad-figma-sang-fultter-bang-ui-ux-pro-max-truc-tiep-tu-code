@@ -4,16 +4,16 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -61,51 +61,60 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _assetScrollBottomInset(context, mode);
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-147 AssetDetailPage',
-      child: Material(
-        color: _assetBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.symbol,
-            subtitle: 'Chi tiết tài sản · số dư minh bạch',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.wallet),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: AssetDetailPage.contentKey,
-                  bottomInset: bottomInset,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _AssetHero(snapshot: snapshot),
-                      _AssetActionGrid(
-                        actions: snapshot.actions,
-                        onNavigate: (route) => context.go(route),
-                      ),
-                      _PriceChartCard(
-                        snapshot: snapshot,
-                        activePeriod: _period,
-                        onPeriod: (period) => setState(() => _period = period),
-                      ),
-                      _AssetTransactions(
-                        transactions: snapshot.transactions,
-                        onNavigate: (route) => context.go(route),
-                      ),
-                    ],
-                  ),
+      background: _assetBackground,
+      header: VitTopChrome(
+        type: VitTopChromeType.detail,
+        title: snapshot.symbol,
+        subtitle: 'Chi tiết tài sản · số dư minh bạch',
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.wallet),
+      ),
+      body: VitInsetScrollView(
+        key: AssetDetailPage.contentKey,
+        bottomInset: bottomInset,
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.compact,
+          density: VitDensity.compact,
+          gap: VitContentGap.tight,
+          children: [
+            _AssetHero(snapshot: snapshot),
+            _AssetActionGrid(
+              actions: snapshot.actions,
+              onNavigate: (route) => context.go(route),
+            ),
+            VitPageSection(
+              label: 'Biểu đồ giá',
+              headerIcon: Icons.show_chart_rounded,
+              headerIconColor: _assetPrimary,
+              headerVariant: VitSectionHeaderVariant.plain,
+              headerDensity: VitDensity.compact,
+              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+              children: [
+                _PriceChartCard(
+                  snapshot: snapshot,
+                  activePeriod: _period,
+                  onPeriod: (period) => setState(() => _period = period),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+            VitPageSection(
+              label: 'Lịch sử giao dịch',
+              headerIcon: Icons.receipt_long_outlined,
+              headerIconColor: _assetPrimary,
+              headerVariant: VitSectionHeaderVariant.plain,
+              headerDensity: VitDensity.compact,
+              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+              children: [
+                _AssetTransactions(
+                  transactions: snapshot.transactions,
+                  onNavigate: (route) => context.go(route),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

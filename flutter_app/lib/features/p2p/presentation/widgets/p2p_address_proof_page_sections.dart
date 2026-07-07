@@ -74,12 +74,12 @@ class _RequirementsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SectionTitle(
-            icon: Icons.info_outline_rounded,
+          VitSectionHeader(
             title: 'Yêu cầu tài liệu',
-            color: AppModuleAccents.p2p,
+            icon: Icons.info_outline_rounded,
+            iconColor: AppModuleAccents.p2p,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: _p2pAddressProofSectionGap),
           for (final requirement in snapshot.requirements) ...[
             _ChecklistRow(text: requirement, color: AppColors.buy),
             if (requirement != snapshot.requirements.last)
@@ -349,12 +349,12 @@ class _ExtractedDataCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
-            icon: Icons.check_circle_outline_rounded,
+          const VitSectionHeader(
             title: 'Đã trích xuất thông tin',
-            color: AppColors.buy,
+            icon: Icons.check_circle_outline_rounded,
+            iconColor: AppColors.buy,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: _p2pAddressProofSectionGap),
           _MetadataRow(label: 'Tên', value: snapshot.extractedName),
           const SizedBox(height: _p2pAddressProofTightGap),
           _MetadataRow(label: 'Ngày phát hành', value: snapshot.extractedDate),

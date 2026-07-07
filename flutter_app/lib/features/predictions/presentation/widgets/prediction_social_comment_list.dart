@@ -55,15 +55,15 @@ class _CommentCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   comment.content,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 _CommentActions(comment: comment, reply: reply),
                 if (comment.replies.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final child in comment.replies)
                     _CommentCard(comment: child, reply: true),
                 ],

@@ -51,7 +51,7 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
               key: ArenaPointsPage.contentKey,
               physics: const ClampingScrollPhysics(),
               padding: AppSpacing.arenaBottomScrollPadding(scrollEndClearance),
-              child: VitPageContent(
+              child: VitPageContent(rhythm: VitPageRhythm.standard, 
                 padding: VitContentPadding.compact,
                 gap: VitContentGap.tight,
                 children: [
@@ -153,14 +153,14 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Hoàn thành nhiệm vụ · nhận điểm Arena',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -196,7 +196,7 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -218,13 +218,13 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _PendingClaimBanner(
             summary: summary,
             claimedAll: claimedAll,
             onTap: onClaimAll,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ExpiringBanner(count: summary.expiringCount),
         ],
       ),
@@ -289,7 +289,7 @@ class _PendingClaimBanner extends StatelessWidget {
       padding: AppSpacing.arenaPaddingX3,
       child: Row(
         children: [
-          _AccentIcon(
+          VitAccentIconBox(
             icon: claimedAll
                 ? Icons.check_circle_outline
                 : Icons.inventory_2_outlined,
@@ -404,13 +404,13 @@ class _CategoryProgress extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final category in categories) ...[
           _CategoryRow(category: category),
           if (category != categories.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             _Legend(label: 'Đã nhận', color: AppColors.buy),

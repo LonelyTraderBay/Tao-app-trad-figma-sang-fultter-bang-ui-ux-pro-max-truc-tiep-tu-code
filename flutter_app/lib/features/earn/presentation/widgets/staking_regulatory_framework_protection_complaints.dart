@@ -20,13 +20,13 @@ class _ProtectionTab extends StatelessWidget {
                 for (final scheme in snapshot.protectionSchemes) ...[
                   _ProtectionCard(scheme: scheme),
                   if (scheme != snapshot.protectionSchemes.last)
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _WarningNote(text: snapshot.protectionWarning),
       ],
     );
@@ -77,7 +77,7 @@ class _ProtectionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.earnCardPaddingX3,
@@ -89,7 +89,7 @@ class _ProtectionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Eligibility: ${scheme.eligibility}',
             style: AppTextStyles.micro.copyWith(
@@ -128,18 +128,18 @@ class _ComplaintsTab extends StatelessWidget {
                     'How to File a Complaint',
                     style: AppTextStyles.baseMedium,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   for (final step in snapshot.complaintSteps) ...[
                     _ComplaintStep(step: step),
                     if (step != snapshot.complaintSteps.last)
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitPageSection(
           label: 'Regulatory Authority Contacts',
           accentColor: AppColors.primarySoft,

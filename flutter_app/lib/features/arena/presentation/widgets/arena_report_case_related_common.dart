@@ -136,7 +136,7 @@ class _SectionBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         child,
       ],
     );

@@ -21,7 +21,7 @@ class _NameSection extends StatelessWidget {
             maxLength: 30,
             onChanged: (_) => onChanged(),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Text(
@@ -327,7 +327,7 @@ class _ExpirySection extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   option.description,
                   maxLines: 1,

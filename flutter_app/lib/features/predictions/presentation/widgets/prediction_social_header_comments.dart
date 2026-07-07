@@ -121,7 +121,7 @@ class _NewCommentCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               for (final stance in PredictionSocialStance.values) ...[
@@ -137,7 +137,7 @@ class _NewCommentCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitInput(
             fieldKey: PredictionSocialPage.commentFieldKey,
             controller: controller,
@@ -145,7 +145,7 @@ class _NewCommentCard extends StatelessWidget {
             hintText: 'Chia se y kien cua ban...',
             textStyle: AppTextStyles.body,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             density: VitDensity.compact,
             onPressed: hasComment ? () {} : null,

@@ -165,14 +165,14 @@ class _MetricCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               caption,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x1,
@@ -217,7 +217,7 @@ class _EventVolumeCard extends StatelessWidget {
             icon: Icons.bar_chart_rounded,
             title: 'Khối lượng sự kiện',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.adminAnalyticsSparklineHeight,
             child: Semantics(
@@ -231,7 +231,7 @@ class _EventVolumeCard extends StatelessWidget {
             ),
           ),
           if (!hasEvents) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             const AdminInlineEmptyState(
               icon: Icons.bar_chart_outlined,
               title: 'No event volume',
@@ -261,7 +261,7 @@ class _TopEventsCard extends StatelessWidget {
             title: 'Top sự kiện',
           ),
           if (events.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             for (final event in events)
               Text(
                 event.eventName,
@@ -270,7 +270,7 @@ class _TopEventsCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text1),
               ),
           ] else ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             const AdminInlineEmptyState(
               icon: Icons.trending_up_rounded,
               title: 'No top events',

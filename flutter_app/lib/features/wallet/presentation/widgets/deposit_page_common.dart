@@ -55,7 +55,6 @@ class _RefreshButton extends StatelessWidget {
         label: 'Làm mới địa chỉ nạp',
         selected: false,
         fullWidth: true,
-        height: _depositRefreshHeight,
         accentColor: _depositPrimary,
         leading: const Icon(Icons.refresh_rounded),
         semanticLabel: 'Refresh deposit address',

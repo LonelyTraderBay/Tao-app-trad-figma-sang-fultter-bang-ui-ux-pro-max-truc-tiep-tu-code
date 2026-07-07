@@ -18,7 +18,7 @@ class _EquityChartCard extends StatelessWidget {
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -64,7 +64,7 @@ class _SharpeCard extends StatelessWidget {
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Row(
             children: [
               Expanded(
@@ -188,7 +188,7 @@ class _MonthlyAlphaCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (month != months.last) const SizedBox(height: AppSpacing.x4),
+            if (month != months.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
       ),

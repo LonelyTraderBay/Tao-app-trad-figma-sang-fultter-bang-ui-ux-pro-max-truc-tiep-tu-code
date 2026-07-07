@@ -229,7 +229,7 @@ class _TxCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: AppSpacing.x2),
+                              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                               _SignatureProgress(tx: tx),
                             ],
                           ),
@@ -307,7 +307,7 @@ class _TxDetails extends StatelessWidget {
                   tx.description,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 for (final row in rows)
                   _DetailRow(
                     label: row.$1,
@@ -318,7 +318,7 @@ class _TxDetails extends StatelessWidget {
                         : null,
                   ),
                 if (tx.params.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   DecoratedBox(
                     decoration: const ShapeDecoration(
                       color: AppColors.surface2,
@@ -337,7 +337,7 @@ class _TxDetails extends StatelessWidget {
                     ),
                   ),
                 ],
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Signers (${tx.signedCount}/${tx.threshold} required)',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -346,7 +346,7 @@ class _TxDetails extends StatelessWidget {
                 for (final signer in tx.signers) _SignerRow(signer: signer),
                 if (tx.status == LaunchpadMultisigTxStatus.pendingSignatures &&
                     onSign != null) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCtaButton(
                     key: LaunchpadMultisigPage.signKey,
                     variant: VitCtaButtonVariant.warning,
@@ -356,7 +356,7 @@ class _TxDetails extends StatelessWidget {
                 ],
                 if (tx.status == LaunchpadMultisigTxStatus.ready &&
                     onExecute != null) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCtaButton(
                     key: LaunchpadMultisigPage.executeKey,
                     variant: VitCtaButtonVariant.success,

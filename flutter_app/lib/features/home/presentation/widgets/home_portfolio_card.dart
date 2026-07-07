@@ -74,16 +74,16 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.homePortfolioCardPadding,
+      padding: AppSpacing.homeCardPaddingDefault,
       background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildHeader(),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _buildBalanceSection(),
           if (showDelta) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(
@@ -105,7 +105,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
               ],
             ),
             if (trend.length >= 2) ...[
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -144,13 +144,13 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
               ),
             ],
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           HomePortfolioBreakdown(
             snapshot: snapshot,
             balanceHidden: balanceHidden,
             onNavigate: widget.onNavigate,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _buildActionRow(),
         ],
       ),
@@ -296,7 +296,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.homePortfolioCardPadding,
+      padding: AppSpacing.homeCardPaddingDefault,
       background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -332,7 +332,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             key: HomePage.portfolioDepositKey,
             height: _heroActionExtent,
@@ -342,7 +342,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
             leading: const Icon(Icons.file_download_outlined),
             child: const Text('Nạp ngay'),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             height: _heroActionExtent,
             density: VitDensity.compact,

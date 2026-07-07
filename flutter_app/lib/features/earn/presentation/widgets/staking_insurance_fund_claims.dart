@@ -94,7 +94,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -106,7 +106,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
                   'Reason: ${claim.reason}',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -135,7 +135,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(

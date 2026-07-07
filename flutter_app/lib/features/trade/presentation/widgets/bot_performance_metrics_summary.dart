@@ -182,6 +182,7 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: _analyticsMetricMinExtent),

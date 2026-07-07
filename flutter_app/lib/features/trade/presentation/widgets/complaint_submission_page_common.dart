@@ -8,6 +8,7 @@ class _SubmissionFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _submissionFooterHeight,
       radius: VitCardRadius.standard,

@@ -81,7 +81,7 @@ class ConvertPairInfoSheet extends StatelessWidget {
             showDivider: pairId != null && onViewTokenInfo != null,
           ),
           if (pairId != null && onViewTokenInfo != null) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               variant: VitCtaButtonVariant.ghost,
               onPressed: onViewTokenInfo,

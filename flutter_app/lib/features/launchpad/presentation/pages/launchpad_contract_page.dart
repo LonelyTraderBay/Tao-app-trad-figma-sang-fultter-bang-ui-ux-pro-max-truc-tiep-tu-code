@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -61,7 +62,7 @@ class LaunchpadContractPage extends ConsumerWidget {
           child: SingleChildScrollView(
             key: contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
+            child: VitPageContent(rhythm: VitPageRhythm.standard, 
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [
@@ -94,7 +95,7 @@ class _ContractProjectNotFound extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Dự án không tồn tại',
             textAlign: TextAlign.center,
@@ -103,7 +104,7 @@ class _ContractProjectNotFound extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Contract chỉ khả dụng khi dự án IDO hợp lệ. Quay về Launchpad để chọn dự án.',
             textAlign: TextAlign.center,
@@ -135,22 +136,22 @@ class _ContractParticipationFlow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _ContractProjectHero(project: project, snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ContractNetworksSection(networks: snapshot.networks),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ContractFunctionsSection(functions: writeFunctions),
         if (previewSimulation != null) ...[
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ContractSimulationCard(simulation: previewSimulation),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           variant: VitCtaButtonVariant.secondary,
           onPressed: () => context.go(snapshot.abiDiffRoute),
           leading: const Icon(Icons.difference_outlined),
           child: const Text('ABI Diff'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _ContractRiskDisclosure(),
       ],
     );
@@ -240,7 +241,7 @@ class _ContractNetworksSection extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -278,7 +279,7 @@ class _ContractFunctionsSection extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final fn in functions) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,7 +319,7 @@ class _ContractFunctionsSection extends StatelessWidget {
                 ),
               ],
             ),
-            if (fn != functions.last) const SizedBox(height: AppSpacing.x3),
+            if (fn != functions.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -364,18 +365,18 @@ class _ContractSimulationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             simulation.expectedOutput,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Chi phí ${simulation.totalCost} · Gas ${simulation.gasEstimate}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           if (simulation.warnings.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             for (final warning in simulation.warnings)
               Text(
                 warning,

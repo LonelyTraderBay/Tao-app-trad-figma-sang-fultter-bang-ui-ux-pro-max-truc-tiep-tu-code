@@ -16,143 +16,96 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pClaimDetailProvider(widget.claimId));
     final claim = snapshot.claim;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pClaimVisualNavClearance + _p2pClaimVisualClearance
-            : _p2pClaimNativeNavClearance + _p2pClaimNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: claim.claimCode,
+      subtitle: 'Bảo hiểm · P2P',
       semanticLabel: 'SC-243 P2PClaimDetailPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: claim.claimCode,
-            subtitle: 'Bảo hiểm · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-            actions: [
-              VitHeaderActionItem(
-                type: VitHeaderActionType.notifications,
-                tooltip: 'Thông báo claim P2P',
-                active: _notificationsEnabled,
-                onPressed: () {
-                  HapticFeedback.selectionClick();
-                  setState(() {
-                    _notificationsEnabled = !_notificationsEnabled;
-                    _feedback = _notificationsEnabled
-                        ? 'Đã bật thông báo claim'
-                        : 'Đã tắt thông báo claim';
-                  });
-                },
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pClaimScrollPadding(scrollEndPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _ClaimHeroCard(claim: claim),
-                        const SizedBox(height: _p2pClaimSectionGap),
-                        _ClaimBenchmarksCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pClaimSectionGap),
-                        _DescriptionCard(description: claim.description),
-                        const SizedBox(height: _p2pClaimSectionGap),
-                        _ClaimSectionTabs(
-                          active: _section,
-                          claim: claim,
-                          onChanged: (section) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _section = section);
-                          },
-                        ),
-                        const SizedBox(height: _p2pClaimTightGap),
-                        _ClaimSectionBody(section: _section, claim: claim),
-                        const SizedBox(height: _p2pClaimSectionGap),
-                        _NotificationsCard(
-                          enabled: _notificationsEnabled,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _notificationsEnabled = value;
-                              _feedback = value
-                                  ? 'Đã bật thông báo claim'
-                                  : 'Đã tắt thông báo claim';
-                            });
-                          },
-                        ),
-                        const SizedBox(height: _p2pClaimTightGap),
-                        _ActionRow(
-                          key: P2PClaimDetailPage.orderLinkKey,
-                          icon: Icons.open_in_new_rounded,
-                          title: 'Xem đơn hàng gốc',
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.orderRoute);
-                          },
-                        ),
-                        const SizedBox(height: _p2pClaimTightGap),
-                        _ActionRow(
-                          key: P2PClaimDetailPage.supportLinkKey,
-                          icon: Icons.help_outline_rounded,
-                          title: 'Liên hệ hỗ trợ',
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.supportRoute);
-                          },
-                        ),
-                        if (_feedback != null) ...[
-                          const SizedBox(height: _p2pClaimTightGap),
-                          _FeedbackBanner(message: _feedback!),
-                        ],
-                        if (claim.status == P2PInsuranceClaimStatus.paid) ...[
-                          const SizedBox(height: _p2pClaimTightGap),
-                          VitCtaButton(
-                            key: P2PClaimDetailPage.receiptKey,
-                            variant: VitCtaButtonVariant.success,
-                            density: VitDensity.compact,
-                            leading: const Icon(Icons.download_rounded),
-                            onPressed: () {
-                              HapticFeedback.selectionClick();
-                              setState(
-                                () => _feedback =
-                                    'Đã chuẩn bị biên lai ${claim.claimCode}',
-                              );
-                            },
-                            child: const Text('Tải biên lai'),
-                          ),
-                        ],
-                        const SizedBox(height: _p2pClaimTightGap),
-                        const VitHighRiskStatePanel(
-                          density: VitDensity.compact,
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại chi tiết claim',
-                          message:
-                              'Trạng thái claim, số tiền bảo hiểm, bằng chứng, thông báo, biên lai và bước hỗ trợ tiếp theo được xem lại trước thao tác tiếp.',
-                          contractId: 'p2p-claim-detail-review',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(snapshot.parentRoute),
+      headerActions: [
+        VitHeaderActionItem(
+          type: VitHeaderActionType.notifications,
+          tooltip: 'Thông báo claim P2P',
+          active: _notificationsEnabled,
+          onPressed: () {
+            HapticFeedback.selectionClick();
+            setState(() {
+              _notificationsEnabled = !_notificationsEnabled;
+              _feedback = _notificationsEnabled
+                  ? 'Đã bật thông báo claim'
+                  : 'Đã tắt thông báo claim';
+            });
+          },
         ),
-      ),
+      ],
+      children: [
+        _ClaimHeroCard(claim: claim),
+        _ClaimBenchmarksCard(snapshot: snapshot),
+        _DescriptionCard(description: claim.description),
+        _ClaimSectionTabs(
+          active: _section,
+          claim: claim,
+          onChanged: (section) {
+            HapticFeedback.selectionClick();
+            setState(() => _section = section);
+          },
+        ),
+        _ClaimSectionBody(section: _section, claim: claim),
+        _NotificationsCard(
+          enabled: _notificationsEnabled,
+          onChanged: (value) {
+            HapticFeedback.selectionClick();
+            setState(() {
+              _notificationsEnabled = value;
+              _feedback = value
+                  ? 'Đã bật thông báo claim'
+                  : 'Đã tắt thông báo claim';
+            });
+          },
+        ),
+        _ActionRow(
+          key: P2PClaimDetailPage.orderLinkKey,
+          icon: Icons.open_in_new_rounded,
+          title: 'Xem đơn hàng gốc',
+          onTap: () {
+            HapticFeedback.selectionClick();
+            context.go(snapshot.orderRoute);
+          },
+        ),
+        _ActionRow(
+          key: P2PClaimDetailPage.supportLinkKey,
+          icon: Icons.help_outline_rounded,
+          title: 'Liên hệ hỗ trợ',
+          onTap: () {
+            HapticFeedback.selectionClick();
+            context.go(snapshot.supportRoute);
+          },
+        ),
+        if (_feedback != null) _FeedbackBanner(message: _feedback!),
+        if (claim.status == P2PInsuranceClaimStatus.paid)
+          VitCtaButton(
+            key: P2PClaimDetailPage.receiptKey,
+            variant: VitCtaButtonVariant.success,
+            density: VitDensity.compact,
+            leading: const Icon(Icons.download_rounded),
+            onPressed: () {
+              HapticFeedback.selectionClick();
+              setState(
+                () => _feedback = 'Đã chuẩn bị biên lai ${claim.claimCode}',
+              );
+            },
+            child: const Text('Tải biên lai'),
+          ),
+        const VitHighRiskStatePanel(
+          density: VitDensity.compact,
+          state: VitHighRiskUiState.riskReview,
+          title: 'Xem lại chi tiết claim',
+          message:
+              'Trạng thái claim, số tiền bảo hiểm, bằng chứng, thông báo, biên lai và bước hỗ trợ tiếp theo được xem lại trước thao tác tiếp.',
+          contractId: 'p2p-claim-detail-review',
+        ),
+      ],
     );
   }
 }
@@ -188,7 +141,7 @@ class _ClaimHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ClaimProgress(status: claim.status),
           const Divider(
             height: _p2pClaimDividerExtent,
@@ -281,7 +234,7 @@ class _ClaimProgress extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             for (var i = 0; i < steps.length; i++)
@@ -318,16 +271,17 @@ class _ClaimBenchmarksCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'So sánh với nền tảng',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             icon: Icons.bar_chart_rounded,
             iconColor: AppColors.accent,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'So sánh claim của bạn với 847 claims đã xử lý',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < snapshot.benchmarks.length; i++) ...[
             if (i > 0)
               const Divider(
@@ -336,19 +290,20 @@ class _ClaimBenchmarksCard extends StatelessWidget {
               ),
             _BenchmarkMetricRow(benchmark: snapshot.benchmarks[i]),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const VitSectionHeader(
             title: 'Phân bổ lý do claim',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             icon: Icons.groups_outlined,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final row in snapshot.reasonShares) ...[
             _ReasonShareRow(row: row),
             if (row != snapshot.reasonShares.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: const [
               Expanded(
@@ -408,7 +363,7 @@ class _BenchmarkMetricRow extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             benchmark.value,
             style: AppTextStyles.baseMedium.copyWith(
@@ -417,9 +372,9 @@ class _BenchmarkMetricRow extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressLine(progress: benchmark.progress, color: color),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             benchmark.caption,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

@@ -26,7 +26,7 @@ class _HeroBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -102,7 +102,7 @@ class _TutorialCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(tutorial.title, style: AppTextStyles.baseMedium),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x1,
@@ -180,7 +180,7 @@ class _QuickTipCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _RoundIcon(icon: _guideIcon(tip.iconKey), color: color),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             tip.title,
             maxLines: 1,
@@ -190,7 +190,7 @@ class _QuickTipCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             tip.description,
             maxLines: 3,
@@ -221,7 +221,7 @@ class _CommonMistakes extends StatelessWidget {
           child: Column(
             children: [
               for (var i = 0; i < snapshot.mistakes.length; i++) ...[
-                if (i > 0) const SizedBox(height: AppSpacing.x3),
+                if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _MistakeRow(mistake: snapshot.mistakes[i]),
               ],
             ],
@@ -295,13 +295,13 @@ class _StartStakingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(snapshot.ctaTitle, style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.ctaBody,
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             width: AppSpacing.buttonHero * 1.55,
             child: VitCtaButton(
@@ -348,7 +348,7 @@ class _ProgressHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(

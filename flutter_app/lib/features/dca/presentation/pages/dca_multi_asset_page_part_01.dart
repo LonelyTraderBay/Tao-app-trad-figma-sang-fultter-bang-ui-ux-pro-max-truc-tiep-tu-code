@@ -64,6 +64,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
                   physics: const ClampingScrollPhysics(),
                   bottomInset: scrollEndPadding,
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
@@ -286,19 +287,19 @@ class _BudgetCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Total Budget per Period'),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitInput(
             controller: controller,
             fieldKey: DCAMultiAssetPage.budgetFieldKey,
             keyboardType: TextInputType.number,
             prefix: const Icon(Icons.attach_money_rounded),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Frequency',
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -344,7 +345,6 @@ class _FrequencyButton extends StatelessWidget {
       selected: active,
       onTap: onPressed,
       fullWidth: true,
-      height: AppSpacing.inputHeight,
       semanticLabel: label,
     );
   }
@@ -394,7 +394,7 @@ class _AllocationSetupCard extends StatelessWidget {
               _DeleteButton(onPressed: onDelete),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -411,7 +411,7 @@ class _AllocationSetupCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _PercentBar(
             label: 'Current Allocation',
             valueLabel: _formatPercent(asset.currentPercent),
@@ -433,6 +433,7 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onPressed,
       variant: VitCardVariant.ghost,

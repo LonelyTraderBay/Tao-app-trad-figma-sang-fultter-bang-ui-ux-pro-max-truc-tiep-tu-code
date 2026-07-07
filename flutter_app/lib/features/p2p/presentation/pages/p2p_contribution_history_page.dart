@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -83,7 +84,7 @@ class _P2PContributionHistoryPageState
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _ContributionSummaryCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         VitCtaButton(
                           key: P2PContributionHistoryPage.exportKey,
                           variant: VitCtaButtonVariant.secondary,
@@ -98,14 +99,15 @@ class _P2PContributionHistoryPageState
                           child: const Text('Xuất CSV'),
                         ),
                         if (_feedback != null) ...[
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                           _FeedbackBanner(message: _feedback!),
                         ],
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         _MonthlyContributionGroups(
                           groups: snapshot.monthlyGroups,
                         ),
                         VitPageContent(
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           children: const [
                             VitHighRiskStatePanel(
@@ -160,7 +162,7 @@ class _ContributionSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -180,17 +182,17 @@ class _ContributionSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             height: AppSpacing.p2pMerchantCommerceDividerHeight,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SummaryLine(
             label: 'Trung bình/giao dịch',
             value: '${_formatVnd(snapshot.averagePerTrade)} đ',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SummaryLine(
             label: 'Tỷ lệ phí',
             value: snapshot.contributionRateLabel,
@@ -316,7 +318,7 @@ class _MonthlyContributionGroups extends StatelessWidget {
       children: [
         for (var i = 0; i < groups.length; i++) ...[
           _MonthGroup(group: groups[i]),
-          if (i != groups.length - 1) const SizedBox(height: AppSpacing.x4),
+          if (i != groups.length - 1) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -369,11 +371,11 @@ class _MonthGroup extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final contribution in group.contributions) ...[
           _ContributionCard(contribution: contribution),
           if (contribution != group.contributions.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

@@ -31,9 +31,9 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
             'Create API Key',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const _SheetInput(label: 'Key Name', hint: 'e.g., Trading Bot Key'),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Permissions',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -46,7 +46,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
               Expanded(child: _PermissionChip('Trade + Read')),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           if (_generated)
             VitCard(
               variant: VitCardVariant.inner,
@@ -62,7 +62,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   VitCard(
                     variant: VitCardVariant.ghost,
                     density: VitDensity.compact,
@@ -136,14 +136,14 @@ class _IpSheet extends StatelessWidget {
             'Add IP to Whitelist',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const _SheetInput(label: 'IP Address', hint: 'e.g., 192.168.1.100'),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const _SheetInput(
             label: 'Label (Optional)',
             hint: 'e.g., Home Network',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             variant: VitCtaButtonVariant.primary,

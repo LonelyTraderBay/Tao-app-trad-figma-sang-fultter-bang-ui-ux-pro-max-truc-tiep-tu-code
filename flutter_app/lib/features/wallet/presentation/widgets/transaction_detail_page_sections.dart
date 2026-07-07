@@ -1,37 +1,5 @@
 part of '../pages/transaction_detail_page.dart';
 
-class _TransactionDetailContent extends StatelessWidget {
-  const _TransactionDetailContent({
-    required this.tx,
-    required this.copiedValue,
-    required this.onCopy,
-    required this.onSupport,
-  });
-
-  final WalletTransaction tx;
-  final String? copiedValue;
-  final ValueChanged<String> onCopy;
-  final VoidCallback onSupport;
-
-  @override
-  Widget build(BuildContext context) {
-    final type = _DetailTypeMeta.from(tx);
-    final status = _DetailStatusMeta.from(tx.status);
-    final details = _detailsFor(tx, type.isDebit);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _SummaryCard(tx: tx, type: type, status: status),
-        _ProgressCard(tx: tx),
-        _DetailsCard(rows: details, copiedValue: copiedValue, onCopy: onCopy),
-        if (tx.txHash != null) ...[const _ExplorerButton()],
-        _SupportButton(onTap: onSupport),
-      ],
-    );
-  }
-}
-
 class _SummaryCard extends StatelessWidget {
   const _SummaryCard({
     required this.tx,
@@ -80,7 +48,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             type.label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -132,13 +100,6 @@ class _ProgressCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VitSectionHeader(
-            title: 'Tiến trình',
-            icon: Icons.timeline_rounded,
-            iconColor: _detailPrimary,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.x3),
           for (var i = 0; i < steps.length; i++)
             _ProgressRow(step: steps[i], isLast: i == steps.length - 1),
         ],
@@ -215,7 +176,8 @@ class _ProgressRow extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
-              if (!isLast) const SizedBox(height: AppSpacing.x3),
+              if (!isLast)
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
           ),
         ),
@@ -242,13 +204,6 @@ class _DetailsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const VitSectionHeader(
-            title: 'Thông tin chi tiết',
-            icon: Icons.article_outlined,
-            iconColor: _detailPrimary,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.x2),
           for (final row in rows)
             _DetailInfoRow(
               row: row,
@@ -311,6 +266,7 @@ class _ExplorerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: TransactionDetailPage.explorerKey,
       height: AppSpacing.walletTransactionExplorerHeight,

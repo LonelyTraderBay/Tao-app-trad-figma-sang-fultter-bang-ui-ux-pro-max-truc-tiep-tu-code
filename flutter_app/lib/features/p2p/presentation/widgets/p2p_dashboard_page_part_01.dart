@@ -5,8 +5,8 @@ const double _dashboardLargeChartExtent =
 const double _dashboardMediumChartExtent =
     AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x5;
 
-class _FilterRail extends StatelessWidget {
-  const _FilterRail({required this.snapshot, required this.onChanged});
+class _DashboardFilterRow extends StatelessWidget {
+  const _DashboardFilterRow({required this.snapshot, required this.onChanged});
 
   final P2PDashboardSnapshot snapshot;
   final ValueChanged<String> onChanged;
@@ -20,40 +20,19 @@ class _FilterRail extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           for (final filter in snapshot.filters) ...[
-            _FilterChip(
-              filter: filter,
-              selected: filter.id == snapshot.selectedFilter.id,
+            VitFilterChip(
+              key: P2PDashboardPage.filterChipKey(filter.id),
+              label: filter.label,
+              active: filter.id == snapshot.selectedFilter.id,
               onTap: () => onChanged(filter.id),
+              color: AppModuleAccents.p2p,
+              padding: AppSpacing.p2pDashboardFilterChipPadding,
+              semanticLabel: 'P2P dashboard filter ${filter.label}',
             ),
             const SizedBox(width: AppSpacing.x2),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.filter,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final P2PDashboardFilterDraft filter;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: P2PDashboardPage.filterChipKey(filter.id),
-      label: filter.label,
-      selected: selected,
-      onTap: onTap,
-      padding: AppSpacing.p2pDashboardFilterChipPadding,
-      accentColor: AppModuleAccents.p2p,
-      semanticLabel: 'P2P dashboard filter ${filter.label}',
     );
   }
 }
@@ -93,7 +72,7 @@ class _VolumeHero extends StatelessWidget {
               const _TrendBadge(value: '+12.5%'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             _formatMoneyCompact(snapshot.selectedVolume),
             style: AppTextStyles.pageTitle.copyWith(
@@ -101,7 +80,7 @@ class _VolumeHero extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               _TinyLegend(
@@ -221,7 +200,7 @@ class _MetricCard extends StatelessWidget {
               if (config.trend != null) _TrendBadge(value: config.trend!),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             config.value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -259,11 +238,12 @@ class _WeeklyVolumeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SectionTitle(
+          const VitSectionHeader(
+            title: 'Volume theo tuần',
             icon: Icons.bar_chart_rounded,
-            label: 'Volume theo tuần',
+            iconColor: AppColors.text2,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           SizedBox(
             height: _dashboardLargeChartExtent,
             child: CustomPaint(
@@ -291,11 +271,14 @@ class _MonthlyOrdersCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(
-                child: _SectionTitle(
+                child: VitSectionHeader(
+                  title: 'Đơn hàng theo tháng',
                   icon: Icons.shopping_cart_outlined,
-                  label: 'Đơn hàng theo tháng',
+                  iconColor: AppColors.text2,
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 ),
               ),
               const _TinyLegend(color: AppColors.buy, label: 'Mua'),
@@ -303,7 +286,6 @@ class _MonthlyOrdersCard extends StatelessWidget {
               const _TinyLegend(color: AppColors.sell, label: 'Bán'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
           SizedBox(
             height: _dashboardMediumChartExtent,
             child: CustomPaint(
@@ -330,11 +312,12 @@ class _AssetDistributionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
+            title: 'Phân bổ tài sản',
             icon: Icons.donut_large_outlined,
-            label: 'Phân bổ tài sản',
+            iconColor: AppColors.text2,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               SizedBox(
@@ -425,11 +408,14 @@ class _LevelCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(
-                child: _SectionTitle(
+                child: VitSectionHeader(
+                  title: 'Cấp & Hạn mức',
                   icon: Icons.workspace_premium_outlined,
-                  label: 'Cấp & Hạn mức',
+                  iconColor: AppColors.text2,
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 ),
               ),
               _SmallPill(
@@ -438,7 +424,6 @@ class _LevelCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
           _ProgressLine(
             label: 'Hạn mức hôm nay',
             value:
@@ -446,7 +431,7 @@ class _LevelCard extends StatelessWidget {
             progress: dailyPct,
             color: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             radius: VitCardRadius.large,
             variant: VitCardVariant.inner,
@@ -460,13 +445,16 @@ class _LevelCard extends StatelessWidget {
                   progress: next.progress,
                   color: AppModuleAccents.p2p,
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
                   children: [
                     for (final requirement in next.requirements)
-                      _RequirementPill(label: requirement),
+                      VitAccentPill(
+                        label: requirement,
+                        accentColor: AppColors.text3,
+                      ),
                   ],
                 ),
               ],
@@ -492,14 +480,15 @@ class _PlatformComparisonCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
+            title: 'So sánh với Platform',
             icon: Icons.trending_up_rounded,
-            label: 'So sánh với Platform',
+            iconColor: AppColors.text2,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (final item in snapshot.platformComparisons) ...[
             _ComparisonLine(item: item),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

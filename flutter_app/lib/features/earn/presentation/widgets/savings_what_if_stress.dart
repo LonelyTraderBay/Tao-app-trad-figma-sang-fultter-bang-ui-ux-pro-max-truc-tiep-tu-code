@@ -59,18 +59,23 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _StressBars(results: results),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        const _SectionTitle(label: 'Xếp hạng theo ảnh hưởng'),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        const VitSectionHeader(
+          title: 'Xếp hạng theo ảnh hưởng',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppModuleAccents.earn,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         for (final entry in results) ...[
           _StressRankCard(entry: entry),
-          if (entry != results.last) const SizedBox(height: AppSpacing.x3),
+          if (entry != results.last) const SizedBox(height: AppSpacing.rowGap),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
@@ -92,7 +97,7 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   _ScoreRing(score: score, color: scoreColor),
@@ -121,7 +126,7 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -155,7 +160,7 @@ class _StressTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _InfoCallout(
           icon: Icons.auto_awesome_rounded,
           color: AppColors.primary,
@@ -163,7 +168,7 @@ class _StressTab extends StatelessWidget {
           text:
               'Đa dạng hóa tài sản và pha trộn sản phẩm linh hoạt với cố định giúp giảm rủi ro trong kịch bản bất lợi. Cân nhắc tăng tỷ trọng stablecoin để hỗ trợ ổn định danh mục.',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         EarnWarningBanner(text: snapshot.stressDisclaimer),
       ],
     );

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -130,6 +131,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -176,7 +178,12 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
     double volatility,
   ) {
     return [
-      const _SectionTitle(label: 'Chọn kịch bản'),
+      const VitSectionHeader(
+        title: 'Chọn kịch bản',
+        variant: VitSectionHeaderVariant.accentBar,
+        accentColor: AppModuleAccents.earn,
+        bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+      ),
       _ScenarioList(
         scenarios: snapshot.scenarios,
         selected: selectedScenario.id,
@@ -195,7 +202,12 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
           setState(() => _customVolatility = value);
         },
       ),
-      const _SectionTitle(label: 'Danh mục hiện tại'),
+      const VitSectionHeader(
+        title: 'Danh mục hiện tại',
+        variant: VitSectionHeaderVariant.accentBar,
+        accentColor: AppModuleAccents.earn,
+        bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+      ),
       _PortfolioList(positions: snapshot.portfolio),
       EarnWarningBanner(text: snapshot.disclaimer),
       VitCtaButton(

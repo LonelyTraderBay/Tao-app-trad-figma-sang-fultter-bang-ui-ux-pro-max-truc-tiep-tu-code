@@ -196,7 +196,7 @@ class _ToolCard extends StatelessWidget {
               child: Icon(_toolIcon(tool.icon), color: color, size: 18),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             tool.title,
             maxLines: 1,
@@ -287,7 +287,7 @@ class _PlansList extends StatelessWidget {
     return Column(
       children: [
         for (var index = 0; index < plans.length; index++) ...[
-          if (index > 0) const SizedBox(height: AppSpacing.x2),
+          if (index > 0) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _DcaPlanCard(plan: plans[index], onPause: onPause),
         ],
       ],
@@ -377,7 +377,7 @@ class _DcaPlanCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.standard,
@@ -422,7 +422,7 @@ class _DcaPlanCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.standard,
@@ -456,7 +456,7 @@ class _DcaPlanCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(

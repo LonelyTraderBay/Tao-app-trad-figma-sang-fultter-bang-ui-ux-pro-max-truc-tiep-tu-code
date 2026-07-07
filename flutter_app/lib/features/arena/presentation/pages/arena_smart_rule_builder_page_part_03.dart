@@ -54,7 +54,7 @@ class _RuleSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SummaryRow(label: 'Lĩnh vực', value: domain ?? '-'),
           _SummaryRow(label: 'Loại challenge', value: challengeType ?? '-'),
           _SummaryRow(label: 'Điều kiện thắng', value: winCondition),
@@ -196,7 +196,7 @@ class _BackendPayloadPreviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             statusLabel,
             style: AppTextStyles.caption.copyWith(
@@ -204,7 +204,7 @@ class _BackendPayloadPreviewCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -220,7 +220,7 @@ class _BackendPayloadPreviewCard extends StatelessWidget {
             ],
           ),
           if (creationState.errorMessage != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               creationState.errorMessage!,
               style: AppTextStyles.caption.copyWith(
@@ -279,7 +279,7 @@ class _CreationSafetyChecklist extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ChecklistRow(
             key: ArenaSmartRuleBuilderPage.rulesAckKey,
             value: ruleReviewAccepted,
@@ -421,7 +421,7 @@ class _FooterActions extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             Expanded(
@@ -447,7 +447,7 @@ class _FooterActions extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x1,
@@ -492,7 +492,7 @@ class _FooterActions extends StatelessWidget {
           ],
         ),
         if (footerLabel != null && footerLabel.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             footerLabel,
             maxLines: 1,
@@ -533,7 +533,7 @@ class _SmartOptionSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _OptionSheetHeader(title: title),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final option in options) ...[
                   _OptionTile(
                     title: option.label,
@@ -541,7 +541,7 @@ class _SmartOptionSheet extends StatelessWidget {
                     selected: selectedId == option.id,
                     onTap: () => Navigator.of(context).pop(option),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
             ),
@@ -579,14 +579,14 @@ class _TextOptionSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _OptionSheetHeader(title: title),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final option in options) ...[
                   _OptionTile(
                     title: option,
                     selected: selectedValue == option,
                     onTap: () => Navigator.of(context).pop(option),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
             ),
@@ -726,7 +726,7 @@ class _SubmitChallengeSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   draft.normalizedTitle,
                   style: AppTextStyles.base.copyWith(
@@ -734,7 +734,7 @@ class _SubmitChallengeSheet extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Challenge sẽ được gửi theo contract POST /arena/challenges. Bản demo lưu local để kiểm thử UI, sau này thay bằng remote repository.',
                   style: AppTextStyles.caption.copyWith(
@@ -742,7 +742,7 @@ class _SubmitChallengeSheet extends StatelessWidget {
                     height: _smartRuleBodyLineRatio,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
@@ -764,7 +764,7 @@ class _SubmitChallengeSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Row(
                   children: [
                     Expanded(
@@ -840,7 +840,7 @@ class _FieldBlock extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         child,
       ],
     );

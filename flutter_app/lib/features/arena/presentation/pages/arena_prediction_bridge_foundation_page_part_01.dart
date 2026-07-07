@@ -46,6 +46,7 @@ class _ArenaPredictionBridgeFoundationPageState
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -131,7 +132,7 @@ class _BridgeHero extends StatelessWidget {
                     height: _bridgeHeroLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Nền tảng bridge an toàn: chỉ topic/context — điểm Arena và ví Prediction tách biệt.',
                   style: AppTextStyles.micro.copyWith(
@@ -163,9 +164,15 @@ class _SectionTabs extends StatelessWidget {
       child: Row(
         children: [
           for (final config in _sectionConfigs) ...[
-            _BridgeTabPill(
-              config: config,
-              active: config.section == active,
+            VitStatusPill(
+              key: ArenaPredictionBridgeFoundationPage.tabKey(config.id),
+              label: config.label,
+              icon: config.icon,
+              status: config.section == active
+                  ? VitStatusPillStatus.info
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.md,
+              outline: config.section != active,
               onTap: () => onChanged(config.section),
             ),
             if (config != _sectionConfigs.last)
@@ -173,31 +180,6 @@ class _SectionTabs extends StatelessWidget {
           ],
         ],
       ),
-    );
-  }
-}
-
-class _BridgeTabPill extends StatelessWidget {
-  const _BridgeTabPill({
-    required this.config,
-    required this.active,
-    required this.onTap,
-  });
-
-  final _SectionConfig config;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      key: ArenaPredictionBridgeFoundationPage.tabKey(config.id),
-      label: config.label,
-      icon: config.icon,
-      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
-      size: VitStatusPillSize.md,
-      outline: !active,
-      onTap: onTap,
     );
   }
 }
@@ -329,7 +311,7 @@ class _PrincipleCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   principle.description,
                   style: AppTextStyles.micro.copyWith(
@@ -380,10 +362,10 @@ class _RuleBoard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final item in items) ...[
             _RuleRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.x2),
+            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

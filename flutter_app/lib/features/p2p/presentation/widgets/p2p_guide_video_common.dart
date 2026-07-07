@@ -16,10 +16,10 @@ class _VideoTab extends StatelessWidget {
           '${snapshot.videos.length} video',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final video in snapshot.videos) ...[
           _VideoCard(video: video),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         VitCard(
           variant: VitCardVariant.inner,
@@ -31,7 +31,7 @@ class _VideoTab extends StatelessWidget {
                 color: AppColors.text3,
                 size: AppSpacing.iconMd,
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Thêm video đang được cập nhật...',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -116,7 +116,11 @@ class _VideoCard extends StatelessWidget {
                   children: [
                     _Meta(icon: Icons.schedule_rounded, text: video.duration),
                     _Meta(icon: Icons.visibility_outlined, text: video.views),
-                    _TonePill(label: video.level, color: color),
+                    VitAccentPill(
+                      label: video.level,
+                      accentColor: color,
+                      size: VitStatusPillSize.sm,
+                    ),
                   ],
                 ),
               ],
@@ -155,7 +159,7 @@ class _ConceptList extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final concept in concepts) ...[
           VitCard(
             variant: VitCardVariant.inner,
@@ -176,7 +180,7 @@ class _ConceptList extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -262,22 +266,6 @@ class _Meta extends StatelessWidget {
         const SizedBox(width: AppSpacing.x1),
         Text(text, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
       ],
-    );
-  }
-}
-
-class _TonePill extends StatelessWidget {
-  const _TonePill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: label,
-      accentColor: color,
-      size: VitStatusPillSize.sm,
     );
   }
 }

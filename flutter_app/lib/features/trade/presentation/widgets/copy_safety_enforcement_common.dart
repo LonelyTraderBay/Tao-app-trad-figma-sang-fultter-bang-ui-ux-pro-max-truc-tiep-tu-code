@@ -180,7 +180,7 @@ class _SimpleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             body,
             style: AppTextStyles.micro.copyWith(
@@ -216,7 +216,7 @@ class _EmergencyPanel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const VitSheetHandle(),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     Text(
                       'Emergency stop activated',
                       style: AppTextStyles.baseMedium,
@@ -228,7 +228,7 @@ class _EmergencyPanel extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     VitCtaButton(
                       onPressed: onClose,
                       height: _safetySheetButtonHeight,

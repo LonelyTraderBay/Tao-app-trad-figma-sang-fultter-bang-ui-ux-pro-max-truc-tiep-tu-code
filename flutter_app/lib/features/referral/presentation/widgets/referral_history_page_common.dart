@@ -30,20 +30,20 @@ class _FriendCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x1,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Flexible(
-                          child: Text(
-                            friend.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.body.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
-                            ),
+                        Text(
+                          friend.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.body.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.x3),
                         VitStatusPill(
                           label: _statusLabel(friend.status),
                           status: _statusPillStatus(friend.status),
@@ -62,30 +62,37 @@ class _FriendCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    friend.totalCommission > 0
-                        ? '+${_formatUsd(friend.totalCommission)}'
-                        : '—',
-                    style: AppTextStyles.body.copyWith(
-                      color: friend.totalCommission > 0
-                          ? AppColors.buy
-                          : AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
+              Flexible(
+                fit: FlexFit.loose,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      friend.totalCommission > 0
+                          ? '+${_formatUsd(friend.totalCommission)}'
+                          : '—',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body.copyWith(
+                        color: friend.totalCommission > 0
+                            ? AppColors.buy
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Hoa hồng',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
+                    Text(
+                      'Hoa hồng',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -119,7 +126,7 @@ class _FriendCard extends StatelessWidget {
             ],
           ),
           if (friend.canRemindKyc) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCtaButton(
               key: ReferralHistoryPage.remindKey(friend.id),
               onPressed: onRemind,

@@ -32,7 +32,7 @@ class _ApiKeyCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _ApiKeyHeader(apiKey: apiKey, onToggle: onToggle),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _SecretRow(
               label: 'API KEY',
               value: _maskedKey(apiKey.key),
@@ -78,11 +78,11 @@ class _ApiKeyCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _PermissionBadges(apiKey: apiKey),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _UsageRow(apiKey: apiKey),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
                 Expanded(child: _RegenerateButton(onTap: () {})),

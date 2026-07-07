@@ -82,7 +82,7 @@ class ProviderComparisonPage extends ConsumerWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _ComparisonTable(snapshot: snapshot),
             ],
           ),
@@ -182,7 +182,7 @@ class _ComparisonTable extends StatelessWidget {
         ),
         for (final group in TradeProviderComparisonCategory.values) ...[
           _CategoryRow(category: group),
-          const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final metric in snapshot.metrics.where(
             (metric) => metric.category == group,
           )) ...[
@@ -201,7 +201,7 @@ class _ComparisonTable extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
       ],
@@ -275,7 +275,7 @@ class _LegendPanel extends StatelessWidget {
               const Icon(
                 Icons.circle,
                 color: _comparisonGreen,
-                size: AppSpacing.x4 - AppSpacing.x1,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -284,7 +284,7 @@ class _LegendPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             text,
             style: AppTextStyles.micro.copyWith(

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -110,11 +111,12 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                   key: AddressAddPage.contentKey,
                   bottomInset: _scrollBottomInset(context, mode),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      AddressAddForm(
+                      ...AddressAddForm.sections(
                         snapshot: snapshot,
                         selectedNetworkId: _networkId,
                         selectedAsset: _asset,

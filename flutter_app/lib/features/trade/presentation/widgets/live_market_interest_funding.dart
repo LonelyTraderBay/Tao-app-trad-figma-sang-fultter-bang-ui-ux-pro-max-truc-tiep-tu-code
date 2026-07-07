@@ -29,7 +29,7 @@ class _FundingCard extends StatelessWidget {
               children: [
                 Text(
                   'Next funding in',
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                   ),
                 ),

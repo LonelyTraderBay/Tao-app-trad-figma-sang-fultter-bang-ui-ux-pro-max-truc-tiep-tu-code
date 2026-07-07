@@ -1,65 +1,5 @@
 part of '../pages/announcements_page.dart';
 
-class _AnnouncementsBody extends StatelessWidget {
-  const _AnnouncementsBody({
-    required this.screenState,
-    required this.pinned,
-    required this.regular,
-    required this.expandedId,
-    required this.onToggle,
-    required this.onRetry,
-  });
-
-  final SupportScreenState screenState;
-  final List<AnnouncementDraft> pinned;
-  final List<AnnouncementDraft> regular;
-  final String? expandedId;
-  final ValueChanged<String> onToggle;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (screenState) {
-      SupportScreenState.loading => const VitSkeletonList(
-        key: AnnouncementsPage.loadingKey,
-        rows: 4,
-      ),
-      SupportScreenState.error => VitErrorState(
-        key: AnnouncementsPage.errorKey,
-        title: 'Không tải được thông báo',
-        message: 'Kiểm tra kết nối và thử lại.',
-        actionLabel: 'Thử lại',
-        onAction: onRetry,
-      ),
-      SupportScreenState.empty ||
-      SupportScreenState.offline when pinned.isEmpty && regular.isEmpty =>
-        const VitEmptyState(
-          key: AnnouncementsPage.emptyKey,
-          title: 'Không có thông báo nào',
-          message: 'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
-          icon: Icons.notifications_none_rounded,
-        ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (pinned.isNotEmpty)
-            _PinnedSection(
-              announcements: pinned,
-              expandedId: expandedId,
-              onToggle: onToggle,
-            ),
-          _AnnouncementList(
-            announcements: regular,
-            showEmpty: pinned.isEmpty && regular.isEmpty,
-            expandedId: expandedId,
-            onToggle: onToggle,
-          ),
-        ],
-      ),
-    };
-  }
-}
-
 class _PinnedSection extends StatelessWidget {
   const _PinnedSection({
     required this.announcements,
@@ -82,7 +22,7 @@ class _PinnedSection extends StatelessWidget {
         density: VitDensity.compact,
         children: [
           for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.x3),
+            if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _AnnouncementCard(
               announcement: announcements[i],
               expanded: expandedId == announcements[i].id,
@@ -130,7 +70,7 @@ class _AnnouncementList extends StatelessWidget {
         density: VitDensity.compact,
         children: [
           for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.x3),
+            if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _AnnouncementCard(
               announcement: announcements[i],
               expanded: expandedId == announcements[i].id,
@@ -173,7 +113,11 @@ class _AnnouncementCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _TypePill(style: style),
+                    VitAccentPill(
+                      label: style.label,
+                      accentColor: style.color,
+                      size: VitStatusPillSize.sm,
+                    ),
                     if (announcement.isPinned) ...[
                       const SizedBox(width: AppSpacing.x3),
                       const Icon(
@@ -184,7 +128,7 @@ class _AnnouncementCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   announcement.title,
                   maxLines: expanded ? 2 : 1,
@@ -204,7 +148,7 @@ class _AnnouncementCard extends StatelessWidget {
                     height: AppSpacing.supportLineHeightReadable,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     const Icon(
@@ -222,12 +166,12 @@ class _AnnouncementCard extends StatelessWidget {
                   ],
                 ),
                 if (expanded) ...[
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   const Divider(
                     color: AppColors.divider,
                     height: AppSpacing.dividerHairline,
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Text(
                     announcement.content,
                     style: AppTextStyles.caption.copyWith(
@@ -235,7 +179,7 @@ class _AnnouncementCard extends StatelessWidget {
                       height: AppSpacing.supportLineHeightExpanded,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -281,21 +225,6 @@ class _TypeIcon extends StatelessWidget {
           size: AppSpacing.supportAnnouncementIcon,
         ),
       ),
-    );
-  }
-}
-
-class _TypePill extends StatelessWidget {
-  const _TypePill({required this.style});
-
-  final _AnnouncementTypeStyle style;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: style.label,
-      accentColor: style.color,
-      size: VitStatusPillSize.sm,
     );
   }
 }

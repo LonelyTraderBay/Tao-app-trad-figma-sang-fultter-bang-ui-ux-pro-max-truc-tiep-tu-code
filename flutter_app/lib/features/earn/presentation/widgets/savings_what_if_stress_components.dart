@@ -57,7 +57,7 @@ class _StressBars extends StatelessWidget {
               ),
             ],
           ),
-          if (entry != results.last) const SizedBox(height: AppSpacing.x3),
+          if (entry != results.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -122,7 +122,7 @@ class _StressRankCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

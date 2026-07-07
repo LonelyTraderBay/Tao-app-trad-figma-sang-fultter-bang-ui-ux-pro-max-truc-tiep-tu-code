@@ -229,7 +229,7 @@ class _StatusCard extends StatelessWidget {
                 _StatusPill(complete: item.complete),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

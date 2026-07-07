@@ -45,9 +45,9 @@ class CopyTradingVariantSection extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _CopyCard(variantId: variant.id, metrics: metrics),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.standard,
           padding: AppSpacing.tradeBotCopyDemoCardPadding,
@@ -61,7 +61,7 @@ class CopyTradingVariantSection extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               for (final item in variant.notes)
                 CopyTradingIconLine(
                   icon: Icons.check_circle_rounded,
@@ -122,18 +122,18 @@ class _HeroCopyCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   formatCopyTradingUsd(metrics.aumUsd),
                   textAlign: TextAlign.center,
                   style: AppTextStyles.numericDisplayHeroSm,
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 CopyTradingTrendPill(value: metrics.aumTrendPercent),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -153,7 +153,7 @@ class _HeroCopyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Updated ${metrics.lastUpdated}',
             style: AppTextStyles.micro.copyWith(
@@ -182,7 +182,7 @@ class _TabularCopyCard extends StatelessWidget {
       child: Column(
         children: [
           _CopyCardHeader(),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
@@ -207,7 +207,7 @@ class _TabularCopyCard extends StatelessWidget {
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -240,7 +240,7 @@ class _CompactCopyCard extends StatelessWidget {
       child: Column(
         children: [
           _CopyCardHeader(),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -346,7 +346,7 @@ class _SecondaryMetric extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(value, style: AppTextStyles.numericDisplayLg),
         ],
       ),
@@ -446,7 +446,7 @@ class _CompactMetric extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(

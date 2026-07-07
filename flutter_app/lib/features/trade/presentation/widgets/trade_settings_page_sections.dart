@@ -276,7 +276,7 @@ class _ChoiceBlock extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.captionSm.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: AppColors.textMutedLight,
                   fontWeight: AppTextStyles.bold,
                   height: _settingsLineTight,
@@ -300,12 +300,17 @@ class _ChoiceBlock extends StatelessWidget {
           children: [
             for (var i = 0; i < options.length; i++) ...[
               Expanded(
-                child: _ChoiceChipButton(
+                child: VitChoicePill(
                   key: keyBuilder(options[i].id),
                   label: options[i].label,
-                  active: activeId == options[i].id,
+                  selected: activeId == options[i].id,
                   height: height,
                   onTap: () => onChanged(options[i].id),
+                  fullWidth: true,
+                  accentColor: _tradePrimary,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x2,
+                  ),
                 ),
               ),
               if (i < options.length - 1)

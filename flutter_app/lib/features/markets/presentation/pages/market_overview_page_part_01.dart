@@ -48,10 +48,19 @@ class _MarketCapHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.marketAnalyticsGap),
-              _ChangePill(value: stats.totalMarketCapChange24h),
+              Padding(
+                padding: AppSpacing.marketMetricDeltaPillPadding,
+                child: VitMetricDeltaPill(
+                  label:
+                      '${stats.totalMarketCapChange24h.abs().toStringAsFixed(2)}%',
+                  tone: stats.totalMarketCapChange24h >= 0
+                      ? VitMetricDeltaTone.positive
+                      : VitMetricDeltaTone.negative,
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -232,7 +241,7 @@ class _StatCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             value,
             maxLines: 1,
@@ -284,6 +293,7 @@ class _SentimentGrid extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           child: VitCard(
             density: VitDensity.compact,
             height: AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x3,
@@ -295,7 +305,7 @@ class _SentimentGrid extends StatelessWidget {
                   color: AppColors.primarySoft,
                   label: 'Fear & Greed',
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Expanded(
                   child: _FearGreedGauge(
                     value: stats.fearGreedIndex,
@@ -308,6 +318,7 @@ class _SentimentGrid extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.marketAnalyticsGap),
         Expanded(
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           child: VitCard(
             density: VitDensity.compact,
             height: AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x3,
@@ -337,7 +348,7 @@ class _MarketBreadthCard extends StatelessWidget {
           color: _marketPrimary,
           label: 'Biến động thị trường',
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _BreadthLine(
           label: 'Tăng',
           value: breadth.advancing,
@@ -349,11 +360,10 @@ class _MarketBreadthCard extends StatelessWidget {
           value: breadth.declining,
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Row(
               children: [
                 Expanded(
@@ -464,7 +474,7 @@ class _FearGreedGauge extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         Text(
           label,
-          style: AppTextStyles.captionSm.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
             height: AppTextStyles.badge.height,

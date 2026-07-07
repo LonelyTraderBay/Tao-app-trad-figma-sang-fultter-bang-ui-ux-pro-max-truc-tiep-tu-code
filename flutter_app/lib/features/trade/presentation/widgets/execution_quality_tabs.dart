@@ -131,7 +131,7 @@ class _ActionTab extends StatelessWidget {
       children: [
         Text(
           description,
-          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.tradeToolCardGap),
         ExecutionQualityGradientButton(

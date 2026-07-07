@@ -117,6 +117,7 @@ class _ReturnCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
       height: _performanceReturnCardHeight,
@@ -163,6 +164,7 @@ class _PerformanceTabs extends StatelessWidget {
       ('costs', 'Chi phí'),
       ('metrics', 'Metrics'),
     ];
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       height: _performanceTabsHeight,

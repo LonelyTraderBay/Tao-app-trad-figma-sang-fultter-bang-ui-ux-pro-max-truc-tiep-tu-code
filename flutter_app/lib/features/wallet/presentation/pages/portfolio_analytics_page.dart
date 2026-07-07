@@ -7,14 +7,14 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 
@@ -63,51 +63,40 @@ class _PortfolioAnalyticsPageState
             : AppSpacing.walletAnalyticsBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-142 PortfolioAnalyticsPage',
-      child: Material(
-        color: _analyticsBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: 'Phân tích Danh mục',
-            subtitle: 'Tổng quan tài sản · không hype',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.wallet),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: PortfolioAnalyticsPage.contentKey,
-                  bottomInset: bottomInset,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _ValueSummary(snapshot: snapshot),
-                      _ViewSwitcher(
-                        active: _activeView,
-                        onChanged: (view) => setState(() => _activeView = view),
-                      ),
-                      if (_activeView == 'overview')
-                        _OverviewContent(
-                          snapshot: snapshot,
-                          activePeriod: _activePeriod,
-                          onPeriodChanged: (period) =>
-                              setState(() => _activePeriod = period),
-                        )
-                      else
-                        _PlaceholderAnalyticsView(view: _activeView),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+      background: _analyticsBackground,
+      header: VitTopChrome(
+        type: VitTopChromeType.detail,
+        title: 'Phân tích Danh mục',
+        subtitle: 'Tổng quan tài sản · không hype',
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.wallet),
+      ),
+      body: VitInsetScrollView(
+        key: PortfolioAnalyticsPage.contentKey,
+        bottomInset: bottomInset,
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.compact,
+          density: VitDensity.compact,
+          gap: VitContentGap.tight,
+          children: [
+            _ValueSummary(snapshot: snapshot),
+            _ViewSwitcher(
+              active: _activeView,
+              onChanged: (view) => setState(() => _activeView = view),
+            ),
+            if (_activeView == 'overview') ...[
+              ..._OverviewContent(
+                snapshot: snapshot,
+                activePeriod: _activePeriod,
+                onPeriodChanged: (period) =>
+                    setState(() => _activePeriod = period),
+              ).sectionChildren,
+            ] else
+              _PlaceholderAnalyticsView(view: _activeView),
+          ],
         ),
       ),
     );

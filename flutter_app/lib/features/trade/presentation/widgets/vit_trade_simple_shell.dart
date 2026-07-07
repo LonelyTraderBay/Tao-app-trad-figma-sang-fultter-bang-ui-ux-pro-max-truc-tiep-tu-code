@@ -61,7 +61,7 @@ class VitTradeSimpleShell extends StatelessWidget {
       quickNavKey: quickNavKey,
       children: [
         ...children,
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'Giao dịch tiền mã hoá có rủi ro. Chỉ dùng số tiền bạn chấp nhận mất.',
           textAlign: TextAlign.center,

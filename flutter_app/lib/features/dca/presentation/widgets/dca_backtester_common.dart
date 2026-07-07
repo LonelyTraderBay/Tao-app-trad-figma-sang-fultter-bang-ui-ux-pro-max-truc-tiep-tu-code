@@ -29,7 +29,7 @@ class DcaReadOnlyField extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         DecoratedBox(
           decoration: const ShapeDecoration(
             color: AppColors.surface2,
@@ -81,7 +81,6 @@ class DcaSelectionButton extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       fullWidth: true,
-      height: AppSpacing.ctaHeight - AppSpacing.x4,
       accentColor: AppColors.primary,
     );
   }
@@ -101,7 +100,7 @@ class DcaNoResultsCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Chưa có kết quả backtest',
             style: AppTextStyles.base.copyWith(color: AppColors.text2),

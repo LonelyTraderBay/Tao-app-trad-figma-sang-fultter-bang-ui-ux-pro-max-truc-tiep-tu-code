@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -29,7 +30,6 @@ const _presetHeight = 32.0;
 const _presetIconSize = 14.0;
 const _resetIconSize = 14.0;
 const _resetMinHeight = 30.0;
-const _categoryChipHeight = 30.0;
 const _rangeInputVerticalPadding = 8.0;
 const _sortHeight = 34.0;
 const _sortChipHeight = 32.0;
@@ -212,6 +212,7 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
                       children: [
                         VitSearchBar(

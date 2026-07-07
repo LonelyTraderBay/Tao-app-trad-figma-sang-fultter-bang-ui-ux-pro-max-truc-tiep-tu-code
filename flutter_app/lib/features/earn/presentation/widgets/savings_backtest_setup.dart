@@ -109,7 +109,7 @@ class AmountField extends StatelessWidget {
             }
           },
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             for (final amount in quickAmounts) ...[
@@ -182,7 +182,6 @@ class _CompactChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       fullWidth: true,
-      height: AppSpacing.buttonCompact,
     );
   }
 }
@@ -209,7 +208,7 @@ class PresetList extends StatelessWidget {
             selected: preset.id == selected,
             onTap: () => onChanged(preset.id),
           ),
-          if (preset != presets.last) const SizedBox(height: AppSpacing.x3),
+          if (preset != presets.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

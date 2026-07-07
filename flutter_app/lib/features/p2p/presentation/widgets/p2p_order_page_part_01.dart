@@ -58,6 +58,7 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pOrderScrollPadding(scrollEndPadding),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       gap: VitContentGap.tight,
                       fullBleed: true,
@@ -495,7 +496,7 @@ class _OrderInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _InfoLine(
             label: 'Giao dịch',
             value:

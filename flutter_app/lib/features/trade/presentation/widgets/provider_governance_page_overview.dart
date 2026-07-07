@@ -15,6 +15,7 @@ class _ProviderDashboard extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               const VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.large,
@@ -52,7 +53,7 @@ class _ProviderDashboard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -147,7 +148,7 @@ class _ModificationsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,
@@ -157,7 +158,7 @@ class _ModificationsTab extends StatelessWidget {
           padding: const EdgeInsetsDirectional.only(start: AppSpacing.x2),
           child: Text(
             'Strategy Modification Log',
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
             ),

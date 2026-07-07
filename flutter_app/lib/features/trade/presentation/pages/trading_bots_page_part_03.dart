@@ -42,7 +42,7 @@ class _StrategyCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       strategy.description,
                       maxLines: 2,
@@ -56,7 +56,7 @@ class _StrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -73,7 +73,7 @@ class _StrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             key: TradingBotsPage.strategyCreateKey(strategy.id),
             onPressed: onCreate,
@@ -161,7 +161,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               padding: AppSpacing.tradeBotCardPadding,
               variant: VitCardVariant.inner,
@@ -171,10 +171,10 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             for (final param in strategy.params) ...[
               _ParamPreview(param: param, color: color),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             ],
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +201,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               key: TradingBotsPage.sheetCreateKey,
               onPressed: _agreed ? () => Navigator.pop(context, true) : null,
@@ -236,6 +236,7 @@ class _ParamPreview extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: AppSpacing.formFieldLabelGap),
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.inputHeight - AppSpacing.formFieldLabelGap,

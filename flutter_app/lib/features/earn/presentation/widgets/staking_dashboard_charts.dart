@@ -47,7 +47,7 @@ class StakingPerformanceCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -75,7 +75,7 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _HeroMetric(
@@ -103,17 +103,26 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
-              Text(
-                'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              Flexible(
+                child: Text(
+                  'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
               ),
               const SizedBox(width: AppSpacing.x2),
-              Text(
-                '${trader.maxCopiers - trader.copiers} slots trống',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+              Flexible(
+                child: Text(
+                  '${trader.maxCopiers - trader.copiers} slots trống',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                ),
               ),
             ],
           ),
@@ -127,7 +136,7 @@ class _ProfileHero extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation(_profilePrimary),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             key: TraderProfilePage.copyButtonKey,
             onPressed: onToggleFollow,

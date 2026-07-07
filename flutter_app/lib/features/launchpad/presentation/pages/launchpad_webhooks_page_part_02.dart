@@ -37,19 +37,20 @@ class _SubscriptionExpanded extends StatelessWidget {
                   'Events',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
                   children: [
                     for (final type in subscription.eventTypes)
-                      _MiniPill(
+                      VitAccentPill(
                         label: type,
-                        color: _eventColor(type, eventTypes),
+                        accentColor: _eventColor(type, eventTypes),
+                        size: VitStatusPillSize.sm,
                       ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _MetadataRows(
                   rows: [
                     _MetadataRowDraft(
@@ -87,7 +88,7 @@ class _SubscriptionExpanded extends StatelessWidget {
                   subscriptionId: subscription.id,
                   onCopy: onCopy,
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -312,7 +313,7 @@ class _DeliveryCard extends StatelessWidget {
                   children: [
                     Text(
                       delivery.eventType,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
                       ),

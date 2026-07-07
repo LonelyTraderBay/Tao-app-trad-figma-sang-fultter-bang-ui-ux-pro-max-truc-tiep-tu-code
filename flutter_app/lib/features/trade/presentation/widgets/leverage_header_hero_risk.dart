@@ -8,6 +8,7 @@ class _LeverageHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _leverageHeroHeight,
       density: VitDensity.compact,
@@ -31,7 +32,7 @@ class _LeverageHero extends StatelessWidget {
                 size: AppSpacing.iconMd,
               ),
               const SizedBox(width: AppSpacing.x3),
-              Text('Đòn bẩy', style: AppTextStyles.captionSm),
+              Text('Đòn bẩy', style: AppTextStyles.caption),
             ],
           ),
           const SizedBox(height: _leverageSpace),
@@ -80,11 +81,11 @@ class _RiskMeter extends StatelessWidget {
             children: [
               Text(
                 'Mức rủi ro',
-                style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
               Text(
                 preview.riskLabel,
-                style: AppTextStyles.captionSm.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: riskColor,
                   fontWeight: AppTextStyles.bold,
                 ),

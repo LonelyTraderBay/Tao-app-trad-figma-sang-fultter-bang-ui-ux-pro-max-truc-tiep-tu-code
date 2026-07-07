@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/providers/news_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -116,16 +117,15 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.newsScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _NewsBody(
-                          snapshot: snapshot,
-                          activeType: _activeType,
-                          onRetry: () => setState(() {}),
-                          onArticleTap: (article) =>
-                              _showArticleSheet(context, article),
-                        ),
-                      ],
+                      children: _newsPageChildren(
+                        snapshot: snapshot,
+                        activeType: _activeType,
+                        onRetry: () => setState(() {}),
+                        onArticleTap: (article) =>
+                            _showArticleSheet(context, article),
+                      ),
                     ),
                   ),
                 ),

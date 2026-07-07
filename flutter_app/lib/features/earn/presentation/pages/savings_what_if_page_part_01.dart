@@ -41,7 +41,7 @@ class _WhatIfHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Danh mục hiện tại',
             style: AppTextStyles.micro.copyWith(
@@ -55,7 +55,7 @@ class _WhatIfHero extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -177,10 +177,10 @@ class _ScenarioList extends StatelessWidget {
             selected: selected == scenario.id,
             onTap: () => onScenarioChanged(scenario.id),
           ),
-          if (scenario != scenarios.last) const SizedBox(height: AppSpacing.x3),
+          if (scenario != scenarios.last) const SizedBox(height: AppSpacing.rowGap),
         ],
         if (selected == SavingsWhatIfScenarioId.custom) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _CustomScenarioControls(
             multiplier: customMultiplier,
             volatility: customVolatility,
@@ -239,7 +239,7 @@ class _ScenarioCard extends StatelessWidget {
                   scenario.description,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Wrap(
                   spacing: AppSpacing.x4,
                   runSpacing: AppSpacing.x1,
@@ -305,7 +305,7 @@ class _CustomScenarioControls extends StatelessWidget {
             display: '${multiplier.toStringAsFixed(2)}x',
             onChanged: onMultiplierChanged,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _SliderRow(
             label: 'Biến động',
             value: volatility,

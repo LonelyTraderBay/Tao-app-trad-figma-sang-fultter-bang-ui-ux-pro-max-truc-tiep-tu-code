@@ -59,7 +59,7 @@ class _PerformanceSummary extends StatelessWidget {
               height: AppTextStyles.numericMicro.height,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -152,7 +152,7 @@ class _StatusBreakdown extends StatelessWidget {
               height: AppTextStyles.numericMicro.height,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
@@ -172,9 +172,9 @@ class _StatusBreakdown extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
-            spacing: AppSpacing.marketSocialSectionGap,
+            spacing: AppSpacing.rowGap,
             runSpacing: AppSpacing.marketSocialCompactGap,
             children: [
               for (final entry in counts.entries)
@@ -244,7 +244,7 @@ class _SignalResultRow extends StatelessWidget {
               color: positive ? AppColors.buy : AppColors.sell,
               size: AppSpacing.marketSocialResultIcon,
             ),
-            const SizedBox(width: AppSpacing.marketSocialSectionGap),
+            const SizedBox(width: AppSpacing.rowGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,6 +310,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: accentColor,
     );
@@ -334,7 +335,7 @@ class _SignalsEmptyState extends StatelessWidget {
                 size: AppSpacing.x6,
                 color: AppColors.text3.withValues(alpha: .35),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 'Không có tín hiệu phù hợp',
                 style: AppTextStyles.caption.copyWith(

@@ -41,6 +41,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
@@ -115,12 +116,12 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   '${snapshot.records.length} bản ghi · ${_formatUsd(snapshot.totalCommission)} tổng',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x3,
@@ -134,7 +135,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                       ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x5),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 VitCtaButton(
                   onPressed: () => Navigator.of(context).pop(),
                   leading: const Icon(Icons.download_rounded),
@@ -174,14 +175,14 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _SheetRecord(record: record),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 for (final type in snapshot.disputeTypes) ...[
                   _DisputeTypeRow(type: type),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 VitCtaButton(
                   onPressed: () => Navigator.of(context).pop(),
                   variant: VitCtaButtonVariant.warning,
@@ -221,7 +222,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 for (final dispute in snapshot.disputes)
                   _DisputeHistoryCard(dispute: dispute),
               ],
@@ -305,17 +306,23 @@ class _RewardHero extends StatelessWidget {
                   ],
                 ),
               ),
-              _TierPill(snapshot: snapshot),
+              VitStatusPill(
+                label: '${snapshot.tierName} (${snapshot.tierNameEn})',
+                icon: Icons.workspace_premium_rounded,
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+                outline: true,
+              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitBanner(
             variant: VitBannerVariant.warning,
             icon: Icons.schedule_rounded,
             message:
                 '+${_formatUsd(snapshot.pendingCommission)} đang chờ xử lý',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -337,7 +344,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -365,23 +372,6 @@ class _RewardHero extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _TierPill extends StatelessWidget {
-  const _TierPill({required this.snapshot});
-
-  final ReferralRewardsSnapshot snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      label: '${snapshot.tierName} (${snapshot.tierNameEn})',
-      icon: Icons.workspace_premium_rounded,
-      status: VitStatusPillStatus.info,
-      size: VitStatusPillSize.sm,
-      outline: true,
     );
   }
 }
@@ -422,7 +412,7 @@ class _HeroStat extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             _formatUsd(amount),
             style: AppTextStyles.body.copyWith(
@@ -452,6 +442,7 @@ class _ReferralSectionHeader extends StatelessWidget {
             title: title,
             accentColor: AppModuleAccents.referral,
             density: VitDensity.compact,
+            bottomGap: AppSpacing.pageRhythmCompactInnerGap,
           ),
         ),
         if (trailing != null)

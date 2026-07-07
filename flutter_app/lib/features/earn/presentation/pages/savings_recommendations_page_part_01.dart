@@ -51,6 +51,7 @@ class _SavingsRecommendationsPageState
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -76,7 +77,7 @@ class _SavingsRecommendationsPageState
                           Column(
                             key: SavingsRecommendationsPage.strategyListKey,
                             children: [
-                              for (final strategy in snapshot.strategies) ...[
+                              for (final strategy in snapshot.strategies)
                                 _StrategyCard(
                                   key: SavingsRecommendationsPage.strategyKey(
                                     strategy.id,
@@ -88,9 +89,6 @@ class _SavingsRecommendationsPageState
                                     snapshot.savingsRoute,
                                   ),
                                 ),
-                                if (strategy != snapshot.strategies.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
                             ],
                           ),
                         ],
@@ -101,11 +99,8 @@ class _SavingsRecommendationsPageState
                         children: [
                           Column(
                             children: [
-                              for (final insight in snapshot.insights) ...[
+                              for (final insight in snapshot.insights)
                                 _InsightCard(insight: insight),
-                                if (insight != snapshot.insights.last)
-                                  const SizedBox(height: AppSpacing.x3),
-                              ],
                             ],
                           ),
                         ],
@@ -233,7 +228,7 @@ class _HeroCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     snapshot.heroSubtitle,
                     style: AppTextStyles.caption.copyWith(
@@ -277,7 +272,7 @@ class _ProfileCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {
               final itemWidth = (constraints.maxWidth - AppSpacing.x3) / 2;
@@ -317,7 +312,7 @@ class _ProfileCard extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,
@@ -409,16 +404,20 @@ class _AmountSimulator extends StatelessWidget {
                 size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Mô phỏng với số tiền khác',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
+              Expanded(
+                child: Text(
+                  'Mô phỏng với số tiền khác',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitInput(
             fieldKey: SavingsRecommendationsPage.amountFieldKey,
             controller: controller,
@@ -430,7 +429,7 @@ class _AmountSimulator extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitPresetChipRow<int>(
             accentColor: AppModuleAccents.earn,
             selectedValue: activeAmount,

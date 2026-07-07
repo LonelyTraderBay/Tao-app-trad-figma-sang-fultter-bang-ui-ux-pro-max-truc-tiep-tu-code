@@ -38,7 +38,7 @@ class StakingInsuranceFundContributionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('How the Fund Grows', style: AppTextStyles.baseMedium),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       '${snapshot.stakingFeeContribution}% of all staking fees are automatically allocated to the insurance fund. No user funds are ever used.',
                       style: AppTextStyles.caption.copyWith(
@@ -51,7 +51,7 @@ class StakingInsuranceFundContributionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -75,7 +75,7 @@ class StakingInsuranceFundContributionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           StakingInsuranceFundInlineStatCard(
             label: 'Total Contributed (All-time)',
             value: stakingInsuranceFundFormatUsd(snapshot.totalContributed),

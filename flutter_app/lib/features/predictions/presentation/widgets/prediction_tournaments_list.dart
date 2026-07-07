@@ -73,7 +73,7 @@ class _FeaturedTournamentBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _TournamentCard(tournament: tournament),
       ],
     );
@@ -182,7 +182,7 @@ class _TournamentCard extends StatelessWidget {
               ],
             ),
             if (tournament.isJoined && tournament.myRank != null) ...[
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Material(
                 color: AppColors.buy.withValues(alpha: .08),
                 borderRadius: AppRadii.cardRadius,
@@ -213,9 +213,9 @@ class _TournamentCard extends StatelessWidget {
                 ),
               ),
             ],
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _TournamentStatsGrid(tournament: tournament),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             const Divider(color: AppColors.border, height: AppSpacing.x2),
             const SizedBox(height: AppSpacing.x1),
             Row(

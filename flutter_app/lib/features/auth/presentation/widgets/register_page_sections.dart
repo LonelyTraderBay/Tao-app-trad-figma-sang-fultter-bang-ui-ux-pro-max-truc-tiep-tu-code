@@ -181,7 +181,7 @@ class _PasswordStrength extends StatelessWidget {
         if (label.isNotEmpty)
           Text(
             'Mật khẩu $label',
-            style: AppTextStyles.captionSm.copyWith(color: color),
+            style: AppTextStyles.caption.copyWith(color: color),
           ),
       ],
     );

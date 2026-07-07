@@ -28,6 +28,7 @@ class _DustHero extends StatelessWidget {
         children: [
           Row(
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 width: _dustHeroIconBox,
                 height: _dustHeroIconBox,

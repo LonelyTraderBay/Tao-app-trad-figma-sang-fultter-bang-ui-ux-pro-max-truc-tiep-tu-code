@@ -8,6 +8,7 @@ class _OverviewContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -349,13 +350,13 @@ class _CoverageCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _TwoColumnInfo(label: 'Hạng merchant', value: snapshot.tierName),
           _TwoColumnInfo(
             label: 'Đóng góp/giao dịch',
             value: snapshot.contributionRate,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -409,7 +410,7 @@ class _CoverageTierCard extends StatelessWidget {
             icon: Icons.info_outline_rounded,
             title: 'Bảng bảo hiểm theo tier',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final tier in tiers) _TierRow(tier: tier),
         ],
       ),
@@ -448,7 +449,7 @@ class _NotificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final pref in prefs) _NotificationRow(pref: pref),
         ],
       ),
@@ -468,7 +469,7 @@ class _HowItWorksCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           _CardTitle(icon: Icons.route_rounded, title: 'Cách hoạt động'),
-          SizedBox(height: AppSpacing.x3),
+          SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _StepRow(
             index: '1',
             title: 'Đóng góp',

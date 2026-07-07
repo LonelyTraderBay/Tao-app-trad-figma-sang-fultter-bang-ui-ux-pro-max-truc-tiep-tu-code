@@ -74,7 +74,7 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
                       borderRadius: AppRadii.smRadius,
                     ),
                   ),
-                  child: SizedBox(height: AppSpacing.x6),
+                  child: SizedBox(height: AppSpacing.pageRhythmRelaxedSectionGap),
                 ),
               ],
             ),

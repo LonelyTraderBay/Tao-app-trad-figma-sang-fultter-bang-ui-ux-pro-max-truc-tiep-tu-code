@@ -126,7 +126,7 @@ class _SecurityInfo extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final tip in snapshot.securityTips) ...[
                     Text(
                       tip,
@@ -167,7 +167,7 @@ class _EmptyState extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.emptyTitle,
             style: AppTextStyles.baseMedium.copyWith(

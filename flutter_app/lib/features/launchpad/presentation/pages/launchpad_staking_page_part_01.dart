@@ -44,6 +44,7 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
                       bottom: scrollEndPadding,
                     ),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -171,7 +172,7 @@ class _StakingHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -217,7 +218,7 @@ class _PoolsTab extends StatelessWidget {
         for (final pool in snapshot.pools) ...[
           _PoolCard(pool: pool, detailRoute: snapshot.detailRoute),
           if (pool != snapshot.pools.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -304,7 +305,7 @@ class _PoolCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -326,9 +327,9 @@ class _PoolCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _CapacityBar(pool: pool),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               for (final tier in pool.tiers) ...[
@@ -344,12 +345,12 @@ class _PoolCard extends StatelessWidget {
             ],
           ),
           if (pool.userStaked > 0) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _UserStakeSummary(pool: pool),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _TimelineStatus(status: pool.status),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _PoolAction(pool: pool),
         ],
       ),
@@ -374,12 +375,12 @@ class _PositionsTab extends StatelessWidget {
               color: AppColors.text3,
               size: AppSpacing.iconLg,
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Text(
               'Chưa có vị trí nào',
               style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               'Bắt đầu stake vào pool để nhận phần thưởng token mới.',
               textAlign: TextAlign.center,
@@ -450,14 +451,14 @@ class _PositionsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final position in snapshot.positions) ...[
           _PositionCard(
             position: position,
             claimReceiptRoute: snapshot.claimReceiptRoute,
           ),
           if (position != snapshot.positions.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );

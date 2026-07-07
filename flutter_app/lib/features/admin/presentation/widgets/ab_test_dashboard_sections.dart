@@ -92,7 +92,7 @@ class _SummaryCard extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x1,
@@ -124,20 +124,6 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: AppTextStyles.baseMedium.copyWith(fontWeight: AppTextStyles.bold),
-    );
-  }
-}
-
 class _ABTestCard extends StatelessWidget {
   const _ABTestCard({
     required this.test,
@@ -164,21 +150,21 @@ class _ABTestCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _TestHeader(test: test),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             _StatsRow(test: test),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             for (final variant in test.variants) ...[
               _VariantResult(variant: variant),
               if (variant != test.variants.last)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
             if (selected) ...[
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               const Divider(
                 height: AppSpacing.adminDividerHeight,
                 color: AppColors.divider,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _ExpandedDetails(test: test),
             ],
           ],
@@ -345,7 +331,7 @@ class _VariantResult extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: SizedBox(

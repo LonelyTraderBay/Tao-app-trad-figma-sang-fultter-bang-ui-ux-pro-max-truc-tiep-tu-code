@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -75,6 +76,7 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
                     padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: snapshot.creator == null
                         ? VitPageContent(
+         rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.none,
                             children: [
                               VitEmptyState(
@@ -176,7 +178,7 @@ class _TrustBreakdownCard extends StatelessWidget {
                       ),
                     ),
                     if (creator.fairPlayBadge) ...[
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       const VitStatusPill(
                         label: 'Fair Play',
                         status: VitStatusPillStatus.success,
@@ -188,7 +190,7 @@ class _TrustBreakdownCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Column(
             children: [
               for (final metric in snapshot.metrics) ...[
@@ -201,7 +203,7 @@ class _TrustBreakdownCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.disclaimer,
             style: AppTextStyles.micro.copyWith(

@@ -17,7 +17,7 @@ class _HoursSection extends StatelessWidget {
           label: 'Giờ giao dịch',
           color: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.p2pSettingsPageCardPadding,
@@ -32,7 +32,7 @@ class _HoursSection extends StatelessWidget {
                   VitSegmentedChoiceOption(value: 'custom', label: 'Tùy chỉnh'),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 mode == '247'
                     ? 'Quảng cáo của bạn hiển thị mọi lúc.'
@@ -69,7 +69,7 @@ class _AutoReplySection extends StatelessWidget {
           label: 'Tin nhắn tự động',
           color: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.p2pSettingsPageCardPadding,
@@ -90,7 +90,7 @@ class _AutoReplySection extends StatelessWidget {
                 last: true,
               ),
               if (enabled) ...[
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -111,7 +111,7 @@ class _AutoReplySection extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   padding: AppSpacing.p2pSettingsPageCompactCardPadding,

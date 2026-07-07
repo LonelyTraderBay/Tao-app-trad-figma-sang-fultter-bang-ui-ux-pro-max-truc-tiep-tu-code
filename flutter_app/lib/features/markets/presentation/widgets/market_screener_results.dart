@@ -39,6 +39,7 @@ class _ScreenerRow extends StatelessWidget {
     final up = pair.change24h >= 0;
     final color = up ? AppColors.buy : AppColors.sell;
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: MarketScreenerPage.rowKey(pair.id),
       variant: VitCardVariant.inner,

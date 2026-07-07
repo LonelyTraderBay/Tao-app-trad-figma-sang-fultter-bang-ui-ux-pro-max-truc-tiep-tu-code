@@ -75,7 +75,7 @@ class _CertificateHero extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               'Giao dịch P2P',
               textAlign: TextAlign.center,
@@ -107,7 +107,7 @@ class _CertificateIdBlock extends StatelessWidget {
                 'Mã chứng nhận',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 snapshot.certId,
                 textAlign: TextAlign.center,
@@ -177,7 +177,7 @@ class _CoverageBox extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _CoverageLine(
             label: 'Hạn mức / claim',
             value: '${_formatVnd(snapshot.maxCoveragePerClaim)} đ',
@@ -237,7 +237,7 @@ class _ProtectedCases extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final item in snapshot.coveredCases) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,7 +259,7 @@ class _ProtectedCases extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

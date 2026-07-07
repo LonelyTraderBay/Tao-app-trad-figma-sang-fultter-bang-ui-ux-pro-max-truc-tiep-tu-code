@@ -36,7 +36,7 @@ class _InputCard extends StatelessWidget {
               if (parsed != null && parsed >= 0) onInvestmentChanged(parsed);
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _NumberField(
             key: RIYCalculatorPage.expectedReturnKey,
             label: 'Expected Annual Return (%)',
@@ -46,7 +46,7 @@ class _InputCard extends StatelessWidget {
               if (parsed != null) onExpectedReturnChanged(parsed);
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _NumberField(
             key: RIYCalculatorPage.totalCostsKey,
             label: 'Total Annual Costs (%)',
@@ -56,7 +56,7 @@ class _InputCard extends StatelessWidget {
               if (parsed != null && parsed >= 0) onTotalCostsChanged(parsed);
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _NumberField(
             key: RIYCalculatorPage.yearsKey,
             label: 'Holding Period (Years)',
@@ -96,7 +96,7 @@ class _NumberField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: AppSpacing.x1),
         SizedBox(
@@ -200,7 +200,7 @@ class _CostImpactCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCard(
               variant: VitCardVariant.ghost,
               padding: const EdgeInsetsDirectional.symmetric(

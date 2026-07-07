@@ -96,42 +96,6 @@ class _StatTile extends StatelessWidget {
   }
 }
 
-class _FilterTabs extends StatelessWidget {
-  const _FilterTabs({required this.activeFilter, required this.onChanged});
-
-  final String activeFilter;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSegmentedChoice<String>(
-      key: P2PLoginHistoryPage.filtersKey,
-      selected: activeFilter,
-      onChanged: onChanged,
-      options: [
-        VitSegmentedChoiceOption(
-          value: 'all',
-          label: 'Tất cả',
-          key: P2PLoginHistoryPage.filterKey('all'),
-          accentColor: AppModuleAccents.p2p,
-        ),
-        VitSegmentedChoiceOption(
-          value: 'success',
-          label: 'Thành công',
-          key: P2PLoginHistoryPage.filterKey('success'),
-          accentColor: AppModuleAccents.p2p,
-        ),
-        VitSegmentedChoiceOption(
-          value: 'suspicious',
-          label: 'Đáng ngờ',
-          key: P2PLoginHistoryPage.filterKey('suspicious'),
-          accentColor: AppModuleAccents.p2p,
-        ),
-      ],
-    );
-  }
-}
-
 class _RiskWarning extends StatelessWidget {
   const _RiskWarning({required this.snapshot});
 

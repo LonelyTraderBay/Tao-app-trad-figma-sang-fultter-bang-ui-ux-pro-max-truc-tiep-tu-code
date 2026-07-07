@@ -6,8 +6,8 @@ import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.da
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-const double _recentProductExtent = AppSpacing.buttonStandard + AppSpacing.x6;
-const double _recentProductWidth = AppSpacing.x7 * 2 + AppSpacing.x5;
+const double _recentProductExtent = AppSpacing.homeRecentProductHeight;
+const double _recentProductWidth = AppSpacing.homeRecentProductWidth;
 
 class HomeRecentProductsSection extends StatelessWidget {
   const HomeRecentProductsSection({
@@ -25,8 +25,10 @@ class HomeRecentProductsSection extends StatelessWidget {
       key: HomePage.recentProductsSectionKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(title: 'Gần đây'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+          title: 'Gần đây',
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+        ),
         if (recentProducts.isEmpty)
           VitEmptyState(
             title: 'Chưa có hoạt động gần đây',
@@ -68,6 +70,7 @@ class _HomeRecentProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: _recentProductWidth,
+      height: _recentProductExtent,
       child: VitCompactProductCard(
         key: HomePage.recentProductKey(product.id),
         icon: HomeActionTokens.icon(product.icon),

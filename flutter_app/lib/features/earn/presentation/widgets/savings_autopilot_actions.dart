@@ -44,7 +44,7 @@ class ActionsTab extends StatelessWidget {
       children: [
         if (pending.isNotEmpty) ...[
           SectionTitle(label: 'Cần phê duyệt (${pending.length})'),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final action in pending) ...[
             _ApprovalCard(
               action: action,
@@ -52,12 +52,12 @@ class ActionsTab extends StatelessWidget {
               onApprove: () => onApprove(action.id),
               onSkip: () => onSkip(action.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
         const SectionTitle(label: 'Lịch sử hành động'),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final action in snapshot.actions) ...[
           ActionTile(
             action: action,
@@ -65,7 +65,7 @@ class ActionsTab extends StatelessWidget {
             onTap: () => onOpenAction(action),
             showImpact: true,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -117,7 +117,7 @@ class _ApprovalCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       action.title,
                       style: captionBoldStyle.copyWith(color: AppColors.text1),
@@ -136,7 +136,7 @@ class _ApprovalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -312,12 +312,12 @@ class ActionDetailSheet extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Text(
               action.description,
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               variant: VitCardVariant.inner,
               padding: AppSpacing.earnPaddingX3,
@@ -344,7 +344,7 @@ class ActionDetailSheet extends StatelessWidget {
               ),
             ),
             if (onApprove != null && onSkip != null) ...[
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(

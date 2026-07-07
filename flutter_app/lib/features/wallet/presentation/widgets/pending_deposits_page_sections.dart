@@ -44,6 +44,7 @@ class _SummaryBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasPending = pendingCount > 0;
     final color = hasPending ? AppColors.caution : AppColors.buy;
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.walletPendingSummaryHeight,
@@ -121,8 +122,8 @@ class _SummaryBanner extends StatelessWidget {
   }
 }
 
-class _FilterChips extends StatelessWidget {
-  const _FilterChips({
+class _PendingDepositFilters extends StatelessWidget {
+  const _PendingDepositFilters({
     required this.active,
     required this.pendingCount,
     required this.onChanged,

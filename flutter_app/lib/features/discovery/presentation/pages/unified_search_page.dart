@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/discovery_controller_providers.d
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -107,18 +108,17 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.none,
                       gap: VitContentGap.tight,
                       fullBleed: true,
-                      children: [
-                        _UnifiedSearchBody(
-                          snapshot: snapshot,
-                          onQuerySelected: (value) => setState(() {
-                            _searchController.text = value;
-                          }),
-                          onRetry: () => setState(() {}),
-                        ),
-                      ],
+                      children: _unifiedSearchPageChildren(
+                        snapshot: snapshot,
+                        onQuerySelected: (value) => setState(() {
+                          _searchController.text = value;
+                        }),
+                        onRetry: () => setState(() {}),
+                      ),
                     ),
                   ),
                 ),

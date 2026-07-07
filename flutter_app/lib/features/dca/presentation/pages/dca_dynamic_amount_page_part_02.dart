@@ -73,11 +73,11 @@ class _RecentDetailsCard extends StatelessWidget {
             subtitle: '${entries.length} lần điều chỉnh',
             color: AppColors.primarySoft,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final entry in entries.take(6)) ...[
             _HistoryRow(entry: entry),
             if (entry != entries.take(6).last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -245,7 +245,7 @@ class _ConfigSection extends StatelessWidget {
                   color: accent,
                   actionLabel: 'Chỉnh sửa',
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     final availableWidth = math.max(0.0, constraints.maxWidth);
@@ -307,7 +307,7 @@ class _ConfigItemCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             item.value,
             style: AppTextStyles.baseMedium.copyWith(
@@ -363,7 +363,7 @@ class _StrategyExplainer extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   option.description,
                   style: AppTextStyles.caption.copyWith(

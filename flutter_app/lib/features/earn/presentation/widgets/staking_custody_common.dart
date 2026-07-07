@@ -51,7 +51,7 @@ class StakingCustodyMetricTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 2,
@@ -154,7 +154,7 @@ class StakingCustodyStorageTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             description,
             style: AppTextStyles.micro.copyWith(
@@ -191,7 +191,7 @@ class StakingCustodyReconciliationLogCard extends StatelessWidget {
               const StakingCustodyMatchStatus(),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

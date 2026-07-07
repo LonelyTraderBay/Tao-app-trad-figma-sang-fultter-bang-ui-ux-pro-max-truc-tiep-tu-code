@@ -72,32 +72,90 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _RewardsHubBody(
-                          snapshot: snapshot,
-                          visibleTasks: visibleTasks,
-                          activeFilter: _activeFilter,
-                          claimedAll: _claimedAll,
-                          onClaimAll: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _claimedAll = true);
-                          },
-                          onFilter: (filter) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeFilter = filter);
-                          },
-                          onReferral: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.referralRoute);
-                          },
-                          onLeaderboard: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.leaderboardRoute);
-                          },
-                        ),
-                      ],
+                      children: switch (snapshot.screenState) {
+                        RewardsScreenState.loading => [
+                          const VitSkeletonList(
+                            key: RewardsHubPage.loadingKey,
+                            rows: 4,
+                          ),
+                        ],
+                        RewardsScreenState.error => [
+                          VitErrorState(
+                            key: RewardsHubPage.errorKey,
+                            title: 'Không tải được phần thưởng',
+                            message:
+                                'Thử lại sau hoặc quay lại trang chủ.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => context.go(snapshot.backRoute),
+                          ),
+                        ],
+                        RewardsScreenState.empty => [
+                          VitEmptyState(
+                            key: RewardsHubPage.emptyKey,
+                            icon: Icons.redeem_outlined,
+                            title: 'Chưa có phần thưởng',
+                            message:
+                                'Hoàn thành nhiệm vụ để nhận Arena Points.',
+                            actionLabel: 'Về trang chủ',
+                            onAction: () => context.go(snapshot.backRoute),
+                          ),
+                        ],
+                        RewardsScreenState.offline
+                            when snapshot.tasks.isEmpty => [
+                          VitEmptyState(
+                            key: RewardsHubPage.offlineKey,
+                            icon: Icons.wifi_off_rounded,
+                            title: 'Đang ngoại tuyến',
+                            message:
+                                'Kết nối lại để xem phần thưởng mới nhất.',
+                          ),
+                        ],
+                        _ => [
+                          _RewardsHero(
+                            summary: snapshot.summary,
+                            claimedAll: _claimedAll,
+                            onClaimAll: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _claimedAll = true);
+                            },
+                          ),
+                          _CategoryProgress(
+                            categories: snapshot.categories,
+                            completionLabel:
+                                snapshot.summary.completionLabel,
+                          ),
+                          _CheckInSection(checkIns: snapshot.checkIns),
+                          _ReferralBanner(
+                            onTap: () {
+                              HapticFeedback.selectionClick();
+                              context.go(snapshot.referralRoute);
+                            },
+                          ),
+                          _TaskSection(
+                            completionLabel:
+                                snapshot.summary.completionLabel,
+                            filters: snapshot.filters,
+                            activeFilter: _activeFilter,
+                            tasks: visibleTasks,
+                            onFilter: (filter) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeFilter = filter);
+                            },
+                          ),
+                          _BonusSection(rows: snapshot.bonusRows),
+                          _ProgressSection(
+                            summary: snapshot.summary,
+                            leaderboard: snapshot.leaderboard,
+                            onLeaderboardTap: () {
+                              HapticFeedback.selectionClick();
+                              context.go(snapshot.leaderboardRoute);
+                            },
+                          ),
+                          _RewardsDisclaimer(text: snapshot.disclaimer),
+                        ],
+                      },
                     ),
                   ),
                 ),
@@ -116,90 +174,6 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
       return;
     }
     context.go(backRoute);
-  }
-}
-
-class _RewardsHubBody extends StatelessWidget {
-  const _RewardsHubBody({
-    required this.snapshot,
-    required this.visibleTasks,
-    required this.activeFilter,
-    required this.claimedAll,
-    required this.onClaimAll,
-    required this.onFilter,
-    required this.onReferral,
-    required this.onLeaderboard,
-  });
-
-  final RewardsHubSnapshot snapshot;
-  final List<RewardTaskDraft> visibleTasks;
-  final String activeFilter;
-  final bool claimedAll;
-  final VoidCallback onClaimAll;
-  final ValueChanged<String> onFilter;
-  final VoidCallback onReferral;
-  final VoidCallback onLeaderboard;
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (snapshot.screenState) {
-      RewardsScreenState.loading => const VitSkeletonList(
-        key: RewardsHubPage.loadingKey,
-        rows: 4,
-      ),
-      RewardsScreenState.error => VitErrorState(
-        key: RewardsHubPage.errorKey,
-        title: 'Không tải được phần thưởng',
-        message: 'Thử lại sau hoặc quay lại trang chủ.',
-        actionLabel: 'Thử lại',
-        onAction: () => context.go(snapshot.backRoute),
-      ),
-      RewardsScreenState.empty => VitEmptyState(
-        key: RewardsHubPage.emptyKey,
-        icon: Icons.redeem_outlined,
-        title: 'Chưa có phần thưởng',
-        message: 'Hoàn thành nhiệm vụ để nhận Arena Points.',
-        actionLabel: 'Về trang chủ',
-        onAction: () => context.go(snapshot.backRoute),
-      ),
-      RewardsScreenState.offline when snapshot.tasks.isEmpty =>
-        VitEmptyState(
-          key: RewardsHubPage.offlineKey,
-          icon: Icons.wifi_off_rounded,
-          title: 'Đang ngoại tuyến',
-          message: 'Kết nối lại để xem phần thưởng mới nhất.',
-        ),
-      _ => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _RewardsHero(
-            summary: snapshot.summary,
-            claimedAll: claimedAll,
-            onClaimAll: onClaimAll,
-          ),
-          _CategoryProgress(
-            categories: snapshot.categories,
-            completionLabel: snapshot.summary.completionLabel,
-          ),
-          _CheckInSection(checkIns: snapshot.checkIns),
-          _ReferralBanner(onTap: onReferral),
-          _TaskSection(
-            completionLabel: snapshot.summary.completionLabel,
-            filters: snapshot.filters,
-            activeFilter: activeFilter,
-            tasks: visibleTasks,
-            onFilter: onFilter,
-          ),
-          _BonusSection(rows: snapshot.bonusRows),
-          _ProgressSection(
-            summary: snapshot.summary,
-            leaderboard: snapshot.leaderboard,
-            onLeaderboardTap: onLeaderboard,
-          ),
-          _RewardsDisclaimer(text: snapshot.disclaimer),
-        ],
-      ),
-    };
   }
 }
 
@@ -243,14 +217,14 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Hoàn thành nhiệm vụ · nhận điểm Arena',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -286,7 +260,7 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -308,13 +282,13 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _PendingClaimBanner(
             summary: summary,
             claimedAll: claimedAll,
             onTap: onClaimAll,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ExpiringBanner(count: summary.expiringCount),
         ],
       ),
@@ -379,7 +353,7 @@ class _PendingClaimBanner extends StatelessWidget {
       padding: AppSpacing.arenaPaddingX3,
       child: Row(
         children: [
-          _AccentIcon(
+          VitAccentIconBox(
             icon: claimedAll
                 ? Icons.check_circle_outline
                 : Icons.inventory_2_outlined,
@@ -494,13 +468,13 @@ class _CategoryProgress extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final category in categories) ...[
           _CategoryRow(category: category),
           if (category != categories.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const Row(
           children: [
             _Legend(label: 'Đã nhận', color: AppColors.buy),

@@ -50,7 +50,7 @@ class _ExampleCard extends StatelessWidget {
               _SmallBadge(label: example.rating, color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -61,7 +61,7 @@ class _ExampleCard extends StatelessWidget {
               _MetaChip(example.resolution),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final reason in example.reasons)
             Padding(
               padding: AppSpacing.arenaGuideReasonPadding,
@@ -298,7 +298,7 @@ class _ChecklistCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (var index = 0; index < items.length; index++)
             Padding(
               padding: AppSpacing.arenaGuideChecklistItemPadding,

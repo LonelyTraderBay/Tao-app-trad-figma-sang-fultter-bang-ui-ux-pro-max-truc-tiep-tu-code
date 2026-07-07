@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -106,39 +107,47 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                 child: VitInsetScrollView(
                   key: PairDetailPage.contentKey,
                   bottomInset: scrollEndClearance,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.compact,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _PriceOverview(pair: pair),
-                      _ViewTabs(
-                        activeView: _activeView,
-                        onChanged: (view) => setState(() => _activeView = view),
-                      ),
-                      if (_activeView == _PairView.chart) ...[
-                        _TimeframeRow(
-                          active: _timeframe,
-                          onChanged: (value) =>
-                              setState(() => _timeframe = value),
-                        ),
-                        _IndicatorRow(
-                          active: _indicators,
-                          onToggle: (value) => setState(() {
-                            if (_indicators.contains(value)) {
-                              _indicators.remove(value);
-                            } else {
-                              _indicators.add(value);
-                            }
-                          }),
-                          onAdvanced: () => context.go(
-                            AppRoutePaths.tradeAdvancedChart(pair.id),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _ViewTabs(
+                            activeView: _activeView,
+                            onChanged: (view) =>
+                                setState(() => _activeView = view),
                           ),
-                        ),
-                        _PairChart(series: snapshot.activeChartSeries),
-                      ] else if (_activeView == _PairView.orderBook) ...[
-                        _OrderBookPanel(snapshot: snapshot),
-                      ] else ...[
-                        _TradesPanel(trades: snapshot.recentTrades),
-                      ],
+                          if (_activeView == _PairView.chart) ...[
+                            _TimeframeRow(
+                              active: _timeframe,
+                              onChanged: (value) =>
+                                  setState(() => _timeframe = value),
+                            ),
+                            _IndicatorRow(
+                              active: _indicators,
+                              onToggle: (value) => setState(() {
+                                if (_indicators.contains(value)) {
+                                  _indicators.remove(value);
+                                } else {
+                                  _indicators.add(value);
+                                }
+                              }),
+                              onAdvanced: () => context.go(
+                                AppRoutePaths.tradeAdvancedChart(pair.id),
+                              ),
+                            ),
+                            _PairChart(series: snapshot.activeChartSeries),
+                          ] else if (_activeView == _PairView.orderBook) ...[
+                            _OrderBookPanel(snapshot: snapshot),
+                          ] else ...[
+                            _TradesPanel(trades: snapshot.recentTrades),
+                          ],
+                        ],
+                      ),
                       const _RiskWarning(),
                       VitPageSection(
                         children: [
@@ -165,7 +174,8 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                             icon: Icons.layers_rounded,
                             iconColor: AppAssetColors.cyanChain,
                             title: 'Độ sâu thị trường',
-                            subtitle: 'Biểu đồ depth · Cảnh báo cá voi · Sổ lệnh',
+                            subtitle:
+                                'Biểu đồ depth · Cảnh báo cá voi · Sổ lệnh',
                             onTap: () =>
                                 context.go(AppRoutePaths.pairDepth(pair.id)),
                           ),

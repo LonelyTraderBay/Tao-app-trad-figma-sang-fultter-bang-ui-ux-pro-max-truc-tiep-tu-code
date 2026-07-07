@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/notifications_controller_provide
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -109,6 +110,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.notificationsScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
                       children: [
                         if (snapshot.screenState ==
@@ -118,17 +120,71 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                             onMarkAllRead:
                                 unreadCount > 0 ? _markAllRead : null,
                           ),
-                        _NotificationsBody(
-                          screenState: snapshot.screenState,
-                          notifications: filtered,
-                          filter: _filter,
-                          onRetry: () => ref
-                              .read(notificationsStateProvider.notifier)
-                              .resetFromRepository(),
-                          onToggleFilter: _toggleFilter,
-                          onOpen: _openNotification,
-                          onDelete: _deleteNotification,
-                        ),
+                        ...switch (snapshot.screenState) {
+                          NotificationsScreenState.loading => [
+                            const VitSkeletonList(
+                              key: NotificationsPage.loadingKey,
+                              rows: 5,
+                            ),
+                          ],
+                          NotificationsScreenState.error => [
+                            VitErrorState(
+                              key: NotificationsPage.errorKey,
+                              title: 'Không tải được thông báo',
+                              message: 'Kiểm tra kết nối và thử lại.',
+                              actionLabel: 'Thử lại',
+                              onAction: () => ref
+                                  .read(notificationsStateProvider.notifier)
+                                  .resetFromRepository(),
+                            ),
+                          ],
+                          NotificationsScreenState.empty ||
+                          NotificationsScreenState.offline
+                              when notifications.isEmpty => [
+                            VitEmptyState(
+                              key: NotificationsPage.emptyKey,
+                              title: _filter == _NotificationFilter.unread
+                                  ? 'Không có thông báo chưa đọc'
+                                  : 'Chưa có thông báo nào',
+                              message: snapshot.screenState ==
+                                      NotificationsScreenState.offline
+                                  ? 'Kết nối lại để nhận cập nhật mới nhất.'
+                                  : 'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
+                              icon: Icons.notifications_off_rounded,
+                              actionLabel: _filter == _NotificationFilter.unread
+                                  ? 'Xem tất cả'
+                                  : null,
+                              onAction: _filter == _NotificationFilter.unread
+                                  ? _toggleFilter
+                                  : null,
+                            ),
+                          ],
+                          _ when filtered.isEmpty => [
+                            VitEmptyState(
+                              key: NotificationsPage.emptyKey,
+                              title: _filter == _NotificationFilter.unread
+                                  ? 'Không có thông báo chưa đọc'
+                                  : 'Chưa có thông báo nào',
+                              message:
+                                  'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
+                              icon: Icons.notifications_off_rounded,
+                              actionLabel:
+                                  _filter == _NotificationFilter.unread
+                                  ? 'Xem tất cả'
+                                  : null,
+                              onAction: _filter == _NotificationFilter.unread
+                                  ? _toggleFilter
+                                  : null,
+                            ),
+                          ],
+                          _ => [
+                            _NotificationFeed(
+                              notifications: filtered,
+                              onOpen: _openNotification,
+                              onDelete: _deleteNotification,
+                            ),
+                          ],
+                        },
                       ],
                     ),
                   ),

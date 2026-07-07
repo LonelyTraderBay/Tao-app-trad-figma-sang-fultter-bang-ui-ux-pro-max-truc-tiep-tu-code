@@ -28,7 +28,7 @@ class _EventList extends StatelessWidget {
             onSelect: () => onSelect(event.id),
             onExpand: () => onExpand(event.id),
           ),
-          if (event != events.last) const SizedBox(height: AppSpacing.x3),
+          if (event != events.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -116,7 +116,7 @@ class _EventLogCard extends StatelessWidget {
                         ),
                       ),
                       if (event.tags.isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Wrap(
                           spacing: AppSpacing.x1,
                           runSpacing: AppSpacing.x1,

@@ -7,11 +7,13 @@ class _TrendsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      density: VitDensity.compact,
-      children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: sectionChildren,
+    );
+  }
+
+  List<Widget> get sectionChildren => [
         _ChartCard(
           title: '24h Gas Price Trends',
           height: VitDensity.compact.controlHeight * 3.2,
@@ -27,9 +29,7 @@ class _TrendsTab extends StatelessWidget {
           ),
         ),
         const _BestTimeCard(),
-      ],
-    );
-  }
+      ];
 }
 
 class _ChartCard extends StatelessWidget {
@@ -45,6 +45,7 @@ class _ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: height,
       density: VitDensity.compact,
@@ -58,7 +59,7 @@ class _ChartCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Expanded(child: child),
         ],
       ),
@@ -110,7 +111,7 @@ class _BestTimeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: const [
               Expanded(

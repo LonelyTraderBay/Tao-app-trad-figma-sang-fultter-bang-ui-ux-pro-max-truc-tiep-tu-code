@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -64,6 +65,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [
@@ -131,7 +133,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(sheet.title, style: AppTextStyles.sectionTitle),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   borderColor: color.withValues(alpha: 0.28),
@@ -147,7 +149,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                         ),
                       ),
                       if (sheet.bullets.isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         for (final bullet in sheet.bullets)
                           Padding(
                             padding: AppSpacing.earnBottomPaddingX1,
@@ -163,7 +165,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 VitCtaButton(
                   variant: sheet.tone == 'danger'
                       ? VitCtaButtonVariant.destructive
@@ -290,7 +292,7 @@ class _EmergencyActionCard extends StatelessWidget {
                     height: AppTextStyles.caption.height,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   action.impact,
                   style: AppTextStyles.caption.copyWith(
@@ -446,7 +448,7 @@ class _StatusTile extends StatelessWidget {
             color: color,
             size: AppSpacing.iconSm,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             status.value,
             style: AppTextStyles.baseMedium.copyWith(color: color),

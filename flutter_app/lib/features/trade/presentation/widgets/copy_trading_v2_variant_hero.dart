@@ -13,6 +13,7 @@ class _VariantSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
@@ -65,6 +66,7 @@ class _VariantButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       height: _copyVariantButtonHeight,
@@ -109,6 +111,7 @@ class _GlassHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(minHeight: _copyGlassHeroMinHeight),
       padding: AppSpacing.zeroInsets.copyWith(
@@ -187,6 +190,7 @@ class _BoldHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(minHeight: _copyBoldHeroMinHeight),
       padding: AppSpacing.zeroInsets.copyWith(
@@ -260,6 +264,7 @@ class _CopyIconBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: _copyHeroIconBox,
       height: _copyHeroIconBox,
@@ -306,6 +311,7 @@ class _GlassStatCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: _copyGlassStatIconBox,
             height: _copyGlassStatIconBox,
@@ -357,6 +363,7 @@ class _BoldStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,

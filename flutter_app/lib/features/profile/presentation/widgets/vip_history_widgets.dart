@@ -18,7 +18,7 @@ class VipHistoryTab extends StatelessWidget {
         for (final row in snapshot.history) ...[
           _VipHistoryCard(row: row),
           if (row != snapshot.history.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -53,7 +53,7 @@ class _VipHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               _VipHistoryMetric(label: 'Khối lượng', value: row.volume),
@@ -92,7 +92,7 @@ class _VipHistoryMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             style: AppTextStyles.numericCode.copyWith(

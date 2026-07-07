@@ -20,7 +20,7 @@ class _AnalysisCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final insight in insights) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +53,7 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (insight != insights.last) const SizedBox(height: AppSpacing.x3),
+            if (insight != insights.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

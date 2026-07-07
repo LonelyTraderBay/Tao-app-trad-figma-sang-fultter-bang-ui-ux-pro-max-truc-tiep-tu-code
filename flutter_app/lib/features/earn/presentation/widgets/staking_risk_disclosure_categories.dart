@@ -23,7 +23,7 @@ class _CategoriesTab extends StatelessWidget {
             onTap: () => onToggle(category.id),
           ),
           if (category != snapshot.categories.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -150,9 +150,9 @@ class _RiskCategoryDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _DetailGroup(label: 'Chi tiết:', items: category.details),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _DetailGroup(label: 'Ví dụ thực tế:', items: category.examples),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _DetailGroup(
                 label: 'Cách giảm thiểu:',
                 items: category.mitigation,
@@ -183,7 +183,7 @@ class _DetailGroup extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final item in items) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,7 +211,7 @@ class _DetailGroup extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.x2),
+          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -198,6 +199,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                     key: WatchlistPage.contentKey,
                     bottomInset: scrollEndClearance,
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -211,7 +213,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                               )
                             : Column(
                                 children: [
-                                  for (var i = 0; i < items.length; i++) ...[
+                                  for (var i = 0; i < items.length; i++)
                                     _WatchlistCard(
                                       item: items[i],
                                       onPairTap: () => context.go(
@@ -229,9 +231,6 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                                       onRemoveTap: () =>
                                           _removeEntry(items[i].entry.id),
                                     ),
-                                    if (i != items.length - 1)
-                                      const SizedBox(height: AppSpacing.x3),
-                                  ],
                                 ],
                               ),
                         const MarketBodyReviewSection(

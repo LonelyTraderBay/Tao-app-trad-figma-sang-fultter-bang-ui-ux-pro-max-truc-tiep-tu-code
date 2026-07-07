@@ -10,15 +10,16 @@ class _DashboardsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle(
-          icon: Icons.trending_up_rounded,
+        const VitSectionHeader(
           title: 'Dashboards',
+          icon: Icons.trending_up_rounded,
+          iconColor: AppColors.text1,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
         ),
-        const SizedBox(height: AppSpacing.x4),
         for (final dashboard in dashboards) ...[
           _DashboardCard(dashboard: dashboard),
           if (dashboard != dashboards.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -124,33 +125,6 @@ class _FooterCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.icon, required this.title});
-
-  final IconData icon;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

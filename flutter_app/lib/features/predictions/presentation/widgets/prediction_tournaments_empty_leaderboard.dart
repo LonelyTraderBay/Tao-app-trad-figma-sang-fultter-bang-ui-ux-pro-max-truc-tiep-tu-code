@@ -48,7 +48,7 @@ class _EmptyStateCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.predictionTournamentEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             title,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),

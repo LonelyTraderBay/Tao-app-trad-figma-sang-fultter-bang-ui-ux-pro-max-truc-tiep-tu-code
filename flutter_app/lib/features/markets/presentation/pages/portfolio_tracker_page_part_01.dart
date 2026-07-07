@@ -49,6 +49,7 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                       bottom: scrollEndClearance,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -94,11 +95,27 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                               ),
                             ),
                         ] else ...[
-                          _TimeFilterChips(
-                            active: _timeFilter,
-                            onSelected: (value) => setState(() {
-                              _timeFilter = value;
-                            }),
+                          Row(
+                            children: [
+                              for (final filter in const [
+                                '24h',
+                                '7d',
+                                '30d',
+                                'Tất cả',
+                              ]) ...[
+                                VitFilterChip(
+                                  label: filter,
+                                  active: _timeFilter == filter,
+                                  onTap: () => setState(() {
+                                    _timeFilter = filter;
+                                  }),
+                                  color: _marketPrimary,
+                                  padding: _portfolioChipPadding,
+                                ),
+                                if (filter != 'Tất cả')
+                                  const SizedBox(width: _portfolioChipGap),
+                              ],
+                            ],
                           ),
                           _PerformanceChartCard(
                             stats: snapshot.stats,

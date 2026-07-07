@@ -42,7 +42,7 @@ class _NoticePanel extends StatelessWidget {
                 color: _venueGreen,
                 size: AppSpacing.executionVenueNoticeIcon,
               ),
-              const SizedBox(width: AppSpacing.x3 + AppSpacing.x1),
+              const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
               Expanded(
                 child: Text(
                   text,

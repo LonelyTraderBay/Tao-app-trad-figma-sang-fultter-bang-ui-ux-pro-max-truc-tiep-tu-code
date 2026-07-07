@@ -12,8 +12,10 @@ class _QuickActions extends StatelessWidget {
       key: P2PSecurityCenterPage.quickActionsKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle('Thao tác nhanh'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+          title: 'Thao tác nhanh',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         GridView.builder(
           itemCount: actions.length,
           shrinkWrap: true,
@@ -88,8 +90,10 @@ class _RecentEvents extends StatelessWidget {
       key: P2PSecurityCenterPage.eventsKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionTitle('Hoạt động gần đây'),
-        const SizedBox(height: AppSpacing.x3),
+        const VitSectionHeader(
+          title: 'Hoạt động gần đây',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+        ),
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
@@ -146,7 +150,7 @@ class _SecurityEventRow extends StatelessWidget {
                     height: _p2pSecurityCompactLine,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     const Icon(
@@ -168,20 +172,6 @@ class _SecurityEventRow extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: AppTextStyles.baseMedium.copyWith(fontWeight: AppTextStyles.bold),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -47,7 +48,7 @@ class AnalysisTab extends StatelessWidget {
     final avgLockDays =
         rungs.fold<int>(0, (total, rung) => total + rung.lockDays) ~/
         rungs.length;
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       key: SavingsLadderPage.analysisKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -152,7 +153,7 @@ class _MetricGrid extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   metric.value,
                   maxLines: 1,
@@ -198,7 +199,7 @@ class _AssetBreakdown extends StatelessWidget {
               color: savingsLadderColorFor(entry.value.colorKey),
             ),
             if (entry.key != byAsset.keys.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -230,7 +231,7 @@ class _DurationBreakdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = savingsLadderTotalAllocated(rungs);
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       gap: VitContentGap.tight,
@@ -353,7 +354,7 @@ class _BreakdownRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(

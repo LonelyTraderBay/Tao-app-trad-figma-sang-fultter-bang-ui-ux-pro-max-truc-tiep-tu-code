@@ -79,16 +79,16 @@ class _StrategyCard extends StatelessWidget {
             title,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.sectionTitle.copyWith(color: color),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _SmallMetric(label: 'Invested', value: invested),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _SmallMetric(
             label: 'Return',
             value: _formatSignedPercent(returnPercent),
@@ -128,7 +128,7 @@ class _WinnerBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text.rich(
                   TextSpan(
                     text: 'Outperformed by ',

@@ -13,7 +13,7 @@ class _SeveritySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -25,7 +25,7 @@ class _SeveritySection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final flag in flags) ...[
           VitCard(
             density: VitDensity.compact,
@@ -50,7 +50,7 @@ class _SeveritySection extends StatelessWidget {
               ],
             ),
           ),
-          if (flag != flags.last) const SizedBox(height: AppSpacing.x2),
+          if (flag != flags.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -64,7 +64,7 @@ class _VerificationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -118,7 +118,7 @@ class _TierCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final req in tier.requirements) ...[
             Text(
               '• $req',
@@ -141,6 +141,7 @@ class _ReportTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,

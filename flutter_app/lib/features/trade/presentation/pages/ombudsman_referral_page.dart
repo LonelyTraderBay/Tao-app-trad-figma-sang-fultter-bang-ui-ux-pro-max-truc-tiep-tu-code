@@ -124,6 +124,7 @@ class _IntroCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: _ombudsmanIntroIconExtent,
             height: _ombudsmanIntroIconExtent,
@@ -149,10 +150,10 @@ class _IntroCard extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     snapshot.infoDescription,
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
                     ),
                   ),
@@ -216,7 +217,7 @@ class _EligibilityRow extends StatelessWidget {
                   color: AppColors.text1,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -272,6 +273,7 @@ class _ContactRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           width: _ombudsmanContactIconExtent,
           height: _ombudsmanContactIconExtent,
@@ -289,7 +291,7 @@ class _ContactRow extends StatelessWidget {
                 contact.label,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 contact.value,
                 style:
@@ -302,7 +304,7 @@ class _ContactRow extends StatelessWidget {
                         ),
               ),
               if (contact.detail != null) ...[
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   contact.detail!,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -328,6 +330,7 @@ class _ProcessStepCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: _ombudsmanStepMarkerExtent,
             height: _ombudsmanStepMarkerExtent,
@@ -355,7 +358,7 @@ class _ProcessStepCard extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Text(
                     step.description,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),

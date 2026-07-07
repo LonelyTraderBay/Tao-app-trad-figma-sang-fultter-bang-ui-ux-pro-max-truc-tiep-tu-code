@@ -9,23 +9,14 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_merchant_profile_header_stats.dart';
 part '../widgets/p2p_merchant_profile_ads_reviews.dart';
 
-const double _p2pMerchantVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pMerchantNativeNavClearance =
-    _p2pMerchantVisualNavClearance - AppSpacing.x4;
-const double _p2pMerchantVisualClearance = AppSpacing.x3;
-const double _p2pMerchantNativeClearance = AppSpacing.x2;
 const double _p2pMerchantSectionGap = AppSpacing.x3;
 const double _p2pMerchantTightGap = AppSpacing.x2;
 const double _p2pMerchantButtonHeight =
@@ -67,89 +58,50 @@ class _P2PMerchantProfilePageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pMerchantProfileProvider(widget.merchantId));
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pMerchantVisualNavClearance + _p2pMerchantVisualClearance
-            : _p2pMerchantNativeNavClearance + _p2pMerchantNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: 'Hồ sơ Merchant',
+      subtitle: 'Merchant · P2P',
       semanticLabel: 'SC-228 P2PMerchantProfilePage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Hồ sơ Merchant',
-            subtitle: 'Merchant · P2P',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.p2p),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PMerchantProfilePage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommercePageScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _ProfileHeader(
-                          snapshot: snapshot,
-                          following: _following,
-                          onFollow: _toggleFollow,
-                          onReport: () => context.go(snapshot.reportRoute),
-                          onBlock: () => _confirmBlock(context, snapshot),
-                        ),
-                        const SizedBox(height: _p2pMerchantSectionGap),
-                        _StatsGrid(merchant: snapshot.merchant),
-                        const SizedBox(height: _p2pMerchantSectionGap),
-                        _ReputationCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pMerchantSectionGap),
-                        VitTabBar(
-                          variant: VitTabBarVariant.segment,
-                          activeKey: _tab.name,
-                          onChanged: (key) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tab = _tabFromKey(key));
-                          },
-                          tabs: [
-                            VitTabItem(
-                              key: _MerchantProfileTab.ads.name,
-                              label: 'Quảng cáo (${snapshot.ads.length})',
-                            ),
-                            VitTabItem(
-                              key: _MerchantProfileTab.reviews.name,
-                              label: 'Đánh giá (${snapshot.reviews.length})',
-                              widgetKey: P2PMerchantProfilePage.reviewsTabKey,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: _p2pMerchantTightGap),
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 180),
-                          child: _tab == _MerchantProfileTab.ads
-                              ? _AdsList(snapshot: snapshot)
-                              : _ReviewsList(snapshot: snapshot),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+      contentKey: P2PMerchantProfilePage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.p2p),
+      children: [
+        _ProfileHeader(
+          snapshot: snapshot,
+          following: _following,
+          onFollow: _toggleFollow,
+          onReport: () => context.go(snapshot.reportRoute),
+          onBlock: () => _confirmBlock(context, snapshot),
         ),
-      ),
+        _StatsGrid(merchant: snapshot.merchant),
+        _ReputationCard(snapshot: snapshot),
+        VitTabBar(
+          variant: VitTabBarVariant.segment,
+          activeKey: _tab.name,
+          onChanged: (key) {
+            HapticFeedback.selectionClick();
+            setState(() => _tab = _tabFromKey(key));
+          },
+          tabs: [
+            VitTabItem(
+              key: _MerchantProfileTab.ads.name,
+              label: 'Quảng cáo (${snapshot.ads.length})',
+            ),
+            VitTabItem(
+              key: _MerchantProfileTab.reviews.name,
+              label: 'Đánh giá (${snapshot.reviews.length})',
+              widgetKey: P2PMerchantProfilePage.reviewsTabKey,
+            ),
+          ],
+        ),
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 180),
+          child: _tab == _MerchantProfileTab.ads
+              ? _AdsList(snapshot: snapshot)
+              : _ReviewsList(snapshot: snapshot),
+        ),
+      ],
     );
   }
 

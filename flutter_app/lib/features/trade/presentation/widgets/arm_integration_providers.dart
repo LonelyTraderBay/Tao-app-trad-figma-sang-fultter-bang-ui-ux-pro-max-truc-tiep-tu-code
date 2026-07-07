@@ -39,6 +39,7 @@ class _ArmProviderCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.standard,
@@ -99,7 +100,7 @@ class _ArmProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -128,9 +129,9 @@ class _ArmProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ConnectionDetails(connection: connection),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -215,9 +216,9 @@ class _ConnectionDetails extends StatelessWidget {
             value: connection.endpoint,
             mono: true,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _DetailRow(label: 'Last Check:', value: connection.lastCheck),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _DetailRow(label: 'Cert Expiry:', value: connection.certExpiry),
         ],
       ),

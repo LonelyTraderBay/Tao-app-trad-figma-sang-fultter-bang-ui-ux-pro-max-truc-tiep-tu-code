@@ -43,7 +43,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 'Tính phí rút sớm',
                 style: AppTextStyles.sectionTitle.copyWith(
@@ -51,7 +51,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitInput(
                 controller: _principalController,
                 fieldKey: const Key('sc355_calculator_principal'),
@@ -63,7 +63,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 prefix: const Icon(Icons.account_balance_wallet_rounded),
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitInput(
                 controller: _earnedController,
                 fieldKey: const Key('sc355_calculator_earned'),
@@ -75,7 +75,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 prefix: const Icon(Icons.savings_rounded),
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitInput(
                 controller: _daysController,
                 fieldKey: const Key('sc355_calculator_days'),
@@ -86,15 +86,15 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
               if (result != null) ...[
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _CalculatorResult(
                   result: result,
                   previewRequested: _previewRequested,
                 ),
               ],
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _WarningBox(text: widget.snapshot.calculatorDisclaimer),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitCtaButton(
                 onPressed: result == null
                     ? null
@@ -172,7 +172,7 @@ class _CalculatorResult extends StatelessWidget {
               'Kết quả:',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _CalculationRow(
               row: StakingWithdrawalCalculationRowDraft(
                 label: 'Phí rút sớm',
@@ -183,7 +183,7 @@ class _CalculatorResult extends StatelessWidget {
                     : StakingDisclosureRiskLevel.medium,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _CalculationRow(
               row: StakingWithdrawalCalculationRowDraft(
                 label: 'Phần thưởng còn lại',
@@ -191,7 +191,7 @@ class _CalculatorResult extends StatelessWidget {
                 tone: StakingDisclosureRiskLevel.low,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _CalculationRow(
               row: StakingWithdrawalCalculationRowDraft(
                 label: 'Số lượng nhận về',
@@ -200,7 +200,7 @@ class _CalculatorResult extends StatelessWidget {
               ),
             ),
             if (previewRequested) ...[
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _SmallBadge(
                 label: 'Preview mock đã sẵn sàng - cần xác nhận trước khi rút',
                 color: AppColors.primary,

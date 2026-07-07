@@ -166,8 +166,14 @@ void main() {
         pattern: RegExp(r'\bColors\.'),
       );
 
-      expect(allHardcoded, lessThanOrEqualTo(210));
-      expect(runtimeHardcoded.length, lessThanOrEqualTo(186));
+      // Baselines raised after TOKEN-WARN-01 added 4 new canonical color
+      // literals in lib/app/theme/app_colors.dart (riskWarning,
+      // riskWarning08/10/15) plus 2 matching regression assertions in
+      // test/app/theme/app_tokens_test.dart. New literals live in the
+      // canonical theme file, which runtimeHardcodedOutsideTheme below
+      // still requires to stay at zero.
+      expect(allHardcoded, lessThanOrEqualTo(216));
+      expect(runtimeHardcoded.length, lessThanOrEqualTo(189));
       expect(runtimeHardcodedOutsideTheme.length, lessThanOrEqualTo(0));
       expect(materialColors.length, lessThanOrEqualTo(0));
     });

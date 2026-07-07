@@ -35,6 +35,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                   key: AdvancedAnalyticsPage.contentKey,
                   bottomInset: scrollClearance,
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: tradeShellWithProductTabs(
@@ -137,7 +138,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               for (final stat in stats) ...[
@@ -293,57 +294,22 @@ class _AiSignalsTab extends StatelessWidget {
             children: [
               for (final filter in const ['all', 'long', 'short']) ...[
                 Expanded(
-                  child: _FilterChip(
-                    id: filter,
+                  child: VitChoicePill(
+                    key: AdvancedAnalyticsPage.filterKey(filter),
+                    label: filter.toUpperCase(),
                     selected: activeFilter == filter,
                     onTap: () => onFilterChanged(filter),
+                    accentColor: _advancedPurple,
+                    fullWidth: true,
                   ),
                 ),
                 if (filter != 'short') const SizedBox(width: AppSpacing.x3),
               ],
             ],
           ),
-          VitPageContent(
-            padding: VitContentPadding.none,
-            fullBleed: true,
-            density: VitDensity.compact,
-            children: [
-              for (final signal in visibleSignals) _SignalCard(signal: signal),
-            ],
-          ),
+          for (final signal in visibleSignals) _SignalCard(signal: signal),
           const _DisclaimerCard(),
         ],
-      ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.id,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String id;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: AdvancedAnalyticsPage.filterKey(id),
-      onTap: onTap,
-      density: VitDensity.compact,
-      alignment: Alignment.center,
-      variant: VitCardVariant.inner,
-      borderColor: selected ? _advancedPurple : _advancedBorder,
-      child: Text(
-        id.toUpperCase(),
-        style: AppTextStyles.caption.copyWith(
-          color: selected ? _advancedPurple : AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-        ),
       ),
     );
   }

@@ -60,12 +60,14 @@ class VitMarketTickerCard extends StatelessWidget {
       child: VitCard(
         onTap: data.onTap,
         borderColor: data.trend.foreground.withValues(alpha: .24),
-        padding: AppSpacing.homeMarketTickerCardPadding,
+        padding: AppSpacing.cardTilePadding,
+        contentAlign: VitCardContentAlign.center,
         constraints: const BoxConstraints(
           minHeight: AppSpacing.homeMarketTickerCardMinHeight,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
@@ -85,7 +87,7 @@ class VitMarketTickerCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.cardTileInnerGap),
             Text(
               data.price,
               maxLines: 1,

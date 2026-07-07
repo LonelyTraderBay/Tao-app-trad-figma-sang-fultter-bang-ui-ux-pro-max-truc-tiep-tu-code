@@ -29,10 +29,10 @@ class StakingInsuranceFundAssetBreakdownCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final asset in assets) ...[
             StakingInsuranceFundAssetRow(asset: asset),
-            if (asset != assets.last) const SizedBox(height: AppSpacing.x3),
+            if (asset != assets.last) const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),

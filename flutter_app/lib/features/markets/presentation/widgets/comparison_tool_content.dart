@@ -109,7 +109,7 @@ class ComparisonMetricSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.comparisonToolMetricSectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final metric in metrics) ...[
           _MetricCard(metric: metric, pairs: pairs),
           if (metric != metrics.last)
@@ -133,6 +133,7 @@ class _MetricCard extends StatelessWidget {
     ];
     final bestIndex = comparisonBestIndex(values, metric.highlight);
 
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(

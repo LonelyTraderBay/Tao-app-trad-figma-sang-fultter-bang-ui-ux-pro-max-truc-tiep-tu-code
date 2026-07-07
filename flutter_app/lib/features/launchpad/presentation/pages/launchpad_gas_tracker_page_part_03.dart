@@ -1,31 +1,5 @@
 part of 'launchpad_gas_tracker_page.dart';
 
-class _SelectablePill extends StatelessWidget {
-  const _SelectablePill({
-    super.key,
-    required this.label,
-    required this.color,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color color;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      padding: AppSpacing.launchpadPillPadding,
-    );
-  }
-}
-
 class _ChainBadge extends StatelessWidget {
   const _ChainBadge({required this.price});
 
@@ -48,45 +22,6 @@ class _ChainBadge extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TrendPill extends StatelessWidget {
-  const _TrendPill({required this.price});
-
-  final LaunchpadGasPriceDraft price;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = _trendColor(price.trend);
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .14),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadBadgePadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _trendIcon(price.trend),
-              color: color,
-              size: AppSpacing.launchpadIconXxs,
-            ),
-            const SizedBox(width: AppSpacing.launchpadGapXs),
-            Text(
-              _formatChange(price.change24h),
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.launchpadLineHeightTight,
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -166,7 +101,7 @@ class _EmptyAlerts extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.launchpadIconHuge,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Chua co canh bao nao',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),

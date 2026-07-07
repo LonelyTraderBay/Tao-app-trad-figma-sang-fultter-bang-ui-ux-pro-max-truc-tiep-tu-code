@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -62,7 +63,7 @@ class LaunchpadDetailPage extends ConsumerWidget {
           child: SingleChildScrollView(
             key: contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
+            child: VitPageContent(rhythm: VitPageRhythm.standard, 
               padding: VitContentPadding.defaultPadding,
               children: [
                 if (snapshot.project == null)
@@ -148,7 +149,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Text(
                       project.name,
                       style: AppTextStyles.baseMedium.copyWith(
@@ -169,7 +170,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Expanded(
@@ -193,7 +194,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.large,
@@ -208,7 +209,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                   height: AppSpacing.launchpadLineHeightLong,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -222,7 +223,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -243,7 +244,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Cần rà soát staking Launchpad',
@@ -251,7 +252,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
               'Xem lại phân bổ, điều kiện tham gia, thời hạn khóa, phí và rủi ro dự án trước khi mở luồng staking.',
           contractId: project.id,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.large,
@@ -264,7 +265,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                 'Bước tiếp theo',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Chỉ mở staking sau khi đã xem điều kiện và thời hạn khóa.',
                 style: AppTextStyles.caption.copyWith(
@@ -272,7 +273,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                   height: AppSpacing.launchpadLineHeightLong,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCtaButton(
                 onPressed: () => context.go(snapshot.stakingRoute),
                 leading: const Icon(Icons.rocket_launch_outlined),

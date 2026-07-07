@@ -61,7 +61,7 @@ class _OverviewTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 '+${summary.averageRoiAth}%',
                 style: AppTextStyles.numericDisplay4xl.copyWith(
@@ -74,7 +74,7 @@ class _OverviewTab extends StatelessWidget {
                   color: AppColors.portfolioTextMuted,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -108,7 +108,7 @@ class _OverviewTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           key: LaunchpadPerformancePage.bestWorstKey,
           children: [
@@ -133,7 +133,7 @@ class _OverviewTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _RoiDistribution(projects: snapshot.projects),
       ],
     );
@@ -160,7 +160,7 @@ class _HeroMetric extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,
@@ -208,7 +208,7 @@ class _BestWorstCard extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             eyebrow,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -257,7 +257,7 @@ class _RoiDistribution extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
             height: _launchpadPerformanceChartHeight,
             child: Row(
@@ -333,7 +333,7 @@ class _RoiBar extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           project.symbol,
           maxLines: 1,

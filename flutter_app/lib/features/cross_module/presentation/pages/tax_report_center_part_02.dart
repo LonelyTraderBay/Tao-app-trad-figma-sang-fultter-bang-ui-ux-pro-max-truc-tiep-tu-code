@@ -63,7 +63,7 @@ class _TaxActivityCard extends StatelessWidget {
                 if (!activity.taxable) const _NonTaxableBadge(),
               ],
             ),
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Row(
               children: [
                 Expanded(
@@ -86,7 +86,7 @@ class _TaxActivityCard extends StatelessWidget {
               ],
             ),
             if (activity.note != null) ...[
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               DecoratedBox(
                 decoration: const ShapeDecoration(
                   color: AppColors.warn08,
@@ -155,7 +155,7 @@ class _ExportFormatCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               for (final item in TaxExportFormat.values) ...[
@@ -228,7 +228,7 @@ class _JurisdictionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           PopupMenuButton<String>(
             color: AppColors.surface2,
             onSelected: onChanged,
@@ -361,7 +361,7 @@ class _ReportCard extends StatelessWidget {
                         _ReportStatusBadge(status: report.status),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       report.dateRange,
                       style: AppTextStyles.micro.copyWith(
@@ -379,7 +379,7 @@ class _ReportCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -403,7 +403,7 @@ class _ReportCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(

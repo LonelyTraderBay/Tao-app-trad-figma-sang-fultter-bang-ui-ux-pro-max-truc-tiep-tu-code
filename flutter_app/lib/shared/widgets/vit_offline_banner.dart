@@ -121,8 +121,8 @@ class _BannerPalette {
   );
 
   static const warning = _BannerPalette(
-    background: AppColors.warn08,
-    foreground: AppColors.warn,
+    background: AppColors.riskWarning08,
+    foreground: AppColors.riskWarning,
     border: AppColors.warningBorder,
   );
 

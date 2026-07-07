@@ -40,7 +40,7 @@ class AddressFieldSection extends StatelessWidget {
           required: required,
           optionalText: optionalText,
         ),
-        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+        const SizedBox(height: AppSpacing.formFieldLabelGap),
         child,
       ],
     );

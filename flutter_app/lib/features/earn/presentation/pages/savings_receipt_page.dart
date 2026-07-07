@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -39,10 +40,10 @@ class SavingsReceiptPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 grow: true,
                 padding: VitContentPadding.compact,
                 children: [
-                  const SizedBox(height: AppSpacing.x7),
                   VitCard(
                     variant: VitCardVariant.standard,
                     radius: VitCardRadius.standard,
@@ -75,7 +76,7 @@ class _EmptyReceiptState extends StatelessWidget {
           message: snapshot.emptyMessage,
           contractId: 'savings-receipt-empty',
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Align(
           alignment: Alignment.center,
           child: VitCtaButton(

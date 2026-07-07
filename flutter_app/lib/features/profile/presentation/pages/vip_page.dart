@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -87,17 +88,17 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(bottom: scrollClearance),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    children: [
-                      _VipBody(
-                        snapshot: snapshot,
-                        selectedTab: _selectedTab,
-                        onTabChanged: (tab) =>
-                            setState(() => _selectedTab = tab),
-                        onTrade: _openTrade,
-                      ),
-                    ],
+                    children: _vipPageChildren(
+                      context: context,
+                      snapshot: snapshot,
+                      selectedTab: _selectedTab,
+                      onTabChanged: (tab) =>
+                          setState(() => _selectedTab = tab),
+                      onTrade: _openTrade,
+                    ),
                   ),
                 ),
               ),

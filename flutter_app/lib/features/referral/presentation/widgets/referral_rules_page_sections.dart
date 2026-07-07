@@ -248,7 +248,7 @@ class _RewardTypes extends StatelessWidget {
         for (var i = 0; i < snapshot.rewardTypes.length; i++) ...[
           _RewardTypeCard(rule: snapshot.rewardTypes[i]),
           if (i < snapshot.rewardTypes.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -306,7 +306,7 @@ class _RewardTypeCard extends StatelessWidget {
                   rule.body,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 VitAccentPill(
                   label: rule.highlight,
                   accentColor: color,

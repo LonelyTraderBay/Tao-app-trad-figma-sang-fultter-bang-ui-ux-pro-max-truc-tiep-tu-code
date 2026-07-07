@@ -129,8 +129,9 @@ class _DescriptionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VitSectionHeader(title: 'Mô tả', density: VitDensity.compact),
-          const SizedBox(height: AppSpacing.x3),
+          const VitSectionHeader(title: 'Mô tả',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap, density: VitDensity.compact),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             description,
             style: AppTextStyles.caption.copyWith(
@@ -302,10 +303,10 @@ class _EvidenceSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _UploadEvidenceCard(count: files.length),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final file in files) ...[
           _EvidenceFileCard(file: file),
-          if (file != files.last) const SizedBox(height: AppSpacing.x3),
+          if (file != files.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -339,7 +340,7 @@ class _UploadEvidenceCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Tải lên bằng chứng',
             style: AppTextStyles.baseMedium.copyWith(
@@ -431,9 +432,9 @@ class _NotesSection extends StatelessWidget {
       children: [
         for (final note in notes) ...[
           _ReviewerNoteCard(note: note),
-          if (note != notes.last) const SizedBox(height: AppSpacing.x3),
+          if (note != notes.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.large,

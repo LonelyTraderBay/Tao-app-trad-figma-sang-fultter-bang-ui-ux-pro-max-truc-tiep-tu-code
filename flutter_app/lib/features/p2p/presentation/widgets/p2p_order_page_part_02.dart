@@ -56,7 +56,7 @@ class _PaymentInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             key: P2POrderPage.qrToggleKey,
             onTap: onToggleQr,
@@ -94,9 +94,9 @@ class _PaymentInfoCard extends StatelessWidget {
             ),
           ),
           if (showQr) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             _QrPanel(order: order),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           for (final field in fields)
             _PaymentFieldLine(
@@ -104,7 +104,7 @@ class _PaymentInfoCard extends StatelessWidget {
               copied: copiedField == field.id,
               onCopy: () => onCopy(field.id),
             ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _InlineWarning(title: warningTitle, message: warning),
         ],
       ),
@@ -142,7 +142,7 @@ class _QrPanel extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Quét mã bằng app ngân hàng',
             style: AppTextStyles.micro.copyWith(
@@ -155,7 +155,7 @@ class _QrPanel extends StatelessWidget {
             '${order.bankName} - ${order.accountName}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SmallPill(
             icon: Icons.open_in_new_rounded,
             label: 'Mở app ngân hàng',
@@ -265,7 +265,7 @@ class _ProofCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             step == _P2POrderUiStep.payment
                 ? 'Tải ảnh chụp giao dịch ngân hàng trước khi xác nhận thanh toán'
@@ -307,7 +307,7 @@ class _TimelineCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var index = 0; index < timeline.length; index++)
             _TimelineItem(
               item: timeline[index],
@@ -488,7 +488,7 @@ class _QuickActions extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               for (var index = 0; index < actions.length; index++) ...[

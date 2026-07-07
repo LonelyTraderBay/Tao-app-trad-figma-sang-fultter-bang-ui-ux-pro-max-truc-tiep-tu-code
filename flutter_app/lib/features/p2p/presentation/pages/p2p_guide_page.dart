@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -90,27 +91,34 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pGuideScrollPadding(bottomInset),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       children: [
-                        _GuideBody(
-                          snapshot: snapshot,
-                          activeTab: _tab,
-                          mode: _mode,
-                          expandedFaqId: _expandedFaqId,
-                          onModeChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _mode = value);
-                          },
-                          onFaqToggle: (faqId) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _expandedFaqId = _expandedFaqId == faqId
-                                  ? null
-                                  : faqId;
-                            });
-                          },
-                        ),
+                        switch (_tab) {
+                          'guide' => _HowItWorksTab(
+                            snapshot: snapshot,
+                            mode: _mode,
+                            onModeChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _mode = value);
+                            },
+                          ),
+                          'safety' => _SafetyTab(snapshot: snapshot),
+                          'video' => _VideoTab(snapshot: snapshot),
+                          _ => _FaqTab(
+                            snapshot: snapshot,
+                            expandedFaqId: _expandedFaqId,
+                            onFaqToggle: (faqId) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _expandedFaqId = _expandedFaqId == faqId
+                                    ? null
+                                    : faqId;
+                              });
+                            },
+                          ),
+                        },
                         Text(
                           snapshot.contractNotes,
                           style: AppTextStyles.micro.copyWith(

@@ -45,12 +45,13 @@ class _ChainFilters extends StatelessWidget {
       child: Row(
         children: [
           for (final filter in filters) ...[
-            _FilterChip(
+            VitChoicePill(
               key: LaunchpadAddressBookPage.filterKey(filter),
               label: filter == 'all' ? 'Tat ca' : filter,
-              active: activeFilter == filter,
-              color: _chainColor(filter),
+              selected: activeFilter == filter,
               onTap: () => onChanged(filter),
+              accentColor: _chainColor(filter),
+              padding: AppSpacing.launchpadPillPadding,
             ),
             if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
           ],

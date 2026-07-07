@@ -75,7 +75,7 @@ class _SavingsProductList extends StatelessWidget {
       children: [
         for (final product in products) ...[
           _SavingsProductCard(product: product, detailRoute: detailRoute),
-          if (product != products.last) const SizedBox(height: AppSpacing.x3),
+          if (product != products.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -147,7 +147,7 @@ class _SavingsProductCard extends StatelessWidget {
                       _productSubtitle(product),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                       ),
                     ),
@@ -181,7 +181,7 @@ class _SavingsProductCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -197,12 +197,12 @@ class _SavingsProductCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressBar(
             progress: product.progress,
             color: product.progress > 0.85 ? AppColors.sell : accent,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

@@ -11,7 +11,7 @@ class _EndpointsView extends StatelessWidget {
       label: 'REST API Endpoints',
       density: VitDensity.compact,
       children: [
-        VitPageContent(
+        VitPageContent(rhythm: VitPageRhythm.standard, 
           padding: VitContentPadding.none,
           fullBleed: true,
           density: VitDensity.compact,
@@ -34,7 +34,7 @@ class _EndpointCard extends StatelessWidget {
     return VitCard(
       key: BotApiDocumentationPage.endpointKey(endpoint.method, endpoint.path),
       density: VitDensity.compact,
-      child: VitPageContent(
+      child: VitPageContent(rhythm: VitPageRhythm.standard, 
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -85,10 +85,10 @@ class _Parameters extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final param in params) ...[
           _ParameterRow(param: param),
-          if (param != params.last) const SizedBox(height: AppSpacing.x3),
+          if (param != params.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -169,7 +169,7 @@ class _ResponseBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _CodeBlock(text: response),
       ],
     );

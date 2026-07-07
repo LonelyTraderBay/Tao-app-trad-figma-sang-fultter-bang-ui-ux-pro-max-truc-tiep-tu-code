@@ -28,7 +28,7 @@ class _ReviewStep extends StatelessWidget {
                 color: AppColors.buy,
                 size: AppSpacing.iconLg,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Xác nhận Batch Claim',
                 style: AppTextStyles.sectionTitle.copyWith(
@@ -36,13 +36,13 @@ class _ReviewStep extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Nhận phần thưởng từ ${positions.length} vị trí cùng lúc',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
               for (final entry in summary.totalClaimable.entries)
                 _ReviewTotalRow(token: entry.key, amount: entry.value),
               const Divider(color: AppColors.divider),
@@ -54,7 +54,7 @@ class _ReviewStep extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitHighRiskStatePanel(
           key: LaunchpadBatchClaimPage.reviewStateKey,
           state: VitHighRiskUiState.riskReview,
@@ -64,7 +64,7 @@ class _ReviewStep extends StatelessWidget {
           contractId:
               'SC-304 / ${positions.length} positions / ${summary.chains.join(', ')}',
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Row(
           children: [
             Expanded(
@@ -152,7 +152,7 @@ class _SuccessStep extends StatelessWidget {
                 color: AppColors.buy,
                 size: AppSpacing.launchpadBox48,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Batch Claim thành công!',
                 textAlign: TextAlign.center,
@@ -161,13 +161,13 @@ class _SuccessStep extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Đã nhận phần thưởng từ ${positions.length} vị trí',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 '~${_formatUsd(summary.totalClaimableUsd)}',
                 style: AppTextStyles.pageTitle.copyWith(
@@ -178,7 +178,7 @@ class _SuccessStep extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           variant: VitCtaButtonVariant.success,
           onPressed: onDone,

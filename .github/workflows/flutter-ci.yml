@@ -79,6 +79,82 @@ jobs:
       - name: Design token consistency guardrails
         run: flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 
+      - name: Page rhythm audit artifact is current
+        run: dart run tool/page_rhythm_audit.dart --check --strict-full
+
+      - name: Page rhythm screen compliance rollup is current
+        run: dart run tool/page_rhythm_screen_rollup.dart --check --strict-layout
+
+      - name: Page rhythm coverage matrix is current
+        run: dart run tool/page_rhythm_coverage_matrix.dart --check
+
+      - name: Upload page rhythm audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-rhythm-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Audit.csv
+            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Screen-Compliance.csv
+            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Coverage-Matrix.csv
+          if-no-files-found: error
+
+      - name: Page rhythm guardrails
+        run: flutter test test/quality/page_rhythm_guardrail_test.dart --reporter=compact
+
+      - name: Page rhythm phone visual QA @ 360x800
+        run: flutter test test/quality/page_rhythm_phone_visual_qa_test.dart --reporter=compact
+
+      - name: Card tile audit artifact is current
+        run: dart run tool/card_tile_audit.dart --check --strict-full
+
+      - name: Card tile migration manifest is current
+        run: dart run tool/card_tile_manifest.dart --check
+
+      - name: Upload card tile audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: card-tile-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Audit.csv
+            docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Migration-Manifest.csv
+            docs/02_FLUTTER_MIGRATION/Card-Tile-Compliance-Report.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Manifest.csv
+          if-no-files-found: error
+
+      - name: Card tile guardrails
+        run: flutter test test/quality/card_tile_guardrail_test.dart --reporter=compact
+
+      - name: Service tile badge guardrails
+        run: flutter test test/quality/service_tile_badge_guardrail_test.dart --reporter=compact
+
+      - name: Task card guardrails
+        run: flutter test test/quality/task_card_guardrail_test.dart --reporter=compact
+
+      - name: Accent icon box guardrails
+        run: flutter test test/quality/accent_icon_box_guardrail_test.dart --reporter=compact
+
+      - name: Segment pill audit artifact is current
+        run: dart run tool/segment_pill_audit.dart --check --strict-full
+
+      - name: Segment pill migration manifest is current
+        run: dart run tool/segment_pill_manifest.dart --check
+
+      - name: Upload segment pill audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: segment-pill-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Segment-Pill-Audit.csv
+            docs/02_FLUTTER_MIGRATION/VitTrade-Segment-Pill-Migration-Manifest.csv
+            docs/02_FLUTTER_MIGRATION/Segment-Pill-Compliance-Report.md
+          if-no-files-found: error
+
+      - name: Segment pill guardrails
+        run: flutter test test/quality/segment_pill_guardrail_test.dart --reporter=compact
+
       - name: Product copy guardrails
         run: >
           flutter test

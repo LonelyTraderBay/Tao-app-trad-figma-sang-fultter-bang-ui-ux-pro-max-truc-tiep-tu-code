@@ -56,14 +56,14 @@ class _EmptyResults extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text('Không tìm thấy câu hỏi', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.x1),
           Text(
             'Thử từ khóa khác hoặc đổi danh mục',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             variant: VitCtaButtonVariant.secondary,
             onPressed: onReset,

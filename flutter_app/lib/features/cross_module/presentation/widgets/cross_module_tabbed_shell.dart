@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -54,6 +55,7 @@ class CrossModuleTabbedPageShell extends StatelessWidget {
                     scrollEndClearance,
                   ),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     gap: contentGap,
                     children: [body],
                   ),

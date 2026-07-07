@@ -71,7 +71,7 @@ class _InlineStudioActions extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _InlineStudioStateLine(
             label: stateLabel,
             active: canContinue,
@@ -79,7 +79,7 @@ class _InlineStudioActions extends StatelessWidget {
                 ? Icons.check_circle_outline_rounded
                 : Icons.info_outline_rounded,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               if (onBack != null)
@@ -177,6 +177,7 @@ class _FooterToolButton extends StatelessWidget {
       child: Semantics(
         button: true,
         label: label,
+        // card-tile: allow-start — fixed surface, not horizontal strip tile
         child: VitCard(
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.standard,

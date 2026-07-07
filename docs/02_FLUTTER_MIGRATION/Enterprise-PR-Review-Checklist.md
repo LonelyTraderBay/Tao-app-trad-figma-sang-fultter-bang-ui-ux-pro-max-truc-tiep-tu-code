@@ -31,6 +31,33 @@ diff, tests, and CI output.
       added in feature or shared code without documented exception.
 - [ ] Changed files do not increase design-token debt; `dart run
       tool/design_token_consistency_audit.dart --check` passes.
+- [ ] Changed presentation pages follow page rhythm standard; `dart run
+      tool/page_rhythm_audit.dart --check` passes and
+      `flutter test test/quality/page_rhythm_guardrail_test.dart` passes.
+- [ ] Phone-first layout @ 360×800 has no overflow/constraint violations;
+      `flutter test test/quality/page_rhythm_phone_visual_qa_test.dart` passes.
+- [ ] Tab-root pages use `VitPageRhythm.compact` with major sections as direct
+      `VitPageContent` children (see
+      [Page-Rhythm-Standard.md](./Page-Rhythm-Standard.md)).
+- [ ] Tier A strip tiles follow card tile standard; `dart run
+      tool/card_tile_audit.dart --check --strict-full` passes,
+      `dart run tool/card_tile_manifest.dart --check` passes, and
+      `flutter test test/quality/card_tile_guardrail_test.dart` passes (see
+      [Card-Tile-Standard.md](./Card-Tile-Standard.md)).
+- [ ] Tier B service tiles with corner badges follow safe inset standard;
+      `flutter test test/quality/service_tile_badge_guardrail_test.dart` passes
+      (see [Service-Tile-Badge-Standard.md](./Service-Tile-Badge-Standard.md)).
+- [ ] Tier E task cards use `VitTaskCard` intrinsic height;
+      `flutter test test/quality/task_card_guardrail_test.dart` passes (see
+      [Task-Card-Standard.md](./Task-Card-Standard.md)).
+- [ ] Module accent icon boxes use `VitAccentIconBox` — no local `_AccentIcon`;
+      `flutter test test/quality/accent_icon_box_guardrail_test.dart` passes (see
+      [Accent-Icon-Box-Standard.md](./Accent-Icon-Box-Standard.md)).
+- [ ] Segment/tab/filter pills follow segment-pill standard; `dart run
+      tool/segment_pill_audit.dart --check --strict-full` passes,
+      `dart run tool/segment_pill_manifest.dart --check` passes, and
+      `flutter test test/quality/segment_pill_guardrail_test.dart` passes (see
+      [Segment-Pill-Standard.md](./Segment-Pill-Standard.md)).
 - [ ] P0 financial modules stay at or below the current design-token baseline
       enforced by `tool/design_token_consistency_audit.dart --check`.
 - [ ] The CI design-token report artifact is reviewed when UI, theme, shared
@@ -93,6 +120,52 @@ Design-token checks (required for every PR with UI changes):
 cd flutter_app
 dart run tool/design_token_consistency_audit.dart --check
 flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
+```
+
+Page-rhythm checks (required for every PR with layout / presentation changes):
+
+```bash
+cd flutter_app
+dart run tool/page_rhythm_audit.dart --check --strict-full
+dart run tool/page_rhythm_screen_rollup.dart --check --strict-layout
+dart run tool/page_rhythm_coverage_matrix.dart --check
+flutter test test/quality/page_rhythm_guardrail_test.dart --reporter=compact
+flutter test test/quality/page_rhythm_phone_visual_qa_test.dart --reporter=compact
+```
+
+Card-tile checks (required for PRs touching strip tiles / Home cards):
+
+```bash
+cd flutter_app
+dart run tool/card_tile_audit.dart --check --strict-full
+dart run tool/card_tile_manifest.dart --check
+flutter test test/quality/card_tile_guardrail_test.dart --reporter=compact
+```
+
+Service-tile badge checks (required for PRs touching `VitServiceTile` / product grids):
+
+```bash
+cd flutter_app
+flutter test test/quality/service_tile_badge_guardrail_test.dart --reporter=compact
+flutter test test/shared/widgets/vit_shared_widgets_test.dart --name "VitServiceTile corner badges"
+```
+
+Task-card checks (required for PRs touching Rewards / Arena mission lists):
+
+```bash
+cd flutter_app
+flutter test test/quality/task_card_guardrail_test.dart --reporter=compact
+flutter test test/quality/accent_icon_box_guardrail_test.dart --reporter=compact
+flutter test test/shared/widgets/vit_shared_widgets_test.dart --name "VitTaskCard"
+```
+
+Segment-pill checks (required for PRs touching tabs / filters / pill rows):
+
+```bash
+cd flutter_app
+dart run tool/segment_pill_audit.dart --check --strict-full
+dart run tool/segment_pill_manifest.dart --check
+flutter test test/quality/segment_pill_guardrail_test.dart --reporter=compact
 ```
 
 CI uploads the design-token audit `.csv` (and regenerated markdown when the

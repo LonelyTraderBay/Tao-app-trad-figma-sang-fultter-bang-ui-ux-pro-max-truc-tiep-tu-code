@@ -18,6 +18,7 @@ Widget homeServiceTile(
     label: action.label,
     accentColor: HomeActionTokens.accent(action.accentKey),
     badgeLabel: action.stateLabel,
+    riskBadgeLabel: action.riskBadge,
     onTap: () => onNavigate(action.routePath),
   );
 }
@@ -48,10 +49,13 @@ class HomeProductsSection extends StatelessWidget {
       children: [
         VitSectionHeader(
           title: 'Sản phẩm',
-          actionLabel: moreActions.isEmpty ? null : 'Xem thêm',
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+          actionLabel: moreActions.isEmpty
+              ? null
+              : 'Xem thêm (+${moreActions.length})',
+          actionSemanticLabel: 'Xem thêm ${moreActions.length} sản phẩm khác',
           onAction: onMore,
         ),
-        const SizedBox(height: AppSpacing.x3),
         HomeQuickActionsGrid(
           actions: actions,
           maxVisibleItems: maxVisibleItems,

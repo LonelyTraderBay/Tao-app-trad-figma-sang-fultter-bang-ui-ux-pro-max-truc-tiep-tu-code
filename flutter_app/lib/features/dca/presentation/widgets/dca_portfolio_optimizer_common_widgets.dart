@@ -28,40 +28,6 @@ class _SmallPill extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.title,
-    required this.color,
-    this.trailing,
-  });
-
-  final IconData icon;
-  final String title;
-  final Color color;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _IconBubble(icon: icon, color: color),
-        const SizedBox(width: AppSpacing.x4),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-        ?trailing,
-      ],
-    );
-  }
-}
-
 class _IconBubble extends StatelessWidget {
   const _IconBubble({required this.icon, required this.color});
 

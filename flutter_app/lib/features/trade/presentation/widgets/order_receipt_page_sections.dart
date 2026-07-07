@@ -15,6 +15,7 @@ class _SuccessHero extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: _receiptHeroExtent,
             height: _receiptHeroExtent,
@@ -28,7 +29,7 @@ class _SuccessHero extends StatelessWidget {
               size: AppSpacing.iconLg,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Đặt lệnh thành công!',
             textAlign: TextAlign.center,
@@ -132,7 +133,7 @@ class _ReceiptCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         if (receipt.tpPrice != null)

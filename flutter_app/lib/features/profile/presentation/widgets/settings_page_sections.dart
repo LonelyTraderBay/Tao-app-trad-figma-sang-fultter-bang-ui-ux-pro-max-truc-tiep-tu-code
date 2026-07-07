@@ -1,21 +1,5 @@
 part of '../pages/settings_page.dart';
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: AppColors.primary,
-      density: VitDensity.compact,
-    );
-  }
-}
-
 class _CurrencyCard extends StatelessWidget {
   const _CurrencyCard({
     required this.currencies,
@@ -52,7 +36,7 @@ class _CurrencyCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitPresetChipRow<String>(
                   gap: AppSpacing.settingsCurrencyChipGap,
                   selectedValue: selectedCurrency,

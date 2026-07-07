@@ -66,7 +66,7 @@ class _CategoryField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _FieldLabel('Category *'),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         PopupMenuButton<String>(
           color: _submissionPanel,
           elevation: 8,
@@ -87,6 +87,7 @@ class _CategoryField extends StatelessWidget {
                 ),
               ),
           ],
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           child: VitCard(
             key: ComplaintSubmissionPage.categoryKey,
             height: _submissionCategoryHeight,
@@ -194,7 +195,7 @@ class _TextInputBlock extends StatelessWidget {
               ),
             ),
           ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           '${controller.text.length}/$maxLength characters (min $minLength)',
           style: AppTextStyles.micro.copyWith(
@@ -219,6 +220,7 @@ class _EvidenceUploadCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // card-tile: allow-start — fixed surface, not horizontal strip tile
             const VitCard(
               width: _submissionEvidenceIconSize,
               height: _submissionEvidenceIconSize,
@@ -231,7 +233,7 @@ class _EvidenceUploadCard extends StatelessWidget {
                 size: AppSpacing.iconMd,
               ),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Text(
               'Upload Evidence (Optional)',
               style: AppTextStyles.caption.copyWith(

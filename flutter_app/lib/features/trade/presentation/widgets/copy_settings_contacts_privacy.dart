@@ -42,7 +42,7 @@ class _EmergencyContactCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SettingsTextField(
             label: 'Email',
             initialValue: email,
@@ -50,7 +50,7 @@ class _EmergencyContactCard extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             onChanged: onEmailChanged,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _SettingsTextField(
             label: 'Số điện thoại',
             initialValue: phone,
@@ -142,7 +142,7 @@ class _PrivacyCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Hiển thị portfolio công khai', style: _cardTitleStyle()),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Cho phép người khác xem portfolio copy của bạn (không hiện số tiền cụ thể)',
                   maxLines: 2,
@@ -198,7 +198,7 @@ class _SettingsCard extends StatelessWidget {
 }
 
 TextStyle _cardTitleStyle() {
-  return AppTextStyles.captionSm.copyWith(
+  return AppTextStyles.caption.copyWith(
     color: AppColors.text1,
     fontWeight: AppTextStyles.bold,
   );

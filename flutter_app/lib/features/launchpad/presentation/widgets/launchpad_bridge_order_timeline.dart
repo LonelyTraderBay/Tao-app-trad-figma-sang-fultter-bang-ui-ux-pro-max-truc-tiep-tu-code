@@ -34,7 +34,7 @@ class _BridgeTimeline extends StatelessWidget {
               const _LiveBadge(),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Stack(
             children: [
               Positioned(

@@ -160,7 +160,12 @@ class _RewardLedger extends StatelessWidget {
                   ),
                 ),
                 if (snapshot.pendingCount > 0) ...[
-                  _PendingPill(count: snapshot.pendingCount),
+                  VitStatusPill(
+                    label: '${snapshot.pendingCount} đang chờ',
+                    icon: Icons.schedule_rounded,
+                    status: VitStatusPillStatus.warning,
+                    size: VitStatusPillSize.sm,
+                  ),
                   const SizedBox(width: AppSpacing.x2),
                 ],
                 Text(
@@ -198,22 +203,6 @@ class _RewardLedger extends StatelessWidget {
             ],
         ],
       ),
-    );
-  }
-}
-
-class _PendingPill extends StatelessWidget {
-  const _PendingPill({required this.count});
-
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      label: '$count đang chờ',
-      icon: Icons.schedule_rounded,
-      status: VitStatusPillStatus.warning,
-      size: VitStatusPillSize.sm,
     );
   }
 }

@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_buy_crypto_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
@@ -84,7 +83,6 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
       semanticLabel: 'SC-145 BuyCryptoPage',
       contentKey: BuyCryptoPage.contentKey,
       bottomInset: bottomInset,
-      contentGap: VitContentGap.tight,
       onBack: () => _confirming
           ? setState(() => _confirming = false)
           : context.go(AppRoutePaths.wallet),
@@ -107,7 +105,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
             onBack: () => setState(() => _confirming = false),
           ),
         ] else
-          BuyInputContent(
+          ...BuyInputContent.sections(
             snapshot: snapshot,
             selectedCrypto: crypto,
             selectedPaymentId: _selectedPayment,

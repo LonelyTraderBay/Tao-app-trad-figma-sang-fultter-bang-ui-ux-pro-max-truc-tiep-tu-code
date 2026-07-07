@@ -33,7 +33,7 @@ class StakingCustodySegregationSection extends StatelessWidget {
                   height: AppSpacing.stakingCustodyBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Center(
                 child: StakingCustodyPieChart(
                   allocations: snapshot.segregation,
@@ -41,13 +41,13 @@ class StakingCustodySegregationSection extends StatelessWidget {
                   donut: false,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Column(
                 children: [
                   for (final item in snapshot.segregationLegend) ...[
                     StakingCustodyLegendRow(item: item),
                     if (item != snapshot.segregationLegend.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
                 ],
               ),
@@ -84,7 +84,7 @@ class StakingCustodyHotColdSection extends StatelessWidget {
                   height: AppSpacing.stakingCustodyBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Center(
                 child: StakingCustodyPieChart(
                   allocations: snapshot.hotCold,
@@ -92,7 +92,7 @@ class StakingCustodyHotColdSection extends StatelessWidget {
                   donut: true,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [

@@ -64,22 +64,11 @@ class _WhitelistModeCard extends StatelessWidget {
                 ],
               ),
             ),
-            _SwitchPill(enabled: enabled),
+            VitTogglePill(enabled: enabled, activeColor: AppColors.buy),
           ],
         ),
       ),
     );
-  }
-}
-
-class _SwitchPill extends StatelessWidget {
-  const _SwitchPill({required this.enabled});
-
-  final bool enabled;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitTogglePill(enabled: enabled, activeColor: AppColors.buy);
   }
 }
 
@@ -91,37 +80,26 @@ class _SecurityTip extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       borderColor: AppColors.primary15,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const VitSectionHeader(
-            title: 'Bảo mật địa chỉ',
-            icon: Icons.shield_outlined,
-            iconColor: AppColors.primary,
-            density: VitDensity.compact,
+      child: Text.rich(
+        TextSpan(
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text2,
+            height: 1.45,
           ),
-          Text.rich(
+          children: [
             TextSpan(
+              text: 'Bảo mật: ',
               style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: 1.45,
+                color: AppColors.primary,
+                fontWeight: AppTextStyles.bold,
               ),
-              children: [
-                TextSpan(
-                  text: 'Bảo mật: ',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const TextSpan(
-                  text:
-                      'Địa chỉ whitelist được bảo vệ bởi 2FA. Chỉ có thể rút tới địa chỉ đã được xác minh.',
-                ),
-              ],
             ),
-          ),
-        ],
+            const TextSpan(
+              text:
+                  'Địa chỉ whitelist được bảo vệ bởi 2FA. Chỉ có thể rút tới địa chỉ đã được xác minh.',
+            ),
+          ],
+        ),
       ),
     );
   }

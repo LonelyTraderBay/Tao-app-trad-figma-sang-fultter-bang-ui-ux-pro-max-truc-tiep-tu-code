@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -120,9 +121,10 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _LoginStats(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x2),
-                          _FilterTabs(
-                            activeFilter: _filter,
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          VitSegmentedChoice<String>(
+                            key: P2PLoginHistoryPage.filtersKey,
+                            selected: _filter,
                             onChanged: (value) {
                               HapticFeedback.selectionClick();
                               setState(() {
@@ -130,13 +132,33 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                                 _expandedEventId = null;
                               });
                             },
+                            options: [
+                              VitSegmentedChoiceOption(
+                                value: 'all',
+                                label: 'Tất cả',
+                                key: P2PLoginHistoryPage.filterKey('all'),
+                                accentColor: AppModuleAccents.p2p,
+                              ),
+                              VitSegmentedChoiceOption(
+                                value: 'success',
+                                label: 'Thành công',
+                                key: P2PLoginHistoryPage.filterKey('success'),
+                                accentColor: AppModuleAccents.p2p,
+                              ),
+                              VitSegmentedChoiceOption(
+                                value: 'suspicious',
+                                label: 'Đáng ngờ',
+                                key: P2PLoginHistoryPage.filterKey('suspicious'),
+                                accentColor: AppModuleAccents.p2p,
+                              ),
+                            ],
                           ),
                           if (snapshot.riskEventCount > 0 &&
                               _filter != 'success') ...[
-                            const SizedBox(height: AppSpacing.x2),
+                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                             _RiskWarning(snapshot: snapshot),
                           ],
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                           if (filteredEvents.isEmpty)
                             _EmptyState(snapshot: snapshot)
                           else
@@ -145,9 +167,10 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                               expandedEventId: _expandedEventId,
                               onToggle: _toggleExpanded,
                             ),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                           _SecurityInfo(snapshot: snapshot),
                           VitPageContent(
+         rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.compact,
                             children: const [
                               VitHighRiskStatePanel(

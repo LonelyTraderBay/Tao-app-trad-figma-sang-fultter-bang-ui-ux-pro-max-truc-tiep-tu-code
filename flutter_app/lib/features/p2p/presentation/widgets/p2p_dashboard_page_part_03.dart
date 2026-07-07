@@ -21,7 +21,7 @@ class _CenteredStat extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,
@@ -93,7 +93,7 @@ class _BreakdownLine extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ClipRRect(
                 borderRadius: AppRadii.xsRadius,
                 child: LinearProgressIndicator(

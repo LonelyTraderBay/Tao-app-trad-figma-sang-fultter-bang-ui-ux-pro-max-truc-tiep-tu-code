@@ -21,7 +21,7 @@ class _VestingTimelineCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: Row(
@@ -37,7 +37,7 @@ class _VestingTimelineCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final entry in receipt.vestingSchedule)
             _VestingTimelineRow(entry: entry, onClaim: onClaim),
         ],
@@ -95,7 +95,7 @@ class _ClaimHistoryCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final entry in receipt.claimHistory) _HistoryEntry(entry: entry),
       ],
     );

@@ -18,7 +18,7 @@ class _SriExplanationCard extends StatelessWidget {
             'the markets or because we are not able to pay you.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -136,6 +136,7 @@ class _AdditionalRisksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         fullBleed: true,

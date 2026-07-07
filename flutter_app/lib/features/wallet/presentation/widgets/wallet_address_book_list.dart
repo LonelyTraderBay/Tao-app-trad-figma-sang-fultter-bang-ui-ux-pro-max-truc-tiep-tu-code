@@ -140,6 +140,7 @@ class _ShieldBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,

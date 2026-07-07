@@ -98,14 +98,14 @@ class _WelcomeAssessment extends StatelessWidget {
               'Copy trading không đảm bảo lợi nhuận. Quá khứ không báo hiệu tương lai.',
           contractId: 'sc071-pre-copy-risk',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _NoticeCard(
           title: 'Đánh giá bắt buộc (MiFID II)',
           text:
               'Chúng tôi cần đánh giá sự phù hợp của Copy Trading với kiến thức, kinh nghiệm và mục tiêu đầu tư của bạn.',
         ),
         const SizedBox(
-          height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
+          height: AppSpacing.pageRhythmStandardInnerGap,
         ),
         VitCard(
           padding: AppSpacing.preCopyAssessmentCardPadding,
@@ -114,11 +114,11 @@ class _WelcomeAssessment extends StatelessWidget {
               VitAssetAvatar(
                 label: provider.avatar,
                 accentColor: _assessmentPrimary,
-                size: AppSpacing.x7 - AppSpacing.x3 + AppSpacing.hairlineStroke,
+                size: AppSpacing.iconLg,
                 radius: AppRadii.cardRadius,
                 border: true,
               ),
-              const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+              const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +159,7 @@ class _WelcomeAssessment extends StatelessWidget {
           ('Nhận kết quả', 'Khuyến nghị phân bổ vốn và cooling-off'),
         ]) ...[
           _ProcessRow(title: item.$1, description: item.$2),
-          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         ],
         VitCtaButton(
           key: PreCopyAssessmentPage.startKey,
@@ -196,7 +196,7 @@ class _QuestionsSummary extends StatelessWidget {
           density: VitDensity.compact,
         ),
         const SizedBox(
-          height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
+          height: AppSpacing.pageRhythmStandardInnerGap,
         ),
         for (final question in snapshot.questions) ...[
           VitCard(
@@ -210,7 +210,7 @@ class _QuestionsSummary extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   question.description,
                   style: AppTextStyles.navLabel.copyWith(
@@ -218,7 +218,7 @@ class _QuestionsSummary extends StatelessWidget {
                     fontWeight: AppTextStyles.normal,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+                const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
                 for (final option in question.options)
                   Padding(
                     padding: AppSpacing.preCopyAssessmentOptionMargin,
@@ -276,11 +276,11 @@ class _ProcessRow extends StatelessWidget {
     return Row(
       children: [
         const CircleAvatar(
-          radius: AppSpacing.x4 + AppSpacing.x1,
+          radius: AppSpacing.pageRhythmStandardSectionGap,
           backgroundColor: AppColors.primary15,
           child: Icon(Icons.check_rounded, color: _assessmentPrimary, size: 17),
         ),
-        const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+        const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,7 +291,7 @@ class _ProcessRow extends StatelessWidget {
                   fontWeight: AppTextStyles.extraBold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1 - AppSpacing.hairlineStroke),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 description,
                 style: AppTextStyles.navLabel.copyWith(

@@ -21,7 +21,7 @@ class _OverallRiskCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Center(
             child: SizedBox(
               width: AppSpacing.x7 + AppSpacing.x7,
@@ -58,11 +58,11 @@ class _OverallRiskCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Center(
             child: _StatusPill(label: label, color: color),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Your staking portfolio has ${label.toLowerCase()}. No immediate action required, but monitor market volatility.',
             textAlign: TextAlign.center,
@@ -71,7 +71,7 @@ class _OverallRiskCard extends StatelessWidget {
               height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -176,7 +176,7 @@ class _RiskMetricCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -213,10 +213,10 @@ class _ExposureCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final item in exposures) ...[
             _ExposureRow(item: item),
-            if (item != exposures.last) const SizedBox(height: AppSpacing.x2),
+            if (item != exposures.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -361,7 +361,7 @@ class _ActionsGrid extends StatelessWidget {
                 color: color,
                 size: AppSpacing.iconMd,
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 action.title,
                 maxLines: 1,

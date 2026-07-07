@@ -45,7 +45,7 @@ class _EcosystemHero extends StatelessWidget {
                     height: _ecosystemMetricLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   'Handoff nội bộ: bridge topic/context giữa Open Arena và Prediction Markets — điểm Arena và ví tách biệt hoàn toàn.',
                   style: AppTextStyles.micro.copyWith(
@@ -77,9 +77,15 @@ class _SectionTabs extends StatelessWidget {
       child: Row(
         children: [
           for (final config in _sectionConfigs) ...[
-            _TabPill(
-              config: config,
-              active: active == config.section,
+            VitStatusPill(
+              key: ConnectedEcosystemProductionPage.tabKey(config.id),
+              label: config.label,
+              icon: config.icon,
+              status: active == config.section
+                  ? VitStatusPillStatus.info
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.md,
+              outline: active != config.section,
               onTap: () => onChanged(config.section),
             ),
             if (config != _sectionConfigs.last)
@@ -87,31 +93,6 @@ class _SectionTabs extends StatelessWidget {
           ],
         ],
       ),
-    );
-  }
-}
-
-class _TabPill extends StatelessWidget {
-  const _TabPill({
-    required this.config,
-    required this.active,
-    required this.onTap,
-  });
-
-  final _SectionConfig config;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      key: ConnectedEcosystemProductionPage.tabKey(config.id),
-      label: config.label,
-      icon: config.icon,
-      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
-      size: VitStatusPillSize.md,
-      outline: !active,
-      onTap: onTap,
     );
   }
 }
@@ -207,7 +188,7 @@ class _CanonicalSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   _SummaryMetric(
@@ -268,7 +249,7 @@ class _CanonicalScreenCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               _MiniPill(
@@ -286,7 +267,7 @@ class _CanonicalScreenCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             screen.notes,
             style: AppTextStyles.micro.copyWith(
@@ -294,7 +275,7 @@ class _CanonicalScreenCard extends StatelessWidget {
               height: _ecosystemBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -304,7 +285,7 @@ class _CanonicalScreenCard extends StatelessWidget {
             ],
           ),
           if (screen.route != '/') ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCtaButton(
               fullWidth: false,
               height: VitDensity.compact.controlHeight,
@@ -392,7 +373,7 @@ class _StateCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             state.description,
             style: AppTextStyles.micro.copyWith(
@@ -400,12 +381,12 @@ class _StateCard extends StatelessWidget {
               height: _ecosystemBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _InfoLine(
             icon: Icons.layers_outlined,
             text: 'Screens: ${state.affectedScreens.join(', ')}',
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _InfoLine(
             icon: Icons.arrow_forward_rounded,
             text: 'Behavior: ${state.behavior}',

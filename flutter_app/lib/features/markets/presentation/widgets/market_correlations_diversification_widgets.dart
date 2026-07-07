@@ -280,6 +280,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
       accentColor: accentColor,
       variant: VitSectionHeaderVariant.accentBar,
     );

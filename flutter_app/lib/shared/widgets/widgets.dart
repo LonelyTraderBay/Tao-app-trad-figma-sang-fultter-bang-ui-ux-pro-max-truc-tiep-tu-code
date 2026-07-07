@@ -1,4 +1,5 @@
 export 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+export 'package:vit_trade_flutter/shared/widgets/vit_accent_icon_box.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_action_tile_grid.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_announcement_banner.dart';
@@ -36,6 +37,7 @@ export 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_tab_bar.dart';
+export 'package:vit_trade_flutter/shared/widgets/vit_task_card.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_trade_instrument_hero.dart';

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -99,6 +100,7 @@ class _PredictionsPortfolioPageState
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
@@ -106,7 +108,7 @@ class _PredictionsPortfolioPageState
                           variant: VitCardVariant.hero,
                           radius: VitCardRadius.large,
                           clip: true,
-                          padding: AppSpacing.homePortfolioCardPadding,
+                          padding: AppSpacing.homeCardPaddingDefault,
                           background: const VitHeroGlow(),
                           child: PredictionPortfolioSummaryCard(
                             snapshot: snapshot,

@@ -150,7 +150,7 @@ class _ClientOptUpRequestPageState
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Text(
                           'Compliance review is required before any categorization change takes effect.',
                           style: AppTextStyles.micro.copyWith(
@@ -308,6 +308,7 @@ class _CurrentCategoryCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -339,7 +340,15 @@ class _CurrentCategoryCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
-                        _CurrentPill(color: style.color),
+                        VitStatusPill(
+                          label: 'CURRENT',
+                          status: style.color == _clientAmber
+                              ? VitStatusPillStatus.warning
+                              : style.color == _clientPrimary
+                              ? VitStatusPillStatus.info
+                              : VitStatusPillStatus.success,
+                          size: VitStatusPillSize.sm,
+                        ),
                       ],
                     ),
                     Text(
@@ -374,6 +383,7 @@ class _CurrentCategoryCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: VitPageContent(
+         rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     density: VitDensity.compact,

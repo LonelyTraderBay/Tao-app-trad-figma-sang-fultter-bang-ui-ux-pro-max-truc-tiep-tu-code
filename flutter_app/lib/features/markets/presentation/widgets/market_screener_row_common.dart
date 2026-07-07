@@ -16,13 +16,13 @@ class _ScreenerEmptyState extends StatelessWidget {
             color: AppColors.text3,
             size: _emptyIconSize,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Không tìm thấy kết quả phù hợp',
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             onPressed: onReset,
             variant: VitCtaButtonVariant.ghost,

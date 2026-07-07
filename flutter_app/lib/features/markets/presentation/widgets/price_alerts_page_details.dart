@@ -121,7 +121,7 @@ class _AlertCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: _alertsSectionGap),
+          const SizedBox(height: _alertsHeaderGap),
           Row(
             children: [
               Expanded(

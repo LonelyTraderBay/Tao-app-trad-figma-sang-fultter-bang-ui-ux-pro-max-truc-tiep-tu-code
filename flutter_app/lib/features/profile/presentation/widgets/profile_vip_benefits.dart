@@ -64,7 +64,7 @@ class _BenefitTierCard extends StatelessWidget {
                               fontWeight: AppTextStyles.heavy,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                           Text(
                             'Volume >= ${_formatUsd(tier.monthlyVolume)}/th\u00E1ng ho\u1EB7c T\u00E0i s\u1EA3n >= ${_formatUsd(tier.assetHold)}',
                             maxLines: 2,
@@ -103,14 +103,14 @@ class _BenefitTierCard extends StatelessWidget {
                       unlocked: unlocked,
                     ),
                     if (feature != tier.features.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   const Divider(
                     height: AppSpacing.dividerHairline,
                     color: AppColors.divider,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Row(
                     children: [
                       _BenefitMetric(
@@ -265,7 +265,7 @@ class _UpgradeCta extends StatelessWidget {
                     fontWeight: AppTextStyles.heavy,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'T\u0103ng kh\u1ED1i l\u01B0\u1EE3ng giao d\u1ECBch \u0111\u1EC3 ti\u1EBFt ki\u1EC7m th\u00EAm',
                   maxLines: 2,

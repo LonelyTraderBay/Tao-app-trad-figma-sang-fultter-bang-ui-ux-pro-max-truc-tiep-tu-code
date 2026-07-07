@@ -12,6 +12,7 @@ class _ThresholdCard extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: VitDensity.compact.cardPadding,
       child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         gap: VitContentGap.tight,
         fullBleed: true,
@@ -89,7 +90,7 @@ class _FrequencyCard extends StatelessWidget {
             icon: Icons.calendar_month_rounded,
             title: 'Tần suất',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: options
                 .map(
@@ -288,7 +289,7 @@ class _AdvancedSettings extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitCard(
                 radius: VitCardRadius.large,
                 padding: VitDensity.compact.cardPadding,
@@ -296,7 +297,7 @@ class _AdvancedSettings extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        _AccentIcon(
+                        VitAccentIconBox(
                           icon: Icons.flash_on_rounded,
                           color: autoExecute ? AppColors.buy : AppColors.text3,
                           muted: !autoExecute,
@@ -323,14 +324,36 @@ class _AdvancedSettings extends StatelessWidget {
                             ],
                           ),
                         ),
-                        _TogglePill(
-                          value: autoExecute,
-                          onChanged: onAutoExecuteChanged,
+                        Semantics(
+                          button: true,
+                          checked: autoExecute,
+                          child: VitCard(
+                            onTap: () => onAutoExecuteChanged(!autoExecute),
+                            variant: VitCardVariant.ghost,
+                            radius: VitCardRadius.standard,
+                            padding: EdgeInsets.zero,
+                            width: AppSpacing.dcaRebalanceToggleWidth,
+                            height: _dcaRebalanceToggleHeight,
+                            borderColor: AppColors.transparent,
+                            clip: true,
+                            child: VitTogglePill(
+                              enabled: autoExecute,
+                              width: AppSpacing.dcaRebalanceToggleWidth,
+                              height: _dcaRebalanceToggleHeight,
+                              knobSize: AppSpacing.dcaRebalanceToggleThumb,
+                              knobMargin: AppSpacing.dcaPaddingX1,
+                              activeColor: AppColors.buy,
+                              inactiveColor: AppColors.borderSolid,
+                              activeKnobColor: AppColors.text1,
+                              inactiveKnobColor: AppColors.text1,
+                              inactiveBorderColor: AppColors.borderSolid,
+                            ),
+                          ),
                         ),
                       ],
                     ),
                     if (autoExecute) ...[
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       DecoratedBox(
                         decoration: ShapeDecoration(
                           color: AppColors.warningBg,
@@ -398,7 +421,7 @@ class _InlineRebalanceActions extends StatelessWidget {
         children: [
           Row(
             children: [
-              _AccentIcon(
+              VitAccentIconBox(
                 icon: valid
                     ? Icons.check_circle_outline_rounded
                     : Icons.error_outline_rounded,
@@ -419,7 +442,7 @@ class _InlineRebalanceActions extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -511,7 +534,7 @@ class _PreviewSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 VitCard(
                   radius: VitCardRadius.large,
                   padding: VitDensity.compact.cardPadding,
@@ -523,7 +546,10 @@ class _PreviewSheet extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const _AccentIcon(icon: Icons.preview_outlined),
+                            const VitAccentIconBox(
+                              icon: Icons.preview_outlined,
+                              color: AppModuleAccents.trade,
+                            ),
                             const SizedBox(width: AppSpacing.x4),
                             Expanded(
                               child: Text(
@@ -541,7 +567,7 @@ class _PreviewSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                         ...previews.map(
                           (preview) => Padding(
                             padding: AppSpacing.dcaBottomPaddingX3,

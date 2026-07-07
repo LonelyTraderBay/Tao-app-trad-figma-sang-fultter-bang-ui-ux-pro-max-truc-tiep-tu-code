@@ -63,7 +63,7 @@ class _OverallRiskCard extends StatelessWidget {
                       '${project.score.overall}/100',
                       style: AppTextStyles.amountLg,
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     _RiskPill(level: project.level),
                   ],
                 ),
@@ -88,9 +88,9 @@ class _OverallRiskCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ScoreProgress(value: project.score.overall, color: color),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Dua tren 6 chi so: Team, Audit, Tokenomics, Community, Security, Liquidity',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -121,7 +121,7 @@ class _RiskBreakdownCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.launchpadBox150 + AppSpacing.launchpadBox64,
             child: CustomPaint(
@@ -248,10 +248,10 @@ class _QuickCheckCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               check.label,
-              style: AppTextStyles.captionSm.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
               ),

@@ -40,7 +40,7 @@ class _RuleCard extends StatelessWidget {
                         _StatusBadge(status: rule.status),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     _TypeBadge(type: rule.type),
                   ],
                 ),
@@ -48,11 +48,11 @@ class _RuleCard extends StatelessWidget {
               _DeleteButton(onPressed: onDelete),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _RuleText(label: 'Condition', value: rule.condition),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _RuleText(label: 'Action', value: rule.action),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -94,10 +94,10 @@ class _TemplateGroup extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final template in templates) ...[
           _TemplateCard(template: template),
-          if (template != templates.last) const SizedBox(height: AppSpacing.x3),
+          if (template != templates.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -125,7 +125,7 @@ class _TemplateCard extends StatelessWidget {
             template.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           DecoratedBox(
             decoration: const ShapeDecoration(
               color: AppColors.surface2,
@@ -136,7 +136,7 @@ class _TemplateCard extends StatelessWidget {
               child: Column(
                 children: [
                   _CodeRow(label: 'Condition', value: template.condition),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _CodeRow(
                     label: 'Action',
                     value: template.action,
@@ -146,7 +146,7 @@ class _TemplateCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               const Icon(
@@ -216,7 +216,7 @@ class _HistoryCard extends StatelessWidget {
                         _ResultBadge(result: entry.result),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         const Icon(
@@ -238,7 +238,7 @@ class _HistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           DecoratedBox(
             decoration: const ShapeDecoration(
               color: AppColors.surface2,
@@ -249,7 +249,7 @@ class _HistoryCard extends StatelessWidget {
               child: Column(
                 children: [
                   _CodeRow(label: 'Condition Met', value: entry.condition),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _CodeRow(
                     label: 'Action Taken',
                     value: entry.action,

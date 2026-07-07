@@ -74,7 +74,7 @@ class _StatTile extends StatelessWidget {
         child: Column(
           children: [
             Icon(_infoIcon(stat.icon), color: color, size: AppSpacing.iconSm),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
@@ -166,7 +166,7 @@ class _BatchOperationCard extends StatelessWidget {
             ],
           ),
           if (batch.status != StakingInstitutionalBatchStatus.executed) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             Row(
               children: [
                 Expanded(
@@ -185,7 +185,7 @@ class _BatchOperationCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: LinearProgressIndicator(
@@ -200,12 +200,12 @@ class _BatchOperationCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             height: AppSpacing.stakingProductDividerHeight,
             color: AppColors.borderSolid,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(

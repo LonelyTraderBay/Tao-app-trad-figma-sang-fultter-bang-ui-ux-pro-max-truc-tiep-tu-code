@@ -43,9 +43,9 @@ class StakingTaxJurisdictionTab extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _JurisdictionDetail(jurisdiction: selected),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Tài liệu tham khảo',
           children: [
@@ -57,14 +57,14 @@ class StakingTaxJurisdictionTab extends StatelessWidget {
                   for (final resource in selected.resources) ...[
                     _ResourceRow(resource: resource),
                     if (resource != selected.resources.last)
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const StakingTaxWarningNote(
           text:
               'Thông tin trên chỉ mang tính tổng quan. Quy định thuế có thể thay đổi. Vui lòng tham khảo chuyên gia thuế hoặc website cơ quan thuế chính thức.',
@@ -139,12 +139,12 @@ class _JurisdictionDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Cách xử lý thuế:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             jurisdiction.treatment,
             style: AppTextStyles.caption.copyWith(
@@ -152,7 +152,7 @@ class _JurisdictionDetail extends StatelessWidget {
               height: AppSpacing.stakingTaxFooterLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -203,7 +203,7 @@ class _JurisdictionMetric extends StatelessWidget {
                 label,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 value,
                 style: AppTextStyles.caption.copyWith(

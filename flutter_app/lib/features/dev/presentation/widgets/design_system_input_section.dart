@@ -155,7 +155,7 @@ class _InputWrapperDemo extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             error!,
-            style: AppTextStyles.captionSm.copyWith(color: AppColors.sell),
+            style: AppTextStyles.caption.copyWith(color: AppColors.sell),
           ),
         ],
       ],

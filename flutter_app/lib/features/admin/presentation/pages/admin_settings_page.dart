@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -54,7 +55,7 @@ class AdminSettingsPage extends ConsumerWidget {
                 physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.adminScrollPadding(bottomInset),
                 child: VitPageContent(
-                  customGap: AppSpacing.x5,
+                  rhythm: VitPageRhythm.standard,
                   children: [
                     VitCard(
                       key: routingKey,
@@ -66,7 +67,6 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.route_outlined,
                             title: 'Dashboard routing',
                           ),
-                          const SizedBox(height: AppSpacing.x4),
                           for (final dashboard in snapshot.dashboards) ...[
                             _AdminSettingsRow(
                               icon: _settingsMetricIcon(dashboard.icon),
@@ -90,7 +90,6 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.health_and_safety_outlined,
                             title: 'Operational health',
                           ),
-                          const SizedBox(height: AppSpacing.x4),
                           _AdminSettingsRow(
                             icon: Icons.bolt_rounded,
                             title: 'Event stream',
@@ -110,7 +109,6 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.verified_outlined,
                             title: 'System health',
                           ),
-                          const SizedBox(height: AppSpacing.x4),
                           _AdminSettingsRow(
                             icon: Icons.verified_outlined,
                             title: 'System health',

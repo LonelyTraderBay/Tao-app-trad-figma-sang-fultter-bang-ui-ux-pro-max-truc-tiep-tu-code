@@ -19,7 +19,18 @@ final class AppColors {
   static const Color sellDark = Color(0xFFDC2626);
   static const Color sellDeep = Color(0xFF991B1B);
   static const Color sellSoft = Color(0xFFFCA5A5);
+  // TOKEN-WARN-01: warn used to conflate "this is a warning/risk signal" with
+  // "soft brand orange" (primarySoft). riskWarning is now the canonical color
+  // for real warning/risk UI; moduleAccentAmber is the canonical color for
+  // module brand identity that previously borrowed warn for that purpose.
+  @Deprecated(
+    'Superseded by AppColors.riskWarning or AppColors.moduleAccentAmber '
+    'after TOKEN-WARN-01. warn conflated "warning" and "soft brand orange" — '
+    'pick the token matching actual intent at each call site.',
+  )
   static const Color warn = primarySoft;
+  static const Color riskWarning = Color(0xFFF0A63A);
+  static const Color moduleAccentAmber = primarySoft;
   static const Color accent = Color(0xFF8B5CF6);
   static const Color accentDark = Color(0xFF7C3AED);
   static const Color info = Color(0xFF3B82F6);
@@ -125,6 +136,10 @@ final class AppColors {
   static const Color warningBorder = Color(0x33F5A524);
   static const Color warningBorderStrong = Color(0x665A3A00);
   static const Color warningBorderDark = Color(0xFF92400E);
+  @Deprecated(
+    'Superseded by AppColors.riskWarning after TOKEN-WARN-01. warningText '
+    'aliased warn, which conflated warning with soft brand orange.',
+  )
   static const Color warningText = warn;
   static const Color infoTextStrong = Color(0xFF1E3A8A);
   static const Color accentTextStrong = Color(0xFF4C1D95);
@@ -154,9 +169,15 @@ final class AppColors {
   static const Color sell20 = Color(0x33EF4444);
   static const Color sell33 = Color(0x55EF4444);
 
+  @Deprecated('Superseded by AppColors.riskWarning08 after TOKEN-WARN-01')
   static const Color warn08 = warningBg;
+  @Deprecated('Superseded by AppColors.riskWarning10 after TOKEN-WARN-01')
   static const Color warn10 = Color(0x1AF5A524);
+  @Deprecated('Superseded by AppColors.riskWarning15 after TOKEN-WARN-01')
   static const Color warn15 = Color(0x26F5A524);
+  static const Color riskWarning08 = Color(0x14F0A63A);
+  static const Color riskWarning10 = Color(0x1AF0A63A);
+  static const Color riskWarning15 = Color(0x26F0A63A);
   static const Color caution10 = Color(0x1AF59E0B);
   static const Color caution20 = Color(0x33F59E0B);
 

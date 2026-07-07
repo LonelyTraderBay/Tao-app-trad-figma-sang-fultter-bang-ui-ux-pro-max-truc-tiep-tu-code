@@ -36,7 +36,7 @@ class TransactionReportsSection extends StatelessWidget {
             height: AppSpacing.transactionReportingLineHeightTight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         if (reports.isEmpty)
           _EmptyReports(query: query)
         else
@@ -47,7 +47,7 @@ class TransactionReportsSection extends StatelessWidget {
               onRetry: () => onRetry(report),
               onCopy: () => onCopy(report),
             ),
-            if (report != reports.last) const SizedBox(height: AppSpacing.x4),
+            if (report != reports.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
       ],
     );
@@ -83,6 +83,7 @@ class _ReportCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -130,7 +131,7 @@ class _ReportCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                           Text(
                             '${report.transactionId} - ${report.tradingVenue}',
                             maxLines: 1,
@@ -147,7 +148,7 @@ class _ReportCard extends StatelessWidget {
                     _SmallPill(label: status.label, color: status.color),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 Row(
                   children: [
                     Expanded(
@@ -164,7 +165,7 @@ class _ReportCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [
                     Expanded(

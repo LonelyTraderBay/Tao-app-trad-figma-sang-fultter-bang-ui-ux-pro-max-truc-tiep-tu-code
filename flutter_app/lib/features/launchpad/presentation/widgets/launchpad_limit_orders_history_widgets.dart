@@ -68,12 +68,12 @@ class _HistorySection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   const Divider(
                     height: AppSpacing.dividerHairline,
                     color: AppColors.border,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Row(
                     children: [
                       Expanded(

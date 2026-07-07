@@ -39,11 +39,10 @@ class _ProgressHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -103,7 +102,7 @@ class _QuestionCard extends StatelessWidget {
             ],
           ),
           if (question.helpText != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               question.helpText!,
               style: AppTextStyles.caption.copyWith(
@@ -112,7 +111,7 @@ class _QuestionCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (var index = 0; index < question.options.length; index++) ...[
             _RiskOptionTile(
               key: index == 0 ? StakingRiskAssessmentPage.firstOptionKey : null,
@@ -125,10 +124,10 @@ class _QuestionCard extends StatelessWidget {
               onTap: () => onSelected(question, question.options[index].value),
             ),
             if (index != question.options.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.rowGap),
           ],
           if (index > 0) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCtaButton(
               key: StakingRiskAssessmentPage.previousButtonKey,
               variant: VitCtaButtonVariant.ghost,

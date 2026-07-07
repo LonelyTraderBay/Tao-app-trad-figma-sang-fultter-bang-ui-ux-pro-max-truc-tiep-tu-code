@@ -78,22 +78,22 @@ class _AssetHero extends StatelessWidget {
             spacing: AppSpacing.walletAssetSmallGap,
             runSpacing: AppSpacing.walletAssetSmallGap,
             children: [
-              _StatPill(
+              _AssetStatTile(
                 label: 'Khả dụng',
                 value: _formatFixed(snapshot.available, 6),
                 valueColor: AppColors.text1,
               ),
-              _StatPill(
+              _AssetStatTile(
                 label: 'Trong lệnh',
                 value: _formatFixed(snapshot.inOrder, 6),
                 valueColor: _assetPrimary,
               ),
-              _StatPill(
+              _AssetStatTile(
                 label: 'Đóng băng',
                 value: _formatFixed(snapshot.frozen, 2),
                 valueColor: AppColors.caution,
               ),
-              _StatPill(
+              _AssetStatTile(
                 label: 'Giá hiện tại',
                 value: _withCommas(snapshot.currentPrice.toStringAsFixed(2)),
                 valueColor: AppColors.text1,
@@ -124,8 +124,8 @@ class _AssetLogo extends StatelessWidget {
   }
 }
 
-class _StatPill extends StatelessWidget {
-  const _StatPill({
+class _AssetStatTile extends StatelessWidget {
+  const _AssetStatTile({
     required this.label,
     required this.value,
     required this.valueColor,
@@ -137,6 +137,7 @@ class _StatPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
@@ -259,13 +260,6 @@ class _PriceChartCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(
-          title: 'Biểu đồ giá',
-          icon: Icons.show_chart_rounded,
-          iconColor: _assetPrimary,
-          density: VitDensity.compact,
-        ),
-        const SizedBox(height: AppSpacing.x2),
         VitTabBar(
           tabs: [
             for (final period in const ['1W', '1M', '3M'])
@@ -279,7 +273,7 @@ class _PriceChartCard extends StatelessWidget {
           onChanged: onPeriod,
           variant: VitTabBarVariant.segment,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           density: VitDensity.compact,
           borderColor: AppColors.overlayStroke,

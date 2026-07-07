@@ -1,7 +1,7 @@
 part of '../pages/activity_log_page.dart';
 
-class _FilterPanel extends StatelessWidget {
-  const _FilterPanel({
+class _ActivityFilterRow extends StatelessWidget {
+  const _ActivityFilterRow({
     required this.filters,
     required this.activeFilter,
     required this.onChanged,
@@ -20,10 +20,14 @@ class _FilterPanel extends StatelessWidget {
       child: Row(
         children: [
           for (final filter in filters) ...[
-            _FilterChip(
-              filter: filter,
+            VitChoicePill(
+              key: ActivityLogPage.filterKey(filter.id),
+              label: filter.label,
               selected: filter.id == activeFilter,
               onTap: () => onChanged(filter.id),
+              height: VitDensity.compact.controlHeight,
+              padding: AppSpacing.profileActivityFilterChipPadding,
+              accentColor: _activityPrimary,
             ),
             if (filter != filters.last)
               const SizedBox(
@@ -81,31 +85,6 @@ class _SuspiciousBanner extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.filter,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final ProfileActivityFilter filter;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: ActivityLogPage.filterKey(filter.id),
-      label: filter.label,
-      selected: selected,
-      onTap: onTap,
-      height: VitDensity.compact.controlHeight,
-      padding: AppSpacing.profileActivityFilterChipPadding,
-      accentColor: _activityPrimary,
     );
   }
 }
@@ -180,14 +159,14 @@ class _ActivityCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ActivityDetails(log: log),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: _activityDivider,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             log.timestamp,
             style: AppTextStyles.micro.copyWith(color: _activityMuted),
@@ -268,7 +247,7 @@ class _ActivityDetails extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _DetailBlock(label: 'IP ADDRESS', value: log.ipAddress),
           ],
         ),

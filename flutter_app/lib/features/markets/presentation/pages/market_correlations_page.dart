@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_data_viz_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -28,7 +29,6 @@ const double _corrVisualScrollClearance = 108;
 const double _corrNativeScrollClearance = 72;
 const double _corrChipGap = AppSpacing.x2;
 const double _corrTimeframeChipHeight = AppSpacing.buttonCompact;
-const double _corrSortChipHeight = AppSpacing.buttonCompact;
 const double _corrMatrixGap = AppSpacing.x2;
 const double _corrInfoTitleGap = AppSpacing.x1;
 const double _corrBodyLineHeight = 1.25;
@@ -115,6 +115,7 @@ class _MarketCorrelationsPageState
                       bottom: scrollEndClearance,
                     ),
                     child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [

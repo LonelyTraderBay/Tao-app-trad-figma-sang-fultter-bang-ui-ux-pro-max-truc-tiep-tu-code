@@ -58,6 +58,7 @@ class _DisputeTabs extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // card-tile: allow-start — fixed surface, not horizontal strip tile
                     VitCard(
                       width: tab.id == activeId
                           ? AppSpacing.tradeBotDisputeTabIndicatorWidth
@@ -111,6 +112,7 @@ class _CasesTab extends StatelessWidget {
         ? snapshot.resolvedCases
         : snapshot.activeCases;
     return VitPageContent(
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -188,7 +190,7 @@ class _DisputeCaseCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             disputeCase.subject,
             style: AppTextStyles.caption.copyWith(
@@ -206,13 +208,13 @@ class _DisputeCaseCard extends StatelessWidget {
             disputeCase.description,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           if (!resolved)
             _CaseTimeline(disputeCase: disputeCase)
           else
             _RefundPanel(disputeCase: disputeCase),
           if (!resolved) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCtaButton(
               onPressed: () {},
               variant: VitCtaButtonVariant.danger,

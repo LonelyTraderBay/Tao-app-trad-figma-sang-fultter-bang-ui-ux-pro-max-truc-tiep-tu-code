@@ -79,7 +79,7 @@ class _StrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -167,7 +167,7 @@ class _BestStrategyCard extends StatelessWidget {
                   'Best Risk-Adjusted Returns',
                   style: AppTextStyles.baseMedium.copyWith(color: color),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text.rich(
                   TextSpan(
                     children: [

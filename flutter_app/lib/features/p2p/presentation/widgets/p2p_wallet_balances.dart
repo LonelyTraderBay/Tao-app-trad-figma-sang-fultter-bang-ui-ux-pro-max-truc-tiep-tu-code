@@ -126,7 +126,7 @@ class _BalanceCard extends StatelessWidget {
               child: Column(
                 children: [
                   _BalanceBreakdown(balance: balance),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Row(
                     children: [
                       Expanded(
@@ -155,7 +155,7 @@ class _BalanceCard extends StatelessWidget {
                     ],
                   ),
                   if (balance.inEscrow > 0) ...[
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     _EscrowDetailButton(
                       asset: balance.asset,
                       onTap: () => context.go(

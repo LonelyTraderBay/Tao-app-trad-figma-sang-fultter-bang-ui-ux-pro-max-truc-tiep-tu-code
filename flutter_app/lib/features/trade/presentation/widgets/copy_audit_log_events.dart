@@ -14,6 +14,7 @@ class _AuditEventCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
@@ -127,6 +128,7 @@ class _EventMetadataPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final metadata = event.metadata!;
     if (event.type == TradeCopyAuditEventType.config) {
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       return VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.standard,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -70,6 +71,7 @@ class WithdrawLimitsPage extends ConsumerWidget {
                   bottomInset: bottomInset,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
@@ -77,19 +79,27 @@ class WithdrawLimitsPage extends ConsumerWidget {
                       _CurrentTierCard(snapshot: snapshot),
                       _QuickStats(tier: snapshot.currentTier),
                       const _LimitWarning(),
-                      const VitSectionHeader(
-                        title:
-                            'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
-                        icon: Icons.verified_user_outlined,
-                        variant: VitSectionHeaderVariant.accentBar,
-                        density: VitDensity.compact,
+                      VitPageSection(
+                        label: 'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
+                        headerIcon: Icons.verified_user_outlined,
+                        headerVariant: VitSectionHeaderVariant.accentBar,
+                        headerDensity: VitDensity.compact,
+                        innerGap: AppSpacing.pageRhythmFormInnerGap,
+                        children: [
+                          for (final tier in snapshot.tiers)
+                            _KycTierCard(
+                              tier: tier,
+                              currentLevel: snapshot.currentLevel,
+                            ),
+                        ],
                       ),
-                      for (final tier in snapshot.tiers)
-                        _KycTierCard(
-                          tier: tier,
-                          currentLevel: snapshot.currentLevel,
-                        ),
-                      _FaqCard(faqs: snapshot.faqs),
+                      VitPageSection(
+                        label: 'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
+                        headerIcon: Icons.help_outline_rounded,
+                        headerVariant: VitSectionHeaderVariant.plain,
+                        innerGap: AppSpacing.pageRhythmFormInnerGap,
+                        children: [_FaqCard(faqs: snapshot.faqs)],
+                      ),
                     ],
                   ),
                 ),

@@ -59,7 +59,7 @@ class _ExportSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     Row(
                       children: [
                         Expanded(
@@ -80,7 +80,7 @@ class _ExportSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Center(
                       child: Column(
                         children: [
@@ -103,14 +103,14 @@ class _ExportSheet extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     Text(
                       'Dinh dang',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         for (final format in formats) ...[
@@ -129,7 +129,7 @@ class _ExportSheet extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     VitCard(
                       variant: VitCardVariant.inner,
                       padding: AppSpacing.launchpadPaddingX3,
@@ -143,7 +143,7 @@ class _ExportSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     VitCtaButton(
                       key: LaunchpadEventLogPage.copyButtonKey,
                       onPressed: onCopy,
@@ -209,7 +209,7 @@ class _ExportFormatTile extends StatelessWidget {
             color: color,
             size: AppSpacing.launchpadIcon3xl,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             format.label,
             style: AppTextStyles.caption.copyWith(

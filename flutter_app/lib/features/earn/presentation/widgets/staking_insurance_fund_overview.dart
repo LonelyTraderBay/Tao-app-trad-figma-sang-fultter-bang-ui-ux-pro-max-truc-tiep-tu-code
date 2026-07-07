@@ -38,7 +38,7 @@ class StakingInsuranceFundInfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
@@ -91,7 +91,7 @@ class StakingInsuranceFundTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     AnimatedSize(
                       duration: const Duration(milliseconds: 160),
                       alignment: Alignment.center,

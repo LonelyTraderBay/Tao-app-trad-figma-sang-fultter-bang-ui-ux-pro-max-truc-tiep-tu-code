@@ -26,7 +26,7 @@ class _ProgressBars extends StatelessWidget {
             ),
           ),
           if (index != steps.length - 1)
-            const SizedBox(width: AppSpacing.x3 + AppSpacing.hairlineStroke),
+            const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -44,7 +44,7 @@ class _IntroStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Icon(Icons.groups_2_outlined, color: _providerPrimary, size: 44),
-        const SizedBox(height: AppSpacing.x6 + AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmRelaxedSectionGap),
         Text(
           'Trở thành Copy Trading Provider',
           textAlign: TextAlign.center,
@@ -52,7 +52,7 @@ class _IntroStep extends StatelessWidget {
             height: AppSpacing.providerApplicationIntroTitleLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Text(
           'Chia sẻ chiến lược giao dịch và kiếm performance fee từ những người copy bạn',
           textAlign: TextAlign.center,
@@ -61,25 +61,25 @@ class _IntroStep extends StatelessWidget {
             height: AppSpacing.providerApplicationIntroDescriptionLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _SectionLabel(label: 'Lợi ích', color: _providerGreen),
-        const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final benefit in snapshot.benefits) ...[
           _BenefitCard(benefit: benefit),
           if (benefit != snapshot.benefits.last)
-            const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+            const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ResponsibilitiesCard(items: snapshot.responsibilities),
         const SizedBox(
-          height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
+          height: AppSpacing.pageRhythmStandardInnerGap,
         ),
         _SectionLabel(label: 'Yêu cầu cơ bản', color: AppColors.text3),
-        const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final requirement in snapshot.requirements) ...[
           _RequirementPreview(requirement: requirement),
           if (requirement != snapshot.requirements.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -103,7 +103,7 @@ class _BenefitCard extends StatelessWidget {
             backgroundColor: AppColors.surfaceSuccessSoft,
             child: Icon(_benefitIcon(benefit.iconName), color: _providerGreen),
           ),
-          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +151,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
             color: _providerWarning,
             size: 22,
           ),
-          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +163,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final item in items)
                   Padding(
                     padding:
@@ -193,6 +193,7 @@ class _RequirementPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height:
           AppSpacing.buttonCompact - AppSpacing.x1 + AppSpacing.hairlineStroke,

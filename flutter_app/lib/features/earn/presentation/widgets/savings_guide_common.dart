@@ -49,7 +49,7 @@ class SavingsGuideProgressHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
@@ -93,7 +93,7 @@ class SavingsGuideStepDetail extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
           step.description,
           style: AppTextStyles.caption.copyWith(
@@ -136,7 +136,7 @@ class SavingsGuideTipPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final tip in tips) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +166,7 @@ class SavingsGuideTipPanel extends StatelessWidget {
                 ),
               ],
             ),
-            if (tip != tips.last) const SizedBox(height: AppSpacing.x2),
+            if (tip != tips.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

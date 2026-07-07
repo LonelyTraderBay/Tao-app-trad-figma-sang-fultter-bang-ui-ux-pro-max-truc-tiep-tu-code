@@ -33,8 +33,12 @@ class _AlertHistoryTab extends StatelessWidget {
                                   fontWeight: AppTextStyles.bold,
                                 ),
                               ),
-                              const SizedBox(height: AppSpacing.x2),
-                              _ModulePill(label: entry.moduleName),
+                              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                              VitAccentPill(
+                                label: entry.moduleName,
+                                accentColor: AppColors.text2,
+                                size: VitStatusPillSize.sm,
+                              ),
                             ],
                           ),
                         ),
@@ -45,14 +49,14 @@ class _AlertHistoryTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                     Text(
                       entry.action,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         const Icon(
@@ -74,7 +78,7 @@ class _AlertHistoryTab extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           padding: AppSpacing.crossModuleCardPadding,
           radius: VitCardRadius.large,
@@ -88,7 +92,7 @@ class _AlertHistoryTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -145,7 +149,7 @@ class _AlertSettingsTab extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Alert Templates',
           children: [
@@ -158,7 +162,7 @@ class _AlertSettingsTab extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _InfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
@@ -225,6 +229,7 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
@@ -278,10 +283,10 @@ class _TemplateCategory extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final template in templates) ...[
           _TemplateCard(template: template),
-          if (template != templates.last) const SizedBox(height: AppSpacing.x3),
+          if (template != templates.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -313,7 +318,7 @@ class _TemplateCard extends StatelessWidget {
             template.description,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               const Icon(

@@ -70,7 +70,7 @@ class _StressScenarioPanel extends StatelessWidget {
                     scenario.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.captionSm.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
                     ),

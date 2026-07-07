@@ -63,15 +63,14 @@ class BuyConfirmContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Chi tiết xác nhận',
+      headerIcon: Icons.receipt_long_outlined,
+      headerIconColor: _buyPrimary,
+      headerVariant: VitSectionHeaderVariant.plain,
+      accentColor: _buyPrimary,
+      innerGap: AppSpacing.pageRhythmFormInnerGap,
       children: [
-        const VitSectionHeader(
-          title: 'Chi tiết xác nhận',
-          icon: Icons.receipt_long_outlined,
-          iconColor: _buyPrimary,
-          accentColor: _buyPrimary,
-        ),
         VitCard(
           density: VitDensity.compact,
           borderColor: AppColors.primary40,
@@ -110,13 +109,11 @@ class BuyConfirmContent extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.walletBuySectionGap),
         _ActionButton(
           label: submitting ? 'Đang xử lý' : 'Xác nhận thanh toán',
           onTap: onConfirm,
           enabled: !submitting,
         ),
-        const SizedBox(height: AppSpacing.walletBuyInlineGap),
         _GhostButton(
           label: 'Quay lại chỉnh sửa',
           onTap: onBack,
@@ -158,6 +155,7 @@ class BuySuccessState extends StatelessWidget {
           child: VitInsetScrollView(
             bottomInset: AppSpacing.walletBuySuccessCtaGap,
             child: VitPageContent(
+              rhythm: VitPageRhythm.form,
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [

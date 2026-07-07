@@ -7,6 +7,7 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: _termsInfoMinExtent),
@@ -62,6 +63,7 @@ class _TermsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _termsCardExtent,
       borderColor: AppColors.cardBorder,
@@ -222,6 +224,7 @@ class _ScrollWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: _termsWarningMinExtent),
@@ -268,6 +271,7 @@ class _AgreementCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: enabled ? 1 : .5,
+      // card-tile: allow-start — fixed surface, not horizontal strip tile
       child: VitCard(
         key: BotTermsOfServicePage.agreementKey,
         onTap: enabled ? onTap : null,

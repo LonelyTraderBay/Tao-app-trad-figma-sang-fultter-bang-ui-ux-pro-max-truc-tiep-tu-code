@@ -21,7 +21,7 @@ class _SuggestedFallbackCard extends StatelessWidget {
             label: 'Gợi ý cải thiện',
             pill: 'SMART',
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final item in suggestions)
             Padding(
               padding: AppSpacing.arenaGovernanceListItemPadding,
@@ -108,7 +108,7 @@ class _EligibilityPanel extends StatelessWidget {
               _StatusPill(label: 'Clarity: ${result.clarity}', color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final check in result.checks)
             Padding(
               padding: AppSpacing.arenaGovernanceListItemPadding,

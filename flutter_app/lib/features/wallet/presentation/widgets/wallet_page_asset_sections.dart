@@ -188,7 +188,7 @@ class WalletAssetList extends StatelessWidget {
                   'N\u1EA1p ho\u1EB7c mua crypto \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u qu\u1EA3n l\u00FD danh m\u1EE5c.',
               icon: Icons.account_balance_wallet_outlined,
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Expanded(

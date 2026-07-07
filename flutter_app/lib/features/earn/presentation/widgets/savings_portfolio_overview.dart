@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -29,6 +30,7 @@ class OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,
@@ -51,11 +53,8 @@ class OverviewTab extends StatelessWidget {
         ),
         SectionLabel(label: 'Lịch đáo hạn', color: AppColors.warn),
         MaturitySummary(events: snapshot.maturityEvents),
-        for (final event in snapshot.maturityEvents) ...[
+        for (final event in snapshot.maturityEvents)
           MaturityCard(event: event),
-          if (event != snapshot.maturityEvents.last)
-            const SizedBox(height: AppSpacing.x3),
-        ],
         EarnWarningBanner(
           text:
               'Khi đáo hạn, bạn có thể gia hạn để tiếp tục nhận lãi hoặc rút về ví. Rút trước hạn có thể mất lãi tích lũy.',
@@ -113,11 +112,11 @@ class _AllocationCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final position in positions) ...[
             AllocationRow(position: position),
             if (position != positions.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -173,7 +172,7 @@ class AllocationRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ProgressBar(
           progress: allocationValue(position.allocationLabel),
           color: color,
@@ -233,7 +232,7 @@ class _IncomeProjectionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             item.label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

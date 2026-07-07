@@ -31,7 +31,7 @@ class _ComplianceNotice extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.complianceDescription,
                   maxLines: 2,
@@ -68,31 +68,3 @@ class _AuditSearchField extends StatelessWidget {
   }
 }
 
-class _AuditFilterTabs extends StatelessWidget {
-  const _AuditFilterTabs({
-    required this.tabs,
-    required this.activeId,
-    required this.onChanged,
-  });
-
-  final List<TradeCopyAuditTab> tabs;
-  final String activeId;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitTabBar(
-      activeKey: activeId,
-      onChanged: onChanged,
-      tabs: [
-        for (final tab in tabs) ...[
-          VitTabItem(
-            key: tab.id,
-            label: tab.label,
-            widgetKey: CopyAuditLogPage.tabKey(tab.id),
-          ),
-        ],
-      ],
-    );
-  }
-}

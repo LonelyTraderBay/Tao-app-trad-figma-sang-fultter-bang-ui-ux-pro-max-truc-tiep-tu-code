@@ -33,7 +33,7 @@ class _EmptyHistory extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text('Chưa có thông báo', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.x1),
           Text(

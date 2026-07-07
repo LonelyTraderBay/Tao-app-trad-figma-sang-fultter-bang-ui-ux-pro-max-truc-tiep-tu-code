@@ -12,14 +12,14 @@ class _TicketsPanel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _CreateTicketButton(onTap: HapticFeedback.selectionClick),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         if (activeTickets.isNotEmpty) ...[
           _TicketSection(
             key: SupportPage.activeTicketsKey,
             title: 'ĐANG XỬ LÝ (${activeTickets.length})',
             tickets: activeTickets,
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
         if (doneTickets.isNotEmpty)
           _TicketSection(
@@ -74,14 +74,14 @@ class _TicketSection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.captionSm.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (var i = 0; i < tickets.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.x3),
+          if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _TicketCard(ticket: tickets[i]),
         ],
       ],
@@ -115,11 +115,16 @@ class _TicketCard extends StatelessWidget {
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
                   children: [
-                    _MiniPill(
+                    VitAccentPill(
                       label: '#${ticket.id.toUpperCase()}',
-                      style: status,
+                      accentColor: status.color,
+                      size: VitStatusPillSize.sm,
                     ),
-                    _MiniPill(label: priority.label, style: priority),
+                    VitAccentPill(
+                      label: priority.label,
+                      accentColor: priority.color,
+                      size: VitStatusPillSize.sm,
+                    ),
                   ],
                 ),
               ),
@@ -127,7 +132,7 @@ class _TicketCard extends StatelessWidget {
               _StatusLabel(style: status),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             ticket.subject,
             style: AppTextStyles.baseMedium.copyWith(
@@ -135,10 +140,14 @@ class _TicketCard extends StatelessWidget {
               height: AppSpacing.supportLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
-              _CategoryPill(label: _categoryLabel(ticket.category)),
+              VitAccentPill(
+                label: _categoryLabel(ticket.category),
+                accentColor: AppColors.text2,
+                size: VitStatusPillSize.sm,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
@@ -150,7 +159,7 @@ class _TicketCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
@@ -181,7 +190,7 @@ class _TicketCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   lastMessage.text,
                   maxLines: 2,

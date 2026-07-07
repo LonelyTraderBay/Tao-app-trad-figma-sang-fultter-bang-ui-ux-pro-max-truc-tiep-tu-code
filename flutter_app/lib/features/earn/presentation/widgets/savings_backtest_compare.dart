@@ -48,19 +48,19 @@ class CompareTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               for (final preset in presets) ...[
                 _CompareBar(preset: preset, amountUsd: amountUsd),
                 if (preset != presets.last)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final preset in presets) ...[
           _CompareCard(preset: preset, amountUsd: amountUsd),
-          if (preset != presets.last) const SizedBox(height: AppSpacing.x3),
+          if (preset != presets.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -96,7 +96,7 @@ class _CompareBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
@@ -184,18 +184,18 @@ class NoResults extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Chưa chạy mô phỏng',
             style: captionBoldStyle.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Thiết lập chiến lược và bấm "Chạy mô phỏng" để xem kết quả.',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             onPressed: onSetup,
             fullWidth: false,

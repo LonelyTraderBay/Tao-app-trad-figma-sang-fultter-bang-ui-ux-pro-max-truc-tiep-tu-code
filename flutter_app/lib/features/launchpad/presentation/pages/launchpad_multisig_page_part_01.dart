@@ -90,6 +90,7 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
                         key: LaunchpadMultisigPage.contentKey,
                         physics: const ClampingScrollPhysics(),
                         child: VitPageContent(
+       rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           gap: VitContentGap.tight,
                           children: [

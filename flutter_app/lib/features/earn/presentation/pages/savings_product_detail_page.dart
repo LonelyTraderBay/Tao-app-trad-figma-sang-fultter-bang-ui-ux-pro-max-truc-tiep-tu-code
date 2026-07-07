@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -56,7 +57,7 @@ class SavingsProductDetailPage extends ConsumerWidget {
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             padding: AppSpacing.earnBottomInsetPadding(bottomInset),
-            child: VitPageContent(
+            child: VitPageContent(rhythm: VitPageRhythm.standard, 
               padding: VitContentPadding.compact,
               gap: VitContentGap.defaultGap,
               children: [
@@ -119,7 +120,7 @@ class _ProductHero extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   lockLabel,
-                  style: AppTextStyles.captionSm.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                   ),
                 ),
@@ -217,7 +218,7 @@ class _NotFoundProductState extends StatelessWidget {
           message: snapshot.notFoundMessage,
           contractId: 'savings-product-empty',
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Align(
           alignment: Alignment.center,
           child: VitCtaButton(

@@ -224,7 +224,7 @@ class _InfoBanner extends StatelessWidget {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 for (final bullet in snapshot.infoBullets)
                   Padding(
                     padding: AppSpacing.earnBottomPaddingX1,

@@ -50,7 +50,7 @@ class _CategorySoundSection extends StatelessWidget {
                 onPreview: () => onPreview(snapshot.categories[i].id),
               ),
               if (i != snapshot.categories.length - 1)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.rowGap),
             ],
           ],
         ),
@@ -205,7 +205,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -220,7 +220,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -258,6 +258,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                   onChanged: onVolume,
                 ),
               ),
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 key: LaunchpadNotifSoundPage.previewKey(category.id),
                 onTap: onPreview,

@@ -90,7 +90,7 @@ class _SummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(data.icon, color: data.iconColor, size: 21),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             data.label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -236,7 +236,7 @@ class _CorrelationCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final row in rows) ...[
             Row(
               children: [
@@ -258,9 +258,9 @@ class _CorrelationCard extends StatelessWidget {
                   ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: AppSpacing.x2),
+            if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text.rich(
             TextSpan(
               children: [

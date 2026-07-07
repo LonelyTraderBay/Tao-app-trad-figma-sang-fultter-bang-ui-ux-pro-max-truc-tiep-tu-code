@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -89,6 +90,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                   physics: const ClampingScrollPhysics(),
                   padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
                     gap: VitContentGap.tight,
                     children: [
                       _DcaStateBar(
@@ -120,7 +122,6 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                             const VitOfflineBanner(
                               detail: 'Showing cached scenario fixtures.',
                             ),
-                            const SizedBox(height: AppSpacing.x4),
                             ..._liveSections(snapshot),
                           ],
                         ),

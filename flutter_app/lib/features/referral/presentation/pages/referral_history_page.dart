@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -96,6 +97,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       children: [
                         VitCard(
@@ -124,7 +126,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                               ),
                               Padding(
                                 padding: AppSpacing.referralCardPadding,
-                                child: _FilterRail(
+                                child: _ReferralFriendFilters(
                                   filters: snapshot.filters,
                                   active: snapshot.filter,
                                   onChanged: (value) {
@@ -162,7 +164,6 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                                 setState(() => _remindedFriend = friend.id);
                               },
                             ),
-                            const SizedBox(height: AppSpacing.x3),
                           ],
                       ],
                     ),

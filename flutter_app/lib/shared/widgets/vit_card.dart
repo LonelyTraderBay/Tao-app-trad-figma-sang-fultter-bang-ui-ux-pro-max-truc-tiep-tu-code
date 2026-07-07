@@ -16,6 +16,18 @@ enum VitCardRadius {
   large,
 }
 
+/// Vertical alignment of [VitCard] content inside a fixed-height surface.
+///
+/// Use [center] whenever [VitCard.height] or [VitCard.constraints.minHeight]
+/// is set so tile cards stay optically balanced without per-page Column hacks.
+enum VitCardContentAlign {
+  /// Default — content stacks from the top (scroll/detail cards).
+  start,
+
+  /// Centers content vertically inside a fixed or minimum-height card.
+  center,
+}
+
 class VitCard extends StatelessWidget {
   const VitCard({
     super.key,
@@ -33,6 +45,7 @@ class VitCard extends StatelessWidget {
     this.background,
     this.clip = false,
     this.onTap,
+    this.contentAlign = VitCardContentAlign.start,
   });
 
   final Widget child;
@@ -49,6 +62,18 @@ class VitCard extends StatelessWidget {
   final Widget? background;
   final bool clip;
   final VoidCallback? onTap;
+  final VitCardContentAlign contentAlign;
+
+  bool get _centersContent {
+    if (contentAlign != VitCardContentAlign.center) {
+      return false;
+    }
+    if (height != null) {
+      return true;
+    }
+    final minHeight = constraints?.minHeight;
+    return minHeight != null && minHeight > 0;
+  }
 
   BorderRadius get _borderRadius {
     switch (radius) {
@@ -107,6 +132,14 @@ class VitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content = child;
+    if (_centersContent) {
+      content = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.max,
+        children: [content],
+      );
+    }
     final resolvedPadding = padding ?? density?.cardPadding;
     if (resolvedPadding != null) {
       content = Padding(padding: resolvedPadding, child: content);

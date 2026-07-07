@@ -23,11 +23,12 @@ class _EarningCalculator extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
             title: 'Thu nhập nháp ước tính',
-            color: AppColors.primary,
+            variant: VitSectionHeaderVariant.accentBar,
+            accentColor: AppColors.primary,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x3),
           Text(
             'Kéo để ước tính thêm bạn mới trong tháng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -236,11 +237,12 @@ class _HowItWorksSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
             title: 'Cách thức hoạt động',
-            color: AppColors.primary,
+            variant: VitSectionHeaderVariant.accentBar,
+            accentColor: AppColors.primary,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x3),
           for (final step in steps) ...[
             _StepRow(step: step),
             if (step != steps.last) const Divider(color: AppColors.divider),
@@ -397,8 +399,8 @@ class _SplitReward extends StatelessWidget {
   }
 }
 
-class _SocialProofPill extends StatelessWidget {
-  const _SocialProofPill({required this.item, required this.color});
+class _SocialProofMetric extends StatelessWidget {
+  const _SocialProofMetric({required this.item, required this.color});
 
   final ReferralSocialProofDraft item;
   final Color color;
@@ -488,7 +490,7 @@ class _MilestoneCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               '${item.friends} bạn bè',
               style: AppTextStyles.caption.copyWith(

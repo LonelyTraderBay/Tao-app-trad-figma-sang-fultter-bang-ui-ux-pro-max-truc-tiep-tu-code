@@ -25,10 +25,10 @@ class SavingsNotificationProductsTab extends StatelessWidget {
           text:
               'Tùy chỉnh thông báo cho từng sản phẩm đang ký. Chỉ áp dụng cho sản phẩm bạn đang có vị thế hoạt động.',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final product in products) ...[
           _ProductCard(product: product),
-          if (product != products.last) const SizedBox(height: AppSpacing.x3),
+          if (product != products.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -102,7 +102,7 @@ class _ProductCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -144,7 +144,7 @@ class SavingsNotificationDeliveryTab extends StatelessWidget {
               _ChannelCard(channel: channel, onToggle: onToggle),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Tần suất gửi',
           accentColor: AppColors.primary,
@@ -158,7 +158,7 @@ class SavingsNotificationDeliveryTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Giờ im lặng',
           accentColor: AppColors.accent,
@@ -174,7 +174,7 @@ class SavingsNotificationDeliveryTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCtaButton(
           onPressed: () => HapticFeedback.lightImpact(),
           child: const Text('Lưu tất cả cài đặt'),

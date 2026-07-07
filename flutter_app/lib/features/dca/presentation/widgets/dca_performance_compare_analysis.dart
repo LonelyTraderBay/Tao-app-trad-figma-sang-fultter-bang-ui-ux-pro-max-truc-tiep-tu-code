@@ -36,9 +36,9 @@ class _ProsConsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ProsConsList(title: 'Pros', items: pros, icon: Icons.check_rounded),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ProsConsList(
             title: 'Cons',
             items: cons,
@@ -76,7 +76,7 @@ class _ProsConsList extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final item in items) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +95,7 @@ class _ProsConsList extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.x2),
+          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -139,7 +139,7 @@ class _InfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),

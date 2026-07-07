@@ -81,21 +81,21 @@ class _RulesContent extends StatelessWidget {
           text:
               'This market will resolve to "Yes" if bitcoin reaches \$150K before July 2026 before the end date. Otherwise, it resolves to "No".',
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _InfoBox(
           icon: Icons.verified_user_outlined,
           title: 'Resolution Source',
           text: 'CoinGecko & CoinMarketCap (average)',
           color: _predictionPrimary,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _InfoBox(
           icon: Icons.calendar_month_outlined,
           title: 'End Date',
           text: '${_formatDate(snapshot.event.endDate)} at 23:59 UTC',
           color: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Text(
           'Market Rules',
           style: AppTextStyles.caption.copyWith(
@@ -103,11 +103,11 @@ class _RulesContent extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (var index = 0; index < snapshot.rules.length; index += 1) ...[
           _RuleRow(index: index, text: snapshot.rules[index]),
           if (index != snapshot.rules.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -179,7 +179,7 @@ class _InfoBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           text,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),

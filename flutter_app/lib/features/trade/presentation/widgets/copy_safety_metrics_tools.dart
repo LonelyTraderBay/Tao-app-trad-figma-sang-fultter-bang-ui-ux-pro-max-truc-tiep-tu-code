@@ -135,13 +135,13 @@ class _MetricCard extends StatelessWidget {
                     text: metric.goodRange,
                     color: AppColors.buy,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   _MetricInfo(
                     label: 'Bad Range',
                     text: metric.badRange,
                     color: AppColors.sell,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   _MetricInfo(
                     label: 'Why It Matters',
                     text: metric.whyMatters,

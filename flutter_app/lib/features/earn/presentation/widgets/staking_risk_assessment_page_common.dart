@@ -59,7 +59,7 @@ class _ResultView extends StatelessWidget {
                             color: accent,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Text(
                           result.description,
                           style: AppTextStyles.caption.copyWith(
@@ -72,7 +72,7 @@ class _ResultView extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _ScoreMeter(score: score, maxScore: maxScore, color: accent),
             ],
           ),
@@ -195,11 +195,10 @@ class _ScoreMeter extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
-            child: SizedBox(
-              height: AppSpacing.x2,
+            child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
               child: Stack(
                 fit: StackFit.expand,
                 children: [

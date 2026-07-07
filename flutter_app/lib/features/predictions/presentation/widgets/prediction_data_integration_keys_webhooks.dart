@@ -98,7 +98,7 @@ class _ApiKeyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ConstrainedBox(
             constraints: const BoxConstraints(
               minHeight: AppSpacing.predictionDataApiKeyBoxMinHeight,
@@ -150,7 +150,7 @@ class _ApiKeyCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Permissions',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -258,7 +258,7 @@ class _WebhookCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Events',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -271,7 +271,7 @@ class _WebhookCard extends StatelessWidget {
               for (final event in webhook.events) _NeutralChip(label: event),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

@@ -35,7 +35,7 @@ class _DeviceSection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (var index = 0; index < devices.length; index++) ...[
           _DeviceCard(
             device: devices[index],
@@ -46,7 +46,7 @@ class _DeviceSection extends StatelessWidget {
             onRemove: () => onRemove(devices[index].id),
           ),
           if (index != devices.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -175,14 +175,14 @@ class _DeviceMainInfo extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           '${device.os} · ${device.browser}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x1,
@@ -270,9 +270,9 @@ class _ExpandedDeviceDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _DetailValue(label: 'Fingerprint', value: device.fingerprint),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               if (device.isCurrent)
                 const _CurrentDeviceMessage()
               else

@@ -63,7 +63,7 @@ class _RelatedMarketCard extends StatelessWidget {
               color: _predictionPrimary,
               background: _predictionPrimary.withValues(alpha: .13),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Text(
               event.title,
               maxLines: 2,
@@ -73,7 +73,7 @@ class _RelatedMarketCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
                 SizedBox.square(
@@ -169,7 +169,7 @@ class _ArenaBridgeSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (
             var index = 0;
             index < snapshot.arenaRooms.length;
@@ -177,7 +177,7 @@ class _ArenaBridgeSection extends StatelessWidget {
           ) ...[
             _ArenaRoomRow(room: snapshot.arenaRooms[index]),
             if (index != snapshot.arenaRooms.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           VitCard(
             key: PredictionEventDetailPage.arenaCreateKey,

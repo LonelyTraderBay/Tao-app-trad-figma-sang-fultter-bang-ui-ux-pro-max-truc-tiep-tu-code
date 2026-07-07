@@ -73,7 +73,7 @@ class _PairValue extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.liveMarketPairValueGap),
         Text(

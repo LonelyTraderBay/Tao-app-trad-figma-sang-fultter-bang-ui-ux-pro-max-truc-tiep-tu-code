@@ -7,19 +7,21 @@ class _OverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'Complaint Categories',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
         _CategoryGrid(categories: snapshot.categories),
         const VitSectionHeader(
           title: 'Resolution Timeline',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -130,7 +132,7 @@ class _TimelineCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != timeline.last) const SizedBox(height: AppSpacing.x2),
+            if (item != timeline.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -145,13 +147,14 @@ class _MyComplaintsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return VitPageContent(rhythm: VitPageRhythm.standard, 
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'Your Complaints',
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),

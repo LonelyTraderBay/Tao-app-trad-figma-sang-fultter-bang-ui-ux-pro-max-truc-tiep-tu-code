@@ -45,7 +45,7 @@ class _SafetyControlsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final control in controls) ...[
             VitCard(
               variant: VitCardVariant.inner,
@@ -76,7 +76,7 @@ class _SafetyControlsCard extends StatelessWidget {
                 ],
               ),
             ),
-            if (control != controls.last) const SizedBox(height: AppSpacing.x2),
+            if (control != controls.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -162,7 +162,7 @@ class _RiskExplanationCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final item in _items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

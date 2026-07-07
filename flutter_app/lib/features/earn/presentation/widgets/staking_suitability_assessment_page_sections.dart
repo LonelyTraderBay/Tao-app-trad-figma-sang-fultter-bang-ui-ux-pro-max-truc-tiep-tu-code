@@ -34,11 +34,10 @@ class _ProgressHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(
-            height: AppSpacing.x2,
+          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -87,7 +86,7 @@ class _QuestionCard extends StatelessWidget {
               height: _stakingSuitabilityQuestionLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           if (question.type == StakingSuitabilityQuestionType.single)
             for (var i = 0; i < question.options.length; i++) ...[
               _OptionTile(
@@ -97,7 +96,7 @@ class _QuestionCard extends StatelessWidget {
                 onTap: () => onSelect(question.id, i),
               ),
               if (i != question.options.length - 1)
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             ]
           else if (question.type == StakingSuitabilityQuestionType.slider)
             _SliderQuestion(
@@ -114,7 +113,7 @@ class _QuestionCard extends StatelessWidget {
                 onSelect: (option) => onQuizSelect(q, option),
               ),
               if (q != question.quizQuestions.length - 1)
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             ],
         ],
       ),
@@ -245,7 +244,7 @@ class _QuizQuestion extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (var i = 0; i < quiz.options.length; i++) ...[
             _QuizOption(
               key: StakingSuitabilityAssessmentPage.quizOptionKey(index, i),
@@ -254,7 +253,7 @@ class _QuizQuestion extends StatelessWidget {
               onTap: () => onSelect(i),
             ),
             if (i != quiz.options.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

@@ -64,13 +64,13 @@ class _ChainPositionCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _ApyPill(value: '${position.apy}% APY'),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
             key: StakingMultiChainPage.manageKey(position.chainId),
             variant: VitCtaButtonVariant.secondary,
@@ -157,7 +157,7 @@ class _ActionCard extends StatelessWidget {
             color: action.icon == 'globe' ? AppColors.accent : AppColors.buy,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             action.title,
             style: AppTextStyles.caption.copyWith(
@@ -196,7 +196,7 @@ class _ApyComparison extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('APY Comparison', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final position in sorted) ...[
             Row(
               children: [
@@ -229,7 +229,7 @@ class _ApyComparison extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

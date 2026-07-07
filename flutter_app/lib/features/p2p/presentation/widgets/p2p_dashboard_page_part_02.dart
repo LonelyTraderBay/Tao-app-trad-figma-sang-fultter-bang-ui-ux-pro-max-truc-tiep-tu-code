@@ -76,14 +76,15 @@ class _OrderBreakdownCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
+            title: 'Phân tích đơn hàng',
             icon: Icons.shopping_cart_outlined,
-            label: 'Phân tích đơn hàng',
+            iconColor: AppColors.text2,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (final row in rows) ...[
             _BreakdownLine(row: row, total: stats.totalOrders),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -106,11 +107,14 @@ class _TopMerchantsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(
-                child: _SectionTitle(
+                child: VitSectionHeader(
+                  title: 'Top Merchants',
                   icon: Icons.star_border_rounded,
-                  label: 'Top Merchants',
+                  iconColor: AppColors.text2,
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 ),
               ),
               Text(
@@ -119,7 +123,6 @@ class _TopMerchantsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (var index = 0; index < snapshot.topMerchants.length; index++)
             _MerchantRow(
               rank: index + 1,
@@ -150,11 +153,14 @@ class _RecentActivityCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(
-                child: _SectionTitle(
+                child: VitSectionHeader(
+                  title: 'Hoạt động gần đây',
                   icon: Icons.schedule_rounded,
-                  label: 'Hoạt động gần đây',
+                  iconColor: AppColors.text2,
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 ),
               ),
               _TextLinkButton(
@@ -167,7 +173,6 @@ class _RecentActivityCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
           for (var index = 0; index < snapshot.recentActivity.length; index++)
             _ActivityRow(
               activity: snapshot.recentActivity[index],
@@ -250,32 +255,6 @@ class _QuickActionTile extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.icon, required this.label});
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: AppColors.text2, size: AppSpacing.iconSm),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            label,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -381,17 +360,6 @@ class _SmallPill extends StatelessWidget {
   }
 }
 
-class _RequirementPill extends StatelessWidget {
-  const _RequirementPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: AppColors.text3);
-  }
-}
-
 class _ProgressLine extends StatelessWidget {
   const _ProgressLine({
     required this.label,
@@ -428,7 +396,7 @@ class _ProgressLine extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
@@ -478,7 +446,7 @@ class _ComparisonLine extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(

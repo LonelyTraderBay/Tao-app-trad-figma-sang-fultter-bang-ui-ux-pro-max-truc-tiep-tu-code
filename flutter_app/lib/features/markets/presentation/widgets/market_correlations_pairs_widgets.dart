@@ -54,7 +54,6 @@ class _SortChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: color,
-      height: _corrSortChipHeight,
       padding: AppSpacing.marketCorrelationsSortChipPadding,
     );
   }

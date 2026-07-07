@@ -36,7 +36,7 @@ class SavingsSmartSuggestionList extends StatelessWidget {
             onDismiss: () => onDismiss(suggestion.id),
           ),
           if (suggestion != suggestions.last)
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -114,7 +114,7 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Icon(
@@ -141,17 +141,17 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SavingsSmartConfidenceBar(
             value: suggestion.confidence,
             color: confidenceColor,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             color: AppColors.divider,
             height: AppSpacing.savingsConsumerDividerHeight,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               const Icon(
@@ -329,6 +329,7 @@ class SavingsSmartSmallActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,

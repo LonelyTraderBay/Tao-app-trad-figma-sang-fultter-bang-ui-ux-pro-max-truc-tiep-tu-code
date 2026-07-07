@@ -117,7 +117,7 @@ class _DetailField extends StatelessWidget {
             fontWeight: AppTextStyles.medium,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitInput(
           fieldKey: P2PReportMerchantPage.detailFieldKey,
           controller: controller,

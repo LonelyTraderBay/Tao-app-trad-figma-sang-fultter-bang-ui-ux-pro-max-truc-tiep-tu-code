@@ -167,7 +167,7 @@ class _ModeCard extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x1,
@@ -244,7 +244,7 @@ class _BudgetCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Row(
           children: [
             for (final amount in options) ...[
@@ -354,7 +354,7 @@ class _RiskParameter extends StatelessWidget {
               Text(value, style: captionBoldStyle.copyWith(color: color)),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
@@ -364,7 +364,7 @@ class _RiskParameter extends StatelessWidget {
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(child: Text(minLabel, style: AppTextStyles.micro)),

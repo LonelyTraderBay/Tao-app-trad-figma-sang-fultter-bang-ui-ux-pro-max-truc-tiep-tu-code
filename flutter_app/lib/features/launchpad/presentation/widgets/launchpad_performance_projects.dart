@@ -11,7 +11,7 @@ class _ProjectsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (final project in projects) ...[
-          if (project != projects.first) const SizedBox(height: AppSpacing.x3),
+          if (project != projects.first) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _HistoricalProjectCard(project: project),
         ],
       ],
@@ -88,7 +88,7 @@ class _HistoricalProjectCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -115,7 +115,7 @@ class _HistoricalProjectCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -130,7 +130,7 @@ class _HistoricalProjectCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             '${_formatInt(project.participants)} người · ${project.totalRaised}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

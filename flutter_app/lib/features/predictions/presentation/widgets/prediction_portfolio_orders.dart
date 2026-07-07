@@ -27,7 +27,8 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(title: 'Open Orders'),
+        const VitSectionHeader(
+      bottomGap: AppSpacing.pageRhythmStandardInnerGap,title: 'Open Orders'),
         const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
@@ -48,7 +49,7 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           clip: true,
           padding: EdgeInsets.zero,
@@ -191,6 +192,7 @@ class _OrderRow extends StatelessWidget {
                 const SizedBox(
                   height: AppSpacing.predictionPortfolioOrderCancelGap,
                 ),
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   key: predictionPortfolioCancelOrderKey(order.id),
                   onTap: onCancel,

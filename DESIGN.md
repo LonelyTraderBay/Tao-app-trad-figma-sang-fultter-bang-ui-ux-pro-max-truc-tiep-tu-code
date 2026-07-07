@@ -137,7 +137,14 @@ semantic green/red for buy/sell, and layered surfaces for cards and terminals.
 | `rounded.sm` | `AppRadii.smRadius` (8px) |
 | `rounded.pill` | `AppRadii.pillRadius` (999px) |
 | `spacing.contentPad` | `AppSpacing.contentPad` |
-| `spacing.sectionGap` | `AppSpacing.sectionGap` |
+| `spacing.sectionGap` | `AppSpacing.sectionGap` (legacy 20px design token) |
+| `spacing.pageRhythm.compact.sectionGap` | `AppSpacing.pageRhythmCompactSectionGap` (8px) |
+| `spacing.pageRhythm.compact.innerGap` | `AppSpacing.pageRhythmCompactInnerGap` (5px) |
+| `spacing.pageRhythm.standard.sectionGap` | `AppSpacing.pageRhythmStandardSectionGap` (13px) |
+| `spacing.pageRhythm.standard.innerGap` | `AppSpacing.pageRhythmStandardInnerGap` (8px) |
+| `spacing.pageRhythm.form.sectionGap` | `AppSpacing.pageRhythmFormSectionGap` (16px) |
+| `spacing.pageRhythm.relaxed.sectionGap` | `AppSpacing.pageRhythmRelaxedSectionGap` (24px) |
+| `VitPageRhythm` tier enum | `app_page_rhythm.dart` |
 | `typography.body` | `AppTextStyles.body` |
 | `typography.pageTitle` | `AppTextStyles.pageTitle` |
 
@@ -177,11 +184,53 @@ Do not introduce arbitrary font sizes outside `AppTextStyles`.
 Phone-first fluid layout with consistent horizontal padding.
 
 - **Content padding:** 20px (`AppSpacing.contentPad`).
-- **Section gap:** 20px between major blocks (`AppSpacing.sectionGap`).
+- **Section gap (legacy):** 20px design reference (`AppSpacing.sectionGap`). Runtime
+  pages use **page rhythm** tiers below — feed roots intentionally use compact 8px.
+- **Page rhythm (3 levels):**
+  1. **Section gap** — parent `VitPageContent` / `rhythm` / `customGap` between major blocks.
+  2. **Inner gap** — section title → body (`pageRhythm*InnerGap`, `VitSectionHeader.bottomGap`).
+  3. **Item gap** — rows, chips, cards within a section (`rowGap`, module tokens).
+- **Tiers:** `VitPageRhythm.compact` (feed/tab root), `.standard` (scroll), `.form`
+  (wizard/KYC/bottom sheets), `.relaxed` (hero/onboarding icon blocks only), `.flush` (charts/terminals).
+- **Ownership:** parent owns section gaps; children must not add orphan `SizedBox`
+  between top-level blocks.
 - **Scale:** Fibonacci-inspired steps x1–x7 (3, 5, 8, 13, 21, 34, 55).
 - **Controls:** CTA and input height 52px.
 - **Page content:** use `VitPageLayout` + `VitPageContent` — not raw `Scaffold` +
   manual padding.
+
+Migration checklist: `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Migration-Checklist.md`.
+**Mandatory standard + CI:** `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md`.
+Audit: `dart run tool/page_rhythm_audit.dart --check` from `flutter_app/`.
+Guardrail: `flutter test test/quality/page_rhythm_guardrail_test.dart`.
+
+**Card tiles (Tier A strip):** fixed-height horizontal tiles use
+`VitCardContentAlign.center`, `AppSpacing.cardTilePadding`, and
+`AppSpacing.cardTileInnerGap`. Canonical widgets: `VitCompactProductCard`,
+`VitMarketTickerCard`. Standard: `docs/02_FLUTTER_MIGRATION/Card-Tile-Standard.md`.
+Audit: `dart run tool/card_tile_audit.dart --check`.
+
+**Service tile badges (Tier B):** `VitServiceTile` corner badges use safe inset
+tokens (`serviceTileBadgeReserve*`) and grid aspect tokens — do not overlap the
+centered label. Standard: `docs/02_FLUTTER_MIGRATION/Service-Tile-Badge-Standard.md`.
+Guardrail: `flutter test test/quality/service_tile_badge_guardrail_test.dart`.
+
+**Task cards (Tier E):** `VitTaskCard` mission rows use intrinsic height and
+`taskCard*` spacing tokens — no legacy `buttonHero + x7 + x5` minHeight.
+Standard: `docs/02_FLUTTER_MIGRATION/Task-Card-Standard.md`.
+Guardrail: `flutter test test/quality/task_card_guardrail_test.dart`.
+
+**Accent icon boxes:** `VitAccentIconBox` module row icons use `accentIconBoxSize`
+(34px) with shared fill/border tokens — no page-local `_AccentIcon`.
+Standard: `docs/02_FLUTTER_MIGRATION/Accent-Icon-Box-Standard.md`.
+Guardrail: `flutter test test/quality/accent_icon_box_guardrail_test.dart`.
+
+**Segment pills (S1–S4):** page tabs → `VitTabBar.segment` / `VitSegmentedTabBar`;
+binary toggles → `VitSegmentedChoice`; preset rows → `VitPresetChipRow`;
+filters → `VitFilterChip`. No P0 local `_FilterButton` / `_FilterTabs`.
+Standard: `docs/02_FLUTTER_MIGRATION/Segment-Pill-Standard.md`.
+Audit: `dart run tool/segment_pill_audit.dart --check --strict-full`.
+Guardrail: `flutter test test/quality/segment_pill_guardrail_test.dart`.
 
 ## Elevation & Depth
 

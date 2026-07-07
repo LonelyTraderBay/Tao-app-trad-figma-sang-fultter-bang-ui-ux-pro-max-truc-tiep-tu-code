@@ -54,6 +54,7 @@ class _AutoCompoundSettingsPageState
                         bottom: scrollTailReserve,
                       ),
                       child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.tight,
                         children: [
@@ -232,7 +233,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -374,12 +375,12 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           if (position.autoCompound)
             _CompoundDetails(position: position)
           else
             _DisabledWarning(),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Icon(
@@ -449,7 +450,7 @@ class _CompoundDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

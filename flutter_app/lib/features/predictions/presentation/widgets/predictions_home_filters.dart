@@ -23,57 +23,6 @@ class _SearchField extends StatelessWidget {
   }
 }
 
-class _FilterTabs extends StatelessWidget {
-  const _FilterTabs({required this.active, required this.onSelected});
-
-  final PredictionFilterTab active;
-  final ValueChanged<PredictionFilterTab> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: VitTabBar(
-        variant: VitTabBarVariant.pill,
-        activeKey: active.name,
-        onChanged: (key) => onSelected(PredictionFilterTab.values.byName(key)),
-        tabs: const [
-          VitTabItem(
-            key: 'trending',
-            label: 'Xu hướng',
-            icon: Icons.trending_up_outlined,
-            widgetKey: PredictionsHomePage.trendingFilterKey,
-          ),
-          VitTabItem(
-            key: 'newEvents',
-            label: 'Mới',
-            icon: Icons.fiber_new_outlined,
-            widgetKey: PredictionsHomePage.newFilterKey,
-          ),
-          VitTabItem(
-            key: 'popular',
-            label: 'Phổ biến',
-            icon: Icons.group_outlined,
-            widgetKey: Key('sc027_filter_popular'),
-          ),
-          VitTabItem(
-            key: 'liquid',
-            label: 'Thanh khoản',
-            icon: Icons.bar_chart_outlined,
-            widgetKey: Key('sc027_filter_liquid'),
-          ),
-          VitTabItem(
-            key: 'ending',
-            label: 'Sắp đóng',
-            icon: Icons.schedule_outlined,
-            widgetKey: Key('sc027_filter_ending'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _CategoryChips extends StatelessWidget {
   const _CategoryChips({
     required this.categories,
@@ -137,7 +86,6 @@ class _CategoryChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _marketPrimary,
-      height: VitDensity.compact.controlHeight - AppSpacing.x3,
       padding: AppSpacing.predictionHomeCategoryPadding,
     );
   }

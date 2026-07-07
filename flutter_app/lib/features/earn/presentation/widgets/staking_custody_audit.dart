@@ -38,13 +38,13 @@ class StakingCustodyReconciliationSection extends StatelessWidget {
                   height: AppSpacing.stakingCustodyBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               for (final log in snapshot.reconciliationLogs) ...[
                 StakingCustodyReconciliationLogCard(log: log),
                 if (log != snapshot.reconciliationLogs.last)
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               StakingCustodyActionButton(
                 key: StakingCustodyKeys.auditTrailButton,
                 label: 'View Full Audit Trail',
@@ -90,7 +90,7 @@ class StakingCustodyTransparencySection extends StatelessWidget {
                       'Real-time On-Chain Verification',
                       style: AppTextStyles.baseMedium,
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.transparencyBody,
                       style: AppTextStyles.caption.copyWith(
@@ -98,11 +98,11 @@ class StakingCustodyTransparencySection extends StatelessWidget {
                         height: AppSpacing.stakingCustodyBodyLineHeight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                     for (final address in snapshot.transparencyAddresses) ...[
                       StakingCustodyAddressRow(address: address),
                       if (address != snapshot.transparencyAddresses.last)
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     ],
                   ],
                 ),

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -87,6 +88,7 @@ class _ExecutionQualityDemoPageState
                       key: ExecutionQualityDemoPage.contentKey,
                       padding: AppSpacing.tradeToolScrollPadding(bottomInset),
                       child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.none,
                         fullBleed: true,
                         customGap: AppSpacing.tradeToolCardGap,

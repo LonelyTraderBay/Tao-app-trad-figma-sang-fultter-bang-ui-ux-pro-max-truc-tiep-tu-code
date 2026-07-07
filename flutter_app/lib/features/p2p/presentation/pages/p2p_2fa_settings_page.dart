@@ -8,25 +8,14 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_2fa_settings_page_sections.dart';
 part '../widgets/p2p_2fa_settings_page_common.dart';
 
-const double _p2pTwoFactorVisualNavClearance =
-    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
-const double _p2pTwoFactorNativeNavClearance =
-    _p2pTwoFactorVisualNavClearance - AppSpacing.x4;
-const double _p2pTwoFactorVisualClearance = AppSpacing.x3;
-const double _p2pTwoFactorNativeClearance = AppSpacing.x2;
-const double _p2pTwoFactorSectionGap = AppSpacing.x3;
-const double _p2pTwoFactorTightGap = AppSpacing.x2;
 const double _p2pTwoFactorHeroIconBox = AppSpacing.x6;
 const double _p2pTwoFactorMethodIconBox = AppSpacing.x6;
 const double _p2pTwoFactorCaptionLineHeight = 1.34;
@@ -68,85 +57,45 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pTwoFactorSettingsProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _p2pTwoFactorVisualNavClearance + _p2pTwoFactorVisualClearance
-            : _p2pTwoFactorNativeNavClearance + _p2pTwoFactorNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
-
     final enabledMethods = _methods.where((method) => method.enabled).length;
     final primaryMethod = _methods.firstWhere(
       (method) => method.isPrimary,
       orElse: () => _methods.first,
     );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitP2PFlowScaffold(
+      title: '2FA cho P2P',
+      subtitle: 'Bảo mật · P2P',
       semanticLabel: 'SC-254 P2P2FASettingsPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: '2FA cho P2P',
-            subtitle: 'Bảo mật · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pTwoFactorScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _TwoFactorStatusCard(
-                          enabledMethods: enabledMethods,
-                          primaryMethod: primaryMethod.label,
-                        ),
-                        const SizedBox(height: _p2pTwoFactorSectionGap),
-                        _MethodSection(
-                          methods: _methods,
-                          onToggle: _toggleMethod,
-                          onSetPrimary: _setPrimaryMethod,
-                        ),
-                        const SizedBox(height: _p2pTwoFactorSectionGap),
-                        _ThresholdSection(
-                          thresholds: _thresholds,
-                          onToggle: _toggleThreshold,
-                        ),
-                        const SizedBox(height: _p2pTwoFactorSectionGap),
-                        _SecurityRecommendation(text: snapshot.recommendation),
-                        const SizedBox(height: _p2pTwoFactorTightGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pTwoFactorInnerPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Rà soát thay đổi 2FA P2P',
-                            message:
-                                'Phương thức bật, yếu tố chính, ngưỡng giao dịch, trạng thái thiết lập và bước bảo mật tiếp theo được rà soát trước khi đổi bảo vệ P2P.',
-                            contractId: 'SC-254',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(snapshot.parentRoute),
+      children: [
+        _TwoFactorStatusCard(
+          enabledMethods: enabledMethods,
+          primaryMethod: primaryMethod.label,
+        ),
+        _MethodSection(
+          methods: _methods,
+          onToggle: _toggleMethod,
+          onSetPrimary: _setPrimaryMethod,
+        ),
+        _ThresholdSection(
+          thresholds: _thresholds,
+          onToggle: _toggleThreshold,
+        ),
+        _SecurityRecommendation(text: snapshot.recommendation),
+        const VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.p2pTwoFactorInnerPadding,
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Rà soát thay đổi 2FA P2P',
+            message:
+                'Phương thức bật, yếu tố chính, ngưỡng giao dịch, trạng thái thiết lập và bước bảo mật tiếp theo được rà soát trước khi đổi bảo vệ P2P.',
+            contractId: 'SC-254',
           ),
         ),
-      ),
+      ],
     );
   }
 

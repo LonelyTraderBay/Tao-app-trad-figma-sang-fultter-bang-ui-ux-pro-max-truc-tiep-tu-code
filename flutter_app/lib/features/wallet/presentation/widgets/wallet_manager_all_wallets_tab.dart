@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_distribution_chart.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletAllWalletsTab extends StatelessWidget {
@@ -36,14 +37,14 @@ class WalletAllWalletsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'T\u1EA5t c\u1EA3 v\u00ED',
+      headerIcon: Icons.account_balance_wallet_outlined,
+      accentColor: walletManagerPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
       children: [
-        const WalletManagerSectionLabel(label: 'T\u1EA5t c\u1EA3 v\u00ED'),
-        const SizedBox(height: AppSpacing.walletManagerAllSectionGap),
         WalletManagerAddWalletButton(onPressed: onAddWallet),
-        if (actionNotice != null) ...[
-          const SizedBox(height: AppSpacing.walletManagerAllSectionGap),
+        if (actionNotice != null)
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: VitStatusPill(
@@ -54,8 +55,6 @@ class WalletAllWalletsTab extends StatelessWidget {
               size: VitStatusPillSize.sm,
             ),
           ),
-        ],
-        const SizedBox(height: AppSpacing.walletManagerAllWalletGap),
         for (var i = 0; i < snapshot.wallets.length; i++) ...[
           _WalletCard(
             wallet: snapshot.wallets[i],
@@ -69,9 +68,7 @@ class WalletAllWalletsTab extends StatelessWidget {
           if (i != snapshot.wallets.length - 1)
             const SizedBox(height: AppSpacing.walletManagerAllWalletGap),
         ],
-        const SizedBox(height: AppSpacing.walletManagerAllSecurityTopGap),
         const WalletManagerSecurityNotice(),
-        const SizedBox(height: AppSpacing.walletManagerAllDistributionGap),
         WalletManagerDistributionCard(snapshot: snapshot),
       ],
     );

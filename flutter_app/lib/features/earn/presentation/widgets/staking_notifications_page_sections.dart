@@ -26,7 +26,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -62,7 +62,7 @@ class _SettingsList extends StatelessWidget {
                 onToggle: () => onToggle(setting.id),
               ),
               if (setting != settings.last)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
           ],
         ),
@@ -110,7 +110,11 @@ class _SettingCard extends StatelessWidget {
                       ),
                     ),
                     if (setting.priority == StakingNotificationPriority.high)
-                      const _PriorityPill(),
+                      const VitStatusPill(
+                        label: 'Quan trọng',
+                        status: VitStatusPillStatus.error,
+                        size: VitStatusPillSize.sm,
+                      ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -157,7 +161,7 @@ class _ChannelsList extends StatelessWidget {
                   onToggle: () => onToggle(channel.id),
                 ),
                 if (channel != channels.last)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),
@@ -236,7 +240,7 @@ class _HistoryList extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Column(
           children: [
             for (final notification in history) ...[
@@ -246,7 +250,7 @@ class _HistoryList extends StatelessWidget {
                 onTap: () => onMarkRead(notification.id),
               ),
               if (notification != history.last)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
           ],
         ),
@@ -313,7 +317,7 @@ class _NotificationCard extends StatelessWidget {
                     height: AppSpacing.stakingNotificationsLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   notification.time,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -353,12 +357,12 @@ class _DoNotDisturbCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Chế độ Không làm phiền', style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Tắt tất cả thông báo từ 22:00-07:00 (trừ High priority)',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _ToggleSwitch(on: enabled, onTap: onToggle),
               ],
             ),

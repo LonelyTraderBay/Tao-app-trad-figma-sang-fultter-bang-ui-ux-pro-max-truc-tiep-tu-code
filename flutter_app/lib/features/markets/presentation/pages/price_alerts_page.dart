@@ -6,12 +6,14 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
@@ -22,10 +24,7 @@ part '../widgets/price_alerts_page_common.dart';
 const _marketPrimary = AppColors.primary;
 const double _alertsVisualScrollClearance = 108;
 const double _alertsNativeScrollClearance = 72;
-const double _alertsSectionGap = AppSpacing.x3;
 const double _alertsCardGap = AppSpacing.x3;
-const double _alertsAddNoticeGap = AppSpacing.x2;
-const double _alertsFilterGap = AppSpacing.x3;
 const double _alertsFilterHeight = AppSpacing.buttonCompact;
 const double _alertsStatGap = AppSpacing.x3;
 const double _alertsStatHeight = AppSpacing.ctaHeight;
@@ -50,8 +49,6 @@ const double _alertsAddIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _alertsLineHeightTight = 1.0;
 const double _alertsLineHeightShort = 1.1;
 const double _alertsLineHeightCaption = 1.2;
-const EdgeInsetsDirectional _alertsScrollPadding =
-    EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.contentPad);
 const EdgeInsetsDirectional _alertsNoticePadding =
     EdgeInsetsDirectional.symmetric(
       horizontal: AppSpacing.x4,
@@ -64,8 +61,6 @@ const EdgeInsetsDirectional _alertsFilterHeaderPadding =
       AppSpacing.contentPad,
       AppSpacing.x3,
     );
-const EdgeInsetsDirectional _alertsFilterTabPadding =
-    EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3);
 const EdgeInsetsDirectional _alertsCardPadding = EdgeInsetsDirectional.fromSTEB(
   AppSpacing.x4,
   AppSpacing.x3,
@@ -192,51 +187,86 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _FilterTabs(
-                activeFilter: _filter,
-                onFilterSelected: (value) => setState(() => _filter = value),
+              Material(
+                color: AppColors.surface,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: _alertsFilterHeaderPadding,
+                      child: VitSegmentedTabBar(
+                        activeKey: _filter.name,
+                        onChanged: (key) => setState(
+                          () => _filter = _AlertFilter.values.byName(key),
+                        ),
+                        tabs: [
+                          VitTabItem(
+                            key: 'all',
+                            label: 'T\u1EA5t c\u1EA3',
+                            widgetKey: PriceAlertsPage.allFilterKey,
+                          ),
+                          VitTabItem(
+                            key: 'active',
+                            label: '\u0110ang ho\u1EA1t \u0111\u1ED9ng',
+                            widgetKey: PriceAlertsPage.activeFilterKey,
+                          ),
+                          VitTabItem(
+                            key: 'triggered',
+                            label: '\u0110\u00E3 k\u00EDch ho\u1EA1t',
+                            widgetKey: PriceAlertsPage.triggeredFilterKey,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      height: AppSpacing.hairlineStroke,
+                      thickness: AppSpacing.hairlineStroke,
+                      color: AppColors.divider,
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
                     context,
                   ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
+                  child: VitInsetScrollView(
                     key: PriceAlertsPage.contentKey,
-                    padding: _alertsScrollPadding.copyWith(
-                      top: AppSpacing.x3,
-                      bottom: scrollEndClearance,
-                    ),
-                    child: Column(
+                    bottomInset: scrollEndClearance,
+                    child: VitPageContent(
+                      rhythm: VitPageRhythm.compact,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _StatsSummary(
                           total: _alerts.length,
                           active: activeCount,
                           triggered: triggeredCount,
                         ),
-                        const SizedBox(height: _alertsSectionGap),
                         if (_filteredAlerts.isEmpty)
                           const _EmptyAlertsCard()
                         else
-                          for (final alert in _filteredAlerts) ...[
-                            _AlertCard(
-                              alert: alert,
-                              pair: _findPair(
-                                snapshot.marketPairs,
-                                alert.pairId,
-                              ),
-                              onToggle: () => _toggleAlert(alert.id),
-                              onDelete: () => _deleteAlert(alert.id),
-                            ),
-                            if (alert != _filteredAlerts.last)
-                              const SizedBox(height: _alertsCardGap),
-                          ],
-                        const SizedBox(height: _alertsSectionGap),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              for (final alert in _filteredAlerts) ...[
+                                _AlertCard(
+                                  alert: alert,
+                                  pair: _findPair(
+                                    snapshot.marketPairs,
+                                    alert.pairId,
+                                  ),
+                                  onToggle: () => _toggleAlert(alert.id),
+                                  onDelete: () => _deleteAlert(alert.id),
+                                ),
+                                if (alert != _filteredAlerts.last)
+                                  const SizedBox(height: _alertsCardGap),
+                              ],
+                            ],
+                          ),
                         _AddAlertButton(onTap: _showAddPlaceholder),
-                        if (_showAddNotice) ...[
-                          const SizedBox(height: _alertsAddNoticeGap),
-                          const _AddAlertNotice(),
-                        ],
+                        if (_showAddNotice) const _AddAlertNotice(),
                       ],
                     ),
                   ),

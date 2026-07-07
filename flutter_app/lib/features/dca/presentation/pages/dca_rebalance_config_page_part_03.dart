@@ -68,7 +68,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _AccentIcon(icon: icon, color: AppColors.accent),
+        VitAccentIconBox(icon: icon, color: AppColors.accent),
         const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Text(
@@ -80,93 +80,6 @@ class _SectionHeader extends StatelessWidget {
         ),
         ?trailing,
       ],
-    );
-  }
-}
-
-class _AccentIcon extends StatelessWidget {
-  const _AccentIcon({
-    required this.icon,
-    this.color = AppModuleAccents.trade,
-    this.muted = false,
-  });
-
-  final IconData icon;
-  final Color color;
-  final bool muted;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.iconLg,
-      height: AppSpacing.iconLg,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: muted ? AppColors.surface2 : color.withValues(alpha: .15),
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-          ),
-        ),
-        child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
-      ),
-    );
-  }
-}
-
-class _PillButton extends StatelessWidget {
-  const _PillButton({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    this.enabled = true,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  final bool enabled;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: enabled ? onTap : null,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 150),
-        opacity: enabled ? 1 : .45,
-        child: DecoratedBox(
-          decoration: const ShapeDecoration(
-            color: AppColors.accent10,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          ),
-          child: Padding(
-            padding: AppSpacing.dcaPrimaryChipPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: AppColors.accent,
-                  size: AppSpacing.dcaRebalanceIconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.accent,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -265,6 +178,7 @@ class _IconBadgeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
@@ -280,56 +194,6 @@ class _IconBadgeButton extends StatelessWidget {
           shape: const CircleBorder(),
         ),
         child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
-      ),
-    );
-  }
-}
-
-class _TogglePill extends StatelessWidget {
-  const _TogglePill({required this.value, required this.onChanged});
-
-  final bool value;
-  final ValueChanged<bool> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      checked: value,
-      child: VitCard(
-        onTap: () => onChanged(!value),
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        width: AppSpacing.dcaRebalanceToggleWidth,
-        height: _dcaRebalanceToggleHeight,
-        borderColor: AppColors.transparent,
-        clip: true,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: value ? AppColors.buy : AppColors.borderSolid,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.xlRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.dcaPaddingX1,
-            child: AnimatedAlign(
-              duration: const Duration(milliseconds: 160),
-              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-              child: const SizedBox(
-                width: AppSpacing.dcaRebalanceToggleThumb,
-                height: _dcaRebalanceToggleThumb,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: AppColors.text1,
-                    shape: CircleBorder(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

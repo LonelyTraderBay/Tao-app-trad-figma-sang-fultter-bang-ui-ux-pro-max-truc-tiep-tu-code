@@ -69,13 +69,13 @@ class _ResultView extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 '${profile.label} Investor',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.sectionTitle.copyWith(color: color),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 profile.description,
                 textAlign: TextAlign.center,

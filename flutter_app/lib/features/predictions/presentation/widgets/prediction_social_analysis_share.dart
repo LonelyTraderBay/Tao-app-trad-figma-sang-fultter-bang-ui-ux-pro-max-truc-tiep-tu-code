@@ -16,7 +16,7 @@ class _SentimentCard extends StatelessWidget {
             'Community Sentiment',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: AppSpacing.x7 * 4,
             child: CustomPaint(
@@ -24,7 +24,7 @@ class _SentimentCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               for (final item in snapshot.sentiment)
@@ -114,7 +114,7 @@ class _CopyLinkCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -332,7 +332,7 @@ class _SentimentTrendCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Bullish sentiment tang 12% trong 24h qua. Cho thay su lac quan tang len.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),

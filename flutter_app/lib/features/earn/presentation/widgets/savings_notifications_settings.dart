@@ -24,7 +24,7 @@ class _SettingsTab extends StatelessWidget {
           subtitle:
               '${snapshot.settingsSubtitle} Đang bật $enabledCount/${settings.length} loại thông báo.',
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final priority in SavingsNotificationPriority.values) ...[
           _PrioritySection(
             priority: priority,
@@ -34,9 +34,9 @@ class _SettingsTab extends StatelessWidget {
             onToggle: onToggle,
           ),
           if (priority != SavingsNotificationPriority.values.last)
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _Disclaimer(text: snapshot.disclaimer),
       ],
     );
@@ -78,7 +78,7 @@ class _SettingsSummary extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, style: AppTextStyles.baseMedium),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     subtitle,
                     style: AppTextStyles.caption.copyWith(
@@ -125,7 +125,7 @@ class _PrioritySection extends StatelessWidget {
                 onToggle: () => onToggle(setting.id),
               ),
               if (setting != settings.last)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             ],
           ],
         ),

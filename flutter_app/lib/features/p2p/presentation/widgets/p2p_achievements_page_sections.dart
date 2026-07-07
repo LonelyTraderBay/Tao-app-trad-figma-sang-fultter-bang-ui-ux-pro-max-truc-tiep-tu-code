@@ -50,7 +50,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ProgressLine(
             label: 'Tiến trình tổng',
             value: '$progressPct%',
@@ -58,7 +58,7 @@ class _SummaryCard extends StatelessWidget {
             color: AppModuleAccents.p2p,
             minHeight: AppSpacing.p2pTrustProgressSummaryProgressHeight,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -170,11 +170,11 @@ class _AchievementCategory extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (var index = 0; index < achievements.length; index++) ...[
           _AchievementCard(achievement: achievements[index]),
           if (index != achievements.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -244,7 +244,7 @@ class _AchievementCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 if (!achievement.unlocked) ...[
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _ProgressLine(
                     label: achievement.currentValueLabel,
                     value: achievement.progressLabel,
@@ -253,15 +253,16 @@ class _AchievementCard extends StatelessWidget {
                     minHeight: AppSpacing.p2pTrustProgressCardProgressHeight,
                   ),
                 ],
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: _RewardPill(
-                    reward: achievement.reward,
-                    color: achievement.unlocked
-                        ? AppColors.buy
-                        : AppColors.text3,
-                    unlocked: achievement.unlocked,
+                  child: VitStatusPill(
+                    label: achievement.reward,
+                    status: achievement.unlocked
+                        ? VitStatusPillStatus.success
+                        : VitStatusPillStatus.neutral,
+                    icon: Icons.star_border_rounded,
+                    size: VitStatusPillSize.sm,
                   ),
                 ),
               ],

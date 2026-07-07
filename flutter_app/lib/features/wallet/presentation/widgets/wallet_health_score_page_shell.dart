@@ -32,6 +32,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
                   bottomInset: scrollEndPadding,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
@@ -53,7 +54,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
                         activeTab: _tab,
                         onChanged: (tab) => setState(() => _tab = tab),
                       ),
-                      _buildTab(
+                      ..._tabSectionChildren(
                         snapshot,
                         primaryRecommendationId: primaryRecommendation?.id,
                       ),
@@ -68,19 +69,21 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
     );
   }
 
-  Widget _buildTab(
+  List<Widget> _tabSectionChildren(
     WalletHealthScoreSnapshot snapshot, {
     String? primaryRecommendationId,
   }) {
-    if (_tab == _tabSecurity) return _SecurityTab(snapshot: snapshot);
+    if (_tab == _tabSecurity) {
+      return _SecurityTab(snapshot: snapshot).sectionChildren;
+    }
     if (_tab == _tabDiversification) {
-      return _DiversificationTab(snapshot: snapshot);
+      return _DiversificationTab(snapshot: snapshot).sectionChildren;
     }
     return _OverviewTab(
       snapshot: snapshot,
       primaryRecommendationId: primaryRecommendationId,
       onRecommendationTap: _showRecommendationSheet,
-    );
+    ).sectionChildren;
   }
 
   void _showRecommendationSheet(WalletHealthRecommendation recommendation) {

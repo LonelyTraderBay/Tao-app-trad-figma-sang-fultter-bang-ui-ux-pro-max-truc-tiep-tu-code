@@ -22,12 +22,12 @@ class _ChartTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Chỉ tính các tháng có dự án launch. Tháng không có dự án hiện 0%.',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _PointBars(
                 points: points,
                 valueFor: (point) => point.avgRoi.toDouble(),
@@ -36,7 +36,7 @@ class _ChartTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.standard,
           padding: _launchpadPerformanceCardPadding,
@@ -49,12 +49,12 @@ class _ChartTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Tổng số USDT huy động qua tất cả dự án trong tháng.',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _PointBars(
                 points: points,
                 valueFor: (point) => point.volume / 1000,
@@ -102,7 +102,7 @@ class _PointBars extends StatelessWidget {
                       height: _launchpadPerformanceLineHeightTight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Flexible(
                     child: FractionallySizedBox(
                       heightFactor: (valueFor(point) / max).clamp(.08, 1.0),
@@ -118,7 +118,7 @@ class _PointBars extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
                     point.month,
                     style: AppTextStyles.micro.copyWith(

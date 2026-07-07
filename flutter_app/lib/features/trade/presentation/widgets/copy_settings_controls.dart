@@ -33,7 +33,7 @@ class _CircuitBreakerCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Tự động dừng TẤT CẢ copy khi tổng portfolio lỗ quá X%',
             maxLines: 1,
@@ -41,7 +41,7 @@ class _CircuitBreakerCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           if (enabled) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
                 Text(
@@ -59,7 +59,7 @@ class _CircuitBreakerCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _CompactSlider(
               value: threshold,
               min: 10,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -39,7 +40,7 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
             preview.auditTrailNote,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.walletAddressAddSheetSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           AddressPreviewPanel(
             rows: [
               ('Tên', preview.label),
@@ -79,10 +80,10 @@ class AddressPreviewPanel extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Xem trước',
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             icon: Icons.receipt_long_outlined,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < rows.length; i++)
             VitInfoRow(
               label: rows[i].$1,
@@ -127,6 +128,7 @@ class AddressSavedState extends StatelessWidget {
             ),
             Expanded(
               child: VitPageContent(
+                rhythm: VitPageRhythm.form,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 gap: VitContentGap.tight,

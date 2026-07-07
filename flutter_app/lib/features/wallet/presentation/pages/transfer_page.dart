@@ -80,7 +80,6 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       semanticLabel: 'SC-146 TransferPage',
       contentKey: TransferPage.contentKey,
       bottomInset: bottomInset,
-      contentGap: VitContentGap.tight,
       onBack: () => context.go(AppRoutePaths.wallet),
       children: [
         if (_showSuccess) const TransferSuccessBanner(),
@@ -142,13 +141,15 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                 )
               : null,
         ),
-        const VitSectionHeader(
-          title: 'L\u1ecbch s\u1eed g\u1ea7n \u0111\u00e2y',
-          icon: Icons.history_rounded,
-          iconColor: _transferPrimary,
+        VitPageSection(
+          label: 'L\u1ecbch s\u1eed g\u1ea7n \u0111\u00e2y',
+          headerIcon: Icons.history_rounded,
+          headerIconColor: _transferPrimary,
+          headerVariant: VitSectionHeaderVariant.plain,
           accentColor: _transferPrimary,
+          innerGap: AppSpacing.pageRhythmFormInnerGap,
+          children: [RecentTransfersList(transfers: snapshot.recentTransfers)],
         ),
-        RecentTransfersList(transfers: snapshot.recentTransfers),
       ],
     );
   }

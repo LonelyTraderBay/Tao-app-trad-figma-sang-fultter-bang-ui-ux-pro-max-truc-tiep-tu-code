@@ -33,7 +33,7 @@ class _ExportHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -71,7 +71,7 @@ class _ExportHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
               Expanded(
@@ -176,32 +176,6 @@ class _ExportTabs extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: AppSpacing.earnExportTitleMarkerWidth,
-          height: AppSpacing.earnExportTitleMarkerHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: AppModuleAccents.earn,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Text(label, style: _captionBold.copyWith(color: AppColors.text2)),
-      ],
-    );
-  }
-}
-
 class _ReportTypeList extends StatelessWidget {
   const _ReportTypeList({
     required this.reports,
@@ -224,7 +198,7 @@ class _ReportTypeList extends StatelessWidget {
             selected: report.id == selected,
             onTap: () => onChanged(report.id),
           ),
-          if (report != reports.last) const SizedBox(height: AppSpacing.x3),
+          if (report != reports.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -278,7 +252,7 @@ class _ReportTypeCard extends StatelessWidget {
                     height: AppSpacing.earnExportDescriptionLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   report.rowsLabel,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

@@ -55,7 +55,7 @@ class _AssetEarningsGrid extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   '+${_formatUsd(product.earnedUsd)}',
                   style: AppTextStyles.baseMedium.copyWith(
@@ -109,7 +109,7 @@ class _ApyTab extends StatelessWidget {
                               size: Size.infinite,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                           _DateLabels(
                             dates: snapshot.apyTrends
                                 .map((p) => p.date)
@@ -121,7 +121,7 @@ class _ApyTab extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               const _LegendRow(
                 entries: [
                   _LegendEntry(label: 'Linh hoạt', color: AppColors.buy),
@@ -129,7 +129,7 @@ class _ApyTab extends StatelessWidget {
                   _LegendEntry(label: 'DeFi', color: AppColors.warn),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               const _InsightBox(
                 text:
                     'APY DeFi biến động cao do thanh khoản pool thay đổi. APY Fixed và Flexible ổn định hơn trong cùng kỳ.',
@@ -166,14 +166,14 @@ class _RoiTab extends StatelessWidget {
                   size: Size.infinite,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               const _LegendRow(
                 entries: [
                   _LegendEntry(label: 'Staking', color: AppColors.buy),
                   _LegendEntry(label: 'Holding', color: AppColors.sell),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               const _InsightBox(
                 text:
                     'Staking cho ROI cao hơn holding sau 6 tháng nhờ phần thưởng hằng ngày, nhưng lợi nhuận vẫn phụ thuộc biến động tài sản.',
@@ -209,7 +209,7 @@ class _ProductsTab extends StatelessWidget {
               for (final product in snapshot.productPerformance) ...[
                 _ProductPerformanceCard(product: product, maxRoi: best),
                 if (product != snapshot.productPerformance.last)
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),
@@ -279,7 +279,7 @@ class _ProductPerformanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -298,7 +298,7 @@ class _ProductPerformanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(

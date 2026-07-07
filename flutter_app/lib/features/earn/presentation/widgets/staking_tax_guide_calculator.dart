@@ -87,7 +87,7 @@ class StakingTaxCalculatorTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitInput(
                 controller: rewardsController,
                 fieldKey: const Key('sc356_tax_rewards_input'),
@@ -99,7 +99,7 @@ class StakingTaxCalculatorTab extends StatelessWidget {
                 prefix: const Icon(Icons.savings_rounded),
                 onChanged: (_) => onChanged(),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitInput(
                 controller: rateController,
                 fieldKey: const Key('sc356_tax_rate_input'),
@@ -111,13 +111,13 @@ class StakingTaxCalculatorTab extends StatelessWidget {
                 prefix: const Icon(Icons.percent_rounded),
                 onChanged: (_) => onChanged(),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 snapshot.calculatorHint,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               if (hasResult) ...[
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 _TaxResultCard(
                   rewards: rewards,
                   rate: rate,
@@ -128,14 +128,14 @@ class StakingTaxCalculatorTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         StakingTaxWarningNote(text: snapshot.calculatorDisclaimer),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: snapshot.faqTitle,
           children: [for (final faq in snapshot.faqs) _FaqCard(faq: faq)],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         StakingTaxFooterCard(text: snapshot.footer),
       ],
     );
@@ -173,12 +173,12 @@ class _TaxResultCard extends StatelessWidget {
                 'Kết quả:',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               _ResultRow(
                 label: 'Tổng phần thưởng',
                 value: stakingTaxMoney(rewards),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               _ResultRow(
                 label:
                     'Thuế phải nộp (${rate.toStringAsFixed(rate.truncateToDouble() == rate ? 0 : 1)}%)',
@@ -263,10 +263,10 @@ class _FaqCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             faq.answer,
-            style: AppTextStyles.captionSm.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               height: AppSpacing.stakingTaxFooterLineHeight,
             ),

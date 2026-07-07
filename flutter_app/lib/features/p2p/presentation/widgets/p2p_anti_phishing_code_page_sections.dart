@@ -98,7 +98,7 @@ class _ExplainerCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             snapshot.explainerBody,
             maxLines: 2,
@@ -108,11 +108,11 @@ class _ExplainerCard extends StatelessWidget {
               height: 1.35,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final benefit in snapshot.benefits) ...[
             _CheckRow(text: benefit),
             if (benefit != snapshot.benefits.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -134,7 +134,7 @@ class _EmailExamples extends StatelessWidget {
         for (var index = 0; index < examples.length; index++) ...[
           _EmailExampleCard(example: examples[index]),
           if (index != examples.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -194,7 +194,7 @@ class _EmailExampleCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     VitCard(
                       radius: VitCardRadius.standard,
                       variant: VitCardVariant.inner,
@@ -216,7 +216,7 @@ class _EmailExampleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Align(
             alignment: Alignment.centerLeft,
             child: VitStatusPill(
@@ -271,7 +271,7 @@ class _WarningCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final warning in snapshot.warnings) ...[
                     _BulletRow(text: warning),
                     if (warning != snapshot.warnings.last)
@@ -283,20 +283,6 @@ class _WarningCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: AppTextStyles.baseMedium.copyWith(fontWeight: AppTextStyles.bold),
     );
   }
 }

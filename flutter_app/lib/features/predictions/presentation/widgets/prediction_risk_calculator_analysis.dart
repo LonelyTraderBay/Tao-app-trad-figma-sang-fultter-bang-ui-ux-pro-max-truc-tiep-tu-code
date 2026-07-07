@@ -116,7 +116,7 @@ class _KellyRecommendation extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.end,
             spacing: AppSpacing.x2,

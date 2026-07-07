@@ -47,7 +47,7 @@ class _V2ScreensSection extends StatelessWidget {
           if (page != snapshot.v2Pages.last)
             const SizedBox(height: AppSpacing.x4),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         Text(
           'Prototype Connections (On Tap → Navigate)',
           style: AppTextStyles.baseMedium.copyWith(
@@ -277,7 +277,7 @@ class _FlowRow extends StatelessWidget {
                   children: [
                     Text(
                       flow.from,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.medium,
                       ),
@@ -289,7 +289,7 @@ class _FlowRow extends StatelessWidget {
                     ),
                     Text(
                       flow.to,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: accent,
                         fontWeight: AppTextStyles.medium,
                       ),

@@ -218,10 +218,13 @@ class _UnderlineTab extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.symmetric(
-                vertical: AppSpacing.x3,
+                vertical: AppSpacing.x2,
               ),
               child: Text(
                 tab.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
                 style: _vitTabBarLabelStyle(active: active),
               ),
             ),

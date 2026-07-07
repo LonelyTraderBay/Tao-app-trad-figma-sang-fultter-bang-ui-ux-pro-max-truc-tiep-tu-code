@@ -7,6 +7,7 @@ class _IntroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.copyEducationIntroMinHeight,
@@ -30,7 +31,7 @@ class _IntroBanner extends StatelessWidget {
                   snapshot.introTitle,
                   style: AppTextStyles.baseMedium.copyWith(color: _copyPrimary),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   snapshot.introDescription,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -91,9 +92,9 @@ class _HowItWorksContent extends StatelessWidget {
     return Column(
       children: [
         _StepsCard(steps: snapshot.steps),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _CopyModesCard(modes: snapshot.copyModes),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _ConceptsCard(concepts: snapshot.concepts),
       ],
     );
@@ -116,10 +117,10 @@ class _StepsCard extends StatelessWidget {
             'Copy Trading hoạt động như thế nào?',
             style: AppTextStyles.baseMedium,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final step in steps) ...[
             _StepRow(step: step),
-            if (step != steps.last) const SizedBox(height: AppSpacing.x3),
+            if (step != steps.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -201,10 +202,10 @@ class _CopyModesCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Các chế độ sao chép', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final mode in modes) ...[
             _CopyModeTile(mode: mode),
-            if (mode != modes.last) const SizedBox(height: AppSpacing.x4),
+            if (mode != modes.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
       ),
@@ -220,6 +221,7 @@ class _CopyModeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(mode.colorHex);
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
@@ -248,14 +250,14 @@ class _CopyModeTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             mode.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -295,10 +297,10 @@ class _ConceptsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Khái niệm quan trọng', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final concept in concepts) ...[
             _ConceptRow(concept: concept),
-            if (concept != concepts.last) const SizedBox(height: AppSpacing.x3),
+            if (concept != concepts.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

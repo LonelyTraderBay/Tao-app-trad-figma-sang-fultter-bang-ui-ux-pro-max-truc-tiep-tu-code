@@ -67,7 +67,7 @@ class _SuggestionCard extends StatelessWidget {
                             children: [
                               Text(
                                 suggestion.asset.symbol,
-                                style: AppTextStyles.captionSm.copyWith(
+                                style: AppTextStyles.caption.copyWith(
                                   color: AppColors.text1,
                                   fontWeight: AppTextStyles.bold,
                                 ),
@@ -96,7 +96,7 @@ class _SuggestionCard extends StatelessWidget {
                         children: [
                           Text(
                             '\$${suggestion.suggestedValue.toStringAsFixed(0)}',
-                            style: AppTextStyles.captionSm.copyWith(
+                            style: AppTextStyles.caption.copyWith(
                               color: color,
                               fontWeight: AppTextStyles.bold,
                             ),

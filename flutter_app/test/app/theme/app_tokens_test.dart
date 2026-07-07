@@ -23,7 +23,10 @@ void main() {
       expect(AppColors.primarySoft, const Color(0xFFF5A524));
       expect(AppColors.buy, const Color(0xFF10B981));
       expect(AppColors.sell, const Color(0xFFEF4444));
+      // ignore: deprecated_member_use_from_same_package
       expect(AppColors.warn, const Color(0xFFF5A524));
+      expect(AppColors.riskWarning, const Color(0xFFF0A63A));
+      expect(AppColors.moduleAccentAmber, const Color(0xFFF5A524));
       expect(AppColors.accent, const Color(0xFF8B5CF6));
       expect(AppColors.text1, const Color(0xFFF5F7FA));
       expect(AppColors.text2, const Color(0xFFA7AFBF));
@@ -35,7 +38,9 @@ void main() {
       expect(AppColors.primary12, const Color(0x1FE58A00));
       expect(AppColors.buy15, const Color(0x2610B981));
       expect(AppColors.sell15, const Color(0x26EF4444));
+      // ignore: deprecated_member_use_from_same_package
       expect(AppColors.warn08, const Color(0x14F5A524));
+      expect(AppColors.riskWarning08, const Color(0x14F0A63A));
     });
 
     test('exposes a canonical module accent registry', () {
@@ -52,6 +57,8 @@ void main() {
       expect(AppModuleAccents.forKey('open-arena'), AppModuleAccents.arena);
       expect(AppModuleAccents.forKey('missing'), AppModuleAccents.neutral);
       expect(AppModuleAccents.keys, containsAll(['wallet', 'p2p', 'support']));
+      expect(AppModuleAccents.arena, AppColors.moduleAccentAmber);
+      expect(AppModuleAccents.p2p, AppColors.moduleAccentAmber);
     });
 
     test('exposes canonical asset color lookup', () {

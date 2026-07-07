@@ -16,7 +16,7 @@ class _DistributionCard extends StatelessWidget {
             icon: Icons.pie_chart_outline_rounded,
             title: 'Phân bổ sự kiện',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: AppSpacing.adminAnalyticsChartHeight,
             child: events.isEmpty
@@ -33,7 +33,7 @@ class _DistributionCard extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: events.length,
                       separatorBuilder: (context, index) =>
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       itemBuilder: (context, index) {
                         final event = events[index];
                         return Text(
@@ -70,14 +70,14 @@ class _RecentEventsCard extends StatelessWidget {
             icon: Icons.offline_bolt_rounded,
             title: 'Sự kiện gần đây',
           ),
-          const SizedBox(height: AppSpacing.x6),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           if (events.isEmpty)
             const AdminInlineEmptyState(
               icon: Icons.monitor_heart_outlined,
               title: 'No recent events',
               message: 'The event stream is quiet for the selected period.',
             ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ),
     );

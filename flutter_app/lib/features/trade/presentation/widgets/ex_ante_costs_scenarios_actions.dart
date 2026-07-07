@@ -279,7 +279,6 @@ class _PeriodButton extends StatelessWidget {
       onTap: onPressed,
       accentColor: _costPrimary,
       fullWidth: true,
-      height: _costButtonExtent,
     );
   }
 }

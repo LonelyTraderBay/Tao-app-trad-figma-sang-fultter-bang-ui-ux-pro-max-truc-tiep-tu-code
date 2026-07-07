@@ -56,7 +56,7 @@ class _PredictionsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: () =>
                 context.go(AppRoutePaths.marketsPredictionsBreaking),

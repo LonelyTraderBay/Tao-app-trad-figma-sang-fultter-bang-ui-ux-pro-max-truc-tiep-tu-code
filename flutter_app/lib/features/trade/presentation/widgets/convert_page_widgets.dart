@@ -30,6 +30,7 @@ class ConvertHistoryRow extends StatelessWidget {
             ),
             child: Row(
               children: [
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
                 const VitCard(
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
@@ -59,7 +60,7 @@ class ConvertHistoryRow extends StatelessWidget {
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                       Row(
                         children: [
                           const Icon(

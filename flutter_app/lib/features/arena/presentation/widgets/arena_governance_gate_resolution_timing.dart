@@ -107,7 +107,7 @@ class _TimingRulesCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FieldBlock(
             label: 'Thời hạn kết thúc',
             child: TextFormField(
@@ -144,7 +144,7 @@ class _TimingRulesCard extends StatelessWidget {
             placeholder: 'Chọn result deadline...',
             onTap: onResultDeadline,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _SwitchRow(
             label: 'Cho phép rematch',
             description: 'Người chơi có thể yêu cầu chơi lại',

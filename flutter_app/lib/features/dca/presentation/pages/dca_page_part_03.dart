@@ -163,7 +163,7 @@ class _HistoryPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: VitDensity.compact.controlHeight * 2.6,
             child: CustomPaint(
@@ -176,7 +176,7 @@ class _HistoryPanel extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -253,7 +253,7 @@ class _CreatePlanSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const VitSheetHandle(),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Row(
                       children: [
                         SizedBox.square(
@@ -295,7 +295,7 @@ class _CreatePlanSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     VitCtaButton(
                       onPressed: onClose,
                       leading: const Icon(Icons.check_rounded),

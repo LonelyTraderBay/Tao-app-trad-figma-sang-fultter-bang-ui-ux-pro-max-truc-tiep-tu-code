@@ -52,7 +52,7 @@ class _VotingPower extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
@@ -100,7 +100,7 @@ class _ActionButtons extends StatelessWidget {
           onPressed: onProposals,
           child: const Text('View Active Proposals'),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCtaButton(
           key: StakingCommunityGovernancePage.joinForumKey,
           onPressed: onForum,

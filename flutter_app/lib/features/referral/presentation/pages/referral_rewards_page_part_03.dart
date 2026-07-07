@@ -119,13 +119,13 @@ class _DisputeHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             dispute.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (dispute.resolution != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               dispute.resolution!,
               style: AppTextStyles.caption.copyWith(color: AppColors.text1),

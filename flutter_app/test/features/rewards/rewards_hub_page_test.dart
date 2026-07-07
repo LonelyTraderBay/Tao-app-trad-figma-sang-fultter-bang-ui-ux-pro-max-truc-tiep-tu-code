@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_leaderboard_page.dart';
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
@@ -74,6 +75,31 @@ void main() {
     expect(find.text('Arena Points'), findsOneWidget);
     expect(find.textContaining('Check-in'), findsOneWidget);
     expect(find.byKey(RewardsHubPage.claimAllKey), findsOneWidget);
+  });
+
+  testWidgets('SC-319 claimed task card looks visually compact (no dead bottom gap)', (
+    tester,
+  ) async {
+    await pumpRewards(tester);
+
+    final taskFinder = find.byKey(RewardsHubPage.taskKey('task-first'));
+    await tester.drag(
+      find.byKey(RewardsHubPage.contentKey),
+      const Offset(0, -900),
+    );
+    await tester.pumpAndSettle();
+
+    const legacyMinHeight =
+        AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5;
+    final taskHeight = tester.getSize(taskFinder).height;
+
+    expect(
+      taskHeight,
+      lessThan(legacyMinHeight - 20),
+      reason: 'Claimed task card should not show a large empty bottom band',
+    );
+    expect(find.text('Giao dịch đầu tiên'), findsOneWidget);
+    expect(find.text('Đã nhận'), findsWidgets);
   });
 
   testWidgets('SC-319 first viewport reaches reward claim action', (

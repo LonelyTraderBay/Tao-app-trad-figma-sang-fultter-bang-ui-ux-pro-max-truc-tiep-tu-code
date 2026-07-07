@@ -5,15 +5,15 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/network_status_cards_stats.dart';
@@ -87,6 +87,18 @@ _NetworkStatusFilter _networkFilterFromKey(String key) {
   );
 }
 
+String _networkStatusFilterTabLabel(
+  _NetworkStatusFilter filter,
+  WalletNetworkStatusSnapshot snapshot,
+) {
+  return switch (filter) {
+    _NetworkStatusFilter.all => '${filter.label} ${snapshot.networks.length}',
+    _NetworkStatusFilter.issues =>
+      '${filter.label} ${snapshot.issueCount + snapshot.downCount}',
+    _NetworkStatusFilter.maintenance => '${filter.label} ${snapshot.downCount}',
+  };
+}
+
 class NetworkStatusPage extends ConsumerStatefulWidget {
   const NetworkStatusPage({super.key, this.shellRenderMode});
 
@@ -115,75 +127,75 @@ class _NetworkStatusPageState extends ConsumerState<NetworkStatusPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _networkScrollBottomInset(context, mode);
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitAutoHidePageScaffold(
       semanticLabel: 'SC-155 NetworkStatusPage',
-      child: Material(
-        color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Tr\u1EA1ng th\u00E1i m\u1EA1ng',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.wallet),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: NetworkStatusPage.contentKey,
-                  bottomInset: bottomInset,
-                  physics: const ClampingScrollPhysics(),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Xem lại trạng thái mạng',
-                        message:
-                            'Kiểm tra phí, độ trễ, tắc nghẽn và trạng thái xác nhận trước khi nạp hoặc rút.',
-                        density: VitDensity.compact,
-                      ),
-                      _SummaryCard(
-                        snapshot: snapshot,
-                        refreshFeedback: _refreshFeedback,
-                        onRefresh: _refreshNetworkStatus,
-                      ),
-                      _NetworkFilterTabs(
-                        active: _filter,
-                        snapshot: snapshot,
-                        onChanged: (filter) => setState(() {
-                          _filter = filter;
-                        }),
-                      ),
-                      VitSectionHeader(
-                        title: _filter == _NetworkStatusFilter.all
-                            ? 'M\u1EA1ng theo m\u1EE9c \u01B0u ti\u00EAn'
-                            : '${_filter.label} (${networks.length})',
-                        icon: Icons.route_rounded,
-                        density: VitDensity.compact,
-                      ),
-                      if (networks.isEmpty)
-                        const VitEmptyState(
-                          title:
-                              'Kh\u00F4ng c\u00F3 m\u1EA1ng ph\u00F9 h\u1EE3p',
-                          message:
-                              'Th\u1EED b\u1ED9 l\u1ECDc kh\u00E1c ho\u1EB7c l\u00E0m m\u1EDBi tr\u1EA1ng th\u00E1i m\u1EA1ng.',
-                          icon: Icons.wifi_find_rounded,
-                        )
-                      else
-                        for (final network in networks)
-                          _NetworkCard(network: network),
-                      const _LegendCard(),
-                      const _DisclaimerCard(),
-                    ],
+      header: VitHeader(
+        title: 'Tr\u1EA1ng th\u00E1i m\u1EA1ng',
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.wallet),
+      ),
+      body: VitInsetScrollView(
+        key: NetworkStatusPage.contentKey,
+        bottomInset: bottomInset,
+        physics: const ClampingScrollPhysics(),
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.compact,
+          density: VitDensity.compact,
+          gap: VitContentGap.tight,
+          children: [
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Xem lại trạng thái mạng',
+              message:
+                  'Kiểm tra phí, độ trễ, tắc nghẽn và trạng thái xác nhận trước khi nạp hoặc rút.',
+              density: VitDensity.compact,
+            ),
+            _SummaryCard(
+              snapshot: snapshot,
+              refreshFeedback: _refreshFeedback,
+              onRefresh: _refreshNetworkStatus,
+            ),
+            VitTabBar(
+              variant: VitTabBarVariant.segment,
+              activeKey: _filter.key,
+              onChanged: (key) => setState(() {
+                _filter = _networkFilterFromKey(key);
+              }),
+              tabs: [
+                for (final filter in _NetworkStatusFilter.values)
+                  VitTabItem(
+                    key: filter.key,
+                    label: _networkStatusFilterTabLabel(filter, snapshot),
+                    icon: filter.icon,
+                    widgetKey: NetworkStatusPage.filterKey(filter.key),
                   ),
-                ),
-              ),
-            ],
-          ),
+              ],
+            ),
+            VitPageSection(
+              label: _filter == _NetworkStatusFilter.all
+                  ? 'M\u1EA1ng theo m\u1EE9c \u01B0u ti\u00EAn'
+                  : '${_filter.label} (${networks.length})',
+              headerIcon: Icons.route_rounded,
+              headerVariant: VitSectionHeaderVariant.plain,
+              headerDensity: VitDensity.compact,
+              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+              children: [
+                if (networks.isEmpty)
+                  const VitEmptyState(
+                    title: 'Kh\u00F4ng c\u00F3 m\u1EA1ng ph\u00F9 h\u1EE3p',
+                    message:
+                        'Th\u1EED b\u1ED9 l\u1ECDc kh\u00E1c ho\u1EB7c l\u00E0m m\u1EDBi tr\u1EA1ng th\u00E1i m\u1EA1ng.',
+                    icon: Icons.wifi_find_rounded,
+                  )
+                else
+                  for (final network in networks)
+                    _NetworkCard(network: network),
+              ],
+            ),
+            const _LegendCard(),
+            const _DisclaimerCard(),
+          ],
         ),
       ),
     );

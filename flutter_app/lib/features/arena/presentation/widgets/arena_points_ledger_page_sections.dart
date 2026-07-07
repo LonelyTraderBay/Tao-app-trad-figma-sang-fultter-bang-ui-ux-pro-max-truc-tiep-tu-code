@@ -48,7 +48,7 @@ class _BalanceSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Text(
@@ -107,8 +107,8 @@ class _LedgerHeroKpi extends StatelessWidget {
   }
 }
 
-class _FilterRail extends StatelessWidget {
-  const _FilterRail({
+class _LedgerFilterRow extends StatelessWidget {
+  const _LedgerFilterRow({
     required this.filters,
     required this.activeFilter,
     required this.onChanged,
@@ -126,68 +126,16 @@ class _FilterRail extends StatelessWidget {
       child: Row(
         children: [
           for (final filter in filters) ...[
-            _FilterButton(
-              filter: filter,
+            VitFilterChip(
+              key: ArenaPointsLedgerPage.filterKey(filter.id),
+              label: filter.label,
               active: filter.id == activeFilter,
               onTap: () => onChanged(filter.id),
+              color: AppModuleAccents.arena,
             ),
             if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({
-    required this.filter,
-    required this.active,
-    required this.onTap,
-  });
-
-  final ArenaPointsLedgerFilterDraft filter;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: VitCard(
-        key: ArenaPointsLedgerPage.filterKey(filter.id),
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact,
-          ),
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: active ? AppColors.primary12 : AppColors.surface2,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.smRadius,
-                side: BorderSide(
-                  color: active ? AppColors.primary30 : AppColors.borderSolid,
-                ),
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaPointsLedgerFilterPadding,
-              child: Center(
-                child: Text(
-                  filter.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.primary : AppColors.text2,
-                    fontWeight: AppTextStyles.medium,
-                    height: _ledgerCompactLineRatio,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -291,7 +239,7 @@ class _LedgerRow extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

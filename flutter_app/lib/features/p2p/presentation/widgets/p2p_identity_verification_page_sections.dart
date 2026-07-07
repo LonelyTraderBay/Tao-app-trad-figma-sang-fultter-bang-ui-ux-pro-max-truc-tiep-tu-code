@@ -41,7 +41,7 @@ class _IdentityHero extends StatelessWidget {
                     color: AppModuleAccents.p2p,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroBody,
                   maxLines: 2,
@@ -79,7 +79,7 @@ class _DocumentTypePicker extends StatelessWidget {
           'Chọn loại giấy tờ',
           style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final document in documents) ...[
           VitCard(
             key: P2PIdentityVerificationPage.documentTypeKey(document.id),
@@ -131,7 +131,7 @@ class _DocumentTypePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (document != documents.last) const SizedBox(height: AppSpacing.x2),
+          if (document != documents.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -152,12 +152,12 @@ class _GuidelinesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SectionTitle(
-            icon: Icons.info_outline_rounded,
+          VitSectionHeader(
             title: 'Hướng dẫn chụp ảnh',
-            color: AppModuleAccents.p2p,
+            icon: Icons.info_outline_rounded,
+            iconColor: AppModuleAccents.p2p,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
-          const SizedBox(height: AppSpacing.x2),
           for (final guide in snapshot.guidelines) ...[
             _ChecklistRow(text: guide, color: AppColors.buy),
             if (guide != snapshot.guidelines.last)
@@ -197,7 +197,7 @@ class _UploadSection extends StatelessWidget {
           'Upload hình ảnh',
           style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _UploadCard(
           key: P2PIdentityVerificationPage.frontUploadKey,
           label: 'Mặt trước',
@@ -208,7 +208,7 @@ class _UploadSection extends StatelessWidget {
           onUpload: onFrontUpload,
           onRemove: onFrontRemove,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _UploadCard(
           key: P2PIdentityVerificationPage.backUploadKey,
           label: 'Mặt sau',
@@ -258,7 +258,7 @@ class _UploadCard extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           radius: VitCardRadius.large,
           variant: uploaded ? VitCardVariant.inner : VitCardVariant.ghost,
@@ -334,7 +334,7 @@ class _UploadCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Text(
                           title,
                           maxLines: 1,

@@ -54,7 +54,7 @@ class _CurrentLevelHero extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Row(
                           children: [
                             Icon(
@@ -110,12 +110,12 @@ class _CurrentLevelHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 const Divider(
                   color: AppColors.divider,
                   height: AppSpacing.dividerHairline,
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -134,13 +134,13 @@ class _CurrentLevelHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 _ProgressTrack(
                   value: dailyRatio,
                   color: accent,
                   height: AppSpacing.p2pTradingLevelDailyTrackHeight,
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   children: [
                     Expanded(
@@ -238,7 +238,7 @@ class _HeroMetricCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             value,
             maxLines: 1,
@@ -303,7 +303,7 @@ class _NextLevelProgress extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _ProgressTrack(
             value: progress,
             color: AppColors.accent,

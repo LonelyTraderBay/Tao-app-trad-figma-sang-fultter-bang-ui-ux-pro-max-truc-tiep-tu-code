@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -119,7 +120,7 @@ class _LaunchpadAddressBookPageState
               child: SingleChildScrollView(
                 key: LaunchpadAddressBookPage.contentKey,
                 physics: const ClampingScrollPhysics(),
-                child: VitPageContent(
+                child: VitPageContent(rhythm: VitPageRhythm.standard, 
                   padding: VitContentPadding.compact,
                   gap: VitContentGap.tight,
                   children: [
@@ -154,7 +155,7 @@ class _LaunchpadAddressBookPageState
                         label: 'Yeu thich',
                         accentColor: AppColors.warn,
                         children: [
-                          for (final address in favorites) ...[
+                          for (final address in favorites)
                             _AddressCard(
                               address: address,
                               expanded: _expandedId == address.id,
@@ -168,9 +169,6 @@ class _LaunchpadAddressBookPageState
                                     : address.id;
                               }),
                             ),
-                            if (address != favorites.last)
-                              const SizedBox(height: AppSpacing.x3),
-                          ],
                         ],
                       ),
                     if (others.isNotEmpty)
@@ -179,7 +177,7 @@ class _LaunchpadAddressBookPageState
                         label: 'Tat ca dia chi',
                         accentColor: AppModuleAccents.launchpad,
                         children: [
-                          for (final address in others) ...[
+                          for (final address in others)
                             _AddressCard(
                               address: address,
                               expanded: _expandedId == address.id,
@@ -193,9 +191,6 @@ class _LaunchpadAddressBookPageState
                                     : address.id;
                               }),
                             ),
-                            if (address != others.last)
-                              const SizedBox(height: AppSpacing.x3),
-                          ],
                         ],
                       ),
                     const _InfoBanner(),

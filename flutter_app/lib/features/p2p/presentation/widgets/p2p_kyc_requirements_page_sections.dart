@@ -46,7 +46,7 @@ class _KycHero extends StatelessWidget {
                     color: AppModuleAccents.p2p,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
@@ -176,7 +176,7 @@ class _KycTierCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                         Row(
                           children: [
                             const Icon(
@@ -214,7 +214,7 @@ class _KycTierCard extends StatelessWidget {
                 for (final requirement in tier.requirements) ...[
                   _RequirementRow(requirement: requirement),
                   if (requirement != tier.requirements.last)
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 ],
               ],
             ),
@@ -239,7 +239,7 @@ class _KycTierCard extends StatelessWidget {
                 for (final benefit in tier.benefits) ...[
                   _BenefitRow(text: benefit, color: color),
                   if (benefit != tier.benefits.last)
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 ],
               ],
             ),
@@ -315,7 +315,7 @@ class _TierSection extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           child,
         ],
       ),

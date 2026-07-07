@@ -44,7 +44,7 @@ class _BugBountySection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 bugBounty.body,
                 style: AppTextStyles.caption.copyWith(
@@ -52,7 +52,7 @@ class _BugBountySection extends StatelessWidget {
                   height: AppSpacing.stakingAuditBodyLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 variant: VitCardVariant.inner,
                 padding: AppSpacing.earnCardPaddingX3,
@@ -69,7 +69,7 @@ class _BugBountySection extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               _ActionButton(
                 key: StakingAuditReportsPage.bugBountyCtaKey,
                 label: 'View on Immunefi',

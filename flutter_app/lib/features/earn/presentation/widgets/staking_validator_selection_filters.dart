@@ -120,72 +120,55 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Sắp xếp theo',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             children: [
               for (final value in StakingValidatorSort.values)
-                _FilterChip(
+                VitChoicePill(
                   label: stakingValidatorSortLabel(value),
                   selected: sort == value,
                   onTap: () => onSortChanged(value),
+                  accentColor: AppColors.primarySoft,
+                  padding: AppSpacing.earnWidePillPadding,
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Text(
             'Tier',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             children: [
-              _FilterChip(
+              VitChoicePill(
                 label: 'Tất cả',
                 selected: tier == null,
                 onTap: () => onTierChanged(null),
+                accentColor: AppColors.primarySoft,
+                padding: AppSpacing.earnWidePillPadding,
               ),
               for (final value in StakingValidatorTier.values)
-                _FilterChip(
+                VitChoicePill(
                   label: stakingValidatorTierLabel(value),
                   selected: tier == value,
                   onTap: () => onTierChanged(value),
+                  accentColor: AppColors.primarySoft,
+                  padding: AppSpacing.earnWidePillPadding,
                 ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      accentColor: AppColors.primarySoft,
-      padding: AppSpacing.earnWidePillPadding,
     );
   }
 }

@@ -80,7 +80,7 @@ class _PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
           Row(
             children: [
               Expanded(
@@ -108,7 +108,7 @@ class _PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Phân bổ phụ thuộc tổng đăng ký. Token mở khóa theo lịch vesting từng dự án.',
             textAlign: TextAlign.center,

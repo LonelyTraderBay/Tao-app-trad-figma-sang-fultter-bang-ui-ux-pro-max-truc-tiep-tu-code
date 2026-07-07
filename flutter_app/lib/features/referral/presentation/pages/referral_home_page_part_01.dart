@@ -56,7 +56,7 @@ class _CampaignBanner extends StatelessWidget {
                           color: AppColors.portfolioTextDim,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                       Wrap(
                         spacing: AppSpacing.x4,
                         runSpacing: AppSpacing.x1,
@@ -79,7 +79,7 @@ class _CampaignBanner extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.primary12,
@@ -237,7 +237,7 @@ class _ReferralHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(
@@ -269,7 +269,7 @@ class _ReferralHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _NoticeCard(
             icon: Icons.schedule_rounded,
             text:
@@ -279,7 +279,7 @@ class _ReferralHero extends StatelessWidget {
             border: AppColors.warningBorder,
             dense: true,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.referralInnerPadding,
@@ -305,7 +305,7 @@ class _ReferralHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   snapshot.referralCode,
                   style: AppTextStyles.base.copyWith(
@@ -318,7 +318,7 @@ class _ReferralHero extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
@@ -346,7 +346,7 @@ class _ReferralHero extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(
@@ -400,7 +400,7 @@ class _SocialProofRail extends StatelessWidget {
       child: Row(
         children: [
           for (var i = 0; i < items.length; i++) ...[
-            _SocialProofPill(item: items[i], color: colors[i % colors.length]),
+            _SocialProofMetric(item: items[i], color: colors[i % colors.length]),
             if (i < items.length - 1) const SizedBox(width: AppSpacing.x2),
           ],
         ],
@@ -499,9 +499,9 @@ class _TierProgress extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _ProgressBar(progress: progress, color: AppColors.primarySoft),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [
               Expanded(

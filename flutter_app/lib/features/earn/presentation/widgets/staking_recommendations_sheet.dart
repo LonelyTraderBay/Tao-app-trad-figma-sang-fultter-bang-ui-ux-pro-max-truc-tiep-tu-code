@@ -40,7 +40,7 @@ class StakingRecommendationsStrategyDetailSheet extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
           padding: AppSpacing.earnCardPaddingX4,
@@ -67,7 +67,7 @@ class StakingRecommendationsStrategyDetailSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         Text(
           'Phân bổ chi tiết',
           style: AppTextStyles.caption.copyWith(
@@ -75,31 +75,31 @@ class StakingRecommendationsStrategyDetailSheet extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final item in strategy.allocation) ...[
           StakingRecommendationsAllocationDetailRow(item: item, amount: amount),
           if (item != strategy.allocation.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         StakingRecommendationsBulletSection(
           title: 'Ưu điểm',
           items: strategy.pros,
           color: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         StakingRecommendationsBulletSection(
           title: 'Nhược điểm',
           items: strategy.cons,
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         StakingRecommendationsBulletSection(
           title: 'Phù hợp với',
           items: strategy.bestFor,
           color: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
         VitCtaButton(
           key: StakingRecommendationsKeys.detailCta,
           onPressed: () {
@@ -197,7 +197,7 @@ class StakingRecommendationsBulletSection extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final item in items) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +227,7 @@ class StakingRecommendationsBulletSection extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.x2),
+          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

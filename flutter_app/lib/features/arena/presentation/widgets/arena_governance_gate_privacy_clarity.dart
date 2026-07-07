@@ -57,7 +57,7 @@ class _PrivacyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               for (final option in options) ...[
@@ -74,7 +74,7 @@ class _PrivacyCard extends StatelessWidget {
             ],
           ),
           if (privacy == 'public') ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Text(
               'Public room yêu cầu tất cả mục rule bắt buộc. Governance Gate sẽ kiểm tra tự động.',
               style: AppTextStyles.caption.copyWith(
@@ -172,7 +172,7 @@ class _ClarityScoreCard extends StatelessWidget {
               _StatusPill(label: result.level, color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(

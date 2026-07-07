@@ -140,7 +140,7 @@ class _JurisdictionSelector extends StatelessWidget {
             onTap: () => onChanged(jurisdictions[index].code),
           ),
           if (index != jurisdictions.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -160,6 +160,7 @@ class _JurisdictionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: P2PTaxReportingPage.jurisdictionKey(jurisdiction.code),
       onTap: onTap,
@@ -285,7 +286,7 @@ class _TaxSummary extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                     Text(
                       snapshot.summary.netGainsLabel,
                       style: AppTextStyles.pageTitle.copyWith(

@@ -37,6 +37,7 @@ class _StatsTab extends StatelessWidget {
     ];
 
     return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -52,7 +53,7 @@ class _StatsTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   Expanded(
@@ -79,7 +80,7 @@ class _StatsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Row(
                 children: [
                   _LegendDot(color: _profileGreen, label: 'Thắng: $wins'),
@@ -101,7 +102,7 @@ class _StatsTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               for (final row in rows) _StatsLine(row: row),
             ],
           ),

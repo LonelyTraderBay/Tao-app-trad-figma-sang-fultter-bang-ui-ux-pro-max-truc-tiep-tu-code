@@ -13,35 +13,47 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      density: VitDensity.compact,
-      children: [
-        _RadarCard(metrics: snapshot.metrics),
-        const _SectionLabel(label: 'Chi ti\u1EBFt \u0111i\u1EC3m'),
-        for (final metric in snapshot.metrics) ...[_MetricCard(metric: metric)],
-        _TrendCard(history: snapshot.history),
-        const _SectionLabel(label: '\u0110\u1EC1 xu\u1EA5t th\u00EAm'),
-        if (snapshot.priorityRecommendations
-            .where((rec) => rec.id != primaryRecommendationId)
-            .isEmpty)
-          const VitEmptyState(
-            title: 'No extra recommendations',
-            message: 'The highest-priority advisory action is shown above.',
-          )
-        else
-          for (final rec in snapshot.priorityRecommendations.where(
-            (rec) => rec.id != primaryRecommendationId,
-          )) ...[
-            _RecommendationCard(
-              recommendation: rec,
-              onTap: () => onRecommendationTap(rec),
-            ),
-          ],
-      ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: sectionChildren,
     );
   }
+
+  List<Widget> get sectionChildren => [
+        _RadarCard(metrics: snapshot.metrics),
+        VitPageSection(
+          label: 'Chi ti\u1EBFt \u0111i\u1EC3m',
+          accentColor: _healthPrimary,
+          innerGap: AppSpacing.pageRhythmStandardInnerGap,
+          children: [
+            for (final metric in snapshot.metrics)
+              _MetricCard(metric: metric),
+          ],
+        ),
+        _TrendCard(history: snapshot.history),
+        VitPageSection(
+          label: '\u0110\u1EC1 xu\u1EA5t th\u00EAm',
+          accentColor: _healthPrimary,
+          innerGap: AppSpacing.pageRhythmStandardInnerGap,
+          children: [
+            if (snapshot.priorityRecommendations
+                .where((rec) => rec.id != primaryRecommendationId)
+                .isEmpty)
+              const VitEmptyState(
+                title: 'No extra recommendations',
+                message: 'The highest-priority advisory action is shown above.',
+              )
+            else
+              for (final rec in snapshot.priorityRecommendations.where(
+                (rec) => rec.id != primaryRecommendationId,
+              ))
+                _RecommendationCard(
+                  recommendation: rec,
+                  onTap: () => onRecommendationTap(rec),
+                ),
+          ],
+        ),
+      ];
 }
 
 class _OverallScoreCard extends StatelessWidget {
@@ -134,6 +146,7 @@ class _RadarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: VitDensity.compact.controlHeight * 3.2,
       density: VitDensity.compact,
@@ -148,7 +161,7 @@ class _RadarCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Expanded(
             child: CustomPaint(
               painter: _RadarPainter(metrics),
@@ -198,7 +211,7 @@ class _MetricCard extends StatelessWidget {
               _StatusBadge(label: metric.status, color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: SizedBox(
@@ -223,6 +236,7 @@ class _TrendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: VitDensity.compact.controlHeight * 3,
       density: VitDensity.compact,
@@ -237,7 +251,7 @@ class _TrendCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Expanded(
             child: CustomPaint(
               painter: _TrendPainter(history),
@@ -286,7 +300,7 @@ class _RecommendationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             recommendation.description,
             maxLines: 2,
@@ -296,7 +310,7 @@ class _RecommendationCard extends StatelessWidget {
               height: 1.28,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             key: WalletHealthScorePage.recommendationKey(recommendation.id),
             onPressed: onTap,
@@ -323,27 +337,34 @@ class _SecurityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metric = snapshot.metricByCategory('Security');
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      density: VitDensity.compact,
-      children: [
-        _ScoreSummaryCard(
-          icon: Icons.shield_outlined,
-          iconColor: _healthPrimary,
-          title: 'Security Score',
-          subtitle: 'Based on 8 security factors',
-          score: metric.score,
-          status: 'Good',
-        ),
-        const _SectionLabel(label: 'Security Checklist'),
-        for (final item in snapshot.securityChecklist) ...[
-          _ChecklistCard(item: item),
-        ],
-        const _ActionRequiredCard(),
-      ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: sectionChildren,
     );
+  }
+
+  List<Widget> get sectionChildren {
+    final metric = snapshot.metricByCategory('Security');
+    return [
+      _ScoreSummaryCard(
+        icon: Icons.shield_outlined,
+        iconColor: _healthPrimary,
+        title: 'Security Score',
+        subtitle: 'Based on 8 security factors',
+        score: metric.score,
+        status: 'Good',
+      ),
+      VitPageSection(
+        label: 'Security Checklist',
+        accentColor: _healthPrimary,
+        innerGap: AppSpacing.pageRhythmStandardInnerGap,
+        children: [
+          for (final item in snapshot.securityChecklist)
+            _ChecklistCard(item: item),
+        ],
+      ),
+      const _ActionRequiredCard(),
+    ];
   }
 }
 
@@ -354,35 +375,44 @@ class _DiversificationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metric = snapshot.metricByCategory('Diversification');
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      density: VitDensity.compact,
-      children: [
-        _ScoreSummaryCard(
-          icon: Icons.track_changes_rounded,
-          iconColor: _healthAmber,
-          title: 'Diversification',
-          subtitle: 'Portfolio balance analysis',
-          score: metric.score,
-          status: 'Moderate',
-        ),
-        _AssetDistributionCard(slices: snapshot.diversification),
-        const _ConcentrationRiskCard(),
-        const _SectionLabel(label: 'Diversification Tips'),
-        for (final tip in const [
-          'Maintain 15-25% in stablecoins for liquidity',
-          'Limit single asset to max 30% of portfolio',
-          'Spread across 5-10 quality assets',
-          'Rebalance quarterly to maintain targets',
-        ]) ...[_TipCard(tip: tip)],
-        const _InfoCard(
-          text:
-              'Diversification reduces portfolio volatility. Aim for balance across asset types and risk levels.',
-        ),
-      ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: sectionChildren,
     );
+  }
+
+  List<Widget> get sectionChildren {
+    final metric = snapshot.metricByCategory('Diversification');
+    return [
+      _ScoreSummaryCard(
+        icon: Icons.track_changes_rounded,
+        iconColor: _healthAmber,
+        title: 'Diversification',
+        subtitle: 'Portfolio balance analysis',
+        score: metric.score,
+        status: 'Moderate',
+      ),
+      _AssetDistributionCard(slices: snapshot.diversification),
+      const _ConcentrationRiskCard(),
+      VitPageSection(
+        label: 'Diversification Tips',
+        accentColor: _healthPrimary,
+        innerGap: AppSpacing.pageRhythmStandardInnerGap,
+        children: [
+          for (final tip in const [
+            'Maintain 15-25% in stablecoins for liquidity',
+            'Limit single asset to max 30% of portfolio',
+            'Spread across 5-10 quality assets',
+            'Rebalance quarterly to maintain targets',
+          ])
+            _TipCard(tip: tip),
+        ],
+      ),
+      const _InfoCard(
+        text:
+            'Diversification reduces portfolio volatility. Aim for balance across asset types and risk levels.',
+      ),
+    ];
   }
 }
 
@@ -410,6 +440,7 @@ class _ScoreSummaryCard extends StatelessWidget {
       borderColor: AppColors.cardBorder,
       child: Row(
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: 36,
             height: 36,
@@ -469,6 +500,7 @@ class _ChecklistCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             width: 32,
             height: 32,
@@ -575,7 +607,7 @@ class _AssetDistributionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           SizedBox(
             height: VitDensity.compact.controlHeight * 2.8,
             child: CustomPaint(
@@ -583,7 +615,7 @@ class _AssetDistributionCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.walletHealthLegendSpacing,
             runSpacing: AppSpacing.walletHealthLegendRunSpacing,
@@ -593,6 +625,7 @@ class _AssetDistributionCard extends StatelessWidget {
                   width: AppSpacing.walletHealthLegendWidth,
                   child: Row(
                     children: [
+                      // card-tile: allow-start — fixed surface, not horizontal strip tile
                       VitCard(
                         width: AppSpacing.walletHealthLegendSwatch,
                         height: _healthLegendSwatchHeight,
@@ -667,7 +700,7 @@ class _ConcentrationRiskCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const _AllocationRow(
             label: 'Recommended BTC allocation',
             value: '25-30%',
@@ -783,22 +816,6 @@ class _InfoCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _healthPrimary,
-      density: VitDensity.compact,
     );
   }
 }

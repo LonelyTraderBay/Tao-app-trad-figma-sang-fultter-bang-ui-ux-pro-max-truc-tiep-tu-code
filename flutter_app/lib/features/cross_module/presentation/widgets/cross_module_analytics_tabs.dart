@@ -53,9 +53,9 @@ class _PerformanceTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SummaryGrid(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _HighlightCards(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ChartCard(
           title: 'ROI by Module',
           child: CustomPaint(
@@ -63,7 +63,7 @@ class _PerformanceTab extends StatelessWidget {
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ChartCard(
           title: 'Monthly ROI Trends',
           child: CustomPaint(
@@ -93,7 +93,7 @@ class _MetricsTab extends StatelessWidget {
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Chi tiet chi so',
           children: [
@@ -125,7 +125,7 @@ class _ComparisonTab extends StatelessWidget {
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitPageSection(
           label: 'Efficiency Comparison',
           children: [
@@ -133,9 +133,9 @@ class _ComparisonTab extends StatelessWidget {
               _EfficiencyRow(rank: i + 1, module: ranked[i]),
           ],
         ),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _ArenaAnalyticsDisclosure(),
-        const SizedBox(height: AppSpacing.sectionGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _AnalyticsInfoCard(),
       ],
     );

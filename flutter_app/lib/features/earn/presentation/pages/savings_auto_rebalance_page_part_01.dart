@@ -18,13 +18,15 @@ class _AllocationComparisonCard extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
+ rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
+            title: 'Hiện tại vs Mục tiêu',
             icon: Icons.compare_arrows_rounded,
             iconColor: AppColors.primary,
-            label: 'Hiện tại vs Mục tiêu',
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,9 +51,10 @@ class _AllocationComparisonCard extends StatelessWidget {
                       size: _savingsRebalanceInlineIcon,
                     ),
                     const SizedBox(height: AppSpacing.x1),
-                    _TonePill(
+                    VitAccentPill(
                       label: 'Drift ${drift.toStringAsFixed(1)}%',
-                      color: _driftColor(drift),
+                      accentColor: _driftColor(drift),
+                      size: VitStatusPillSize.sm,
                     ),
                   ],
                 ),
@@ -88,6 +91,7 @@ class _AllocationRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+ rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -168,7 +172,7 @@ class _AssetDriftRow extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               SizedBox(
                 height: _savingsRebalanceTrackHeight,
                 child: CustomPaint(
@@ -270,13 +274,15 @@ class _DriftHistoryCard extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
+   rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
+            title: 'Lịch sử Drift',
             icon: Icons.bar_chart_rounded,
             iconColor: AppColors.primary,
-            label: 'Lịch sử Drift',
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           ),
           SizedBox(
             height: _savingsRebalanceDriftChartHeight,

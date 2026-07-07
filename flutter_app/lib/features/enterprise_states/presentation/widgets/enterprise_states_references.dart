@@ -30,7 +30,7 @@ class _AppliedSection extends StatelessWidget {
             '6 màn dữ liệu × 4–5 states. Chọn page và state để preview.',
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ReferenceTile(
             icon: Icons.bar_chart_rounded,
             title: 'MarketListPage',
@@ -38,7 +38,7 @@ class _AppliedSection extends StatelessWidget {
             actionLabel: 'Mở Markets',
             onTap: () => context.go(snapshot.marketRoute),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const _ReferenceTile(
             icon: Icons.history_rounded,
             title: 'OrdersHistoryPage',
@@ -64,7 +64,7 @@ class _SecuritySection extends StatelessWidget {
             '4 security overlay chuẩn enterprise. Các CTA đi tới route đã migrate hoặc auth shell.',
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ReferenceTile(
             icon: Icons.login_rounded,
             title: 'Session Expired Modal',
@@ -73,7 +73,7 @@ class _SecuritySection extends StatelessWidget {
             actionKey: EnterpriseStatesPage.loginCtaKey,
             onTap: () => context.go(snapshot.loginRoute),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ReferenceTile(
             icon: Icons.verified_user_outlined,
             title: 'KYC Gate Panel',
@@ -81,7 +81,7 @@ class _SecuritySection extends StatelessWidget {
             actionLabel: 'Đi tới KYC',
             onTap: () => context.go(snapshot.kycRoute),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           _ReferenceTile(
             icon: Icons.key_rounded,
             title: '2FA Gate Panel',
