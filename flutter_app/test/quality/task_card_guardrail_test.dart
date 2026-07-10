@@ -54,7 +54,6 @@ void main() {
   test('Rewards and Arena task lists use VitTaskCard — no local _TaskCard', () {
     for (final relativePath in [
       'lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart',
-      'lib/features/arena/presentation/pages/arena_points_page_part_02.dart',
     ]) {
       final file = File('$repoRoot/$relativePath');
       expect(file.existsSync(), isTrue, reason: relativePath);

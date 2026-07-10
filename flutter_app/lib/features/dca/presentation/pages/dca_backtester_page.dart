@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_analysis.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_results.dart';
@@ -17,9 +18,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-
-const double _dcaBacktesterVisualNavClearance = 112;
-const double _dcaBacktesterNativeNavClearance = 88;
 
 class DCABacktesterPage extends ConsumerStatefulWidget {
   const DCABacktesterPage({super.key, this.shellRenderMode});
@@ -50,8 +48,8 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
     final snapshot = ref.watch(dcaBacktesterProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaBacktesterVisualNavClearance
-        : _dcaBacktesterNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

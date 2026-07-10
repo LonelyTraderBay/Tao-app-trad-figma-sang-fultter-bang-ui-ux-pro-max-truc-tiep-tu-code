@@ -173,7 +173,7 @@ final class WalletSpacingTokens {
   static const double walletBuyGroupIconGap = 6;
   static const double walletBuyPaymentMetaGap = 5;
   static const double walletBuyPaymentPopularGap = 8;
-  static const double walletBuyPaymentCardGap = 10;
+  static const double walletBuyPaymentCardGap = AppSpacing.rowGap;
   static const double walletBuyConfirmAmountGap = 20;
   static const double walletBuySuccessTopPad = 40;
   static const double walletBuySuccessBottomPad = 120;
@@ -366,12 +366,6 @@ final class WalletSpacingTokens {
     16,
     14,
   );
-  static const double walletAddressSwitchWidth = 48;
-  static const double walletAddressSwitchHeight = 28;
-  static const double walletAddressSwitchKnob = 22;
-  static const EdgeInsets walletAddressSwitchKnobMargin = EdgeInsets.symmetric(
-    horizontal: 2.5,
-  );
   static const double walletAddressSwitchBorder = 1.4;
   static const EdgeInsets walletAddressAddSheetPadding = transferSheetPadding;
   static const double walletAddressAddSheetTitleGap = 8;
@@ -456,7 +450,7 @@ final class WalletSpacingTokens {
   static const double walletTokenSectionGap = 18;
   static const double walletTokenAlertGap = 17;
   static const double walletTokenLabelGap = 11;
-  static const double walletTokenCardGap = 14;
+  static const double walletTokenCardGap = AppSpacing.rowGap;
   static const double walletTokenNoticeGap = 16;
   static const double walletTokenOverviewHeight = 203;
   static const EdgeInsets walletTokenOverviewPadding = EdgeInsets.fromLTRB(
@@ -1024,7 +1018,7 @@ final class WalletSpacingTokens {
   static const double walletManagerAllSummaryGap = 16;
   static const double walletManagerAllDistributionGap = 17;
   static const double walletManagerAllSectionGap = AppSpacing.rowGap;
-  static const double walletManagerAllWalletGap = 14;
+  static const double walletManagerAllWalletGap = AppSpacing.rowGap;
   static const double walletManagerAllAddTopGap = 18;
   static const double walletManagerAllSecurityTopGap = 16;
   static const double walletManagerWalletCardHeight = 200;
@@ -1056,7 +1050,7 @@ final class WalletSpacingTokens {
   static const double walletManagerWalletTypeIconBox = 36;
   static const double walletManagerWalletTypeIcon = 18;
   static const double walletManagerGroupsSectionGap = 10;
-  static const double walletManagerGroupCardGap = 12;
+  static const double walletManagerGroupCardGap = AppSpacing.rowGap;
   static const double walletManagerGroupCreateTopGap = 14;
   static const double walletManagerGroupCreateHeight = 46;
   static const double walletManagerGroupCreateIcon = 16;
@@ -1073,7 +1067,7 @@ final class WalletSpacingTokens {
       EdgeInsets.symmetric(horizontal: 12);
   static const double walletManagerGroupWalletTextGap = 6;
   static const double walletManagerActivitySectionGap = 10;
-  static const double walletManagerActivityRowGap = 10;
+  static const double walletManagerActivityRowGap = AppSpacing.rowGap;
   static const double walletManagerActivityRowHeight = 62;
   static const EdgeInsets walletManagerActivityRowPadding =
       EdgeInsets.symmetric(horizontal: 12);

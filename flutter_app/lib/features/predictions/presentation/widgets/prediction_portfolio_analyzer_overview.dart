@@ -61,7 +61,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: HomeSpacingTokens.homeCardPaddingDefault,
+      padding: SharedSpacingTokens.homeCardPaddingDefault,
       background: const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

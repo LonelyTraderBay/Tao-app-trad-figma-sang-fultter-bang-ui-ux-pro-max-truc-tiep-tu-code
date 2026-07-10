@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 /// Visual skin for copy-trading provider lists (SC-063 classic vs SC-064 v2).
@@ -607,7 +607,7 @@ class _CopyDetailsButton extends StatelessWidget {
         key: keys.detailKey(traderId),
         onPressed: onOpen,
         variant: VitCtaButtonVariant.secondary,
-        height: HomeSpacingTokens.homeHeroActionHeight,
+        height: SharedSpacingTokens.homeHeroActionHeight,
         trailing: const Icon(Icons.chevron_right_rounded),
         child: const Text('Xem chi tiết'),
       );

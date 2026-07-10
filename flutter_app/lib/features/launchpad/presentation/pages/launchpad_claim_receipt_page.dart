@@ -19,15 +19,13 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/launchpad_claim_receipt_hero_widgets.dart';
 part '../widgets/launchpad_claim_receipt_overview_widgets.dart';
 part '../widgets/launchpad_claim_receipt_timeline_widgets.dart';
 part '../widgets/launchpad_claim_receipt_claim_sheet_widgets.dart';
 part '../widgets/launchpad_claim_receipt_misc_widgets.dart';
-
-const double _launchpadClaimReceiptVisualNavClearance = 112;
-const double _launchpadClaimReceiptNativeNavClearance = 88;
 
 class LaunchpadClaimReceiptPage extends ConsumerStatefulWidget {
   const LaunchpadClaimReceiptPage({
@@ -77,8 +75,8 @@ class _LaunchpadClaimReceiptPageState
     final receipt = snapshot.receipt;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadClaimReceiptVisualNavClearance
-        : _launchpadClaimReceiptNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

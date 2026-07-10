@@ -204,7 +204,7 @@ class _PaymentMethodCard extends StatelessWidget {
                       height: AppSpacing.pageRhythmCompactInnerGap,
                     ),
                     Text(
-                      method.accountNumber,
+                      maskAccountNumber(method.accountNumber),
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,

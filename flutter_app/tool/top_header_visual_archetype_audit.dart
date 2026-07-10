@@ -81,7 +81,6 @@ const _rootModulePages = <String>{
   'P2PHomePage',
   'LaunchpadPage',
   'RewardsHubPage',
-  'ArenaPointsPage',
 };
 
 const _primaryTabRootPages = <String>{
@@ -96,15 +95,11 @@ const _productModuleHubPages = <String>{
   'LaunchpadPage',
   'StakingEarnPage',
   'ArenaHomePage',
-  'ArenaPointsPage',
   'PredictionsHomePage',
   'RewardsHubPage',
 };
 
-const _fullscreenToolPages = <String>{
-  'AdvancedChartPage',
-  'P2PChatPage',
-};
+const _fullscreenToolPages = <String>{'AdvancedChartPage', 'P2PChatPage'};
 
 const _noHeaderDecisions = <String, _NoHeaderDecision>{
   'LoginPage': _NoHeaderDecision(
@@ -801,7 +796,9 @@ final class _PageIndex {
     }
 
     for (final entry in sourceByGroup.entries) {
-      final baseSource = entry.value.map((file) => file.readAsStringSync()).join('\n');
+      final baseSource = entry.value
+          .map((file) => file.readAsStringSync())
+          .join('\n');
       final source = [
         baseSource,
         ..._extraSourceForPageGroup(appRoot, entry.key, baseSource),
@@ -863,6 +860,12 @@ List<String> _extraSourceForPageGroup(
     ],
     'CrossModuleTabbedPageShell(': [
       'lib/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
+    ],
+    'VitAutoHidePageScaffold(': [
+      'lib/shared/layout/vit_auto_hide_page_scaffold.dart',
+    ],
+    'VitP2PFlowScaffold(': [
+      'lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
     ],
   };
 

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
@@ -16,9 +17,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
-
-const double _dcaScheduleAnalyticsVisualNavClearance = 112;
-const double _dcaScheduleAnalyticsNativeNavClearance = 88;
 
 class DCAScheduleAnalytics extends ConsumerWidget {
   const DCAScheduleAnalytics({
@@ -39,8 +37,8 @@ class DCAScheduleAnalytics extends ConsumerWidget {
     final snapshot = ref.watch(dcaScheduleAnalyticsProvider(configId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaScheduleAnalyticsVisualNavClearance
-        : _dcaScheduleAnalyticsNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

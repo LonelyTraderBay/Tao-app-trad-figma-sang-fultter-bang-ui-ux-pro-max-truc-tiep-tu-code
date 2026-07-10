@@ -48,7 +48,7 @@ class _ProfileHero extends StatelessWidget {
                       height: AppSpacing.pageRhythmCompactInnerGap,
                     ),
                     Text(
-                      user.email,
+                      maskEmail(user.email),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.numericMicro.copyWith(

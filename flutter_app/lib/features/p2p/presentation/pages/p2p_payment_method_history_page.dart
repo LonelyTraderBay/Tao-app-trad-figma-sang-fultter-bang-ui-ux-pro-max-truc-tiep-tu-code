@@ -72,6 +72,7 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
+                      fullBleed: true,
                       gap: VitContentGap.tight,
                       children: [
                         _StatsCard(snapshot: snapshot),

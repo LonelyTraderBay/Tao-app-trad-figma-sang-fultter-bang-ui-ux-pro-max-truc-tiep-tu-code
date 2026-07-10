@@ -93,7 +93,7 @@ class _NotificationCard extends StatelessWidget {
                 child: Icon(
                   _notificationIcon(notification),
                   color: color,
-                  size: HomeSpacingTokens.homeNextActionIconSize,
+                  size: SharedSpacingTokens.homeNextActionIconSize,
                 ),
               ),
             ),

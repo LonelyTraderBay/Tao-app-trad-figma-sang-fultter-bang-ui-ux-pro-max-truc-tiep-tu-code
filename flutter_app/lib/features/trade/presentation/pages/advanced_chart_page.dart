@@ -96,50 +96,51 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
           padding: VitContentPadding.none,
           fullBleed: true,
           children: [
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    VitTradeTerminalHeader(
-                      symbol: pair.symbol,
-                      showBack: true,
-                      onBack: () =>
-                          context.go(AppRoutePaths.tradePair(pair.id)),
-                      pairTapKey: AdvancedChartPage.pairSelectorKey,
-                      onPairTap: () => context.go(AppRoutePaths.markets),
-                      priceLabel: formatTradePrice(pair.price),
-                      changePct: pair.changePct,
-                    ),
-                    ...productTabs,
-                    _OhlcvBar(ohlcv: snapshot.ohlcv),
-                    _ChartToolbar(
-                      timeframes: snapshot.timeframes,
-                      activeTimeframe: _timeframe,
-                      activeChartType: _chartType,
-                      activeIndicatorCount: enabledIndicators.length,
-                      onTimeframeChanged: (value) =>
-                          setState(() => _timeframe = value),
-                      onChartTypeChanged: (value) =>
-                          setState(() => _chartType = value),
-                      onIndicators: () =>
-                          setState(() => _showIndicators = true),
-                    ),
-                    _ChartArea(
-                      candles: snapshot.candles,
-                      indicators: _indicators,
-                      chartType: _chartType,
-                    ),
-                    _ActionBar(pairId: pair.id),
-                    const Expanded(child: SizedBox.expand()),
-                  ],
-                ),
-                if (_showIndicators)
-                  _IndicatorSheet(
-                    indicators: _indicators,
-                    onToggle: _toggleIndicator,
-                    onClose: () => setState(() => _showIndicators = false),
+            Expanded(
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      VitTradeTerminalHeader(
+                        symbol: pair.symbol,
+                        showBack: true,
+                        onBack: () =>
+                            context.go(AppRoutePaths.tradePair(pair.id)),
+                        pairTapKey: AdvancedChartPage.pairSelectorKey,
+                        onPairTap: () => context.go(AppRoutePaths.markets),
+                        priceLabel: formatTradePrice(pair.price),
+                        changePct: pair.changePct,
+                      ),
+                      ...productTabs,
+                      _OhlcvBar(ohlcv: snapshot.ohlcv),
+                      _ChartToolbar(
+                        timeframes: snapshot.timeframes,
+                        activeTimeframe: _timeframe,
+                        activeChartType: _chartType,
+                        activeIndicatorCount: enabledIndicators.length,
+                        onTimeframeChanged: (value) =>
+                            setState(() => _timeframe = value),
+                        onChartTypeChanged: (value) =>
+                            setState(() => _chartType = value),
+                        onIndicators: () =>
+                            setState(() => _showIndicators = true),
+                      ),
+                      _ChartArea(
+                        candles: snapshot.candles,
+                        indicators: _indicators,
+                        chartType: _chartType,
+                      ),
+                      _ActionBar(pairId: pair.id),
+                    ],
                   ),
-              ],
+                  if (_showIndicators)
+                    _IndicatorSheet(
+                      indicators: _indicators,
+                      onToggle: _toggleIndicator,
+                      onClose: () => setState(() => _showIndicators = false),
+                    ),
+                ],
+              ),
             ),
           ],
         ),

@@ -24,9 +24,11 @@ Load docs **on demand** — do not paste large audit output into chat. Shared ru
 
 | File | When |
 | --- | --- |
+| [Flutter-Design-System-Reference.md](02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md) | **Required entry point for all UI/UX work** — routes to every domain's `*-Standard.md`, what enforces it, and the command to check it locally |
 | [Flutter-App-Foundation.md](02_FLUTTER_MIGRATION/Flutter-App-Foundation.md) | App bootstrap, layers |
 | [Flutter-Native-Design-Standard.md](02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md) | Native UI rules |
 | [Flutter-Module-Identity-Standard.md](02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md) | Module accents |
+| [Flutter-Page-Archetype-Standard.md](02_FLUTTER_MIGRATION/Flutter-Page-Archetype-Standard.md) | Tabbed-detail / form-wizard page patterns |
 | [Flutter-Port-Master-Plan.md](02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md) | Screen coverage tracker |
 | [Flutter-Migration-Execution-Runbook.md](02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md) | Standard workflow |
 | [Flutter-Design-Tokens.md](02_FLUTTER_MIGRATION/Flutter-Design-Tokens.md) | Token file map |
@@ -40,6 +42,15 @@ Load docs **on demand** — do not paste large audit output into chat. Shared ru
 | [Segment-Pill-Standard.md](02_FLUTTER_MIGRATION/Segment-Pill-Standard.md) | Mandatory segment/tab/filter pill tiers (S1–S4) |
 | [Segment-Pill-Migration-Execution-Plan.md](02_FLUTTER_MIGRATION/Segment-Pill-Migration-Execution-Plan.md) | Segment pill migration status (0 locals, 0 warn) |
 | [Card-Tile-Migration-Execution-Plan.md](02_FLUTTER_MIGRATION/Card-Tile-Migration-Execution-Plan.md) | Card tile audit status (993/993 pass) |
+| [Top-Header-Standard.md](02_FLUTTER_MIGRATION/Top-Header-Standard.md) | Mandatory header behavior/actions/global-access/visual-archetype (4 sub-domains) |
+| [Back-Navigation-Standard.md](02_FLUTTER_MIGRATION/Back-Navigation-Standard.md) | Mandatory back-control safe fallback + Home-entry contract |
+| [Bottom-Sheet-Standard.md](02_FLUTTER_MIGRATION/Bottom-Sheet-Standard.md) | Mandatory `showVitBottomSheet` usage |
+| [Scroll-Physics-Standard.md](02_FLUTTER_MIGRATION/Scroll-Physics-Standard.md) | Mandatory `ClampingScrollPhysics` everywhere |
+| [Scroll-Auto-Hide-Standard.md](02_FLUTTER_MIGRATION/Scroll-Auto-Hide-Standard.md) | Mandatory collapse-budget gate for scroll-to-hide headers (no short-list snap-back) |
+| [High-Risk-State-Standard.md](02_FLUTTER_MIGRATION/High-Risk-State-Standard.md) | Mandatory `VitHighRiskStatePanel` for the 8 named high-risk pages |
+| [Body-Component-Standard.md](02_FLUTTER_MIGRATION/Body-Component-Standard.md) | Body layout/surface/controls/state grading (audit-only, not yet CI-enforced) |
+| [UI-Density-Standard.md](02_FLUTTER_MIGRATION/UI-Density-Standard.md) | `VitDensity` tiers + visual density risk (audit-only, not yet CI-enforced) |
+| [Spacing-Token-Duplication-Standard.md](02_FLUTTER_MIGRATION/Spacing-Token-Duplication-Standard.md) | Per-module literals that duplicate a core `AppSpacing.x1..x7` scale step |
 | [Guidelines.md](03_DESIGN_SYSTEM/Guidelines.md) | Product + design rules |
 
 ## Ponytail audit (over-engineering)

@@ -144,19 +144,24 @@ class _BotIcon extends StatelessWidget {
       'target' => Icons.gps_fixed_rounded,
       _ => Icons.smart_toy_outlined,
     };
-    return Container(
-      width: LaunchpadSpacingTokens.launchpadBox40,
-      height: LaunchpadSpacingTokens.launchpadBox40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(color: color.withValues(alpha: .22)),
+        ),
       ),
-      child: Icon(
-        iconData,
-        color: color,
-        size: TradeSpacingTokens.tradeBotActionIcon,
+      child: SizedBox(
+        width: LaunchpadSpacingTokens.launchpadBox40,
+        height: LaunchpadSpacingTokens.launchpadBox40,
+        child: Center(
+          child: Icon(
+            iconData,
+            color: color,
+            size: TradeSpacingTokens.tradeBotActionIcon,
+          ),
+        ),
       ),
     );
   }

@@ -128,22 +128,18 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tabs = [('current', 'Q1 2026 (Current)'), ('archive', 'Archive')];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      child: VitTabBar(
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.underline,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: BestExecutionReportsPage.tabKey(tab.$1),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: BestExecutionReportsPage.tabKey(tab.$1),
+          ),
+      ],
     );
   }
 }

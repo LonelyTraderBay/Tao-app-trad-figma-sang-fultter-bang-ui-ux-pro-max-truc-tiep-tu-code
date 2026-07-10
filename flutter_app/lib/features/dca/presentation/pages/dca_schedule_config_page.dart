@@ -17,13 +17,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/dca_schedule_strategy_time.dart';
 part '../widgets/dca_schedule_limits_enable.dart';
 part '../widgets/dca_schedule_common.dart';
 
-const double _dcaScheduleVisualNavClearance = 112;
-const double _dcaScheduleNativeNavClearance = 88;
 const double _dcaScheduleStrategyChipWidth = 148;
 const double _dcaScheduleTwoColumnMinWidth = 280;
 const EdgeInsetsDirectional _dcaScheduleHeroPadding = EdgeInsetsDirectional.all(
@@ -75,8 +74,8 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaScheduleVisualNavClearance
-        : _dcaScheduleNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

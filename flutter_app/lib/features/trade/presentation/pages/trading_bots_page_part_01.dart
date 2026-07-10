@@ -43,7 +43,7 @@ class _BotsHero extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: AppSpacing.x4),
+              padding: TradeSpacingTokens.tradeBotHeroSecondaryPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

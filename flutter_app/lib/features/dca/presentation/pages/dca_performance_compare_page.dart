@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/dca_performance_compare_tabs.dart';
 part '../widgets/dca_performance_compare_charts.dart';
@@ -27,9 +28,6 @@ part '../widgets/dca_performance_compare_primitives.dart';
 part '../widgets/dca_performance_compare_painters.dart';
 
 enum _CompareTab { compare, scenarios, analysis }
-
-const double _dcaPerformanceCompareVisualNavClearance = 112;
-const double _dcaPerformanceCompareNativeNavClearance = 88;
 
 class DCAPerformanceComparePage extends ConsumerStatefulWidget {
   const DCAPerformanceComparePage({super.key, this.shellRenderMode});
@@ -54,8 +52,8 @@ class _DCAPerformanceComparePageState
     final snapshot = ref.watch(dcaPerformanceCompareProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaPerformanceCompareVisualNavClearance
-        : _dcaPerformanceCompareNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

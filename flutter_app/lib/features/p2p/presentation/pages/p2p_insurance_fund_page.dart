@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'p2p_insurance_fund_page_part_01.dart';
 part 'p2p_insurance_fund_page_part_02.dart';
@@ -28,8 +29,6 @@ part 'p2p_insurance_fund_page_part_03.dart';
 
 enum _InsuranceTab { overview, claims }
 
-const double _p2pInsuranceVisualNavClearance = 112;
-const double _p2pInsuranceNativeNavClearance = 88;
 const double _p2pInsuranceIconBox = AppSpacing.buttonCompact;
 const double _p2pInsuranceChartHeight =
     P2PSpacingTokens.p2pTrustProgressChartHeight;
@@ -72,8 +71,8 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
     final snapshot = ref.watch(p2pInsuranceFundProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _p2pInsuranceVisualNavClearance
-        : _p2pInsuranceNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

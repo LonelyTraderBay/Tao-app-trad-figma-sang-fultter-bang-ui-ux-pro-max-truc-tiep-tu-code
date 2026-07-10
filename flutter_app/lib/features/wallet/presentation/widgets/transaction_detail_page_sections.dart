@@ -25,11 +25,13 @@ class _SummaryCard extends StatelessWidget {
               SizedBox.square(
                 dimension: WalletSpacingTokens.walletTransactionSummaryIconSize,
                 child: DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: ShapeDecoration(
                     color: type.color.withValues(alpha: .12),
-                    borderRadius: AppRadii.smRadius,
-                    border: Border.all(
-                      color: type.color.withValues(alpha: .22),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                      side: BorderSide(
+                        color: type.color.withValues(alpha: .22),
+                      ),
                     ),
                   ),
                   child: Icon(

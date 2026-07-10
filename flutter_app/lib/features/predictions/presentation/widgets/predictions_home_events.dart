@@ -184,7 +184,7 @@ class _PredictionsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+      padding: PredictionsSpacingTokens.predictionEmptyStatePadding,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

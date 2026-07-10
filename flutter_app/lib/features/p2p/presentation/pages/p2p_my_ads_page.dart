@@ -135,7 +135,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               _EmptyMyAds(snapshot: snapshot)
             else
               for (var index = 0; index < filtered.length; index++) ...[
-                if (index > 0) const SizedBox(height: _p2pMyAdsSectionGap),
+                if (index > 0) const SizedBox(height: AppSpacing.rowGap),
                 _MyAdCard(
                   ad: filtered[index],
                   onAnalytics: () =>

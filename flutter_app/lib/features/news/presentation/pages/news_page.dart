@@ -57,11 +57,17 @@ class NewsPage extends ConsumerStatefulWidget {
 class _NewsPageState extends ConsumerState<NewsPage> {
   NewsArticleType? _activeType;
 
+  Future<void> _refreshNews() async {
+    ref.invalidate(newsSnapshotProvider);
+    await ref.read(newsSnapshotProvider.future);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(newsControllerProvider)
-        .getNews(type: _activeType);
+    final snapshot = _resolveNewsSnapshot(
+      ref.watch(newsSnapshotProvider),
+      _activeType,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -123,7 +129,7 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                       children: _newsPageChildren(
                         snapshot: snapshot,
                         activeType: _activeType,
-                        onRetry: () => setState(() {}),
+                        onRetry: () => _refreshNews(),
                         onArticleTap: (article) =>
                             _showArticleSheet(context, article),
                       ),
@@ -148,4 +154,42 @@ class _NewsPageState extends ConsumerState<NewsPage> {
       builder: (context) => _ArticleSheet(article: article),
     );
   }
+}
+
+/// Bridges the one-shot [newsSnapshotProvider] fetch to the synchronous
+/// [NewsScreenSnapshot]-shaped widget tree in `news_page_sections.dart`.
+///
+/// - While the fetch is pending, or if it fails, a placeholder snapshot
+///   carrying [NewsScreenState.loading] / [NewsScreenState.error] is
+///   returned so the already-built loading/error branches in
+///   `_newsPageChildren` render without any change to that file.
+/// - Once data arrives, filtering by [activeType] happens client-side via
+///   [NewsController.filterBy] — no re-fetch, no loading flash.
+NewsScreenSnapshot _resolveNewsSnapshot(
+  AsyncValue<NewsScreenSnapshot> asyncSnapshot,
+  NewsArticleType? activeType,
+) {
+  final value = asyncSnapshot.value;
+  if (value != null) {
+    return NewsController(snapshot: value).filterBy(activeType);
+  }
+  return NewsScreenSnapshot(
+    articles: const [],
+    pinnedArticles: const [],
+    normalArticles: const [],
+    newsReferenceData: const NewsReferenceData(
+      endpoint: '/api/mobile/news/news',
+      filters: NewsArticleType.values,
+      lastUpdatedLabel: 'read-only',
+    ),
+    screenState: asyncSnapshot.hasError
+        ? NewsScreenState.error
+        : NewsScreenState.loading,
+    supportedStates: const [
+      NewsScreenState.loading,
+      NewsScreenState.empty,
+      NewsScreenState.error,
+      NewsScreenState.offline,
+    ],
+  );
 }

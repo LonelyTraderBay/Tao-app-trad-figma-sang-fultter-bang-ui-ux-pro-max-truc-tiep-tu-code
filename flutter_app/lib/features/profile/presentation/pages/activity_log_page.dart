@@ -85,37 +85,19 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
         ),
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
-          padding: VitContentPadding.none,
+          padding: VitContentPadding.compact,
           density: VitDensity.compact,
-          fullBleed: true,
           children: [
-            if (suspiciousCount > 0)
-              Padding(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: AppSpacing.contentPad,
-                ),
-                child: _SuspiciousBanner(count: suspiciousCount),
-              ),
+            if (suspiciousCount > 0) _SuspiciousBanner(count: suspiciousCount),
             _ActivityFilterRow(
               filters: snapshot.filters,
               activeFilter: _activeFilter,
               onChanged: _setFilter,
             ),
             if (logs.isEmpty)
-              const Padding(
-                padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: AppSpacing.contentPad,
-                ),
-                child: _EmptyActivity(),
-              )
+              const _EmptyActivity()
             else
-              for (final log in logs)
-                Padding(
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: AppSpacing.contentPad,
-                  ),
-                  child: _ActivityCard(log: log),
-                ),
+              for (final log in logs) _ActivityCard(log: log),
             const _ActivityFooter(),
           ],
         ),

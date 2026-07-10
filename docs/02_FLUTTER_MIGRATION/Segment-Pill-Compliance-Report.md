@@ -7,10 +7,10 @@
 | Metric | Count |
 | --- | ---: |
 | Audit rows | 322 |
-| Files with shared widgets | 283 |
-| Compliance pass | 226 |
+| Files with shared widgets | 282 |
+| Compliance pass | 228 |
 | Compliance warn | 0 |
-| Compliance review | 96 |
+| Compliance review | 94 |
 | Interactive local classes | 0 |
 | P0 local classes | 0 |
 
@@ -18,8 +18,8 @@
 
 | Family | Call sites |
 | --- | ---: |
-| VitTabBar | 120 |
-| VitChoicePill | 130 |
+| VitTabBar | 121 |
+| VitChoicePill | 129 |
 | VitSegmentedChoice | 80 |
 | VitSegmentedTabBar | 26 |
 | VitPresetChipRow | 30 |
@@ -40,7 +40,7 @@
 | enterprise_states | 2 |
 | home | 1 |
 | launchpad | 23 |
-| markets | 32 |
+| markets | 33 |
 | news | 1 |
 | notifications | 1 |
 | p2p | 46 |
@@ -50,7 +50,7 @@
 | rewards | 1 |
 | support | 2 |
 | trade | 66 |
-| wallet | 18 |
+| wallet | 17 |
 
 ## Migration status
 

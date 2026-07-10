@@ -118,10 +118,12 @@ class _StatusCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: AppColors.surface2,
-              borderRadius: AppRadii.smRadius,
-              border: Border.all(color: _trackingAmber.withValues(alpha: .24)),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+                side: BorderSide(color: _trackingAmber.withValues(alpha: .24)),
+              ),
             ),
             child: SizedBox(
               width: _trackingIconTile,

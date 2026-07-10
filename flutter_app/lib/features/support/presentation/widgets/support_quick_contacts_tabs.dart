@@ -61,33 +61,21 @@ List<Widget> _supportHubReadySections({
 }) {
   return [
     if (supportContext != null)
-      Padding(
-        padding: SupportSpacingTokens.supportContentPadding,
-        child: _SupportContextCard(supportContext: supportContext),
-      ),
+      _SupportContextCard(supportContext: supportContext),
     _QuickContactGrid(snapshot: snapshot),
-    Padding(
-      padding: SupportSpacingTokens.supportContentPadding,
-      child: _SupportTabs(
-        ticketCount: snapshot.tickets.length,
-        showFaq: showFaq,
-        onShowTickets: onShowTickets,
-        onShowFaq: onShowFaq,
-      ),
+    _SupportTabs(
+      ticketCount: snapshot.tickets.length,
+      showFaq: showFaq,
+      onShowTickets: onShowTickets,
+      onShowFaq: onShowFaq,
     ),
-    Padding(
-      padding: SupportSpacingTokens.supportContentPadding,
-      child: showFaq
-          ? _FaqPanel(
-              items: snapshot.faqItems,
-              expandedIndex: expandedFaqIndex,
-              onToggle: onToggleFaq,
-            )
-          : _TicketsPanel(
-              activeTickets: activeTickets,
-              doneTickets: doneTickets,
-            ),
-    ),
+    showFaq
+        ? _FaqPanel(
+            items: snapshot.faqItems,
+            expandedIndex: expandedFaqIndex,
+            onToggle: onToggleFaq,
+          )
+        : _TicketsPanel(activeTickets: activeTickets, doneTickets: doneTickets),
   ];
 }
 
@@ -98,64 +86,61 @@ class _QuickContactGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Column(
       key: SupportPage.quickLinksKey,
-      padding: SupportSpacingTokens.supportContentPadding,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: _QuickLinkCard(
-                  key: SupportPage.quickLinkKey('help'),
-                  icon: Icons.menu_book_outlined,
-                  eyebrow: 'Trung tâm',
-                  title: 'Trợ giúp',
-                  color: AppColors.accent,
-                  onTap: () => context.go(snapshot.helpRoute),
-                ),
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: _QuickLinkCard(
+                key: SupportPage.quickLinkKey('help'),
+                icon: Icons.menu_book_outlined,
+                eyebrow: 'Trung tâm',
+                title: 'Trợ giúp',
+                color: AppColors.accent,
+                onTap: () => context.go(snapshot.helpRoute),
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _QuickLinkCard(
-                  key: SupportPage.quickLinkKey('announcements'),
-                  icon: Icons.notifications_none_rounded,
-                  eyebrow: 'Thông báo',
-                  title: 'Hệ thống',
-                  color: AppColors.warn,
-                  onTap: () => context.go(snapshot.announcementsRoute),
-                ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: _QuickLinkCard(
+                key: SupportPage.quickLinkKey('announcements'),
+                icon: Icons.notifications_none_rounded,
+                eyebrow: 'Thông báo',
+                title: 'Hệ thống',
+                color: AppColors.warn,
+                onTap: () => context.go(snapshot.announcementsRoute),
               ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          Row(
-            children: [
-              Expanded(
-                child: _QuickLinkCard(
-                  key: SupportPage.quickLinkKey('email'),
-                  icon: Icons.mail_outline_rounded,
-                  eyebrow: 'Email',
-                  title: 'support@...',
-                  color: AppModuleAccents.support,
-                  onTap: HapticFeedback.selectionClick,
-                ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+        Row(
+          children: [
+            Expanded(
+              child: _QuickLinkCard(
+                key: SupportPage.quickLinkKey('email'),
+                icon: Icons.mail_outline_rounded,
+                eyebrow: 'Email',
+                title: 'support@...',
+                color: AppModuleAccents.support,
+                onTap: HapticFeedback.selectionClick,
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _QuickLinkCard(
-                  key: SupportPage.quickLinkKey('hotline'),
-                  icon: Icons.call_outlined,
-                  eyebrow: 'Hotline',
-                  title: snapshot.hotline,
-                  color: AppColors.buy,
-                  onTap: HapticFeedback.selectionClick,
-                ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: _QuickLinkCard(
+                key: SupportPage.quickLinkKey('hotline'),
+                icon: Icons.call_outlined,
+                eyebrow: 'Hotline',
+                title: snapshot.hotline,
+                color: AppColors.buy,
+                onTap: HapticFeedback.selectionClick,
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

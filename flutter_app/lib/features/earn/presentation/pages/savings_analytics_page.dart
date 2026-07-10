@@ -75,32 +75,6 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Material(
-                color: AppColors.surface,
-                child: Padding(
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.zero,
-                    bottom: AppSpacing.zero,
-                  ),
-                  child: VitTabBar(
-                    variant: VitTabBarVariant.underline,
-                    activeKey: activeTab,
-                    onChanged: (tab) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _tab = tab);
-                    },
-                    tabs: [
-                      for (final tab in snapshot.tabs)
-                        VitTabItem(key: tab, label: tab),
-                    ],
-                  ),
-                ),
-              ),
-              const Divider(
-                height: AppSpacing.dividerHairline,
-                thickness: AppSpacing.dividerHairline,
-                color: AppColors.divider,
-              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -113,6 +87,18 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
                     gap: VitContentGap.defaultGap,
                     children: [
                       _SummaryHero(summary: snapshot.summary),
+                      VitTabBar(
+                        variant: VitTabBarVariant.segment,
+                        activeKey: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                        tabs: [
+                          for (final tab in snapshot.tabs)
+                            VitTabItem(key: tab, label: tab),
+                        ],
+                      ),
                       if (activeTab == 'Yield') ...[
                         _TimeRangeSelector(
                           ranges: snapshot.timeRanges,

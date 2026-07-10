@@ -13,29 +13,24 @@ class _ActivityFilterRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.contentPad,
-      ),
-      child: Row(
-        children: [
-          for (final filter in filters) ...[
-            VitChoicePill(
-              key: ActivityLogPage.filterKey(filter.id),
-              label: filter.label,
-              selected: filter.id == activeFilter,
-              onTap: () => onChanged(filter.id),
-              height: VitDensity.compact.controlHeight,
-              padding: ProfileSpacingTokens.profileActivityFilterChipPadding,
-              accentColor: _activityPrimary,
+    return Row(
+      children: [
+        for (final filter in filters) ...[
+          VitChoicePill(
+            key: ActivityLogPage.filterKey(filter.id),
+            label: filter.label,
+            selected: filter.id == activeFilter,
+            onTap: () => onChanged(filter.id),
+            height: VitDensity.compact.controlHeight,
+            padding: ProfileSpacingTokens.profileActivityFilterChipPadding,
+            accentColor: _activityPrimary,
+          ),
+          if (filter != filters.last)
+            const SizedBox(
+              width: ProfileSpacingTokens.profileActivityFilterChipGap,
             ),
-            if (filter != filters.last)
-              const SizedBox(
-                width: ProfileSpacingTokens.profileActivityFilterChipGap,
-              ),
-          ],
         ],
-      ),
+      ],
     );
   }
 }

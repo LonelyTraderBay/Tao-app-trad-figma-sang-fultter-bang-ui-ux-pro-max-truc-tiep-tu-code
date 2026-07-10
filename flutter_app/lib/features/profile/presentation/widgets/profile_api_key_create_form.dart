@@ -267,7 +267,7 @@ class _IpWhitelistSection extends StatelessWidget {
                     selected: true,
                     onTap: () => onRemove(ip),
                     tone: VitChoicePillTone.success,
-                    height: HomeSpacingTokens.homeChipMinHeight,
+                    height: SharedSpacingTokens.homeChipMinHeight,
                     padding: ProfileSpacingTokens.profileApiCreateIpChipPadding,
                   ),
               ],

@@ -183,7 +183,8 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                           _SecurityInfo(snapshot: snapshot),
                           VitPageContent(
                             rhythm: VitPageRhythm.standard,
-                            padding: VitContentPadding.compact,
+                            padding: VitContentPadding.none,
+                            fullBleed: true,
                             children: const [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,

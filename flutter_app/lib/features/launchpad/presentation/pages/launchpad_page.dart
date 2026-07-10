@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/launchpad_home_header_widgets.dart';
 part '../widgets/launchpad_home_helpers.dart';
@@ -28,8 +29,6 @@ part '../widgets/launchpad_home_shared_widgets.dart';
 part '../widgets/launchpad_home_project_widgets.dart';
 part '../widgets/launchpad_home_tool_widgets.dart';
 
-const _launchpadVisualNavClearance = 112.0;
-const _launchpadNativeNavClearance = 88.0;
 const _launchpadLineHeightDense =
     LaunchpadSpacingTokens.launchpadLineHeightDense;
 const _launchpadLineHeightCompact =
@@ -80,8 +79,8 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
         .length;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadVisualNavClearance
-        : _launchpadNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

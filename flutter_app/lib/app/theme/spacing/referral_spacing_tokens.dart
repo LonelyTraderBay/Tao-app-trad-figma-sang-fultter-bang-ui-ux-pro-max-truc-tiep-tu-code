@@ -44,6 +44,8 @@ final class ReferralSpacingTokens {
       LaunchpadSpacingTokens.launchpadBox34;
   static EdgeInsets referralBottomScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
+  // Recipe B only: horizontal contentPad here requires VitPageContent fullBleed.
+  // Prefer Recipe A (referralBottomScrollPadding + VitPageContent padding).
   static EdgeInsets referralPageScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(
         AppSpacing.contentPad,

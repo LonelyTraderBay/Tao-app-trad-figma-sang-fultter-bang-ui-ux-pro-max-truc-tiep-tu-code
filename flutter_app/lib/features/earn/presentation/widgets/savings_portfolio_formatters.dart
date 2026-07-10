@@ -4,8 +4,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
-const double savingsPortfolioVisualNavClearance = 112;
-const double savingsPortfolioNativeNavClearance = 88;
 const double savingsPortfolioDonutExtent = 118;
 const double savingsPortfolioSectionMarkerExtent =
     AppSpacing.iconSm + AppSpacing.x1;

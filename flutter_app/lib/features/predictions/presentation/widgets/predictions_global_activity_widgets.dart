@@ -69,10 +69,10 @@ class _LiveStats extends StatelessWidget {
                   value: _formatVolume(snapshot.totalVolume),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
-                color: AppColors.border,
+                child: ColoredBox(color: AppColors.border),
               ),
               Expanded(
                 child: Row(

@@ -19,23 +19,28 @@ class _WhitelistModeCard extends StatelessWidget {
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
-            Container(
-              width: AppSpacing.buttonCompact,
-              height: AppSpacing.buttonCompact,
-              decoration: BoxDecoration(
+            DecoratedBox(
+              decoration: ShapeDecoration(
                 color: enabled
                     ? AppColors.buy.withValues(alpha: .12)
                     : AppColors.surface2,
-                borderRadius: AppRadii.smRadius,
-                border: Border.all(
-                  color: enabled ? AppColors.buy20 : AppColors.borderSolid,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                  side: BorderSide(
+                    color: enabled ? AppColors.buy20 : AppColors.borderSolid,
+                  ),
                 ),
               ),
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.lock_outline_rounded,
-                color: enabled ? AppColors.buy : AppColors.text3,
-                size: AppSpacing.iconSm,
+              child: SizedBox(
+                width: AppSpacing.buttonCompact,
+                height: AppSpacing.buttonCompact,
+                child: Center(
+                  child: Icon(
+                    Icons.lock_outline_rounded,
+                    color: enabled ? AppColors.buy : AppColors.text3,
+                    size: AppSpacing.iconSm,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: WalletSpacingTokens.walletAddressActionGap),

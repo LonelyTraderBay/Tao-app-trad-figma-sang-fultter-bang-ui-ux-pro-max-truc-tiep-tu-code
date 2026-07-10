@@ -26,7 +26,7 @@ const Map<String, int> _allModuleDivergenceBaselines = <String, int>{
   'dca': 1,
   'dev': 0,
   'discovery': 0,
-  'earn': 10,
+  'earn': 0,
   'enterprise_states': 0,
   // Home is the canonical reference itself — locked at zero, not just a
   // frozen historical baseline. If this regresses above 0, home is no
@@ -39,13 +39,13 @@ const Map<String, int> _allModuleDivergenceBaselines = <String, int>{
   'notifications': 1,
   'onboarding': 0,
   'p2p': 5,
-  'predictions': 12,
+  'predictions': 0,
   'profile': 0,
   'referral': 0,
   'rewards': 2,
   'support': 3,
-  'trade': 15,
-  'wallet': 15,
+  'trade': 0,
+  'wallet': 0,
 };
 
 const Set<String> _additionalRootPagePaths = <String>{
@@ -60,6 +60,7 @@ const Set<String> _additionalRootPagePaths = <String>{
   'lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart',
   'lib/features/onboarding/presentation/pages/onboarding_flow.dart',
   'lib/features/trade/presentation/pages/copy_trading_card_demo.dart',
+  'lib/features/dca/presentation/pages/dca_overview_demo.dart',
 };
 
 final class DivergenceFileMetric {

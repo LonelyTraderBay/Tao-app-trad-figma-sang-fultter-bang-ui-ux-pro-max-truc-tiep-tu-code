@@ -282,10 +282,12 @@ class _BreakdownRow extends StatelessWidget {
             ),
           ),
           if (i != items.length - 1)
-            Container(
+            SizedBox(
               width: 1,
               height: _walletBreakdownDividerHeight,
-              color: AppColors.onAccent.withValues(alpha: .08),
+              child: ColoredBox(
+                color: AppColors.onAccent.withValues(alpha: .08),
+              ),
             ),
         ],
       ],

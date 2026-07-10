@@ -135,6 +135,10 @@ const tierProductRouteOverrides = <String, String>{
   'AppRouteNames.sc355StakingWithdrawalPolicy': 'form',
   'AppRouteNames.sc188ArenaGovernanceGate': 'form',
   'AppRouteNames.sc023AdvancedCharts': 'flush',
+  // Canonical tabbed-detail archetype reference (Flutter-Page-Archetype-Standard.md
+  // Archetype A): "Use VitPageRhythm.form when tab panels are data-entry
+  // heavy (as in the canonical reference)" — refers to this exact page.
+  'AppRouteNames.sc150TokenApproval': 'form',
 };
 
 final flushChartWidgetPatterns = RegExp(

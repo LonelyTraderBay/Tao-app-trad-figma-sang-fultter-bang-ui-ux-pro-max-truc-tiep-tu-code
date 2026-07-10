@@ -100,31 +100,25 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
                         ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
                       children: [
-                        Padding(
-                          padding: EnterpriseStatesSpacingTokens
-                              .enterpriseStatesContentPadding,
-                          child: switch (_section) {
-                            EnterpriseStateSection.stateKit => _StateKitSection(
-                              snapshot: snapshot,
-                              activeState: _preview,
-                              onStateChanged: (state) {
-                                HapticFeedback.selectionClick();
-                                setState(() => _preview = state);
-                              },
-                              onMarkets: () => context.go(snapshot.marketRoute),
-                              onKyc: () => context.go(snapshot.kycRoute),
-                            ),
-                            EnterpriseStateSection.applied => _AppliedSection(
-                              snapshot: snapshot,
-                            ),
-                            EnterpriseStateSection.security => _SecuritySection(
-                              snapshot: snapshot,
-                            ),
-                          },
-                        ),
+                        switch (_section) {
+                          EnterpriseStateSection.stateKit => _StateKitSection(
+                            snapshot: snapshot,
+                            activeState: _preview,
+                            onStateChanged: (state) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _preview = state);
+                            },
+                            onMarkets: () => context.go(snapshot.marketRoute),
+                            onKyc: () => context.go(snapshot.kycRoute),
+                          ),
+                          EnterpriseStateSection.applied => _AppliedSection(
+                            snapshot: snapshot,
+                          ),
+                          EnterpriseStateSection.security => _SecuritySection(
+                            snapshot: snapshot,
+                          ),
+                        },
                       ],
                     ),
                   ),

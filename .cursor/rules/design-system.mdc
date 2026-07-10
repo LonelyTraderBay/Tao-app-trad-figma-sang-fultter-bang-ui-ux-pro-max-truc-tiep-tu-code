@@ -1,5 +1,5 @@
 ---
-description: Design system contract — read DESIGN.md before UI work
+description: 
 globs: ["flutter_app/**/*.dart"]
 alwaysApply: false
 ---

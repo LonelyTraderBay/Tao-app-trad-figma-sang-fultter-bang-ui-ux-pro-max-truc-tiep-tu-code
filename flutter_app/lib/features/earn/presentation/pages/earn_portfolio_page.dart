@@ -13,8 +13,8 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? savingsPortfolioVisualNavClearance
-            : savingsPortfolioNativeNavClearance) +
+            ? SharedSpacingTokens.bottomNavVisualClearance
+            : SharedSpacingTokens.bottomNavNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(

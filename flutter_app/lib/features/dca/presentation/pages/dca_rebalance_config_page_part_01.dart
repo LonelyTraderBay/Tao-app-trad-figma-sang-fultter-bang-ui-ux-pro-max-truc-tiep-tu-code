@@ -419,22 +419,20 @@ class _StrategySection extends StatelessWidget {
           title: 'Chiến lược',
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const ClampingScrollPhysics(),
-          child: Row(
-            children: [
-              for (var index = 0; index < options.length; index++) ...[
-                _StrategyOptionTile(
+        Row(
+          children: [
+            for (var index = 0; index < options.length; index++) ...[
+              Expanded(
+                child: _StrategyOptionTile(
                   option: options[index],
                   selected: active == options[index].strategy,
                   onTap: () => onChanged(options[index].strategy),
                 ),
-                if (index < options.length - 1)
-                  const SizedBox(width: AppSpacing.x2),
-              ],
+              ),
+              if (index < options.length - 1)
+                const SizedBox(width: AppSpacing.x2),
             ],
-          ),
+          ],
         ),
       ],
     );
@@ -454,19 +452,16 @@ class _StrategyOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: _dcaRebalanceStrategyChipWidth,
-      child: VitChoicePill(
-        key: DCARebalanceConfig.strategyKey(option.strategy),
-        label: option.title,
-        selected: selected,
-        onTap: onTap,
-        accentColor: AppColors.accent,
-        fullWidth: true,
-        leading: Icon(_strategyIcon(option.icon)),
-        showSelectedIcon: selected,
-        semanticLabel: '${option.title}: ${option.subtitle}',
-      ),
+    return VitChoicePill(
+      key: DCARebalanceConfig.strategyKey(option.strategy),
+      label: _strategyChoiceLabel(option),
+      selected: selected,
+      onTap: onTap,
+      accentColor: AppColors.accent,
+      fullWidth: true,
+      leading: Icon(_strategyIcon(option.icon)),
+      showSelectedIcon: selected,
+      semanticLabel: '${option.title}: ${option.subtitle}',
     );
   }
 }

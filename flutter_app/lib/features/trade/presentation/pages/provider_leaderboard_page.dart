@@ -130,7 +130,7 @@ class _ProviderLeaderboardPageState
                   height: _leaderLineFlat,
                 ),
               ),
-              for (final entry in providers.indexed)
+              for (final entry in providers.indexed) ...[
                 _ProviderRankCard(
                   rank: entry.$1 + 1,
                   provider: entry.$2,
@@ -141,6 +141,9 @@ class _ProviderLeaderboardPageState
                     ),
                   ),
                 ),
+                if (entry.$1 != providers.length - 1)
+                  const SizedBox(height: AppSpacing.rowGap),
+              ],
               _Disclaimer(text: snapshot.disclaimer),
             ],
           ),

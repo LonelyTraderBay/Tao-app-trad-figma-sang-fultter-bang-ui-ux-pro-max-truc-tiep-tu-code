@@ -115,7 +115,8 @@ class _P2PContributionHistoryPageState
                         ),
                         VitPageContent(
                           rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.compact,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,

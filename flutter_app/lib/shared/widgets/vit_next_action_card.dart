@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class VitNextActionCard extends StatelessWidget {
   const VitNextActionCard({
@@ -36,14 +36,14 @@ class VitNextActionCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       padding: const EdgeInsetsDirectional.all(
-        HomeSpacingTokens.homeNextActionCardPadding,
+        SharedSpacingTokens.homeNextActionCardPadding,
       ),
       borderColor: accentColor.withValues(alpha: .28),
       child: Row(
         children: [
           SizedBox(
-            width: HomeSpacingTokens.homeNextActionIconContainer,
-            height: HomeSpacingTokens.homeNextActionIconContainer,
+            width: SharedSpacingTokens.homeNextActionIconContainer,
+            height: SharedSpacingTokens.homeNextActionIconContainer,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accentColor.withValues(alpha: .14),
@@ -55,12 +55,12 @@ class VitNextActionCard extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: accentColor,
-                  size: HomeSpacingTokens.homeNextActionIconSize,
+                  size: SharedSpacingTokens.homeNextActionIconSize,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: HomeSpacingTokens.homeCommandRowSpacing),
+          const SizedBox(width: SharedSpacingTokens.homeCommandRowSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class VitNextActionCard extends StatelessWidget {
                     VitAccentPill(label: statusLabel, accentColor: accentColor),
                   ],
                 ),
-                const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
+                const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -109,11 +109,11 @@ class VitNextActionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: HomeSpacingTokens.homeChevronGap),
+          const SizedBox(width: SharedSpacingTokens.homeChevronGap),
           Icon(
             Icons.chevron_right_rounded,
             color: accentColor,
-            size: HomeSpacingTokens.homeActionChevronSize,
+            size: SharedSpacingTokens.homeActionChevronSize,
           ),
         ],
       ),

@@ -269,6 +269,9 @@ void main() {
   ) async {
     await pumpSmartRules(tester);
 
+    await tester.ensureVisible(
+      find.byKey(ArenaSmartRuleBuilderPage.guidanceKey),
+    );
     await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.guidanceKey));
     await tester.pumpAndSettle();
     expect(find.text('Public room cần rule rõ ràng hơn'), findsOneWidget);

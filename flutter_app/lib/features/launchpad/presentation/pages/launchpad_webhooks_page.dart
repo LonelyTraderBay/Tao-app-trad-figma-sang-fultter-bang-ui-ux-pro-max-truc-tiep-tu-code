@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'launchpad_webhooks_page_part_01.dart';
 part 'launchpad_webhooks_page_part_02.dart';
@@ -31,8 +32,6 @@ part '../widgets/launchpad_webhooks_common_widgets.dart';
 
 enum _WebhookTab { subscriptions, deliveries }
 
-const double _launchpadWebhooksVisualNavClearance = 112;
-const double _launchpadWebhooksNativeNavClearance = 88;
 const double _launchpadWebhooksLineHeightTight = 1.0;
 const double _launchpadWebhooksLineHeightShort = 1.2;
 const double _launchpadWebhooksDividerHeight = AppSpacing.hairlineStroke;
@@ -134,8 +133,8 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
     final snapshot = ref.watch(launchpadControllerProvider).getWebhooks();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadWebhooksVisualNavClearance
-        : _launchpadWebhooksNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
     final stats = _WebhookStats.from(_subscriptions, snapshot.deliveries);

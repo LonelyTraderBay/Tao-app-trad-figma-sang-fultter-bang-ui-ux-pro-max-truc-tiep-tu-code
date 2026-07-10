@@ -181,7 +181,7 @@ class StakingRecommendationsProfileMetric extends StatelessWidget {
   }
 }
 
-class StakingRecommendationsAmountSimulator extends StatelessWidget {
+class StakingRecommendationsAmountSimulator extends StatefulWidget {
   const StakingRecommendationsAmountSimulator({
     super.key,
     required this.amountText,
@@ -190,6 +190,45 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
 
   final String amountText;
   final ValueChanged<String> onAmountChanged;
+
+  @override
+  State<StakingRecommendationsAmountSimulator> createState() =>
+      _StakingRecommendationsAmountSimulatorState();
+}
+
+class _StakingRecommendationsAmountSimulatorState
+    extends State<StakingRecommendationsAmountSimulator> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.amountText)
+      ..selection = TextSelection.collapsed(offset: widget.amountText.length);
+  }
+
+  @override
+  void didUpdateWidget(
+    covariant StakingRecommendationsAmountSimulator oldWidget,
+  ) {
+    super.didUpdateWidget(oldWidget);
+    // onAmountChanged always feeds the parent back the exact string this
+    // controller already holds, so this only fires for a genuinely
+    // external/programmatic change — never fights the user's own typing.
+    if (widget.amountText != oldWidget.amountText &&
+        widget.amountText != _controller.text) {
+      _controller.value = TextEditingValue(
+        text: widget.amountText,
+        selection: TextSelection.collapsed(offset: widget.amountText.length),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,9 +246,8 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
           TextField(
             key: StakingRecommendationsKeys.amountField,
             keyboardType: TextInputType.number,
-            onChanged: onAmountChanged,
-            controller: TextEditingController(text: amountText)
-              ..selection = TextSelection.collapsed(offset: amountText.length),
+            onChanged: widget.onAmountChanged,
+            controller: _controller,
             cursorColor: AppColors.primary,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,

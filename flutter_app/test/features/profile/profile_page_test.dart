@@ -93,7 +93,7 @@ void main() {
     );
     expect(find.text('T\u00E0i kho\u1EA3n'), findsOneWidget);
     expect(find.text('Nguy\u1EC5n V\u0103n A'), findsOneWidget);
-    expect(find.text('nguyenvana@email.com'), findsOneWidget);
+    expect(find.text('n***@email.com'), findsOneWidget);
     expect(find.text('USR001'), findsOneWidget);
     expect(find.text('VITTA-A2B3C'), findsOneWidget);
     expect(find.text('Ti\u1EBFn \u0111\u1ED9 VIP'), findsOneWidget);

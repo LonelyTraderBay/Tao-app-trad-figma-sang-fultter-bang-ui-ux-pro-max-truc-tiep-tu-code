@@ -6,7 +6,6 @@ void main() {
   group('product copy guardrails - Arena and auth', () {
     test('Arena and RewardsHub reward surfaces stay points-only', () {
       final files = [
-        'lib/features/arena/presentation/pages/arena_points_page.dart',
         'lib/features/arena/data/repositories/mock_arena_repository.dart',
         'lib/features/rewards/presentation/pages/rewards_hub_page.dart',
         'lib/features/rewards/data/repositories/mock_rewards_repository.dart',
@@ -23,7 +22,6 @@ void main() {
       }
 
       final visibleRewardSurfaces = [
-        'lib/features/arena/presentation/pages/arena_points_page.dart',
         'lib/features/rewards/presentation/pages/rewards_hub_page.dart',
         'lib/features/rewards/data/repositories/mock_rewards_repository.dart',
       ];

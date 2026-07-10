@@ -94,6 +94,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(P2P2FASettingsPage.dialogConfirmKey));
+    await tester.pumpAndSettle();
+
     expect(find.text('≥ 50,000,000 VND'), findsOneWidget);
   });
 
@@ -109,11 +112,33 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(P2P2FASettingsPage.dialogConfirmKey));
+    await tester.pumpAndSettle();
+
     expect(find.text('2FA đã bật (3 phương thức)'), findsOneWidget);
     expect(
       find.text('Cần setup Authenticator App trước khi sử dụng'),
       findsNothing,
     );
+  });
+
+  testWidgets('SC-254 can set a new primary 2FA method', (tester) async {
+    await pumpTwoFactorSettings(tester);
+
+    expect(find.text('Phương thức chính: SMS OTP'), findsOneWidget);
+
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(P2P2FASettingsPage.methodKey('2fa_email')),
+        matching: find.text('Đặt làm phương thức chính'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(P2P2FASettingsPage.dialogConfirmKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Phương thức chính: Email OTP'), findsOneWidget);
   });
 
   testWidgets('SC-254 back returns to security center', (tester) async {

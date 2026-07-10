@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_market_rows.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class VitMarketTickerData {
   const VitMarketTickerData({
@@ -41,7 +41,9 @@ class VitMarketTickerStrip extends StatelessWidget {
           for (var index = 0; index < items.length; index++) ...[
             VitMarketTickerCard(data: items[index]),
             if (index < items.length - 1)
-              const SizedBox(width: HomeSpacingTokens.homeMarketTickerStripGap),
+              const SizedBox(
+                width: SharedSpacingTokens.homeMarketTickerStripGap,
+              ),
           ],
         ],
       ),
@@ -57,14 +59,14 @@ class VitMarketTickerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: HomeSpacingTokens.homeMarketTickerCardWidth,
+      width: SharedSpacingTokens.homeMarketTickerCardWidth,
       child: VitCard(
         onTap: data.onTap,
         borderColor: data.trend.foreground.withValues(alpha: .24),
         padding: AppSpacing.cardTilePadding,
         contentAlign: VitCardContentAlign.center,
         constraints: const BoxConstraints(
-          minHeight: HomeSpacingTokens.homeMarketTickerCardMinHeight,
+          minHeight: SharedSpacingTokens.homeMarketTickerCardMinHeight,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

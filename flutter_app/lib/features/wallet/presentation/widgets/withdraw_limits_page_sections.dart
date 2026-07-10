@@ -20,19 +20,24 @@ class _CurrentTierCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: _limitsIconBox,
-                height: _limitsIconBox,
-                decoration: BoxDecoration(
+              DecoratedBox(
+                decoration: ShapeDecoration(
                   color: tierColor.withValues(alpha: .14),
-                  borderRadius: AppRadii.smRadius,
-                  border: Border.all(color: tierColor.withValues(alpha: .5)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                    side: BorderSide(color: tierColor.withValues(alpha: .5)),
+                  ),
                 ),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.shield_outlined,
-                  color: tierColor,
-                  size: WalletSpacingTokens.walletTokenHeroIconGlyph,
+                child: SizedBox(
+                  width: _limitsIconBox,
+                  height: _limitsIconBox,
+                  child: Center(
+                    child: Icon(
+                      Icons.shield_outlined,
+                      color: tierColor,
+                      size: WalletSpacingTokens.walletTokenHeroIconGlyph,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: _limitsInlineGap),

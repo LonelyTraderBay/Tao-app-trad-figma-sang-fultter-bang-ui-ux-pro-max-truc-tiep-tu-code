@@ -121,7 +121,7 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                   child: SingleChildScrollView(
                     key: SupportPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: SupportSpacingTokens.supportScrollPadding(
+                    padding: SupportSpacingTokens.supportHubScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(

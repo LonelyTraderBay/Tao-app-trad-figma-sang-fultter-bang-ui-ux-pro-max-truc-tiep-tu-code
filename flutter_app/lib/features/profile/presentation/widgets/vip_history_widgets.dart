@@ -19,7 +19,7 @@ class VipHistoryTab extends StatelessWidget {
         for (final row in snapshot.history) ...[
           _VipHistoryCard(row: row),
           if (row != snapshot.history.last)
-            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

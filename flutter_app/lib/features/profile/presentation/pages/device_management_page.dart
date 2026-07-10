@@ -38,6 +38,8 @@ class DeviceManagementPage extends ConsumerStatefulWidget {
   static const contentKey = Key('sc165_devices_content');
   static const summaryKey = Key('sc165_devices_summary');
   static const logoutAllKey = Key('sc165_devices_logout_all');
+  static const logoutConfirmKey = Key('sc165_devices_logout_confirm');
+  static const logoutCancelKey = Key('sc165_devices_logout_cancel');
 
   static Key deviceCardKey(String id) => Key('sc165_device_card_$id');
   static Key trustKey(String id) => Key('sc165_device_trust_$id');
@@ -199,14 +201,52 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
     });
   }
 
-  void _logoutDevice(String id) {
+  ProfileManagedDevice? _deviceById(String id) {
+    for (final device in _devices) {
+      if (device.id == id) return device;
+    }
+    return null;
+  }
+
+  Future<void> _logoutDevice(String id) async {
+    final device = _deviceById(id);
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Đăng xuất thiết bị?',
+      message: 'Phiên đăng nhập trên thiết bị này sẽ bị thu hồi ngay lập tức.',
+      rows: [
+        if (device != null)
+          VitConfirmDialogRow(label: 'Tên thiết bị', value: device.name),
+        if (device != null)
+          VitConfirmDialogRow(
+            label: 'Loại thiết bị',
+            value: '${device.browser} • ${device.os}',
+          ),
+      ],
+      confirmLabel: 'Đăng xuất',
+      confirmVariant: VitCtaButtonVariant.danger,
+      confirmKey: DeviceManagementPage.logoutConfirmKey,
+      cancelKey: DeviceManagementPage.logoutCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _devices = _devices.where((device) => device.id != id).toList();
     });
   }
 
-  void _logoutAll() {
+  Future<void> _logoutAll() async {
+    final targets = _otherDevices;
+    if (targets.isEmpty) return;
+
+    final confirmed = await showVitBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => _LogoutAllDevicesPreviewSheet(devices: targets),
+    );
+    if (!mounted || confirmed != true) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _devices = _devices.where((device) => device.isCurrent).toList();

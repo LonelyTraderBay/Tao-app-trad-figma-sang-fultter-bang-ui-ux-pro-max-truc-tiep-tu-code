@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 /// Descriptor for a trade order row in dense list views.
 final class VitTradeOrderRecord {
@@ -34,7 +34,7 @@ class VitTradeOrderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: TradeSpacingTokens.tradeOrderRowPadding,
+      padding: SharedSpacingTokens.tradeOrderRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -85,7 +85,7 @@ class VitTradeOrderList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (records.isEmpty) {
       return Padding(
-        padding: TradeSpacingTokens.tradeOrderRowPadding,
+        padding: SharedSpacingTokens.tradeOrderRowPadding,
         child: Text(
           emptyLabel,
           textAlign: TextAlign.center,

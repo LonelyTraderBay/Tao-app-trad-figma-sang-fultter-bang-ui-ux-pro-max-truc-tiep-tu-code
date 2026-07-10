@@ -420,12 +420,6 @@ int _blockingStructuralCount(_AuditRow row) {
       .length;
 }
 
-String _joinUnique(Iterable<String> values) {
-  final set = values.where((v) => v.isNotEmpty).toSet();
-  if (set.isEmpty) return '';
-  return set.join('|');
-}
-
 String _renderCsv(List<_ScreenRow> rows) {
   final buffer = StringBuffer(
     'screen_id,route_path,route_name,page_widget,page_file,layout_pattern,'

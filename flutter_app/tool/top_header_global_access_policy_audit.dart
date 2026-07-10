@@ -52,7 +52,7 @@ final class GlobalAccessReport {
 }
 
 const _globalSearchAllowlist = <String>{
-  'lib/features/home/presentation/pages/home_page_part_01.dart',
+  'lib/features/home/presentation/widgets/home_header.dart',
 };
 
 const _moduleSearchAllowlist = <String>{
@@ -61,7 +61,7 @@ const _moduleSearchAllowlist = <String>{
 };
 
 const _globalNotificationAllowlist = <String>{
-  'lib/features/home/presentation/pages/home_page_part_01.dart',
+  'lib/features/home/presentation/widgets/home_header.dart',
 };
 
 const _contextNotificationAllowlist = <String>{

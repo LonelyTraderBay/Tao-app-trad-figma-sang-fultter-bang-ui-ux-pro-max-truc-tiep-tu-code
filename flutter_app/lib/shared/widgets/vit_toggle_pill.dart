@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class VitTogglePill extends StatelessWidget {
   const VitTogglePill({
     super.key,
     required this.enabled,
-    this.width = WalletSpacingTokens.walletAddressSwitchWidth,
-    this.height = WalletSpacingTokens.walletAddressSwitchHeight,
-    this.knobSize = WalletSpacingTokens.walletAddressSwitchKnob,
-    this.knobMargin = WalletSpacingTokens.walletAddressSwitchKnobMargin,
+    this.width = SharedSpacingTokens.walletAddressSwitchWidth,
+    this.height = SharedSpacingTokens.walletAddressSwitchHeight,
+    this.knobSize = SharedSpacingTokens.walletAddressSwitchKnob,
+    this.knobMargin = SharedSpacingTokens.walletAddressSwitchKnobMargin,
     this.activeColor = AppColors.buy,
     this.inactiveColor = AppColors.surface2,
     this.activeKnobColor = AppColors.onAccent,

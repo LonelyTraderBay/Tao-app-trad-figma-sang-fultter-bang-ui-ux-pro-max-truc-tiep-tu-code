@@ -19,80 +19,22 @@ class MarketCalendarViewTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface,
-      child: SizedBox(
-        height: MarketsSpacingTokens.marketCalendarViewTabHeight,
-        child: Row(
-          children: [
-            _UnderlineViewTab(
-              key: MarketCalendarKeys.listTab,
-              label: 'Danh sách',
-              value: 'list',
-              active: activeView == 'list',
-              onChanged: onChanged,
-            ),
-            _UnderlineViewTab(
-              key: MarketCalendarKeys.calendarTab,
-              label: 'Lịch',
-              value: 'calendar',
-              active: activeView == 'calendar',
-              onChanged: onChanged,
-            ),
-          ],
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: activeView,
+      onChanged: onChanged,
+      tabs: [
+        VitTabItem(
+          key: 'list',
+          label: 'Danh sách',
+          widgetKey: MarketCalendarKeys.listTab,
         ),
-      ),
-    );
-  }
-}
-
-class _UnderlineViewTab extends StatelessWidget {
-  const _UnderlineViewTab({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String value;
-  final bool active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        borderColor: AppColors.transparent,
-        padding: EdgeInsets.zero,
-        onTap: () => onChanged(value),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? marketCalendarPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MarketsSpacingTokens.marketCalendarViewUnderlineHeight,
-              child: FractionallySizedBox(
-                widthFactor: active ? 1 : 0,
-                alignment: Alignment.center,
-                child: const ColoredBox(color: marketCalendarPrimary),
-              ),
-            ),
-          ],
+        VitTabItem(
+          key: 'calendar',
+          label: 'Lịch',
+          widgetKey: MarketCalendarKeys.calendarTab,
         ),
-      ),
+      ],
     );
   }
 }

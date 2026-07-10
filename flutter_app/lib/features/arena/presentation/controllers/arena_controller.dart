@@ -1,5 +1,6 @@
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/features/arena/domain/repositories/arena_repository.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_creation_controller.dart';
 
 export 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 export 'package:vit_trade_flutter/features/arena/domain/repositories/arena_repository.dart';
@@ -295,4 +296,186 @@ String _reportStatusLabel(ArenaReportCaseStatus status) {
     ArenaReportCaseStatus.closed => 'Closed',
     ArenaReportCaseStatus.appealOpen => 'Appeal open',
   };
+}
+
+final class ArenaSmartRuleFormDraft {
+  const ArenaSmartRuleFormDraft({
+    required this.title,
+    required this.domainId,
+    required this.challengeTypeId,
+    required this.subject,
+    required this.action,
+    required this.metric,
+    required this.winType,
+    required this.deadlineContext,
+    required this.customWinCondition,
+    required this.description,
+    required this.endDate,
+    required this.tieRule,
+    required this.voidRule,
+    required this.resultDeadline,
+    required this.rematchEnabled,
+    required this.saveAsMode,
+    required this.ruleReviewAccepted,
+    required this.pointsBoundaryAccepted,
+    required this.moderationAccepted,
+  });
+
+  final String title;
+  final String domainId;
+  final String challengeTypeId;
+  final String subject;
+  final String action;
+  final String metric;
+  final String winType;
+  final String deadlineContext;
+  final String customWinCondition;
+  final String description;
+  final String endDate;
+  final String tieRule;
+  final String voidRule;
+  final String resultDeadline;
+  final bool rematchEnabled;
+  final bool saveAsMode;
+  final bool ruleReviewAccepted;
+  final bool pointsBoundaryAccepted;
+  final bool moderationAccepted;
+}
+
+final class ArenaSmartRuleBuilderViewState {
+  const ArenaSmartRuleBuilderViewState({required this.snapshot});
+  final ArenaSmartRulesSnapshot snapshot;
+}
+
+final class ArenaSmartRuleBuilderController {
+  const ArenaSmartRuleBuilderController({required this.state});
+  final ArenaSmartRuleBuilderViewState state;
+
+  ArenaSmartOptionDraft? selectedDomain(ArenaSmartRuleFormDraft form) {
+    if (form.domainId.isEmpty) return null;
+    for (final domain in state.snapshot.domains) {
+      if (domain.id == form.domainId) return domain;
+    }
+    return null;
+  }
+
+  ArenaSmartOptionDraft? selectedChallengeType(ArenaSmartRuleFormDraft form) {
+    if (form.challengeTypeId.isEmpty) return null;
+    for (final type in state.snapshot.challengeTypes) {
+      if (type.id == form.challengeTypeId) return type;
+    }
+    return null;
+  }
+
+  List<String> quickSuggestions(ArenaSmartRuleFormDraft form) {
+    if (form.domainId == 'crypto') {
+      return [
+        'Giá gần đúng nhất?',
+        'Vượt mốc giá?',
+        'Token nào tăng mạnh nhất?',
+      ];
+    }
+    return state.snapshot.titleSuggestions;
+  }
+
+  String generatedWinCondition(ArenaSmartRuleFormDraft form) {
+    final parts = <String>[
+      if (form.subject.isNotEmpty) form.subject,
+      if (form.action.isNotEmpty) form.action,
+      if (form.metric.isNotEmpty) form.metric,
+      if (form.deadlineContext.isNotEmpty) form.deadlineContext,
+      if (form.winType.isNotEmpty) form.winType,
+    ];
+    if (parts.isNotEmpty) return '${parts.join(' ')}.';
+    if (form.customWinCondition.trim().isNotEmpty) {
+      return form.customWinCondition;
+    }
+    return '-';
+  }
+
+  int clarityScore(ArenaSmartRuleFormDraft form) {
+    var score = 0;
+    if (form.title.length >= 5) {
+      score += 10;
+    } else if (form.title.length >= 3) {
+      score += 5;
+    }
+    if (form.domainId.isNotEmpty) score += 10;
+    if (form.challengeTypeId.isNotEmpty) score += 10;
+    if (form.subject.isNotEmpty) score += 8;
+    if (form.action.isNotEmpty) score += 8;
+    if (form.metric.isNotEmpty) score += 6;
+    if (form.winType.isNotEmpty) score += 5;
+    if (form.deadlineContext.isNotEmpty) score += 5;
+    if (form.customWinCondition.length >= 10) {
+      score += 15;
+    } else if (form.customWinCondition.length >= 5) {
+      score += 8;
+    }
+    if (form.description.length >= 20) {
+      score += 8;
+    } else if (form.description.length >= 5) {
+      score += 4;
+    }
+    if (form.tieRule.isNotEmpty) score += 8;
+    if (form.voidRule.isNotEmpty) score += 8;
+    if (form.resultDeadline.isNotEmpty) score += 8;
+    if (form.endDate.isNotEmpty) score += 5;
+    return score.clamp(0, 100);
+  }
+
+  bool canProceed(ArenaSmartRuleFormDraft form) {
+    final hasStructuredRule = form.subject.isNotEmpty && form.action.isNotEmpty;
+    final hasCustomRule = form.customWinCondition.trim().length >= 5;
+    return form.title.trim().length >= 3 &&
+        form.domainId.isNotEmpty &&
+        form.challengeTypeId.isNotEmpty &&
+        (hasStructuredRule || hasCustomRule);
+  }
+
+  bool canSubmit(ArenaSmartRuleFormDraft form, int clarityScore) {
+    return canProceed(form) &&
+        clarityScore >= 35 &&
+        form.tieRule.isNotEmpty &&
+        form.voidRule.isNotEmpty &&
+        form.resultDeadline.isNotEmpty &&
+        form.ruleReviewAccepted &&
+        form.pointsBoundaryAccepted &&
+        form.moderationAccepted;
+  }
+
+  String missingCoreRequirement(ArenaSmartRuleFormDraft form) {
+    if (form.title.trim().length < 3) {
+      return 'Nhập tên challenge tối thiểu 3 ký tự.';
+    }
+    if (form.domainId.isEmpty) return 'Chọn lĩnh vực để phân loại challenge.';
+    if (form.challengeTypeId.isEmpty) return 'Chọn loại challenge.';
+    if (generatedWinCondition(form) == '-') {
+      return 'Chọn điều kiện thắng hoặc tự nhập rule.';
+    }
+    return 'Hoàn thiện thêm rule để tiếp tục.';
+  }
+
+  ArenaCreateChallengeDraft buildCreationDraft(
+    ArenaSmartRuleFormDraft form,
+    int clarityScore,
+  ) {
+    return ArenaCreateChallengeDraft(
+      title: form.title,
+      domainLabel: selectedDomain(form)?.label ?? '',
+      challengeTypeLabel: selectedChallengeType(form)?.label ?? '',
+      winCondition: generatedWinCondition(form),
+      description: form.description,
+      endDate: form.endDate,
+      tieRule: form.tieRule,
+      voidRule: form.voidRule,
+      resultDeadline: form.resultDeadline,
+      clarityScore: clarityScore,
+      rematchEnabled: form.rematchEnabled,
+      saveAsMode: form.saveAsMode,
+      pointsBoundaryAccepted: form.pointsBoundaryAccepted,
+      ruleReviewAccepted: form.ruleReviewAccepted,
+      moderationAccepted: form.moderationAccepted,
+    );
+  }
 }

@@ -96,7 +96,6 @@ class _RiskManagementDemoPageState
                         rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
-                        fullBleed: true,
                         children: tradeShellWithProductTabs(
                           context: context,
                           children: [

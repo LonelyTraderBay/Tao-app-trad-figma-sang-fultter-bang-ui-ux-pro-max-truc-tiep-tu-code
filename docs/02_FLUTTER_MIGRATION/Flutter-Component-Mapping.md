@@ -10,7 +10,8 @@ It replaces the old web-to-Flutter mapping role.
 | App shell | `VitAppShell` | Owns route child, shell mode, bottom nav visibility, and app chrome. |
 | Fixed review frame | `VitPhoneFrame` | Use only for explicit local QA/review flows. |
 | Page scaffold | `VitPageLayout` | Default page wrapper for feature screens. |
-| Scroll/content area | `VitPageContent` | Use for normal page content and consistent padding. |
+| Scroll/content area | `VitPageContent` | Use for normal page content and consistent padding. Set `fullBleed: true` when the scroll view already applies horizontal `contentPad` — see [Page-Content-Width-Standard.md](./Page-Content-Width-Standard.md). |
+| Bottom scroll clearance | `VitInsetScrollView` | Preferred scroll wrapper for Recipe A: bottom inset only; horizontal pad owned by `VitPageContent`. |
 | Header | `VitHeader` | Use for standard title/back/action rows. |
 | Bottom nav | `VitBottomNav` | Use shared navigation behavior and active brand token. |
 

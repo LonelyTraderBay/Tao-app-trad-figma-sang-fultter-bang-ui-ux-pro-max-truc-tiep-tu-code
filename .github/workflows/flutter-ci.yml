@@ -79,6 +79,38 @@ jobs:
       - name: Design token consistency guardrails
         run: flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 
+      - name: Spacing token duplication artifact is current
+        run: dart run tool/spacing_token_duplication_audit.dart --check
+
+      - name: Upload spacing token duplication reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spacing-token-duplication-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Spacing-Token-Duplication-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Spacing-Token-Duplication-Audit.csv
+          if-no-files-found: error
+
+      - name: Spacing token duplication guardrails
+        run: flutter test test/quality/spacing_token_duplication_guardrail_test.dart --reporter=compact
+
+      - name: Page content width artifact is current
+        run: dart run tool/page_content_width_audit.dart --check
+
+      - name: Upload page content width reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-content-width-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Content-Width-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Content-Width-Audit.csv
+          if-no-files-found: error
+
+      - name: Page content width guardrails
+        run: flutter test test/quality/page_content_width_guardrail_test.dart --reporter=compact
+
       - name: Home reference consistency artifact is current
         run: dart run tool/home_reference_consistency_audit.dart --check
 
@@ -173,6 +205,112 @@ jobs:
 
       - name: Segment pill guardrails
         run: flutter test test/quality/segment_pill_guardrail_test.dart --reporter=compact
+
+      - name: Top header behavior artifact is current
+        run: dart run tool/top_header_behavior_audit.dart --check --strict
+
+      - name: Upload top header behavior audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: top-header-behavior-audit
+          path: docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Behavior-Audit.md
+          if-no-files-found: error
+
+      - name: Top header behavior guardrails
+        run: flutter test test/quality/top_header_behavior_guardrail_test.dart --reporter=compact
+
+      - name: Top header action artifacts are current
+        run: dart run tool/top_header_action_audit.dart --check --strict
+
+      - name: Upload top header action audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: top-header-action-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Action-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Action-Audit.csv
+          if-no-files-found: error
+
+      - name: Top header action guardrails
+        run: flutter test test/quality/top_header_action_guardrail_test.dart --reporter=compact
+
+      - name: Top header global access policy artifacts are current
+        run: dart run tool/top_header_global_access_policy_audit.dart --check --strict
+
+      - name: Upload top header global access policy audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: top-header-global-access-policy-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Global-Access-Policy-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Global-Access-Policy-Audit.csv
+          if-no-files-found: error
+
+      - name: Top header global access policy guardrails
+        run: flutter test test/quality/top_header_global_access_policy_guardrail_test.dart --reporter=compact
+
+      - name: Top header visual archetype artifacts are current
+        run: dart run tool/top_header_visual_archetype_audit.dart --check --strict
+
+      - name: Upload top header visual archetype audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: top-header-visual-archetype-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.csv
+          if-no-files-found: error
+
+      - name: Top header visual archetype guardrails
+        run: flutter test test/quality/top_header_visual_guardrail_test.dart --reporter=compact
+
+      - name: Back navigation behavior artifacts are current
+        run: dart run tool/back_navigation_behavior_audit.dart --check --strict
+
+      - name: Upload back navigation behavior audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: back-navigation-behavior-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Header-Back-Navigation-Behavior-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Header-Back-Navigation-Behavior-Audit.csv
+          if-no-files-found: error
+
+      - name: Back navigation behavior guardrails
+        run: flutter test test/quality/back_navigation_behavior_guardrail_test.dart --reporter=compact
+
+      - name: Home entry back navigation artifacts are current
+        run: dart run tool/home_entry_back_navigation_audit.dart --check
+
+      - name: Upload home entry back navigation audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: home-entry-back-navigation-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Entry-Back-Navigation-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Entry-Back-Navigation-Audit.csv
+          if-no-files-found: error
+
+      - name: Home entry back navigation guardrails
+        run: flutter test test/quality/home_entry_back_navigation_guardrail_test.dart --reporter=compact
+
+      - name: Bottom sheet usage guardrails
+        run: flutter test test/quality/bottom_sheet_guardrail_test.dart --reporter=compact
+
+      - name: Scroll physics guardrails
+        run: flutter test test/quality/scroll_physics_guardrail_test.dart --reporter=compact
+
+      - name: Scroll auto-hide guardrails
+        run: flutter test test/quality/scroll_auto_hide_guardrail_test.dart --reporter=compact
+
+      - name: High-risk state primitives guardrails
+        run: flutter test test/quality/high_risk_state_primitives_guardrail_test.dart --reporter=compact
 
       - name: Product copy guardrails
         run: >

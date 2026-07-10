@@ -57,16 +57,13 @@ class _FaqCard extends StatelessWidget {
           ),
           if (expanded)
             Padding(
-              padding: const EdgeInsets.fromLTRB(
-                TradeSpacingTokens.tradeBotQuestionIconBox + AppSpacing.x3,
-                0,
-                AppSpacing.x3,
-                AppSpacing.x3,
-              ),
+              padding: TradeSpacingTokens.tradeBotFaqAnswerPadding,
               child: DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: const ShapeDecoration(
                   color: AppColors.surface2,
-                  borderRadius: AppRadii.smRadius,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
                 ),
                 child: Padding(
                   padding: TradeSpacingTokens.tradeBotInnerPanelPadding,

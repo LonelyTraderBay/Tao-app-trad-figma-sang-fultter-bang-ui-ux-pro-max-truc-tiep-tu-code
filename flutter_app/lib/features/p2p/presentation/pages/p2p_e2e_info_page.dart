@@ -17,9 +17,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-const double _p2pE2EVisualNavClearance = 112;
-const double _p2pE2ENativeNavClearance = 88;
 const double _p2pE2EHeroIconExtent = AppSpacing.inputHeight + AppSpacing.x2;
 const double _p2pE2EEndpointAvatarExtent =
     AppSpacing.inputHeight - AppSpacing.x1;
@@ -57,8 +56,8 @@ class P2PE2EInfoPage extends ConsumerWidget {
     final snapshot = ref.watch(p2pE2EInfoProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _p2pE2EVisualNavClearance
-        : _p2pE2ENativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 
@@ -84,12 +83,7 @@ class P2PE2EInfoPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      scrollEndPadding,
-                    ),
+                    padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,

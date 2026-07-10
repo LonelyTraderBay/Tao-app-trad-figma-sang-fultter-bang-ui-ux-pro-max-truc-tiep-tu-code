@@ -115,7 +115,7 @@ void main() {
 
     expect(find.text('Volume 30d'), findsOneWidget);
     expect(
-      find.textContaining('bot1@vittrade.vn', findRichText: true),
+      find.textContaining('b***@vittrade.vn', findRichText: true),
       findsOneWidget,
     );
     expect(find.text('Chuy\u1EC3n ti\u1EC1n'), findsOneWidget);

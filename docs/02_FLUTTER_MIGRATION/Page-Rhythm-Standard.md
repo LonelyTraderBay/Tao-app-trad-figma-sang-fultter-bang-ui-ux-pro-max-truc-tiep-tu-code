@@ -36,6 +36,7 @@ Tab roots are listed in `flutter_app/tool/page_rhythm_audit.dart` (`_tabRootPage
 4. **No spacing-only nested VPC** — Do not nest `VitPageContent` only to inject gaps; flatten to direct children.
 5. **Inner gap after headers** — `VitSectionHeader` uses `bottomGap: rhythm.innerGap` (or tier token); do not rely on ad-hoc `SizedBox` under labels.
 6. **Tier matches role** — Tab roots use `compact`; do not use legacy `AppSpacing.sectionGap` (20px) for page section rhythm.
+7. **One horizontal inset owner** — Horizontal `AppSpacing.contentPad` between screen edge and page content applies **once** on the `ScrollView → VitPageContent` chain. See [Page-Content-Width-Standard.md](./Page-Content-Width-Standard.md) (Recipe A/B; never stack scroll horizontal pad + default `VitPageContent` padding).
 
 ## Wire pattern (tab root)
 
@@ -51,6 +52,28 @@ VitPageContent(
   ],
 )
 ```
+
+## Rhythm vs Density precedence
+
+`VitPageContent` almost always sets `rhythm:` and `density:` together (see
+the wire pattern above) — they answer different questions and do **not**
+override each other uniformly. Read `VitPageContent`/`VitPageSection`
+(`lib/shared/layout/vit_page_content.dart`) directly if in doubt; the actual
+resolution order per concern is:
+
+| Concern | Resolution order (first non-null wins) |
+| --- | --- |
+| Section gap between `VitPageContent`/`VitPageSection` children | `customGap` → `rhythm.sectionGap` → `density.pageContentGap` → `gap` enum default |
+| Top padding above the first child (`VitPageContent` only) | `density.pageContentTopPadding` → `padding` enum default — **`rhythm` has no effect on top padding at all** |
+| Section label → body gap (`VitPageSection._labelBottomGap`) | `innerGap` → `rhythm.innerGap` → fixed `pageRhythmStandardInnerGap` (8px) — **`density` has no effect here** |
+
+In short: `rhythm` governs vertical section/inner gaps; `density` governs top
+padding (and, when no `rhythm` is set, falls back to also driving the section
+gap) plus control/card sizing outside `VitPageContent` entirely (see
+`VitDensity` in `lib/app/theme/app_density.dart` — `controlHeight`,
+`cardPadding`). Always set both on a page's top-level `VitPageContent`
+(matching tier — e.g. `rhythm: .compact` with `density: .compact`); do not
+assume setting only one of them controls every spacing concern.
 
 ## Allowed exceptions
 

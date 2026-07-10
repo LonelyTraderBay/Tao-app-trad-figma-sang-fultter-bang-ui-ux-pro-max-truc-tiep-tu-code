@@ -280,7 +280,7 @@ class _ExpandedNewsDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Divider(height: HomeSpacingTokens.homeDividerHeight),
+        const Divider(height: SharedSpacingTokens.homeDividerHeight),
         Padding(
           padding: AppSpacing.cardPaddingCompact,
           child: Column(

@@ -19,12 +19,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/launchpad_receipt_states_success.dart';
 part '../widgets/launchpad_receipt_details_next_steps.dart';
-
-const double _launchpadReceiptVisualNavClearance = 112;
-const double _launchpadReceiptNativeNavClearance = 88;
 
 class LaunchpadReceiptPage extends ConsumerWidget {
   const LaunchpadReceiptPage({
@@ -48,8 +46,8 @@ class LaunchpadReceiptPage extends ConsumerWidget {
         .getReceipt(subscriptionId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadReceiptVisualNavClearance
-        : _launchpadReceiptNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
     final hasSubscription = snapshot.subscription != null;

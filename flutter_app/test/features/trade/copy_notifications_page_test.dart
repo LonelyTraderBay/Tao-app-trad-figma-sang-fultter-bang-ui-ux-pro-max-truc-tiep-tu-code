@@ -104,7 +104,10 @@ void main() {
   testWidgets('SC-068 filters by risk notifications', (tester) async {
     await pumpCopyNotifications(tester);
 
-    await tester.tap(find.byKey(CopyNotificationsPage.tabKey('risk')));
+    final riskTab = find.byKey(CopyNotificationsPage.tabKey('risk'));
+    await tester.ensureVisible(riskTab);
+    await tester.pumpAndSettle();
+    await tester.tap(riskTab);
     await tester.pumpAndSettle();
 
     expect(find.text('Cảnh báo rủi ro cao'), findsOneWidget);

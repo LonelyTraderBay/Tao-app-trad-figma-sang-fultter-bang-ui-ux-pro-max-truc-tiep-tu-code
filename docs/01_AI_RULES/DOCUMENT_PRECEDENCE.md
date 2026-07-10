@@ -16,11 +16,15 @@ Use this order when documents disagree.
 8. Flutter tests under `flutter_app/test/`.
 9. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md` for screen coverage
    tracking.
-10. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and
+10. `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md` as the
+    required entry point for UI/UX regulation — routes to the correct
+    `*-Standard.md` per domain (picker only; does not itself carry normative
+    content beyond what those docs and their enforcing tools/tests define).
+11. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and
     `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md` for UI rules.
-11. `docs/03_DESIGN_SYSTEM/Guidelines.md` for product and design rules.
-12. Screen-specific references under `docs/04_SCREEN_REFERENCES/`.
-13. Architecture reports under `docs/05_ARCHITECTURE/`.
+12. `docs/03_DESIGN_SYSTEM/Guidelines.md` for product and design rules.
+13. Screen-specific references under `docs/04_SCREEN_REFERENCES/`.
+14. Architecture reports under `docs/05_ARCHITECTURE/`.
 
 ## Conflict Rules
 

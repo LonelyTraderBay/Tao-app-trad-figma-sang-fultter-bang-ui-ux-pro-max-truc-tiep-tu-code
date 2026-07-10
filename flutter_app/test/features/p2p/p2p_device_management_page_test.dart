@@ -115,6 +115,63 @@ void main() {
     expect(find.text('Hủy tin cậy'), findsOneWidget);
   });
 
+  testWidgets('SC-255 revokes trust after confirming the dialog', (
+    tester,
+  ) async {
+    await pumpDeviceManagement(tester);
+
+    await tester.tap(
+      find.byKey(P2PDeviceManagementPage.deviceKey('device_macbook')),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(
+      find.byKey(P2PDeviceManagementPage.revokeButtonKey('device_macbook')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(P2PDeviceManagementPage.revokeButtonKey('device_macbook')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Thu hồi tin cậy thiết bị?'), findsOneWidget);
+
+    await tester.tap(find.byKey(P2PDeviceManagementPage.revokeConfirmKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Thiết bị tin cậy (2)'), findsOneWidget);
+    expect(find.text('Thiết bị khác (2)'), findsOneWidget);
+    expect(find.text('MacBook Pro'), findsOneWidget);
+  });
+
+  testWidgets('SC-255 removes a device after confirming the dialog', (
+    tester,
+  ) async {
+    await pumpDeviceManagement(tester);
+
+    await tester.tap(
+      find.byKey(P2PDeviceManagementPage.deviceKey('device_ipad_pro')),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(
+      find.byKey(P2PDeviceManagementPage.removeButtonKey('device_ipad_pro')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(P2PDeviceManagementPage.removeButtonKey('device_ipad_pro')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xóa thiết bị?'), findsOneWidget);
+
+    await tester.tap(find.byKey(P2PDeviceManagementPage.removeConfirmKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Thiết bị tin cậy (2)'), findsOneWidget);
+    expect(find.text('iPad Pro'), findsNothing);
+  });
+
   testWidgets('SC-255 back returns to P2P security center', (tester) async {
     await pumpDeviceManagement(tester);
 

@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 enum VitDiscoveryActionCardVariant { standard, compact }
 
@@ -42,15 +42,16 @@ class VitDiscoveryActionCard extends StatelessWidget {
     return switch (variant) {
       VitDiscoveryActionCardVariant.standard => const _DiscoveryCardMetrics(
         padding: AppSpacing.cardPadding,
-        iconContainerSize: HomeSpacingTokens.homeDiscoveryIconContainer,
-        iconSize: HomeSpacingTokens.homeDiscoveryIconSize,
+        iconContainerSize: SharedSpacingTokens.homeDiscoveryIconContainer,
+        iconSize: SharedSpacingTokens.homeDiscoveryIconSize,
         titleStyle: AppTextStyles.body,
         showActionLabel: true,
       ),
       VitDiscoveryActionCardVariant.compact => const _DiscoveryCardMetrics(
-        padding: HomeSpacingTokens.homeDiscoveryCompactPadding,
-        iconContainerSize: HomeSpacingTokens.homeDiscoveryCompactIconContainer,
-        iconSize: HomeSpacingTokens.homeDiscoveryCompactIconSize,
+        padding: SharedSpacingTokens.homeDiscoveryCompactPadding,
+        iconContainerSize:
+            SharedSpacingTokens.homeDiscoveryCompactIconContainer,
+        iconSize: SharedSpacingTokens.homeDiscoveryCompactIconSize,
         titleStyle: AppTextStyles.caption,
         showActionLabel: true,
       ),
@@ -79,7 +80,7 @@ class VitDiscoveryActionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: HomeSpacingTokens.homeMarketIconGap),
+          const SizedBox(width: SharedSpacingTokens.homeMarketIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +127,7 @@ class VitDiscoveryActionCard extends StatelessWidget {
           Icon(
             Icons.chevron_right_rounded,
             color: accentColor,
-            size: HomeSpacingTokens.homeSectionActionChevronSize,
+            size: SharedSpacingTokens.homeSectionActionChevronSize,
           ),
         ],
       ),

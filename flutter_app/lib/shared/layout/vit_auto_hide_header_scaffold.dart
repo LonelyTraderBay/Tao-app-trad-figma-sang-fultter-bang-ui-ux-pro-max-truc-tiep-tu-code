@@ -36,6 +36,11 @@ class VitAutoHideHeaderScaffold extends StatefulWidget {
 }
 
 class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
+  /// Approximate header height used when deciding whether collapsing the
+  /// header would shrink [ScrollMetrics.maxScrollExtent] enough to clamp the
+  /// current offset back (the "snap to top" bug on short pages).
+  static const double _collapseBudget = 96;
+
   late bool _headerVisible;
 
   @override
@@ -49,6 +54,14 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
     setState(() => _headerVisible = visible);
   }
 
+  /// Collapsing the header grows the body viewport and shrinks
+  /// [maxScrollExtent] by roughly the header height. Only hide when the
+  /// current offset still fits after that shrink — otherwise Flutter clamps
+  /// pixels toward zero and the page appears to spring back.
+  bool _canHideHeader(ScrollMetrics metrics) {
+    return metrics.pixels <= metrics.maxScrollExtent - _collapseBudget;
+  }
+
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification.metrics.axis != Axis.vertical) return false;
 
@@ -59,7 +72,9 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
 
     if (notification is ScrollUpdateNotification) {
       final delta = notification.scrollDelta ?? 0;
-      if (delta > 0 && notification.metrics.pixels > widget.hideThreshold) {
+      if (delta > 0 &&
+          notification.metrics.pixels > widget.hideThreshold &&
+          _canHideHeader(notification.metrics)) {
         _setHeaderVisible(false);
       } else if (delta < 0) {
         _setHeaderVisible(true);
@@ -69,7 +84,8 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
     if (notification is UserScrollNotification) {
       switch (notification.direction) {
         case ScrollDirection.reverse:
-          if (notification.metrics.pixels > widget.hideThreshold) {
+          if (notification.metrics.pixels > widget.hideThreshold &&
+              _canHideHeader(notification.metrics)) {
             _setHeaderVisible(false);
           }
         case ScrollDirection.forward:

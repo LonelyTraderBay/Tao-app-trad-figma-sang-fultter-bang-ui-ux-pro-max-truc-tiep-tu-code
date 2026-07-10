@@ -20,13 +20,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/p2p_ad_analytics_page_part_01.dart';
 part '../widgets/p2p_ad_analytics_page_part_02.dart';
 part '../widgets/p2p_ad_analytics_page_part_03.dart';
 
-const double _p2pAdAnalyticsVisualNavClearance = 112;
-const double _p2pAdAnalyticsNativeNavClearance = 88;
 const double _p2pAdAnalyticsIdentityExtent =
     P2PSpacingTokens.p2pMarketplaceAnalyticsIdentityHeight;
 const double _p2pAdAnalyticsMetricCardExtent =
@@ -67,8 +66,8 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
     final snapshot = ref.watch(p2pAdAnalyticsProvider(adId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _p2pAdAnalyticsVisualNavClearance
-        : _p2pAdAnalyticsNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

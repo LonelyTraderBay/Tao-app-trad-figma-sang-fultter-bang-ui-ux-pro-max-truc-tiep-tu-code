@@ -13,25 +13,22 @@ class _PinnedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return VitPageSection(
       key: AnnouncementsPage.pinnedKey,
-      padding: SupportSpacingTokens.supportSectionMargin,
-      child: VitPageSection(
-        label: 'GHIM',
-        accentColor: AppModuleAccents.support,
-        density: VitDensity.compact,
-        children: [
-          for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0)
-              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            _AnnouncementCard(
-              announcement: announcements[i],
-              expanded: expandedId == announcements[i].id,
-              onTap: () => onToggle(announcements[i].id),
-            ),
-          ],
+      label: 'GHIM',
+      accentColor: AppModuleAccents.support,
+      density: VitDensity.compact,
+      children: [
+        for (var i = 0; i < announcements.length; i++) ...[
+          if (i > 0)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          _AnnouncementCard(
+            announcement: announcements[i],
+            expanded: expandedId == announcements[i].id,
+            onTap: () => onToggle(announcements[i].id),
+          ),
         ],
-      ),
+      ],
     );
   }
 }
@@ -52,35 +49,28 @@ class _AnnouncementList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (showEmpty) {
-      return Padding(
-        key: AnnouncementsPage.listKey,
-        padding: SupportSpacingTokens.supportSectionMargin,
-        child: const VitEmptyState(
-          key: AnnouncementsPage.emptyKey,
-          title: 'Không có thông báo nào',
-          message: 'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
-          icon: Icons.notifications_none_rounded,
-        ),
+      return const VitEmptyState(
+        key: AnnouncementsPage.emptyKey,
+        title: 'Không có thông báo nào',
+        message: 'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
+        icon: Icons.notifications_none_rounded,
       );
     }
 
-    return Padding(
+    return VitPageSection(
       key: AnnouncementsPage.listKey,
-      padding: SupportSpacingTokens.supportSectionMargin,
-      child: VitPageSection(
-        density: VitDensity.compact,
-        children: [
-          for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0)
-              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            _AnnouncementCard(
-              announcement: announcements[i],
-              expanded: expandedId == announcements[i].id,
-              onTap: () => onToggle(announcements[i].id),
-            ),
-          ],
+      density: VitDensity.compact,
+      children: [
+        for (var i = 0; i < announcements.length; i++) ...[
+          if (i > 0)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          _AnnouncementCard(
+            announcement: announcements[i],
+            expanded: expandedId == announcements[i].id,
+            onTap: () => onToggle(announcements[i].id),
+          ),
         ],
-      ),
+      ],
     );
   }
 }

@@ -20,8 +20,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/prediction_portfolio_analyzer_overview.dart';
 part '../widgets/prediction_portfolio_analyzer_performance.dart';

@@ -30,14 +30,15 @@ class _PredictionsHero extends StatelessWidget {
                   valueColor: AppColors.text1,
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
-                color: AppColors.border,
+                child: ColoredBox(color: AppColors.border),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: AppSpacing.x4),
+                  padding: PredictionsSpacingTokens
+                      .predictionHomeHeroSecondaryPadding,
                   child: Material(
                     color: AppColors.transparent,
                     child: InkWell(

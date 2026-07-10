@@ -108,9 +108,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pExpressConfirmScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,

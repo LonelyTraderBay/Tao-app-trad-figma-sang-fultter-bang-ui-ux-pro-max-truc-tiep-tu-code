@@ -450,7 +450,20 @@ class VitModuleSectionHeader extends StatelessWidget {
           ),
         ),
         if (actionLabel != null && onAction != null)
-          TextButton(onPressed: onAction, child: Text(actionLabel!)),
+          TextButton(
+            onPressed: onAction,
+            style: _isCompact
+                ? TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: AppSpacing.x2,
+                      vertical: AppSpacing.x1,
+                    ),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  )
+                : null,
+            child: Text(actionLabel!),
+          ),
       ],
     );
     final gap = _resolvedBottomGap;

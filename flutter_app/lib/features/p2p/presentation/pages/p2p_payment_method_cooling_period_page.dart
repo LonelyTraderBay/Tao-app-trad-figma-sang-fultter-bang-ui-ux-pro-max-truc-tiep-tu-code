@@ -76,6 +76,7 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
+                      fullBleed: true,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,

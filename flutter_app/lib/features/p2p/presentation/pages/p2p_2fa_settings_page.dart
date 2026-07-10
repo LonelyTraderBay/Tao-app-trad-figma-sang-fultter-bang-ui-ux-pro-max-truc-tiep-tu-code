@@ -37,6 +37,13 @@ class P2P2FASettingsPage extends ConsumerStatefulWidget {
   static Key thresholdSwitchKey(String id) =>
       Key('sc254_p2p_2fa_threshold_switch_$id');
 
+  /// Shared confirm-dialog action keys. Only one [showVitConfirmDialog] can
+  /// ever be open at a time across the three security actions on this page
+  /// (toggle method, set primary, toggle threshold), so a single reused pair
+  /// is sufficient — no need for one pair per action.
+  static const dialogConfirmKey = Key('sc254_p2p_2fa_dialog_confirm');
+  static const dialogCancelKey = Key('sc254_p2p_2fa_dialog_cancel');
+
   final ShellRenderMode? shellRenderMode;
 
   @override
@@ -97,7 +104,35 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     );
   }
 
-  void _toggleMethod(String methodId) {
+  Future<void> _toggleMethod(String methodId) async {
+    final target = _methods.firstWhere((method) => method.id == methodId);
+    final willEnable = !target.enabled;
+    final willDisableLastMethod =
+        target.enabled &&
+        _methods.where((method) => method.enabled).length == 1;
+
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Xác nhận thay đổi phương thức 2FA',
+      message: willDisableLastMethod
+          ? 'Đây là phương thức xác thực duy nhất đang bật. Tắt phương thức này sẽ tắt toàn bộ bảo vệ 2FA cho P2P.'
+          : null,
+      rows: [
+        VitConfirmDialogRow(label: 'Phương thức', value: target.label),
+        VitConfirmDialogRow(
+          label: 'Trạng thái mới',
+          value: willEnable ? 'Bật' : 'Tắt',
+          valueColor: willEnable ? AppColors.buy : AppColors.text3,
+        ),
+      ],
+      confirmVariant: willDisableLastMethod
+          ? VitCtaButtonVariant.warning
+          : VitCtaButtonVariant.primary,
+      confirmKey: P2P2FASettingsPage.dialogConfirmKey,
+      cancelKey: P2P2FASettingsPage.dialogCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _methods = [
@@ -113,7 +148,17 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     });
   }
 
-  void _setPrimaryMethod(String methodId) {
+  Future<void> _setPrimaryMethod(String methodId) async {
+    final target = _methods.firstWhere((method) => method.id == methodId);
+
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Đặt ${target.label} làm phương thức xác thực chính?',
+      confirmKey: P2P2FASettingsPage.dialogConfirmKey,
+      cancelKey: P2P2FASettingsPage.dialogCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _methods = [
@@ -123,7 +168,26 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     });
   }
 
-  void _toggleThreshold(String thresholdId) {
+  Future<void> _toggleThreshold(String thresholdId) async {
+    final target = _thresholds.firstWhere(
+      (threshold) => threshold.id == thresholdId,
+    );
+
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Xác nhận ngưỡng xác thực cho ${target.label}',
+      rows: [
+        VitConfirmDialogRow(label: 'Hành động', value: target.label),
+        VitConfirmDialogRow(
+          label: 'Ngưỡng áp dụng',
+          value: target.valueLabel.isEmpty ? 'Luôn áp dụng' : target.valueLabel,
+        ),
+      ],
+      confirmKey: P2P2FASettingsPage.dialogConfirmKey,
+      cancelKey: P2P2FASettingsPage.dialogCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _thresholds = [

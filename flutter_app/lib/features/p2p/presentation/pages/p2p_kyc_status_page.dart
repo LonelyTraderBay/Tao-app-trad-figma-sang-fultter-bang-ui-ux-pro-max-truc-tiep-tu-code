@@ -106,7 +106,8 @@ class P2PKycStatusPage extends ConsumerWidget {
                           _SupportCard(snapshot: snapshot),
                           VitPageContent(
                             rhythm: VitPageRhythm.form,
-                            padding: VitContentPadding.compact,
+                            padding: VitContentPadding.none,
+                            fullBleed: true,
                             customGap: P2PSpacingTokens.p2pKycContentGap,
                             children: const [
                               VitHighRiskStatePanel(

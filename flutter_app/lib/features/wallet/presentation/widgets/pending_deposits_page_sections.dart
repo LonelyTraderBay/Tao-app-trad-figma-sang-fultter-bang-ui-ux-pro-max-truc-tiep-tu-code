@@ -54,10 +54,12 @@ class _SummaryBanner extends StatelessWidget {
       child: Row(
         children: [
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.smRadius,
-              border: Border.all(color: color.withValues(alpha: .22)),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+                side: BorderSide(color: color.withValues(alpha: .22)),
+              ),
             ),
             child: SizedBox(
               width: WalletSpacingTokens.walletPendingAssetIconBox,
@@ -189,11 +191,13 @@ class _DepositCard extends StatelessWidget {
           Row(
             children: [
               DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: ShapeDecoration(
                   color: config.color.withValues(alpha: .12),
-                  borderRadius: AppRadii.smRadius,
-                  border: Border.all(
-                    color: config.color.withValues(alpha: .22),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                    side: BorderSide(
+                      color: config.color.withValues(alpha: .22),
+                    ),
                   ),
                 ),
                 child: SizedBox(

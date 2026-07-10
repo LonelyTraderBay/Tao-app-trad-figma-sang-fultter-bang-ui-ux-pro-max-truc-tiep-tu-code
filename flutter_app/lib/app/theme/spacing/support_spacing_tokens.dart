@@ -7,6 +7,13 @@ final class SupportSpacingTokens {
 
   static EdgeInsets supportScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
+  static EdgeInsets supportHubScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(
+        AppSpacing.contentPad,
+        0,
+        AppSpacing.contentPad,
+        bottomInset,
+      );
   static const EdgeInsets supportContentPadding = EdgeInsets.symmetric(
     horizontal: AppSpacing.contentPad,
   );
@@ -25,9 +32,9 @@ final class SupportSpacingTokens {
     vertical: AppSpacing.x4,
   );
   static const EdgeInsets supportFilterRailPadding = EdgeInsets.fromLTRB(
-    AppSpacing.contentPad,
+    0,
     AppSpacing.x5,
-    AppSpacing.contentPad,
+    0,
     AppSpacing.x1,
   );
   static const EdgeInsets supportFilterChipPadding = EdgeInsets.symmetric(

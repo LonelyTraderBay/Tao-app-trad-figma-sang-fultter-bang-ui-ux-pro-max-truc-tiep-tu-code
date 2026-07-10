@@ -113,7 +113,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(AnnouncementsPage.filterKey('security')));
+    final securityFilter = find.byKey(AnnouncementsPage.filterKey('security'));
+    await tester.ensureVisible(securityFilter);
+    await tester.pumpAndSettle();
+    await tester.tap(securityFilter);
     await tester.pumpAndSettle();
 
     expect(find.text('Tăng cường bảo mật tài khoản'), findsOneWidget);
@@ -132,6 +135,33 @@ void main() {
     expect(find.textContaining('Từ ngày 23/02 đến 29/02'), findsOneWidget);
     expect(find.text('#BTC'), findsOneWidget);
     expect(find.text('#Phí'), findsOneWidget);
+  });
+
+  testWidgets('SC-293 scroll offset is retained after dragging down', (
+    tester,
+  ) async {
+    await pumpAnnouncements(tester);
+
+    final content = find.byKey(AnnouncementsPage.contentKey);
+    await tester.drag(content, const Offset(0, -220));
+    await tester.pumpAndSettle();
+
+    final verticalScrollable = find.byWidgetPredicate(
+      (widget) =>
+          widget is Scrollable && widget.axisDirection == AxisDirection.down,
+    );
+    final offset = tester
+        .state<ScrollableState>(verticalScrollable.first)
+        .position
+        .pixels;
+
+    expect(
+      offset,
+      greaterThan(8),
+      reason:
+          'Announcements must keep scroll position; auto-hide header must not snap back.',
+    );
+    expect(find.text('Bảo trì hệ thống định kỳ'), findsOneWidget);
   });
 
   testWidgets('SC-293 header back returns to support hub placeholder', (

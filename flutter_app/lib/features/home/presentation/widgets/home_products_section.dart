@@ -39,6 +39,7 @@ class HomeProductsSection extends StatelessWidget {
               : 'Xem thêm (+${moreActions.length})',
           actionSemanticLabel: 'Xem thêm ${moreActions.length} sản phẩm khác',
           onAction: onMore,
+          density: density,
         ),
         HomeQuickActionsGrid(
           actions: actions,
@@ -67,6 +68,13 @@ class HomeQuickActionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (actions.isEmpty) {
+      return const VitEmptyState(
+        title: 'Chưa có sản phẩm nào',
+        message: 'Danh sách sản phẩm sẽ sớm xuất hiện ở đây.',
+        icon: Icons.grid_view_rounded,
+      );
+    }
     return VitActionTileGrid(
       density: density,
       itemCount: actions.length,

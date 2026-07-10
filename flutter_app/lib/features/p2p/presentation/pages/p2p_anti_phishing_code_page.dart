@@ -142,7 +142,8 @@ class _P2PAntiPhishingCodePageState
                         _WarningCard(snapshot: snapshot),
                         VitPageContent(
                           rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.compact,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,

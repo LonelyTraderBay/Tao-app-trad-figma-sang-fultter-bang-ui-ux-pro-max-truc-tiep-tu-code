@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 Widget _wrap(Widget child) {
   return MaterialApp(
@@ -968,9 +968,12 @@ void main() {
 
     expect(
       inactiveSize.width,
-      HomeSpacingTokens.homeAnnouncementDotInactiveWidth,
+      SharedSpacingTokens.homeAnnouncementDotInactiveWidth,
     );
-    expect(activeSize.width, HomeSpacingTokens.homeAnnouncementDotActiveWidth);
+    expect(
+      activeSize.width,
+      SharedSpacingTokens.homeAnnouncementDotActiveWidth,
+    );
     expect(find.bySemanticsLabel('Carousel page 2 of 3'), findsOneWidget);
   });
 
@@ -1558,11 +1561,11 @@ void main() {
 
       expect(
         handleSize.width,
-        HomeSpacingTokens.homeMoreProductsSheetHandleWidth,
+        SharedSpacingTokens.homeMoreProductsSheetHandleWidth,
       );
       expect(
         handleSize.height,
-        HomeSpacingTokens.homeMoreProductsSheetHandleHeight,
+        SharedSpacingTokens.homeMoreProductsSheetHandleHeight,
       );
     },
   );
@@ -1597,7 +1600,7 @@ void main() {
 
     expect(
       surfacePadding.padding,
-      HomeSpacingTokens.homeMoreProductsSheetPadding,
+      SharedSpacingTokens.homeMoreProductsSheetPadding,
     );
     expect(decoration.color, AppColors.bg);
     expect(shape.borderRadius, AppRadii.sheetTopLargeRadius);

@@ -17,14 +17,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/launchpad_bridge_order_hero.dart';
 part '../widgets/launchpad_bridge_order_timeline.dart';
 part '../widgets/launchpad_bridge_order_events.dart';
 part '../widgets/launchpad_bridge_order_details.dart';
-
-const double _launchpadBridgeOrderVisualNavClearance = 112;
-const double _launchpadBridgeOrderNativeNavClearance = 88;
 
 class LaunchpadBridgeOrderPage extends ConsumerStatefulWidget {
   const LaunchpadBridgeOrderPage({
@@ -63,8 +61,8 @@ class _LaunchpadBridgeOrderPageState
         .getBridgeOrder(widget.txId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadBridgeOrderVisualNavClearance
-        : _launchpadBridgeOrderNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

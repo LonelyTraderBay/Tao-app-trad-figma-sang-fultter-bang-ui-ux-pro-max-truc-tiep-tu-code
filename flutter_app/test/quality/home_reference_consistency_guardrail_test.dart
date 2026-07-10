@@ -78,6 +78,178 @@ void main() {
     },
   );
 
+  test('archetype reference pages (tabbed detail, form wizard) stay '
+      'divergence-free and keep their defining structure', () {
+    // Lightweight tripwire — NOT a full archetype-classification audit
+    // (see docs/02_FLUTTER_MIGRATION/Flutter-Page-Archetype-Standard.md
+    // for why automatic classification was rejected). Reuses the exact
+    // same 4 regexes as the home-reference divergence scan above, scoped
+    // to just the two evidence-vetted canonical pages and their bundles.
+    const tabbedDetailBundle = <String>[
+      'lib/features/wallet/presentation/pages/wallet_token_approval_page.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_approval_badges.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_approval_tabs.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_approval_cards.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_approval_history_tab.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_approval_settings_tab.dart',
+      'lib/features/wallet/presentation/widgets/wallet_token_approval_common.dart',
+    ];
+    const formWizardBundle = <String>[
+      'lib/features/wallet/presentation/pages/address_add_page.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_form.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_sections.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_common.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_preview.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_agreement.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart',
+    ];
+
+    final violations = <String>[];
+    for (final path in [...tabbedDetailBundle, ...formWizardBundle]) {
+      final file = File(path);
+      if (!file.existsSync()) {
+        violations.add('$path: file missing');
+        continue;
+      }
+      final content = file.readAsStringSync();
+      for (final line in content.split('\n')) {
+        final trimmed = line.trim();
+        if (trimmed.isEmpty || trimmed.startsWith('//')) continue;
+        if (_containerPattern.hasMatch(trimmed) ||
+            _boxDecorationPattern.hasMatch(trimmed) ||
+            _borderRadiusPattern.hasMatch(trimmed) ||
+            _radiusPattern.hasMatch(trimmed)) {
+          violations.add('$path: new raw markup -> $trimmed');
+        }
+      }
+    }
+
+    const structuralMarkers = <String, String>{
+      'lib/features/wallet/presentation/pages/wallet_token_approval_page.dart':
+          'WalletTokenApprovalTabs(',
+      'lib/features/wallet/presentation/pages/address_add_page.dart':
+          'AddressAddForm.sections(',
+    };
+    structuralMarkers.forEach((path, needle) {
+      final content = File(path).readAsStringSync();
+      if (!content.contains(needle)) {
+        violations.add(
+          '$path: no longer references $needle — archetype reference '
+          'page lost its defining structure.',
+        );
+      }
+    });
+
+    expect(violations, isEmpty, reason: violations.join('\n'));
+  });
+
+  test('sibling-card gap fixes for the 14-site card-gap audit stay applied', () {
+    // Pinned tripwire (not a full audit) for the card-to-card gap sweep that
+    // aligned all sibling-card lists/grids on AppSpacing.rowGap (8px) to
+    // match lib/features/home/presentation's canonical pattern. See
+    // needles as symbol-level substrings (not whole-line snippets) so a
+    // `dart format` reflow doesn't spuriously break this test.
+    const requiredNeedles = <String, List<String>>{
+      'lib/features/trade/presentation/pages/provider_leaderboard_page.dart': [
+        'entry.\$1 != providers.length - 1',
+        'AppSpacing.rowGap',
+      ],
+      'lib/app/theme/spacing/wallet_spacing_tokens.dart': [
+        'walletManagerAllWalletGap = AppSpacing.rowGap',
+        'walletTokenCardGap = AppSpacing.rowGap',
+        'walletManagerGroupCardGap = AppSpacing.rowGap',
+        'walletManagerActivityRowGap = AppSpacing.rowGap',
+        'walletBuyPaymentCardGap = AppSpacing.rowGap',
+      ],
+      'lib/app/theme/spacing/trade_spacing_tokens.dart': [
+        'preCopyAssessmentCtaGap = 12',
+      ],
+      'lib/features/trade/presentation/pages/pre_copy_assessment_page.dart': [
+        'question != snapshot.questions.last',
+        'TradeSpacingTokens.preCopyAssessmentCtaGap',
+      ],
+      'lib/app/theme/spacing/p2p_spacing_tokens.dart': [
+        'p2pPaymentMethodsListSectionGap = AppSpacing.rowGap',
+      ],
+      'lib/features/markets/presentation/pages/token_unlocks_page.dart': [
+        '_unlockListGap = AppSpacing.rowGap',
+      ],
+      'lib/features/p2p/presentation/pages/p2p_my_ads_page.dart': [
+        'if (index > 0) const SizedBox(height: AppSpacing.rowGap)',
+      ],
+      'lib/features/markets/presentation/widgets/market_news_page_sections.dart': [
+        'item != news.last',
+        'SizedBox(height: AppSpacing.rowGap)',
+      ],
+      'lib/features/profile/presentation/widgets/vip_history_widgets.dart': [
+        'row != snapshot.history.last',
+        'SizedBox(height: AppSpacing.rowGap)',
+      ],
+      'lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart': [
+        'width: AppSpacing.rowGap',
+      ],
+    };
+    const forbiddenNeedles = <String, List<String>>{
+      'lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart': [
+        'AppSpacing.cardTileInnerGap',
+      ],
+    };
+
+    final violations = <String>[];
+    requiredNeedles.forEach((path, needles) {
+      final file = File(path);
+      if (!file.existsSync()) {
+        violations.add('$path: file missing');
+        return;
+      }
+      final content = file.readAsStringSync();
+      for (final needle in needles) {
+        if (!content.contains(needle)) {
+          violations.add('$path: missing "$needle" — card-gap fix regressed');
+        }
+      }
+    });
+    forbiddenNeedles.forEach((path, needles) {
+      final content = File(path).readAsStringSync();
+      for (final needle in needles) {
+        if (content.contains(needle)) {
+          violations.add(
+            '$path: still contains "$needle" — off-label token reintroduced',
+          );
+        }
+      }
+    });
+
+    expect(violations, isEmpty, reason: violations.join('\n'));
+  });
+
+  test(
+    'AppSpacing.cardTileInnerGap is never used as a horizontal (width) gap '
+    'between sibling tiles — reserved for the vertical gap inside one tile',
+    () {
+      // Generalizes the rewards/arena fix above: catches this exact
+      // off-label-token bug pattern anywhere in lib/features, not just the
+      // two known sites. cardTileInnerGap's doc comment reserves it for the
+      // vertical icon→title→subtitle gap inside one tile.
+      final violations = <String>[];
+      for (final entity
+          in Directory('lib/features').listSync(recursive: true)) {
+        if (entity is! File || !entity.path.endsWith('.dart')) continue;
+        final path = entity.path.replaceAll('\\', '/');
+        for (final line in entity.readAsStringSync().split('\n')) {
+          final trimmed = line.trim();
+          if (trimmed.isEmpty || trimmed.startsWith('//')) continue;
+          if (_cardTileInnerGapWidthPattern.hasMatch(trimmed)) {
+            violations.add('$path: $trimmed');
+          }
+        }
+      }
+      expect(violations, isEmpty, reason: violations.join('\n'));
+    },
+  );
+
   test('changed app files do not introduce new home-reference divergence', () {
     final changedFiles = _collectChangedLibFiles();
     final violations = <String>[];
@@ -222,6 +394,9 @@ final RegExp _containerPattern = RegExp(r'Container\(');
 final RegExp _boxDecorationPattern = RegExp(r'BoxDecoration\(');
 final RegExp _borderRadiusPattern = RegExp(r'BorderRadius\.circular\(');
 final RegExp _radiusPattern = RegExp(r'Radius\.circular\(');
+final RegExp _cardTileInnerGapWidthPattern = RegExp(
+  r'width:\s*AppSpacing\.cardTileInnerGap',
+);
 
 const List<String> _exceptionPathPatterns = <String>[
   '/dev/',

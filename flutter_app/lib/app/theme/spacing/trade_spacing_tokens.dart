@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/referral_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 final class TradeSpacingTokens {
   const TradeSpacingTokens._();
 
+  static const EdgeInsets tradeBotHeroSecondaryPadding = EdgeInsets.only(
+    left: AppSpacing.x4,
+  );
+  static const EdgeInsets tradeBotFaqAnswerPadding = EdgeInsets.fromLTRB(
+    tradeBotQuestionIconBox + AppSpacing.x3,
+    0,
+    AppSpacing.x3,
+    AppSpacing.x3,
+  );
   static const double tradeBottomInsetVisual = 54;
   static const double tradeBottomInsetNative = 20;
   static const double tradeHistoryBottomInsetVisual = 42;
@@ -116,7 +125,7 @@ final class TradeSpacingTokens {
       AppSpacing.x4 + AppSpacing.x1;
   static const double preCopyAssessmentContentGap =
       AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke;
-  static const double preCopyAssessmentQuestionCardGap = 12;
+  static const double preCopyAssessmentCtaGap = 12;
   static const EdgeInsets preCopyAssessmentCardPadding = EdgeInsets.all(
     AppSpacing.x4 + AppSpacing.x1,
   );
@@ -666,7 +675,7 @@ final class TradeSpacingTokens {
   static const double copyTradingV2TraderAvatarSize =
       WalletSpacingTokens.walletTransactionExplorerHeight;
   static const double copyTradingV2TraderTierBadgeSize =
-      HomeSpacingTokens.homeChipMinHeight;
+      SharedSpacingTokens.homeChipMinHeight;
   static const double copyTradingV2TraderTierBadgeIcon =
       AppSpacing.statusPillIconSizeMd - AppSpacing.hairlineStroke / 2;
   static const double copyTradingV2RoiMaxWidth = copyTradingV2SortDefaultWidth;
@@ -679,7 +688,7 @@ final class TradeSpacingTokens {
       AppSpacing.hairlineStroke / 2;
   static const double copyTradingV2GlassStatHeight = 112;
   static const double copyTradingV2GlassStatIconBox =
-      WalletSpacingTokens.walletAddressSwitchHeight;
+      SharedSpacingTokens.walletAddressSwitchHeight;
   static const double copyTradingV2GlassStatIconGlyph =
       WalletSpacingTokens.walletDepositCopyIcon;
   static const double copyTradingV2BoldStatHeight =
@@ -835,17 +844,9 @@ final class TradeSpacingTokens {
       WalletSpacingTokens.walletAssetSmallGap;
   static const double tradeBookDividerHeight = 16;
   static const double tradeTapeRowBottomGap = AppSpacing.rowGap;
-  static const EdgeInsets tradeInstrumentHeroPadding = EdgeInsets.all(
-    AppSpacing.x4,
-  );
-  static const double tradeInstrumentHeroMetricGap = AppSpacing.x3;
   static const int tradeHubPrimaryCount = 6;
   static const double tradeHubTileExtent =
       AppSpacing.buttonCompact + AppSpacing.x2;
-  static const EdgeInsets tradeOrderRowPadding = EdgeInsets.symmetric(
-    horizontal: AppSpacing.x3,
-    vertical: AppSpacing.x2,
-  );
   static const double tradeChartPanelHeight =
       AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x4;
   static const double tradeOrderTabsHeight = 44;
@@ -1380,7 +1381,7 @@ final class TradeSpacingTokens {
   static const double copyConfirmationDividerHeight =
       AppSpacing.x5 + AppSpacing.dividerHairline;
   static const double copyConfirmationCheckboxIcon =
-      WalletSpacingTokens.walletAddressSwitchKnob;
+      SharedSpacingTokens.walletAddressSwitchKnob;
   static const double copyConfirmationWarningIcon =
       AppSpacing.x5 + AppSpacing.x1;
   static const double copyConfirmationCoolingIcon = tradeBotDisputeTabBadgeSize;

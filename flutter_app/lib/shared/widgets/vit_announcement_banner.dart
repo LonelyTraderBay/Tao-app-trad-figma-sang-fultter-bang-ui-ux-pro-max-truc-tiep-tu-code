@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_carousel_dots.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 enum VitAnnouncementBannerVariant { standard, compact }
 
@@ -42,9 +42,9 @@ class VitAnnouncementBanner extends StatelessWidget {
   EdgeInsetsGeometry get _padding {
     return switch (variant) {
       VitAnnouncementBannerVariant.standard =>
-        HomeSpacingTokens.homeCardPaddingDefault,
+        SharedSpacingTokens.homeCardPaddingDefault,
       VitAnnouncementBannerVariant.compact =>
-        HomeSpacingTokens.homeAnnouncementCardPaddingCompact,
+        SharedSpacingTokens.homeAnnouncementCardPaddingCompact,
     };
   }
 
@@ -62,9 +62,11 @@ class VitAnnouncementBanner extends StatelessWidget {
               Icon(
                 icon,
                 color: accentColor,
-                size: HomeSpacingTokens.homeAnnouncementIcon,
+                size: SharedSpacingTokens.homeAnnouncementIcon,
               ),
-              const SizedBox(width: HomeSpacingTokens.homeAnnouncementIconGap),
+              const SizedBox(
+                width: SharedSpacingTokens.homeAnnouncementIconGap,
+              ),
               Expanded(
                 child: Text(
                   message,
@@ -73,12 +75,14 @@ class VitAnnouncementBanner extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
-              const SizedBox(width: HomeSpacingTokens.homeAnnouncementArrowGap),
+              const SizedBox(
+                width: SharedSpacingTokens.homeAnnouncementArrowGap,
+              ),
               if (onDismiss == null)
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: HomeSpacingTokens.homeAnnouncementChevron,
+                  size: SharedSpacingTokens.homeAnnouncementChevron,
                 )
               else
                 VitInlineIconAction(

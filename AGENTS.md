@@ -46,7 +46,11 @@ Rules:
 - Keep reusable UI primitives in `shared/`.
 - Keep screen widgets under `features/<feature>/presentation/pages/`.
 - Put repository contracts and value objects under `domain/`.
-- Put mock/remote implementations and Riverpod providers under `data/`.
+- Put mock/remote repository implementations and their base Riverpod provider
+  under `data/`; feature/screen-level controller providers that wire a
+  repository provider together with `presentation/controllers/` models live
+  in `app/providers/<feature>_controller_providers.dart` (composition root —
+  confirmed 100% consistent across all 23 feature modules).
 - Prefer `package:vit_trade_flutter/...` imports across modules.
 
 ## Product Boundaries
@@ -67,6 +71,10 @@ search/discovery, and profile surfaces with clearly separated sections.
 
 - Visual contract for agents: [`DESIGN.md`](DESIGN.md) at repo root (tokens +
   component ladder); `AGENTS.md` wins on product/financial rules.
+- Full map of every design-consistency audit domain (~24), what enforces it,
+  and the exact command to check it locally — see
+  `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md` before
+  creating a new page.
 - Use shared layout primitives before creating local scaffolds:
   `VitAppShell`, `VitPageLayout`, `VitPageContent`, `VitHeader`,
   `VitBottomNav`, `VitCard`, `VitCtaButton`, `VitInput`, and `VitTabBar`.
@@ -90,6 +98,17 @@ search/discovery, and profile surfaces with clearly separated sections.
   Tab roots use `VitPageRhythm.compact` with major sections as direct
   `VitPageContent` children — see
   `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md`.
+- **Page content width:** horizontal `contentPad` (20px) applies once on the
+  scroll → `VitPageContent` chain — Recipe A (`VitInsetScrollView` + default
+  VPC padding) or Recipe B (scroll token with horizontal pad + `fullBleed: true`);
+  see `docs/02_FLUTTER_MIGRATION/Page-Content-Width-Standard.md` and
+  `page_content_width_audit.dart --check`.
+- **Scroll auto-hide:** scroll-to-hide headers must use `VitAutoHideHeaderScaffold`
+  / `VitAutoHidePageScaffold` only — the shared scaffold keeps a collapse-budget
+  gate so short lists do not snap scroll offset back to the top. Do not hand-roll
+  `_headerVisible` + `heightFactor` collapse; see
+  `docs/02_FLUTTER_MIGRATION/Scroll-Auto-Hide-Standard.md` and
+  `flutter test test/quality/scroll_auto_hide_guardrail_test.dart`.
 - **Card tiles:** Tier A strip tiles use `VitCard.height` / `minHeight` with
   `contentAlign: VitCardContentAlign.center`, `cardTilePadding`, and
   `cardTileInnerGap` — see

@@ -14,8 +14,8 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? _stakingAnalyticsVisualNavClearance
-            : _stakingAnalyticsNativeNavClearance) +
+            ? SharedSpacingTokens.bottomNavVisualClearance
+            : SharedSpacingTokens.bottomNavNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -35,12 +35,7 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollEndPadding,
-                  ),
+                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,

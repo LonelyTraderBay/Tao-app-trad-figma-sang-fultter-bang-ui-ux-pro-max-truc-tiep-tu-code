@@ -499,15 +499,6 @@ SourceBundle _readSourceBundle(
         ),
       ),
     );
-    widgetFiles.add(
-      File(
-        _joinPath(
-          appRoot.path,
-          'lib/features/arena/presentation/pages/arena_points_page.dart'
-              .replaceAll('/', Platform.pathSeparator),
-        ),
-      ),
-    );
   }
 
   final widgetVisited = <String>{};
@@ -588,7 +579,7 @@ List<File> _directFeatureWidgetImports({
       file = File(
         _joinPath(
           appRoot.path,
-          packagePath.replaceAll('/', Platform.pathSeparator),
+          'lib${Platform.pathSeparator}${packagePath.replaceAll('/', Platform.pathSeparator)}',
         ),
       );
     } else if (!uri.startsWith('dart:') && !uri.startsWith('package:')) {

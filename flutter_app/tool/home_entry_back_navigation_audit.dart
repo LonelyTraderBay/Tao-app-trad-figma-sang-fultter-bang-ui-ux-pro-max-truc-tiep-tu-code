@@ -236,14 +236,14 @@ const _homeMatrixSourceRules = [
   HomeEntryBackRule(
     id: 'HEB-001',
     area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_01.dart',
+    file: 'lib/features/home/presentation/widgets/home_header.dart',
     requiredSnippets: ["onNavigate('/search')"],
     notes: 'Header Search source is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-002',
     area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_01.dart',
+    file: 'lib/features/home/presentation/widgets/home_header.dart',
     requiredSnippets: ["onNavigate('/notifications')"],
     notes: 'Header Notifications source is present.',
   ),

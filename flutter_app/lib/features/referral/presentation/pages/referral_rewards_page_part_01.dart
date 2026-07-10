@@ -39,9 +39,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                   child: SingleChildScrollView(
                     key: ReferralRewardsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: ReferralSpacingTokens.referralPageScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsetsDirectional.only(bottom: bottomInset),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,

@@ -26,14 +26,14 @@ class _SavingsHero extends StatelessWidget {
                   valueColor: AppColors.text1,
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
-                color: AppColors.border,
+                child: ColoredBox(color: AppColors.border),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: AppSpacing.x4),
+                  padding: EarnSpacingTokens.earnHeroSecondaryPadding,
                   child: _HeroKpi(
                     label: 'APY ước tính',
                     value: _savingsApyEstimateRange(snapshot.products),

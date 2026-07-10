@@ -20,14 +20,13 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'arena_home_page_part_01.dart';
 part 'arena_home_page_part_02.dart';
 part 'arena_home_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _arenaHomeVisualNavClearance = 114.0;
-const _arenaHomeNativeNavClearance = 88.0;
 const _arenaHomeHeroTitleLineHeight = 1.06;
 const _arenaHomeTemplateTitleLineHeight = 1.12;
 const _arenaHomeTemplateDescriptionLineHeight = 1.18;

@@ -4,7 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class VitAccentPill extends StatelessWidget {
   const VitAccentPill({
@@ -23,9 +23,9 @@ class VitAccentPill extends StatelessWidget {
   _AccentPillMetrics get _metrics {
     return switch (size) {
       VitStatusPillSize.sm => const _AccentPillMetrics(
-        minHeight: HomeSpacingTokens.homeChipMinHeight,
-        paddingX: HomeSpacingTokens.homeChipHorizontalPadding,
-        paddingY: HomeSpacingTokens.homeChipVerticalPadding,
+        minHeight: SharedSpacingTokens.homeChipMinHeight,
+        paddingX: SharedSpacingTokens.homeChipHorizontalPadding,
+        paddingY: SharedSpacingTokens.homeChipVerticalPadding,
         style: AppTextStyles.micro,
       ),
       VitStatusPillSize.md => const _AccentPillMetrics(

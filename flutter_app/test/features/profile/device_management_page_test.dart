@@ -113,10 +113,16 @@ void main() {
     await tester.tap(find.byKey(DeviceManagementPage.logoutKey('dev002')));
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(DeviceManagementPage.logoutConfirmKey));
+    await tester.pumpAndSettle();
+
     expect(find.text('iPhone 15 Pro'), findsNothing);
 
     await tester.ensureVisible(find.byKey(DeviceManagementPage.logoutAllKey));
     await tester.tap(find.byKey(DeviceManagementPage.logoutAllKey));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('sc165_devices_logout_all_confirm')));
     await tester.pumpAndSettle();
 
     expect(find.text('MacBook Air'), findsNothing);

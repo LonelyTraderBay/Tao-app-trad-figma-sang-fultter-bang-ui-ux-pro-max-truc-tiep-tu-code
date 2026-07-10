@@ -47,15 +47,9 @@ void main(List<String> args) {
   );
 }
 
-final _orphanHeightPattern = RegExp(
-  r'AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap)',
-);
-
 final _orphanSizedBoxLine = RegExp(
   r'^\s*(?:const\s+)?SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap)[^)]*\)\s*,?\s*$',
 );
-
-final _moduleSectionGap = RegExp(r'AppSpacing\.(\w+SectionGap)');
 
 ({String source, int removed}) _removeOrphanSizedBoxFromVitPageContent(String source) {
   var removed = 0;

@@ -164,29 +164,20 @@ void main() {
   ) async {
     await pumpMyArena(tester);
 
-    await tester.drag(
-      find.byKey(MyArenaPage.tabsScrollKey),
-      const Offset(-130, 0),
-    );
+    await tester.ensureVisible(find.byKey(MyArenaPage.tabKey('saved_modes')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(MyArenaPage.tabKey('saved_modes')));
     await tester.pumpAndSettle();
     expect(find.text('BTC Weekly Predict'), findsOneWidget);
     expect(find.text('Fair play'), findsWidgets);
 
-    await tester.drag(
-      find.byKey(MyArenaPage.tabsScrollKey),
-      const Offset(-180, 0),
-    );
+    await tester.ensureVisible(find.byKey(MyArenaPage.tabKey('drafts')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(MyArenaPage.tabKey('drafts')));
     await tester.pumpAndSettle();
     expect(find.text('SOL vs DOT Prediction'), findsOneWidget);
 
-    await tester.drag(
-      find.byKey(MyArenaPage.tabsScrollKey),
-      const Offset(-160, 0),
-    );
+    await tester.ensureVisible(find.byKey(MyArenaPage.tabKey('history')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(MyArenaPage.tabKey('history')));
     await tester.pumpAndSettle();

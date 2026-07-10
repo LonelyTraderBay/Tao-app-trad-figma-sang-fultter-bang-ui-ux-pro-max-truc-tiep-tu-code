@@ -5,6 +5,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 final class PredictionsSpacingTokens {
   const PredictionsSpacingTokens._();
 
+  static const EdgeInsets predictionHomeHeroSecondaryPadding = EdgeInsets.only(
+    left: AppSpacing.x4,
+  );
+  static const EdgeInsets predictionEmptyStatePadding = EdgeInsets.symmetric(
+    vertical: AppSpacing.x4,
+  );
   static const double predictionHomeBottomInsetVisual = 54;
   static const double predictionHomeBottomInsetNative = AppSpacing.contentPad;
   static EdgeInsets predictionHomeScrollPadding(double bottomInset) =>

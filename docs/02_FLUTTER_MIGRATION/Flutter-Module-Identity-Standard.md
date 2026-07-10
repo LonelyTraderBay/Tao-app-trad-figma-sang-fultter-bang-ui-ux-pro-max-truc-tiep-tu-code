@@ -63,11 +63,39 @@ local copy:
 historical "module-prefixed screen tokens" block (finding #15) has been fully
 migrated into per-feature files under `lib/app/theme/spacing/`
 (`<module>_spacing_tokens.dart`, e.g. `TradeSpacingTokens`,
-`MarketsSpacingTokens`) — one file per `lib/features/*` module, plus
-`shared_spacing_tokens.dart` for the handful of tokens that are genuinely
-generic (consumed by `lib/shared/widgets/**`) but don't belong in the core
-scale. New one-off tokens for a feature must go into that feature's own
+`MarketsSpacingTokens`) — one file per `lib/features/*` module. New one-off
+tokens for a feature must go into that feature's own
 `<module>_spacing_tokens.dart`, never appended back into `app_spacing.dart`.
+
+**Resolved (2026-07-09):** this policy names `shared_spacing_tokens.dart` as
+the intended home for tokens that are genuinely generic (consumed by
+`lib/shared/widgets/**` and/or by feature modules other than the one that
+defined them) but don't belong in the core scale — **that file now exists**
+(`SharedSpacingTokens`). `lib/app/theme/spacing/cross_module_spacing_tokens.dart`
+remains a false cognate: it holds tokens for the `cross_module` *feature*
+(`lib/features/cross_module/`), not tokens shared *across* modules — do not
+confuse the two.
+
+61 constants that were reached into from outside their origin module were
+moved into `SharedSpacingTokens`, and every call site was repointed
+(verified via `flutter analyze` + the full test suite): 4 from
+`WalletSpacingTokens` (consumed by `vit_toggle_pill.dart` and 2 other
+cross-module sites), 3 from `TradeSpacingTokens` (consumed by
+`vit_trade_instrument_hero.dart`/`vit_trade_order_list.dart` and 1 other
+site), 3 from `ArenaSpacingTokens` (consumed by `vit_community_rules_link.dart`),
+and 55 from `HomeSpacingTokens` (consumed by 13 `lib/shared/widgets/` files
+plus several other feature modules and `trade_spacing_tokens.dart` itself).
+This closes the specific 17-shared-widgets-file dependency-direction problem
+this note originally documented.
+
+**Residual (not exhaustive, smaller, separate follow-up if pursued):** a
+handful of *other* inter-module spacing-token cross-references exist beyond
+the 61 moved — confirmed still present: `p2p_spacing_tokens.dart` reads
+`TradeSpacingTokens.complaintSubmissionLineHeightReadable`;
+`wallet_spacing_tokens.dart` reads `TradeSpacingTokens.tradeBotLineHeightTight`/
+`tradeBotLineHeightCaption`/`tradeBotLineHeightReadable`. These were out of
+scope for this pass (they weren't part of the originally-reported
+shared/widgets dependency problem) and were left untouched.
 
 ## Enforcement
 

@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_dashboard_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -46,14 +47,14 @@ class StakingDashboardSummaryCard extends StatelessWidget {
                         valueColor: AppColors.text1,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: 1,
                       height: AppSpacing.x6,
-                      color: AppColors.border,
+                      child: ColoredBox(color: AppColors.border),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: AppSpacing.x4),
+                        padding: EarnSpacingTokens.earnHeroSecondaryPadding,
                         child: _HeroKpi(
                           label: 'APY ước tính',
                           value: '${snapshot.weightedApy.toStringAsFixed(2)}%',

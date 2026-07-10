@@ -23,10 +23,14 @@ class _EarnHero extends StatelessWidget {
               valueColor: AppColors.text1,
             ),
           ),
-          Container(width: 1, height: AppSpacing.x6, color: AppColors.border),
+          SizedBox(
+            width: 1,
+            height: AppSpacing.x6,
+            child: ColoredBox(color: AppColors.border),
+          ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: AppSpacing.x4),
+              padding: EarnSpacingTokens.earnHeroSecondaryPadding,
               child: _HeroKpi(
                 label: 'APY uoc tinh',
                 value: _apyEstimateRange(snapshot.products),

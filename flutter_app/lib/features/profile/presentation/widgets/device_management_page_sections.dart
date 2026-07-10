@@ -267,6 +267,72 @@ class _DeviceCard extends StatelessWidget {
   }
 }
 
+/// Escalated preview + confirm sheet for the bulk "log out all other
+/// devices" action. Modeled on `WithdrawPreviewSheet` (see
+/// `withdraw_preview_sheet.dart`): lists what is about to be revoked, shows a
+/// high-risk banner, and only resolves `true` when the user taps Confirm.
+class _LogoutAllDevicesPreviewSheet extends StatelessWidget {
+  const _LogoutAllDevicesPreviewSheet({required this.devices});
+
+  static const confirmKey = Key('sc165_devices_logout_all_confirm');
+  static const cancelKey = Key('sc165_devices_logout_all_cancel');
+
+  final List<ProfileManagedDevice> devices;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitSheetPanel(
+      title: 'Xác nhận đăng xuất tất cả',
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          for (var i = 0; i < devices.length; i++)
+            VitInfoRow(
+              label: devices[i].name,
+              value: '${devices[i].browser} • ${devices[i].os}',
+              density: VitDensity.compact,
+              showDivider: i != devices.length - 1,
+            ),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          VitCard(
+            variant: VitCardVariant.inner,
+            density: VitDensity.compact,
+            borderColor: _devicesAmber.withValues(alpha: .24),
+            child: Text(
+              'High-risk action: preview + confirm + audit trail required.',
+              style: AppTextStyles.caption.copyWith(color: _devicesAmber),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          Row(
+            children: [
+              Expanded(
+                child: VitCtaButton(
+                  key: cancelKey,
+                  onPressed: () => Navigator.of(context).pop(false),
+                  variant: VitCtaButtonVariant.secondary,
+                  height: AppSpacing.ctaHeight,
+                  child: const Text('Hủy'),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
+              Expanded(
+                child: VitCtaButton(
+                  key: confirmKey,
+                  onPressed: () => Navigator.of(context).pop(true),
+                  variant: VitCtaButtonVariant.destructive,
+                  height: AppSpacing.ctaHeight,
+                  child: const Text('Đăng xuất tất cả'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _DeviceDetails extends StatelessWidget {
   const _DeviceDetails({required this.device, required this.suspicious});
 

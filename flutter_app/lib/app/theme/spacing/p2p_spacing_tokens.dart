@@ -1928,7 +1928,7 @@ final class P2PSpacingTokens {
       EdgeInsets.symmetric(horizontal: AppSpacing.x2, vertical: AppSpacing.x1);
   static const EdgeInsets p2pPaymentMethodsListEmptyPadding =
       EdgeInsets.symmetric(vertical: AppSpacing.x4);
-  static const double p2pPaymentMethodsListSectionGap = AppSpacing.x1;
+  static const double p2pPaymentMethodsListSectionGap = AppSpacing.rowGap;
   static const double p2pPaymentMethodsListCardMinExtent = 80;
   static const EdgeInsets p2pPaymentAddFormCardPadding = EdgeInsets.all(
     AppSpacing.x2,

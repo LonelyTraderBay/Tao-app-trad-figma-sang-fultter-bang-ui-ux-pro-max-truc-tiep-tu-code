@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/home_action_tokens.dart';
 import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-const double _recentProductExtent = HomeSpacingTokens.homeRecentProductHeight;
+const double _recentProductExtent = SharedSpacingTokens.homeRecentProductHeight;
 const double _recentProductWidth = HomeSpacingTokens.homeRecentProductWidth;
 
 class HomeRecentProductsSection extends StatelessWidget {
@@ -15,10 +17,12 @@ class HomeRecentProductsSection extends StatelessWidget {
     super.key,
     required this.recentProducts,
     required this.onNavigate,
+    required this.density,
   });
 
   final List<HomeRecentProduct> recentProducts;
   final ValueChanged<String> onNavigate;
+  final VitDensity density;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +30,10 @@ class HomeRecentProductsSection extends StatelessWidget {
       key: HomePage.recentProductsSectionKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(
+        VitSectionHeader(
           title: 'Gần đây',
           bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+          density: density,
         ),
         if (recentProducts.isEmpty)
           VitEmptyState(

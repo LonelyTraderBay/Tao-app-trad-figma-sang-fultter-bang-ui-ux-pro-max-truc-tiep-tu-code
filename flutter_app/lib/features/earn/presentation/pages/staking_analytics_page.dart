@@ -21,13 +21,12 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'staking_analytics_page_part_01.dart';
 part 'staking_analytics_page_part_02.dart';
 part 'staking_analytics_page_part_03.dart';
 
-const double _stakingAnalyticsVisualNavClearance = 112;
-const double _stakingAnalyticsNativeNavClearance = 88;
 const double _stakingAnalyticsEarningsChartHeight = 158;
 const double _stakingAnalyticsChartHeight = 164;
 const double _stakingAnalyticsCaptionLineHeight = 1.22;

@@ -20,7 +20,7 @@ arena,flutter_app/lib/features/arena/presentation/pages/arena_home_page_part_02.
 arena,flutter_app/lib/features/arena/presentation/pages/arena_home_page_part_03.dart,3,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_mode_detail_page.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_points_page_part_01.dart,2,0,0,C,0,0,0,pass,-
-arena,flutter_app/lib/features/arena/presentation/pages/arena_points_page_part_02.dart,3,0,0,C,0,0,0,pass,-
+arena,flutter_app/lib/features/arena/presentation/pages/arena_points_page_part_02.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_points_page_part_03.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_prediction_bridge_foundation_page_part_01.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_prediction_bridge_foundation_page_part_02.dart,7,0,0,C,0,0,0,pass,-
@@ -32,15 +32,15 @@ arena,flutter_app/lib/features/arena/presentation/pages/arena_resolution_center_
 arena,flutter_app/lib/features/arena/presentation/pages/arena_smart_rule_builder_page_part_03.dart,6,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_trust_breakdown_page.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_universal_preset_library_page_part_01.dart,7,0,0,C,0,0,0,pass,-
-arena,flutter_app/lib/features/arena/presentation/pages/arena_universal_preset_library_page_part_02.dart,8,0,0,C,0,0,0,pass,-
+arena,flutter_app/lib/features/arena/presentation/pages/arena_universal_preset_library_page_part_02.dart,7,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/arena_universal_preset_library_page_part_03.dart,5,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/connected_ecosystem_production_page_part_01.dart,3,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/connected_ecosystem_production_page_part_02.dart,3,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/connected_ecosystem_production_page_part_03.dart,2,0,0,C,0,0,0,pass,-
-arena,flutter_app/lib/features/arena/presentation/pages/my_arena_page_part_01.dart,3,0,0,C,0,0,0,pass,-
+arena,flutter_app/lib/features/arena/presentation/pages/my_arena_page_part_01.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/my_arena_page_part_02.dart,7,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/my_arena_page_part_03.dart,5,0,0,C,0,0,0,pass,-
-arena,flutter_app/lib/features/arena/presentation/pages/my_arena_page_part_04.dart,2,0,0,C,0,0,0,pass,-
+arena,flutter_app/lib/features/arena/presentation/pages/my_arena_page_part_04.dart,1,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/pages/verified_challenges_page.dart,1,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_creator_common.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_creator_hero_trust.dart,2,0,0,C,0,0,0,pass,-
@@ -66,7 +66,7 @@ arena,flutter_app/lib/features/arena/presentation/widgets/arena_mode_detail_rela
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_mode_detail_rules.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_points_entry_detail_page_common.dart,1,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_points_entry_detail_page_sections.dart,4,0,0,C,0,0,0,pass,-
-arena,flutter_app/lib/features/arena/presentation/widgets/arena_points_ledger_page_sections.dart,4,0,0,C,0,0,0,pass,-
+arena,flutter_app/lib/features/arena/presentation/widgets/arena_points_ledger_page_sections.dart,3,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_report_case_related_common.dart,2,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_report_case_summary_timeline.dart,4,0,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_report_case_system_appeal.dart,3,0,0,C,0,0,0,pass,-
@@ -78,7 +78,7 @@ arena,flutter_app/lib/features/arena/presentation/widgets/arena_state_cards.dart
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_studio_fee_banner.dart,2,0,0,D,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_studio_footer.dart,2,1,0,C,0,0,0,pass,-
 arena,flutter_app/lib/features/arena/presentation/widgets/arena_studio_steps.dart,3,0,0,C,0,0,0,pass,-
-arena,flutter_app/lib/features/arena/presentation/widgets/my_arena_reports_page_sections.dart,5,0,0,C,0,0,0,pass,-
+arena,flutter_app/lib/features/arena/presentation/widgets/my_arena_reports_page_sections.dart,4,0,0,C,0,0,0,pass,-
 auth,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_backup.dart,2,0,0,C,0,0,0,pass,-
 auth,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_qr.dart,1,0,0,C,0,0,0,pass,-
 auth,flutter_app/lib/features/auth/presentation/widgets/two_fa_setup_verify.dart,3,0,0,C,0,0,0,pass,-
@@ -101,12 +101,13 @@ dca,flutter_app/lib/features/dca/presentation/pages/dca_dynamic_amount_page_part
 dca,flutter_app/lib/features/dca/presentation/pages/dca_multi_asset_page_part_01.dart,3,1,0,C,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_multi_asset_page_part_02.dart,8,1,0,C,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_multi_asset_page_part_03.dart,1,0,0,C,0,0,0,pass,-
+dca,flutter_app/lib/features/dca/presentation/pages/dca_overview_demo.dart,1,0,0,D,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_page_part_01.dart,2,0,0,D,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_page_part_02.dart,7,0,0,C,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_page_part_03.dart,4,0,0,C,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_01.dart,3,0,0,D,0,0,0,pass,-
-dca,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_02.dart,8,0,0,D,0,0,0,pass,-
-dca,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_03.dart,3,2,0,D,0,0,0,pass,-
+dca,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_02.dart,9,1,0,D,0,0,0,warn,fixed_height_baseline
+dca,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_03.dart,1,1,0,D,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_dashboard_page.dart,2,0,0,C,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/pages/dca_schedule_analytics_page.dart,2,0,0,C,0,0,0,pass,-
 dca,flutter_app/lib/features/dca/presentation/widgets/dca_backtester_analysis.dart,2,0,0,C,0,0,0,pass,-
@@ -342,7 +343,7 @@ earn,flutter_app/lib/features/earn/presentation/widgets/staking_validator_select
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_preview_kit.dart,1,0,0,E,0,0,0,pass,-
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,1,0,0,C,0,0,0,pass,-
 home,flutter_app/lib/features/home/presentation/pages/home_page_part_02.dart,1,0,0,E,0,0,0,pass,-
-home,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,3,0,0,E,0,0,0,pass,-
+home,flutter_app/lib/features/home/presentation/widgets/home_portfolio_card.dart,2,0,0,E,0,0,0,pass,-
 home,flutter_app/lib/features/home/presentation/widgets/home_status_content.dart,2,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/pages/launchpad_bridge_compare_page_part_01.dart,2,0,0,D,0,0,0,pass,-
 launchpad,flutter_app/lib/features/launchpad/presentation/pages/launchpad_bridge_compare_page_part_02.dart,3,0,0,E,0,0,0,pass,-
@@ -422,7 +423,7 @@ markets,flutter_app/lib/features/markets/presentation/pages/market_overview_page
 markets,flutter_app/lib/features/markets/presentation/pages/portfolio_tracker_page_part_01.dart,3,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/pages/portfolio_tracker_page_part_02.dart,4,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/pages/portfolio_tracker_page_part_03.dart,2,0,0,C,0,0,0,pass,-
-markets,flutter_app/lib/features/markets/presentation/pages/social_signals_page_part_01.dart,4,0,0,C,0,0,0,pass,-
+markets,flutter_app/lib/features/markets/presentation/pages/social_signals_page_part_01.dart,2,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/pages/social_signals_page_part_02.dart,2,0,0,E,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/pages/social_signals_page_part_03.dart,3,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/pages/token_unlocks_page_part_01.dart,1,0,0,C,0,0,0,pass,-
@@ -432,7 +433,7 @@ markets,flutter_app/lib/features/markets/presentation/widgets/comparison_tool_co
 markets,flutter_app/lib/features/markets/presentation/widgets/comparison_tool_tokens.dart,2,1,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_body_review_widgets.dart,3,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_calendar_events.dart,1,0,0,E,0,0,0,pass,-
-markets,flutter_app/lib/features/markets/presentation/widgets/market_calendar_filters.dart,2,1,0,C,0,0,0,pass,-
+markets,flutter_app/lib/features/markets/presentation/widgets/market_calendar_filters.dart,1,1,0,D,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_calendar_month.dart,2,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_correlations_diversification_widgets.dart,5,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_correlations_matrix_widgets.dart,4,0,0,C,0,0,0,pass,-
@@ -458,7 +459,6 @@ markets,flutter_app/lib/features/markets/presentation/widgets/market_screener_re
 markets,flutter_app/lib/features/markets/presentation/widgets/market_screener_row_common.dart,1,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_sector_card.dart,1,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_sector_comparison_table.dart,1,0,0,C,0,0,0,pass,-
-markets,flutter_app/lib/features/markets/presentation/widgets/market_sector_controls.dart,1,1,1,A,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_sector_detail_summary.dart,4,0,0,C,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/market_sector_distribution.dart,1,1,0,D,0,0,0,pass,-
 markets,flutter_app/lib/features/markets/presentation/widgets/pair_detail_chart_widgets.dart,1,0,0,C,0,0,0,pass,-
@@ -669,7 +669,7 @@ profile,flutter_app/lib/features/profile/presentation/widgets/activity_log_page_
 profile,flutter_app/lib/features/profile/presentation/widgets/api_management_docs.dart,1,0,0,C,0,0,0,pass,-
 profile,flutter_app/lib/features/profile/presentation/widgets/api_management_key_controls.dart,1,0,0,C,0,0,0,pass,-
 profile,flutter_app/lib/features/profile/presentation/widgets/api_management_keys.dart,1,0,0,C,0,0,0,pass,-
-profile,flutter_app/lib/features/profile/presentation/widgets/device_management_page_sections.dart,2,0,0,C,0,0,0,pass,-
+profile,flutter_app/lib/features/profile/presentation/widgets/device_management_page_sections.dart,3,0,0,C,0,0,0,pass,-
 profile,flutter_app/lib/features/profile/presentation/widgets/kyc_details_privacy.dart,1,0,0,C,0,0,0,pass,-
 profile,flutter_app/lib/features/profile/presentation/widgets/kyc_status_levels.dart,3,0,0,C,0,0,0,pass,-
 profile,flutter_app/lib/features/profile/presentation/widgets/profile_api_key_create_form.dart,3,0,0,C,0,0,0,pass,-
@@ -701,7 +701,7 @@ referral,flutter_app/lib/features/referral/presentation/widgets/referral_history
 referral,flutter_app/lib/features/referral/presentation/widgets/referral_rules_page_common.dart,2,0,0,C,0,0,0,pass,-
 referral,flutter_app/lib/features/referral/presentation/widgets/referral_rules_page_sections.dart,2,0,0,E,0,0,0,pass,-
 rewards,flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page_part_01.dart,2,0,0,C,0,0,0,pass,-
-rewards,flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart,3,0,0,C,0,0,0,pass,-
+rewards,flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart,2,0,0,C,0,0,0,pass,-
 rewards,flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page_part_03.dart,2,0,0,C,0,0,0,pass,-
 support,flutter_app/lib/features/support/presentation/widgets/announcements_list_widgets.dart,1,0,0,C,0,0,0,pass,-
 support,flutter_app/lib/features/support/presentation/widgets/help_center_hero_actions.dart,2,0,0,D,0,0,0,pass,-
@@ -713,7 +713,7 @@ support,flutter_app/lib/features/support/presentation/widgets/support_tickets.da
 trade,flutter_app/lib/features/trade/presentation/pages/active_copies_page_part_01.dart,4,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/pages/active_copies_page_part_02.dart,4,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/pages/active_copies_page_part_03.dart,2,0,0,C,0,0,0,pass,-
-trade,flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page_part_01.dart,3,0,0,C,0,0,0,pass,-
+trade,flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page_part_01.dart,2,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page_part_02.dart,4,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page_part_03.dart,3,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page_part_04.dart,1,0,0,C,0,0,0,pass,-
@@ -760,11 +760,11 @@ trade,flutter_app/lib/features/trade/presentation/widgets/audit_trail_page_commo
 trade,flutter_app/lib/features/trade/presentation/widgets/audit_trail_page_sections.dart,1,1,0,D,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/best_execution_archive_common.dart,2,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/best_execution_current.dart,2,0,0,C,0,0,0,pass,-
-trade,flutter_app/lib/features/trade/presentation/widgets/best_execution_overview.dart,2,0,0,C,0,0,0,pass,-
+trade,flutter_app/lib/features/trade/presentation/widgets/best_execution_overview.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/bot_api_documentation_endpoints.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/bot_api_documentation_intro_tabs.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/bot_api_documentation_support_common.dart,3,0,0,C,0,0,0,pass,-
-trade,flutter_app/lib/features/trade/presentation/widgets/bot_backtesting_widgets.dart,4,2,0,C,0,0,0,pass,-
+trade,flutter_app/lib/features/trade/presentation/widgets/bot_backtesting_widgets.dart,3,1,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/bot_drawdown_analyzer_page_common.dart,2,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/bot_drawdown_analyzer_page_sections.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/bot_emergency_stop_page_common.dart,1,0,0,C,0,0,0,pass,-
@@ -823,7 +823,7 @@ trade,flutter_app/lib/features/trade/presentation/widgets/copy_confirmation_page
 trade,flutter_app/lib/features/trade/presentation/widgets/copy_confirmation_page_sections.dart,7,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/copy_education_page_common.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/copy_education_page_sections.dart,2,2,0,D,0,0,0,pass,-
-trade,flutter_app/lib/features/trade/presentation/widgets/copy_notifications_page_sections.dart,3,2,1,D,0,0,0,pass,-
+trade,flutter_app/lib/features/trade/presentation/widgets/copy_notifications_page_sections.dart,2,1,0,D,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/copy_performance_common.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/copy_performance_details.dart,5,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/copy_performance_summary_tabs.dart,4,2,0,C,0,0,0,pass,-
@@ -950,7 +950,7 @@ wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_buy_crypto_re
 wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_assets.dart,1,1,0,D,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_confirm.dart,1,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_hero.dart,3,1,0,E,0,0,0,pass,-
-wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_targets.dart,2,0,0,C,0,0,0,pass,-
+wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_targets.dart,1,0,0,E,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_gas_optimizer_current.dart,3,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_gas_optimizer_tips.dart,3,1,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/wallet_gas_optimizer_trends.dart,2,1,0,D,0,0,0,pass,-
@@ -982,6 +982,7 @@ wallet,flutter_app/lib/features/wallet/presentation/widgets/withdraw_limits_page
 wallet,flutter_app/lib/features/wallet/presentation/widgets/withdraw_network_picker.dart,1,0,0,C,0,0,0,pass,-
 wallet,flutter_app/lib/features/wallet/presentation/widgets/withdraw_preview_sheet.dart,1,0,0,C,0,0,0,pass,-
 shared,flutter_app/lib/shared/widgets/vit_announcement_banner.dart,1,0,0,C,0,0,0,pass,-
+shared,flutter_app/lib/shared/widgets/vit_balance_breakdown_row.dart,1,0,0,C,0,0,0,pass,-
 shared,flutter_app/lib/shared/widgets/vit_community_rules_link.dart,1,0,0,C,0,0,0,pass,-
 shared,flutter_app/lib/shared/widgets/vit_compact_product_card.dart,1,1,0,D,0,0,0,pass,-
 shared,flutter_app/lib/shared/widgets/vit_discovery_action_card.dart,1,0,0,C,0,0,0,pass,-

@@ -19,13 +19,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/launchpad_portfolio_hero_tabs.dart';
 part '../widgets/launchpad_portfolio_subscription.dart';
 part '../widgets/launchpad_portfolio_empty_disclaimer_common.dart';
 
-const double _launchpadPortfolioVisualNavClearance = 112;
-const double _launchpadPortfolioNativeNavClearance = 88;
 const double _launchpadPortfolioLineHeightLabel =
     LaunchpadSpacingTokens.launchpadLineHeightLabel;
 const double _launchpadPortfolioLineHeightDense =
@@ -63,8 +62,8 @@ class _LaunchpadPortfolioPageState
     final subscriptions = _subscriptionsFor(snapshot.subscriptions, _activeTab);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadPortfolioVisualNavClearance
-        : _launchpadPortfolioNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

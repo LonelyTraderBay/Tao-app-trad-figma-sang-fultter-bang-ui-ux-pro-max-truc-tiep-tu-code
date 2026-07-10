@@ -1,7 +1,7 @@
 kind,scope,file,line,allowed,issue,notes
-search_action,module_search,lib/features/discovery/presentation/pages/topic_hub_page.dart,99,yes,-,Module/discovery search action is allowlisted.
-search_action,global_search,lib/features/home/presentation/pages/home_page_part_01.dart,387,yes,-,Home global command search.
-notification_action,global_notification,lib/features/home/presentation/pages/home_page_part_01.dart,392,yes,-,Home global notification inbox action.
-notification_action,context_notification,lib/features/launchpad/presentation/pages/launchpad_claim_receipt_page.dart,99,yes,-,Context notification action must not masquerade as global inbox.
-notification_action,context_notification,lib/features/p2p/presentation/pages/p2p_claim_detail_page_part_01.dart,39,yes,-,Context notification action must not masquerade as global inbox.
-search_action,module_search,lib/features/predictions/presentation/pages/predictions_home_page.dart,116,yes,-,Module/discovery search action is allowlisted.
+search_action,module_search,lib/features/discovery/presentation/pages/topic_hub_page.dart,101,yes,-,Module/discovery search action is allowlisted.
+search_action,global_search,lib/features/home/presentation/widgets/home_header.dart,23,yes,-,Home global command search.
+notification_action,global_notification,lib/features/home/presentation/widgets/home_header.dart,28,yes,-,Home global notification inbox action.
+notification_action,context_notification,lib/features/launchpad/presentation/pages/launchpad_claim_receipt_page.dart,100,yes,-,Context notification action must not masquerade as global inbox.
+notification_action,context_notification,lib/features/p2p/presentation/pages/p2p_claim_detail_page_part_01.dart,28,yes,-,Context notification action must not masquerade as global inbox.
+search_action,module_search,lib/features/predictions/presentation/pages/predictions_home_page.dart,119,yes,-,Module/discovery search action is allowlisted.

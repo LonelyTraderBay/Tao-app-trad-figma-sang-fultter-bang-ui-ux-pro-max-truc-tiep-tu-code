@@ -4,7 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 enum VitTrendDirection { positive, negative, neutral }
 
@@ -54,13 +54,13 @@ class VitMarketPairRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final content = Padding(
       padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: HomeSpacingTokens.homeSectionHorizontalPadding,
-        vertical: HomeSpacingTokens.homeSectionVerticalPadding,
+        horizontal: SharedSpacingTokens.homeSectionHorizontalPadding,
+        vertical: SharedSpacingTokens.homeSectionVerticalPadding,
       ),
       child: Row(
         children: [
           leading,
-          const SizedBox(width: HomeSpacingTokens.homeMarketIconGap),
+          const SizedBox(width: SharedSpacingTokens.homeMarketIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,14 +85,14 @@ class VitMarketPairRow extends StatelessWidget {
           ),
           if (showSparkline && sparkline != null) ...[
             SizedBox(
-              width: HomeSpacingTokens.homeSparklineWidth,
-              height: HomeSpacingTokens.homeSparklineHeight,
+              width: SharedSpacingTokens.homeSparklineWidth,
+              height: SharedSpacingTokens.homeSparklineHeight,
               child: VitSparkline(values: sparkline!, color: trend.foreground),
             ),
-            const SizedBox(width: HomeSpacingTokens.homeMarketIconGap),
+            const SizedBox(width: SharedSpacingTokens.homeMarketIconGap),
           ],
           SizedBox(
-            width: HomeSpacingTokens.homeRankedValueColumnWidth,
+            width: SharedSpacingTokens.homeRankedValueColumnWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

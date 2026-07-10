@@ -33,8 +33,8 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
     final snapshot = ref.watch(dcaMultiAssetProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaMultiAssetVisualNavClearance
-        : _dcaMultiAssetNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

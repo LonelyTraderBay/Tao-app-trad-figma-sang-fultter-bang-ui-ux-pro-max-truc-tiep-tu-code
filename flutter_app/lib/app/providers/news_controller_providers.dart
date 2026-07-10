@@ -4,6 +4,11 @@ import 'package:vit_trade_flutter/features/news/presentation/controllers/news_co
 
 export 'package:vit_trade_flutter/features/news/presentation/controllers/news_controller.dart';
 
+final newsSnapshotProvider = FutureProvider<NewsScreenSnapshot>((ref) {
+  return ref.watch(newsRepositoryProvider).getNews();
+});
+
 final newsControllerProvider = Provider<NewsController>((ref) {
-  return NewsController(ref.watch(newsRepositoryProvider));
+  final snapshot = ref.watch(newsSnapshotProvider).requireValue;
+  return NewsController(snapshot: snapshot);
 });

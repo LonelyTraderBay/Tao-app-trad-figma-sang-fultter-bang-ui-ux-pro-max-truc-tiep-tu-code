@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
@@ -175,4 +176,80 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Configuration not found'), findsOneWidget);
   });
+
+  testWidgets(
+    'SC-170 360px hybrid preview avoids layout overflow with large trades',
+    (tester) async {
+      final layoutErrors = <FlutterErrorDetails>[];
+      final previousOnError = FlutterError.onError;
+      FlutterError.onError = layoutErrors.add;
+      addTearDown(() => FlutterError.onError = previousOnError);
+
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(360, 800);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      final base = const MockDcaRepository().getRebalanceConfig();
+      final largeTradeSnapshot = DcaRebalanceConfigSnapshot(
+        endpoint: base.endpoint,
+        actionDraft: base.actionDraft,
+        supportedStates: base.supportedStates,
+        totalPortfolioUsd: 25000000,
+        driftThreshold: base.driftThreshold,
+        minTradeAmountUsd: 1,
+        strategy: base.strategy,
+        frequency: base.frequency,
+        targets: base.targets,
+        strategyOptions: base.strategyOptions,
+        frequencyOptions: base.frequencyOptions,
+      );
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            dcaRebalanceConfigProvider.overrideWithValue(largeTradeSnapshot),
+          ],
+          child: VitTradeApp(
+            routerConfig: createAppRouter(
+              initialLocation: AppRoutePaths.dcaRebalanceConfig,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(
+        find.byKey(DCARebalanceConfig.strategyKey(DcaRebalanceStrategy.hybrid)),
+      );
+      await tester.tap(
+        find.byKey(DCARebalanceConfig.strategyKey(DcaRebalanceStrategy.hybrid)),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Drift'), findsOneWidget);
+      expect(find.text('Tần suất'), findsOneWidget);
+      expect(find.text('Ngưỡng drift'), findsOneWidget);
+
+      await tester.ensureVisible(find.byKey(DCARebalanceConfig.previewKey));
+      await tester.tap(find.byKey(DCARebalanceConfig.previewKey));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(DCARebalanceConfig.previewSheetKey), findsOneWidget);
+      expect(find.textContaining('Mua \$'), findsWidgets);
+
+      final exceptions = <Object?>[];
+      Object? exception = tester.takeException();
+      while (exception != null) {
+        exceptions.add(exception);
+        exception = tester.takeException();
+      }
+      expect(exceptions, isEmpty);
+
+      final overflowErrors = layoutErrors
+          .where((details) => details.exceptionAsString().contains('overflowed'))
+          .toList();
+      expect(overflowErrors, isEmpty);
+    },
+  );
 }

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 void main() {
   test('page rhythm tokens align with VitPageRhythm metrics', () {
@@ -28,7 +29,7 @@ void main() {
       AppSpacing.pageRhythmCompactSectionGap,
     );
     expect(
-      HomeSpacingTokens.homeSectionInnerGap,
+      SharedSpacingTokens.homeSectionInnerGap,
       AppSpacing.pageRhythmCompactInnerGap,
     );
   });

@@ -16,7 +16,7 @@ class _OrderSummary extends StatelessWidget {
       contractId: 'SC-085 Margin preview',
       density: VitDensity.compact,
       footer:
-          'Review margin, liquidation, fee, leverage, and side before opening a position.',
+          'Review margin, liquidation, fee, leverage limit, and side before opening a position.',
       items: [
         VitFinancialSafetyItem(
           label: 'Available margin',

@@ -8,8 +8,8 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
     final snapshot = ref.watch(launchpadControllerProvider).getStaking();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _launchpadStakingVisualNavClearance
-        : _launchpadStakingNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

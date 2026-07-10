@@ -28,22 +28,38 @@ class _PreviewRow extends StatelessWidget {
           children: [
             Text(
               preview.symbol,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: AppTextStyles.base.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
-            Text(
-              '${preview.currentPercent.toStringAsFixed(0)}% → ${preview.targetPercent.toStringAsFixed(0)}%',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            Flexible(
+              child: Text(
+                '${preview.currentPercent.toStringAsFixed(0)}% → ${preview.targetPercent.toStringAsFixed(0)}%',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
             ),
             const SizedBox(width: AppSpacing.x4),
-            Text(
-              '$label \$${preview.tradeAmountUsd.toStringAsFixed(0)}',
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
+            Flexible(
+              child: Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: Text(
+                    '$label \$${preview.tradeAmountUsd.toStringAsFixed(0)}',
+                    maxLines: 1,
+                    style: AppTextStyles.caption.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -323,6 +339,13 @@ IconData _strategyIcon(DcaRebalanceOptionIcon icon) {
     DcaRebalanceOptionIcon.zap => Icons.flash_on_rounded,
     DcaRebalanceOptionIcon.clock => Icons.schedule_rounded,
     DcaRebalanceOptionIcon.combine => Icons.account_tree_rounded,
+  };
+}
+
+String _strategyChoiceLabel(DcaRebalanceStrategyOption option) {
+  return switch (option.strategy) {
+    DcaRebalanceStrategy.threshold => 'Drift',
+    _ => option.title,
   };
 }
 

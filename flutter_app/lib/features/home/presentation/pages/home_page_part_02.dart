@@ -30,7 +30,7 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/markets/predictions'),
         ),
-        const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
+        const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
         VitDiscoveryActionCard(
           title: 'Open Arena',
           badgeLabel: 'Arena Points only',
@@ -48,7 +48,7 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/arena'),
         ),
-        const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
+        const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
         const VitRiskDisclaimerNote(
           message:
               'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
@@ -108,27 +108,34 @@ class _MarketSection extends StatelessWidget {
             VitTabItem(key: 'new', label: 'Mới', icon: Icons.fiber_new_rounded),
           ],
         ),
-        const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
-        VitCard(
-          clip: true,
-          child: Column(
-            children: [
-              for (var i = 0; i < pairs.length; i++) ...[
-                _MarketRow(
-                  pair: pairs[i],
-                  showSparkline: true,
-                  onTap: () => onNavigate('/pair/${pairs[i].id}'),
-                ),
-                if (i < pairs.length - 1)
-                  const Divider(
-                    height: AppSpacing.dividerHairline,
-                    thickness: AppSpacing.dividerHairline,
-                    color: AppColors.divider,
+        const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
+        if (pairs.isEmpty)
+          const VitEmptyState(
+            title: 'Chưa có cặp nào trong mục này',
+            message: 'Thử chọn tab khác để xem thêm thị trường.',
+            icon: Icons.candlestick_chart_rounded,
+          )
+        else
+          VitCard(
+            clip: true,
+            child: Column(
+              children: [
+                for (var i = 0; i < pairs.length; i++) ...[
+                  _MarketRow(
+                    pair: pairs[i],
+                    showSparkline: true,
+                    onTap: () => onNavigate('/pair/${pairs[i].id}'),
                   ),
+                  if (i < pairs.length - 1)
+                    const Divider(
+                      height: AppSpacing.dividerHairline,
+                      thickness: AppSpacing.dividerHairline,
+                      color: AppColors.divider,
+                    ),
+                ],
               ],
-            ],
+            ),
           ),
-        ),
       ],
     );
   }

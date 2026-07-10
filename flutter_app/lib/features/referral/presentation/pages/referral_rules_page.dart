@@ -80,8 +80,8 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                   child: SingleChildScrollView(
                     key: ReferralRulesPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: ReferralSpacingTokens.referralPageScrollPadding(
-                      scrollEndClearance,
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
                     ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,

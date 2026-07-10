@@ -19,14 +19,13 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'dca_dynamic_amount_page_part_01.dart';
 part 'dca_dynamic_amount_page_part_02.dart';
 part 'dca_dynamic_amount_page_part_03.dart';
 part 'dca_dynamic_amount_page_part_04.dart';
 
-const double _dcaDynamicVisualNavClearance = 112;
-const double _dcaDynamicNativeNavClearance = 88;
 const double _dcaDynamicChartHeight = 144;
 const EdgeInsetsDirectional _dcaDynamicHeroPadding = EdgeInsetsDirectional.all(
   AppSpacing.x4,
@@ -60,8 +59,8 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
     final snapshot = ref.watch(dcaDynamicAmountProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaDynamicVisualNavClearance
-        : _dcaDynamicNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
     final activeOption = _strategyOption(snapshot.strategies, _activeStrategy);

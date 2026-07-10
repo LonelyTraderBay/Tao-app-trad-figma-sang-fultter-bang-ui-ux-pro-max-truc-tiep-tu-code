@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'dca_portfolio_optimizer_page_part_01.dart';
 part 'dca_portfolio_optimizer_page_part_02.dart';
@@ -37,8 +38,6 @@ part '../widgets/dca_portfolio_optimizer_frontier_painter.dart';
 
 enum _OptimizerTab { frontier, correlation, backtest, risk }
 
-const double _dcaPortfolioVisualNavClearance = 112;
-const double _dcaPortfolioNativeNavClearance = 88;
 const double _dcaPortfolioBodyLineHeight = 1.35;
 const double _dcaPortfolioTightLineHeight = 1.0;
 const double _dcaPortfolioFrontierChartHeight = 180;
@@ -84,8 +83,8 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
     final snapshot = ref.watch(dcaPortfolioOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaPortfolioVisualNavClearance
-        : _dcaPortfolioNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

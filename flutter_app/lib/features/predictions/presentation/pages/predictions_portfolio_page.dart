@@ -20,8 +20,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class PredictionsPortfolioPage extends ConsumerStatefulWidget {
   const PredictionsPortfolioPage({
@@ -111,7 +111,7 @@ class _PredictionsPortfolioPageState
                           variant: VitCardVariant.hero,
                           radius: VitCardRadius.large,
                           clip: true,
-                          padding: HomeSpacingTokens.homeCardPaddingDefault,
+                          padding: SharedSpacingTokens.homeCardPaddingDefault,
                           background: const VitHeroGlow(),
                           child: PredictionPortfolioSummaryCard(
                             snapshot: snapshot,

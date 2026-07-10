@@ -20,13 +20,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'dca_multi_asset_page_part_01.dart';
 part 'dca_multi_asset_page_part_02.dart';
 part 'dca_multi_asset_page_part_03.dart';
-
-const double _dcaMultiAssetVisualNavClearance = 112;
-const double _dcaMultiAssetNativeNavClearance = 88;
 
 enum _MultiAssetTab { setup, assets, performance }
 

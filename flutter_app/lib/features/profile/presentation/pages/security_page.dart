@@ -39,6 +39,12 @@ class SecurityPage extends ConsumerStatefulWidget {
   static const scoreCardKey = Key('sc158_security_score_card');
   static const antiPhishingFieldKey = Key('sc158_security_anti_phishing_field');
   static const antiPhishingSaveKey = Key('sc158_security_anti_phishing_save');
+  static const antiPhishingConfirmKey = Key(
+    'sc158_security_anti_phishing_confirm',
+  );
+  static const antiPhishingCancelKey = Key(
+    'sc158_security_anti_phishing_cancel',
+  );
   static const supportKey = Key('sc158_security_support');
 
   static Key itemKey(String id) => Key('sc158_security_item_$id');
@@ -155,6 +161,20 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
   }
 
   Future<void> _saveAntiPhishingCode() async {
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Xác nhận mã chống lừa đảo',
+      rows: [
+        VitConfirmDialogRow(
+          label: 'Mã chống lừa đảo',
+          value: _antiPhishingController.text,
+        ),
+      ],
+      confirmKey: SecurityPage.antiPhishingConfirmKey,
+      cancelKey: SecurityPage.antiPhishingCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() => _saving = true);
     await Future<void>.delayed(const Duration(milliseconds: 280));

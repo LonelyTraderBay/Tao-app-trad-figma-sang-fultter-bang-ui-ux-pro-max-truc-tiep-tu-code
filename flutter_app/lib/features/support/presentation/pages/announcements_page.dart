@@ -107,7 +107,7 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                   child: SingleChildScrollView(
                     key: AnnouncementsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: SupportSpacingTokens.supportScrollPadding(
+                    padding: SupportSpacingTokens.supportHubScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(

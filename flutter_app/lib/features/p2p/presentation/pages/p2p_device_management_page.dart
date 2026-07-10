@@ -36,6 +36,11 @@ class P2PDeviceManagementPage extends ConsumerStatefulWidget {
   static Key revokeButtonKey(String id) => Key('sc255_p2p_device_revoke_$id');
   static Key removeButtonKey(String id) => Key('sc255_p2p_device_remove_$id');
 
+  static const revokeConfirmKey = Key('sc255_p2p_devices_revoke_confirm');
+  static const revokeCancelKey = Key('sc255_p2p_devices_revoke_cancel');
+  static const removeConfirmKey = Key('sc255_p2p_devices_remove_confirm');
+  static const removeCancelKey = Key('sc255_p2p_devices_remove_cancel');
+
   final ShellRenderMode? shellRenderMode;
 
   @override
@@ -139,7 +144,19 @@ class _P2PDeviceManagementPageState
     });
   }
 
-  void _revokeTrust(String deviceId) {
+  Future<void> _revokeTrust(String deviceId) async {
+    final targetDevice = _devices.firstWhere((device) => device.id == deviceId);
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Thu hồi tin cậy thiết bị?',
+      rows: [VitConfirmDialogRow(label: 'Thiết bị', value: targetDevice.name)],
+      message:
+          'Thiết bị này có thể cần xác minh bổ sung ở lần đăng nhập tiếp theo.',
+      confirmKey: P2PDeviceManagementPage.revokeConfirmKey,
+      cancelKey: P2PDeviceManagementPage.revokeCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _devices = [
@@ -153,7 +170,21 @@ class _P2PDeviceManagementPageState
     });
   }
 
-  void _removeDevice(String deviceId) {
+  Future<void> _removeDevice(String deviceId) async {
+    final targetDevice = _devices.firstWhere((device) => device.id == deviceId);
+    final confirmed = await showVitConfirmDialog(
+      context: context,
+      title: 'Xóa thiết bị?',
+      rows: [VitConfirmDialogRow(label: 'Thiết bị', value: targetDevice.name)],
+      message:
+          'Thao tác này không thể hoàn tác. Thiết bị sẽ mất quyền truy cập ngay lập tức.',
+      confirmLabel: 'Xóa',
+      confirmVariant: VitCtaButtonVariant.destructive,
+      confirmKey: P2PDeviceManagementPage.removeConfirmKey,
+      cancelKey: P2PDeviceManagementPage.removeCancelKey,
+    );
+    if (!mounted || !confirmed) return;
+
     HapticFeedback.selectionClick();
     setState(() {
       _devices = _devices.where((device) => device.id != deviceId).toList();

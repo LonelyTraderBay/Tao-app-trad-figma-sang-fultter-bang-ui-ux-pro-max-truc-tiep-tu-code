@@ -162,6 +162,8 @@ void main() {
       'VIT4',
     );
     await tester.tap(find.byKey(SecurityPage.antiPhishingSaveKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(SecurityPage.antiPhishingConfirmKey));
     await tester.pump();
     expect(find.text('...'), findsOneWidget);
     await tester.pumpAndSettle(const Duration(milliseconds: 320));

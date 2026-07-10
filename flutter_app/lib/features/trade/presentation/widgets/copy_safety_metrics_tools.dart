@@ -323,7 +323,7 @@ class _ToolButton extends StatelessWidget {
                 ? Icons.flag_outlined
                 : Icons.warning_amber_rounded,
             color: color,
-            size: HomeSpacingTokens.homeNextActionIconSize,
+            size: SharedSpacingTokens.homeNextActionIconSize,
           ),
           const SizedBox(width: AppSpacing.cardGap),
           Expanded(

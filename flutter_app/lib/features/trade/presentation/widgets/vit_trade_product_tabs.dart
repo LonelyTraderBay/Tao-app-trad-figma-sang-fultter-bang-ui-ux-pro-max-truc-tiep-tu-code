@@ -178,9 +178,11 @@ class _ProductTabChip extends StatelessWidget {
           : AppColors.borderSolid,
       background: active
           ? DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: AppColors.primary.withValues(alpha: .10),
-                borderRadius: AppRadii.cardRadius,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardRadius,
+                ),
               ),
             )
           : null,

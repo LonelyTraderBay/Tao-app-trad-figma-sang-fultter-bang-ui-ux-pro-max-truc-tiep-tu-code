@@ -39,6 +39,40 @@ void main() {
     expect(_headerHeight(tester), 0);
   });
 
+  testWidgets('short content keeps scroll offset instead of snapping back', (
+    WidgetTester tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    // Short viewport + modest list → maxScrollExtent ≈ header height.
+    // Collapsing the header used to clamp pixels back to 0.
+    tester.view.physicalSize = const Size(360, 640);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+
+    await tester.pumpWidget(_scaffoldHarness(itemCount: 10));
+
+    final scrollable = find.byType(Scrollable);
+    await tester.drag(find.byKey(_scrollKey), const Offset(0, -120));
+    await tester.pumpAndSettle(const Duration(milliseconds: 220));
+
+    final offsetAfterDrag = tester
+        .state<ScrollableState>(scrollable)
+        .position
+        .pixels;
+
+    expect(
+      offsetAfterDrag,
+      greaterThan(8),
+      reason: 'Short lists must retain scroll offset after a downward drag.',
+    );
+    expect(
+      _headerHeight(tester),
+      greaterThan(0),
+      reason:
+          'Header must stay expanded when collapsing it would clamp the offset.',
+    );
+  });
+
   testWidgets('header returns on upward scroll', (WidgetTester tester) async {
     await tester.pumpWidget(_scaffoldHarness());
 
@@ -148,6 +182,7 @@ Widget _scaffoldHarness({
   double bottomInset = 0,
   Key? headerKey,
   Key? bodyKey,
+  int itemCount = 40,
 }) {
   final page = VitPageLayout(
     variant: VitPageVariant.flush,
@@ -169,11 +204,12 @@ Widget _scaffoldHarness({
       ),
       child: SingleChildScrollView(
         key: _scrollKey,
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: [
-            for (var index = 0; index < 40; index++)
+            for (var index = 0; index < itemCount; index++)
               SizedBox(
-                key: index == 39 ? _lastItemKey : null,
+                key: index == itemCount - 1 ? _lastItemKey : null,
                 height: 64,
                 child: Text('Row $index'),
               ),

@@ -89,7 +89,7 @@ class _TrendsTab extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: HomeSpacingTokens.homeHeroActionHeight,
+                      width: SharedSpacingTokens.homeHeroActionHeight,
                       child: Text(
                         trend.month,
                         style: AppTextStyles.caption.copyWith(

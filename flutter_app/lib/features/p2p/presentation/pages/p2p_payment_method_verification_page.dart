@@ -115,6 +115,7 @@ class _P2PPaymentMethodVerificationPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
+                      fullBleed: true,
                       children: [
                         if (_selectedMethodId == null)
                           _MethodChooser(

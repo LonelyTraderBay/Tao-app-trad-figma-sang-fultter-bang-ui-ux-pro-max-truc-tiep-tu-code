@@ -1,5 +1,6 @@
 cluster,file,suggested_tier,violation_type,status,batch,notes
 01_shared,flutter_app/lib/shared/widgets/vit_announcement_banner.dart,C,-,done,0,-
+01_shared,flutter_app/lib/shared/widgets/vit_balance_breakdown_row.dart,C,-,done,0,-
 01_shared,flutter_app/lib/shared/widgets/vit_community_rules_link.dart,C,-,done,0,-
 01_shared,flutter_app/lib/shared/widgets/vit_compact_product_card.dart,D,-,done,0,-
 01_shared,flutter_app/lib/shared/widgets/vit_discovery_action_card.dart,C,-,done,0,-
@@ -104,7 +105,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/comparison_tool_tokens.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_body_review_widgets.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_calendar_events.dart,E,-,done,0,-
-03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_calendar_filters.dart,C,-,done,0,-
+03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_calendar_filters.dart,D,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_calendar_month.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_correlations_diversification_widgets.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_correlations_matrix_widgets.dart,C,-,done,0,-
@@ -130,7 +131,6 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_screener_row_common.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_sector_card.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_sector_comparison_table.dart,C,-,done,0,-
-03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_sector_controls.dart,A,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_sector_detail_summary.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/market_sector_distribution.dart,D,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/pair_detail_chart_widgets.dart,C,-,done,0,-
@@ -569,7 +569,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_assets.dart,D,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_confirm.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_hero.dart,E,-,done,0,-
-04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_targets.dart,C,-,done,0,-
+04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_dust_converter_targets.dart,E,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_gas_optimizer_current.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_gas_optimizer_tips.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/wallet/presentation/widgets/wallet_gas_optimizer_trends.dart,D,-,done,0,-
@@ -605,11 +605,12 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_multi_asset_page_part_01.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_multi_asset_page_part_02.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_multi_asset_page_part_03.dart,C,-,done,0,-
+05_growth,flutter_app/lib/features/dca/presentation/pages/dca_overview_demo.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_page_part_01.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_page_part_02.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_page_part_03.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_01.dart,D,-,done,0,-
-05_growth,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_02.dart,D,-,done,0,-
+05_growth,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_02.dart,D,allow_start_baseline,pending,1,fixed_height_baseline
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page_part_03.dart,D,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_rebalance_dashboard_page.dart,C,-,done,0,-
 05_growth,flutter_app/lib/features/dca/presentation/pages/dca_schedule_analytics_page.dart,C,-,done,0,-

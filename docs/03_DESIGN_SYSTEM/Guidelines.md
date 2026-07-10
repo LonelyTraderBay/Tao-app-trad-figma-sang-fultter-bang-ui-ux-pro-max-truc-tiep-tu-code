@@ -86,7 +86,7 @@ adoption. A screen is not done if the phone viewport is mostly chrome, hero
 space, fixed-height cards, vertical gaps, or bottom-nav padding while the first
 useful repeated/actionable section sits below the fold.
 
-Use the maintained audit gate:
+Use the maintained audit check (local only — no CI step wires this in yet):
 
 ```bash
 cd flutter_app
@@ -98,13 +98,10 @@ financial-safety copy, and Prediction Markets/Open Arena boundaries. Fullscreen
 tool routes are separate QA exceptions; do not compact them with normal
 content-page rules without emulator evidence.
 
-Shared UI density tiers are:
-
-- `VitDensity.compact`: dense root/list/card sections and repeated actions.
-- `VitDensity.standard`: default behavior for existing screens.
-- `VitDensity.relaxed`: low-frequency informational or confirmation content.
-- `VitDensity.hero`: intentional first-screen emphasis, used sparingly.
-- `VitDensity.tool`: fullscreen tools that need chrome-efficient controls.
+See [UI-Density-Standard.md](../02_FLUTTER_MIGRATION/UI-Density-Standard.md)
+for the full `VitDensity` tier contract (pixel/token values per tier) and the
+enforcement detail for both chained density audits — that gate is audit-only
+today (no CI step, no guardrail test).
 
 ## Financial Safety
 

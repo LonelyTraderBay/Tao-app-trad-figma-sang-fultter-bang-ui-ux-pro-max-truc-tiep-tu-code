@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletTokenApprovalSettingsTab extends StatelessWidget {
@@ -113,8 +114,8 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
             ),
             VitTogglePill(
               enabled: enabled,
-              width: WalletSpacingTokens.walletAddressSwitchWidth,
-              height: WalletSpacingTokens.walletAddressSwitchHeight,
+              width: SharedSpacingTokens.walletAddressSwitchWidth,
+              height: SharedSpacingTokens.walletAddressSwitchHeight,
               knobSize: WalletSpacingTokens.walletTokenSwitchKnob,
               knobMargin: WalletSpacingTokens.walletTokenSwitchPadding,
               activeColor: walletTokenApprovalPrimary,

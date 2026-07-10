@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class VitCarouselDots extends StatelessWidget {
   const VitCarouselDots({
@@ -52,7 +52,9 @@ class VitCarouselDots extends StatelessWidget {
               semanticLabel: 'Go to carousel page ${index + 1}',
             ),
             if (index < itemCount - 1)
-              const SizedBox(width: HomeSpacingTokens.homeAnnouncementDotGap),
+              const SizedBox(
+                width: SharedSpacingTokens.homeAnnouncementDotGap,
+              ),
           ],
         ],
       ),
@@ -82,8 +84,8 @@ class _CarouselDot extends StatelessWidget {
   Widget build(BuildContext context) {
     final targetColor = active ? activeColor : inactiveColor;
     final targetWidth = active
-        ? HomeSpacingTokens.homeAnnouncementDotActiveWidth
-        : HomeSpacingTokens.homeAnnouncementDotInactiveWidth;
+        ? SharedSpacingTokens.homeAnnouncementDotActiveWidth
+        : SharedSpacingTokens.homeAnnouncementDotInactiveWidth;
     final dot = TweenAnimationBuilder<double>(
       duration: duration,
       tween: Tween<double>(end: targetWidth),
@@ -94,7 +96,7 @@ class _CarouselDot extends StatelessWidget {
           builder: (context, color, child) {
             return SizedBox(
               width: width,
-              height: HomeSpacingTokens.homeAnnouncementDotHeight,
+              height: SharedSpacingTokens.homeAnnouncementDotHeight,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: color ?? targetColor,

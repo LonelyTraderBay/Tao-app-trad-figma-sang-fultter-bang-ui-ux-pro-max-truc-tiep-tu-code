@@ -107,14 +107,6 @@ final class ArenaSpacingTokens {
   static const double arenaHomeFooterIcon = 16;
   static const double arenaHomeFooterShieldIcon = 17;
   static const double arenaHomeFooterLineHeight = 1.35;
-  static const double arenaCommunityRulesLinkLineHeight =
-      arenaHomeFooterLineHeight;
-  static const double arenaCommunityRulesLinkIcon = AppSpacing.iconMd;
-  static const EdgeInsetsDirectional arenaCommunityRulesLinkPadding =
-      EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      );
   static const double arenaHomeSearchChevron = 18;
   static const double arenaHomeActionIconBox = 32;
   static const double arenaHomeActionIcon = 17;

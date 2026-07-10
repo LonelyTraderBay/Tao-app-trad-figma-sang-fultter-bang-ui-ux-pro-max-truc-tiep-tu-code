@@ -4,10 +4,10 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 
 ```text
 total_routed_screens=414
-fixed_vit_header_remaining=9
-auto_hide_header=316
+fixed_vit_header_remaining=19
+auto_hide_header=283
 custom_scroll_header=2
-no_top_header=87
+no_top_header=110
 unresolved=0
 ```
 
@@ -16,6 +16,8 @@ unresolved=0
 | Feature | Fixed-header routes |
 | --- | ---: |
 | trade | 9 |
+| profile | 8 |
+| wallet | 2 |
 
 ## Route Header Inventory
 
@@ -154,7 +156,7 @@ unresolved=0
 | earn | `AppRoutePaths.earnVotingProposalRoute` | `StakingVotingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_webhooks_page.dart` |
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
-| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| home | `AppRoutePaths.home` | `HomePage` | no_top_header | no_top_header | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_abi_diff_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAddressBook` | `LaunchpadAddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_address_book_page.dart` |
@@ -211,15 +213,15 @@ unresolved=0
 | p2p | `'/p2p/dispute/detail/:disputeId'` | `P2PDisputeDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_detail_page.dart` |
 | p2p | `'/p2p/dispute/evidence/:disputeId'` | `P2PDisputeEvidencePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_evidence_page.dart` |
 | p2p | `'/p2p/dispute/resolution/:disputeId'` | `P2PDisputeResolutionPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_resolution_page.dart` |
-| p2p | `'/p2p/escrow/:orderId'` | `P2PEscrowDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` |
-| p2p | `'/p2p/insurance/claim/:claimId'` | `P2PClaimDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_claim_detail_page.dart` |
-| p2p | `'/p2p/merchant/:merchantId'` | `P2PMerchantProfilePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` |
+| p2p | `'/p2p/escrow/:orderId'` | `P2PEscrowDetailPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` |
+| p2p | `'/p2p/insurance/claim/:claimId'` | `P2PClaimDetailPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_claim_detail_page.dart` |
+| p2p | `'/p2p/merchant/:merchantId'` | `P2PMerchantProfilePage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` |
 | p2p | `'/p2p/order/:orderId'` | `P2POrderPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart` |
 | p2p | `'/p2p/order/cancel/:orderId'` | `P2POrderCancelPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_cancel_page.dart` |
 | p2p | `'/p2p/order/proof/:orderId'` | `P2POrderProofPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_proof_page.dart` |
 | p2p | `'/p2p/order/rate/:orderId'` | `P2POrderRatePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` |
 | p2p | `'/p2p/order/timeline/:orderId'` | `P2POrderTimelinePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_timeline_page.dart` |
-| p2p | `'/p2p/payment-method/ownership/:methodId'` | `P2PPaymentMethodOwnershipPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` |
+| p2p | `'/p2p/payment-method/ownership/:methodId'` | `P2PPaymentMethodOwnershipPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` |
 | p2p | `'/p2p/payment-method/verification/:methodId'` | `P2PPaymentMethodVerificationPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` |
 | p2p | `'/p2p/report/:merchantId'` | `P2PReportMerchantPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_report_merchant_page.dart` |
 | p2p | `'/p2p/tax-report/detailed/:year'` | `P2PTaxReportingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` |
@@ -233,17 +235,17 @@ unresolved=0
 | p2p | `AppRoutePaths.p2pComplianceRiskAssessment` | `P2PRiskAssessmentPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` |
 | p2p | `AppRoutePaths.p2pComplianceSourceOfFunds` | `P2PSourceOfFundsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` |
 | p2p | `AppRoutePaths.p2pContributionHistory` | `P2PContributionHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_contribution_history_page.dart` |
-| p2p | `AppRoutePaths.p2pCreate` | `P2PCreateAdPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` |
+| p2p | `AppRoutePaths.p2pCreate` | `P2PCreateAdPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` |
 | p2p | `AppRoutePaths.p2pDashboard` | `P2PDashboardPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_dashboard_page.dart` |
 | p2p | `AppRoutePaths.p2pDisputes` | `P2PDisputesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_disputes_page.dart` |
 | p2p | `AppRoutePaths.p2pE2EInfo` | `P2PE2EInfoPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_e2e_info_page.dart` |
-| p2p | `AppRoutePaths.p2pEscrowBalance` | `P2PEscrowBalancePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` |
+| p2p | `AppRoutePaths.p2pEscrowBalance` | `P2PEscrowBalancePage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` |
 | p2p | `AppRoutePaths.p2pExpress` | `P2PExpressPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` |
 | p2p | `AppRoutePaths.p2pExpressConfirm` | `P2PExpressConfirmPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` |
 | p2p | `AppRoutePaths.p2pFraudPrevention` | `P2PFraudPreventionPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_fraud_prevention_page.dart` |
 | p2p | `AppRoutePaths.p2pGuide` | `P2PGuidePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_guide_page.dart` |
 | p2p | `AppRoutePaths.p2pInsurance` | `P2PInsuranceFundPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_fund_page.dart` |
-| p2p | `AppRoutePaths.p2pInsuranceCertificate` | `P2PInsuranceCertificatePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` |
+| p2p | `AppRoutePaths.p2pInsuranceCertificate` | `P2PInsuranceCertificatePage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` |
 | p2p | `AppRoutePaths.p2pInsuranceFundAlias` | `P2PInsuranceFundPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_fund_page.dart` |
 | p2p | `AppRoutePaths.p2pInsurancePolicy` | `P2PInsurancePolicyPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_policy_page.dart` |
 | p2p | `AppRoutePaths.p2pInsuranceScore` | `P2PInsuranceScorePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_score_page.dart` |
@@ -254,32 +256,32 @@ unresolved=0
 | p2p | `AppRoutePaths.p2pKycSelfie` | `P2PSelfieVerificationPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` |
 | p2p | `AppRoutePaths.p2pKycStatus` | `P2PKycStatusPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` |
 | p2p | `AppRoutePaths.p2pKycVerify` | `P2PIdentityVerificationPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_identity_verification_page.dart` |
-| p2p | `AppRoutePaths.p2pKycVideo` | `P2PVideoVerificationPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_video_verification_page.dart` |
+| p2p | `AppRoutePaths.p2pKycVideo` | `P2PVideoVerificationPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_video_verification_page.dart` |
 | p2p | `AppRoutePaths.p2pLimits` | `P2PTransactionLimitsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` |
-| p2p | `AppRoutePaths.p2pLimitsTracker` | `P2PLimitTrackerPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_limit_tracker_page.dart` |
+| p2p | `AppRoutePaths.p2pLimitsTracker` | `P2PLimitTrackerPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_limit_tracker_page.dart` |
 | p2p | `AppRoutePaths.p2pMerchantApply` | `P2PMerchantApplyPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_apply_page.dart` |
-| p2p | `AppRoutePaths.p2pMyAds` | `P2PMyAdsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_ads_page.dart` |
+| p2p | `AppRoutePaths.p2pMyAds` | `P2PMyAdsPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_ads_page.dart` |
 | p2p | `AppRoutePaths.p2pMyOrders` | `P2PMyOrdersPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_orders_page.dart` |
 | p2p | `AppRoutePaths.p2pOrderBook` | `P2POrderBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_book_page.dart` |
-| p2p | `AppRoutePaths.p2pPaymentMethodAdd` | `P2PPaymentMethodAddPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` |
+| p2p | `AppRoutePaths.p2pPaymentMethodAdd` | `P2PPaymentMethodAddPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` |
 | p2p | `AppRoutePaths.p2pPaymentMethodCoolingPeriod` | `P2PPaymentMethodCoolingPeriodPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` |
 | p2p | `AppRoutePaths.p2pPaymentMethodHistory` | `P2PPaymentMethodHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_history_page.dart` |
-| p2p | `AppRoutePaths.p2pPaymentMethods` | `P2PPaymentMethodsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` |
+| p2p | `AppRoutePaths.p2pPaymentMethods` | `P2PPaymentMethodsPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` |
 | p2p | `AppRoutePaths.p2pReviews` | `P2PReviewsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_reviews_page.dart` |
-| p2p | `AppRoutePaths.p2pSecurity2fa` | `P2P2FASettingsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` |
+| p2p | `AppRoutePaths.p2pSecurity2fa` | `P2P2FASettingsPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` |
 | p2p | `AppRoutePaths.p2pSecurityAntiPhishing` | `P2PAntiPhishingCodePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_anti_phishing_code_page.dart` |
 | p2p | `AppRoutePaths.p2pSecurityCenter` | `P2PSecurityCenterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_security_center_page.dart` |
-| p2p | `AppRoutePaths.p2pSecurityDevices` | `P2PDeviceManagementPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` |
+| p2p | `AppRoutePaths.p2pSecurityDevices` | `P2PDeviceManagementPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` |
 | p2p | `AppRoutePaths.p2pSecurityLoginHistory` | `P2PLoginHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_login_history_page.dart` |
-| p2p | `AppRoutePaths.p2pSecuritySuspiciousActivity` | `P2PSuspiciousActivityPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` |
+| p2p | `AppRoutePaths.p2pSecuritySuspiciousActivity` | `P2PSuspiciousActivityPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` |
 | p2p | `AppRoutePaths.p2pSecurityWhitelist` | `P2PWhitelistModePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_security_center_page.dart` |
 | p2p | `AppRoutePaths.p2pSettings` | `P2PSettingsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` |
 | p2p | `AppRoutePaths.p2pSettingsNotifications` | `P2PNotificationsSettingsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_notifications_settings_page.dart` |
 | p2p | `AppRoutePaths.p2pTaxReporting` | `P2PTaxReportingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` |
 | p2p | `AppRoutePaths.p2pTradingLevel` | `P2PTradingLevelPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_trading_level_page.dart` |
 | p2p | `AppRoutePaths.p2pWallet` | `P2PWalletPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_page.dart` |
-| p2p | `AppRoutePaths.p2pWalletFundLockHistory` | `P2PFundLockHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` |
-| p2p | `AppRoutePaths.p2pWalletHistory` | `P2PFundLockHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` |
+| p2p | `AppRoutePaths.p2pWalletFundLockHistory` | `P2PFundLockHistoryPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` |
+| p2p | `AppRoutePaths.p2pWalletHistory` | `P2PFundLockHistoryPage` | no_top_header | no_top_header | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` |
 | p2p | `AppRoutePaths.p2pWalletTransfer` | `P2PWalletTransferPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` |
 | predictions | `'/markets/predictions/advanced-chart/:eventId'` | `PredictionAdvancedChartPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/prediction_advanced_chart_page.dart` |
 | predictions | `'/markets/predictions/event/:eventId'` | `PredictionEventDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/prediction_event_detail_page.dart` |
@@ -300,20 +302,20 @@ unresolved=0
 | predictions | `AppRoutePaths.marketsPredictionsSocial` | `PredictionSocialPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/prediction_social_page.dart` |
 | predictions | `AppRoutePaths.marketsPredictionsTournaments` | `PredictionTournamentsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/prediction_tournaments_page.dart` |
 | predictions | `AppRoutePaths.profilePredictions` | `PredictionsPortfolioPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/predictions/presentation/pages/predictions_portfolio_page.dart` |
-| profile | `AppRoutePaths.profile` | `ProfilePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
-| profile | `AppRoutePaths.profileActivity` | `ActivityLogPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
+| profile | `AppRoutePaths.profile` | `ProfilePage` | no_top_header | no_top_header | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
+| profile | `AppRoutePaths.profileActivity` | `ActivityLogPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | profile | `AppRoutePaths.profileApi` | `ApiManagementPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/api_management_page.dart` |
 | profile | `AppRoutePaths.profileApiCreate` | `ApiKeyCreatePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/api_key_create_page.dart` |
 | profile | `AppRoutePaths.profileDevices` | `DeviceManagementPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/device_management_page.dart` |
-| profile | `AppRoutePaths.profileEdit` | `EditProfilePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart` |
+| profile | `AppRoutePaths.profileEdit` | `EditProfilePage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart` |
 | profile | `AppRoutePaths.profileKyc` | `KYCPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/kyc_page.dart` |
-| profile | `AppRoutePaths.profileSecurity` | `SecurityPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
-| profile | `AppRoutePaths.profileSettings` | `SettingsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` |
-| profile | `AppRoutePaths.profileSubAccounts` | `SubAccountPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart` |
+| profile | `AppRoutePaths.profileSecurity` | `SecurityPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
+| profile | `AppRoutePaths.profileSettings` | `SettingsPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` |
+| profile | `AppRoutePaths.profileSubAccounts` | `SubAccountPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart` |
 | profile | `AppRoutePaths.profileVip` | `VIPPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/vip_page.dart` |
-| profile | `AppRoutePaths.settingsSecurity` | `SecurityPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
-| profile | `AppRoutePaths.settingsSecurityBiometric` | `SecurityPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
-| profile | `AppRoutePaths.settingsSecurityChangePassword` | `SecurityPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
+| profile | `AppRoutePaths.settingsSecurity` | `SecurityPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
+| profile | `AppRoutePaths.settingsSecurityBiometric` | `SecurityPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
+| profile | `AppRoutePaths.settingsSecurityChangePassword` | `SecurityPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | referral | `'/referral/friend/:friendId'` | `ReferralFriendDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/referral/presentation/pages/referral_friend_detail_page.dart` |
 | referral | `AppRoutePaths.referral` | `ReferralHomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/referral/presentation/pages/referral_home_page.dart` |
 | referral | `AppRoutePaths.referralHistory` | `ReferralHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/referral/presentation/pages/referral_history_page.dart` |
@@ -416,22 +418,22 @@ unresolved=0
 | trade | `AppRoutePaths.tradeSettings` | `TradeSettingsPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/trade_settings_page.dart` |
 | wallet | `'${AppRoutePaths.walletDeposit}/:asset'` | `DepositPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/deposit_page.dart` |
 | wallet | `'${AppRoutePaths.walletWithdraw}/:asset'` | `WithdrawPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/withdraw_page.dart` |
-| wallet | `'/wallet/asset/:assetId'` | `AssetDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/asset_detail_page.dart` |
+| wallet | `'/wallet/asset/:assetId'` | `AssetDetailPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/asset_detail_page.dart` |
 | wallet | `'/wallet/transaction/:txId'` | `TransactionDetailPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/transaction_detail_page.dart` |
-| wallet | `AppRoutePaths.wallet` | `WalletPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_page.dart` |
-| wallet | `AppRoutePaths.walletAddressBook` | `AddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` |
+| wallet | `AppRoutePaths.wallet` | `WalletPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/wallet_page.dart` |
+| wallet | `AppRoutePaths.walletAddressBook` | `AddressBookPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBookAdd` | `AddressAddPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/address_add_page.dart` |
 | wallet | `AppRoutePaths.walletBuyCrypto` | `BuyCryptoPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/buy_crypto_page.dart` |
 | wallet | `AppRoutePaths.walletDeposit` | `DepositPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/deposit_page.dart` |
 | wallet | `AppRoutePaths.walletDustConverter` | `DustConverterPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/dust_converter_page.dart` |
 | wallet | `AppRoutePaths.walletGasOptimizer` | `WalletGasOptimizerPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_gas_optimizer_page.dart` |
 | wallet | `AppRoutePaths.walletHealthScore` | `WalletHealthScorePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_health_score_page.dart` |
-| wallet | `AppRoutePaths.walletHistory` | `TransactionHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/transaction_history_page.dart` |
+| wallet | `AppRoutePaths.walletHistory` | `TransactionHistoryPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/transaction_history_page.dart` |
 | wallet | `AppRoutePaths.walletLimits` | `WithdrawLimitsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/withdraw_limits_page.dart` |
 | wallet | `AppRoutePaths.walletMultiManager` | `WalletMultiManagerPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_multi_manager_page.dart` |
-| wallet | `AppRoutePaths.walletNetworkStatus` | `NetworkStatusPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/network_status_page.dart` |
+| wallet | `AppRoutePaths.walletNetworkStatus` | `NetworkStatusPage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/wallet/presentation/pages/network_status_page.dart` |
 | wallet | `AppRoutePaths.walletPendingDeposits` | `PendingDepositsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/pending_deposits_page.dart` |
-| wallet | `AppRoutePaths.walletPortfolioAnalytics` | `PortfolioAnalyticsPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/portfolio_analytics_page.dart` |
+| wallet | `AppRoutePaths.walletPortfolioAnalytics` | `PortfolioAnalyticsPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/portfolio_analytics_page.dart` |
 | wallet | `AppRoutePaths.walletTokenApproval` | `WalletTokenApprovalPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_token_approval_page.dart` |
 | wallet | `AppRoutePaths.walletTransfer` | `TransferPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/transfer_page.dart` |
 | wallet | `AppRoutePaths.walletWithdraw` | `WithdrawPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/withdraw_page.dart` |

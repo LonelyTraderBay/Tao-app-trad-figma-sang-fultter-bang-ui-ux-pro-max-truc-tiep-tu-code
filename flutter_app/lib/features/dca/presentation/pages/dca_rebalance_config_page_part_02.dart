@@ -92,20 +92,19 @@ class _FrequencyCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
-            children: options
-                .map(
-                  (option) => Expanded(
-                    child: Padding(
-                      padding: DcaSpacingTokens.dcaHorizontalPaddingX1,
-                      child: _FrequencyOptionTile(
-                        option: option,
-                        selected: active == option.frequency,
-                        onTap: () => onChanged(option.frequency),
-                      ),
-                    ),
+            children: [
+              for (var index = 0; index < options.length; index++) ...[
+                Expanded(
+                  child: _FrequencyOptionTile(
+                    option: options[index],
+                    selected: active == options[index].frequency,
+                    onTap: () => onChanged(options[index].frequency),
                   ),
-                )
-                .toList(),
+                ),
+                if (index < options.length - 1)
+                  const SizedBox(width: AppSpacing.x2),
+              ],
+            ],
           ),
         ],
       ),

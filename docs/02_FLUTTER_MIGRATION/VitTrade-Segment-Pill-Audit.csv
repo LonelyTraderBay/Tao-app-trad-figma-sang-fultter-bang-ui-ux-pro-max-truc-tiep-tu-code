@@ -43,7 +43,7 @@ discovery,discovery/presentation/widgets/topic_hub_header.dart,VitChoicePill,chi
 discovery,discovery/presentation/widgets/unified_search_shell.dart,VitChoicePill,chip,1,44,hug,-,pass,
 earn,earn/presentation/pages/auto_compound_settings_page_part_02.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
 earn,earn/presentation/pages/earn_portfolio_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-earn,earn/presentation/pages/savings_analytics_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+earn,earn/presentation/pages/savings_analytics_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 earn,earn/presentation/pages/savings_auto_rebalance_page.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
 earn,earn/presentation/pages/savings_recommendations_page_part_01.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
 earn,earn/presentation/pages/savings_what_if_page_part_01.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
@@ -130,6 +130,7 @@ markets,markets/presentation/pages/token_unlocks_page_part_01.dart,VitTabBar,und
 markets,markets/presentation/widgets/comparison_tool_tokens.dart,VitChoicePill,chip,1,44,hug,-,pass,
 markets,markets/presentation/widgets/market_calendar_filters.dart,VitChoicePill,chip,1,44,hug,-,pass,
 markets,markets/presentation/widgets/market_calendar_filters.dart,VitFilterChip,filter_accent,1,44,hug_scroll,-,review,wrapper over VitChoicePill
+markets,markets/presentation/widgets/market_calendar_filters.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 markets,markets/presentation/widgets/market_correlations_pairs_widgets.dart,VitChoicePill,chip,1,44,hug,-,pass,
 markets,markets/presentation/widgets/market_correlations_tabs_widgets.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
 markets,markets/presentation/widgets/market_correlations_tabs_widgets.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
@@ -254,7 +255,7 @@ trade,trade/presentation/widgets/advanced_tools_tabs_sheets.dart,VitTabBar,segme
 trade,trade/presentation/widgets/advanced_trading_demo_page_sections.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
 trade,trade/presentation/widgets/advanced_trading_demo_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
 trade,trade/presentation/widgets/audit_trail_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/best_execution_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade,trade/presentation/widgets/best_execution_overview.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 trade,trade/presentation/widgets/bot_api_documentation_intro_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 trade,trade/presentation/widgets/bot_backtesting_widgets.dart,VitChoicePill,chip,2,44,full_or_hug,-,pass,
 trade,trade/presentation/widgets/bot_equity_curve_summary_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
@@ -320,4 +321,3 @@ wallet,wallet/presentation/widgets/wallet_manager_tabs.dart,VitTabBar,segment,1,
 wallet,wallet/presentation/widgets/wallet_page_asset_sections.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 wallet,wallet/presentation/widgets/wallet_token_approval_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
 wallet,wallet/presentation/widgets/wallet_transfer_asset_amount.dart,VitChoicePill,chip,1,44,hug,-,pass,
-wallet,wallet/presentation/widgets/withdraw_amount_actions.dart,VitChoicePill,chip,1,44,hug,-,pass,

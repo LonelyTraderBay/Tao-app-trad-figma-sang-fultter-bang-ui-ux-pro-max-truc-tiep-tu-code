@@ -90,7 +90,9 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                 child: SingleChildScrollView(
                   key: DCAOverviewDemo.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     gap: VitContentGap.tight,
@@ -181,17 +183,14 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
             constraints: const BoxConstraints(
               maxWidth: DcaSpacingTokens.dcaOverviewPreviewMaxWidth,
             ),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.borderSolid),
-                borderRadius: AppRadii.cardLargeRadius,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x2),
-                child: _DcaOverviewCardPreview(
-                  scenario: snapshot.mobilePreview,
-                  compact: true,
-                ),
+            child: VitCard(
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.large,
+              borderColor: AppColors.borderSolid,
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+              child: _DcaOverviewCardPreview(
+                scenario: snapshot.mobilePreview,
+                compact: true,
               ),
             ),
           ),

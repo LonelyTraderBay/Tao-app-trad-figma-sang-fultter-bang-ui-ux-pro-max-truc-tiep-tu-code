@@ -45,7 +45,7 @@ class _CheckInSection extends StatelessWidget {
                         child: _CheckInTile(item: item),
                       ),
                       if (item != checkIns.last)
-                        const SizedBox(width: AppSpacing.cardTileInnerGap),
+                        const SizedBox(width: AppSpacing.rowGap),
                     ],
                   ],
                 ),

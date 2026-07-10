@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -58,7 +59,7 @@ class HomePortfolioSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: HomeSpacingTokens.homeCardPaddingDefault,
+      padding: SharedSpacingTokens.homeCardPaddingDefault,
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -86,16 +87,16 @@ class HomeNextActionSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: const EdgeInsetsDirectional.all(
-        HomeSpacingTokens.homeNextActionCardPadding,
+        SharedSpacingTokens.homeNextActionCardPadding,
       ),
       child: const Row(
         children: [
           VitSkeleton(
-            width: HomeSpacingTokens.homeNextActionIconContainer,
-            height: HomeSpacingTokens.homeNextActionIconContainer,
+            width: SharedSpacingTokens.homeNextActionIconContainer,
+            height: SharedSpacingTokens.homeNextActionIconContainer,
             borderRadius: AppRadii.smRadius,
           ),
-          SizedBox(width: HomeSpacingTokens.homeCommandRowSpacing),
+          SizedBox(width: SharedSpacingTokens.homeCommandRowSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +142,7 @@ class HomeRecentProductsSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: HomeSpacingTokens.homeRecentProductHeight,
+      height: SharedSpacingTokens.homeRecentProductHeight,
       child: const Row(
         children: [
           Expanded(

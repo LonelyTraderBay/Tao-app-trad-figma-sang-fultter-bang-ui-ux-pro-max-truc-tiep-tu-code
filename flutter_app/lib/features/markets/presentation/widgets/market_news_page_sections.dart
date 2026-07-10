@@ -273,7 +273,7 @@ class _NewsFeed extends StatelessWidget {
             onToggleSaved: () => onToggleSaved(item.id),
             onTokenTap: onTokenTap,
           ),
-          if (item != news.last) const SizedBox(height: _marketSpace),
+          if (item != news.last) const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

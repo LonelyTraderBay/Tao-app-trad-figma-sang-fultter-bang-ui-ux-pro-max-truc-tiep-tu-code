@@ -18,12 +18,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/p2p_security_center_score_features.dart';
 part '../widgets/p2p_security_center_actions_events.dart';
 
-const double _p2pSecurityVisualNavClearance = 112;
-const double _p2pSecurityNativeNavClearance = 88;
 const double _p2pSecurityScoreBox = 108;
 const double _p2pSecurityScoreTrack = 98;
 const double _p2pSecurityIconBox = P2PSpacingTokens.p2pSecurityCenterIconBox;
@@ -61,8 +60,8 @@ class P2PSecurityCenterPage extends ConsumerWidget {
     final snapshot = ref.watch(p2pSecurityCenterProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _p2pSecurityVisualNavClearance
-        : _p2pSecurityNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 
@@ -211,8 +210,8 @@ class P2PWhitelistModePage extends ConsumerWidget {
         .route;
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _p2pSecurityVisualNavClearance
-        : _p2pSecurityNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

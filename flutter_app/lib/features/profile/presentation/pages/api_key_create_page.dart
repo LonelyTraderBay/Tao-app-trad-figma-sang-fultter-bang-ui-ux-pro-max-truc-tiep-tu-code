@@ -19,8 +19,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part '../widgets/profile_api_key_create_form.dart';
 part '../widgets/profile_api_key_create_result.dart';

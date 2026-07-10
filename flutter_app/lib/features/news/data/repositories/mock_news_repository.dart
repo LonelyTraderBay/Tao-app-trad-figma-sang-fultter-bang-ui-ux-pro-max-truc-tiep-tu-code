@@ -2,23 +2,30 @@ import 'package:vit_trade_flutter/features/news/domain/entities/news_entities.da
 import 'package:vit_trade_flutter/features/news/domain/repositories/news_repository.dart';
 
 final class MockNewsRepository implements NewsRepository {
-  const MockNewsRepository();
+  const MockNewsRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
 
   @override
-  NewsScreenSnapshot getNews({NewsArticleType? type}) {
-    final filtered = type == null
-        ? _articles
-        : _articles.where((article) => article.type == type).toList();
+  Future<NewsScreenSnapshot> getNews() async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('news_fetch_failed');
+    }
     return NewsScreenSnapshot(
-      articles: filtered,
-      pinnedArticles: filtered.where((article) => article.isPinned).toList(),
-      normalArticles: filtered.where((article) => !article.isPinned).toList(),
+      articles: _articles,
+      pinnedArticles: _articles.where((article) => article.isPinned).toList(),
+      normalArticles: _articles.where((article) => !article.isPinned).toList(),
       newsReferenceData: const NewsReferenceData(
         endpoint: '/api/mobile/news/news',
         filters: NewsArticleType.values,
         lastUpdatedLabel: 'read-only',
       ),
-      screenState: filtered.isEmpty
+      screenState: _articles.isEmpty
           ? NewsScreenState.empty
           : NewsScreenState.ready,
       supportedStates: const [

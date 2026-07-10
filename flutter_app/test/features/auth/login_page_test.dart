@@ -216,4 +216,132 @@ void main() {
     expect(find.text('Tạo tài khoản'), findsOneWidget);
     expect(find.byType(VitBottomNav), findsNothing);
   });
+
+  testWidgets('SC-001 login shows error and retries on second attempt', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    final flakyRepository = _FlakyAuthLoginRepository();
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [authRepositoryProvider.overrideWithValue(flakyRepository)],
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.authLogin,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(LoginPage.identifierFieldKey),
+      'user@vittrade.vn',
+    );
+    await tester.enterText(find.byKey(LoginPage.passwordFieldKey), 'password');
+    await tester.tap(find.byKey(LoginPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(
+        'Authentication service is temporarily unavailable. Please try again.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.byType(LoginPage), findsOneWidget);
+
+    await tester.tap(find.byKey(LoginPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
+  });
+}
+
+final class _FlakyAuthLoginRepository implements AuthRepository {
+  _FlakyAuthLoginRepository()
+    : _delegate = const MockAuthRepository(delay: Duration.zero);
+
+  final MockAuthRepository _delegate;
+  var _loginAttempts = 0;
+
+  @override
+  Future<AuthSession> login({
+    required String identifier,
+    required String password,
+    bool demo = false,
+  }) async {
+    _loginAttempts++;
+    if (_loginAttempts == 1) {
+      throw StateError('auth_login_failed');
+    }
+    return _delegate.login(
+      identifier: identifier,
+      password: password,
+      demo: demo,
+    );
+  }
+
+  @override
+  Future<AuthRegistrationDraft> register({
+    required String name,
+    required String contact,
+    required AuthContactType contactType,
+    required String password,
+    String? referralCode,
+  }) {
+    return _delegate.register(
+      name: name,
+      contact: contact,
+      contactType: contactType,
+      password: password,
+      referralCode: referralCode,
+    );
+  }
+
+  @override
+  Future<AuthOtpVerificationDraft> verifyFactor({
+    required String contact,
+    required String code,
+    required AuthOtpPurpose purpose,
+  }) {
+    return _delegate.verifyFactor(
+      contact: contact,
+      code: code,
+      purpose: purpose,
+    );
+  }
+
+  @override
+  Future<AuthTwoFaSetupDraft> setupTwoFactor({
+    required String secretKey,
+    required String code,
+    required bool backupCodesSaved,
+  }) {
+    return _delegate.setupTwoFactor(
+      secretKey: secretKey,
+      code: code,
+      backupCodesSaved: backupCodesSaved,
+    );
+  }
+
+  @override
+  Future<AuthPasswordResetDraft> requestPasswordReset({required String email}) {
+    return _delegate.requestPasswordReset(email: email);
+  }
+
+  @override
+  Future<AuthPasswordResetDraft> resetPassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) {
+    return _delegate.resetPassword(
+      email: email,
+      otp: otp,
+      newPassword: newPassword,
+    );
+  }
 }

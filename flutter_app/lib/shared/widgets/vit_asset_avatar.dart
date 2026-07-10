@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 class VitAssetAvatar extends StatelessWidget {
   const VitAssetAvatar({
     super.key,
     required this.label,
     required this.accentColor,
-    this.size = HomeSpacingTokens.homeCoinAvatarSize,
+    this.size = SharedSpacingTokens.homeCoinAvatarSize,
     this.radius = AppRadii.smRadius,
     this.border = false,
   });

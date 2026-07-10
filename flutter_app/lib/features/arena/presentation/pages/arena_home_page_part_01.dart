@@ -19,8 +19,8 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
     final activeChallenges = _countActiveArenaChallenges(snapshot.liveRooms);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _arenaHomeVisualNavClearance
-        : _arenaHomeNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

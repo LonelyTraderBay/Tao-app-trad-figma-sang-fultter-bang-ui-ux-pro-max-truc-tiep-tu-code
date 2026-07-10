@@ -23,22 +23,17 @@ final class _FixedStateNewsRepository implements NewsRepository {
   final List<NewsArticle> articles;
 
   @override
-  NewsScreenSnapshot getNews({NewsArticleType? type}) {
-    final filtered = type == null
-        ? articles
-        : articles.where((article) => article.type == type).toList();
+  Future<NewsScreenSnapshot> getNews() async {
     return NewsScreenSnapshot(
-      articles: filtered,
-      pinnedArticles: filtered.where((article) => article.isPinned).toList(),
-      normalArticles: filtered.where((article) => !article.isPinned).toList(),
+      articles: articles,
+      pinnedArticles: articles.where((article) => article.isPinned).toList(),
+      normalArticles: articles.where((article) => !article.isPinned).toList(),
       newsReferenceData: const NewsReferenceData(
         endpoint: '/api/mobile/news/news',
         filters: NewsArticleType.values,
         lastUpdatedLabel: 'read-only',
       ),
-      screenState: filtered.isEmpty && screenState == NewsScreenState.ready
-          ? NewsScreenState.empty
-          : screenState,
+      screenState: screenState,
       supportedStates: const [
         NewsScreenState.loading,
         NewsScreenState.empty,
@@ -46,6 +41,19 @@ final class _FixedStateNewsRepository implements NewsRepository {
         NewsScreenState.offline,
       ],
     );
+  }
+}
+
+final class _FlakyNewsRepository implements NewsRepository {
+  var _attempts = 0;
+
+  @override
+  Future<NewsScreenSnapshot> getNews() async {
+    _attempts++;
+    if (_attempts == 1) {
+      throw StateError('news_fetch_failed');
+    }
+    return const MockNewsRepository(loadDelay: Duration.zero).getNews();
   }
 }
 
@@ -63,8 +71,9 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (repository != null)
-            newsRepositoryProvider.overrideWithValue(repository),
+          newsRepositoryProvider.overrideWithValue(
+            repository ?? const MockNewsRepository(loadDelay: Duration.zero),
+          ),
         ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.news),
@@ -78,8 +87,10 @@ void main() {
     }
   }
 
-  test('SC-047 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockNewsRepository().getNews();
+  test('SC-047 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockNewsRepository(
+      loadDelay: Duration.zero,
+    ).getNews();
 
     expect(snapshot.newsReferenceData.endpoint, '/api/mobile/news/news');
     expect(snapshot.newsReferenceData.lastUpdatedLabel, 'read-only');
@@ -100,16 +111,6 @@ void main() {
         NewsScreenState.offline,
       ]),
     );
-
-    final maintenance = const MockNewsRepository().getNews(
-      type: NewsArticleType.maintenance,
-    );
-    expect(maintenance.articles.single.title, 'Bảo trì hệ thống định kỳ');
-
-    final empty = const MockNewsRepository().getNews(
-      type: NewsArticleType.general,
-    );
-    expect(empty.screenState, NewsScreenState.empty);
   });
 
   testWidgets('SC-047 renders the announcements feed inside the shell', (
@@ -200,12 +201,17 @@ void main() {
   testWidgets('SC-047 renders loading skeleton state', (tester) async {
     await pumpNews(
       tester,
-      repository: const _FixedStateNewsRepository(NewsScreenState.loading),
+      repository: const MockNewsRepository(
+        loadDelay: Duration(milliseconds: 500),
+      ),
       settle: false,
     );
 
     expect(find.byKey(NewsPage.loadingKey), findsOneWidget);
     expect(find.byType(VitSkeletonList), findsOneWidget);
+
+    // Drain the pending delay timer so it doesn't leak into later tests.
+    await tester.pumpAndSettle();
   });
 
   testWidgets('SC-047 renders error state with retry', (tester) async {
@@ -220,10 +226,31 @@ void main() {
     expect(find.text('Thử lại'), findsOneWidget);
   });
 
+  testWidgets('SC-047 error state retries the news fetch', (tester) async {
+    final flakyRepository = _FlakyNewsRepository();
+
+    await pumpNews(tester, repository: flakyRepository);
+
+    expect(find.byKey(NewsPage.errorKey), findsOneWidget);
+    expect(find.text('Không tải được tin tức'), findsOneWidget);
+
+    await tester.tap(find.text('Thử lại'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(NewsPage.errorKey), findsNothing);
+    expect(find.text('Phí giao dịch 0% cho BTC/USDT'), findsOneWidget);
+  });
+
   testWidgets('SC-047 renders offline banner with cached articles', (
     tester,
   ) async {
-    final cachedArticles = const MockNewsRepository().getNews().articles;
+    // `getNews()` awaits a real Future.delayed, so it must run through
+    // `runAsync` — a bare `await` inside a testWidgets body never resolves
+    // because the fake test clock is only advanced by `tester.pump`.
+    final cachedSnapshot = await tester.runAsync(
+      () => const MockNewsRepository(loadDelay: Duration.zero).getNews(),
+    );
+    final cachedArticles = cachedSnapshot!.articles;
     await pumpNews(
       tester,
       repository: _FixedStateNewsRepository(

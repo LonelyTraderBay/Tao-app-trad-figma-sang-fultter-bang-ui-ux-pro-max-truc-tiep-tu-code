@@ -149,8 +149,12 @@ class _ArenaSmartRuleBuilderPageState
       visualExtra: AppSpacing.x7 + AppSpacing.x7,
       nativeExtra: AppSpacing.x7 + AppSpacing.x7,
     );
-    final clarity = _computeClarity();
-    final canProceed = _canProceed;
+    final ruleController = ArenaSmartRuleBuilderController(
+      state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
+    );
+    final form = _formDraft();
+    final clarity = _ClarityResult(ruleController.clarityScore(form));
+    final canProceed = ruleController.canProceed(form);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -191,7 +195,7 @@ class _ArenaSmartRuleBuilderPageState
                         onSuggestion: _setTitle,
                       ),
                       _DomainField(
-                        domain: _selectedDomain(snapshot),
+                        domain: ruleController.selectedDomain(form),
                         onTap: () => _selectDomain(snapshot),
                       ),
                       _ChallengeTypeGrid(
@@ -249,7 +253,7 @@ class _ArenaSmartRuleBuilderPageState
                             setState(() => _description = value),
                       ),
                       _QuickSuggestions(
-                        suggestions: _quickSuggestions(snapshot),
+                        suggestions: ruleController.quickSuggestions(form),
                         onTap: (value) => setState(() {
                           if (_title.isEmpty) {
                             _setTitle(value);
@@ -291,9 +295,13 @@ class _ArenaSmartRuleBuilderPageState
                             setState(() => _saveAsMode = !_saveAsMode),
                       ),
                       _RuleSummaryCard(
-                        domain: _selectedDomain(snapshot)?.label,
-                        challengeType: _selectedChallengeType(snapshot)?.label,
-                        winCondition: _generatedWinCondition,
+                        domain: ruleController.selectedDomain(form)?.label,
+                        challengeType: ruleController
+                            .selectedChallengeType(form)
+                            ?.label,
+                        winCondition: ruleController.generatedWinCondition(
+                          form,
+                        ),
                         endDate: _endDate,
                         tieRule: _tieRule,
                         voidRule: _voidRule,
@@ -302,7 +310,10 @@ class _ArenaSmartRuleBuilderPageState
                       const _ModerationNote(),
                       _BackendPayloadPreviewCard(
                         creationState: creationState,
-                        draft: _buildCreationDraft(snapshot, clarity),
+                        draft: ruleController.buildCreationDraft(
+                          form,
+                          clarity.score,
+                        ),
                       ),
                       _CreationSafetyChecklist(
                         ruleReviewAccepted: _ruleReviewAccepted,
@@ -321,12 +332,15 @@ class _ArenaSmartRuleBuilderPageState
                       ),
                       _FooterActions(
                         canProceed: canProceed,
-                        canSubmit: _canSubmit(clarity),
+                        canSubmit: ruleController.canSubmit(
+                          form,
+                          clarity.score,
+                        ),
                         clarityScore: clarity.score,
                         statusLabel: _statusLabel,
                         commandStatusLabel: creationState.statusLabel,
                         onBack: _close,
-                        onContinue: _continue,
+                        onContinue: () => _continue(snapshot),
                         onPreview: () =>
                             _previewBackendPayload(snapshot, clarity),
                         onSave: () => _saveDraftForBackend(snapshot, clarity),
@@ -344,97 +358,28 @@ class _ArenaSmartRuleBuilderPageState
     );
   }
 
-  bool get _canProceed {
-    final hasStructuredRule = _subject.isNotEmpty && _action.isNotEmpty;
-    final hasCustomRule = _customWinCondition.trim().length >= 5;
-    return _title.trim().length >= 3 &&
-        _domainId.isNotEmpty &&
-        _challengeTypeId.isNotEmpty &&
-        (hasStructuredRule || hasCustomRule);
-  }
-
-  bool _canSubmit(_ClarityResult clarity) {
-    return _canProceed &&
-        clarity.score >= 35 &&
-        _tieRule.isNotEmpty &&
-        _voidRule.isNotEmpty &&
-        _resultDeadline.isNotEmpty &&
-        _ruleReviewAccepted &&
-        _pointsBoundaryAccepted &&
-        _moderationAccepted;
-  }
-
-  String get _generatedWinCondition {
-    final parts = <String>[
-      if (_subject.isNotEmpty) _subject,
-      if (_action.isNotEmpty) _action,
-      if (_metric.isNotEmpty) _metric,
-      if (_deadlineContext.isNotEmpty) _deadlineContext,
-      if (_winType.isNotEmpty) _winType,
-    ];
-    if (parts.isNotEmpty) return '${parts.join(' ')}.';
-    if (_customWinCondition.trim().isNotEmpty) return _customWinCondition;
-    return '-';
-  }
-
-  ArenaSmartOptionDraft? _selectedDomain(ArenaSmartRulesSnapshot snapshot) {
-    if (_domainId.isEmpty) return null;
-    for (final domain in snapshot.domains) {
-      if (domain.id == _domainId) return domain;
-    }
-    return null;
-  }
-
-  ArenaSmartOptionDraft? _selectedChallengeType(
-    ArenaSmartRulesSnapshot snapshot,
-  ) {
-    if (_challengeTypeId.isEmpty) return null;
-    for (final type in snapshot.challengeTypes) {
-      if (type.id == _challengeTypeId) return type;
-    }
-    return null;
-  }
-
-  List<String> _quickSuggestions(ArenaSmartRulesSnapshot snapshot) {
-    if (_domainId == 'crypto') {
-      return [
-        'Giá gần đúng nhất?',
-        'Vượt mốc giá?',
-        'Token nào tăng mạnh nhất?',
-      ];
-    }
-    return snapshot.titleSuggestions;
-  }
-
-  _ClarityResult _computeClarity() {
-    var score = 0;
-    if (_title.length >= 5) {
-      score += 10;
-    } else if (_title.length >= 3) {
-      score += 5;
-    }
-    if (_domainId.isNotEmpty) score += 10;
-    if (_challengeTypeId.isNotEmpty) score += 10;
-    if (_subject.isNotEmpty) score += 8;
-    if (_action.isNotEmpty) score += 8;
-    if (_metric.isNotEmpty) score += 6;
-    if (_winType.isNotEmpty) score += 5;
-    if (_deadlineContext.isNotEmpty) score += 5;
-    if (_customWinCondition.length >= 10) {
-      score += 15;
-    } else if (_customWinCondition.length >= 5) {
-      score += 8;
-    }
-    if (_description.length >= 20) {
-      score += 8;
-    } else if (_description.length >= 5) {
-      score += 4;
-    }
-    if (_tieRule.isNotEmpty) score += 8;
-    if (_voidRule.isNotEmpty) score += 8;
-    if (_resultDeadline.isNotEmpty) score += 8;
-    if (_endDate.isNotEmpty) score += 5;
-    return _ClarityResult(score.clamp(0, 100));
+  ArenaSmartRuleFormDraft _formDraft() {
+    return ArenaSmartRuleFormDraft(
+      title: _title,
+      domainId: _domainId,
+      challengeTypeId: _challengeTypeId,
+      subject: _subject,
+      action: _action,
+      metric: _metric,
+      winType: _winType,
+      deadlineContext: _deadlineContext,
+      customWinCondition: _customWinCondition,
+      description: _description,
+      endDate: _endDate,
+      tieRule: _tieRule,
+      voidRule: _voidRule,
+      resultDeadline: _resultDeadline,
+      rematchEnabled: _rematchEnabled,
+      saveAsMode: _saveAsMode,
+      ruleReviewAccepted: _ruleReviewAccepted,
+      pointsBoundaryAccepted: _pointsBoundaryAccepted,
+      moderationAccepted: _moderationAccepted,
+    );
   }
 
   Future<void> _selectDomain(ArenaSmartRulesSnapshot snapshot) async {
@@ -507,9 +452,15 @@ class _ArenaSmartRuleBuilderPageState
     setState(() => _statusLabel = 'Public room cần rule rõ ràng hơn');
   }
 
-  void _continue() {
-    if (!_canProceed) {
-      setState(() => _statusLabel = _missingCoreRequirement());
+  void _continue(ArenaSmartRulesSnapshot snapshot) {
+    final ruleController = ArenaSmartRuleBuilderController(
+      state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
+    );
+    final form = _formDraft();
+    if (!ruleController.canProceed(form)) {
+      setState(
+        () => _statusLabel = ruleController.missingCoreRequirement(form),
+      );
       return;
     }
     HapticFeedback.selectionClick();
@@ -521,9 +472,10 @@ class _ArenaSmartRuleBuilderPageState
     _ClarityResult clarity,
   ) {
     HapticFeedback.selectionClick();
-    final result = ref
-        .read(arenaCreationProvider.notifier)
-        .preview(_buildCreationDraft(snapshot, clarity));
+    final draft = ArenaSmartRuleBuilderController(
+      state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
+    ).buildCreationDraft(_formDraft(), clarity.score);
+    final result = ref.read(arenaCreationProvider.notifier).preview(draft);
     setState(() => _statusLabel = result.statusLabel);
   }
 
@@ -532,9 +484,10 @@ class _ArenaSmartRuleBuilderPageState
     _ClarityResult clarity,
   ) {
     HapticFeedback.selectionClick();
-    final result = ref
-        .read(arenaCreationProvider.notifier)
-        .saveDraft(_buildCreationDraft(snapshot, clarity));
+    final draft = ArenaSmartRuleBuilderController(
+      state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
+    ).buildCreationDraft(_formDraft(), clarity.score);
+    final result = ref.read(arenaCreationProvider.notifier).saveDraft(draft);
     setState(() => _statusLabel = result.statusLabel);
   }
 
@@ -544,7 +497,9 @@ class _ArenaSmartRuleBuilderPageState
   ) async {
     HapticFeedback.selectionClick();
     FocusScope.of(context).unfocus();
-    final draft = _buildCreationDraft(snapshot, clarity);
+    final draft = ArenaSmartRuleBuilderController(
+      state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
+    ).buildCreationDraft(_formDraft(), clarity.score);
     final errors = draft.submitValidationErrors();
     if (errors.isNotEmpty) {
       setState(() => _statusLabel = errors.first);
@@ -601,41 +556,6 @@ class _ArenaSmartRuleBuilderPageState
       _moderationAccepted = false;
       _statusLabel = 'Đã làm mới form';
     });
-  }
-
-  ArenaCreateChallengeDraft _buildCreationDraft(
-    ArenaSmartRulesSnapshot snapshot,
-    _ClarityResult clarity,
-  ) {
-    return ArenaCreateChallengeDraft(
-      title: _title,
-      domainLabel: _selectedDomain(snapshot)?.label ?? '',
-      challengeTypeLabel: _selectedChallengeType(snapshot)?.label ?? '',
-      winCondition: _generatedWinCondition,
-      description: _description,
-      endDate: _endDate,
-      tieRule: _tieRule,
-      voidRule: _voidRule,
-      resultDeadline: _resultDeadline,
-      clarityScore: clarity.score,
-      rematchEnabled: _rematchEnabled,
-      saveAsMode: _saveAsMode,
-      pointsBoundaryAccepted: _pointsBoundaryAccepted,
-      ruleReviewAccepted: _ruleReviewAccepted,
-      moderationAccepted: _moderationAccepted,
-    );
-  }
-
-  String _missingCoreRequirement() {
-    if (_title.trim().length < 3) {
-      return 'Nhập tên challenge tối thiểu 3 ký tự.';
-    }
-    if (_domainId.isEmpty) return 'Chọn lĩnh vực để phân loại challenge.';
-    if (_challengeTypeId.isEmpty) return 'Chọn loại challenge.';
-    if (_generatedWinCondition == '-') {
-      return 'Chọn điều kiện thắng hoặc tự nhập rule.';
-    }
-    return 'Hoàn thiện thêm rule để tiếp tục.';
   }
 
   void _close() {

@@ -9,8 +9,8 @@ class _DCAPageState extends ConsumerState<DCAPage> {
     final snapshot = ref.watch(dcaDashboardProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaVisualNavClearance
-        : _dcaNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
     final showOfflineBanner =

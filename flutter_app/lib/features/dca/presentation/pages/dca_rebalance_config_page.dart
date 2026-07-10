@@ -21,15 +21,13 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 part 'dca_rebalance_config_page_part_01.dart';
 part 'dca_rebalance_config_page_part_02.dart';
 part 'dca_rebalance_config_page_part_03.dart';
 
-const _dcaRebalanceVisualNavClearance = 114.0;
-const _dcaRebalanceNativeNavClearance = 88.0;
 const _dcaRebalancePreviewNavClearance = 72.0;
-const _dcaRebalanceStrategyChipWidth = 156.0;
 const _dcaRebalanceSummaryRingSize = 104.0;
 const _dcaRebalanceBodyLineHeight = DcaSpacingTokens.dcaRebalanceBodyLineHeight;
 const _dcaRebalanceCompactLineHeight =
@@ -83,8 +81,8 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _dcaRebalanceVisualNavClearance
-        : _dcaRebalanceNativeNavClearance;
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 

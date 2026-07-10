@@ -108,10 +108,12 @@ class _SummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: AppColors.surface2,
-              borderRadius: AppRadii.smRadius,
-              border: Border.all(color: _targetPrimary.withValues(alpha: .18)),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+                side: BorderSide(color: _targetPrimary.withValues(alpha: .18)),
+              ),
             ),
             child: SizedBox(
               width: _targetSummaryIconExtent,

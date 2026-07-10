@@ -179,6 +179,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               .skip(homePrimaryQuickActionCount)
               .toList(growable: false);
           final visibleNextAction = _visibleNextAction(snapshot.nextAction);
+          final marketTickerPairs = controller.gainers
+              .take(3)
+              .toList(growable: false);
 
           return HomeScrollShell(
             scrollEndClearance: scrollEndClearance,
@@ -210,10 +213,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                 // Distinct from the Market section below (default tab
                 // "Hot"): the ticker previews top movers so the two blocks
                 // don't show the exact same three pairs back to back.
-                HomeMarketTickerSection(
-                  pairs: controller.gainers.take(3).toList(),
-                  onNavigate: _go,
-                ),
+                if (marketTickerPairs.isNotEmpty)
+                  HomeMarketTickerSection(
+                    pairs: marketTickerPairs,
+                    onNavigate: _go,
+                  ),
                 HomeProductsSection(
                   actions: gridQuickActions,
                   maxVisibleItems: homePrimaryQuickActionCount,
@@ -227,6 +231,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 HomeRecentProductsSection(
                   recentProducts: snapshot.recentProducts,
                   onNavigate: _go,
+                  density: homeDensity,
                 ),
                 _HomeDiscoverySection(onNavigate: _go),
                 _MarketSection(

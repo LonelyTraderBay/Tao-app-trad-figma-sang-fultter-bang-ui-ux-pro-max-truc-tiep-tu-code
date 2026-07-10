@@ -11,9 +11,11 @@ import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dar
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 const double _heroActionExtent = AppSpacing.buttonCompact + AppSpacing.x2;
-const double _homePortfolioTrendHeight = HomeSpacingTokens.homeSparklineHeight;
+const double _homePortfolioTrendHeight =
+    SharedSpacingTokens.homeSparklineHeight;
 
 class HomePortfolioCard extends StatefulWidget {
   const HomePortfolioCard({
@@ -75,7 +77,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: HomeSpacingTokens.homeCardPaddingDefault,
+      padding: SharedSpacingTokens.homeCardPaddingDefault,
       background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -230,7 +232,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
                   if (!balanceHidden) ...[
                     Icon(
                       Icons.swap_horiz_rounded,
-                      size: HomeSpacingTokens.homePortfolioBadgeIcon,
+                      size: SharedSpacingTokens.homePortfolioBadgeIcon,
                       color: AppColors.portfolioTextMuted,
                     ),
                     const SizedBox(width: AppSpacing.x1),
@@ -297,7 +299,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: HomeSpacingTokens.homeCardPaddingDefault,
+      padding: SharedSpacingTokens.homeCardPaddingDefault,
       background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

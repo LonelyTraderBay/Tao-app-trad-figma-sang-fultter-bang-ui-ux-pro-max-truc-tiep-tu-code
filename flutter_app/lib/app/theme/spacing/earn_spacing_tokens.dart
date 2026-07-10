@@ -6,6 +6,9 @@ import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 final class EarnSpacingTokens {
   const EarnSpacingTokens._();
 
+  static const EdgeInsets earnHeroSecondaryPadding = EdgeInsets.only(
+    left: AppSpacing.x4,
+  );
   static const EdgeInsets earnPaddingX1 = EdgeInsets.all(AppSpacing.x1);
   static const EdgeInsets earnPaddingX2 = EdgeInsets.all(AppSpacing.x2);
   static const EdgeInsets earnPaddingX3 = EdgeInsets.all(AppSpacing.x3);

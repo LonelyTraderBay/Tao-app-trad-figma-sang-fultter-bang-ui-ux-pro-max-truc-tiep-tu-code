@@ -4,6 +4,11 @@ Use this checklist for every VitTrade Flutter pull request. It converts the
 enterprise architecture rules into review gates that can be verified from the
 diff, tests, and CI output.
 
+This checklist itemizes the most common gates. For anything not explicitly
+listed below (or to see which domains are audit-only and not yet CI-enforced),
+check the full domain map in
+[Flutter-Design-System-Reference.md](./Flutter-Design-System-Reference.md).
+
 ## Required PR Evidence
 
 - [ ] Scope summary explains the user-facing or engineering outcome.
@@ -45,6 +50,15 @@ diff, tests, and CI output.
       `flutter test test/quality/page_rhythm_guardrail_test.dart` passes.
 - [ ] Phone-first layout @ 360×800 has no overflow/constraint violations;
       `flutter test test/quality/page_rhythm_phone_visual_qa_test.dart` passes.
+- [ ] Scroll/detail pages use Recipe A or B from
+      [Page-Content-Width-Standard.md](./Page-Content-Width-Standard.md) — no
+      double horizontal `contentPad`; `dart run
+      tool/page_content_width_audit.dart --check` passes and
+      `flutter test test/quality/page_content_width_guardrail_test.dart` passes.
+- [ ] Scroll-to-hide headers use `VitAutoHideHeaderScaffold` only (no page-local
+      `_headerVisible` / `heightFactor` collapse); collapse-budget gate stays
+      intact — `flutter test test/quality/scroll_auto_hide_guardrail_test.dart`
+      passes (see [Scroll-Auto-Hide-Standard.md](./Scroll-Auto-Hide-Standard.md)).
 - [ ] Tab-root pages use `VitPageRhythm.compact` with major sections as direct
       `VitPageContent` children (see
       [Page-Rhythm-Standard.md](./Page-Rhythm-Standard.md)).

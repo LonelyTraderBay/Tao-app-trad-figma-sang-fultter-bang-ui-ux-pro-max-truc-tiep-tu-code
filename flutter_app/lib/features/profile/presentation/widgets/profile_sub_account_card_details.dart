@@ -67,7 +67,7 @@ class _SubAccountDetails extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               children: [
                 TextSpan(
-                  text: account.email,
+                  text: maskEmail(account.email),
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
