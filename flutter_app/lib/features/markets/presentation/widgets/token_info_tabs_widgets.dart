@@ -215,7 +215,7 @@ class _HeroCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  _formatPrice(pair.price),
+                  formatMarketPriceFixed2(pair.price),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.amountMd.copyWith(

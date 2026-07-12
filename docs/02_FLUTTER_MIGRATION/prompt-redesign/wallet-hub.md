@@ -12,7 +12,7 @@
 | --- | --- |
 | [AGENTS.md](../../AGENTS.md) | Product, UI rules, financial safety |
 | [DESIGN.md](../../DESIGN.md) | Tokens, component ladder |
-| [Flutter-Native-Design-Standard.md](../Flutter-Native-Design-Standard.md) | Trust-first, no dark patterns |
+| [Flutter-Native-Design-Standard.md](../standards/Flutter-Native-Design-Standard.md) | Trust-first, no dark patterns |
 | [HomePage-Flutter-Native-Standard.md](../../04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md) | Chuẩn SC-007 |
 | [trading-bots-hub.md](trading-bots-hub.md) | Tier A reference |
 | `flutter_app/lib/features/home/presentation/pages/home_page.dart` | Reference implementation |
@@ -197,7 +197,7 @@ Gate: [AI_PROMPT_SHELL.md](../01_AI_RULES/AI_PROMPT_SHELL.md) § Verification (`
 
 ## Batch discipline
 
-Max 5–10 files/chat · hub trước · Cursor Auto · visual QA riêng: `/browse` ([Flutter-Visual-QA.md](../Flutter-Visual-QA.md)).
+Max 5–10 files/chat · hub trước · Cursor Auto · visual QA riêng: `/browse` ([Flutter-Visual-QA.md](../checklists/Flutter-Visual-QA.md)).
 
 **Bắt đầu ngay:** STEP 0 → 1 → 2 → 3 đến pass gate hoặc `RESUME FROM: Phase 1 — STEP <n> — RD-W01`.
 

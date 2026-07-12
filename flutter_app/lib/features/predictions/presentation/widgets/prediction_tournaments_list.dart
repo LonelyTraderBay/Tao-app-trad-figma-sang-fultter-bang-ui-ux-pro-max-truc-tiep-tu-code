@@ -8,39 +8,22 @@ class _TournamentTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionTournamentsPage.activeTabKey,
-        tab: _TournamentTab.active,
-        label: 'Dang dien ra',
-      ),
-      (
-        key: PredictionTournamentsPage.mineTabKey,
-        tab: _TournamentTab.mine,
-        label: 'Cua toi',
-      ),
-      (
-        key: PredictionTournamentsPage.endedTabKey,
-        tab: _TournamentTab.ended,
-        label: 'Ket thuc',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_TournamentTab.values.byName(key)),
-        tabs: [
-          for (final item in tabs)
-            VitTabItem(
-              key: item.tab.name,
-              label: item.label,
-              widgetKey: item.key,
-            ),
-        ],
-      ),
+    return PredictionEnumTabBar<_TournamentTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      items: [
+        (
+          PredictionTournamentsPage.activeTabKey,
+          _TournamentTab.active,
+          'Dang dien ra',
+        ),
+        (PredictionTournamentsPage.mineTabKey, _TournamentTab.mine, 'Cua toi'),
+        (
+          PredictionTournamentsPage.endedTabKey,
+          _TournamentTab.ended,
+          'Ket thuc',
+        ),
+      ],
     );
   }
 }

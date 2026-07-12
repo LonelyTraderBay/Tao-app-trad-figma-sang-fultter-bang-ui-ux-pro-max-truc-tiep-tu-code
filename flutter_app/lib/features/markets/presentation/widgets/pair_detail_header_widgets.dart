@@ -88,7 +88,9 @@ class _PairHeader extends StatelessWidget {
             const SizedBox(width: MarketsSpacingTokens.pairHeaderTrailingGap),
             const VitHeaderActionButton(
               type: VitHeaderActionType.share,
-              onPressed: _noop,
+              // ponytail: no share handler wired yet — disabled rather than
+              // a no-op tap target. Upgrade path: wire a real share sheet.
+              onPressed: null,
             ),
           ],
         ),
@@ -96,8 +98,6 @@ class _PairHeader extends StatelessWidget {
     );
   }
 }
-
-void _noop() {}
 
 class _PriceOverview extends StatelessWidget {
   const _PriceOverview({required this.pair});
@@ -120,7 +120,7 @@ class _PriceOverview extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      _formatPrice(pair.price),
+                      formatMarketPriceFixed2(pair.price),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.amountLg.copyWith(
@@ -144,14 +144,14 @@ class _PriceOverview extends StatelessWidget {
                   Expanded(
                     child: _PriceStat(
                       label: '24h Cao',
-                      value: _formatPrice(pair.high24h),
+                      value: formatMarketPriceFixed2(pair.high24h),
                       color: AppColors.buy,
                     ),
                   ),
                   Expanded(
                     child: _PriceStat(
                       label: '24h Thấp',
-                      value: _formatPrice(pair.low24h),
+                      value: formatMarketPriceFixed2(pair.low24h),
                       color: AppColors.sell,
                     ),
                   ),

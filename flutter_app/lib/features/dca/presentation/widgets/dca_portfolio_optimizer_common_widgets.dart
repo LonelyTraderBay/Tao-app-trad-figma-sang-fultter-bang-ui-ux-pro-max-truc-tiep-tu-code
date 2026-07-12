@@ -28,28 +28,6 @@ class _SmallPill extends StatelessWidget {
   }
 }
 
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: _dcaPortfolioIconBubbleExtent,
-      height: _dcaPortfolioIconBubbleExtent,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: .10),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-        ),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}
-
 class _CardLabel extends StatelessWidget {
   const _CardLabel({
     required this.color,

@@ -63,7 +63,7 @@ class _ActiveAlertsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _CreateAlertButton(),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        _InfoPanel(
+        CrossModuleInfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
           border: AppColors.primary20,
@@ -90,7 +90,7 @@ class _SmartAlertSummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _IconBadge(
+              const CrossModuleIconBadge(
                 icon: Icons.notifications_none_rounded,
                 color: AppColors.primary,
                 background: AppColors.primary12,

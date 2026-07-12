@@ -130,19 +130,19 @@ class _SignalCard extends StatelessWidget {
                     Expanded(
                       child: _SignalMetric(
                         label: 'Entry',
-                        value: _formatPrice(signal.entry),
+                        value: formatMarketPriceAdaptive(signal.entry),
                       ),
                     ),
                     Expanded(
                       child: _SignalMetric(
                         label: 'Hiện tại',
-                        value: _formatPrice(signal.currentPrice),
+                        value: formatMarketPriceAdaptive(signal.currentPrice),
                       ),
                     ),
                     Expanded(
                       child: _SignalMetric(
                         label: 'Stop Loss',
-                        value: _formatPrice(signal.stopLoss),
+                        value: formatMarketPriceAdaptive(signal.stopLoss),
                         valueColor: AppColors.sell,
                       ),
                     ),
@@ -224,7 +224,9 @@ class _ExpandedSignalDetail extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  _formatPrice(signal.targets[index]),
+                                  formatMarketPriceAdaptive(
+                                    signal.targets[index],
+                                  ),
                                   style: AppTextStyles.micro.copyWith(
                                     color: AppColors.buy,
                                     fontWeight: AppTextStyles.bold,

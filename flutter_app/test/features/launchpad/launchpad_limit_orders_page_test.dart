@@ -195,6 +195,42 @@ void main() {
     expect(find.text('SELL ARB'), findsOneWidget);
   });
 
+  testWidgets('SC-315 edit mini icon button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpLimitOrders(tester);
+
+    final orderCard = find.byKey(LaunchpadLimitOrdersPage.orderKey('lo_001'));
+    await tester.ensureVisible(orderCard);
+
+    await tester.tap(
+      find.descendant(
+        of: orderCard,
+        matching: find.byIcon(Icons.edit_outlined),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Sửa lệnh sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-315 delete mini icon button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpLimitOrders(tester);
+
+    final orderCard = find.byKey(LaunchpadLimitOrdersPage.orderKey('lo_001'));
+    await tester.ensureVisible(orderCard);
+
+    await tester.tap(
+      find.descendant(
+        of: orderCard,
+        matching: find.byIcon(Icons.delete_outline_rounded),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Xóa lệnh sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-315 header back returns to launchpad', (tester) async {
     await pumpLimitOrders(tester);
 

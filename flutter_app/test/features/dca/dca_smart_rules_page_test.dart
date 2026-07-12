@@ -86,4 +86,19 @@ void main() {
     expect(find.text('Performance Impact'), findsOneWidget);
     expect(find.text('Total Saved'), findsOneWidget);
   });
+
+  testWidgets('SC-179 template Use button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpSmartRules(tester);
+
+    await tester.tap(find.byKey(DCASmartRulesPage.tabKey('templates')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Use').first);
+    await tester.tap(find.text('Use').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Áp dụng mẫu quy tắc sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

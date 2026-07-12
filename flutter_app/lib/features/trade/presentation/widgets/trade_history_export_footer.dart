@@ -112,7 +112,7 @@ class _ExportFooter extends StatelessWidget {
                         child: VitCtaButton(
                           key: TradeHistoryExportPage.downloadKey,
                           variant: VitCtaButtonVariant.success,
-                          onPressed: () {},
+                          onPressed: () => _showComingSoon(context),
                           leading: const Icon(Icons.file_download_outlined),
                           child: Text('Tải ${format.toUpperCase()}'),
                         ),
@@ -140,17 +140,16 @@ class _ExportFooter extends StatelessWidget {
       ),
     );
   }
+
+  void _showComingSoon(BuildContext context) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Tải file xuất sẽ sớm ra mắt')),
+    );
+  }
 }
 
-String _formatInteger(int value) {
-  final text = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < text.length; i++) {
-    if (i > 0 && (text.length - i) % 3 == 0) buffer.write(',');
-    buffer.write(text[i]);
-  }
-  return buffer.toString();
-}
+String _formatInteger(int value) => formatTradeInt(value);
 
 String _formatCompact(double value) {
   if (value >= 1000000) {
@@ -160,8 +159,4 @@ String _formatCompact(double value) {
   return _formatMoney(value);
 }
 
-String _formatMoney(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  return '\$${_formatInteger(int.parse(parts[0]))}.${parts[1]}';
-}
+String _formatMoney(double value) => formatTradeUsd(value);

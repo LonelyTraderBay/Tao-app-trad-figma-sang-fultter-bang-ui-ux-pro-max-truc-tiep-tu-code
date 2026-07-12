@@ -14,21 +14,12 @@ final class AdminHomeViewState {
   final AdminHomeSnapshot snapshot;
   final AdminDashboardLoadStatus status;
   final String? message;
-
-  bool get hasDashboards => snapshot.dashboards.isNotEmpty;
 }
 
 final class AdminHomeController {
   const AdminHomeController({required this.state});
 
   final AdminHomeViewState state;
-
-  AdminDashboardLink? dashboardById(String id) {
-    for (final dashboard in state.snapshot.dashboards) {
-      if (dashboard.id == id) return dashboard;
-    }
-    return null;
-  }
 }
 
 final class AdminAnalyticsViewState {
@@ -47,13 +38,6 @@ final class AdminAnalyticsController {
   const AdminAnalyticsController({required this.state});
 
   final AdminAnalyticsViewState state;
-
-  AdminAnalyticsRangeOption activeRange(AdminAnalyticsRange range) {
-    return state.snapshot.ranges.firstWhere(
-      (option) => option.range == range,
-      orElse: () => state.snapshot.ranges.first,
-    );
-  }
 }
 
 final class AdminAbTestsViewState {

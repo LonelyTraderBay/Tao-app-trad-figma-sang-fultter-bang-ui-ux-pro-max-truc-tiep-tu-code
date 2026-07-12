@@ -216,7 +216,7 @@ class _SettingsRow extends StatelessWidget {
           children: [
             if (hasIcon) ...[
               Icon(
-                _iconFor(row.iconKey),
+                profileIconFor(row.iconKey),
                 color: AppColors.primary,
                 size: ProfileSpacingTokens.settingsRowIcon,
               ),

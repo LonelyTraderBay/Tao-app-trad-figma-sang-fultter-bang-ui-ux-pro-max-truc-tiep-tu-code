@@ -11,11 +11,10 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
@@ -50,65 +49,53 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
         AppSpacing.x6 +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
+    return AdminDashboardPageShell(
       semanticLabel: 'SC-182 ABTestDashboard',
-      child: VitAutoHideHeaderScaffold(
-        header: VitHeader(
-          title: 'A/B Test Dashboard',
-          subtitle: 'Test Results & Analysis',
-          showBack: true,
-          onBack: () => context.go(AppRoutePaths.admin),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                key: ABTestDashboard.contentKey,
-                physics: const ClampingScrollPhysics(),
-                padding: AdminSpacingTokens.adminScrollPadding(scrollBottom),
-                child: VitPageContent(
-                  rhythm: VitPageRhythm.standard,
-                  children: [
-                    AdminDashboardStateContent(
-                      status: controller.state.status,
-                      title: 'A/B test dashboard',
-                      message: controller.state.message,
-                      gap: AppSpacing.x4,
-                      children: [
-                        _SummaryGrid(snapshot: snapshot),
-                        const VitSectionHeader(
-                          title: 'Tất cả A/B Tests',
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        if (snapshot.tests.isEmpty)
-                          const AdminInlineEmptyState(
-                            icon: Icons.science_outlined,
-                            title: 'Chưa có A/B test nào',
-                            message: 'Tạo test mới để bắt đầu thử nghiệm',
-                          )
-                        else
-                          for (final test in snapshot.tests) ...[
-                            _ABTestCard(
-                              test: test,
-                              selected: test.id == _selectedTestId,
-                              onTap: () {
-                                setState(() {
-                                  _selectedTestId = test.id == _selectedTestId
-                                      ? null
-                                      : test.id;
-                                });
-                              },
-                            ),
-                          ],
-                      ],
-                    ),
-                  ],
-                ),
+      scrollKey: ABTestDashboard.contentKey,
+      scrollBottom: scrollBottom,
+      header: VitHeader(
+        title: 'A/B Test Dashboard',
+        subtitle: 'Test Results & Analysis',
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.admin),
+      ),
+      child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
+        children: [
+          AdminDashboardStateContent(
+            status: controller.state.status,
+            title: 'A/B test dashboard',
+            message: controller.state.message,
+            gap: AppSpacing.x4,
+            children: [
+              _SummaryGrid(snapshot: snapshot),
+              const VitSectionHeader(
+                title: 'Tất cả A/B Tests',
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
               ),
-            ),
-          ],
-        ),
+              if (snapshot.tests.isEmpty)
+                const AdminInlineEmptyState(
+                  icon: Icons.science_outlined,
+                  title: 'Chưa có A/B test nào',
+                  message: 'Tạo test mới để bắt đầu thử nghiệm',
+                )
+              else
+                for (final test in snapshot.tests) ...[
+                  _ABTestCard(
+                    test: test,
+                    selected: test.id == _selectedTestId,
+                    onTap: () {
+                      setState(() {
+                        _selectedTestId = test.id == _selectedTestId
+                            ? null
+                            : test.id;
+                      });
+                    },
+                  ),
+                ],
+            ],
+          ),
+        ],
       ),
     );
   }

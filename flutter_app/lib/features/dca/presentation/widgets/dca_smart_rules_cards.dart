@@ -79,10 +79,15 @@ class _RuleCard extends StatelessWidget {
 }
 
 class _TemplateGroup extends StatelessWidget {
-  const _TemplateGroup({required this.category, required this.templates});
+  const _TemplateGroup({
+    required this.category,
+    required this.templates,
+    required this.onUse,
+  });
 
   final String category;
   final List<DcaRuleTemplate> templates;
+  final VoidCallback onUse;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +103,7 @@ class _TemplateGroup extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final template in templates) ...[
-          _TemplateCard(template: template),
+          _TemplateCard(template: template, onUse: onUse),
           if (template != templates.last)
             const SizedBox(height: AppSpacing.rowGap),
         ],
@@ -108,9 +113,10 @@ class _TemplateGroup extends StatelessWidget {
 }
 
 class _TemplateCard extends StatelessWidget {
-  const _TemplateCard({required this.template});
+  const _TemplateCard({required this.template, required this.onUse});
 
   final DcaRuleTemplate template;
+  final VoidCallback onUse;
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +173,7 @@ class _TemplateCard extends StatelessWidget {
               SizedBox(
                 height: DcaSpacingTokens.dcaSmartButtonHeight,
                 child: VitCtaButton(
-                  onPressed: () {},
+                  onPressed: onUse,
                   fullWidth: false,
                   height: DcaSpacingTokens.dcaSmartButtonHeight,
                   padding: DcaSpacingTokens.dcaHorizontalPaddingX3,

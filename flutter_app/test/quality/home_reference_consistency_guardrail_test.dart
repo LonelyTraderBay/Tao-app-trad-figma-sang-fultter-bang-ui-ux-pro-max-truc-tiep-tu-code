@@ -21,9 +21,18 @@ void main() {
 
   test('Home still consumes the shared widgets extracted from it', () {
     const expectations = <String, String>{
+      // The home grid and the "more products" sheet both render a
+      // HomeQuickAction as a VitServiceTile via the single shared
+      // `buildHomeQuickActionTile` builder in home_formatters.dart (see the
+      // needle below), rather than each duplicating an identical
+      // `VitServiceTile.fromAction(...)` call inline. That builder is the
+      // one and only place that still has to call the real factory, which
+      // is asserted directly.
       'lib/features/home/presentation/widgets/home_products_section.dart':
-          'VitServiceTile.fromAction(',
+          'buildHomeQuickActionTile(',
       'lib/features/home/presentation/widgets/home_more_products_sheet.dart':
+          'buildHomeQuickActionTile(',
+      'lib/features/home/presentation/widgets/home_formatters.dart':
           'VitServiceTile.fromAction(',
       'lib/features/home/presentation/widgets/home_portfolio_card.dart':
           'VitBalanceBreakdownRow(',
@@ -81,7 +90,7 @@ void main() {
   test('archetype reference pages (tabbed detail, form wizard) stay '
       'divergence-free and keep their defining structure', () {
     // Lightweight tripwire — NOT a full archetype-classification audit
-    // (see docs/02_FLUTTER_MIGRATION/Flutter-Page-Archetype-Standard.md
+    // (see docs/02_FLUTTER_MIGRATION/standards/Flutter-Page-Archetype-Standard.md
     // for why automatic classification was rejected). Reuses the exact
     // same 4 regexes as the home-reference divergence scan above, scoped
     // to just the two evidence-vetted canonical pages and their bundles.
@@ -179,10 +188,8 @@ void main() {
       'lib/features/p2p/presentation/pages/p2p_my_ads_page.dart': [
         'if (index > 0) const SizedBox(height: AppSpacing.rowGap)',
       ],
-      'lib/features/markets/presentation/widgets/market_news_page_sections.dart': [
-        'item != news.last',
-        'SizedBox(height: AppSpacing.rowGap)',
-      ],
+      'lib/features/markets/presentation/widgets/market_news_page_sections.dart':
+          ['item != news.last', 'SizedBox(height: AppSpacing.rowGap)'],
       'lib/features/profile/presentation/widgets/vip_history_widgets.dart': [
         'row != snapshot.history.last',
         'SizedBox(height: AppSpacing.rowGap)',
@@ -234,8 +241,9 @@ void main() {
       // two known sites. cardTileInnerGap's doc comment reserves it for the
       // vertical icon→title→subtitle gap inside one tile.
       final violations = <String>[];
-      for (final entity
-          in Directory('lib/features').listSync(recursive: true)) {
+      for (final entity in Directory(
+        'lib/features',
+      ).listSync(recursive: true)) {
         if (entity is! File || !entity.path.endsWith('.dart')) continue;
         final path = entity.path.replaceAll('\\', '/');
         for (final line in entity.readAsStringSync().split('\n')) {

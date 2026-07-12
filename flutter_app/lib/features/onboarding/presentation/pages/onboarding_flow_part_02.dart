@@ -250,16 +250,12 @@ class _FeatureRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = _accentForId(feature.id);
+    final visual = _visualForId(feature.id);
     return Row(
       key: OnboardingFlow.featureKey(feature.id),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SmallIconBadge(
-          icon: _iconForId(feature.id),
-          color: accent,
-          background: _backgroundForId(feature.id),
-        ),
+        VitAccentIconBox(icon: visual.icon, color: visual.accent),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Column(
@@ -284,30 +280,6 @@ class _FeatureRow extends StatelessWidget {
   }
 }
 
-class _SmallIconBadge extends StatelessWidget {
-  const _SmallIconBadge({
-    required this.icon,
-    required this.color,
-    required this.background,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color background;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: OnboardingSpacingTokens.onboardingSmallIconBox,
-      child: Material(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
-        child: Icon(icon, color: color, size: AppSpacing.iconMd),
-      ),
-    );
-  }
-}
-
 class _BoundaryCard extends StatelessWidget {
   const _BoundaryCard({
     required this.boundary,
@@ -321,7 +293,8 @@ class _BoundaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = _accentForId(boundary.id);
+    final visual = _visualForId(boundary.id);
+    final accent = visual.accent;
 
     return VitCard(
       key: OnboardingFlow.boundaryKey(boundary.id),
@@ -334,11 +307,7 @@ class _BoundaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _SmallIconBadge(
-                icon: _iconForId(boundary.id),
-                color: accent,
-                background: _backgroundForId(boundary.id),
-              ),
+              VitAccentIconBox(icon: visual.icon, color: accent),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -397,7 +366,7 @@ class _TrustCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = _accentForId(pillar.id);
+    final visual = _visualForId(pillar.id);
 
     return VitCard(
       padding: OnboardingSpacingTokens.onboardingCardPadding,
@@ -405,11 +374,7 @@ class _TrustCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _SmallIconBadge(
-            icon: _iconForId(pillar.id),
-            color: accent,
-            background: _backgroundForId(pillar.id),
-          ),
+          VitAccentIconBox(icon: visual.icon, color: visual.accent),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(

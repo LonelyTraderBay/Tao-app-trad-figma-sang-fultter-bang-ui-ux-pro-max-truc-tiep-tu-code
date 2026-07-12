@@ -355,7 +355,7 @@ class _TimingRulesCard extends StatelessWidget {
                 color: AppColors.text3,
                 size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
-              onChanged: (value) => onDate(_normalizeArenaRuleDateInput(value)),
+              onChanged: (value) => onDate(normalizeArenaDateInput(value)),
             ),
           ),
           _EdgeRuleField(

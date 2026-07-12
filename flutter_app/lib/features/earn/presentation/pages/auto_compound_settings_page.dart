@@ -20,9 +20,11 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custod
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
-part 'auto_compound_settings_page_part_01.dart';
-part 'auto_compound_settings_page_part_02.dart';
-part 'auto_compound_settings_page_part_03.dart';
+part '../widgets/auto_compound_settings_positions.dart';
+part '../widgets/auto_compound_settings_calculator.dart';
+part '../widgets/auto_compound_settings_settings_sheet.dart';
+part '../widgets/auto_compound_settings_info_sheet.dart';
+part '../widgets/auto_compound_settings_shared.dart';
 
 class AutoCompoundSettingsPage extends ConsumerStatefulWidget {
   const AutoCompoundSettingsPage({super.key, this.shellRenderMode});
@@ -45,4 +47,197 @@ class AutoCompoundSettingsPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<AutoCompoundSettingsPage> createState() =>
       _AutoCompoundSettingsPageState();
+}
+
+class _AutoCompoundSettingsPageState
+    extends ConsumerState<AutoCompoundSettingsPage> {
+  final Map<String, bool> _enabled = {};
+  final Map<String, String> _frequencies = {};
+  final Map<String, double> _thresholds = {};
+  String? _editingId;
+  bool _showSuccess = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(autoCompoundSettingsRepositoryProvider)
+        .getSettings();
+    final positions = [
+      for (final position in snapshot.positions) _resolved(position),
+    ];
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final scrollTailReserve =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-341 AutoCompoundSettingsPage',
+      child: Material(
+        color: AppColors.bg,
+        child: Stack(
+          children: [
+            VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: AutoCompoundSettingsPage.infoButtonKey,
+                    type: VitHeaderActionType.help,
+                    onPressed: () => _openInfo(snapshot),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: AppSpacing.zeroInsets.copyWith(
+                        bottom: scrollTailReserve,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _SummaryCard(positions: positions),
+                          VitPageSection(
+                            label: 'Vị thế tiết kiệm',
+                            accentColor: AppColors.buy,
+                            children: [
+                              for (final position in positions)
+                                _PositionCard(
+                                  position: position,
+                                  onToggle: () => _toggle(position),
+                                  onSettings: () =>
+                                      _openSettings(snapshot, position),
+                                ),
+                            ],
+                          ),
+                          _CalculatorPreview(),
+                          _NoteCard(text: snapshot.note),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Auto-compound settings review',
+                            message:
+                                'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
+                            contractId: 'SC-341',
+                          ),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (_showSuccess)
+              Positioned(
+                left: AppSpacing.contentPad,
+                right: AppSpacing.contentPad,
+                top: MediaQuery.paddingOf(context).top + AppSpacing.x7,
+                child: _SuccessToast(
+                  onDismiss: () {
+                    setState(() => _showSuccess = false);
+                  },
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AutoCompoundPositionDraft _resolved(AutoCompoundPositionDraft position) {
+    return AutoCompoundPositionDraft(
+      id: position.id,
+      product: position.product,
+      asset: position.asset,
+      amount: position.amount,
+      earned: position.earned,
+      apy: position.apy,
+      type: position.type,
+      autoCompound: _enabled[position.id] ?? position.autoCompound,
+      compoundFrequency:
+          _frequencies[position.id] ?? position.compoundFrequency,
+      compoundThreshold: _thresholds[position.id] ?? position.compoundThreshold,
+      lastCompounded: position.lastCompounded,
+      totalCompounded: position.totalCompounded,
+      compoundCount: position.compoundCount,
+      estimatedBoost: position.estimatedBoost,
+    );
+  }
+
+  void _toggle(AutoCompoundPositionDraft position) {
+    HapticFeedback.selectionClick();
+    setState(() => _enabled[position.id] = !position.autoCompound);
+  }
+
+  Future<void> _openInfo(AutoCompoundSettingsSnapshot snapshot) async {
+    HapticFeedback.selectionClick();
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) {
+        return _SheetFrame(child: _InfoSheet(snapshot: snapshot));
+      },
+    );
+  }
+
+  Future<void> _openSettings(
+    AutoCompoundSettingsSnapshot snapshot,
+    AutoCompoundPositionDraft position,
+  ) async {
+    HapticFeedback.selectionClick();
+    setState(() => _editingId = position.id);
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) {
+        return _SheetFrame(
+          child: _SettingsSheet(
+            snapshot: snapshot,
+            position: _resolved(position),
+            onToggle: () {
+              _toggle(_resolved(position));
+              Navigator.of(context).pop();
+              _openSettings(snapshot, position);
+            },
+            onFrequency: (frequency) {
+              HapticFeedback.selectionClick();
+              setState(() => _frequencies[position.id] = frequency);
+              Navigator.of(context).pop();
+              _openSettings(snapshot, position);
+            },
+            onThreshold: (threshold) {
+              HapticFeedback.selectionClick();
+              setState(() => _thresholds[position.id] = threshold);
+              Navigator.of(context).pop();
+              _openSettings(snapshot, position);
+            },
+            onSave: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).pop();
+              setState(() {
+                _editingId = null;
+                _showSuccess = true;
+              });
+            },
+          ),
+        );
+      },
+    );
+    if (mounted && _editingId == position.id) {
+      setState(() => _editingId = null);
+    }
+  }
 }

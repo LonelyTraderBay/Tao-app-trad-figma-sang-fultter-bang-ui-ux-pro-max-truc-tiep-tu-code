@@ -103,11 +103,7 @@ class _RewardCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _IconBubble(
-                icon: icon,
-                color: color,
-                background: color.withValues(alpha: .10),
-              ),
+              VitAccentIconBox(icon: icon, color: color, iconSize: 18),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -234,10 +230,10 @@ class _DetailLinkRow extends StatelessWidget {
           padding: ReferralSpacingTokens.referralLedgerHeaderPadding,
           child: Row(
             children: [
-              _IconBubble(
+              VitAccentIconBox(
                 icon: style.icon,
                 color: style.color,
-                background: style.color.withValues(alpha: .10),
+                iconSize: 18,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -291,10 +287,10 @@ class _StepRow extends StatelessWidget {
       padding: ReferralSpacingTokens.referralStepRowPadding,
       child: Row(
         children: [
-          _IconBubble(
+          VitAccentIconBox(
             icon: Icons.check_rounded,
             color: color,
-            background: color.withValues(alpha: .10),
+            iconSize: 18,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

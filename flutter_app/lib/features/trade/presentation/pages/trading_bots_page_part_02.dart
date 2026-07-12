@@ -39,7 +39,7 @@ class _BotCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: AppSpacing.pageRhythmCompactInnerGap,
+                      height: AppSpacing.pageRhythmStandardInnerGap,
                     ),
                     VitStatusPill(
                       label: running ? 'Đang chạy' : 'Tạm dừng',
@@ -68,7 +68,7 @@ class _BotCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Expanded(

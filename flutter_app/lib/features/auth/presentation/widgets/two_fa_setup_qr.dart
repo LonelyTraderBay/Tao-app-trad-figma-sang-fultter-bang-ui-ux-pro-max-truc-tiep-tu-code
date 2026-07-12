@@ -66,19 +66,17 @@ class _ShieldHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: SizedBox.square(
+      child: AuthHeroIconBox(
         dimension: AuthSpacingTokens.authHeroIconBoxSm,
-        child: Material(
-          color: _authPrimary10,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-            side: BorderSide(color: _authPrimary30),
-          ),
-          child: const Icon(
-            Icons.shield_outlined,
-            color: _authPrimary,
-            size: AuthSpacingTokens.authHeroIconMd,
-          ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: _authPrimary30),
+        ),
+        fillColor: _authPrimary10,
+        child: const Icon(
+          Icons.shield_outlined,
+          color: _authPrimary,
+          size: AuthSpacingTokens.authHeroIconMd,
         ),
       ),
     );

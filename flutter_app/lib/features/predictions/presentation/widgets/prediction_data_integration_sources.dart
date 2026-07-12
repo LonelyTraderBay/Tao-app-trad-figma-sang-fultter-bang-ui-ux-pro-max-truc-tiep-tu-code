@@ -11,39 +11,26 @@ class _DataIntegrationTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionDataIntegrationPage.sourcesTabKey,
-        tab: _DataIntegrationTab.sources,
-        label: 'Nguon du lieu',
-      ),
-      (
-        key: PredictionDataIntegrationPage.apiKeysTabKey,
-        tab: _DataIntegrationTab.apiKeys,
-        label: 'API Keys',
-      ),
-      (
-        key: PredictionDataIntegrationPage.webhooksTabKey,
-        tab: _DataIntegrationTab.webhooks,
-        label: 'Webhooks',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_DataIntegrationTab.values.byName(key)),
-        tabs: [
-          for (final item in tabs)
-            VitTabItem(
-              key: item.tab.name,
-              label: item.label,
-              widgetKey: item.key,
-            ),
-        ],
-      ),
+    return PredictionEnumTabBar<_DataIntegrationTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      items: [
+        (
+          PredictionDataIntegrationPage.sourcesTabKey,
+          _DataIntegrationTab.sources,
+          'Nguon du lieu',
+        ),
+        (
+          PredictionDataIntegrationPage.apiKeysTabKey,
+          _DataIntegrationTab.apiKeys,
+          'API Keys',
+        ),
+        (
+          PredictionDataIntegrationPage.webhooksTabKey,
+          _DataIntegrationTab.webhooks,
+          'Webhooks',
+        ),
+      ],
     );
   }
 }

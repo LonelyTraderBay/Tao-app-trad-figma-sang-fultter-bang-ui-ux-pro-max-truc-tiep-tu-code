@@ -73,7 +73,7 @@ class _AlertCard extends StatelessWidget {
                         const SizedBox(width: _alertsTrendGap),
                         Flexible(
                           child: Text(
-                            '${_isAbove ? 'Tr\u00EAn' : 'D\u01B0\u1EDBi'} ${_formatUsd(alert.targetPrice)}',
+                            '${_isAbove ? 'Tr\u00EAn' : 'D\u01B0\u1EDBi'} ${formatMarketPriceTiered(alert.targetPrice, prefix: r'$')}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
@@ -143,7 +143,10 @@ class _AlertCard extends StatelessWidget {
                         const SizedBox(width: AppSpacing.x2),
                         Flexible(
                           child: Text(
-                            _formatUsd(alert.currentPrice),
+                            formatMarketPriceTiered(
+                              alert.currentPrice,
+                              prefix: r'$',
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.end,
@@ -195,7 +198,7 @@ class _AlertCard extends StatelessWidget {
                     ),
                     const SizedBox(height: _alertsActionGap),
                     Text(
-                      _formatUsd(alert.targetPrice),
+                      formatMarketPriceTiered(alert.targetPrice, prefix: r'$'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(

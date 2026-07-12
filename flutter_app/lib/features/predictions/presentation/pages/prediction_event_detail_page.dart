@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,11 +26,6 @@ import 'package:vit_trade_flutter/app/providers/predictions_controller_providers
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_order_preview_card.dart';
 
-part 'prediction_event_detail_page_part_01.dart';
-part 'prediction_event_detail_page_part_02.dart';
-part 'prediction_event_detail_page_part_03.dart';
-part 'prediction_event_detail_page_part_04.dart';
-part 'prediction_event_detail_page_part_05.dart';
 part '../widgets/prediction_event_detail_header.dart';
 part '../widgets/prediction_event_detail_stats_position.dart';
 part '../widgets/prediction_event_detail_chart.dart';
@@ -40,6 +36,8 @@ part '../widgets/prediction_event_detail_detail_tabs.dart';
 part '../widgets/prediction_event_detail_comments.dart';
 part '../widgets/prediction_event_detail_activity_holders.dart';
 part '../widgets/prediction_event_detail_related_arena.dart';
+part '../widgets/prediction_event_detail_quick_links.dart';
+part '../widgets/prediction_event_detail_common.dart';
 
 const _predictionPrimary = AppColors.primary;
 const _predictionPurple = AppColors.accent;
@@ -95,6 +93,13 @@ class _PredictionEventDetailPageState
       _selectedOutcome = 'Yes';
       _amount = '';
     }
+  }
+
+  void _showComingSoon() {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Tìm hiểu rủi ro sẽ sớm ra mắt')),
+    );
   }
 
   @override
@@ -218,7 +223,7 @@ class _PredictionEventDetailPageState
                               _selectedOutcome = value;
                             }),
                           ),
-                          _RiskLink(onTap: () {}),
+                          _RiskLink(onTap: _showComingSoon),
                         ],
                         _DetailTabs(
                           activeTab: _activeTab,

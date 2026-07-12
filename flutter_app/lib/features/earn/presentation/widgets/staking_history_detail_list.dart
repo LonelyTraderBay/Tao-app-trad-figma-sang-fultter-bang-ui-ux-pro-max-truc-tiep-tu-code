@@ -52,7 +52,10 @@ class _TransactionDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _DetailRow(label: 'Số lượng', value: '${tx.amountLabel} ${tx.asset}'),
-          _DetailRow(label: 'Giá trị USD', value: _formatUsd(tx.usdValue)),
+          _DetailRow(
+            label: 'Giá trị USD',
+            value: EarnFormatters.usd(tx.usdValue),
+          ),
           _DetailRow(label: 'Thời gian', value: '${tx.date} ${tx.time}'),
           _DetailRow(label: 'Trạng thái', value: _statusLabel(tx.status)),
           if (tx.txHash != null)
@@ -203,7 +206,7 @@ class _TransactionCard extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.x1),
               Text(
-                _formatUsd(tx.usdValue),
+                EarnFormatters.usd(tx.usdValue),
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],

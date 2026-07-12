@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Card Tile (Mandatory)
 
-Full contract: [Card-Tile-Standard.md](../../docs/02_FLUTTER_MIGRATION/Card-Tile-Standard.md)  
+Full contract: [Card-Tile-Standard.md](../../docs/02_FLUTTER_MIGRATION/standards/Card-Tile-Standard.md)  
 Reference: `flutter_app/lib/shared/widgets/vit_compact_product_card.dart`
 
 ## When editing strip / tile cards

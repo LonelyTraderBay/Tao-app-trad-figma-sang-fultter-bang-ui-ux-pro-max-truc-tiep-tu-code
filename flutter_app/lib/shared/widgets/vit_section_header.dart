@@ -91,9 +91,8 @@ class VitSectionHeader extends StatelessWidget {
                       .copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height:
-                            SharedSpacingTokens
-                                .homeSectionHeaderTitleLineHeight,
+                        height: SharedSpacingTokens
+                            .homeSectionHeaderTitleLineHeight,
                       ),
             ),
           ),

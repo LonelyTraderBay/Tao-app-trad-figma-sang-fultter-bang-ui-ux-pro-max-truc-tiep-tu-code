@@ -120,8 +120,6 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
           keyFor: pctKeyBuilder ?? (pct) => Key('sc048_pct_$pct'),
           accentColor: _tradePrimary,
         ),
-        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        const Divider(height: 1, color: AppColors.border),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _SummaryRow(label: 'Giá thị trường', value: marketPriceLabel),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -140,7 +138,7 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
           'Giá thị trường có thể thay đổi',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCtaButton(
           key: submitKey,
           onPressed: canSubmit ? () => _openConfirm(context) : null,

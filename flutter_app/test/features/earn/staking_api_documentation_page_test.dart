@@ -138,6 +138,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Copied'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Get Sandbox API Key'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Get Sandbox API Key'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Lấy Sandbox API Key sẽ sớm ra mắt'), findsOneWidget);
   });
 
   testWidgets('SC-379 auth tab renders limits and error codes', (tester) async {
@@ -157,6 +164,41 @@ void main() {
     expect(find.text('Error Codes'), findsOneWidget);
     expect(find.text('401'), findsOneWidget);
     expect(find.text('Internal Server Error'), findsOneWidget);
+  });
+
+  testWidgets('SC-379 generate API key CTA shows placeholder feedback', (
+    tester,
+  ) async {
+    await pumpDocumentation(tester);
+
+    await tester.tap(find.byKey(StakingApiDocumentationPage.tabKey('auth')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Generate API Key in Settings ->'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Generate API Key in Settings ->'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Tạo API Key trong Cài đặt sẽ sớm ra mắt'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-379 contact sales CTA shows placeholder feedback', (
+    tester,
+  ) async {
+    await pumpDocumentation(tester);
+
+    await tester.tap(find.byKey(StakingApiDocumentationPage.tabKey('auth')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Contact Sales'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Contact Sales'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Liên hệ Sales sẽ sớm ra mắt'), findsOneWidget);
   });
 
   testWidgets('SC-379 header back returns to staking hub', (tester) async {

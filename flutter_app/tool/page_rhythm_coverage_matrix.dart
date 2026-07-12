@@ -9,9 +9,9 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
 
-  final auditCsv = File('${docsDir.path}/VitTrade-Page-Rhythm-Audit.csv');
-  final screenCsv = File('${docsDir.path}/VitTrade-Page-Rhythm-Screen-Compliance.csv');
-  final outCsv = File('${docsDir.path}/VitTrade-Page-Rhythm-Coverage-Matrix.csv');
+  final auditCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv');
+  final screenCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv');
+  final outCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Coverage-Matrix.csv');
 
   if (!auditCsv.existsSync() || !screenCsv.existsSync()) {
     stderr.writeln(

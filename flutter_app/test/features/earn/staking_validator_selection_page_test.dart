@@ -136,6 +136,14 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Chọn Validator này'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Chọn Validator này'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Chọn Validator này'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Đã chọn Figment làm validator'), findsOneWidget);
+    expect(find.byKey(StakingValidatorSelectionPage.detailKey), findsNothing);
   });
 
   testWidgets('SC-362 header back returns to staking hub', (tester) async {

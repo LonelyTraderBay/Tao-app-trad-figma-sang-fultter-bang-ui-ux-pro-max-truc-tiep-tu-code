@@ -3,7 +3,7 @@ import 'dart:io';
 /// Audits horizontal content inset on presentation pages: flags double
 /// application of `AppSpacing.contentPad` on ScrollView → VitPageContent.
 ///
-/// See docs/02_FLUTTER_MIGRATION/Page-Content-Width-Standard.md
+/// See docs/02_FLUTTER_MIGRATION/standards/Page-Content-Width-Standard.md
 ///
 /// Usage (from flutter_app/):
 ///   dart run tool/page_content_width_audit.dart          # regenerate
@@ -35,9 +35,9 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Page-Content-Width-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Page-Content-Width-Audit.md',
   );
-  final csvFile = File('${docsDir.path}/VitTrade-Page-Content-Width-Audit.csv');
+  final csvFile = File('${docsDir.path}/audits/VitTrade-Page-Content-Width-Audit.csv');
 
   final horizontalScrollTokens = _loadHorizontalScrollPaddingTokens(appRoot);
   final findings = _scanPresentationPages(appRoot, horizontalScrollTokens);
@@ -377,7 +377,7 @@ String _buildMarkdown(List<PageContentWidthFinding> findings) {
     ..writeln('Generated: $_generatedDate')
     ..writeln()
     ..writeln(
-      'Authority: [Page-Content-Width-Standard.md](./Page-Content-Width-Standard.md)',
+      'Authority: [Page-Content-Width-Standard.md](../standards/Page-Content-Width-Standard.md)',
     )
     ..writeln()
     ..writeln('```text')

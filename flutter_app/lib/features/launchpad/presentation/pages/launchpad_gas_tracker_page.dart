@@ -21,9 +21,13 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
-part 'launchpad_gas_tracker_page_part_01.dart';
-part 'launchpad_gas_tracker_page_part_02.dart';
-part 'launchpad_gas_tracker_page_part_03.dart';
+part '../widgets/launchpad_gas_tracker_hero.dart';
+part '../widgets/launchpad_gas_tracker_prices.dart';
+part '../widgets/launchpad_gas_tracker_chains.dart';
+part '../widgets/launchpad_gas_tracker_estimator.dart';
+part '../widgets/launchpad_gas_tracker_alerts.dart';
+part '../widgets/launchpad_gas_tracker_alert_sheet.dart';
+part '../widgets/launchpad_gas_tracker_common.dart';
 
 enum _GasTab { prices, estimator, alerts }
 
@@ -219,5 +223,38 @@ class _LaunchpadGasTrackerPageState
       _alerts = [..._alerts, alert];
       _showAddAlert = false;
     });
+  }
+}
+
+class _GasTabs extends StatelessWidget {
+  const _GasTabs({required this.activeTab, required this.onChanged});
+
+  final _GasTab activeTab;
+  final ValueChanged<_GasTab> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: activeTab.name,
+      tabs: const [
+        VitTabItem(
+          key: 'prices',
+          label: 'prices',
+          widgetKey: LaunchpadGasTrackerPage.pricesTabKey,
+        ),
+        VitTabItem(
+          key: 'estimator',
+          label: 'estimator',
+          widgetKey: LaunchpadGasTrackerPage.estimatorTabKey,
+        ),
+        VitTabItem(
+          key: 'alerts',
+          label: 'alerts',
+          widgetKey: LaunchpadGasTrackerPage.alertsTabKey,
+        ),
+      ],
+      onChanged: (key) => onChanged(_GasTab.values.byName(key)),
+    );
   }
 }

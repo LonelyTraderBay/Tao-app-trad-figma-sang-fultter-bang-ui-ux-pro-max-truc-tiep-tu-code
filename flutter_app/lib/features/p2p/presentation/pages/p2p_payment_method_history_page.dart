@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_formatters.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
@@ -323,15 +324,7 @@ class _TrendIcon extends StatelessWidget {
   }
 }
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    if (i > 0 && (raw.length - i) % 3 == 0) buffer.write('.');
-    buffer.write(raw[i]);
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);
 
 String _formatMillionVnd(int value) {
   final millions = value ~/ 1000000;

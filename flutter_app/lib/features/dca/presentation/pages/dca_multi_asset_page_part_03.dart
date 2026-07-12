@@ -359,10 +359,9 @@ Color _assetColor(int index) {
   }
 }
 
-String _formatUsd(num value) => '\$${value.round()}';
+// Delegates to the shared formatters in dca_currency_formatters.dart (see
+// that file's doc comment for the formatUsd duplicate and the divergent
+// per-screen _formatPercent implementations it consolidates).
+String _formatUsd(num value) => formatUsd(value);
 
-String _formatPercent(double value) {
-  final rounded = value.roundToDouble();
-  if (rounded == value) return '${rounded.toInt()}%';
-  return '${value.toStringAsFixed(1)}%';
-}
+String _formatPercent(double value) => formatPercentTrimmed(value);

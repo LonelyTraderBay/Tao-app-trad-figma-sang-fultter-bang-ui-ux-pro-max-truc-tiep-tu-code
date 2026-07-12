@@ -58,17 +58,9 @@ VitStatusPillStatus _statusPillStatus(String status) {
   };
 }
 
-String _formatCrypto(double value) => value.toStringAsFixed(4);
+String _formatCrypto(double value) => formatP2PCrypto(value);
 
-String _formatVnd(num value) {
-  final text = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < text.length; i++) {
-    if (i > 0 && (text.length - i) % 3 == 0) buffer.write('.');
-    buffer.write(text[i]);
-  }
-  return buffer.toString();
-}
+String _formatVnd(num value) => formatP2PVnd(value);
 
 String _formatCompactVnd(double value) {
   if (value >= 1000000) {

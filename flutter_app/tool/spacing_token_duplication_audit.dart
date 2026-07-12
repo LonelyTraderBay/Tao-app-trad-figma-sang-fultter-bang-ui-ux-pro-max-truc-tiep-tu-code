@@ -10,7 +10,7 @@ import 'dart:io';
 /// semantic tokens in `app_spacing.dart` — those cover narrow, named
 /// purposes (e.g. `serviceTileIconContainer = 26`) where a coincidental
 /// value match is not evidence of duplication. See
-/// `docs/02_FLUTTER_MIGRATION/Spacing-Token-Duplication-Standard.md`.
+/// `docs/02_FLUTTER_MIGRATION/standards/Spacing-Token-Duplication-Standard.md`.
 final class DuplicationEntry {
   const DuplicationEntry({
     required this.module,
@@ -76,10 +76,10 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Spacing-Token-Duplication-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Spacing-Token-Duplication-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Spacing-Token-Duplication-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Spacing-Token-Duplication-Audit.csv',
   );
 
   final entries = _collectEntries(appRoot, repoRoot);

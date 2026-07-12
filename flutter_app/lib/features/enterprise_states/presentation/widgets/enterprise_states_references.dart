@@ -117,7 +117,10 @@ class _ReferenceTile extends StatelessWidget {
       padding: EnterpriseStatesSpacingTokens.enterpriseStatesCardPadding,
       child: Row(
         children: [
-          _IconBubble(icon: icon, color: AppModuleAccents.enterpriseStates),
+          VitAccentIconBox(
+            icon: icon,
+            color: AppModuleAccents.enterpriseStates,
+          ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
@@ -149,30 +152,6 @@ class _ReferenceTile extends StatelessWidget {
             onTap: onTap,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: EnterpriseStatesSpacingTokens.enterpriseStatesIconBox,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: .12),
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-            side: BorderSide(color: color.withValues(alpha: .22)),
-          ),
-        ),
-        child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
     );
   }

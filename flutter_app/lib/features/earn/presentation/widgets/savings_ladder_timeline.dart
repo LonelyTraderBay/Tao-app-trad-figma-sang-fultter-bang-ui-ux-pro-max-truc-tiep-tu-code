@@ -22,10 +22,16 @@ const _maturityBadgeHeight = 44.0;
 const _disclaimerLineHeight = 1.22;
 
 class TimelineTab extends StatelessWidget {
-  const TimelineTab({super.key, required this.snapshot, required this.rungs});
+  const TimelineTab({
+    super.key,
+    required this.snapshot,
+    required this.rungs,
+    required this.onEmptyCta,
+  });
 
   final SavingsLadderSnapshot snapshot;
   final List<SavingsLadderRungDraft> rungs;
+  final VoidCallback onEmptyCta;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class TimelineTab extends StatelessWidget {
         icon: Icons.layers_clear_outlined,
         title: 'Chưa có bậc nào',
         cta: 'Bắt đầu xây',
+        onCta: onEmptyCta,
       );
     }
 

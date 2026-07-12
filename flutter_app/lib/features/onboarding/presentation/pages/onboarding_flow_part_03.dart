@@ -14,7 +14,8 @@ class _GoalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = _accentForGoal(goal.id);
+    final visual = _visualForGoal(goal.id);
+    final accent = visual.accent;
 
     return VitCard(
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
@@ -26,11 +27,7 @@ class _GoalTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SmallIconBadge(
-                icon: _iconForGoal(goal.id),
-                color: accent,
-                background: _backgroundForGoal(goal.id),
-              ),
+              VitAccentIconBox(icon: visual.icon, color: accent),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               Text(
                 goal.label,
@@ -95,10 +92,9 @@ class _RecommendationCard extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          const _SmallIconBadge(
+          const VitAccentIconBox(
             icon: Icons.arrow_outward_rounded,
             color: AppColors.primary,
-            background: AppColors.primary12,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -184,67 +180,60 @@ class _BackControl extends StatelessWidget {
   }
 }
 
-Color _accentForId(String id) {
+({Color accent, IconData icon}) _visualForId(String id) {
   return switch (id) {
-    'security' || 'wallet' || 'safety' => AppColors.buy,
-    'smart' || 'prediction' || 'transparency' => AppColors.accent,
-    'arena' || 'points' || 'no_dark_patterns' || 'p2p' => AppColors.warn,
-    'value' || 'trading' => AppModuleAccents.trade,
-    _ => AppColors.primary,
+    'security' ||
+    'safety' => (accent: AppColors.buy, icon: Icons.shield_outlined),
+    'wallet' => (
+      accent: AppColors.buy,
+      icon: Icons.account_balance_wallet_outlined,
+    ),
+    'smart' => (accent: AppColors.accent, icon: Icons.bolt_rounded),
+    'prediction' => (accent: AppColors.accent, icon: Icons.query_stats_rounded),
+    'transparency' => (
+      accent: AppColors.accent,
+      icon: Icons.visibility_outlined,
+    ),
+    'arena' ||
+    'points' => (accent: AppColors.warn, icon: Icons.emoji_events_outlined),
+    'no_dark_patterns' => (
+      accent: AppColors.warn,
+      icon: Icons.report_problem_outlined,
+    ),
+    'p2p' => (accent: AppColors.warn, icon: Icons.groups_2_outlined),
+    'value' || 'trading' => (
+      accent: AppModuleAccents.trade,
+      icon: Icons.trending_up_rounded,
+    ),
+    _ => (accent: AppColors.primary, icon: Icons.lock_outline_rounded),
   };
 }
 
-Color _backgroundForId(String id) {
-  return switch (id) {
-    'security' || 'wallet' || 'safety' => AppColors.buy15,
-    'smart' || 'prediction' || 'transparency' => AppColors.accent15,
-    'arena' || 'points' || 'no_dark_patterns' || 'p2p' => AppColors.warn15,
-    _ => AppColors.primary12,
-  };
-}
-
-IconData _iconForId(String id) {
-  return switch (id) {
-    'security' || 'safety' => Icons.shield_outlined,
-    'smart' => Icons.bolt_rounded,
-    'wallet' => Icons.account_balance_wallet_outlined,
-    'p2p' => Icons.groups_2_outlined,
-    'prediction' => Icons.query_stats_rounded,
-    'arena' || 'points' => Icons.emoji_events_outlined,
-    'value' || 'trading' => Icons.trending_up_rounded,
-    'transparency' => Icons.visibility_outlined,
-    'no_dark_patterns' => Icons.report_problem_outlined,
-    _ => Icons.lock_outline_rounded,
-  };
-}
-
-Color _accentForGoal(OnboardingUserGoalDraft goal) {
+({Color accent, IconData icon}) _visualForGoal(OnboardingUserGoalDraft goal) {
   return switch (goal) {
-    OnboardingUserGoalDraft.saveRegularly => AppColors.buy,
-    OnboardingUserGoalDraft.predictEvents => AppColors.accent,
-    OnboardingUserGoalDraft.arenaChallenges => AppModuleAccents.arena,
-    OnboardingUserGoalDraft.p2pExchange => AppModuleAccents.p2p,
-    _ => AppColors.primary,
-  };
-}
-
-Color _backgroundForGoal(OnboardingUserGoalDraft goal) {
-  return switch (goal) {
-    OnboardingUserGoalDraft.saveRegularly => AppColors.buy15,
-    OnboardingUserGoalDraft.predictEvents => AppColors.accent15,
-    OnboardingUserGoalDraft.arenaChallenges ||
-    OnboardingUserGoalDraft.p2pExchange => AppColors.warn15,
-    _ => AppColors.primary12,
-  };
-}
-
-IconData _iconForGoal(OnboardingUserGoalDraft goal) {
-  return switch (goal) {
-    OnboardingUserGoalDraft.tradeCrypto => Icons.trending_up_rounded,
-    OnboardingUserGoalDraft.saveRegularly => Icons.repeat_rounded,
-    OnboardingUserGoalDraft.p2pExchange => Icons.groups_2_outlined,
-    OnboardingUserGoalDraft.predictEvents => Icons.query_stats_rounded,
-    OnboardingUserGoalDraft.arenaChallenges => Icons.emoji_events_outlined,
-    OnboardingUserGoalDraft.earnRewards => Icons.card_giftcard_rounded,
+    OnboardingUserGoalDraft.tradeCrypto => (
+      accent: AppColors.primary,
+      icon: Icons.trending_up_rounded,
+    ),
+    OnboardingUserGoalDraft.saveRegularly => (
+      accent: AppColors.buy,
+      icon: Icons.repeat_rounded,
+    ),
+    OnboardingUserGoalDraft.p2pExchange => (
+      accent: AppModuleAccents.p2p,
+      icon: Icons.groups_2_outlined,
+    ),
+    OnboardingUserGoalDraft.predictEvents => (
+      accent: AppColors.accent,
+      icon: Icons.query_stats_rounded,
+    ),
+    OnboardingUserGoalDraft.arenaChallenges => (
+      accent: AppModuleAccents.arena,
+      icon: Icons.emoji_events_outlined,
+    ),
+    OnboardingUserGoalDraft.earnRewards => (
+      accent: AppColors.primary,
+      icon: Icons.card_giftcard_rounded,
+    ),
   };
 }

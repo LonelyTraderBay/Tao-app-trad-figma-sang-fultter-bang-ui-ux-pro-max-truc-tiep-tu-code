@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/widgets/auth_hero_icon_box.dart';
 
 part '../widgets/otp_identity_intro.dart';
 part '../widgets/otp_input_status.dart';
@@ -238,7 +239,25 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                 child: VitPageContent(
                   rhythm: VitPageRhythm.form,
                   children: [
-                    const _ShieldHero(),
+                    Align(
+                      alignment: Alignment.center,
+                      child: AuthHeroIconBox(
+                        dimension: AuthSpacingTokens.authHeroIconBoxMd,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: AppRadii.cardLargeRadius,
+                          side: BorderSide(
+                            color: _authPrimary30,
+                            width: AppSpacing.borderWidth,
+                          ),
+                        ),
+                        fillColor: _authPrimary10,
+                        child: const Icon(
+                          Icons.gpp_good_outlined,
+                          color: _authPrimary,
+                          size: AuthSpacingTokens.authHeroIconLg,
+                        ),
+                      ),
+                    ),
                     _OtpIntro(contact: widget.contact),
                     _OtpDigitRow(
                       controllers: _controllers,

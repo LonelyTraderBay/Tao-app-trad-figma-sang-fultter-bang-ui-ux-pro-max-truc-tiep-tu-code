@@ -136,7 +136,14 @@ class _ProductCard extends StatelessWidget {
           VitCtaButton(
             height: AppSpacing.inputHeight - AppSpacing.x1,
             variant: VitCtaButtonVariant.secondary,
-            onPressed: () {},
+            onPressed: () {
+              HapticFeedback.selectionClick();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Xem chi tiết sản phẩm sẽ sớm ra mắt'),
+                ),
+              );
+            },
             child: const Text('Xem chi tiet'),
           ),
         ],

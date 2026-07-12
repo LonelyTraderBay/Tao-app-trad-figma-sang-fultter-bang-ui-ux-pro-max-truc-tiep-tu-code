@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_social_support_widgets.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_enum_tab_bar.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 part '../widgets/prediction_social_header_comments.dart';

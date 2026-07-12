@@ -378,23 +378,6 @@ class _DrawingToolsGrid extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.label, required this.accentColor});
-
-  final String label;
-  final Color accentColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: accentColor,
-    );
-  }
-}
-
 class _TipsCard extends StatelessWidget {
   const _TipsCard();
 

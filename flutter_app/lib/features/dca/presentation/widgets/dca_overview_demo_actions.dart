@@ -314,27 +314,12 @@ class _SparklinePainter extends CustomPainter {
   }
 }
 
-String _formatFullVnd(int amount) {
-  final sign = amount < 0 ? '-' : '';
-  final digits = amount.abs().toString();
-  final buffer = StringBuffer(sign);
-  for (var i = 0; i < digits.length; i++) {
-    if (i > 0 && (digits.length - i) % 3 == 0) buffer.write('.');
-    buffer.write(digits[i]);
-  }
-  return buffer.toString();
-}
+// Delegates to the shared, sign-safe formatters in dca_currency_formatters.dart
+// (see that file's doc comment for why the two former local implementations
+// were consolidated, and why _formatPercent was relocated rather than merged
+// with the other DCA screens' divergent percent formatters).
+String _formatFullVnd(int amount) => formatFullVnd(amount);
 
-String _formatCompactVnd(int amount) {
-  final sign = amount < 0 ? '-' : '';
-  final abs = amount.abs();
-  if (abs >= 1000000000) {
-    return '$sign${(abs / 1000000000).toStringAsFixed(2)}B';
-  }
-  return '$sign${(abs / 1000000).toStringAsFixed(2)}M';
-}
+String _formatCompactVnd(int amount) => formatCompactVnd(amount);
 
-String _formatPercent(double value) {
-  final sign = value >= 0 ? '+' : '';
-  return '$sign${value.toStringAsFixed(1).replaceAll('.', ',')}%';
-}
+String _formatPercent(double value) => formatPercentSigned(value);

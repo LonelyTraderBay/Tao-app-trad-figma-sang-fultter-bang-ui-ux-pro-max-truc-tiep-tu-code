@@ -10,16 +10,16 @@ web screenshot baseline were removed on 2026-05-26.
 3. `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`
 4. `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`
 5. `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md`
-6. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`
-7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
+6. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Native-Design-Standard.md`
+7. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Module-Identity-Standard.md`
 8. `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md`
 9. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
 10. `docs/03_DESIGN_SYSTEM/Guidelines.md`
 11. `DESIGN.md` (root — visual tokens and Vit* component ladder)
 12. `docs/02_FLUTTER_MIGRATION/ke-hoac-tong-the.md` (status dashboard)
 13. `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` (production gaps)
-14. `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md`
-15. `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md`
+14. `docs/02_FLUTTER_MIGRATION/checklists/Future-Feature-Onboarding-Checklist.md`
+15. `docs/02_FLUTTER_MIGRATION/checklists/Enterprise-PR-Review-Checklist.md`
 16. Screen- or module-specific references only when working on that area.
 
 ## Source Of Truth
@@ -74,8 +74,9 @@ behavior changes.
 | `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` | Production readiness checklist. |
 | `docs/02_FLUTTER_MIGRATION/` | Flutter engineering standards, checklists, backend skeletons. |
 | `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md` | Map of every design-consistency audit domain — what enforces it, and the command to check it locally. |
-| `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md` | Required checklist before adding a feature, route, high-risk flow, or large test surface. |
-| `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md` | Pull request review gates for architecture, router, product safety, and tests. |
+| `docs/02_FLUTTER_MIGRATION/checklists/Future-Feature-Onboarding-Checklist.md` | Required checklist before adding a feature, route, high-risk flow, or large test surface. |
+| `docs/02_FLUTTER_MIGRATION/checklists/Enterprise-PR-Review-Checklist.md` | Pull request review gates for architecture, router, product safety, and tests. |
+| `.claude/agents/` | Claude Code subagents (batching, screen design, audits, tests, PR gate) — see `AGENTS.md` § Claude Code Subagents for the task-to-agent table. |
 | `docs/03_DESIGN_SYSTEM/Guidelines.md` | Product and design rules. |
 | `docs/05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md` | Architecture reference; Flutter source wins on conflict. |
 

@@ -5,7 +5,7 @@ void main(List<String> args) {
   final appRoot = findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final csvFile = File('${docsDir.path}/VitTrade-Page-Rhythm-Migration-Manifest.csv');
+  final csvFile = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv');
 
   final rows = <_Row>[];
   for (final entity in Directory('${appRoot.path}/lib').listSync(recursive: true)) {
@@ -65,7 +65,7 @@ void main(List<String> args) {
   docsDir.createSync(recursive: true);
   csvFile.writeAsStringSync(csv);
 
-  final planFile = File('${docsDir.path}/Page-Rhythm-Migration-Execution-Plan.md');
+  final planFile = File('${docsDir.path}/checklists/Page-Rhythm-Migration-Execution-Plan.md');
   planFile.writeAsStringSync(_renderExecutionPlan(rows, batch));
 
   final pending = rows.where((r) => r.status == 'pending').length;
@@ -315,7 +315,7 @@ UNTIL pending == 0
 
 ```
 Thực thi Page Rhythm migration theo:
-docs/02_FLUTTER_MIGRATION/Page-Rhythm-Migration-Execution-Plan.md
+docs/02_FLUTTER_MIGRATION/checklists/Page-Rhythm-Migration-Execution-Plan.md
 
 Quy tắc:
 1. Đọc mục "Checkpoint AI" và "Batch tiếp theo"

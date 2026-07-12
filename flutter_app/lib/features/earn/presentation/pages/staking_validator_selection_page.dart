@@ -143,6 +143,7 @@ class _StakingValidatorSelectionPageState
                           key: StakingValidatorSelectionPage.detailKey,
                           validator: _selected!,
                           onClose: () => setState(() => _selected = null),
+                          onSelect: () => _confirmSelection(_selected!),
                         ),
                       StakingValidatorSelectionValidatorList(
                         validators: validators,
@@ -185,6 +186,14 @@ class _StakingValidatorSelectionPageState
       };
     });
     return result;
+  }
+
+  void _confirmSelection(StakingValidatorDraft validator) {
+    HapticFeedback.mediumImpact();
+    setState(() => _selected = null);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Đã chọn ${validator.name} làm validator')),
+    );
   }
 
   void _clearFilters() {

@@ -126,7 +126,7 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(

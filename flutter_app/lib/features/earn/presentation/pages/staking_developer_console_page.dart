@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -255,7 +256,8 @@ class _ApiKeysTab extends StatelessWidget {
         for (final apiKey in snapshot.apiKeys) _ApiKeyCard(apiKey: apiKey),
         VitCtaButton(
           key: StakingDeveloperConsolePage.createKey,
-          onPressed: () {},
+          onPressed: () =>
+              _showComingSoon(context, 'Tạo API Key sẽ sớm ra mắt'),
           child: Text(snapshot.createKeyLabel),
         ),
       ],
@@ -431,7 +433,7 @@ class _DocCard extends StatelessWidget {
       key: StakingDeveloperConsolePage.docKey(doc.title),
       radius: VitCardRadius.large,
       padding: EarnSpacingTokens.earnCardPaddingX3,
-      onTap: () {},
+      onTap: () => _showComingSoon(context, 'Xem tài liệu sẽ sớm ra mắt'),
       child: Row(
         children: [
           const Icon(
@@ -465,6 +467,11 @@ class _DocCard extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 
 Color _toneColor(String tone) {

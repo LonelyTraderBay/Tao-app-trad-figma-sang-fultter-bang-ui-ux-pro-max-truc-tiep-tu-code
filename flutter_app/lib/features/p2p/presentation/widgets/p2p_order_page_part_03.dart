@@ -356,17 +356,6 @@ Color _quickActionColor(String id) {
   };
 }
 
-String _formatCrypto(double value) => value.toStringAsFixed(4);
+String _formatCrypto(double value) => formatP2PCrypto(value);
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final reverseIndex = raw.length - i;
-    buffer.write(raw[i]);
-    if (reverseIndex > 1 && reverseIndex % 3 == 1) {
-      buffer.write('.');
-    }
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);

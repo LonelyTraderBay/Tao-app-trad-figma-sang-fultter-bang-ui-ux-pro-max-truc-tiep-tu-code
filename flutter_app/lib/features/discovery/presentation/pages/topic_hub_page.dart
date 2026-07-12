@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/discovery/presentation/widgets/discovery_shared_tiles.dart';
 
 part '../widgets/topic_hub_header.dart';
 part '../widgets/topic_hub_sections.dart';

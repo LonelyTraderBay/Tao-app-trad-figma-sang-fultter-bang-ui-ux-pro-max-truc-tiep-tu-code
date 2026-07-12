@@ -73,6 +73,26 @@ void main() {
     expect(find.text('No recent events'), findsOneWidget);
   });
 
+  testWidgets('SC-181 refresh button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpAnalytics(tester);
+
+    await tester.tap(find.byKey(AnalyticsDashboard.refreshKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Làm mới phân tích sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-181 export button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpAnalytics(tester);
+
+    await tester.tap(find.byKey(AnalyticsDashboard.exportKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Xuất phân tích sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-181 supports range selection and back route', (tester) async {
     await pumpAnalytics(tester);
 

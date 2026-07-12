@@ -21,9 +21,12 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'launchpad_staking_page_part_01.dart';
-part 'launchpad_staking_page_part_02.dart';
-part 'launchpad_staking_page_part_03.dart';
+part '../widgets/launchpad_staking_hero.dart';
+part '../widgets/launchpad_staking_pool_card.dart';
+part '../widgets/launchpad_staking_pool_status.dart';
+part '../widgets/launchpad_staking_positions.dart';
+part '../widgets/launchpad_staking_calculator.dart';
+part '../widgets/launchpad_staking_shared.dart';
 
 class LaunchpadStakingPage extends ConsumerStatefulWidget {
   const LaunchpadStakingPage({super.key, this.shellRenderMode});
@@ -46,4 +49,126 @@ class LaunchpadStakingPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<LaunchpadStakingPage> createState() =>
       _LaunchpadStakingPageState();
+}
+
+enum _StakingTab {
+  pools('pools', 'Pools'),
+  positions('positions', 'Vị trí của tôi'),
+  calculator('calculator', 'Tính APY');
+
+  const _StakingTab(this.id, this.label);
+
+  final String id;
+  final String label;
+}
+
+class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
+  var _activeTab = _StakingTab.pools;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref.watch(launchpadControllerProvider).getStaking();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final navClearance = mode.usesVisualQaFrame
+        ? SharedSpacingTokens.bottomNavVisualClearance
+        : SharedSpacingTokens.bottomNavNativeClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-298 LaunchpadStakingPage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: VitAutoHideHeaderScaffold(
+          semanticLabel: 'SC-298 LaunchpadStakingPage scroll surface',
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            children: [
+              _StakingTabs(
+                activeTab: _activeTab,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: LaunchpadStakingPage.contentKey,
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
+                    child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
+                      children: [
+                        _StakingHero(snapshot: snapshot),
+                        switch (_activeTab) {
+                          _StakingTab.pools => _PoolsTab(snapshot: snapshot),
+                          _StakingTab.positions => _PositionsTab(
+                            snapshot: snapshot,
+                          ),
+                          _StakingTab.calculator => _ApyCalculator(
+                            pools: snapshot.pools,
+                          ),
+                        },
+                        const _RiskDisclosure(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StakingTabs extends StatelessWidget {
+  const _StakingTabs({required this.activeTab, required this.onChanged});
+
+  final _StakingTab activeTab;
+  final ValueChanged<_StakingTab> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: AppColors.navBg,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: LaunchpadSpacingTokens.launchpadHorizontalContentPadding,
+            child: VitSegmentedChoice.withPrimaryAccent<_StakingTab>(
+              key: LaunchpadStakingPage.tabsKey,
+              selected: activeTab,
+              onChanged: onChanged,
+              options: [
+                for (final tab in _StakingTab.values)
+                  VitSegmentedChoiceOption(
+                    key: LaunchpadStakingPage.tabKey(tab.id),
+                    value: tab,
+                    label: tab.label,
+                  ),
+              ],
+            ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -111,8 +111,8 @@ class _TimingRulesCard extends StatelessWidget {
           _FieldBlock(
             label: 'Thời hạn kết thúc',
             child: TextFormField(
-              initialValue: _formatArenaDateInput(endDate),
-              onChanged: (value) => onDate(_normalizeArenaDateInput(value)),
+              initialValue: formatArenaDateInput(endDate),
+              onChanged: (value) => onDate(normalizeArenaDateInput(value)),
               style: AppTextStyles.base.copyWith(color: AppColors.text1),
               decoration: _inputDecoration('03/15/2026').copyWith(
                 suffixIcon: const Icon(

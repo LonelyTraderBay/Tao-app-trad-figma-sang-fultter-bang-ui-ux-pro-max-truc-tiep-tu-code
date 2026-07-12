@@ -82,7 +82,18 @@ class _ApiKeyCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Row(
               children: [
-                Expanded(child: _RegenerateButton(onTap: () {})),
+                Expanded(
+                  child: _RegenerateButton(
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Tạo lại Secret sẽ sớm ra mắt'),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 const SizedBox(width: AppSpacing.x2),
                 _DeleteButton(onTap: onDelete, id: apiKey.id),
               ],
@@ -148,7 +159,10 @@ class _ApiKeyHeader extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x1),
-                  _StatusBadge(active: active),
+                  VitAccentPill(
+                    label: active ? '• Active' : '• Disabled',
+                    accentColor: active ? _apiGreen : _apiRed,
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.x1),

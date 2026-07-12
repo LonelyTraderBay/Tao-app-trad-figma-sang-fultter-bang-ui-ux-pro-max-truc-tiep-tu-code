@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_formatters.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 part '../widgets/savings_analytics_summary_range.dart';

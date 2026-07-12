@@ -78,7 +78,10 @@ class _Legend extends StatelessWidget {
   }
 }
 
-String _formatUsd(num value) => '\$${value.round()}';
+// Delegates to the shared formatter in dca_currency_formatters.dart (see
+// that file's doc comment — was a byte-for-byte duplicate of the _formatUsd
+// in dca_multi_asset_page_part_03.dart).
+String _formatUsd(num value) => formatUsd(value);
 
 String _formatSignedPercent(double value) {
   final sign = value >= 0 ? '+' : '';

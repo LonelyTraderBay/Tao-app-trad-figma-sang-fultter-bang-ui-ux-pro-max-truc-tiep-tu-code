@@ -37,7 +37,7 @@ class _BotsHero extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 1,
+            width: TradeSpacingTokens.tradeBotHairline,
             height: AppSpacing.x6,
             child: ColoredBox(color: AppColors.border),
           ),
@@ -82,30 +82,27 @@ class _BotsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: TradeSpacingTokens.tradeBotTabsHeight,
-      child: VitSegmentedTabBar(
-        activeKey: active.name,
-        onChanged: (key) => onChanged(
-          key == _TradingBotsTab.myBots.name
-              ? _TradingBotsTab.myBots
-              : _TradingBotsTab.strategies,
-        ),
-        tabs: [
-          VitTabItem(
-            key: _TradingBotsTab.myBots.name,
-            label: 'Bot của tôi ($botCount)',
-            icon: Icons.smart_toy_outlined,
-            widgetKey: TradingBotsPage.tabKey('mybots'),
-          ),
-          VitTabItem(
-            key: _TradingBotsTab.strategies.name,
-            label: 'Chiến lược',
-            icon: Icons.storefront_outlined,
-            widgetKey: TradingBotsPage.tabKey('strategies'),
-          ),
-        ],
+    return VitSegmentedTabBar(
+      activeKey: active.name,
+      onChanged: (key) => onChanged(
+        key == _TradingBotsTab.myBots.name
+            ? _TradingBotsTab.myBots
+            : _TradingBotsTab.strategies,
       ),
+      tabs: [
+        VitTabItem(
+          key: _TradingBotsTab.myBots.name,
+          label: 'Bot của tôi ($botCount)',
+          icon: Icons.smart_toy_outlined,
+          widgetKey: TradingBotsPage.tabKey('mybots'),
+        ),
+        VitTabItem(
+          key: _TradingBotsTab.strategies.name,
+          label: 'Chiến lược',
+          icon: Icons.storefront_outlined,
+          widgetKey: TradingBotsPage.tabKey('strategies'),
+        ),
+      ],
     );
   }
 }

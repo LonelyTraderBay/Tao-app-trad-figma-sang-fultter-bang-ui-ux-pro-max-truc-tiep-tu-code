@@ -97,39 +97,39 @@ search/discovery, and profile surfaces with clearly separated sections.
   Phone-first layout @ 360×800: `page_rhythm_phone_visual_qa_test.dart`.
   Tab roots use `VitPageRhythm.compact` with major sections as direct
   `VitPageContent` children — see
-  `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md`.
+  `docs/02_FLUTTER_MIGRATION/standards/Page-Rhythm-Standard.md`.
 - **Page content width:** horizontal `contentPad` (20px) applies once on the
   scroll → `VitPageContent` chain — Recipe A (`VitInsetScrollView` + default
   VPC padding) or Recipe B (scroll token with horizontal pad + `fullBleed: true`);
-  see `docs/02_FLUTTER_MIGRATION/Page-Content-Width-Standard.md` and
+  see `docs/02_FLUTTER_MIGRATION/standards/Page-Content-Width-Standard.md` and
   `page_content_width_audit.dart --check`.
 - **Scroll auto-hide:** scroll-to-hide headers must use `VitAutoHideHeaderScaffold`
   / `VitAutoHidePageScaffold` only — the shared scaffold keeps a collapse-budget
   gate so short lists do not snap scroll offset back to the top. Do not hand-roll
   `_headerVisible` + `heightFactor` collapse; see
-  `docs/02_FLUTTER_MIGRATION/Scroll-Auto-Hide-Standard.md` and
+  `docs/02_FLUTTER_MIGRATION/standards/Scroll-Auto-Hide-Standard.md` and
   `flutter test test/quality/scroll_auto_hide_guardrail_test.dart`.
 - **Card tiles:** Tier A strip tiles use `VitCard.height` / `minHeight` with
   `contentAlign: VitCardContentAlign.center`, `cardTilePadding`, and
   `cardTileInnerGap` — see
-  `docs/02_FLUTTER_MIGRATION/Card-Tile-Standard.md` and
+  `docs/02_FLUTTER_MIGRATION/standards/Card-Tile-Standard.md` and
   `card_tile_audit.dart --check --strict-full`.
 - **Service tile badges:** Tier B `VitServiceTile` corner badges (`badgeLabel`,
   `riskBadgeLabel`) must use the shared safe-inset contract — see
-  `docs/02_FLUTTER_MIGRATION/Service-Tile-Badge-Standard.md` and
+  `docs/02_FLUTTER_MIGRATION/standards/Service-Tile-Badge-Standard.md` and
   `flutter test test/quality/service_tile_badge_guardrail_test.dart`.
 - **Task cards:** Tier E mission rows use `VitTaskCard` with intrinsic height —
   no `buttonHero + x7 + x5` minHeight — see
-  `docs/02_FLUTTER_MIGRATION/Task-Card-Standard.md` and
+  `docs/02_FLUTTER_MIGRATION/standards/Task-Card-Standard.md` and
   `flutter test test/quality/task_card_guardrail_test.dart`.
 - **Accent icon boxes:** module row icons use `VitAccentIconBox` (34px, shared
   fill/border) — no page-local `_AccentIcon` — see
-  `docs/02_FLUTTER_MIGRATION/Accent-Icon-Box-Standard.md` and
+  `docs/02_FLUTTER_MIGRATION/standards/Accent-Icon-Box-Standard.md` and
   `flutter test test/quality/accent_icon_box_guardrail_test.dart`.
 - **Segment pills:** view tabs, binary toggles, preset rows, and filter chips
   use the tier decision tree — no P0 local `_FilterButton` / `_FilterTabs` /
   `_SegmentedTabs` — see
-  `docs/02_FLUTTER_MIGRATION/Segment-Pill-Standard.md` and
+  `docs/02_FLUTTER_MIGRATION/standards/Segment-Pill-Standard.md` and
   `dart run tool/segment_pill_audit.dart --check --strict-full` +
   `flutter test test/quality/segment_pill_guardrail_test.dart`.
 
@@ -238,6 +238,39 @@ boundaries always take precedence over generic skill guidance.
 | Debug / test failure / blocked batch | `.codex/skills/debugging-and-error-recovery/SKILL.md` |
 | Performance / jank / profiling | `.codex/skills/performance-optimization/SKILL.md` |
 | Trade module debt scan (sprint) | `.codex/skills/ponytail-audit/SKILL.md` |
+
+## Claude Code Subagents
+
+Claude Code sessions only — dispatched via the Task/Agent tool, not directly
+invokable from Cursor/Codex. Each file under `.claude/agents/` is a
+self-contained runbook in plain markdown; any AI (including Cursor's) can
+still open one and follow its procedure manually for a matching task.
+
+| Task | Agent |
+| --- | --- |
+| Split large migration/rollout into safe batches | `.claude/agents/flutter-batch-planner.md` |
+| Implement one pre-scoped batch | `.claude/agents/flutter-batch-builder.md` |
+| Design/build a new screen or deliberate redesign | `.claude/agents/flutter-screen-designer.md` |
+| Check design-consistency domain compliance | `.claude/agents/flutter-domain-auditor.md` |
+| Trim over-engineered diff (current diff only) | `.claude/agents/flutter-diff-trimmer.md` |
+| Whole-module architecture-debt sweep (dead code/circular/god-class) | `.claude/agents/flutter-architecture-sweep.md` |
+| Check button/data-flow wiring (dead `onPressed`/`onTap`) | `.claude/agents/flutter-button-wiring-auditor.md` |
+| Write unit/controller/widget tests | `.claude/agents/flutter-test-writer.md` |
+| Check structural test-coverage gaps | `.claude/agents/flutter-test-coverage-auditor.md` |
+| Full PR merge-readiness gate | `.claude/agents/flutter-pr-gate.md` |
+
+`flutter-architecture-sweep` is the Claude Code-native counterpart to the
+`ponytail-audit` skill above — same ledger format/location
+(`flutter_app/run-artifacts/ponytail-audit-<scope>-<date>.md`), same tags,
+but uses the `tokensave` MCP server instead of GitNexus (unavailable in
+Claude Code sessions). They are two entry points to the same process, not
+two different processes.
+
+`flutter-button-wiring-auditor` fills a gap neither `route_coverage_audit`
+nor `navigation_edge_audit` covers: those two verify navigation calls
+resolve to real routes, not that non-navigation `onPressed`/`onTap`
+handlers actually do anything. Ledger location:
+`flutter_app/run-artifacts/button-wiring-audit-<scope>-<date>.md`.
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence

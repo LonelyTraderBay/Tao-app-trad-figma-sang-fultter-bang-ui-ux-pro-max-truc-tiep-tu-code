@@ -7,8 +7,3 @@ export 'package:vit_trade_flutter/features/news/presentation/controllers/news_co
 final newsSnapshotProvider = FutureProvider<NewsScreenSnapshot>((ref) {
   return ref.watch(newsRepositoryProvider).getNews();
 });
-
-final newsControllerProvider = Provider<NewsController>((ref) {
-  final snapshot = ref.watch(newsSnapshotProvider).requireValue;
-  return NewsController(snapshot: snapshot);
-});

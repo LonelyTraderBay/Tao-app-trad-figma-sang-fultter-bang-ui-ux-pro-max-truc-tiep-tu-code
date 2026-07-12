@@ -121,7 +121,7 @@ class _BinaryOutcomeBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: SizedBox(
@@ -235,14 +235,14 @@ class _SearchEmptyState extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Thử điều chỉnh bộ lọc hoặc xem sự kiện biến động',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           if (hasActiveFilters) ...[
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCtaButton(
               onPressed: onClearFilters,
               child: const Text('Xóa bộ lọc'),

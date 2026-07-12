@@ -77,13 +77,13 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final bodyCsvFile = File(
-    '${docsDir.path}/VitTrade-Body-Component-Consistency-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Body-Component-Consistency-Audit.csv',
   );
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-UI-Fullscreen-Density-Audit.md',
+    '${docsDir.path}/audits/VitTrade-UI-Fullscreen-Density-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-UI-Fullscreen-Density-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-UI-Fullscreen-Density-Audit.csv',
   );
 
   if (!bodyCsvFile.existsSync()) {

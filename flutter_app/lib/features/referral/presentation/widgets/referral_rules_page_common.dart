@@ -182,4 +182,4 @@ class _Disclaimer extends StatelessWidget {
   }
 }
 
-String _formatUsd(double value) => '\$${value.toStringAsFixed(2)}';
+String _formatUsd(double value) => formatUsd(value);

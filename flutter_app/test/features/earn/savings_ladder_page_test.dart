@@ -128,6 +128,98 @@ void main() {
     expect(find.text('Đánh giá thanh khoản'), findsOneWidget);
   });
 
+  testWidgets(
+    'SC-351 empty tab CTA switches from timeline back to builder tab',
+    (tester) async {
+      await pumpLadder(tester);
+
+      // Move to the custom preset, then remove every rung so the
+      // timeline/analysis tabs render EmptyTab.
+      final customPreset = find.byKey(
+        SavingsLadderPage.presetKey(SavingsLadderPreset.custom),
+      );
+      await Scrollable.ensureVisible(tester.element(customPreset));
+      await tester.pumpAndSettle();
+      await tester.tap(customPreset);
+      await tester.pumpAndSettle();
+
+      while (find.byTooltip('Xóa bậc').evaluate().isNotEmpty) {
+        final deleteButton = find.byTooltip('Xóa bậc').first;
+        await Scrollable.ensureVisible(tester.element(deleteButton));
+        await tester.pumpAndSettle();
+        await tester.tap(deleteButton);
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('Chưa có bậc ladder'), findsOneWidget);
+
+      final timelineTab = find.text('Timeline');
+      await Scrollable.ensureVisible(tester.element(timelineTab));
+      await tester.pumpAndSettle();
+      await tester.tap(timelineTab);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Chưa có bậc nào'), findsOneWidget);
+      final cta = find.text('Bắt đầu xây');
+      expect(cta, findsOneWidget);
+      await Scrollable.ensureVisible(tester.element(cta));
+      await tester.pumpAndSettle();
+      await tester.tap(cta);
+      await tester.pumpAndSettle();
+
+      // Back on the builder tab: builder-only content is visible again and
+      // the timeline-only empty state is gone.
+      expect(find.text('Tổng vốn (USD)'), findsOneWidget);
+      expect(find.text('Chiến lược ladder'), findsOneWidget);
+      expect(find.text('Chưa có bậc nào'), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'SC-351 empty tab CTA switches from analysis back to builder tab',
+    (tester) async {
+      await pumpLadder(tester);
+
+      // Move to the custom preset, then remove every rung so the
+      // timeline/analysis tabs render EmptyTab.
+      final customPreset = find.byKey(
+        SavingsLadderPage.presetKey(SavingsLadderPreset.custom),
+      );
+      await Scrollable.ensureVisible(tester.element(customPreset));
+      await tester.pumpAndSettle();
+      await tester.tap(customPreset);
+      await tester.pumpAndSettle();
+
+      while (find.byTooltip('Xóa bậc').evaluate().isNotEmpty) {
+        final deleteButton = find.byTooltip('Xóa bậc').first;
+        await Scrollable.ensureVisible(tester.element(deleteButton));
+        await tester.pumpAndSettle();
+        await tester.tap(deleteButton);
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('Chưa có bậc ladder'), findsOneWidget);
+
+      final analysisTab = find.text('Phân tích');
+      await Scrollable.ensureVisible(tester.element(analysisTab));
+      await tester.pumpAndSettle();
+      await tester.tap(analysisTab);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Tạo ladder để xem phân tích'), findsOneWidget);
+      final cta = find.text('Bắt đầu xây');
+      expect(cta, findsOneWidget);
+      await Scrollable.ensureVisible(tester.element(cta));
+      await tester.pumpAndSettle();
+      await tester.tap(cta);
+      await tester.pumpAndSettle();
+
+      // Back on the builder tab: builder-only content is visible again and
+      // the analysis-only empty state is gone.
+      expect(find.text('Tổng vốn (USD)'), findsOneWidget);
+      expect(find.text('Chiến lược ladder'), findsOneWidget);
+      expect(find.text('Tạo ladder để xem phân tích'), findsNothing);
+    },
+  );
+
   testWidgets('SC-351 savings insight edge opens ladder page', (tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);

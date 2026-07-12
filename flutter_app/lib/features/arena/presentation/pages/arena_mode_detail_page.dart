@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -9,8 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_actions.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_navigation_actions.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_hero.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_prediction.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_quality.dart';
@@ -100,18 +101,20 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                           creatorKey: ArenaModeDetailPage.creatorKey,
                           trustKey: ArenaModeDetailPage.trustKey,
                           snapshot: snapshot,
-                          onCreator: () => _go(
+                          onCreator: () => context.goHaptic(
                             AppRoutePaths.arenaCreator(snapshot.creator.id),
                           ),
-                          onTrust: () => _go(
+                          onTrust: () => context.goHaptic(
                             AppRoutePaths.arenaTrust(snapshot.creator.id),
                           ),
                         ),
                         ArenaModeActions(
                           useModeKey: ArenaModeDetailPage.useModeKey,
                           createRoomKey: ArenaModeDetailPage.createRoomKey,
-                          onUseMode: () => _go(AppRoutePaths.arenaStudio),
-                          onCreateRoom: () => _go(AppRoutePaths.arenaStudio),
+                          onUseMode: () =>
+                              context.goHaptic(AppRoutePaths.arenaStudio),
+                          onCreateRoom: () =>
+                              context.goHaptic(AppRoutePaths.arenaStudio),
                         ),
                         VitCard(
                           padding: AppSpacing.zeroInsets,
@@ -132,19 +135,21 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                           ArenaModeRelatedRooms(
                             roomKey: ArenaModeDetailPage.roomKey,
                             rooms: snapshot.relatedRooms,
-                            onRoom: (id) =>
-                                _go(AppRoutePaths.arenaChallenge(id)),
+                            onRoom: (id) => context.goHaptic(
+                              AppRoutePaths.arenaChallenge(id),
+                            ),
                           ),
                         if (snapshot.relatedModes.isNotEmpty)
                           ArenaModeRelatedModes(
                             relatedModeKey: ArenaModeDetailPage.relatedModeKey,
                             modes: snapshot.relatedModes,
-                            onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                            onMode: (id) =>
+                                context.goHaptic(AppRoutePaths.arenaMode(id)),
                           ),
                         ArenaModePredictionContext(
                           predictionKey: ArenaModeDetailPage.predictionKey,
                           contextDraft: snapshot.predictionContext,
-                          onTap: () => _go(
+                          onTap: () => context.goHaptic(
                             AppRoutePaths.marketsPredictionEvent(
                               snapshot.predictionContext.eventId,
                             ),
@@ -162,17 +167,12 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
     );
   }
 
-  void _go(String route) {
-    HapticFeedback.selectionClick();
-    context.go(route);
-  }
-
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.arena);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.arena,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 
   void _showTrustSheet() {

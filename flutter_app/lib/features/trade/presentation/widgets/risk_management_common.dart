@@ -199,22 +199,6 @@ class _SuccessToast extends StatelessWidget {
   }
 }
 
-String _formatSignedMoney(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign\$${_formatMoney(value.abs())}';
-}
+String _formatSignedMoney(double value) => formatTradeSignedMoney(value);
 
-String _formatMoney(double value) {
-  if (value >= 1000) {
-    final fixed = value.toStringAsFixed(2);
-    final parts = fixed.split('.');
-    final buffer = StringBuffer();
-    for (var i = 0; i < parts.first.length; i++) {
-      final remaining = parts.first.length - i;
-      buffer.write(parts.first[i]);
-      if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
-    }
-    return '${buffer.toString()}.${parts.last}';
-  }
-  return value.toStringAsFixed(2);
-}
+String _formatMoney(double value) => formatTradeMoney(value);

@@ -123,61 +123,70 @@ class MarketHeatmapControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Material(
-          color: AppColors.surface2,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
-          child: SizedBox(
-            height: MarketsSpacingTokens.marketHeatmapControlsHeight,
-            child: Padding(
-              padding: MarketsSpacingTokens.marketHeatmapControlsPadding,
-              child: Row(
-                children: [
-                  for (final metric in metrics)
-                    VitFilterChip(
-                      key: metric == '7d'
-                          ? MarketHeatmapKeys.metric7d
-                          : MarketHeatmapKeys.metric24h,
-                      label: metric,
-                      active: metric == activeMetric,
-                      onTap: () => onMetricSelected(metric),
-                      color: marketHeatmapPrimary,
-                      height: MarketsSpacingTokens.marketHeatmapFilterHeight,
-                      padding: MarketsSpacingTokens.marketHeatmapFilterPadding,
+    return SizedBox(
+      height: MarketsSpacingTokens.marketHeatmapControlsHeight,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        clipBehavior: Clip.hardEdge,
+        child: Row(
+          children: [
+            Material(
+              color: AppColors.surface2,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
+              child: IntrinsicWidth(
+                child: SizedBox(
+                  height: MarketsSpacingTokens.marketHeatmapControlsHeight,
+                  child: Padding(
+                    padding: MarketsSpacingTokens.marketHeatmapControlsPadding,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        for (final metric in metrics) ...[
+                          VitFilterChip(
+                            key: metric == '7d'
+                                ? MarketHeatmapKeys.metric7d
+                                : MarketHeatmapKeys.metric24h,
+                            label: metric,
+                            active: metric == activeMetric,
+                            onTap: () => onMetricSelected(metric),
+                            color: marketHeatmapPrimary,
+                            height:
+                                MarketsSpacingTokens.marketHeatmapFilterHeight,
+                            padding:
+                                MarketsSpacingTokens.marketHeatmapFilterPadding,
+                          ),
+                          if (metric != metrics.last)
+                            const SizedBox(
+                              width: MarketsSpacingTokens.marketFilterGap,
+                            ),
+                        ],
+                      ],
                     ),
-                ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsBreadthGap),
-        Expanded(
-          child: SizedBox(
-            height: MarketsSpacingTokens.marketHeatmapControlsHeight,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              clipBehavior: Clip.none,
-              itemCount: categories.length,
-              separatorBuilder: (_, _) => const SizedBox(
-                width: MarketsSpacingTokens.marketAnalyticsCompactGap,
-              ),
-              itemBuilder: (context, index) {
-                final category = categories[index];
-                return VitFilterChip(
-                  key: MarketHeatmapKeys.category(category),
-                  label: category,
-                  active: category == activeCategory,
-                  onTap: () => onCategorySelected(category),
-                  color: marketHeatmapPrimary,
-                  height: MarketsSpacingTokens.marketHeatmapFilterHeight,
-                  padding: MarketsSpacingTokens.marketHeatmapFilterPadding,
-                );
-              },
+            const SizedBox(
+              width: MarketsSpacingTokens.marketAnalyticsBreadthGap,
             ),
-          ),
+            for (final category in categories) ...[
+              VitFilterChip(
+                key: MarketHeatmapKeys.category(category),
+                label: category,
+                active: category == activeCategory,
+                onTap: () => onCategorySelected(category),
+                color: marketHeatmapPrimary,
+                height: MarketsSpacingTokens.marketHeatmapFilterHeight,
+                padding: MarketsSpacingTokens.marketHeatmapFilterPadding,
+              ),
+              if (category != categories.last)
+                const SizedBox(width: MarketsSpacingTokens.marketFilterGap),
+            ],
+          ],
         ),
-      ],
+      ),
     );
   }
 }

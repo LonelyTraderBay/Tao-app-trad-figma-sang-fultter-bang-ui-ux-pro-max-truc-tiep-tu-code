@@ -109,7 +109,7 @@ class _ScreenerRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '\$${_formatPrice(pair.price)}',
+                    formatMarketPriceTiered(pair.price, prefix: r'$'),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.body.copyWith(

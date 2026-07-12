@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_currency_formatters.dart';
 
 part '../widgets/dca_overview_demo_shell.dart';
 part '../widgets/dca_overview_demo_metrics.dart';

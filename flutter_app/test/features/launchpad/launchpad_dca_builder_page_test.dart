@@ -163,6 +163,49 @@ void main() {
     expect(find.text('Chon token'), findsOneWidget);
   });
 
+  testWidgets('SC-316 pause mini icon button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpDcaBuilder(tester);
+
+    final strategyCard = find.byKey(
+      LaunchpadDcaBuilderPage.strategyKey('dca_001'),
+    );
+    await tester.ensureVisible(strategyCard);
+
+    await tester.tap(
+      find.descendant(
+        of: strategyCard,
+        matching: find.byIcon(Icons.pause_rounded),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Tạm dừng/tiếp tục chiến lược sẽ sớm ra mắt'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-316 settings mini icon button shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpDcaBuilder(tester);
+
+    final strategyCard = find.byKey(
+      LaunchpadDcaBuilderPage.strategyKey('dca_001'),
+    );
+    await tester.ensureVisible(strategyCard);
+
+    await tester.tap(
+      find.descendant(
+        of: strategyCard,
+        matching: find.byIcon(Icons.settings_outlined),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Cài đặt chiến lược sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-316 header back returns to launchpad', (tester) async {
     await pumpDcaBuilder(tester);
 

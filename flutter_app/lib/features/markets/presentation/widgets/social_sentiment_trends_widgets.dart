@@ -130,7 +130,12 @@ class _LeaderboardColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionHeader(label: label, accentColor: color),
+        VitSectionHeader(
+          title: label,
+          accentColor: color,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          variant: VitSectionHeaderVariant.accentBar,
+        ),
         const SizedBox(height: _sentimentLeaderboardGap),
         for (var index = 0; index < tokens.length; index += 1) ...[
           VitCard(

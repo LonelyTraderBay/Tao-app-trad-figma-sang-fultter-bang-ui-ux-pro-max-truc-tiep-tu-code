@@ -163,7 +163,14 @@ class _ExportButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: CassReconciliationPage.exportKey,
-      onPressed: () {},
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Xuất báo cáo đối chiếu CASS sẽ sớm ra mắt'),
+          ),
+        );
+      },
       variant: VitCtaButtonVariant.secondary,
       height: _exportButtonHeight,
       leading: const Icon(Icons.download_rounded, size: AppSpacing.x4),

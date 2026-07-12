@@ -61,7 +61,7 @@ class _SearchFilterSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _FilterLabel('Sắp xếp'),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: VitTabBar(
@@ -111,7 +111,7 @@ class _SearchFilterSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const _FilterLabel('Trạng thái'),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitSegmentedChoice<PredictionStatusFilter>(
           selected: status,
           onChanged: onStatusSelected,
@@ -135,7 +135,7 @@ class _SearchFilterSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const _FilterLabel('Danh mục'),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

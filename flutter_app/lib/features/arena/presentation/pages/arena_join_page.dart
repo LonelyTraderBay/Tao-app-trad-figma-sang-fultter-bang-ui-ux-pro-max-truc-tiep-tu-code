@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -21,6 +22,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_navigation_actions.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_join_page_sections.dart';
@@ -112,7 +114,8 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                       children: [
                         _ChallengeSummaryCard(challenge: challenge),
                         _SafetyPolicyLink(
-                          onTap: () => _go(AppRoutePaths.arenaSafety),
+                          onTap: () =>
+                              context.goHaptic(AppRoutePaths.arenaSafety),
                         ),
                         _AcknowledgementStack(
                           readRules: _readRules,
@@ -170,16 +173,11 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
     _close();
   }
 
-  void _go(String route) {
-    HapticFeedback.selectionClick();
-    context.go(route);
-  }
-
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.arenaChallenge(widget.challengeId));
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.arenaChallenge(widget.challengeId),
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 }

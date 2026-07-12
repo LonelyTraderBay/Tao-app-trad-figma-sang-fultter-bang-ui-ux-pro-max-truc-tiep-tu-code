@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -140,6 +141,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
               templates: snapshot.templates
                   .where((template) => template.category == category)
                   .toList(),
+              onUse: _showApplyTemplateNotice,
             ),
         ],
       ),
@@ -180,5 +182,12 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Rule delete preview ready')));
+  }
+
+  void _showApplyTemplateNotice() {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Áp dụng mẫu quy tắc sẽ sớm ra mắt')),
+    );
   }
 }

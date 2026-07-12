@@ -117,6 +117,21 @@ void main() {
     expect(find.text('11:08'), findsOneWidget);
   });
 
+  testWidgets('SC-217 attach image action shows coming-soon snackbar', (
+    tester,
+  ) async {
+    await pumpP2PChat(tester);
+
+    await tester.tap(find.byTooltip('Attach payment proof image'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(
+      find.text('Đính kèm ảnh bằng chứng thanh toán sẽ sớm ra mắt'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('SC-217 detail and E2E actions navigate safely', (tester) async {
     await pumpP2PChat(tester);
 

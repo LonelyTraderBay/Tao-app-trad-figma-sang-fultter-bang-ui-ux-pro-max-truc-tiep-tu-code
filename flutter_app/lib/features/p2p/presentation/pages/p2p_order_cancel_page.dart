@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_formatters.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2POrderCancelPage extends ConsumerStatefulWidget {
@@ -422,15 +423,4 @@ String _formatAmount(double value) {
   return value.toStringAsFixed(4);
 }
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final reverseIndex = raw.length - i;
-    buffer.write(raw[i]);
-    if (reverseIndex > 1 && reverseIndex % 3 == 1) {
-      buffer.write('.');
-    }
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);

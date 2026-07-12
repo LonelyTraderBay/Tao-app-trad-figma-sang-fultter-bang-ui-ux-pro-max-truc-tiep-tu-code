@@ -113,9 +113,10 @@ class _CompareHintCard extends StatelessWidget {
       padding: DcaSpacingTokens.dcaPaddingX3,
       child: Row(
         children: [
-          const _IconBubble(
+          const VitAccentIconBox(
             icon: Icons.compare_arrows_rounded,
             color: AppColors.accent,
+            iconSize: AppSpacing.iconSm,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -289,9 +290,10 @@ class _SuggestionsCard extends StatelessWidget {
             borderColor: AppColors.transparent,
             child: Row(
               children: [
-                const _IconBubble(
+                const VitAccentIconBox(
                   icon: Icons.auto_awesome_rounded,
                   color: AppColors.warn,
+                  iconSize: AppSpacing.iconSm,
                 ),
                 const SizedBox(width: AppSpacing.x4),
                 Expanded(

@@ -296,20 +296,6 @@ String _typeLabel(String type) {
   };
 }
 
-String _formatUsd(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    if (i > 0 && (whole.length - i) % 3 == 0) {
-      buffer.write(',');
-    }
-    buffer.write(whole[i]);
-  }
-  return '\$${buffer.toString()}.${parts.last}';
-}
-
 String _formatAmount(double value) {
   if (value == value.roundToDouble()) return value.toStringAsFixed(0);
   return value.toStringAsFixed(4).replaceFirst(RegExp(r'\.?0+$'), '');

@@ -8,7 +8,7 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final csvFile = File('${docsDir.path}/VitTrade-Page-Rhythm-Audit.csv');
+  final csvFile = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv');
 
   final libDir = Directory('${appRoot.path}/lib/features');
   final rows = <_AuditRow>[];
@@ -26,11 +26,13 @@ void main(List<String> args) {
 
     final source = entity.readAsStringSync();
     final hasVitPageContent = source.contains('VitPageContent');
+    final hasTradeRhythmScaffold = _hasTradeRhythmScaffold(source);
+    final hasRhythmOwnerSurface = hasVitPageContent || hasTradeRhythmScaffold;
     final isPartOrWidget =
         relative.contains('_part_') ||
         relative.contains('/presentation/widgets/');
 
-    if (!hasVitPageContent && !isPartOrWidget) continue;
+    if (!hasRhythmOwnerSurface && !isPartOrWidget) continue;
 
     final tier = hasVitPageContent ? _suggestTier(relative) : _Tier.standard;
     final wiring = _scanPhase2bPresentationDebt(source);
@@ -45,13 +47,18 @@ void main(List<String> args) {
         wiring.add('no_rhythm_or_custom_gap');
       }
 
-      final orphanCount = _countOrphanSectionSizedBox(source);
+      final orphanCount = _countOrphanRhythmOwnerSizedBox(source);
       if (orphanCount > 0) {
-        wiring.add('orphan_section_sizedbox:$orphanCount');
+        wiring.add('orphan_page_rhythm_sizedbox:$orphanCount');
       }
 
       if (_hasStructuralNestedVitPageContent(source)) {
         wiring.add('nested_vit_page_content');
+      }
+    } else if (hasTradeRhythmScaffold) {
+      final orphanCount = _countOrphanRhythmOwnerSizedBox(source);
+      if (orphanCount > 0) {
+        wiring.add('orphan_page_rhythm_sizedbox:$orphanCount');
       }
     }
 
@@ -118,7 +125,7 @@ void main(List<String> args) {
   final summary = _renderSummary(rows);
 
   final manifestFile =
-      File('${docsDir.path}/VitTrade-Page-Rhythm-Visual-Debt-Manifest.csv');
+      File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Visual-Debt-Manifest.csv');
 
   if (checkOnly) {
     if (!csvFile.existsSync()) {
@@ -610,49 +617,68 @@ bool _lineInColumnChildrenContext(List<String> lines, int lineIndex) {
   return false;
 }
 
-bool _lineInVitPageContentDirectChildren(String source, int lineIndex) {
+bool _orphanX1DirectChild(String item) {
+  var trimmed = item.trim();
+  if (trimmed.contains('...') || trimmed.startsWith('if (')) return false;
+  var work = trimmed;
+  if (work.startsWith('const ')) work = work.substring(6).trimLeft();
+  return work.startsWith('SizedBox(') &&
+      _orphanX1MajorSizedBoxLine.hasMatch(trimmed);
+}
+
+bool _lineInRhythmOwnerDirectChildItem(
+  String source,
+  int lineIndex,
+  bool Function(String item) isOrphanItem,
+) {
   final lines = source.split('\n');
   if (lineIndex < 0 || lineIndex >= lines.length) return false;
-  if (!_orphanX1MajorSizedBoxLine.hasMatch(lines[lineIndex])) return false;
 
-  var index = 0;
-  while (true) {
-    final start = source.indexOf('VitPageContent', index);
-    if (start < 0) return false;
+  for (final owner in _rhythmOwnerWidgets) {
+    var index = 0;
+    while (true) {
+      final start = source.indexOf(owner, index);
+      if (start < 0) break;
 
-    final childrenIndex = source.indexOf('children:', start);
-    if (childrenIndex < 0 || childrenIndex > start + 800) {
-      index = start + 1;
-      continue;
-    }
-
-    final listStart = source.indexOf('[', childrenIndex);
-    if (listStart < 0) {
-      index = childrenIndex + 1;
-      continue;
-    }
-
-    final listEnd = _findMatchingBracket(source, listStart);
-    if (listEnd < 0) {
-      index = listStart + 1;
-      continue;
-    }
-
-    final listBody = source.substring(listStart + 1, listEnd);
-    for (final item in _splitTopLevelListItems(listBody)) {
-      final trimmed = item.trim();
-      if (!_orphanX1MajorSizedBoxLine.hasMatch(trimmed)) continue;
-      final itemStart = source.indexOf(trimmed, listStart);
-      if (itemStart < 0) continue;
-      final itemStartLine = source.substring(0, itemStart).split('\n').length - 1;
-      final itemEndLine =
-          source.substring(0, itemStart + trimmed.length).split('\n').length - 1;
-      if (lineIndex >= itemStartLine && lineIndex <= itemEndLine) {
-        return true;
+      final childrenIndex = source.indexOf('children:', start);
+      if (childrenIndex < 0 || childrenIndex > start + 800) {
+        index = start + 1;
+        continue;
       }
+
+      final listStart = source.indexOf('[', childrenIndex);
+      if (listStart < 0) {
+        index = childrenIndex + 1;
+        continue;
+      }
+
+      final listEnd = _findMatchingBracket(source, listStart);
+      if (listEnd < 0) {
+        index = listStart + 1;
+        continue;
+      }
+
+      final listBody = source.substring(listStart + 1, listEnd);
+      for (final item in _splitTopLevelListItems(listBody)) {
+        if (!isOrphanItem(item)) continue;
+        final trimmed = item.trim();
+        final itemStart = source.indexOf(trimmed, listStart);
+        if (itemStart < 0) continue;
+        final itemStartLine =
+            source.substring(0, itemStart).split('\n').length - 1;
+        final itemEndLine = source
+                .substring(0, itemStart + trimmed.length)
+                .split('\n')
+                .length -
+            1;
+        if (lineIndex >= itemStartLine && lineIndex <= itemEndLine) {
+          return true;
+        }
+      }
+      index = listEnd + 1;
     }
-    index = listEnd + 1;
   }
+  return false;
 }
 
 final class _VisualDebtRow {
@@ -811,7 +837,7 @@ List<_VisualDebtRow> _visualDebtEntries({
       }
     }
     if (_orphanX1MajorSizedBoxLine.hasMatch(line) &&
-        _lineInVitPageContentDirectChildren(source, i)) {
+        _lineInRhythmOwnerDirectChildItem(source, i, _orphanX1DirectChild)) {
       entries.add(
         _VisualDebtRow(
           file: file,
@@ -820,6 +846,27 @@ List<_VisualDebtRow> _visualDebtEntries({
           px: 3,
           category: 'orphan_x1_major_gap',
           batch: '45',
+          status: 'open',
+        ),
+      );
+    }
+    if (_orphanPageRhythmSizedBoxLine.hasMatch(line) &&
+        _lineInRhythmOwnerDirectChildItem(
+          source,
+          i,
+          _isOrphanSizedBoxDirectChild,
+        )) {
+      final tokenMatch = RegExp(
+        r'AppSpacing\.(pageRhythm\w+)',
+      ).firstMatch(line);
+      entries.add(
+        _VisualDebtRow(
+          file: file,
+          line: i + 1,
+          token: tokenMatch?.group(1) ?? 'pageRhythm',
+          px: 0,
+          category: 'orphan_page_rhythm_sizedbox',
+          batch: '50',
           status: 'open',
         ),
       );
@@ -853,43 +900,78 @@ int _countModuleSectionGapUsage(String source) {
   return _moduleSectionGapSizedBox.allMatches(source).length;
 }
 
-final _orphanSizedBoxLine = RegExp(
-  r'^\s*(?:const\s+)?SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap)[^)]*\)\s*,?\s*$',
+const _rhythmOwnerWidgets = [
+  'VitPageContent',
+  'VitTradeHubScaffold',
+  'VitTradeDetailScaffold',
+  'VitTradeSimpleShell',
+];
+
+bool _hasTradeRhythmScaffold(String source) {
+  return source.contains('VitTradeHubScaffold') ||
+      source.contains('VitTradeDetailScaffold') ||
+      source.contains('VitTradeSimpleShell');
+}
+
+final _orphanPageRhythmSizedBoxLine = RegExp(
+  r'SizedBox\s*\(\s*height:\s*AppSpacing\.pageRhythm',
 );
 
-int _countOrphanSectionSizedBox(String source) {
+int _countOrphanRhythmOwnerSizedBox(String source) {
   var count = 0;
-  var index = 0;
-  while (true) {
-    final start = source.indexOf('VitPageContent', index);
-    if (start < 0) break;
+  for (final owner in _rhythmOwnerWidgets) {
+    var index = 0;
+    while (true) {
+      final start = source.indexOf(owner, index);
+      if (start < 0) break;
 
-    final childrenIndex = source.indexOf('children:', start);
-    if (childrenIndex < 0 || childrenIndex > start + 800) {
-      index = start + 1;
-      continue;
-    }
+      final childrenIndex = source.indexOf('children:', start);
+      if (childrenIndex < 0 || childrenIndex > start + 800) {
+        index = start + 1;
+        continue;
+      }
 
-    final listStart = source.indexOf('[', childrenIndex);
-    if (listStart < 0) {
-      index = childrenIndex + 1;
-      continue;
-    }
+      final listStart = source.indexOf('[', childrenIndex);
+      if (listStart < 0) {
+        index = childrenIndex + 1;
+        continue;
+      }
 
-    final listEnd = _findMatchingBracket(source, listStart);
-    if (listEnd < 0) {
-      index = listStart + 1;
-      continue;
-    }
+      final listEnd = _findMatchingBracket(source, listStart);
+      if (listEnd < 0) {
+        index = listStart + 1;
+        continue;
+      }
 
-    final listBody = source.substring(listStart + 1, listEnd);
-    for (final line in listBody.split('\n')) {
-      if (_orphanSizedBoxLine.hasMatch(line)) count++;
+      final listBody = source.substring(listStart + 1, listEnd);
+      for (final item in _splitTopLevelListItems(listBody)) {
+        if (_isOrphanSizedBoxDirectChild(item)) count++;
+      }
+      index = listEnd + 1;
     }
-    index = listEnd + 1;
   }
   return count;
 }
+
+bool _isOrphanSizedBoxDirectChild(String item) {
+  var trimmed = item.trim();
+  if (trimmed.isEmpty) return false;
+  if (trimmed.contains('...') || trimmed.startsWith('if (')) return false;
+  if (trimmed.contains('Column(') ||
+      trimmed.contains('Row(') ||
+      trimmed.contains('VitTradeSection(') ||
+      trimmed.contains('VitPageSection(')) {
+    return false;
+  }
+  var work = trimmed;
+  if (work.startsWith('const ')) work = work.substring(6).trimLeft();
+  if (!work.startsWith('SizedBox(')) return false;
+  return _orphanSizedBoxHeightPattern.hasMatch(trimmed);
+}
+
+final _orphanSizedBoxHeightPattern = RegExp(
+  r'SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap|pageRhythm(?:Compact|Standard|Form|Relaxed)(?:Inner|Section)Gap)',
+);
 
 bool _hasStructuralNestedVitPageContent(String source) {
   var index = 0;

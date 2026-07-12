@@ -259,16 +259,4 @@ class _Card extends StatelessWidget {
   }
 }
 
-String _formatUsd(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var index = 0; index < whole.length; index += 1) {
-    if (index > 0 && (whole.length - index) % 3 == 0) {
-      buffer.write(',');
-    }
-    buffer.write(whole[index]);
-  }
-  return '\$${buffer.toString()}.${parts.last}';
-}
+String _formatUsd(double value) => formatTradeUsd(value);

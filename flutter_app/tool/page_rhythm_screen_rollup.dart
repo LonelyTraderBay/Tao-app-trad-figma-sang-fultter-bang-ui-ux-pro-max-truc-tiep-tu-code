@@ -9,10 +9,10 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final auditCsv = File('${docsDir.path}/VitTrade-Page-Rhythm-Audit.csv');
+  final auditCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv');
   final routeMd = File('${docsDir.path}/Flutter-Route-Coverage-Truth-Table.md');
-  final outCsv = File('${docsDir.path}/VitTrade-Page-Rhythm-Screen-Compliance.csv');
-  final outMd = File('${docsDir.path}/Page-Rhythm-Compliance-Report.md');
+  final outCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv');
+  final outMd = File('${docsDir.path}/audits/Page-Rhythm-Compliance-Report.md');
 
   if (!auditCsv.existsSync()) {
     stderr.writeln('Missing ${auditCsv.path}. Run page_rhythm_audit.dart first.');

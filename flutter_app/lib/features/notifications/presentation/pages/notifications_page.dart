@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -143,40 +142,18 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                           NotificationsScreenState.empty ||
                           NotificationsScreenState
                               .offline when notifications.isEmpty => [
-                            VitEmptyState(
-                              key: NotificationsPage.emptyKey,
-                              title: _filter == _NotificationFilter.unread
-                                  ? 'Không có thông báo chưa đọc'
-                                  : 'Chưa có thông báo nào',
+                            _emptyState(
                               message:
                                   snapshot.screenState ==
                                       NotificationsScreenState.offline
                                   ? 'Kết nối lại để nhận cập nhật mới nhất.'
                                   : 'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
-                              icon: Icons.notifications_off_rounded,
-                              actionLabel: _filter == _NotificationFilter.unread
-                                  ? 'Xem tất cả'
-                                  : null,
-                              onAction: _filter == _NotificationFilter.unread
-                                  ? _toggleFilter
-                                  : null,
                             ),
                           ],
                           _ when filtered.isEmpty => [
-                            VitEmptyState(
-                              key: NotificationsPage.emptyKey,
-                              title: _filter == _NotificationFilter.unread
-                                  ? 'Không có thông báo chưa đọc'
-                                  : 'Chưa có thông báo nào',
+                            _emptyState(
                               message:
                                   'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
-                              icon: Icons.notifications_off_rounded,
-                              actionLabel: _filter == _NotificationFilter.unread
-                                  ? 'Xem tất cả'
-                                  : null,
-                              onAction: _filter == _NotificationFilter.unread
-                                  ? _toggleFilter
-                                  : null,
                             ),
                           ],
                           _ => [
@@ -196,6 +173,19 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
           ),
         ),
       ),
+    );
+  }
+
+  VitEmptyState _emptyState({required String message}) {
+    return VitEmptyState(
+      key: NotificationsPage.emptyKey,
+      title: _filter == _NotificationFilter.unread
+          ? 'Không có thông báo chưa đọc'
+          : 'Chưa có thông báo nào',
+      message: message,
+      icon: Icons.notifications_off_rounded,
+      actionLabel: _filter == _NotificationFilter.unread ? 'Xem tất cả' : null,
+      onAction: _filter == _NotificationFilter.unread ? _toggleFilter : null,
     );
   }
 

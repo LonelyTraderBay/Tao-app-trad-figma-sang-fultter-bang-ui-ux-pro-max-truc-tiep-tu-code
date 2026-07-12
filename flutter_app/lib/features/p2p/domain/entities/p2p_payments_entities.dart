@@ -16,6 +16,7 @@ final class P2PPaymentMethodAddSnapshot {
     required this.confirmMessage,
     required this.emptyTitle,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -32,6 +33,7 @@ final class P2PPaymentMethodAddSnapshot {
   final String confirmMessage;
   final String emptyTitle;
   final String contractNotes;
+  final String? highRiskContractId;
 }
 
 final class P2PPaymentMethodVerificationSnapshot {
@@ -94,6 +96,7 @@ final class P2PPaymentMethodOwnershipSnapshot {
     required this.confirmMessage,
     required this.emptyTitle,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -106,6 +109,7 @@ final class P2PPaymentMethodOwnershipSnapshot {
   final String confirmMessage;
   final String emptyTitle;
   final String contractNotes;
+  final String? highRiskContractId;
 }
 
 final class P2POwnershipDocumentDraft {
@@ -134,6 +138,7 @@ final class P2PPaymentMethodCoolingPeriodSnapshot {
     required this.waitMessage,
     required this.emptyTitle,
     required this.contractNotes,
+    this.highRiskContractId,
   });
 
   final String endpoint;
@@ -148,6 +153,7 @@ final class P2PPaymentMethodCoolingPeriodSnapshot {
   final String waitMessage;
   final String emptyTitle;
   final String contractNotes;
+  final String? highRiskContractId;
 }
 
 final class P2PPaymentMethodHistorySnapshot {

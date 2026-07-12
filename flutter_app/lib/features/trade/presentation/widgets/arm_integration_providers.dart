@@ -303,7 +303,7 @@ class _LogsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
-      onPressed: () {},
+      onPressed: () => _showComingSoon(context),
       variant: VitCtaButtonVariant.secondary,
       fullWidth: false,
       density: VitDensity.compact,
@@ -319,6 +319,13 @@ class _LogsButton extends StatelessWidget {
           fontWeight: AppTextStyles.bold,
         ),
       ),
+    );
+  }
+
+  void _showComingSoon(BuildContext context) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Nhật ký kết nối sẽ sớm ra mắt')),
     );
   }
 }

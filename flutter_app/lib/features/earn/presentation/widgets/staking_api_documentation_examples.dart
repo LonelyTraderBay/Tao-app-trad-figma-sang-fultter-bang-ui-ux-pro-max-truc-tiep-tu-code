@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -194,7 +195,14 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                   const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   VitCtaButton(
                     height: AppSpacing.ctaHeight,
-                    onPressed: () {},
+                    onPressed: () {
+                      HapticFeedback.selectionClick();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Lấy Sandbox API Key sẽ sớm ra mắt'),
+                        ),
+                      );
+                    },
                     child: const Text('Get Sandbox API Key'),
                   ),
                 ],

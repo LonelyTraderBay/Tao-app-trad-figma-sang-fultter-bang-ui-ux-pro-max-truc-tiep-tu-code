@@ -66,9 +66,11 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                             hidden: _hideBalance,
                           ),
                           _AllocationCard(holdings: overviewHoldings),
-                          const _SectionHeader(
-                            label: 'Tài sản chính',
+                          const VitSectionHeader(
+                            title: 'Tài sản chính',
                             accentColor: _marketPrimary,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _TopHoldings(
                             holdings: overviewHoldings.take(4).toList(),
@@ -121,9 +123,11 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                             stats: snapshot.stats,
                             points: snapshot.performance,
                           ),
-                          const _SectionHeader(
-                            label: 'Lãi/Lỗ theo tài sản',
+                          const VitSectionHeader(
+                            title: 'Lãi/Lỗ theo tài sản',
                             accentColor: AppColors.buy,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _PnlBreakdown(
                             holdings: overviewHoldings

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Locks the scroll auto-hide contract from
-/// `docs/02_FLUTTER_MIGRATION/Scroll-Auto-Hide-Standard.md`.
+/// `docs/02_FLUTTER_MIGRATION/standards/Scroll-Auto-Hide-Standard.md`.
 ///
 /// Collapsing chrome via layout height (`heightFactor` / removing a Column
 /// child above an Expanded scroll body) shrinks [ScrollMetrics.maxScrollExtent]
@@ -13,33 +13,36 @@ void main() {
   const sharedScaffoldPath =
       'lib/shared/layout/vit_auto_hide_header_scaffold.dart';
 
-  test('shared auto-hide scaffold keeps the short-list collapse budget gate', () {
-    final file = File(sharedScaffoldPath);
-    expect(file.existsSync(), isTrue, reason: 'Missing $sharedScaffoldPath');
+  test(
+    'shared auto-hide scaffold keeps the short-list collapse budget gate',
+    () {
+      final file = File(sharedScaffoldPath);
+      expect(file.existsSync(), isTrue, reason: 'Missing $sharedScaffoldPath');
 
-    final source = file.readAsStringSync();
-    expect(
-      source.contains('_canHideHeader'),
-      isTrue,
-      reason:
-          'VitAutoHideHeaderScaffold must keep _canHideHeader so short lists '
-          'do not snap scroll offset when the header collapses.',
-    );
-    expect(
-      source.contains('_collapseBudget'),
-      isTrue,
-      reason:
-          'VitAutoHideHeaderScaffold must keep _collapseBudget (header-height '
-          'reserve) before hiding the header.',
-    );
-    expect(
-      source.contains('maxScrollExtent'),
-      isTrue,
-      reason:
-          'Collapse gate must compare pixels against maxScrollExtent after '
-          'accounting for header height.',
-    );
-  });
+      final source = file.readAsStringSync();
+      expect(
+        source.contains('_canHideHeader'),
+        isTrue,
+        reason:
+            'VitAutoHideHeaderScaffold must keep _canHideHeader so short lists '
+            'do not snap scroll offset when the header collapses.',
+      );
+      expect(
+        source.contains('_collapseBudget'),
+        isTrue,
+        reason:
+            'VitAutoHideHeaderScaffold must keep _collapseBudget (header-height '
+            'reserve) before hiding the header.',
+      );
+      expect(
+        source.contains('maxScrollExtent'),
+        isTrue,
+        reason:
+            'Collapse gate must compare pixels against maxScrollExtent after '
+            'accounting for header height.',
+      );
+    },
+  );
 
   test('app code does not hand-roll layout-collapsing auto-hide headers', () {
     final scanRoots = [

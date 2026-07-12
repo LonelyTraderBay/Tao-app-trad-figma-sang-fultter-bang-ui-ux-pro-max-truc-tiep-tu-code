@@ -361,9 +361,9 @@ class _DeviceDetails extends StatelessWidget {
               const SizedBox(
                 width: ProfileSpacingTokens.profileDevicesNamePillGap,
               ),
-              const _TinyPill(
+              const VitAccentPill(
                 label: 'Hi\u1EC7n t\u1EA1i',
-                color: _devicesGreen,
+                accentColor: _devicesGreen,
               ),
             ],
             if (suspicious) ...[

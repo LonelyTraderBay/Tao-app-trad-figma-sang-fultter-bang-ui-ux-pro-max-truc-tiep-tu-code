@@ -36,15 +36,19 @@ class VitPageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      label: semanticLabel,
-      child: ColoredBox(
-        color: _background,
-        child: SizedBox.expand(
-          child: Padding(
-            padding: EdgeInsetsDirectional.only(bottom: _bottomPadding),
-            child: child,
+    return Scaffold(
+      backgroundColor: AppColors.transparent,
+      resizeToAvoidBottomInset: false,
+      body: Semantics(
+        container: true,
+        label: semanticLabel,
+        child: ColoredBox(
+          color: _background,
+          child: SizedBox.expand(
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(bottom: _bottomPadding),
+              child: child,
+            ),
           ),
         ),
       ),

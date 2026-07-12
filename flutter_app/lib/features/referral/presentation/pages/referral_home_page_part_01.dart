@@ -20,10 +20,10 @@ class _CampaignBanner extends StatelessWidget {
           children: [
             Row(
               children: [
-                const _IconBubble(
+                const VitAccentIconBox(
                   icon: Icons.bolt_rounded,
                   color: AppColors.primarySoft,
-                  background: AppColors.primary20,
+                  iconSize: 18,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -143,10 +143,10 @@ class _PendingKycBanner extends StatelessWidget {
       padding: ReferralSpacingTokens.referralCardPadding,
       child: Row(
         children: [
-          const _IconBubble(
+          const VitAccentIconBox(
             icon: Icons.notifications_none_rounded,
             color: AppColors.primary,
-            background: AppColors.primary12,
+            iconSize: 18,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -205,11 +205,10 @@ class _ReferralHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _IconBubble(
+              const VitAccentIconBox(
                 icon: Icons.military_tech_rounded,
                 color: AppColors.primarySoft,
-                background: AppColors.primary20,
-                size: _heroBubble,
+                iconSize: 18,
               ),
               const SizedBox(width: AppSpacing.x4),
               Expanded(

@@ -8,7 +8,7 @@
 --- | --- |
 | [AGENTS.md](../../../AGENTS.md) | Product, UI rules, financial safety |
 | [DESIGN.md](../../../DESIGN.md) | Tokens, component ladder |
-| [Flutter-Native-Design-Standard.md](../Flutter-Native-Design-Standard.md) | Trust-first, beginner-friendly, no dark patterns |
+| [Flutter-Native-Design-Standard.md](../standards/Flutter-Native-Design-Standard.md) | Trust-first, beginner-friendly, no dark patterns |
 | [HomePage-Flutter-Native-Standard.md](../../04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md) | Chuẩn thị giác SC-007 |
 | `flutter_app/lib/features/home/presentation/pages/home_page.dart` | Reference implementation |
 
@@ -296,7 +296,7 @@ RESUME FROM: Phase 1 — STEP <n>
 - Max **5–10 files**/chat.
 - Phase 1 = hub only; Phase 2 = `bot_*` batches.
 - Cursor **Auto** only.
-- Visual QA riêng chat: `/browse` sau `flutter run -d chrome` ([Flutter-Visual-QA.md](../Flutter-Visual-QA.md)).
+- Visual QA riêng chat: `/browse` sau `flutter run -d chrome` ([Flutter-Visual-QA.md](../checklists/Flutter-Visual-QA.md)).
 
 ---
 

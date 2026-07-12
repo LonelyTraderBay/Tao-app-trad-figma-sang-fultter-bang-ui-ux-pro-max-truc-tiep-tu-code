@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -61,7 +60,6 @@ class VitTradeSimpleShell extends StatelessWidget {
       quickNavKey: quickNavKey,
       children: [
         ...children,
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
           'Giao dịch tiền mã hoá có rủi ro. Chỉ dùng số tiền bạn chấp nhận mất.',
           textAlign: TextAlign.center,

@@ -122,7 +122,7 @@ class _SectionShell extends StatelessWidget {
       children: [
         Row(
           children: [
-            _TinySectionIcon(icon: icon, color: color),
+            VitAccentIconBox(icon: icon, color: color),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Row(
@@ -139,7 +139,10 @@ class _SectionShell extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x2),
-                  _CountPill(count: count),
+                  DiscoveryCountChip(
+                    count: count,
+                    padding: LaunchpadSpacingTokens.discoveryMiniBadgePadding,
+                  ),
                 ],
               ),
             ),
@@ -152,7 +155,7 @@ class _SectionShell extends StatelessWidget {
                 padding: LaunchpadSpacingTokens.discoveryInlineActionPadding,
                 child: Padding(
                   padding: EdgeInsets.zero,
-                  child: _InlineCta(label: actionLabel!, color: color),
+                  child: DiscoveryInlineCta(label: actionLabel!, color: color),
                 ),
               ),
           ],

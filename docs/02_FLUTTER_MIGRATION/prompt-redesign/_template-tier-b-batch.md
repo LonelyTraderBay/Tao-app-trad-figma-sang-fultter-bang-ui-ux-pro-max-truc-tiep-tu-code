@@ -10,7 +10,7 @@
 
 ## Load order
 
-1. [ke-hoach-redesign-theo-module.md](../ke-hoach-redesign-theo-module.md) §1–4
+1. [ke-hoach-redesign-theo-module.md](../redesign/ke-hoach-redesign-theo-module.md) §1–4
 2. `ke-hoach-redesign-batches.csv` row `<batch_id>`
 3. Checklist CSV rows matching `sc_ids`
 4. **Partial parent** (nếu `module_prompt` có giá trị): chỉ sections **Design North Star**, **Copy & tone**, **Financial / product safety** — **không** load full STEP lặp

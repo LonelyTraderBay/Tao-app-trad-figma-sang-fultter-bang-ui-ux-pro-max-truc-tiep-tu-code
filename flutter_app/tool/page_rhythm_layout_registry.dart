@@ -48,7 +48,6 @@ String? shellRhythmTierForSource(String? source) {
 /// Page base names whose chart/terminal VPC lives in a linked part file.
 const chartPartPageBases = <String>{
   'futures_page',
-  'prediction_advanced_chart_page',
   'market_depth_page',
   'trade_terminal_page',
   'cross_module_chart_page',
@@ -59,7 +58,7 @@ const gateShellWidgets = {'InternalSurfaceGate'};
 /// Route truth-table widget → page file when not under `presentation/pages/`.
 const widgetClassPageOverrides = <String, String>{
   'ClientOptUpRequestPage':
-      'features/trade/presentation/pages/client_categorization_page.dart',
+      'features/trade/presentation/pages/client_categorization_opt_up_page.dart',
   'PredictionTournamentDetailPage':
       'features/predictions/presentation/pages/prediction_tournaments_page.dart',
   'P2PWhitelistModePage':

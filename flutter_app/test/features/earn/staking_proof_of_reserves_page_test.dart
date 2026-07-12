@@ -173,4 +173,17 @@ void main() {
     expect(find.byType(StakingEarnPage), findsOneWidget);
     expect(find.text('Staking & Earn'), findsOneWidget);
   });
+
+  testWidgets('SC-380 download report shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpProofOfReserves(tester);
+
+    await tester.ensureVisible(find.text('Download Report (PDF)').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Download Report (PDF)').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tải báo cáo (PDF) sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

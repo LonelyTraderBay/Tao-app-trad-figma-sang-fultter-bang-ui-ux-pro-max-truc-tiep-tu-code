@@ -91,16 +91,16 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final bodyCsvFile = File(
-    '${docsDir.path}/VitTrade-Body-Component-Consistency-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Body-Component-Consistency-Audit.csv',
   );
   final officialDensityCsvFile = File(
-    '${docsDir.path}/VitTrade-UI-Fullscreen-Density-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-UI-Fullscreen-Density-Audit.csv',
   );
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Visual-Density-Risk-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Visual-Density-Risk-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Visual-Density-Risk-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Visual-Density-Risk-Audit.csv',
   );
 
   if (!bodyCsvFile.existsSync()) {
@@ -532,10 +532,10 @@ String _renderMarkdown(List<VisualDensityEntry> entries) {
     ..writeln('## Inputs')
     ..writeln()
     ..writeln(
-      '- `docs/02_FLUTTER_MIGRATION/VitTrade-Body-Component-Consistency-Audit.csv`',
+      '- `docs/02_FLUTTER_MIGRATION/audits/VitTrade-Body-Component-Consistency-Audit.csv`',
     )
     ..writeln(
-      '- `docs/02_FLUTTER_MIGRATION/VitTrade-UI-Fullscreen-Density-Audit.csv`',
+      '- `docs/02_FLUTTER_MIGRATION/audits/VitTrade-UI-Fullscreen-Density-Audit.csv`',
     )
     ..writeln('- Routed page files, `part` files, and feature-local widgets')
     ..writeln()

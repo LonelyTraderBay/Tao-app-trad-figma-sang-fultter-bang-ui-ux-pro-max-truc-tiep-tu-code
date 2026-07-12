@@ -20,10 +20,14 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_formatters.dart';
 
-part 'staking_proof_of_reserves_page_part_01.dart';
-part 'staking_proof_of_reserves_page_part_02.dart';
-part 'staking_proof_of_reserves_page_part_03.dart';
+part '../widgets/staking_proof_of_reserves_common.dart';
+part '../widgets/staking_proof_of_reserves_overview.dart';
+part '../widgets/staking_proof_of_reserves_overview_painters.dart';
+part '../widgets/staking_proof_of_reserves_assets.dart';
+part '../widgets/staking_proof_of_reserves_verify.dart';
+part '../widgets/staking_proof_of_reserves_verify_sheet.dart';
 
 enum _ReserveTab { overview, assets, verify }
 
@@ -52,4 +56,116 @@ class StakingProofOfReservesPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<StakingProofOfReservesPage> createState() =>
       _StakingProofOfReservesPageState();
+}
+
+class _StakingProofOfReservesPageState
+    extends ConsumerState<StakingProofOfReservesPage> {
+  _ReserveTab _tab = _ReserveTab.overview;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(stakingProofOfReservesRepositoryProvider)
+        .getProofOfReserves();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-380 StakingProofOfReservesPage',
+      child: Material(
+        color: AppColors.bg,
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
+            title: snapshot.title,
+            subtitle: 'Minh bạch dự trữ — kiểm tra độc lập',
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.tight,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _ReserveTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (_tab == _ReserveTab.overview)
+                        _OverviewTab(snapshot: snapshot)
+                      else if (_tab == _ReserveTab.assets)
+                        _AssetsTab(snapshot: snapshot)
+                      else
+                        _VerifyTab(
+                          snapshot: snapshot,
+                          onVerify: () => _openVerifySheet(snapshot),
+                        ),
+                      _FooterNote(note: snapshot.footerNote),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openVerifySheet(StakingProofOfReservesSnapshot snapshot) async {
+    HapticFeedback.selectionClick();
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) => _VerifySheet(snapshot: snapshot),
+    );
+  }
+}
+
+class _ReserveTabs extends StatelessWidget {
+  const _ReserveTabs({required this.active, required this.onChanged});
+
+  final _ReserveTab active;
+  final ValueChanged<_ReserveTab> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: StakingProofOfReservesPage.tabsKey,
+      variant: VitCardVariant.inner,
+      padding: EarnSpacingTokens.earnPaddingX2,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: active.name,
+        tabs: [
+          for (final tab in _ReserveTab.values)
+            VitTabItem(
+              key: tab.name,
+              label: _tabLabel(tab),
+              widgetKey: StakingProofOfReservesPage.tabKey(tab.name),
+            ),
+        ],
+        onChanged: (key) => onChanged(_reserveTabFromKey(key)),
+      ),
+    );
+  }
 }

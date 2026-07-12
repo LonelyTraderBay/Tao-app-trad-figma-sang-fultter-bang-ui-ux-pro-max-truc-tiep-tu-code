@@ -1,5 +1,16 @@
 part of '../repositories/mock_p2p_repository.dart';
 
+/// Payment-method-scoped high-risk contract id shared by the add,
+/// ownership-verification, and cooling-period screens (one continuous
+/// payment-method-onboarding audit trail — analogous to how
+/// `HighRiskFlowContractIds.walletMoneyMovement` spans one withdrawal's
+/// preview/confirm/receipt). Deliberately not registered in
+/// `HighRiskFlowContractIds`: `p2pEscrowOrder` is specifically
+/// order/escrow/dispute lifecycle, not payment-method management, and
+/// registering a new shared entry would require inventing a full 9-stage
+/// flow this surface doesn't have.
+const _p2pPaymentMethodContractId = 'p2p_payment_method_onboarding';
+
 mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   @override
   P2PPaymentMethodAddSnapshot getPaymentMethodAdd() {
@@ -27,6 +38,7 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
       emptyTitle: 'Chưa có phương thức thanh toán',
       contractNotes:
           'High-risk action: preview + confirm + audit trail required. P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: _p2pPaymentMethodContractId,
     );
   }
 
@@ -85,6 +97,7 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
       emptyTitle: 'Chưa có tài liệu xác minh',
       contractNotes:
           'High-risk action: preview + confirm + audit trail required. P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: _p2pPaymentMethodContractId,
     );
   }
 
@@ -116,6 +129,7 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
       emptyTitle: 'Không có phương thức đang chờ',
       contractNotes:
           'High-risk action: preview + confirm + audit trail required. P2P requires escrow, fraud, KYC, payment-state clarity.',
+      highRiskContractId: _p2pPaymentMethodContractId,
     );
   }
 

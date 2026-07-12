@@ -59,15 +59,21 @@ void main() {
   test('Feature modules must not define local _AccentIcon classes', () {
     expect(featuresRoot.existsSync(), isTrue);
 
+    const bannedClassNames = ['_AccentIcon', '_IconBubble'];
+
     for (final entity in featuresRoot.listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;
 
       final source = entity.readAsStringSync();
-      expect(
-        source,
-        isNot(contains('class _AccentIcon')),
-        reason: '${entity.path} must not define local _AccentIcon',
-      );
+      for (final bannedName in bannedClassNames) {
+        expect(
+          source,
+          isNot(contains('class $bannedName')),
+          reason:
+              '${entity.path} must not define local $bannedName — use '
+              'VitAccentIconBox',
+        );
+      }
     }
   });
 }

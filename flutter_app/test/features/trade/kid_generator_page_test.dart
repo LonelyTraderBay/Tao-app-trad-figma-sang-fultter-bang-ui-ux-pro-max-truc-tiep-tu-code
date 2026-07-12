@@ -98,4 +98,29 @@ void main() {
     expect(find.byType(KIDGeneratorPage), findsOneWidget);
     expect(find.text('Key Information Document'), findsOneWidget);
   });
+
+  testWidgets(
+    'SC-108 preview KID shows a coming-soon SnackBar without crashing',
+    (tester) async {
+      // Regression test: the shared trade layout primitives never construct a
+      // real Scaffold, so ScaffoldMessenger.of(context).showSnackBar
+      // previously crashed at tap-time with a '_scaffolds.isNotEmpty'
+      // assertion. KIDGeneratorPage now wraps its root in a page-scoped
+      // Scaffold to host the SnackBar.
+      await pumpKidGenerator(tester);
+
+      await tester.scrollUntilVisible(
+        find.byKey(KIDGeneratorPage.previewKey),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(KIDGeneratorPage.previewKey));
+      await tester.pump();
+
+      expect(tester.takeException(), isNull);
+      expect(find.text('Xem trước KID sẽ sớm ra mắt'), findsOneWidget);
+    },
+  );
 }

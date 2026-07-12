@@ -149,8 +149,7 @@ void main() {
 
     // The segmented tab row sits low enough in the compact layout that it
     // initially renders behind the fixed bottom navigation bar's hit-test
-    // band; scroll it clear before interacting, matching the pattern used
-    // for the quick links below it.
+    // band; scroll it clear before interacting.
     await tester.scrollUntilVisible(
       ClientCategorizationPage.tabKey('protections').asFinder(),
       120,
@@ -160,10 +159,6 @@ void main() {
             matching: find.byType(Scrollable),
           )
           .first,
-    );
-    await tester.drag(
-      find.byKey(ClientCategorizationPage.contentKey),
-      const Offset(0, -120),
     );
     await tester.pumpAndSettle();
 

@@ -21,7 +21,7 @@ class _SecondaryTabContent extends StatelessWidget {
     final value = switch (tab) {
       'Compound' => '+\$121.48',
       'APY' => '${summary.weightedApy.toStringAsFixed(2)}%',
-      _ => _formatUsd(summary.totalInvested),
+      _ => EarnFormatters.usd(summary.totalInvested),
     };
     final description = switch (tab) {
       'Compound' =>
@@ -296,17 +296,4 @@ void _drawLine(
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke,
   );
-}
-
-String _formatUsd(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  final raw = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final fromEnd = raw.length - i;
-    buffer.write(raw[i]);
-    if (fromEnd > 1 && fromEnd % 3 == 1) buffer.write(',');
-  }
-  return '\$${buffer.toString()}.${parts.last}';
 }

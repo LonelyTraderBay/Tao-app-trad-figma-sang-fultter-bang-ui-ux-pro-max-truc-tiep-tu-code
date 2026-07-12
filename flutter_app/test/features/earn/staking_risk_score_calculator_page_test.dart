@@ -159,4 +159,19 @@ void main() {
     expect(find.byType(StakingRiskDashboardPage), findsOneWidget);
     expect(find.text('Risk Dashboard'), findsOneWidget);
   });
+
+  testWidgets('SC-384 proceed CTA shows coming-soon snack bar', (tester) async {
+    await pumpRiskCalculator(tester);
+
+    await tester.ensureVisible(
+      find.byKey(StakingRiskScoreCalculatorPage.footerButtonKey),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(StakingRiskScoreCalculatorPage.footerButtonKey),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tiếp tục sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

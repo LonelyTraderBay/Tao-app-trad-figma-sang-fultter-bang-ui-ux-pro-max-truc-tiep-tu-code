@@ -35,10 +35,10 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Header-Back-Navigation-Behavior-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Header-Back-Navigation-Behavior-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Header-Back-Navigation-Behavior-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Header-Back-Navigation-Behavior-Audit.csv',
   );
 
   final entries = _collectBackNavigationEntries(appRoot, repoRoot);
@@ -589,7 +589,7 @@ Map<String, int> _readModalBaselineCounts() {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final csv = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/'
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/'
     'VitTrade-Back-Modal-Behavior-Audit.csv',
   );
   if (!csv.existsSync()) return const {};

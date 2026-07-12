@@ -459,17 +459,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: AppSpacing.x6,
-          height: AppSpacing.x6,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: color.withValues(alpha: .14),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-            ),
-            child: Icon(icon, color: color, size: AppSpacing.iconMd),
-          ),
-        ),
+        VitAccentIconBox(icon: icon, color: color),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Column(

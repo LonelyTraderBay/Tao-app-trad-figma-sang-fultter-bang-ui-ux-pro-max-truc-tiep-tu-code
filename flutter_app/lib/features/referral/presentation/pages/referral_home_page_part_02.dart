@@ -45,26 +45,26 @@ class _EarningCalculator extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _MetricBox(
+                child: VitMetricCard(
                   label: 'Bạn mới',
                   value: '+$friendCount',
-                  color: AppColors.primary,
+                  accentColor: AppColors.primary,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _MetricBox(
+                child: VitMetricCard(
                   label: 'Hoa hồng/tháng',
                   value: _formatUsd(monthly),
-                  color: AppColors.buy,
+                  accentColor: AppColors.buy,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _MetricBox(
+                child: VitMetricCard(
                   label: 'Hoa hồng/năm',
                   value: _formatUsd(yearly),
-                  color: AppColors.primarySoft,
+                  accentColor: AppColors.primarySoft,
                 ),
               ),
             ],
@@ -267,18 +267,18 @@ class _MonthStats extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: _MetricBox(
+              child: VitMetricCard(
                 label: 'Hoa hồng tháng này',
                 value: '+${_formatUsd(stats.thisMonthCommission)}',
-                color: AppColors.buy,
+                accentColor: AppColors.buy,
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
-              child: _MetricBox(
+              child: VitMetricCard(
                 label: 'Bạn mới tháng này',
                 value: '+${stats.thisMonthFriends}',
-                color: AppColors.primary,
+                accentColor: AppColors.primary,
               ),
             ),
           ],

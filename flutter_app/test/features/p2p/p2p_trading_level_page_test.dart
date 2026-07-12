@@ -118,6 +118,12 @@ void main() {
     expect(find.text('Volume > 5 tỷ VND'), findsOneWidget);
     expect(find.byKey(P2PTradingLevelPage.upgradeButtonKey), findsOneWidget);
     expect(find.text('Nâng cấp lên VIP'), findsOneWidget);
+
+    await tester.tap(find.byKey(P2PTradingLevelPage.upgradeButtonKey));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Nâng cấp lên VIP sẽ sớm ra mắt'), findsOneWidget);
   });
 
   testWidgets('SC-230 header back returns to the P2P parent route', (

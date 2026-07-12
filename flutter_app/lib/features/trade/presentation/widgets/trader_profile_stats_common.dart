@@ -245,11 +245,7 @@ String _compactUsd(double value) {
   return '\$${value.toStringAsFixed(0)}';
 }
 
-String _formatMoney(double value) {
-  return value
-      .toStringAsFixed(2)
-      .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
-}
+String _formatMoney(double value) => formatTradeMoney(value);
 
 String _formatPrice(double value) {
   return value
@@ -257,9 +253,4 @@ String _formatPrice(double value) {
       .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
 }
 
-String _formatInt(int value) {
-  return value.toString().replaceAllMapped(
-    RegExp(r'\B(?=(\d{3})+(?!\d))'),
-    (_) => ',',
-  );
-}
+String _formatInt(int value) => formatTradeInt(value);

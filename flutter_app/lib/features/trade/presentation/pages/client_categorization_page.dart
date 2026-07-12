@@ -17,9 +17,11 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_modu
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
-part 'client_categorization_page_part_01.dart';
-part 'client_categorization_page_part_02.dart';
-part 'client_categorization_page_part_03.dart';
+part 'client_categorization_opt_up_page.dart';
+part '../widgets/client_categorization_page_chrome.dart';
+part '../widgets/client_categorization_overview_tab.dart';
+part '../widgets/client_categorization_protections_requirements_tab.dart';
+part '../widgets/client_categorization_history_tab.dart';
 
 const _clientBorder = AppColors.borderSolid;
 const _clientGreen = AppColors.buy;
@@ -41,4 +43,117 @@ class ClientCategorizationPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<ClientCategorizationPage> createState() =>
       _ClientCategorizationPageState();
+}
+
+class _ClientCategorizationPageState
+    extends ConsumerState<ClientCategorizationPage> {
+  String? _tab;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(tradeReadModelControllerProvider)
+        .getClientCategorization();
+    _tab ??= snapshot.defaultTab;
+    final current = snapshot.categories.firstWhere(
+      (item) => item.id == snapshot.currentCategoryId,
+    );
+    return VitTradeHubScaffold(
+      title: 'Client Categorization',
+      subtitle: 'MiFID II Classification',
+      semanticLabel: 'SC-099 ClientCategorizationPage',
+      contentKey: ClientCategorizationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      useCopyTradingInset: true,
+      children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Client classification review',
+            message:
+                'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
+            contractId: 'client-categorization-review',
+          ),
+        ),
+        VitTradeSection(
+          title: 'Current category',
+          child: _CurrentCategoryCard(category: current),
+        ),
+        VitTradeComplianceSection(
+          title: 'Classification review',
+          statusPill: const VitStatusPill(
+            label: 'Compliance gated',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(label: 'Category', value: current.label),
+            VitTradeComplianceItem(
+              label: 'Options',
+              value: '${snapshot.categories.length} tiers',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Details',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const _InfoNotice(),
+              _Tabs(
+                activeId: _tab!,
+                onChanged: (id) => setState(() => _tab = id),
+              ),
+              if (_tab == 'overview')
+                _OverviewTab(
+                  categories: snapshot.categories,
+                  currentCategoryId: snapshot.currentCategoryId,
+                )
+              else if (_tab == 'protections')
+                _ProtectionsTab(categories: snapshot.categories)
+              else if (_tab == 'requirements')
+                _RequirementsTab(categories: snapshot.categories)
+              else
+                _HistoryTab(
+                  categories: snapshot.categories,
+                  history: snapshot.history,
+                ),
+              const _QuickLinks(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Tabs extends StatelessWidget {
+  const _Tabs({required this.activeId, required this.onChanged});
+
+  final String activeId;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    const tabs = [
+      ('overview', 'Overview'),
+      ('protections', 'Protections'),
+      ('requirements', 'Requirements'),
+      ('history', 'History'),
+    ];
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: ClientCategorizationPage.tabKey(tab.$1),
+          ),
+      ],
+      activeKey: activeId,
+      onChanged: onChanged,
+    );
+  }
 }

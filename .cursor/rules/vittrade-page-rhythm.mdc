@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Page Rhythm (Mandatory)
 
-Full contract: [Page-Rhythm-Standard.md](../../docs/02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md)  
+Full contract: [Page-Rhythm-Standard.md](../../docs/02_FLUTTER_MIGRATION/standards/Page-Rhythm-Standard.md)  
 Reference: `flutter_app/lib/features/home/presentation/pages/home_page_part_01.dart`
 
 ## When editing presentation pages

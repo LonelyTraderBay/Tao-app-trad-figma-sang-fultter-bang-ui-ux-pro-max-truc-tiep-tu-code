@@ -161,16 +161,4 @@ class _Card extends StatelessWidget {
   }
 }
 
-String _formatEur(double value) {
-  final rounded = value.round();
-  final absolute = rounded.abs().toString();
-  final buffer = StringBuffer();
-  for (var index = 0; index < absolute.length; index += 1) {
-    if (index > 0 && (absolute.length - index) % 3 == 0) {
-      buffer.write(',');
-    }
-    buffer.write(absolute[index]);
-  }
-  final sign = rounded < 0 ? '-' : '';
-  return '$sign€${buffer.toString()}';
-}
+String _formatEur(double value) => formatTradeEur(value);

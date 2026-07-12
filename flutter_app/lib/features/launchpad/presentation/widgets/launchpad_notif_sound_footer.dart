@@ -154,41 +154,6 @@ class _SoundSwitch extends StatelessWidget {
   }
 }
 
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({
-    required this.icon,
-    required this.accent,
-    this.small = false,
-  });
-
-  final IconData icon;
-  final Color accent;
-  final bool small;
-
-  @override
-  Widget build(BuildContext context) {
-    final size = small ? AppSpacing.x6 : AppSpacing.x7;
-    return SizedBox.square(
-      dimension: size,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: accent.withValues(alpha: .12),
-          shape: RoundedRectangleBorder(
-            borderRadius: small ? AppRadii.mdRadius : AppRadii.lgRadius,
-          ),
-        ),
-        child: Center(
-          child: Icon(
-            icon,
-            color: accent,
-            size: small ? AppSpacing.iconSm : AppSpacing.iconMd,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 IconData _categoryIcon(String iconKey) {
   return switch (iconKey) {
     'chart' => Icons.query_stats_rounded,

@@ -163,7 +163,8 @@ class AddressAddForm {
         gap: VitContentGap.tight,
         children: [
           AddressWhitelistCard(enabled: whitelist, onTap: onWhitelistChanged),
-          const AddressWarningCard(),
+          if (snapshot.highRiskContractId != null)
+            AddressWarningCard(highRiskContractId: snapshot.highRiskContractId),
           AddressAgreementRow(agreed: agreed, onTap: onAgreementChanged),
           if (labelController.text.trim().isNotEmpty &&
               addressController.text.trim().isNotEmpty)

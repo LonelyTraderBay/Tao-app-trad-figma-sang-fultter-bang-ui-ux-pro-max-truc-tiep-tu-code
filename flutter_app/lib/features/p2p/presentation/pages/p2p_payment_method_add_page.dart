@@ -152,13 +152,14 @@ class _P2PPaymentMethodAddPageState
             ),
             type: _type,
           ),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Payment method add state review',
-          message:
-              'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
-          contractId: 'SC-232',
-        ),
+        if (snapshot.highRiskContractId != null)
+          VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Payment method add state review',
+            message:
+                'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
+            contractId: snapshot.highRiskContractId,
+          ),
         Semantics(
           label: 'Preview and add P2P payment method',
           button: true,

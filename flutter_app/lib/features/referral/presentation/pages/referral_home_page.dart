@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/utils/currency_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/referral_spacing_tokens.dart';
@@ -25,7 +26,6 @@ part 'referral_home_page_part_02.dart';
 part 'referral_home_page_part_03.dart';
 part 'referral_home_page_part_04.dart';
 
-const _heroBubble = 36.0;
 const _ctaExtent = 44.0;
 const _dividerExtent = 38.0;
 const _rankSlot = 28.0;

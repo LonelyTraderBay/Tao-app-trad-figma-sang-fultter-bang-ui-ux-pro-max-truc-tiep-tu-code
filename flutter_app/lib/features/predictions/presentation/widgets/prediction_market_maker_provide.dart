@@ -8,40 +8,27 @@ class _MarketMakerTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionMarketMakerPage.provideTabKey,
-        tab: _MarketMakerTab.provide,
-        label: 'Cung cap',
-      ),
-      (
-        key: PredictionMarketMakerPage.positionsTabKey,
-        tab: _MarketMakerTab.positions,
-        label: 'Vi the',
-      ),
-      (
-        key: PredictionMarketMakerPage.earningsTabKey,
-        tab: _MarketMakerTab.earnings,
-        label: 'Thu nhap',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      shape: const Border(bottom: BorderSide(color: AppColors.border)),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_MarketMakerTab.values.byName(key)),
-        tabs: [
-          for (final item in tabs)
-            VitTabItem(
-              key: item.tab.name,
-              label: item.label,
-              widgetKey: item.key,
-            ),
-        ],
-      ),
+    return PredictionEnumTabBar<_MarketMakerTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      showBottomBorder: true,
+      items: [
+        (
+          PredictionMarketMakerPage.provideTabKey,
+          _MarketMakerTab.provide,
+          'Cung cap',
+        ),
+        (
+          PredictionMarketMakerPage.positionsTabKey,
+          _MarketMakerTab.positions,
+          'Vi the',
+        ),
+        (
+          PredictionMarketMakerPage.earningsTabKey,
+          _MarketMakerTab.earnings,
+          'Thu nhap',
+        ),
+      ],
     );
   }
 }

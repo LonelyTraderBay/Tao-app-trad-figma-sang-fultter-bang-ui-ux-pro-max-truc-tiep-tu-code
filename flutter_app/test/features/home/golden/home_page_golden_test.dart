@@ -1,6 +1,6 @@
 // Pixel baseline for lib/features/home/presentation/pages/home_page.dart —
 // the canonical UI reference ("SC-007 HomePage", see
-// docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md). Pinned at
+// docs/02_FLUTTER_MIGRATION/standards/Flutter-Module-Identity-Standard.md). Pinned at
 // 360x800 (minimum supported phone size, matches the convention used by
 // test/quality/page_rhythm_phone_visual_qa_test.dart) and Flutter 3.41.9
 // stable (matches .github/workflows/flutter-ci.yml) — goldens are sensitive

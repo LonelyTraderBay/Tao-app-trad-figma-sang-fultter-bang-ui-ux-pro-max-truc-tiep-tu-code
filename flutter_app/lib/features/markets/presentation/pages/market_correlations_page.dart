@@ -161,9 +161,11 @@ class _MarketCorrelationsPageState
                           _DiversificationMetrics(
                             score: snapshot.diversificationScore,
                           ),
-                          const _SectionHeader(
-                            label: 'So sánh theo thời gian',
+                          const VitSectionHeader(
+                            title: 'So sánh theo thời gian',
                             accentColor: AppColors.accent,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _TimeframeScoreCard(repo: repo),
                           const _CorrelationDisclaimer(),

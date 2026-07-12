@@ -8,9 +8,9 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final auditCsv = File('${docsDir.path}/VitTrade-Card-Tile-Audit.csv');
-  final legacyManifest = File('${docsDir.path}/VitTrade-Card-Tile-Manifest.csv');
-  final reportMd = File('${docsDir.path}/Card-Tile-Compliance-Report.md');
+  final auditCsv = File('${docsDir.path}/audits/VitTrade-Card-Tile-Audit.csv');
+  final legacyManifest = File('${docsDir.path}/audits/VitTrade-Card-Tile-Manifest.csv');
+  final reportMd = File('${docsDir.path}/audits/Card-Tile-Compliance-Report.md');
 
   final rows = <_AuditRow>[];
   final scanRoots = [

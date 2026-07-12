@@ -140,10 +140,17 @@ class _HelpButton extends StatelessWidget {
     return VitCtaButton(
       height: AppSpacing.buttonCompact,
       variant: variant,
-      onPressed: () {},
+      onPressed: () => _showComingSoon(context),
       padding: TradeSpacingTokens.tradeBotChipPadding,
       child: Text(label),
     );
+  }
+
+  void _showComingSoon(BuildContext context) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('$label sẽ sớm ra mắt')));
   }
 }
 

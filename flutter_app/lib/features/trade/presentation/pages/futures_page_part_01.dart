@@ -72,26 +72,32 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
           lowLabel: formatTradePrice(pair.price * 0.98),
           volumeLabel: '1.2B',
         ),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          density: VitDensity.compact,
-          title: 'Rủi ro cao',
-          message:
-              'Hợp đồng tương lai có thể làm bạn mất toàn bộ ký quỹ. Chỉ dùng số tiền bạn chấp nhận mất.',
-          contractId: 'SC-057',
-        ),
         VitTradeSection(
           title: 'Giao dịch',
-          child: _FuturesSimpleForm(
-            snapshot: snapshot,
-            pairId: widget.pairId,
-            side: _side,
-            leverage: _leverage,
-            marginController: _marginController,
-            onSideChanged: (side) => setState(() => _side = side),
-            onPercent: _setPercent,
-            onChanged: () => setState(() {}),
-            onConfirmedSubmit: _submit,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                density: VitDensity.compact,
+                title: 'Rủi ro cao',
+                message:
+                    'Hợp đồng tương lai có thể làm bạn mất toàn bộ ký quỹ. Chỉ dùng số tiền bạn chấp nhận mất.',
+                contractId: 'SC-057',
+              ),
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+              _FuturesSimpleForm(
+                snapshot: snapshot,
+                pairId: widget.pairId,
+                side: _side,
+                leverage: _leverage,
+                marginController: _marginController,
+                onSideChanged: (side) => setState(() => _side = side),
+                onPercent: _setPercent,
+                onChanged: () => setState(() {}),
+                onConfirmedSubmit: _submit,
+              ),
+            ],
           ),
         ),
       ],
@@ -204,19 +210,12 @@ class _FuturesSimpleForm extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            side == TradeFuturesSide.long
-                ? 'Kỳ vọng giá sẽ tăng'
-                : 'Kỳ vọng giá sẽ giảm',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Đòn bẩy ${leverage}x',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Bước 2 · Số tiền ký quỹ',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

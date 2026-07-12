@@ -234,10 +234,7 @@ class _EmptyPositions extends StatelessWidget {
   }
 }
 
-String _formatSignedMoney(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign\$${_formatMoney(value.abs())}';
-}
+String _formatSignedMoney(double value) => formatTradeSignedMoney(value);
 
 String _formatSignedPct(double value) {
   final sign = value >= 0 ? '+' : '-';
@@ -251,18 +248,7 @@ String _formatCompactMoney(double value) {
   return '\$${_formatMoney(value)}';
 }
 
-String _formatMoney(double value) {
-  final raw = value.toStringAsFixed(2);
-  final parts = raw.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final fromEnd = whole.length - i;
-    buffer.write(whole[i]);
-    if (fromEnd > 1 && fromEnd % 3 == 1) buffer.write(',');
-  }
-  return '$buffer.${parts.last}';
-}
+String _formatMoney(double value) => formatTradeMoney(value);
 
 String _formatAmount(double value) {
   if (value >= 1) return value.toStringAsFixed(4);

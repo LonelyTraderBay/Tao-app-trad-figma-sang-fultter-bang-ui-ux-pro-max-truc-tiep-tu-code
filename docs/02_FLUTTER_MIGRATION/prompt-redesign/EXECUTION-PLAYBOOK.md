@@ -9,7 +9,7 @@
 | File | Vai trò |
 | --- | --- |
 | [REDESIGN-CONTRACT.md](REDESIGN-CONTRACT.md) | Chuẩn chung — load 1 lần đầu session |
-| [ke-hoach-redesign-theo-module.md](../ke-hoach-redesign-theo-module.md) | Routing §1–4 mỗi chat |
+| [ke-hoach-redesign-theo-module.md](../redesign/ke-hoach-redesign-theo-module.md) | Routing §1–4 mỗi chat |
 | [README.md](README.md) | 11 hub Tier A + SC-059 |
 | Hub prompts trong folder này | Tier A full / parent Tier B |
 
@@ -130,7 +130,7 @@ Completion: `VITTRADE UI REDESIGN COMPLETE — 415 screens`
 ```text
 EXECUTION 1/66 — batch RD-M02-B01 module RD-M02
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -152,7 +152,7 @@ Sau completion: chạy MODULE GATE test/features/auth/ → `MODULE REDESIGN GATE
 ```text
 EXECUTION 2/66 — batch RD-M03-B01 module RD-M03
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -174,7 +174,7 @@ Sau completion: chạy MODULE GATE test/features/onboarding/ → `MODULE REDESIG
 ```text
 EXECUTION 3/66 — batch RD-K01 module RD-M04
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -194,7 +194,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M04 — RD-K01
 ```text
 EXECUTION 4/66 — batch RD-K02 module RD-M04
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -215,7 +215,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M04 — RD-K02
 ```text
 EXECUTION 5/66 — batch RD-K03 module RD-M04
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -236,7 +236,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M04 — RD-K03
 ```text
 EXECUTION 6/66 — batch RD-K04 module RD-M04
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -259,7 +259,7 @@ Sau completion: chạy MODULE GATE test/features/markets/ → `MODULE REDESIGN G
 ```text
 EXECUTION 7/66 — batch RD-T01 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -279,7 +279,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T01
 ```text
 EXECUTION 8/66 — batch RD-T02 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -299,7 +299,7 @@ Completion: TRADING BOTS HUB UI REDESIGN DONE — SC-059 v2
 ```text
 EXECUTION 9/66 — batch RD-T03 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -320,7 +320,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T03
 ```text
 EXECUTION 10/66 — batch RD-T04 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -341,7 +341,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T04
 ```text
 EXECUTION 11/66 — batch RD-T05 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -361,7 +361,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T05
 ```text
 EXECUTION 12/66 — batch RD-T06 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -382,7 +382,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T06
 ```text
 EXECUTION 13/66 — batch RD-T07 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -403,7 +403,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T07
 ```text
 EXECUTION 14/66 — batch RD-T08 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -424,7 +424,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T08
 ```text
 EXECUTION 15/66 — batch RD-T09 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -445,7 +445,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T09
 ```text
 EXECUTION 16/66 — batch RD-T10 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -466,7 +466,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M05 — RD-T10
 ```text
 EXECUTION 17/66 — batch RD-T11 module RD-M05
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -489,7 +489,7 @@ Sau completion: chạy MODULE GATE test/features/trade/ → `MODULE REDESIGN GAT
 ```text
 EXECUTION 18/66 — batch RD-W01 module RD-M06
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -509,7 +509,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M06 — RD-W01
 ```text
 EXECUTION 19/66 — batch RD-W02 module RD-M06
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -530,7 +530,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M06 — RD-W02
 ```text
 EXECUTION 20/66 — batch RD-W03 module RD-M06
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -551,7 +551,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M06 — RD-W03
 ```text
 EXECUTION 21/66 — batch RD-W04 module RD-M06
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -574,7 +574,7 @@ Sau completion: chạy MODULE GATE test/features/wallet/ → `MODULE REDESIGN GA
 ```text
 EXECUTION 22/66 — batch RD-F01 module RD-M07
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -594,7 +594,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M07 — RD-F01
 ```text
 EXECUTION 23/66 — batch RD-F02 module RD-M07
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -614,7 +614,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M07 — RD-F02
 ```text
 EXECUTION 24/66 — batch RD-F03 module RD-M07
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -636,7 +636,7 @@ Sau completion: chạy MODULE GATE test/features/profile/ → `MODULE REDESIGN G
 ```text
 EXECUTION 25/66 — batch RD-P01 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -656,7 +656,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P01
 ```text
 EXECUTION 26/66 — batch RD-P02 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -677,7 +677,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P02
 ```text
 EXECUTION 27/66 — batch RD-P03 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -698,7 +698,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P03
 ```text
 EXECUTION 28/66 — batch RD-P04 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -719,7 +719,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P04
 ```text
 EXECUTION 29/66 — batch RD-P05 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -740,7 +740,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P05
 ```text
 EXECUTION 30/66 — batch RD-P06 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -761,7 +761,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P06
 ```text
 EXECUTION 31/66 — batch RD-P07 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -782,7 +782,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P07
 ```text
 EXECUTION 32/66 — batch RD-P08 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -803,7 +803,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P08
 ```text
 EXECUTION 33/66 — batch RD-P09 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -824,7 +824,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P09
 ```text
 EXECUTION 34/66 — batch RD-P10 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -845,7 +845,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M08 — RD-P10
 ```text
 EXECUTION 35/66 — batch RD-P11 module RD-M08
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -868,7 +868,7 @@ Sau completion: chạy MODULE GATE test/features/p2p/ → `MODULE REDESIGN GATE 
 ```text
 EXECUTION 36/66 — batch RD-E01 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -888,7 +888,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M09 — RD-E01
 ```text
 EXECUTION 37/66 — batch RD-E02 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -909,7 +909,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M09 — RD-E02
 ```text
 EXECUTION 38/66 — batch RD-E03 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -930,7 +930,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M09 — RD-E03
 ```text
 EXECUTION 39/66 — batch RD-E04 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -951,7 +951,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M09 — RD-E04
 ```text
 EXECUTION 40/66 — batch RD-E05 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -972,7 +972,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M09 — RD-E05
 ```text
 EXECUTION 41/66 — batch RD-E06 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -993,7 +993,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M09 — RD-E06
 ```text
 EXECUTION 42/66 — batch RD-E07 module RD-M09
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1016,7 +1016,7 @@ Sau completion: chạy MODULE GATE test/features/earn/ → `MODULE REDESIGN GATE
 ```text
 EXECUTION 43/66 — batch RD-C01 module RD-M10
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1036,7 +1036,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M10 — RD-C01
 ```text
 EXECUTION 44/66 — batch RD-C02 module RD-M10
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1056,7 +1056,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M10 — RD-C02
 ```text
 EXECUTION 45/66 — batch RD-C03 module RD-M10
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1078,7 +1078,7 @@ Sau completion: chạy MODULE GATE test/features/dca/ → `MODULE REDESIGN GATE 
 ```text
 EXECUTION 46/66 — batch RD-R01 module RD-M11
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1098,7 +1098,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M11 — RD-R01
 ```text
 EXECUTION 47/66 — batch RD-R02 module RD-M11
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1119,7 +1119,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M11 — RD-R02
 ```text
 EXECUTION 48/66 — batch RD-R03 module RD-M11
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1142,7 +1142,7 @@ Sau completion: chạy MODULE GATE test/features/predictions/ → `MODULE REDESI
 ```text
 EXECUTION 49/66 — batch RD-A01 module RD-M12
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1162,7 +1162,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M12 — RD-A01
 ```text
 EXECUTION 50/66 — batch RD-A02 module RD-M12
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1183,7 +1183,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M12 — RD-A02
 ```text
 EXECUTION 51/66 — batch RD-A03 module RD-M12
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1204,7 +1204,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M12 — RD-A03
 ```text
 EXECUTION 52/66 — batch RD-A04 module RD-M12
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1225,7 +1225,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M12 — RD-A04
 ```text
 EXECUTION 53/66 — batch RD-A05 module RD-M12
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1248,7 +1248,7 @@ Sau completion: chạy MODULE GATE test/features/arena/ → `MODULE REDESIGN GAT
 ```text
 EXECUTION 54/66 — batch RD-L01 module RD-M13
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1268,7 +1268,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M13 — RD-L01
 ```text
 EXECUTION 55/66 — batch RD-L02 module RD-M13
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1289,7 +1289,7 @@ Completion: MODULE UI REDESIGN DONE — RD-M13 — RD-L02
 ```text
 EXECUTION 56/66 — batch RD-L03 module RD-M13
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1312,7 +1312,7 @@ Sau completion: chạy MODULE GATE test/features/launchpad/ → `MODULE REDESIGN
 ```text
 EXECUTION 57/66 — batch RD-M14-B01 module RD-M14
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1334,7 +1334,7 @@ Sau completion: chạy MODULE GATE test/features/discovery/ → `MODULE REDESIGN
 ```text
 EXECUTION 58/66 — batch RD-M15-B01 module RD-M15
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1356,7 +1356,7 @@ Sau completion: chạy MODULE GATE test/features/news/ → `MODULE REDESIGN GATE
 ```text
 EXECUTION 59/66 — batch RD-M16-B01 module RD-M16
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1378,7 +1378,7 @@ Sau completion: chạy MODULE GATE test/features/notifications/ → `MODULE REDE
 ```text
 EXECUTION 60/66 — batch RD-M17-B01 module RD-M17
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1400,7 +1400,7 @@ Sau completion: chạy MODULE GATE test/features/referral/ → `MODULE REDESIGN 
 ```text
 EXECUTION 61/66 — batch RD-M18-B01 module RD-M18
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1422,7 +1422,7 @@ Sau completion: chạy MODULE GATE test/features/support/ → `MODULE REDESIGN G
 ```text
 EXECUTION 62/66 — batch RD-M19-B01 module RD-M19
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1444,7 +1444,7 @@ Sau completion: chạy MODULE GATE test/features/rewards/ → `MODULE REDESIGN G
 ```text
 EXECUTION 63/66 — batch RD-M20-B01 module RD-M20
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1466,7 +1466,7 @@ Sau completion: chạy MODULE GATE test/features/cross_module/ → `MODULE REDES
 ```text
 EXECUTION 64/66 — batch RD-M21-B01 module RD-M21
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1488,7 +1488,7 @@ Sau completion: chạy MODULE GATE test/features/enterprise_states/ → `MODULE 
 ```text
 EXECUTION 65/66 — batch RD-M22-B01 module RD-M22
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)
@@ -1510,7 +1510,7 @@ Sau completion: chạy MODULE GATE test/features/admin/ → `MODULE REDESIGN GAT
 ```text
 EXECUTION 66/66 — batch RD-M23-B01 module RD-M23
 
-- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4
+- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4
 - docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md
 - ke-hoach-redesign-batches.csv row <batch_id>
 - VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)

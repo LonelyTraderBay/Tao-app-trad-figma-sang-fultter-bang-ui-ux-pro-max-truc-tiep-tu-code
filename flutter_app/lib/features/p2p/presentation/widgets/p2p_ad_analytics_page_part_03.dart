@@ -363,16 +363,7 @@ String _formatCount(int value) {
   return buffer.toString();
 }
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final remaining = raw.length - i;
-    buffer.write(raw[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write('.');
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);
 
 String _formatCompactVnd(int value) {
   if (value >= 1000000000) {

@@ -42,11 +42,8 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
-      rhythm: VitPageRhythm.standard,
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      density: VitDensity.compact,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _ChartCard(
           title: 'PnL tích lũy (30 ngày)',

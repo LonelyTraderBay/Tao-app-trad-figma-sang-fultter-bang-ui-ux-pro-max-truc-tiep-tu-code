@@ -123,4 +123,17 @@ void main() {
     expect(find.byType(StakingCommunityGovernancePage), findsOneWidget);
     expect(find.text('Governance'), findsOneWidget);
   });
+
+  testWidgets('SC-389 create proposal shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpProposals(tester);
+
+    await tester.ensureVisible(find.byKey(StakingProposalsPage.createKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(StakingProposalsPage.createKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tạo đề xuất sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

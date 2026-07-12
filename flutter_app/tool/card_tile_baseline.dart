@@ -6,7 +6,7 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final auditCsv = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Audit.csv',
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Card-Tile-Audit.csv',
   );
   if (!auditCsv.existsSync()) {
     stderr.writeln('Run `dart run tool/card_tile_audit.dart` first.');

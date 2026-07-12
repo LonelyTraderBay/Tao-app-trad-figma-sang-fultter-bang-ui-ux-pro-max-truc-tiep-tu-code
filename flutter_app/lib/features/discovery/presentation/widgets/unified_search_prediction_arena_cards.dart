@@ -15,7 +15,7 @@ class _PredictionResultCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _ModuleBadge(
+          const DiscoveryModuleBadge(
             label: 'Prediction Market',
             icon: Icons.track_changes_rounded,
             color: AppModuleAccents.predictions,
@@ -44,7 +44,7 @@ class _PredictionResultCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const Spacer(),
-              _InlineCta(
+              DiscoveryInlineCta(
                 label: 'Xem thị trường',
                 color: AppModuleAccents.predictions,
               ),
@@ -73,7 +73,7 @@ class _ArenaModeResultCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _ModuleBadge(
+              const DiscoveryModuleBadge(
                 label: 'Open Arena',
                 icon: Icons.bolt_rounded,
                 color: AppModuleAccents.arena,
@@ -114,7 +114,7 @@ class _ArenaModeResultCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              const _InlineCta(
+              const DiscoveryInlineCta(
                 label: 'Xem mode',
                 color: AppModuleAccents.arena,
               ),

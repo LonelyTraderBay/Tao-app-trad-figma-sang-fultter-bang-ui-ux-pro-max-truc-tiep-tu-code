@@ -18,7 +18,7 @@ class _SmartAlertCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _IconBadge(
+              CrossModuleIconBadge(
                 icon: module.icon,
                 color: module.color,
                 background: module.background,
@@ -57,14 +57,14 @@ class _SmartAlertCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              _SmallIconAction(
+              CrossModuleIconAction(
                 icon: Icons.edit_outlined,
                 color: AppColors.text3,
                 background: AppColors.surface2,
                 onTap: HapticFeedback.selectionClick,
               ),
               const SizedBox(width: AppSpacing.x2),
-              _SmallIconAction(
+              CrossModuleIconAction(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
                 background: AppColors.sell10,

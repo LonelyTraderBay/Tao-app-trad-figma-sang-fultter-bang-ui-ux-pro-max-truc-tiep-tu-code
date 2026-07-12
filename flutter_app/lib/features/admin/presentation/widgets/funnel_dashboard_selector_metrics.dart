@@ -94,7 +94,7 @@ class _MetricsGrid extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _MetricCard(
+          child: AdminMetricCard(
             icon: Icons.filter_alt_outlined,
             title: 'Phiên',
             value: '${snapshot.totalSessions}',
@@ -103,11 +103,17 @@ class _MetricsGrid extends StatelessWidget {
             timeframe: 'Selected funnel',
             tint: AppColors.accent15,
             accent: AppColors.accent,
+            semanticsLabel:
+                'Admin funnel metric Phiên: ${snapshot.totalSessions}. '
+                '${snapshot.completedSessions} hoàn thành. 0.0% Selected funnel',
+            valueStyle: AppTextStyles.amountXs.copyWith(
+              color: AppColors.accent,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
         Expanded(
-          child: _MetricCard(
+          child: AdminMetricCard(
             icon: Icons.check_circle_outline_rounded,
             title: 'Tỷ lệ hoàn thành',
             value: snapshot.completionRateLabel,
@@ -116,115 +122,13 @@ class _MetricsGrid extends StatelessWidget {
             timeframe: 'Selected funnel',
             tint: AppColors.buy15,
             accent: AppColors.buy,
+            semanticsLabel:
+                'Admin funnel metric Tỷ lệ hoàn thành: ${snapshot.completionRateLabel}. '
+                'Trung bình ${snapshot.avgCompletionTimeLabel}. 0.0% Selected funnel',
+            valueStyle: AppTextStyles.amountXs.copyWith(color: AppColors.buy),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _MetricCard extends StatelessWidget {
-  const _MetricCard({
-    required this.icon,
-    required this.title,
-    required this.value,
-    required this.caption,
-    required this.delta,
-    required this.timeframe,
-    required this.tint,
-    required this.accent,
-  });
-
-  final IconData icon;
-  final String title;
-  final String value;
-  final String caption;
-  final String delta;
-  final String timeframe;
-  final Color tint;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: 'Admin funnel metric $title: $value. $caption. $delta $timeframe',
-      child: VitCard(
-        padding: AdminSpacingTokens.adminCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox.square(
-                  dimension: AdminSpacingTokens.adminBox40,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: tint,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: AppRadii.inputRadius,
-                      ),
-                    ),
-                    child: Icon(
-                      icon,
-                      color: accent,
-                      size: AdminSpacingTokens.adminIconXl,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                      Text(
-                        value,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.amountXs.copyWith(color: accent),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            Text(
-              caption,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-            Wrap(
-              spacing: AppSpacing.x2,
-              runSpacing: AppSpacing.x1,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                VitStatusPill(
-                  label: delta,
-                  status: delta.startsWith('-')
-                      ? VitStatusPillStatus.error
-                      : VitStatusPillStatus.success,
-                  size: VitStatusPillSize.sm,
-                ),
-                Text(
-                  timeframe,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

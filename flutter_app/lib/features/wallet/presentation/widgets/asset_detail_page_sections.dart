@@ -97,7 +97,9 @@ class _AssetHero extends StatelessWidget {
               ),
               _AssetStatTile(
                 label: 'Giá hiện tại',
-                value: _withCommas(snapshot.currentPrice.toStringAsFixed(2)),
+                value: walletGroupThousands(
+                  snapshot.currentPrice.toStringAsFixed(2),
+                ),
                 valueColor: AppColors.text1,
               ),
             ],

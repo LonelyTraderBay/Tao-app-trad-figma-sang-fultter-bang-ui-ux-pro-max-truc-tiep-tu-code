@@ -118,7 +118,10 @@ class _SearchAndFilter extends StatelessWidget {
         VitIconButton(
           icon: Icons.filter_alt_outlined,
           tooltip: 'Filter audit trail',
-          onPressed: () {},
+          onPressed: () => _showComingSoon(
+            context,
+            'Bộ lọc nhật ký kiểm toán sẽ sớm ra mắt',
+          ),
           variant: VitIconButtonVariant.ghost,
           size: VitIconButtonSize.md,
         ),

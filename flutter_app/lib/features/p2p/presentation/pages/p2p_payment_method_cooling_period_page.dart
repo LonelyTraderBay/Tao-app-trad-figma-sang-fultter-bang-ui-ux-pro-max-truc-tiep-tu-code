@@ -93,13 +93,14 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Payment method cooling review',
-                          message:
-                              'New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.',
-                          contractId: 'SC-235',
-                        ),
+                        if (snapshot.highRiskContractId != null)
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Payment method cooling review',
+                            message:
+                                'New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.',
+                            contractId: snapshot.highRiskContractId,
+                          ),
                       ],
                     ),
                   ),

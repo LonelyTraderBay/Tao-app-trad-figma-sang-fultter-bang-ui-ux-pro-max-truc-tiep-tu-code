@@ -119,4 +119,34 @@ void main() {
     expect(find.byType(StakingEarnPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
   });
+
+  testWidgets('SC-396 create API key CTA shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpConsole(tester);
+
+    await tester.ensureVisible(
+      find.byKey(StakingDeveloperConsolePage.createKey),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(StakingDeveloperConsolePage.createKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tạo API Key sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-396 doc card tap shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpConsole(tester);
+
+    await tester.tap(find.text('Docs'));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(StakingDeveloperConsolePage.docKey('API Reference')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xem tài liệu sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

@@ -106,7 +106,7 @@ class _ContractProjectNotFound extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Contract chỉ khả dụng khi dự án IDO hợp lệ. Quay về Launchpad để chọn dự án.',
             textAlign: TextAlign.center,
@@ -373,7 +373,7 @@ class _ContractSimulationCard extends StatelessWidget {
             simulation.expectedOutput,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             'Chi phí ${simulation.totalCost} · Gas ${simulation.gasEstimate}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

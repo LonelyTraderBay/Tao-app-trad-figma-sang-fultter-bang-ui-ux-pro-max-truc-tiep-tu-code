@@ -238,7 +238,7 @@ class _SummaryTab extends StatelessWidget {
                 children: [
                   _SummaryPanel(
                     label: 'Total Staking Income',
-                    value: _formatUsd(summary.totalStakingIncome),
+                    value: EarnFormatters.usd(summary.totalStakingIncome),
                     body:
                         'Taxed as ordinary income at your marginal tax rate (reported on Form 1099-MISC)',
                   ),
@@ -351,7 +351,7 @@ class _GainsPanel extends StatelessWidget {
                 ),
               ),
               Text(
-                _formatUsd(summary.totalCapitalGains),
+                EarnFormatters.usd(summary.totalCapitalGains),
                 style: AppTextStyles.sectionTitle.copyWith(
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
@@ -364,7 +364,7 @@ class _GainsPanel extends StatelessWidget {
               Expanded(
                 child: _SmallMetric(
                   label: 'Short-term (<1 year)',
-                  value: _formatUsd(summary.shortTermGains),
+                  value: EarnFormatters.usd(summary.shortTermGains),
                   color: AppColors.warn,
                 ),
               ),
@@ -372,7 +372,7 @@ class _GainsPanel extends StatelessWidget {
               Expanded(
                 child: _SmallMetric(
                   label: 'Long-term (>=1 year)',
-                  value: _formatUsd(summary.longTermGains),
+                  value: EarnFormatters.usd(summary.longTermGains),
                   color: AppColors.buy,
                 ),
               ),
@@ -412,14 +412,14 @@ class _CostBasisPanel extends StatelessWidget {
               Expanded(
                 child: _SmallMetric(
                   label: 'Cost Basis',
-                  value: _formatUsd(summary.costBasis),
+                  value: EarnFormatters.usd(summary.costBasis),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: _SmallMetric(
                   label: 'Proceeds',
-                  value: _formatUsd(summary.proceeds),
+                  value: EarnFormatters.usd(summary.proceeds),
                 ),
               ),
             ],

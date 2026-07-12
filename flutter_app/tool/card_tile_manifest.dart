@@ -6,9 +6,9 @@ void main(List<String> args) {
   final appRoot = findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final auditCsv = File('${docsDir.path}/VitTrade-Card-Tile-Audit.csv');
+  final auditCsv = File('${docsDir.path}/audits/VitTrade-Card-Tile-Audit.csv');
   final manifestCsv = File(
-    '${docsDir.path}/VitTrade-Card-Tile-Migration-Manifest.csv',
+    '${docsDir.path}/audits/VitTrade-Card-Tile-Migration-Manifest.csv',
   );
 
   if (!auditCsv.existsSync()) {

@@ -114,4 +114,29 @@ void main() {
     expect(find.byKey(OmbudsmanReferralPage.ctaKey), findsOneWidget);
     expect(find.text('Visit FOS Website'), findsOneWidget);
   });
+
+  testWidgets(
+    'SC-114 visit FOS CTA shows a coming-soon SnackBar without crashing',
+    (tester) async {
+      // Regression test: the shared trade layout primitives never construct a
+      // real Scaffold, so ScaffoldMessenger.of(context).showSnackBar
+      // previously crashed at tap-time with a '_scaffolds.isNotEmpty'
+      // assertion. OmbudsmanReferralPage now wraps its root in a page-scoped
+      // Scaffold to host the SnackBar.
+      await pumpOmbudsman(tester);
+
+      await tester.scrollUntilVisible(
+        find.byKey(OmbudsmanReferralPage.ctaKey),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(OmbudsmanReferralPage.ctaKey));
+      await tester.pump();
+
+      expect(tester.takeException(), isNull);
+      expect(find.text('Trang khiếu nại sẽ sớm ra mắt'), findsOneWidget);
+    },
+  );
 }

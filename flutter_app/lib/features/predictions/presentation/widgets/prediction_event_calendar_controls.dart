@@ -11,39 +11,26 @@ class _EventCalendarTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionEventCalendarPage.calendarTabKey,
-        tab: _CalendarTab.calendar,
-        label: 'Lich',
-      ),
-      (
-        key: PredictionEventCalendarPage.upcomingTabKey,
-        tab: _CalendarTab.upcoming,
-        label: 'Sap toi',
-      ),
-      (
-        key: PredictionEventCalendarPage.notificationsTabKey,
-        tab: _CalendarTab.notifications,
-        label: 'Thong bao',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_CalendarTab.values.byName(key)),
-        tabs: [
-          for (final item in tabs)
-            VitTabItem(
-              key: item.tab.name,
-              label: item.label,
-              widgetKey: item.key,
-            ),
-        ],
-      ),
+    return PredictionEnumTabBar<_CalendarTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      items: [
+        (
+          PredictionEventCalendarPage.calendarTabKey,
+          _CalendarTab.calendar,
+          'Lich',
+        ),
+        (
+          PredictionEventCalendarPage.upcomingTabKey,
+          _CalendarTab.upcoming,
+          'Sap toi',
+        ),
+        (
+          PredictionEventCalendarPage.notificationsTabKey,
+          _CalendarTab.notifications,
+          'Thong bao',
+        ),
+      ],
     );
   }
 }

@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_date_format.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -32,27 +34,6 @@ final double _smartRuleActionExtent = VitDensity.compact.controlHeight;
 const _smartRuleBodyLineRatio = ArenaSpacingTokens.arenaSmartRuleBodyLineHeight;
 const _smartRuleSubtitleLineRatio =
     ArenaSpacingTokens.arenaSmartRuleSubtitleLineHeight;
-
-String _formatArenaRuleDateInput(String isoDate) {
-  final parts = isoDate.split('-');
-  if (parts.length != 3) return isoDate;
-  final year = parts[0];
-  final month = parts[1];
-  final day = parts[2];
-  if (year.length != 4 || month.length != 2 || day.length != 2) {
-    return isoDate;
-  }
-  return '$month/$day/$year';
-}
-
-String _normalizeArenaRuleDateInput(String displayDate) {
-  final parts = displayDate.split('/');
-  if (parts.length != 3) return displayDate;
-  final month = parts[0].padLeft(2, '0');
-  final day = parts[1].padLeft(2, '0');
-  final year = parts[2].padLeft(4, '0');
-  return '$year-$month-$day';
-}
 
 class ArenaSmartRuleBuilderPage extends ConsumerStatefulWidget {
   const ArenaSmartRuleBuilderPage({super.key, this.shellRenderMode});
@@ -120,7 +101,7 @@ class _ArenaSmartRuleBuilderPageState
   void initState() {
     super.initState();
     _endDate = _defaultArenaRuleEndDate();
-    _endDateController.text = _formatArenaRuleDateInput(_endDate);
+    _endDateController.text = formatArenaDateInput(_endDate);
   }
 
   @override
@@ -140,7 +121,7 @@ class _ArenaSmartRuleBuilderPageState
     final creationState = ref.watch(arenaCreationProvider);
     _endDate = _endDate.isEmpty ? snapshot.defaultEndDate : _endDate;
     if (_endDateController.text.isEmpty && _endDate.isNotEmpty) {
-      _endDateController.text = _formatArenaRuleDateInput(_endDate);
+      _endDateController.text = formatArenaDateInput(_endDate);
     }
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
@@ -534,7 +515,7 @@ class _ArenaSmartRuleBuilderPageState
     _customWinController.clear();
     _descriptionController.clear();
     _endDate = _defaultArenaRuleEndDate();
-    _endDateController.text = _formatArenaRuleDateInput(_endDate);
+    _endDateController.text = formatArenaDateInput(_endDate);
     setState(() {
       _title = '';
       _domainId = '';
@@ -559,11 +540,11 @@ class _ArenaSmartRuleBuilderPageState
   }
 
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.arenaStudio);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.arenaStudio,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 }
 

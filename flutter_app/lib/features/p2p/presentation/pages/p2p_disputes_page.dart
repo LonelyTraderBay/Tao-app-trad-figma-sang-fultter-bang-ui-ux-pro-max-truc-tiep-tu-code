@@ -84,7 +84,7 @@ class P2PDisputesPage extends ConsumerWidget {
                             _DisputeListTile(dispute: dispute),
                             if (dispute != snapshot.disputes.last)
                               const SizedBox(
-                                height: AppSpacing.pageRhythmCompactInnerGap,
+                                height: AppSpacing.pageRhythmFormInnerGap,
                               ),
                           ],
                         _GuideCard(snapshot: snapshot),
@@ -172,7 +172,7 @@ class _StatCard extends StatelessWidget {
               child: Icon(icon, color: color, size: AppSpacing.iconSm),
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
@@ -228,7 +228,7 @@ class _SafetyNotice extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
                   Text(
                     snapshot.notice,
                     maxLines: 2,
@@ -272,7 +272,7 @@ class _ListHeader extends StatelessWidget {
                 shape: CircleBorder(),
                 child: SizedBox(width: AppSpacing.x2, height: AppSpacing.x2),
               ),
-              const SizedBox(width: AppSpacing.x1),
+              const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
               Text(
                 '$activeCount đang xử lý',
                 style: AppTextStyles.micro.copyWith(
@@ -303,7 +303,7 @@ class _EmptyDisputes extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Text(
             snapshot.emptyTitle,
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
@@ -365,7 +365,7 @@ class _DisputeListTile extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
                     Text(
                       dispute.createdAt,
                       style: AppTextStyles.micro.copyWith(
@@ -385,14 +385,14 @@ class _DisputeListTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Text(
             dispute.reason,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           Row(
             children: [
               _MetaItem(
@@ -428,7 +428,7 @@ class _MetaItem extends StatelessWidget {
           color: AppColors.text3,
           size: P2PSpacingTokens.p2pDisputeMetaIcon,
         ),
-        const SizedBox(width: AppSpacing.x1),
+        const SizedBox(width: AppSpacing.pageRhythmFormInnerGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -468,14 +468,14 @@ class _GuideCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           for (var index = 0; index < snapshot.guideSteps.length; index++) ...[
             Text(
               '${index + 1}. ${snapshot.guideSteps[index]}',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
             if (index < snapshot.guideSteps.length - 1)
-              const SizedBox(height: AppSpacing.x1),
+              const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           ],
         ],
       ),

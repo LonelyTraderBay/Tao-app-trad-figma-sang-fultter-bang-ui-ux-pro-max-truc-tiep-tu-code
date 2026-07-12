@@ -27,6 +27,7 @@ class AnalysisTab extends StatelessWidget {
     required this.weightedApy,
     required this.annualInterest,
     required this.liquidityScore,
+    required this.onEmptyCta,
   });
 
   final SavingsLadderSnapshot snapshot;
@@ -35,6 +36,7 @@ class AnalysisTab extends StatelessWidget {
   final double weightedApy;
   final double annualInterest;
   final int liquidityScore;
+  final VoidCallback onEmptyCta;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class AnalysisTab extends StatelessWidget {
         icon: Icons.bar_chart_rounded,
         title: 'Tạo ladder để xem phân tích',
         cta: 'Bắt đầu xây',
+        onCta: onEmptyCta,
       );
     }
 

@@ -99,15 +99,7 @@ class _PaymentPill extends StatelessWidget {
   }
 }
 
-String _formatVnd(num value) {
-  final whole = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    if (i > 0 && (whole.length - i) % 3 == 0) buffer.write('.');
-    buffer.write(whole[i]);
-  }
-  return buffer.toString();
-}
+String _formatVnd(num value) => formatP2PVnd(value);
 
 String _compactVnd(int value) {
   if (value >= 1000000000) {

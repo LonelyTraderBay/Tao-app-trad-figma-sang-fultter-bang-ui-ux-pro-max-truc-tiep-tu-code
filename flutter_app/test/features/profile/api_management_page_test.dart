@@ -119,6 +119,31 @@ void main() {
     expect(find.text('T\u1EA1o API Key m\u1EDBi'), findsOneWidget);
   });
 
+  testWidgets('SC-163 regenerate secret shows coming-soon snackbar', (
+    tester,
+  ) async {
+    await pumpApiManagement(tester);
+
+    await tester.tap(find.text('Tạo lại Secret').first);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Tạo lại Secret sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-163 API docs card shows coming-soon snackbar', (
+    tester,
+  ) async {
+    await pumpApiManagement(tester);
+
+    await tester.ensureVisible(find.text('Tài liệu API'));
+    await tester.tap(find.text('Tài liệu API'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Tài liệu API sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-163 direct header back returns to profile parent', (
     tester,
   ) async {

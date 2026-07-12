@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_formatters.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pExpressConfirmVisualNavClearance =
@@ -108,7 +109,9 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
@@ -484,18 +487,7 @@ double parseP2PAmount(String? value) {
   return double.tryParse(value) ?? 0;
 }
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final reverseIndex = raw.length - i;
-    buffer.write(raw[i]);
-    if (reverseIndex > 1 && reverseIndex % 3 == 1) {
-      buffer.write('.');
-    }
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);
 
 String _formatAmount(double value) {
   if (value == 0) return '0.00';

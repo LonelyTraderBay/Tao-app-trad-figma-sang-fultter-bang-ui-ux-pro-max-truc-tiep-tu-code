@@ -13,6 +13,11 @@ void main() {
       'lib/features/predictions/presentation/pages/predictions_home_page.dart',
       'lib/features/predictions/presentation/pages/prediction_event_detail_page.dart',
       'lib/features/predictions/presentation/widgets/prediction_order_receipt_page_sections.dart',
+      'lib/features/wallet/presentation/widgets/wallet_address_add_agreement.dart',
+      'lib/features/profile/presentation/pages/security_page.dart',
+      'lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart',
+      'lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart',
+      'lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart',
     };
 
     final missing = <String>[];

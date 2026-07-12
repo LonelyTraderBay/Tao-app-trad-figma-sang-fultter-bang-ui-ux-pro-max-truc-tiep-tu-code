@@ -129,10 +129,9 @@ class _QuickNavItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _IconBubble(
+          VitAccentIconBox(
             icon: icon,
             color: color,
-            size: MarketsSpacingTokens.marketOverviewQuickNavIcon,
             iconSize: MarketsSpacingTokens.marketOverviewQuickNavGlyph,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -305,7 +304,7 @@ class _QuickMoverRow extends StatelessWidget {
         SizedBox(
           width: MarketsSpacingTokens.marketOverviewMoverPriceWidth,
           child: Text(
-            _formatPrice(mover.price),
+            formatMarketPriceAdaptive(mover.price),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
@@ -422,10 +421,9 @@ class _SectorRow extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  _IconBubble(
+                  VitAccentIconBox(
                     icon: MarketIconTokens.icon(sector.icon),
                     color: sector.color.resolve(),
-                    size: MarketsSpacingTokens.marketOverviewSectorIcon,
                     iconSize: MarketsSpacingTokens.marketOverviewSectorGlyph,
                   ),
                   const SizedBox(
@@ -464,7 +462,10 @@ class _SectorRow extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.x1),
                       Text(
-                        _formatCompact(sector.totalMarketCap, prefix: r'$'),
+                        formatMarketCompact(
+                          sector.totalMarketCap,
+                          prefix: r'$',
+                        ),
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                           fontFeatures: AppTextStyles.tabularFigures,

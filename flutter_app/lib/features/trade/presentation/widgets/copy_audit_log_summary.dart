@@ -213,20 +213,6 @@ String _eventTypeLabel(TradeCopyAuditEventType type) {
   };
 }
 
-String _formatUsd(double value) {
-  return '\$${_formatNumber(value.round())}';
-}
+String _formatUsd(double value) => formatTradeUsdRounded(value);
 
-String _formatSignedUsd(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign\$${_formatNumber(value.abs().round())}';
-}
-
-String _formatNumber(int value) {
-  final chars = value.toString().split('').reversed.toList();
-  final groups = <String>[];
-  for (var i = 0; i < chars.length; i += 3) {
-    groups.add(chars.skip(i).take(3).toList().reversed.join());
-  }
-  return groups.reversed.join(',');
-}
+String _formatSignedUsd(double value) => formatTradeSignedUsdRounded(value);

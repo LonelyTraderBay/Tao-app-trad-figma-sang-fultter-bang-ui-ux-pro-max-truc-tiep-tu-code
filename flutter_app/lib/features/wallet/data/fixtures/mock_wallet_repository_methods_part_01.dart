@@ -106,6 +106,7 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
       ],
       auditTrailNote:
           'High-risk action: preview + confirm + audit trail required.',
+      highRiskContractId: HighRiskFlowContractIds.walletMoneyMovement,
     );
   }
 

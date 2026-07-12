@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 

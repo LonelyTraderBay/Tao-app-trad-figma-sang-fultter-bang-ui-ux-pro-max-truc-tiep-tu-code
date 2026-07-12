@@ -186,6 +186,18 @@ void main() {
     expect(find.byType(HomePage), findsOneWidget);
   });
 
+  testWidgets('SC-327 product detail CTA shows placeholder feedback', (
+    tester,
+  ) async {
+    await pumpStakingEarn(tester);
+
+    await tester.tap(find.text('Xem chi tiet').first);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('Xem chi tiết sản phẩm sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-328 renders the staking route variant', (tester) async {
     await pumpStakingRoute(tester);
 

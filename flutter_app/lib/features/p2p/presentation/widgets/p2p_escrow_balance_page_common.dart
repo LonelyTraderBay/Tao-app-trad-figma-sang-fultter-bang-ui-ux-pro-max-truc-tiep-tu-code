@@ -131,12 +131,4 @@ String _formatAssetAmount(
   return '${value.toStringAsFixed(2)} $asset';
 }
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    if (i > 0 && (raw.length - i) % 3 == 0) buffer.write('.');
-    buffer.write(raw[i]);
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);

@@ -52,9 +52,7 @@ class VitCarouselDots extends StatelessWidget {
               semanticLabel: 'Go to carousel page ${index + 1}',
             ),
             if (index < itemCount - 1)
-              const SizedBox(
-                width: SharedSpacingTokens.homeAnnouncementDotGap,
-              ),
+              const SizedBox(width: SharedSpacingTokens.homeAnnouncementDotGap),
           ],
         ],
       ),

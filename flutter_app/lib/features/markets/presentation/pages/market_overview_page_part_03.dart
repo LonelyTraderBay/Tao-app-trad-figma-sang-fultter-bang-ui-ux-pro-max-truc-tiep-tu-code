@@ -257,76 +257,12 @@ class _MiniHeader extends StatelessWidget {
   }
 }
 
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({
-    required this.icon,
-    required this.color,
-    required this.size,
-    required this.iconSize,
-  });
-
-  final IconData icon;
-  final Color color;
-  final double size;
-  final double iconSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: 0.13),
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      child: SizedBox.square(
-        dimension: size,
-        child: Center(
-          child: Icon(icon, color: color, size: iconSize),
-        ),
-      ),
-    );
-  }
-}
-
 Color _fearGreedColor(int value) {
   if (value <= 25) return AppColors.sell;
   if (value <= 45) return AppColors.primarySoft;
   if (value <= 55) return AppAssetColors.neutralChain;
   if (value <= 75) return AppColors.buy;
   return AppColors.buyDark;
-}
-
-String _formatCompact(double value, {String prefix = ''}) {
-  if (value >= 1000000000) {
-    return '$prefix${_formatFixed(value / 1000000000, 2)}B';
-  }
-  if (value >= 1000000) {
-    return '$prefix${_formatFixed(value / 1000000, 2)}M';
-  }
-  if (value >= 1000) {
-    return '$prefix${_formatFixed(value / 1000, 2)}K';
-  }
-  return '$prefix${_formatFixed(value, 2)}';
-}
-
-String _formatPrice(double value) {
-  if (value >= 1) {
-    return _formatFixed(value, 2);
-  }
-  if (value >= 0.01) {
-    return _formatFixed(value, 4);
-  }
-  return _formatFixed(value, 6);
-}
-
-String _formatFixed(double value, int decimals) {
-  final fixed = value.toStringAsFixed(decimals);
-  final parts = fixed.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final fromEnd = whole.length - i;
-    buffer.write(whole[i]);
-    if (fromEnd > 1 && fromEnd % 3 == 1) buffer.write(',');
-  }
-  return '${buffer.toString()}.${parts.last}';
 }
 
 String _formatSignedPercent(double value) {

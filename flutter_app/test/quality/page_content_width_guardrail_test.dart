@@ -23,7 +23,7 @@ void main() {
   test('referral pilot routes are not P0 double inset offenders', () {
     final repoRoot = Directory.current.uri.resolve('../').toFilePath();
     final csvPath =
-        '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Page-Content-Width-Audit.csv';
+        '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Content-Width-Audit.csv';
     final csv = File(csvPath).readAsStringSync();
     const referralPaths = [
       'referral_history_page.dart',

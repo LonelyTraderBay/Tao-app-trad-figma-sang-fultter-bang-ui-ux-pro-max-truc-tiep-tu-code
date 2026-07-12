@@ -116,4 +116,4 @@ and checklists only unless a specific section is required.
 | Pre-merge review | `.codex/skills/code-review-and-quality/SKILL.md` |
 | GitNexus workflows | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
 | Diff trim / batch self-check | `.codex/skills/vittrade-minimal-review/SKILL.md` |
-| Ponytail audit toàn module | `docs/02_FLUTTER_MIGRATION/ke-hoach-ponytail-audit-toan-module.md` v2.1 — **1 STEP/chat**; kết thúc **khối HANDOFF Section 1.2** (copy prompt STEP tiếp); MERGE dùng cùng khối, không chỉ `PONYTAIL AUDIT DONE` |
+| Ponytail audit toàn module | `docs/02_FLUTTER_MIGRATION/checklists/ke-hoach-ponytail-audit-toan-module.md` v2.1 — **1 STEP/chat**; kết thúc **khối HANDOFF Section 1.2** (copy prompt STEP tiếp); MERGE dùng cùng khối, không chỉ `PONYTAIL AUDIT DONE` |

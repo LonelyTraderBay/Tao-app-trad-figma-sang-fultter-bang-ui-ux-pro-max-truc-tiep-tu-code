@@ -84,11 +84,22 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
           const _FormPermissionPreview(),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
-            onPressed: () {},
+            onPressed: _submitCreate,
             density: VitDensity.compact,
             child: const Text('T\u1EA1o t\u00E0i kho\u1EA3n'),
           ),
         ],
+      ),
+    );
+  }
+
+  void _submitCreate() {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 s\u1EBD s\u1EDBm ra m\u1EAFt',
+        ),
       ),
     );
   }

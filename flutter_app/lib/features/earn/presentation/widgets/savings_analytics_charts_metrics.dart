@@ -30,7 +30,7 @@ class _YieldChartCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
-                      _formatUsd(summary.totalEarned),
+                      EarnFormatters.usd(summary.totalEarned),
                       style: AppTextStyles.pageTitle.copyWith(
                         color: AppColors.buy,
                         fontFeatures: AppTextStyles.tabularFigures,
@@ -187,7 +187,7 @@ class _MetricRow extends StatelessWidget {
           child: _MetricCard(
             icon: Icons.attach_money_rounded,
             label: 'Thu nhập/ngày',
-            value: _formatUsd(summary.dailyEarnings),
+            value: EarnFormatters.usd(summary.dailyEarnings),
             color: AppColors.primary,
           ),
         ),
@@ -196,7 +196,7 @@ class _MetricRow extends StatelessWidget {
           child: _MetricCard(
             icon: Icons.calendar_month_outlined,
             label: 'Thu nhập/tháng',
-            value: _formatUsd(summary.monthlyEarnings),
+            value: EarnFormatters.usd(summary.monthlyEarnings),
             color: AppColors.warn,
           ),
         ),
@@ -205,7 +205,7 @@ class _MetricRow extends StatelessWidget {
           child: _MetricCard(
             icon: Icons.trending_up_rounded,
             label: 'Dự kiến/năm',
-            value: _formatUsd(summary.annualProjection),
+            value: EarnFormatters.usd(summary.annualProjection),
             color: AppColors.buy,
           ),
         ),

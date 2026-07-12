@@ -21,9 +21,6 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'dca_portfolio_optimizer_page_part_01.dart';
-part 'dca_portfolio_optimizer_page_part_02.dart';
-part 'dca_portfolio_optimizer_page_part_03.dart';
 part 'dca_portfolio_optimizer_page_part_04.dart';
 part '../widgets/dca_portfolio_optimizer_header_drift.dart';
 part '../widgets/dca_portfolio_optimizer_comparison_hero.dart';
@@ -50,7 +47,6 @@ const int _dcaPortfolioRiskGridColumns = 2;
 const double _dcaPortfolioRiskGridAspect = 1.35;
 const double _dcaPortfolioAlertIconExtent = AppSpacing.buttonCompact;
 const double _dcaPortfolioHeroIconExtent = AppSpacing.inputHeight;
-const double _dcaPortfolioIconBubbleExtent = AppSpacing.x6;
 const EdgeInsetsDirectional _dcaPortfolioCardPadding =
     EdgeInsetsDirectional.all(AppSpacing.x3);
 const EdgeInsetsDirectional _dcaPortfolioHeroPadding =

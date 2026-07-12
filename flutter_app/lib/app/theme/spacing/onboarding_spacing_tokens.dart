@@ -38,8 +38,6 @@ final class OnboardingSpacingTokens {
   static const int onboardingGoalGridColumns = 2;
   static const double onboardingGoalGridAspectRatio = 1.08;
   static const double onboardingHeroIconElevation = AppSpacing.x3;
-  static const double onboardingSmallIconBox =
-      AppSpacing.buttonCompact + AppSpacing.x3;
   static const double onboardingBulletDotIcon = 7;
   static const double onboardingBulletIcon = 14;
 }

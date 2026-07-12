@@ -149,10 +149,10 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('$repoRoot/docs/02_FLUTTER_MIGRATION');
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Design-Token-Consistency-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Design-Token-Consistency-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Design-Token-Consistency-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Design-Token-Consistency-Audit.csv',
   );
 
   final metrics = _collectMetrics(appRoot, repoRoot);

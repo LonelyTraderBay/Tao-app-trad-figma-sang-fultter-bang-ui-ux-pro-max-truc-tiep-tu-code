@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -383,7 +384,12 @@ class _VisitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: OmbudsmanReferralPage.ctaKey,
-      onPressed: () {},
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Trang khiếu nại sẽ sớm ra mắt')),
+        );
+      },
       leading: const Icon(
         Icons.open_in_new_rounded,
         size: TradeSpacingTokens.complaintCaseTrailingIcon,

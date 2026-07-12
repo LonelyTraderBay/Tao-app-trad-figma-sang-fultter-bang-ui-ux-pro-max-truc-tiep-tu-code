@@ -4,20 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/cross_module_controller_providers.dart';
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_analysis.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_history.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_overview.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
   const UnifiedPortfolioDashboard({super.key, this.shellRenderMode});
@@ -50,57 +44,29 @@ class _UnifiedPortfolioDashboardState
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return CrossModuleTabbedPageShell(
       semanticLabel: 'SC-321 UnifiedPortfolioDashboard',
-      child: Material(
-        color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              UnifiedPortfolioTabs(
-                tabs: snapshot.tabs,
-                active: _activeTab,
-                tabKey: UnifiedPortfolioDashboard.tabKey,
-                onChanged: _changeTab,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  key: UnifiedPortfolioDashboard.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: CrossModuleSpacingTokens.crossModuleScrollPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      if (_activeTab == UnifiedPortfolioTab.overview)
-                        UnifiedPortfolioOverview(
-                          snapshot: snapshot,
-                          refreshKey: UnifiedPortfolioDashboard.refreshKey,
-                          moduleKey: UnifiedPortfolioDashboard.moduleKey,
-                          onRefresh: () => HapticFeedback.lightImpact(),
-                          onOpenRoute: (route) => context.go(route),
-                        )
-                      else if (_activeTab == UnifiedPortfolioTab.analysis)
-                        UnifiedPortfolioAnalysis(snapshot: snapshot)
-                      else
-                        UnifiedPortfolioHistory(snapshot: snapshot),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      contentKey: UnifiedPortfolioDashboard.contentKey,
+      title: snapshot.title,
+      onBack: () => context.go(snapshot.backRoute),
+      scrollEndClearance: bottomInset,
+      tabs: UnifiedPortfolioTabs(
+        tabs: snapshot.tabs,
+        active: _activeTab,
+        tabKey: UnifiedPortfolioDashboard.tabKey,
+        onChanged: _changeTab,
       ),
+      body: _activeTab == UnifiedPortfolioTab.overview
+          ? UnifiedPortfolioOverview(
+              snapshot: snapshot,
+              refreshKey: UnifiedPortfolioDashboard.refreshKey,
+              moduleKey: UnifiedPortfolioDashboard.moduleKey,
+              onRefresh: () => HapticFeedback.lightImpact(),
+              onOpenRoute: (route) => context.go(route),
+            )
+          : _activeTab == UnifiedPortfolioTab.analysis
+          ? UnifiedPortfolioAnalysis(snapshot: snapshot)
+          : UnifiedPortfolioHistory(snapshot: snapshot),
     );
   }
 

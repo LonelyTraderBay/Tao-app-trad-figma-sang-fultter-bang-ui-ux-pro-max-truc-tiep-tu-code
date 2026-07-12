@@ -61,12 +61,10 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
           historyCount: snapshot.historyOrders.length,
           onChanged: (tab) => setState(() => _activeTab = tab),
         ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _FilterRow(
           active: _filter,
           onChanged: (filter) => setState(() => _filter = filter),
         ),
-        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         if (orders.isEmpty)
           _EmptyState(activeTab: _activeTab)
         else

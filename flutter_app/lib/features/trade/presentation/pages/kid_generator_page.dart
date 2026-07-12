@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -324,6 +325,13 @@ class _KidSectionCard extends StatelessWidget {
 class _Actions extends StatelessWidget {
   const _Actions();
 
+  void _showComingSoon(BuildContext context, String message) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -334,7 +342,8 @@ class _Actions extends StatelessWidget {
             icon: Icons.remove_red_eye_outlined,
             label: 'Preview KID',
             filled: false,
-            onPressed: () {},
+            onPressed: () =>
+                _showComingSoon(context, 'Xem trước KID sẽ sớm ra mắt'),
           ),
         ),
         const SizedBox(width: _kidSectionCardGap),
@@ -343,7 +352,7 @@ class _Actions extends StatelessWidget {
             icon: Icons.download_rounded,
             label: 'Download PDF',
             filled: true,
-            onPressed: () {},
+            onPressed: () => _showComingSoon(context, 'Tải PDF sẽ sớm ra mắt'),
           ),
         ),
       ],

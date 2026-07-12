@@ -99,14 +99,18 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                             ),
                         ] else if (_tab == 'analysis') ...[
                           _ImpactOverview(snapshot: allSnapshot),
-                          const _SectionHeader(
-                            label: 'Theo loại',
+                          const VitSectionHeader(
+                            title: 'Theo loại',
                             accentColor: AppColors.accent,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _CategoryBreakdown(snapshot: allSnapshot),
-                          const _SectionHeader(
-                            label: 'Rủi ro pha loãng cao nhất',
+                          const VitSectionHeader(
+                            title: 'Rủi ro pha loãng cao nhất',
                             accentColor: AppColors.sell,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _DilutionRanking(snapshot: allSnapshot),
                           const _UnlockWarningCard(),

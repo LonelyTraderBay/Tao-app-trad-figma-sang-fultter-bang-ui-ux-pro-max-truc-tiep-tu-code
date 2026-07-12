@@ -93,10 +93,10 @@ class _ApiKeyCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _IconBubble(
+              VitAccentIconBox(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
-                background: AppColors.sell10,
+                iconSize: PredictionsSpacingTokens.predictionDataIconBubbleIcon,
               ),
             ],
           ),
@@ -264,10 +264,10 @@ class _WebhookCard extends StatelessWidget {
               const SizedBox(
                 width: PredictionsSpacingTokens.predictionDataWebhookActionGap,
               ),
-              _IconBubble(
+              VitAccentIconBox(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
-                background: AppColors.sell10,
+                iconSize: PredictionsSpacingTokens.predictionDataIconBubbleIcon,
               ),
             ],
           ),

@@ -118,7 +118,8 @@ class _InspectorPortalCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: RegulatoryInspectionReadyPage.portalKey,
-            onPressed: () {},
+            onPressed: () =>
+                _showComingSoon(context, 'Cổng thanh tra sẽ sớm ra mắt'),
             variant: VitCtaButtonVariant.secondary,
             density: VitDensity.compact,
             leading: const Icon(
@@ -148,7 +149,7 @@ class _ReportButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: RegulatoryInspectionReadyPage.reportKey,
-      onPressed: () {},
+      onPressed: () => _showComingSoon(context, 'Tải báo cáo sẽ sớm ra mắt'),
       variant: VitCtaButtonVariant.success,
       density: VitDensity.compact,
       leading: const Icon(
@@ -215,4 +216,9 @@ final class _StatStyle {
 
   final Color color;
   final IconData icon;
+}
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }

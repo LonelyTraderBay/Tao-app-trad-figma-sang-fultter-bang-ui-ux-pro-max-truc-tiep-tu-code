@@ -69,7 +69,7 @@ class _MoverRow extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            _formatPrice(mover.price),
+                            formatMarketPriceAdaptive(mover.price),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
@@ -112,7 +112,7 @@ class _MoverRow extends StatelessWidget {
   _MoverMetric _metricForTab() {
     if (tab == 'Hoạt động') {
       return _MoverMetric(
-        label: _formatCompact(mover.volume24h, prefix: r'$'),
+        label: formatMarketCompact(mover.volume24h, prefix: r'$'),
         positive: true,
       );
     }

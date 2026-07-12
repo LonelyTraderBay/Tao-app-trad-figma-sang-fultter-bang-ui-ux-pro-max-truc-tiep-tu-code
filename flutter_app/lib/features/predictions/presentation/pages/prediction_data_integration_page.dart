@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_enum_tab_bar.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 part '../widgets/prediction_data_integration_sources.dart';
@@ -74,6 +75,13 @@ class _PredictionDataIntegrationPageState
     setState(() => _copiedKeyId = apiKey.id);
   }
 
+  void _showComingSoon(String message) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
@@ -125,10 +133,13 @@ class _PredictionDataIntegrationPageState
                         _DataIntegrationTab.sources => [
                           _SourcesOverview(snapshot: snapshot),
                           _SourceSection(sources: snapshot.sources),
-                          const _PrimaryBlueButton(
+                          _PrimaryBlueButton(
                             key: PredictionDataIntegrationPage.addSourceKey,
                             icon: Icons.add_rounded,
                             label: 'Add Data Source',
+                            onPressed: () => _showComingSoon(
+                              'Thêm nguồn dữ liệu sẽ sớm ra mắt',
+                            ),
                           ),
                           const _InfoCard(
                             icon: Icons.shield_outlined,
@@ -144,10 +155,12 @@ class _PredictionDataIntegrationPageState
                             onReveal: _toggleKey,
                             onCopy: _copyKey,
                           ),
-                          const _PrimaryBlueButton(
+                          _PrimaryBlueButton(
                             key: PredictionDataIntegrationPage.createApiKeyKey,
                             icon: Icons.add_rounded,
                             label: 'Create API Key',
+                            onPressed: () =>
+                                _showComingSoon('Tạo API Key sẽ sớm ra mắt'),
                           ),
                           const _WarningCard(
                             message:
@@ -156,10 +169,12 @@ class _PredictionDataIntegrationPageState
                         ],
                         _DataIntegrationTab.webhooks => [
                           _WebhookSection(webhooks: snapshot.webhooks),
-                          const _PrimaryBlueButton(
+                          _PrimaryBlueButton(
                             key: PredictionDataIntegrationPage.addWebhookKey,
                             icon: Icons.add_rounded,
                             label: 'Add Webhook',
+                            onPressed: () =>
+                                _showComingSoon('Thêm Webhook sẽ sớm ra mắt'),
                           ),
                           const _InfoCard(
                             icon: Icons.info_outline_rounded,

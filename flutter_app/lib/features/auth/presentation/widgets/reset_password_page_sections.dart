@@ -10,21 +10,19 @@ class _ResetExpired extends StatelessWidget {
       padding: AuthSpacingTokens.authStateVerticalPadding,
       child: Column(
         children: [
-          SizedBox.square(
+          AuthHeroIconBox(
             dimension: AuthSpacingTokens.authHeroIconBoxMd,
-            child: Material(
-              color: AppColors.warn10,
-              shape: const CircleBorder(
-                side: BorderSide(
-                  color: AppColors.warningBorder,
-                  width: AppSpacing.hairlineStroke,
-                ),
+            shape: const CircleBorder(
+              side: BorderSide(
+                color: AppColors.warningBorder,
+                width: AppSpacing.hairlineStroke,
               ),
-              child: const Icon(
-                Icons.lock_clock_outlined,
-                color: AppColors.warn,
-                size: AuthSpacingTokens.authHeroIconLg,
-              ),
+            ),
+            fillColor: AppColors.warn10,
+            child: const Icon(
+              Icons.lock_clock_outlined,
+              color: AppColors.warn,
+              size: AuthSpacingTokens.authHeroIconLg,
             ),
           ),
           const Padding(padding: AuthSpacingTokens.authTopGapX6),
@@ -56,22 +54,20 @@ class _ResetHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox.square(
+        AuthHeroIconBox(
           dimension: AuthSpacingTokens.authHeroIconBoxSm,
-          child: Material(
-            color: _authPrimary10,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.cardRadius,
-              side: BorderSide(
-                color: _authPrimary30,
-                width: AppSpacing.borderWidth,
-              ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+            side: BorderSide(
+              color: _authPrimary30,
+              width: AppSpacing.borderWidth,
             ),
-            child: const Icon(
-              Icons.lock_outline_rounded,
-              color: _authPrimary,
-              size: AuthSpacingTokens.authHeroIconMd,
-            ),
+          ),
+          fillColor: _authPrimary10,
+          child: const Icon(
+            Icons.lock_outline_rounded,
+            color: _authPrimary,
+            size: AuthSpacingTokens.authHeroIconMd,
           ),
         ),
         const Padding(padding: AuthSpacingTokens.authTopGapX5),

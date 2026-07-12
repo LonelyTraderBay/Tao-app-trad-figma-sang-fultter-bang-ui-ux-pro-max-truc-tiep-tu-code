@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/cross_module_icon_widgets.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart';
 
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';

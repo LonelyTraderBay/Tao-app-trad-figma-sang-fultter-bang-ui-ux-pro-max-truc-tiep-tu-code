@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Accent icon boxes (Mandatory)
 
-Full contract: [Accent-Icon-Box-Standard.md](../../docs/02_FLUTTER_MIGRATION/Accent-Icon-Box-Standard.md)
+Full contract: [Accent-Icon-Box-Standard.md](../../docs/02_FLUTTER_MIGRATION/standards/Accent-Icon-Box-Standard.md)
 
 ## When editing list rows with module accent icons
 

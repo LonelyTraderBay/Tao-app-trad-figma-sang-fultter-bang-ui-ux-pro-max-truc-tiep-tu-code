@@ -193,6 +193,18 @@ void main() {
     expect(find.text('Arena Studio'), findsOneWidget);
   });
 
+  testWidgets('SC-030 risk link shows a placeholder snackbar', (tester) async {
+    await pumpDetail(tester);
+
+    await tester.ensureVisible(
+      find.byKey(PredictionEventDetailPage.riskLinkKey),
+    );
+    await tester.tap(find.byKey(PredictionEventDetailPage.riskLinkKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tìm hiểu rủi ro sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-030 back button returns to SC-027 Predictions home', (
     tester,
   ) async {

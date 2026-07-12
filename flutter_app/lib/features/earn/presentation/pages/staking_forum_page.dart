@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -78,7 +79,10 @@ class StakingForumPage extends ConsumerWidget {
                       ),
                       VitCtaButton(
                         key: StakingForumPage.createKey,
-                        onPressed: () {},
+                        onPressed: () => _showComingSoon(
+                          context,
+                          'Tạo chủ đề sẽ sớm ra mắt',
+                        ),
                         child: Text(snapshot.createLabel),
                       ),
                     ],
@@ -168,7 +172,7 @@ class _CategoryCard extends StatelessWidget {
       key: StakingForumPage.categoryKey(category.name),
       radius: VitCardRadius.large,
       padding: EarnSpacingTokens.earnCardPaddingX3,
-      onTap: () {},
+      onTap: () => _showComingSoon(context, 'Xem danh mục sẽ sớm ra mắt'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -226,7 +230,7 @@ class _ThreadCard extends StatelessWidget {
       key: StakingForumPage.threadKey(index),
       radius: VitCardRadius.large,
       padding: EarnSpacingTokens.earnCardPaddingX3X4,
-      onTap: () {},
+      onTap: () => _showComingSoon(context, 'Xem chủ đề sẽ sớm ra mắt'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -276,6 +280,11 @@ class _ThreadCard extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 
 class _ThreadMetric extends StatelessWidget {

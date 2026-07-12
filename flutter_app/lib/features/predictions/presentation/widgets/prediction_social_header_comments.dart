@@ -8,39 +8,14 @@ class _SocialTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionSocialPage.commentsTabKey,
-        tab: _SocialTab.comments,
-        label: 'Binh luan',
-      ),
-      (
-        key: PredictionSocialPage.analysisTabKey,
-        tab: _SocialTab.analysis,
-        label: 'Phan tich',
-      ),
-      (
-        key: PredictionSocialPage.shareTabKey,
-        tab: _SocialTab.share,
-        label: 'Chia se',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_SocialTab.values.byName(key)),
-        tabs: [
-          for (final item in tabs)
-            VitTabItem(
-              key: item.tab.name,
-              label: item.label,
-              widgetKey: item.key,
-            ),
-        ],
-      ),
+    return PredictionEnumTabBar<_SocialTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      items: [
+        (PredictionSocialPage.commentsTabKey, _SocialTab.comments, 'Binh luan'),
+        (PredictionSocialPage.analysisTabKey, _SocialTab.analysis, 'Phan tich'),
+        (PredictionSocialPage.shareTabKey, _SocialTab.share, 'Chia se'),
+      ],
     );
   }
 }

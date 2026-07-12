@@ -217,7 +217,11 @@ class _InfoCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _IconBubble(icon: icon, color: color),
+          VitAccentIconBox(
+            icon: icon,
+            color: color,
+            iconSize: _challengeIconBubbleIcon,
+          ),
           const SizedBox(width: _challengeGap),
           Expanded(
             child: Column(
@@ -347,29 +351,6 @@ class _SmallIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Icon(icon, color: color, size: _challengeMdIcon);
-  }
-}
-
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: _challengeIconBubble,
-      height: _challengeIconBubble,
-      child: Material(
-        color: color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: color.withValues(alpha: .22)),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Icon(icon, color: color, size: _challengeIconBubbleIcon),
-      ),
-    );
   }
 }
 

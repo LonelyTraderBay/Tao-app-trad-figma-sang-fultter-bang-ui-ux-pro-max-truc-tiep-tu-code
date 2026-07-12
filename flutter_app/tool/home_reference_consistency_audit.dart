@@ -1,6 +1,6 @@
 // Audits every feature module against the structural patterns established by
 // lib/features/home/presentation/** (the canonical UI reference per
-// docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md, "SC-007
+// docs/02_FLUTTER_MIGRATION/standards/Flutter-Module-Identity-Standard.md, "SC-007
 // HomePage"). Reuses the same divergence signals as
 // design_token_consistency_audit.dart (raw Container/BoxDecoration instead of
 // VitCard, BorderRadius.circular( instead of AppRadii.*, plus the other local
@@ -108,10 +108,10 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('$repoRoot/docs/02_FLUTTER_MIGRATION');
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Home-Reference-Consistency-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Home-Reference-Consistency-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Home-Reference-Consistency-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Home-Reference-Consistency-Audit.csv',
   );
 
   final metrics = _collectMetrics(appRoot, repoRoot);

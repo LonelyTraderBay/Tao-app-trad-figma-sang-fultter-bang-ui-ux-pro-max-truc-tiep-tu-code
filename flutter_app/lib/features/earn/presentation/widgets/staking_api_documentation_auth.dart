@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -8,6 +9,11 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
 
 class StakingApiDocumentationAuthTab extends StatelessWidget {
   const StakingApiDocumentationAuthTab({super.key, required this.snapshot});
@@ -73,7 +79,10 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                   VitCtaButton(
                     variant: VitCtaButtonVariant.ghost,
                     height: AppSpacing.ctaHeight,
-                    onPressed: () {},
+                    onPressed: () => _showComingSoon(
+                      context,
+                      'Tạo API Key trong Cài đặt sẽ sớm ra mắt',
+                    ),
                     child: const Text('Generate API Key in Settings ->'),
                   ),
                 ],
@@ -192,7 +201,8 @@ class _RateLimitCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             VitCtaButton(
               height: AppSpacing.ctaHeight,
-              onPressed: () {},
+              onPressed: () =>
+                  _showComingSoon(context, 'Liên hệ Sales sẽ sớm ra mắt'),
               child: const Text('Contact Sales'),
             ),
           ],

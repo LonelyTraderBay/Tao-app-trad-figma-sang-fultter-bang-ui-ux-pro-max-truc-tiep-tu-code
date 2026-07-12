@@ -94,16 +94,18 @@ class AddressWhitelistCard extends StatelessWidget {
 }
 
 class AddressWarningCard extends StatelessWidget {
-  const AddressWarningCard({super.key});
+  const AddressWarningCard({super.key, this.highRiskContractId});
+
+  final String? highRiskContractId;
 
   @override
   Widget build(BuildContext context) {
-    return const VitHighRiskStatePanel(
+    return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
       title: 'Lưu ý quan trọng',
       message:
           'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục.',
-      contractId: 'Address add preview',
+      contractId: highRiskContractId,
       density: VitDensity.compact,
     );
   }

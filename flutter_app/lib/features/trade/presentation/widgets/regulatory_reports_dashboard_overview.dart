@@ -1,0 +1,283 @@
+part of '../pages/regulatory_reports_dashboard_page.dart';
+
+class _OverviewTab extends StatelessWidget {
+  const _OverviewTab({required this.snapshot});
+
+  final TradeRegulatoryReportsDashboardSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
+      children: [
+        VitPageSection(
+          label: 'Submission Trend (Last 7 Days)',
+          density: VitDensity.compact,
+          children: [
+            _Card(
+              padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
+              child: AspectRatio(
+                aspectRatio: 2.4,
+                child: CustomPaint(
+                  painter: _TrendPainter(stats: snapshot.dailyStats),
+                  child: const SizedBox.expand(),
+                ),
+              ),
+            ),
+          ],
+        ),
+        VitPageSection(
+          label: 'Report Distribution by Regulation',
+          density: VitDensity.compact,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: _Card(
+                    padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
+                    child: AspectRatio(
+                      aspectRatio: 1.25,
+                      child: CustomPaint(
+                        painter: _DonutPainter(items: snapshot.distribution),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: _DistributionLegend(
+                    items: snapshot.distribution,
+                    total: snapshot.totals.distributionTotal,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        VitPageSection(
+          label: 'ARM Provider Performance',
+          density: VitDensity.compact,
+          children: [
+            for (final provider in snapshot.providers)
+              _ProviderCard(provider: provider),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _DistributionLegend extends StatelessWidget {
+  const _DistributionLegend({required this.items, required this.total});
+
+  final List<TradeRegulatoryDistributionItem> items;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
+      children: [
+        for (final item in items)
+          VitCard(
+            density: VitDensity.compact,
+            variant: VitCardVariant.inner,
+            constraints: BoxConstraints(
+              minHeight: VitDensity.compact.controlHeight,
+            ),
+            child: Row(
+              children: [
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
+                VitCard(
+                  variant: VitCardVariant.ghost,
+                  width: AppSpacing.x3,
+                  height: AppSpacing.x3,
+                  clip: true,
+                  background: ColoredBox(color: Color(item.colorHex)),
+                  child: const SizedBox.shrink(),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    item.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                ),
+                Text(
+                  _formatInt(item.value),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        VitCard(
+          padding: TradeSpacingTokens.tradeBotCompactCardPadding,
+          variant: VitCardVariant.ghost,
+          borderColor: _dashBorder,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Total',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ),
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    _formatInt(total),
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ProviderCard extends StatelessWidget {
+  const _ProviderCard({required this.provider});
+
+  final TradeRegulatoryArmProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    final healthy = provider.status == 'healthy';
+    final color = healthy ? _dashGreen : _dashAmber;
+    return _Card(
+      padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              // card-tile: allow-start — fixed surface, not horizontal strip tile
+              VitCard(
+                variant: VitCardVariant.ghost,
+                width: TradeSpacingTokens.tradeBotCorrelationLegendDot,
+                height: TradeSpacingTokens.tradeBotCorrelationLegendDot,
+                clip: true,
+                background: ColoredBox(color: color),
+                child: const SizedBox.shrink(),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  provider.name,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              Text(
+                '${_formatInt(provider.reports)} reports',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          Row(
+            children: [
+              Expanded(
+                child: _SmallMetric(
+                  label: 'Success Rate',
+                  value: '${provider.successRate.toStringAsFixed(1)}%',
+                  color: _dashGreen,
+                ),
+              ),
+              Expanded(
+                child: _SmallMetric(
+                  label: 'Avg Latency',
+                  value: '${provider.avgLatency}s',
+                ),
+              ),
+              Expanded(
+                child: _SmallMetric(
+                  label: 'Status',
+                  value: provider.status,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SmallMetric extends StatelessWidget {
+  const _SmallMetric({
+    required this.label,
+    required this.value,
+    this.color = AppColors.text1,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Card extends StatelessWidget {
+  const _Card({required this.child, required this.padding, this.onTap});
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: padding,
+      borderColor: _dashBorder.withValues(alpha: .7),
+      onTap: onTap,
+      child: child,
+    );
+  }
+}
+
+String _formatInt(int value) => formatTradeInt(value);

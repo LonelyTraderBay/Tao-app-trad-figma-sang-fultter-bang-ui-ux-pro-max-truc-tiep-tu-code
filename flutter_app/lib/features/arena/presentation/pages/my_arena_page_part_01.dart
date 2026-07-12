@@ -44,7 +44,7 @@ class _PointsHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [

@@ -169,7 +169,7 @@ class _AlertSettingsTab extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        _InfoPanel(
+        CrossModuleInfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
           border: AppColors.warn15,

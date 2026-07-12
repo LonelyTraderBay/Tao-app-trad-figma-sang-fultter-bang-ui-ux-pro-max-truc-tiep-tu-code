@@ -24,18 +24,6 @@ InputDecoration _inputDecoration(String hint) {
   );
 }
 
-String _formatArenaDateInput(String isoDate) {
-  final parts = isoDate.split('-');
-  if (parts.length != 3) return isoDate;
-  return '${parts[1]}/${parts[2]}/${parts[0]}';
-}
-
-String _normalizeArenaDateInput(String displayDate) {
-  final parts = displayDate.split('/');
-  if (parts.length != 3) return displayDate;
-  return '${parts[2].padLeft(4, '0')}-${parts[0].padLeft(2, '0')}-${parts[1].padLeft(2, '0')}';
-}
-
 IconData _privacyIcon(String id) {
   switch (id) {
     case 'public':

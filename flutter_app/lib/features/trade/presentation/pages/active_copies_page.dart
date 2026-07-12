@@ -19,11 +19,11 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_modu
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
-part 'active_copies_page_part_01.dart';
-part 'active_copies_page_part_02.dart';
-part 'active_copies_page_part_03.dart';
-
-const _copyPrimary = AppColors.primary;
+part '../widgets/active_copies_overview.dart';
+part '../widgets/active_copies_card.dart';
+part '../widgets/active_copies_expanded_details.dart';
+part '../widgets/active_copies_alerts_modal.dart';
+part '../widgets/active_copies_shared.dart';
 
 class ActiveCopiesPage extends ConsumerStatefulWidget {
   const ActiveCopiesPage({super.key, this.shellRenderMode});

@@ -151,11 +151,13 @@ class EmptyTab extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.cta,
+    required this.onCta,
   });
 
   final IconData icon;
   final String title;
   final String cta;
+  final VoidCallback onCta;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +176,7 @@ class EmptyTab extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          VitCtaButton(fullWidth: false, onPressed: () {}, child: Text(cta)),
+          VitCtaButton(fullWidth: false, onPressed: onCta, child: Text(cta)),
         ],
       ),
     );

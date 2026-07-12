@@ -17,7 +17,7 @@ class _SummaryHero extends StatelessWidget {
           Expanded(
             child: _SummaryTile(
               label: 'Tổng tiết kiệm',
-              value: _formatUsd(summary.totalInvested),
+              value: EarnFormatters.usd(summary.totalInvested),
               color: AppColors.text1,
             ),
           ),
@@ -25,7 +25,7 @@ class _SummaryHero extends StatelessWidget {
           Expanded(
             child: _SummaryTile(
               label: 'Tổng yield',
-              value: '+${_formatUsd(summary.totalEarned)}',
+              value: '+${EarnFormatters.usd(summary.totalEarned)}',
               color: AppColors.buy,
             ),
           ),

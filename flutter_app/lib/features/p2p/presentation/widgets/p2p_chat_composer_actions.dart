@@ -65,7 +65,16 @@ class _ChatComposer extends StatelessWidget {
                       _RoundIconButton(
                         icon: Icons.image_outlined,
                         tooltip: 'Attach payment proof image',
-                        onPressed: () {},
+                        onPressed: () {
+                          HapticFeedback.selectionClick();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Đính kèm ảnh bằng chứng thanh toán sẽ sớm ra mắt',
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(width: AppSpacing.x3),
                       Expanded(

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/widgets/auth_hero_icon_box.dart';
 
 part '../widgets/reset_password_page_sections.dart';
 

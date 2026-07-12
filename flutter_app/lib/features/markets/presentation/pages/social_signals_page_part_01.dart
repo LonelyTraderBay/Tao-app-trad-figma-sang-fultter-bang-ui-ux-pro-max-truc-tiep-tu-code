@@ -293,9 +293,11 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                         ] else ...[
                           _PerformanceSummary(snapshot: allSnapshot),
                           _StatusBreakdown(snapshot: allSnapshot),
-                          const _SectionHeader(
-                            label: 'Kết quả tín hiệu',
+                          const VitSectionHeader(
+                            title: 'Kết quả tín hiệu',
                             accentColor: _marketPrimary,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           for (final signal
                               in allSnapshot.signals

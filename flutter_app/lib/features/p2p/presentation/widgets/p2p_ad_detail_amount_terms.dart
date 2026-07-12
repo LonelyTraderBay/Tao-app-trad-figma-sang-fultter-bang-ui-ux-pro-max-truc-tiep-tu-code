@@ -370,16 +370,7 @@ class _Badge extends StatelessWidget {
   }
 }
 
-String _formatVnd(num value) {
-  final raw = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final remaining = raw.length - i;
-    buffer.write(raw[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write('.');
-  }
-  return buffer.toString();
-}
+String _formatVnd(num value) => formatP2PVnd(value);
 
 String _formatAmount(num value) {
   final parts = value.toStringAsFixed(2).split('.');

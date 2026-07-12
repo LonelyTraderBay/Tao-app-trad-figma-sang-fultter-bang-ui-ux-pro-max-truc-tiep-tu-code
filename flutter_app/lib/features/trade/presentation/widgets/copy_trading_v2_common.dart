@@ -16,7 +16,4 @@ String _formatCompact(double value, {String prefix = ''}) {
   return '$prefix${value.toStringAsFixed(0)}';
 }
 
-String _formatCompactNumber(int value) {
-  if (value >= 1000) return '${(value / 1000).toStringAsFixed(0)}K';
-  return '$value';
-}
+String _formatCompactNumber(int value) => formatTradeCompactNumber(value);

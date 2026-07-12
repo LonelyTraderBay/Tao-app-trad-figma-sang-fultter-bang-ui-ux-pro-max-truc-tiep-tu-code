@@ -112,9 +112,7 @@ class _NoticeSheet extends StatelessWidget {
   }
 }
 
-String _formatMoney(double value) {
-  return '\$${value.toStringAsFixed(2).replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',')}';
-}
+String _formatMoney(double value) => formatTradeUsd(value);
 
 String _signedMoney(double value) {
   final sign = value >= 0 ? '+' : '-';

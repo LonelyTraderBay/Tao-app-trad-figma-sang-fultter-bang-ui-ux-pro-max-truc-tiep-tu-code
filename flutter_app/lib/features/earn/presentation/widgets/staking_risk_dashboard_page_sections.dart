@@ -78,14 +78,14 @@ class _OverallRiskCard extends StatelessWidget {
               Expanded(
                 child: _MiniRiskMetric(
                   label: 'Total Staked',
-                  value: _formatUsd(snapshot.totalStakedUsd),
+                  value: EarnFormatters.usd(snapshot.totalStakedUsd),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MiniRiskMetric(
                   label: 'At Risk',
-                  value: _formatUsd(snapshot.atRiskUsd),
+                  value: EarnFormatters.usd(snapshot.atRiskUsd),
                   color: AppColors.warn,
                 ),
               ),
@@ -263,7 +263,7 @@ class _ExposureRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                _formatUsd(item.valueUsd),
+                EarnFormatters.usd(item.valueUsd),
                 style: AppTextStyles.caption.copyWith(
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,

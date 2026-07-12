@@ -41,7 +41,7 @@ class _MarketCapHero extends StatelessWidget {
             children: [
               Flexible(
                 child: Text(
-                  _formatCompact(stats.totalMarketCap, prefix: r'$'),
+                  formatMarketCompact(stats.totalMarketCap, prefix: r'$'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.pageTitle.copyWith(
@@ -88,7 +88,10 @@ class _MarketCapHero extends StatelessWidget {
               Expanded(
                 child: _HeroMetric(
                   label: 'KL 24h',
-                  value: _formatCompact(stats.total24hVolume, prefix: r'$'),
+                  value: formatMarketCompact(
+                    stats.total24hVolume,
+                    prefix: r'$',
+                  ),
                   valueColor: AppColors.text1,
                 ),
               ),
@@ -159,7 +162,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 label: 'DeFi TVL',
-                value: _formatCompact(stats.defiTVL, prefix: r'$'),
+                value: formatMarketCompact(stats.defiTVL, prefix: r'$'),
                 change: stats.defiTVLChange24h,
                 icon: Icons.layers_rounded,
                 color: _sectorPurple,
@@ -169,7 +172,10 @@ class _StatsGrid extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 label: 'Stablecoin Vol',
-                value: _formatCompact(stats.stablecoinVolume24h, prefix: r'$'),
+                value: formatMarketCompact(
+                  stats.stablecoinVolume24h,
+                  prefix: r'$',
+                ),
                 icon: Icons.monitor_heart_outlined,
                 color: _marketPrimary,
               ),
@@ -227,10 +233,9 @@ class _StatCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _IconBubble(
+              VitAccentIconBox(
                 icon: icon,
                 color: color,
-                size: MarketsSpacingTokens.marketAnalyticsIconBubble,
                 iconSize: MarketsSpacingTokens.marketAnalyticsStatIcon,
               ),
               const SizedBox(

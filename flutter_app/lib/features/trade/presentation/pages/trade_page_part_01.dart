@@ -44,7 +44,14 @@ class _TradePageState extends ConsumerState<TradePage> {
         subtitle: 'Chọn MUA hoặc BÁN, nhập số lượng và xác nhận',
         statusLabel: 'Mới',
         ctaLabel: 'Bắt đầu',
-        onTap: () {},
+        onTap: () {
+          HapticFeedback.selectionClick();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Tính năng bắt đầu giao dịch sẽ sớm ra mắt'),
+            ),
+          );
+        },
       );
     }
     return _TradeNextAction(
@@ -143,24 +150,18 @@ class _TradePageState extends ConsumerState<TradePage> {
               density: VitDensity.compact,
             ),
           ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const VitSectionHeader(
-              title: 'Tiếp theo',
-              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-            ),
-            VitNextActionCard(
-              key: TradePage.nextActionKey,
-              icon: nextAction.icon,
-              title: nextAction.title,
-              subtitle: nextAction.subtitle,
-              statusLabel: nextAction.statusLabel,
-              ctaLabel: nextAction.ctaLabel,
-              accentColor: AppModuleAccents.trade,
-              onTap: nextAction.onTap,
-            ),
-          ],
+        VitTradeSection(
+          title: 'Tiếp theo',
+          child: VitNextActionCard(
+            key: TradePage.nextActionKey,
+            icon: nextAction.icon,
+            title: nextAction.title,
+            subtitle: nextAction.subtitle,
+            statusLabel: nextAction.statusLabel,
+            ctaLabel: nextAction.ctaLabel,
+            accentColor: AppModuleAccents.trade,
+            onTap: nextAction.onTap,
+          ),
         ),
         VitTradeSection(
           title: 'Tài sản của bạn',

@@ -77,13 +77,14 @@ class _P2PPaymentMethodOwnershipPageState
             onUpload: () => _markUploaded(document.id),
             onRemove: () => _removeUpload(document.id),
           ),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Payment ownership submission review',
-          message:
-              'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
-          contractId: 'SC-234',
-        ),
+        if (snapshot.highRiskContractId != null)
+          VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Payment ownership submission review',
+            message:
+                'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
+            contractId: snapshot.highRiskContractId,
+          ),
         VitCtaButton(
           key: P2PPaymentMethodOwnershipPage.submitButtonKey,
           loading: _submitting,

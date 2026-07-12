@@ -57,7 +57,7 @@ String _permissionLabel(String permission) {
 String _formatUsd(double value) {
   final fixed = value.toStringAsFixed(2);
   final parts = fixed.split('.');
-  return '\$${_withCommas(parts[0])}.${parts[1]}';
+  return '\$${insertThousandsSeparator(parts[0])}.${parts[1]}';
 }
 
 String _formatSignedUsd(double value) {
@@ -74,16 +74,4 @@ String _formatCompact(double value, {String prefix = ''}) {
     return '$prefix${(value / 1000).toStringAsFixed(1)}K';
   }
   return '$prefix${value.toStringAsFixed(0)}';
-}
-
-String _withCommas(String input) {
-  final buffer = StringBuffer();
-  for (var i = 0; i < input.length; i += 1) {
-    final remaining = input.length - i;
-    buffer.write(input[i]);
-    if (remaining > 1 && remaining % 3 == 1) {
-      buffer.write(',');
-    }
-  }
-  return buffer.toString();
 }

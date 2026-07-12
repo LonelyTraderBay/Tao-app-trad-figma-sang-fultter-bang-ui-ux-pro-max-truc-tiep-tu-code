@@ -188,13 +188,4 @@ void _paintText(
   painter.paint(canvas, offset);
 }
 
-String _formatUsd(double value) {
-  final whole = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final remaining = whole.length - i;
-    buffer.write(whole[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
-  }
-  return '\$$buffer';
-}
+String _formatUsd(double value) => formatTradeUsdRounded(value);

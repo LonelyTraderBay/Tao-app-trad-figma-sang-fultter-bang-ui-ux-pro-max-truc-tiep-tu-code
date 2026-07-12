@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_formatters.dart';
 part '../widgets/price_alerts_page_overview.dart';
 part '../widgets/price_alerts_page_details.dart';
 part '../widgets/price_alerts_page_common.dart';

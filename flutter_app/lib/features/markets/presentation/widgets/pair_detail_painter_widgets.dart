@@ -85,18 +85,6 @@ TextStyle _tableHeaderStyle() {
   return AppTextStyles.micro.copyWith(color: AppColors.text3);
 }
 
-String _formatPrice(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  final raw = parts[0];
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i += 1) {
-    if (i > 0 && (raw.length - i) % 3 == 0) buffer.write(',');
-    buffer.write(raw[i]);
-  }
-  return '${buffer.toString()}.${parts[1]}';
-}
-
 String _formatCompact(double value) {
   if (value >= 1000000000) {
     return (value / 1000000000).toStringAsFixed(2);

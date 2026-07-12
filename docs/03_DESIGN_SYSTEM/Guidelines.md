@@ -43,20 +43,17 @@ search/discovery, and profile sections with clear separation.
 
 ## Flutter Visual System
 
-- Use Flutter theme tokens in `flutter_app/lib/app/theme/`.
-- Use `docs/03_DESIGN_SYSTEM/VitTrade-Flutter-Enterprise-Tokenization-Plan.md`
-  as the tracking plan for tokenizing typography, spacing, sizing, radii,
-  surfaces, and visual-density consistency.
+- Use Flutter theme tokens in `flutter_app/lib/app/theme/`. Tokenizing plan
+  closed; rules now live directly in `DESIGN.md` and the theme package.
 - Use shared layout/widgets in `flutter_app/lib/shared/`.
 - Dark theme is the active baseline.
 - Home establishes the global app chrome, neutral surfaces, shared card/CTA
   treatment, and primary brand behavior.
-- Use `docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Playbook.md` when
-  applying Home's UI foundation to Wallet, Markets, Trade, P2P, Profile, Arena,
+- Home UI foundation rollout to Wallet, Markets, Trade, P2P, Profile, Arena,
   Predictions, Earn, DCA, Launchpad, Discovery/Search,
-  Notifications/News/Support, Admin, or Dev surfaces.
-- Use `docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Execution-Plan.md` to
-  track screen-by-screen rollout batches and avoid missing route surfaces.
+  Notifications/News/Support, Admin, and Dev surfaces is closed — see
+  `02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md` for the
+  per-module tracker and batch history.
 - Module identity is an accent layer only.
 - Retired web screenshots are obsolete history and must not drive new native UI.
 
@@ -98,7 +95,7 @@ financial-safety copy, and Prediction Markets/Open Arena boundaries. Fullscreen
 tool routes are separate QA exceptions; do not compact them with normal
 content-page rules without emulator evidence.
 
-See [UI-Density-Standard.md](../02_FLUTTER_MIGRATION/UI-Density-Standard.md)
+See [UI-Density-Standard.md](../02_FLUTTER_MIGRATION/standards/UI-Density-Standard.md)
 for the full `VitDensity` tier contract (pixel/token values per tier) and the
 enforcement detail for both chained density audits — that gate is audit-only
 today (no CI step, no guardrail test).

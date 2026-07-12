@@ -15,7 +15,29 @@ class _EmailStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const _KeyHero(),
+        Align(
+          alignment: Alignment.center,
+          child: AuthHeroIconBox(
+            dimension: AuthSpacingTokens.authHeroIconBoxSm,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.cardRadius,
+              side: BorderSide(
+                color: _authPrimary30,
+                width: AppSpacing.borderWidth,
+              ),
+            ),
+            fillColor: _authPrimary10,
+            child: const Center(
+              child: CustomPaint(
+                size: Size(
+                  AuthSpacingTokens.authHeroPainterSize,
+                  AuthSpacingTokens.authHeroPainterSize,
+                ),
+                painter: _KeyIconPainter(),
+              ),
+            ),
+          ),
+        ),
         const Padding(padding: AuthSpacingTokens.authTopGapX5),
         Text(
           'Đặt lại mật khẩu',
@@ -46,39 +68,6 @@ class _EmailStep extends StatelessWidget {
           onChanged: (_) => onChanged(),
         ),
       ],
-    );
-  }
-}
-
-class _KeyHero extends StatelessWidget {
-  const _KeyHero();
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: SizedBox.square(
-        dimension: AuthSpacingTokens.authHeroIconBoxSm,
-        child: Material(
-          color: _authPrimary10,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-            side: BorderSide(
-              color: _authPrimary30,
-              width: AppSpacing.borderWidth,
-            ),
-          ),
-          child: const Center(
-            child: CustomPaint(
-              size: Size(
-                AuthSpacingTokens.authHeroPainterSize,
-                AuthSpacingTokens.authHeroPainterSize,
-              ),
-              painter: _KeyIconPainter(),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -30,7 +30,7 @@ class _RewardAssetRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                _formatUsd(reward.usdValue),
+                EarnFormatters.usd(reward.usdValue),
                 style: AppTextStyles.baseMedium.copyWith(
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
@@ -105,7 +105,7 @@ class _TransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    _formatUsd(tx.usdValue),
+                    EarnFormatters.usd(tx.usdValue),
                     style: AppTextStyles.caption.copyWith(
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
@@ -135,7 +135,7 @@ class _TransactionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  _formatUsd(tx.costBasis!),
+                  EarnFormatters.usd(tx.costBasis!),
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontFeatures: AppTextStyles.tabularFigures,

@@ -138,32 +138,12 @@ VitStatusPillStatus _statusPillStatus(DcaPlanStatus status) {
   };
 }
 
-String _formatFullVnd(int amount) {
-  final raw = amount.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final fromEnd = raw.length - i;
-    buffer.write(raw[i]);
-    if (fromEnd > 1 && fromEnd % 3 == 1) {
-      buffer.write('.');
-    }
-  }
-  return buffer.toString();
-}
+// Delegates to the shared, sign-safe formatters in dca_currency_formatters.dart
+// (see that file's doc comment for why the two former local implementations
+// were consolidated, and why _formatPercent was relocated rather than merged
+// with the other DCA screens' divergent percent formatters).
+String _formatFullVnd(int amount) => formatFullVnd(amount);
 
-String _formatCompactVnd(int amount) {
-  if (amount >= 1000000000) {
-    return '${(amount / 1000000000).toStringAsFixed(2)}B';
-  }
-  if (amount >= 1000000) {
-    return '${(amount / 1000000).toStringAsFixed(2)}M';
-  }
-  if (amount >= 1000) {
-    return '${(amount / 1000).toStringAsFixed(0)}K';
-  }
-  return _formatFullVnd(amount);
-}
+String _formatCompactVnd(int amount) => formatCompactVnd(amount);
 
-String _formatPercent(double percent) {
-  return percent.toStringAsFixed(1).replaceAll('.', ',');
-}
+String _formatPercent(double percent) => formatPercentPlain(percent);

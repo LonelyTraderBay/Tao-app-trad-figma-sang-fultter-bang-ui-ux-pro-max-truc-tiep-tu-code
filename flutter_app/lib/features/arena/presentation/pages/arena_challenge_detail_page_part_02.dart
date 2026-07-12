@@ -83,9 +83,10 @@ class _CreatorCard extends StatelessWidget {
       padding: _challengeCardPadding,
       child: Row(
         children: [
-          _IconBubble(
+          VitAccentIconBox(
             icon: Icons.workspace_premium_outlined,
             color: AppColors.primary,
+            iconSize: _challengeIconBubbleIcon,
           ),
           const SizedBox(width: _challengeGap),
           Expanded(
@@ -154,9 +155,10 @@ class _SafetyLinkCard extends StatelessWidget {
       padding: _challengeCardPadding,
       child: Row(
         children: [
-          _IconBubble(
+          VitAccentIconBox(
             icon: Icons.health_and_safety_outlined,
             color: AppColors.buy,
+            iconSize: _challengeIconBubbleIcon,
           ),
           const SizedBox(width: _challengeGap),
           Expanded(

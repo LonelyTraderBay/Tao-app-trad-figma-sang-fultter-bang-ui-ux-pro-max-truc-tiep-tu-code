@@ -1026,8 +1026,6 @@ final class TradeSpacingTokens {
   static const double tradeBotControlTall = 82;
   static const double tradeBotControlCompact = 44;
   static const double tradeBotLanguageTabWidth = 86;
-  static const double tradeBotTabsHeight =
-      AppSpacing.inputHeight - AppSpacing.x1;
   static const double tradeBotFooterButtonHeight = 42;
   static const double tradeBotMethodTextIndent = 25;
   static const double tradeBotSelectionDot = 16;
@@ -1883,12 +1881,7 @@ final class TradeSpacingTokens {
   static const EdgeInsets tradeBotTabShellPadding = EdgeInsets.all(
     AppSpacing.x1,
   );
-  static const EdgeInsets tradeBotCardPadding = EdgeInsets.fromLTRB(
-    16,
-    16,
-    16,
-    16,
-  );
+  static const EdgeInsets tradeBotCardPadding = AppSpacing.cardPadding;
   static const EdgeInsets tradeBotCardPaddingLoose = EdgeInsets.fromLTRB(
     16,
     17,

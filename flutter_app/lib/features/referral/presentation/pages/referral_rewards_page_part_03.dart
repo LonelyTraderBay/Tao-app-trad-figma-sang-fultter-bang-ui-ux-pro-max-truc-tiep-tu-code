@@ -204,6 +204,4 @@ class _ReferralRewardChartPainter extends CustomPainter {
   }
 }
 
-String _formatUsd(double value) {
-  return '\$${value.toStringAsFixed(2)}';
-}
+String _formatUsd(double value) => formatUsd(value);

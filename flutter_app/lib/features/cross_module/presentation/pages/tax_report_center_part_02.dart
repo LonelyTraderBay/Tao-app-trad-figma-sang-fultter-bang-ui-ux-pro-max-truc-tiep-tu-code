@@ -45,7 +45,7 @@ class _TaxActivityCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                _IconBadge(
+                CrossModuleIconBadge(
                   icon: visual.icon,
                   color: visual.color,
                   background: visual.background,
@@ -373,7 +373,7 @@ class _ReportCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _IconAction(
+              CrossModuleIconAction(
                 icon: Icons.file_download_outlined,
                 color: AppColors.primary,
                 background: AppColors.primary12,

@@ -6,6 +6,14 @@ part 'mock_profile_repository_core_fixtures.dart';
 part 'mock_profile_repository_settings_fixtures.dart';
 part 'mock_profile_repository_vip_fixtures.dart';
 
+/// Profile-scoped high-risk contract id for the security review panel.
+/// Deliberately not registered in `HighRiskFlowContractIds`/
+/// `HighRiskFlowContracts`/`HighRiskFlowBindings` — those model full
+/// multi-stage money-movement/escrow flows with an entry/eligibility/
+/// setup/preview/confirm/submit/receipt/manage/support route set that
+/// this settings panel doesn't have; this is a display-only contract id.
+const _profileSecurityReviewContractId = 'profile_security_review';
+
 final class MockProfileRepository implements ProfileRepository {
   const MockProfileRepository();
 
@@ -71,6 +79,7 @@ final class MockProfileRepository implements ProfileRepository {
         ProfileScreenState.submitting,
         ProfileScreenState.success,
       ],
+      highRiskContractId: _profileSecurityReviewContractId,
     );
   }
 

@@ -22,6 +22,11 @@ class _ActiveOrdersSection extends StatelessWidget {
   }
 }
 
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
+
 class _LimitOrderCard extends StatelessWidget {
   const _LimitOrderCard({required this.order});
 
@@ -75,13 +80,13 @@ class _LimitOrderCard extends StatelessWidget {
               _MiniIconButton(
                 icon: Icons.edit_outlined,
                 color: AppColors.text3,
-                onTap: () {},
+                onTap: () => _showComingSoon(context, 'Sửa lệnh sẽ sớm ra mắt'),
               ),
               const SizedBox(width: AppSpacing.x2),
               _MiniIconButton(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
-                onTap: () {},
+                onTap: () => _showComingSoon(context, 'Xóa lệnh sẽ sớm ra mắt'),
               ),
             ],
           ),

@@ -141,4 +141,17 @@ void main() {
     expect(find.byType(StakingEarnPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
   });
+
+  testWidgets('SC-394 export custom range shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpDataExport(tester);
+
+    await tester.ensureVisible(find.byKey(StakingDataExportPage.exportKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(StakingDataExportPage.exportKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xuất dữ liệu sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

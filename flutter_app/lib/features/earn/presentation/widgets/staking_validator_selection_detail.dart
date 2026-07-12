@@ -13,10 +13,12 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
     super.key,
     required this.validator,
     required this.onClose,
+    required this.onSelect,
   });
 
   final StakingValidatorDraft validator;
   final VoidCallback onClose;
+  final VoidCallback onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCtaButton(
-            onPressed: () {},
+            onPressed: onSelect,
             leading: const Icon(Icons.check_circle_outline_rounded),
             child: const Text('Chọn Validator này'),
           ),

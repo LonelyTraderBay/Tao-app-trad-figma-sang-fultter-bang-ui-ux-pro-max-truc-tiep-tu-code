@@ -227,11 +227,7 @@ String _formatSignedEur(double value) {
   return '$sign\u20AC${_groupThousands(rounded.abs())}';
 }
 
-String _formatEur(double value) {
-  final rounded = value.round();
-  final sign = rounded < 0 ? '-' : '';
-  return '$sign\u20AC${_groupThousands(rounded.abs())}';
-}
+String _formatEur(double value) => formatTradeEur(value);
 
 String _groupThousands(int value) {
   final raw = value.toString();

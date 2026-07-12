@@ -72,16 +72,7 @@ class _Card extends StatelessWidget {
   }
 }
 
-String _formatInt(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final remaining = raw.length - i;
-    buffer.write(raw[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
-  }
-  return buffer.toString();
-}
+String _formatInt(int value) => formatTradeInt(value);
 
 String _formatUsd(double value) => '\$${value.abs().toStringAsFixed(2)}';
 

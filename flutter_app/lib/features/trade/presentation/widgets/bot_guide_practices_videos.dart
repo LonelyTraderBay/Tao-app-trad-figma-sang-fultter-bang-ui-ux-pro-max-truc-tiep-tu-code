@@ -214,11 +214,18 @@ class _VideoTutorialsCard extends StatelessWidget {
           ),
           VitCtaButton(
             density: VitDensity.compact,
-            onPressed: () {},
+            onPressed: () => _showComingSoon(context),
             child: const Text('View All Tutorials'),
           ),
         ],
       ),
+    );
+  }
+
+  void _showComingSoon(BuildContext context) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Danh sách hướng dẫn đầy đủ sẽ sớm ra mắt')),
     );
   }
 }

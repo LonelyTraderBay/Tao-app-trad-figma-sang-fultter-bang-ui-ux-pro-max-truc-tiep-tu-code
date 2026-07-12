@@ -206,7 +206,7 @@ class _ProfileProductTile extends StatelessWidget {
               color: accent.withValues(alpha: .12),
               shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
               child: Icon(
-                _iconFor(shortcut.iconKey),
+                profileIconFor(shortcut.iconKey),
                 color: accent,
                 size: ProfileSpacingTokens.profileProductIcon,
               ),
@@ -273,7 +273,7 @@ class _MenuRow extends StatelessWidget {
                       borderRadius: AppRadii.cardRadius,
                     ),
                     child: Icon(
-                      _iconFor(item.iconKey),
+                      profileIconFor(item.iconKey),
                       color: accent,
                       size: ProfileSpacingTokens.profileMenuIcon,
                     ),
@@ -408,33 +408,4 @@ class _SectionLabel extends StatelessWidget {
       bottomGap: AppSpacing.pageRhythmCompactInnerGap,
     );
   }
-}
-
-IconData _iconFor(String key) {
-  return switch (key) {
-    'shield-check' => Icons.verified_user_outlined,
-    'wallet' => Icons.account_balance_wallet_outlined,
-    'shield' => Icons.shield_outlined,
-    'crown' => Icons.workspace_premium_outlined,
-    'bell' => Icons.notifications_none_rounded,
-    'key' => Icons.key_rounded,
-    'phone' => Icons.phone_android_rounded,
-    'users' => Icons.groups_outlined,
-    'clipboard' => Icons.assignment_outlined,
-    'globe' => Icons.language_rounded,
-    'settings' => Icons.settings_outlined,
-    'rotate' => Icons.history_rounded,
-    'message' => Icons.chat_bubble_outline_rounded,
-    'compass' => Icons.explore_outlined,
-    'trophy' => Icons.emoji_events_outlined,
-    'refresh' => Icons.sync_rounded,
-    'rocket' => Icons.rocket_launch_outlined,
-    'copy' => Icons.content_copy_rounded,
-    'zap' => Icons.bolt_rounded,
-    'bot' => Icons.smart_toy_outlined,
-    'help' => Icons.help_outline_rounded,
-    'file' => Icons.article_outlined,
-    'star' => Icons.star_border_rounded,
-    _ => Icons.circle_outlined,
-  };
 }

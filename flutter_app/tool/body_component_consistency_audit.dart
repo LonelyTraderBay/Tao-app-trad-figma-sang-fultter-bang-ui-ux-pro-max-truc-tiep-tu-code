@@ -207,13 +207,13 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final topHeaderFile = File(
-    '${docsDir.path}/VitTrade-Top-Header-Visual-Archetype-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Top-Header-Visual-Archetype-Audit.md',
   );
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Body-Component-Consistency-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Body-Component-Consistency-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Body-Component-Consistency-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Body-Component-Consistency-Audit.csv',
   );
 
   final entries = _collectBodyRouteEntries(appRoot, repoRoot, topHeaderFile);
@@ -1025,7 +1025,7 @@ String _renderMarkdown(List<BodyRouteEntry> entries) {
     ..writeln('## Inputs')
     ..writeln()
     ..writeln(
-      '- `docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.md`',
+      '- `docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.md`',
     )
     ..writeln('- Routed page files under `flutter_app/lib/features/`')
     ..writeln('- Page `part` files')

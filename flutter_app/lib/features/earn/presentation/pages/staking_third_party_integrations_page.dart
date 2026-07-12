@@ -135,7 +135,7 @@ class _IntegrationsHero extends StatelessWidget {
             snapshot.heroTitle,
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
@@ -210,7 +210,7 @@ class _IntegrationCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   integration.description,
                   maxLines: 1,
@@ -300,7 +300,7 @@ class _ApiAccess extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   snapshot.apiBody,
                   style: AppTextStyles.caption.copyWith(

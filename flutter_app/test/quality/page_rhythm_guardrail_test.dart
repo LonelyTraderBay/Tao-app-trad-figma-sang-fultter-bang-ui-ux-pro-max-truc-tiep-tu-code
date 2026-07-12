@@ -32,7 +32,12 @@ void main() {
       final file = File(path);
       if (!file.existsSync()) continue;
       final content = file.readAsStringSync();
-      if (!content.contains('VitPageContent')) continue;
+      if (!content.contains('VitPageContent') &&
+          !content.contains('VitTradeHubScaffold') &&
+          !content.contains('VitTradeDetailScaffold') &&
+          !content.contains('VitTradeSimpleShell')) {
+        continue;
+      }
 
       final isUntracked = !_isTracked(path);
       final addedLines = _collectAddedLines(path, isUntracked);
@@ -40,7 +45,7 @@ void main() {
       for (final line in addedLines) {
         if (_orphanGapPattern.hasMatch(line.trim())) {
           violations.add(
-            '$path: orphan section SizedBox in VitPageContent children -> $line',
+            '$path: orphan rhythm-owner SizedBox in direct children -> $line',
           );
         }
         if (_orphanMajorGapPattern.hasMatch(line.trim()) &&
@@ -323,7 +328,7 @@ bool _isTabRootPage(String path) {
 }
 
 final _orphanGapPattern = RegExp(
-  r'SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap)',
+  r'SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap|pageRhythm(?:Compact|Standard|Form|Relaxed)(?:Inner|Section)Gap)',
 );
 
 final _orphanMajorGapPattern = RegExp(
@@ -447,7 +452,7 @@ bool _isNewStructuralDebt(String prior, String current) {
 
 Map<String, String> _loadStructuralBaseline() {
   final csv = File(
-    '../docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Audit.csv',
+    '../docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Audit.csv',
   );
   if (!csv.existsSync()) return {};
   final lines = csv.readAsLinesSync();

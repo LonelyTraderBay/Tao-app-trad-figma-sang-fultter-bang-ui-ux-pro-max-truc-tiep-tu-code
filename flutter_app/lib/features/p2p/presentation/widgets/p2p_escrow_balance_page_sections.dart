@@ -44,7 +44,9 @@ class _EscrowHeroCard extends StatelessWidget {
                         color: AppColors.text2,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Text(
                       _formatAssetAmount(
                         balance.totalAmount,
@@ -219,7 +221,7 @@ class _EscrowOrderCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: AppSpacing.pageRhythmCompactInnerGap,
+                      height: AppSpacing.pageRhythmStandardInnerGap,
                     ),
                     Row(
                       children: [
@@ -228,7 +230,9 @@ class _EscrowOrderCard extends StatelessWidget {
                           color: AppColors.text3,
                           size: 12,
                         ),
-                        const SizedBox(width: AppSpacing.x1),
+                        const SizedBox(
+                          width: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         Flexible(
                           child: Text(
                             order.counterparty,
@@ -282,7 +286,7 @@ class _EscrowOrderCard extends StatelessWidget {
                 color: AppColors.text3,
                 size: 12,
               ),
-              const SizedBox(width: AppSpacing.x1),
+              const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
               Expanded(
                 child: Text(
                   'Khóa lúc: ${order.lockedAt}',
@@ -325,7 +329,7 @@ class _EscrowOrderCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Align(
             alignment: Alignment.centerLeft,
             // card-tile: allow-start — fixed surface, not horizontal strip tile
@@ -365,7 +369,7 @@ class _OrderMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x1),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Text(
           value,
           maxLines: 1,

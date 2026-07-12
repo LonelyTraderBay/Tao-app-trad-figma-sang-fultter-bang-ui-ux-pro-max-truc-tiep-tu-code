@@ -111,6 +111,17 @@ void main() {
     expect(find.text('Create Webhook'), findsWidgets);
   });
 
+  testWidgets('SC-393 delete webhook CTA shows placeholder feedback', (
+    tester,
+  ) async {
+    await pumpWebhooks(tester);
+
+    await tester.tap(find.byKey(StakingWebhooksPage.webhookDeleteKey('w1')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xóa webhook sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-393 header back returns to Earn', (tester) async {
     await pumpWebhooks(tester);
 

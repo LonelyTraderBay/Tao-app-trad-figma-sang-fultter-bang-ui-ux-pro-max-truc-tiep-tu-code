@@ -20,9 +20,11 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
-part 'staking_withdrawal_policy_page_part_01.dart';
-part 'staking_withdrawal_policy_page_part_02.dart';
-part 'staking_withdrawal_policy_page_part_03.dart';
+part '../widgets/staking_withdrawal_policy_timeline.dart';
+part '../widgets/staking_withdrawal_policy_penalties.dart';
+part '../widgets/staking_withdrawal_policy_emergency.dart';
+part '../widgets/staking_withdrawal_policy_calculator.dart';
+part '../widgets/staking_withdrawal_policy_common.dart';
 
 const double _stakingWithdrawalInfoMinHeight = 88;
 const double _stakingWithdrawalBorderWidth = AppSpacing.hairlineStroke;
@@ -79,4 +81,125 @@ class StakingWithdrawalPolicyPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<StakingWithdrawalPolicyPage> createState() =>
       _StakingWithdrawalPolicyPageState();
+}
+
+class _StakingWithdrawalPolicyPageState
+    extends ConsumerState<StakingWithdrawalPolicyPage> {
+  String? _activeTab;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(stakingWithdrawalPolicyRepositoryProvider)
+        .getPolicy();
+    final activeTab = _activeTab ?? snapshot.defaultTab;
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-355 StakingWithdrawalPolicyPage',
+      child: Material(
+        color: AppColors.bg,
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
+            title: snapshot.title,
+            subtitle: 'Thời gian rút và phí phạt được liệt kê rõ',
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.form,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      const VitHighRiskStatePanel(
+                        density: VitDensity.compact,
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Withdrawal policy review required',
+                        message:
+                            'Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.',
+                        contractId: 'staking-withdrawal-policy',
+                      ),
+                      _PolicyTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _activeTab = tab);
+                        },
+                      ),
+                      if (activeTab == 'timeline')
+                        _TimelineTab(snapshot: snapshot)
+                      else if (activeTab == 'penalties')
+                        _PenaltiesTab(
+                          snapshot: snapshot,
+                          onOpenCalculator: () => _openCalculator(snapshot),
+                        )
+                      else
+                        _EmergencyTab(snapshot: snapshot),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openCalculator(StakingWithdrawalPolicySnapshot snapshot) async {
+    HapticFeedback.selectionClick();
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) => _PenaltyCalculatorSheet(snapshot: snapshot),
+    );
+  }
+}
+
+class _PolicyTabs extends StatelessWidget {
+  const _PolicyTabs({
+    required this.tabs,
+    required this.active,
+    required this.onChanged,
+  });
+
+  final List<StakingRiskDisclosureTabDraft> tabs;
+  final String active;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: StakingWithdrawalPolicyPage.tabKey(tab.id),
+          ),
+      ],
+    );
+  }
 }

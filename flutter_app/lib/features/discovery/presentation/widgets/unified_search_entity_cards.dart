@@ -17,7 +17,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _ModuleBadge(
+              const DiscoveryModuleBadge(
                 label: 'Arena Points only',
                 icon: Icons.stars_rounded,
                 color: AppModuleAccents.arena,
@@ -62,7 +62,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text2),
               ),
               const Spacer(),
-              const _InlineCta(
+              const DiscoveryInlineCta(
                 label: 'Xem room',
                 color: AppModuleAccents.arena,
               ),
@@ -87,7 +87,13 @@ class _CreatorResultCard extends StatelessWidget {
       padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Row(
         children: [
-          _InitialsAvatar(initials: creator.initials),
+          DiscoveryInitialsAvatar(
+            initials: creator.initials,
+            size: AppSpacing.ctaHeight,
+            fillAlpha: .12,
+            radius: AppRadii.cardRadius,
+            textStyle: AppTextStyles.body,
+          ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
@@ -124,7 +130,10 @@ class _CreatorResultCard extends StatelessWidget {
               ],
             ),
           ),
-          const _InlineCta(label: 'Xem creator', color: AppColors.text2),
+          const DiscoveryInlineCta(
+            label: 'Xem creator',
+            color: AppColors.text2,
+          ),
         ],
       ),
     );
@@ -148,7 +157,7 @@ class _TradingPairResultCard extends StatelessWidget {
       borderColor: AppModuleAccents.markets.withValues(alpha: .14),
       child: Row(
         children: [
-          const _ModuleBadge(
+          const DiscoveryModuleBadge(
             label: 'Spot Trading',
             icon: Icons.bar_chart_rounded,
             color: AppModuleAccents.markets,

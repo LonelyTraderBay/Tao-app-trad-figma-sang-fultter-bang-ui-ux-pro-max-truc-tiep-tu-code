@@ -120,19 +120,7 @@ class _ResultSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            SizedBox(
-              width: AppSpacing.buttonCompact,
-              height: AppSpacing.buttonCompact,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: color.withValues(alpha: .12),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                ),
-                child: Center(child: Icon(icon, color: color, size: 16)),
-              ),
-            ),
+            VitAccentIconBox(icon: icon, color: color),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Text(
@@ -143,7 +131,7 @@ class _ResultSection extends StatelessWidget {
                 ),
               ),
             ),
-            _CountBadge(count: count),
+            DiscoveryCountChip(count: count),
           ],
         ),
         ...children,

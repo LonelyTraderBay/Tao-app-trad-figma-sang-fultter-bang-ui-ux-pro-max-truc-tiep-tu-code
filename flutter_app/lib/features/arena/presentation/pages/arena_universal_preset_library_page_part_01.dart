@@ -108,7 +108,7 @@ class _DomainPacksSection extends StatelessWidget {
             expanded: expandedId == pack.id,
             onTap: () => onToggle(pack.id),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -197,7 +197,7 @@ class _DomainPackCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -214,7 +214,7 @@ class _DomainPackCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   for (final example in pack.examples)
                     Padding(
                       padding: ArenaSpacingTokens.arenaBottomPaddingX2,
@@ -391,7 +391,7 @@ class _DropdownsSection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _DropdownPreview(group: group),
               ],
             ),

@@ -4,7 +4,7 @@ void main() {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final tiers = _loadTiers(
-    File('${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Migration-Manifest.csv'),
+    File('${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv'),
   );
 
   var fixed = 0;

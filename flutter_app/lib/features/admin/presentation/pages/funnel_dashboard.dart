@@ -12,12 +12,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_metric_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/funnel_dashboard_selector_metrics.dart';
@@ -62,60 +62,45 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
+    return AdminDashboardPageShell(
       semanticLabel: 'SC-183 FunnelDashboard',
-      child: VitAutoHideHeaderScaffold(
-        header: VitHeader(
-          title: 'Funnel Analytics',
-          subtitle: 'Conversion Funnel Tracking',
-          showBack: true,
-          onBack: () => context.go(AppRoutePaths.admin),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                key: FunnelDashboard.contentKey,
-                physics: const ClampingScrollPhysics(),
-                padding: AdminSpacingTokens.adminScrollPadding(
-                  scrollEndClearance,
-                ),
-                child: VitPageContent(
-                  rhythm: VitPageRhythm.standard,
-                  gap: VitContentGap.tight,
-                  children: [
-                    AdminDashboardStateContent(
-                      status: controller.state.status,
-                      title: 'Funnel dashboard',
-                      message: controller.state.message,
-                      gap: AppSpacing.x4,
-                      children: [
-                        _FunnelSelector(
-                          funnels: snapshot.funnels,
-                          selectedFunnelId: _selectedFunnelId,
-                          onChanged: (id) =>
-                              setState(() => _selectedFunnelId = id),
-                        ),
-                        _MetricsGrid(snapshot: snapshot),
-                        _WaterfallCard(funnel: selectedFunnel),
-                        _DropoutChartCard(funnel: selectedFunnel),
-                        _StepDetailsCard(funnel: selectedFunnel),
-                        if (snapshot.totalSessions == 0)
-                          const AdminInlineEmptyState(
-                            icon: Icons.filter_alt_outlined,
-                            title: 'Chưa có dữ liệu funnel',
-                            message:
-                                'Dữ liệu sẽ xuất hiện khi có người dùng đi qua funnel',
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
+      scrollKey: FunnelDashboard.contentKey,
+      scrollBottom: scrollEndClearance,
+      header: VitHeader(
+        title: 'Funnel Analytics',
+        subtitle: 'Conversion Funnel Tracking',
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.admin),
+      ),
+      child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
+        gap: VitContentGap.tight,
+        children: [
+          AdminDashboardStateContent(
+            status: controller.state.status,
+            title: 'Funnel dashboard',
+            message: controller.state.message,
+            gap: AppSpacing.x4,
+            children: [
+              _FunnelSelector(
+                funnels: snapshot.funnels,
+                selectedFunnelId: _selectedFunnelId,
+                onChanged: (id) => setState(() => _selectedFunnelId = id),
               ),
-            ),
-          ],
-        ),
+              _MetricsGrid(snapshot: snapshot),
+              _WaterfallCard(funnel: selectedFunnel),
+              _DropoutChartCard(funnel: selectedFunnel),
+              _StepDetailsCard(funnel: selectedFunnel),
+              if (snapshot.totalSessions == 0)
+                const AdminInlineEmptyState(
+                  icon: Icons.filter_alt_outlined,
+                  title: 'Chưa có dữ liệu funnel',
+                  message:
+                      'Dữ liệu sẽ xuất hiện khi có người dùng đi qua funnel',
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }

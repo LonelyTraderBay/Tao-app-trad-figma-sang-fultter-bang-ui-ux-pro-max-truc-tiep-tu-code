@@ -165,7 +165,11 @@ class _NotificationRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _TypeIcon(style: style),
+          VitAccentIconBox(
+            icon: style.icon,
+            color: style.color,
+            iconSize: NotificationsSpacingTokens.notificationsTypeIcon,
+          ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
@@ -233,31 +237,6 @@ class _NotificationRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           _DeleteButton(id: notification.id, onDelete: onDelete),
         ],
-      ),
-    );
-  }
-}
-
-class _TypeIcon extends StatelessWidget {
-  const _TypeIcon({required this.style});
-
-  final _NotificationTypeStyle style;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: NotificationsSpacingTokens.notificationsTypeIconMargin,
-      child: SizedBox.square(
-        dimension: NotificationsSpacingTokens.notificationsTypeIconBox,
-        child: Material(
-          color: style.color.withValues(alpha: .16),
-          borderRadius: AppRadii.smRadius,
-          child: Icon(
-            style.icon,
-            color: style.color,
-            size: NotificationsSpacingTokens.notificationsTypeIcon,
-          ),
-        ),
       ),
     );
   }

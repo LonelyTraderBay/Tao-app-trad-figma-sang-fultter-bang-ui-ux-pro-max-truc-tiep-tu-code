@@ -2,7 +2,7 @@
 
 **Bắt đầu tại:** [EXECUTION-PLAYBOOK.md](EXECUTION-PLAYBOOK.md) — 66 bước, copy-paste từng chat.  
 **Contract chung:** [REDESIGN-CONTRACT.md](REDESIGN-CONTRACT.md)  
-**Routing:** [ke-hoach-redesign-theo-module.md](../ke-hoach-redesign-theo-module.md) v2.5
+**Routing:** [ke-hoach-redesign-theo-module.md](../redesign/ke-hoach-redesign-theo-module.md) v2.5
 
 ## Tier A — 11 hub (+ Trading Bots trong Trade)
 

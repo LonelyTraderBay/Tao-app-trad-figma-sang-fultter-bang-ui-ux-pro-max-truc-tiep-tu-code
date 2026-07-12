@@ -1,20 +1,5 @@
 part of '../pages/api_management_page.dart';
 
-class _StatusBadge extends StatelessWidget {
-  const _StatusBadge({required this.active});
-
-  final bool active;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = active ? _apiGreen : _apiRed;
-    return VitAccentPill(
-      label: active ? '\u2022 Active' : '\u2022 Disabled',
-      accentColor: color,
-    );
-  }
-}
-
 class _ToggleSwitch extends StatelessWidget {
   const _ToggleSwitch({super.key, required this.active, required this.onTap});
 

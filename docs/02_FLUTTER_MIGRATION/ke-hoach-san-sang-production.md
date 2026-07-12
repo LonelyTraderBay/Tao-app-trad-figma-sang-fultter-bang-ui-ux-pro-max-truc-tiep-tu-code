@@ -56,13 +56,13 @@ Debug APK trên Android emulator: build/install/launch pass
 - Android signing config: `flutter_app/android/app/build.gradle.kts`
 - CI workflow: `.github/workflows/flutter-ci.yml`
 - Body audit artifact:
-  `docs/02_FLUTTER_MIGRATION/VitTrade-Body-Component-Consistency-Audit.csv`
+  `docs/02_FLUTTER_MIGRATION/audits/VitTrade-Body-Component-Consistency-Audit.csv`
 - Header audit artifact:
-  `docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.csv`
+  `docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.csv`
 - Back navigation audit:
-  `docs/02_FLUTTER_MIGRATION/VitTrade-Header-Back-Navigation-Behavior-Audit.csv`
+  `docs/02_FLUTTER_MIGRATION/audits/VitTrade-Header-Back-Navigation-Behavior-Audit.csv`
 - Home-entry back navigation audit:
-  `docs/02_FLUTTER_MIGRATION/VitTrade-Home-Entry-Back-Navigation-Audit.csv`
+  `docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Entry-Back-Navigation-Audit.csv`
 
 ## Những điểm trong bản cũ không còn đúng
 

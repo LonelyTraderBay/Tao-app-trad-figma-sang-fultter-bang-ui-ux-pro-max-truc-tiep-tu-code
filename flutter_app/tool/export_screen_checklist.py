@@ -241,7 +241,7 @@ def load_all_sc_ids(app_root: Path) -> list[str]:
 def main() -> None:
     app_root = find_app_root()
     repo_root = app_root.parent
-    out_dir = repo_root / "docs/02_FLUTTER_MIGRATION"
+    out_dir = repo_root / "docs/02_FLUTTER_MIGRATION/redesign"
     out_dir.mkdir(parents=True, exist_ok=True)
     csv_path = out_dir / "VitTrade-Screen-Redesign-Checklist.csv"
     md_path = out_dir / "VitTrade-Screen-Redesign-Checklist.md"

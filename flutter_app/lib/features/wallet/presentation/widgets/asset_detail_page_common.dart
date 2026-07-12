@@ -115,31 +115,13 @@ class _AssetTransactionRow extends StatelessWidget {
   }
 }
 
-String _formatUsd(double value) => '\$${_withCommas(value.toStringAsFixed(2))}';
+String _formatUsd(double value) => formatWalletUsdGrouped(value);
 
 String _formatFixed(double value, int decimals) {
-  return _withCommas(value.toStringAsFixed(decimals));
+  return walletGroupThousands(value.toStringAsFixed(decimals));
 }
 
 String _formatPct(double value) {
   final sign = value >= 0 ? '+' : '';
   return '$sign${value.toStringAsFixed(2)}%';
-}
-
-String _withCommas(String value) {
-  final parts = value.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final remaining = whole.length - i;
-    buffer.write(whole[i]);
-    if (remaining > 1 && remaining % 3 == 1) {
-      buffer.write(',');
-    }
-  }
-  if (parts.length > 1) {
-    buffer.write('.');
-    buffer.write(parts[1]);
-  }
-  return buffer.toString();
 }

@@ -20,9 +20,12 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
-part 'launchpad_multisig_page_part_01.dart';
-part 'launchpad_multisig_page_part_02.dart';
-part 'launchpad_multisig_page_part_03.dart';
+part '../widgets/launchpad_multisig_page_chrome.dart';
+part '../widgets/launchpad_multisig_queue_history.dart';
+part '../widgets/launchpad_multisig_owners.dart';
+part '../widgets/launchpad_multisig_tx_card.dart';
+part '../widgets/launchpad_multisig_tx_details.dart';
+part '../widgets/launchpad_multisig_create_sheet.dart';
 
 enum _MultisigTab { queue, history, safes }
 
@@ -57,4 +60,241 @@ class LaunchpadMultisigPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<LaunchpadMultisigPage> createState() =>
       _LaunchpadMultisigPageState();
+}
+
+class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
+  late String _selectedSafeAddress;
+  late List<LaunchpadMultisigTxDraft> _transactions;
+  var _activeTab = _MultisigTab.queue;
+  String? _expandedTxId;
+  String? _copiedField;
+  var _showCreate = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final snapshot = ref.read(launchpadControllerProvider).getMultisig();
+    _selectedSafeAddress = snapshot.defaultSafeAddress;
+    _transactions = List.of(snapshot.transactions);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref.watch(launchpadControllerProvider).getMultisig();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final scrollTailReserve =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome
+            : DeviceMetrics.nativeBottomChrome) +
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.x3;
+    final selectedSafe = snapshot.safes.firstWhere(
+      (safe) => safe.address == _selectedSafeAddress,
+      orElse: () => snapshot.safes.first,
+    );
+    final queueTxs = _queueTxs(selectedSafe.address);
+    final historyTxs = _historyTxs(selectedSafe.address);
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-313 LaunchpadMultisigPage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Stack(
+          children: [
+            VitAutoHideHeaderScaffold(
+              bottomInset: scrollTailReserve,
+              semanticLabel: 'SC-313 LaunchpadMultisigPage scroll surface',
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: 'Hàng đợi multisig · Xác nhận đa chữ ký',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                children: [
+                  _SafeSelector(
+                    safes: snapshot.safes,
+                    selectedAddress: _selectedSafeAddress,
+                    onChanged: (address) {
+                      setState(() {
+                        _selectedSafeAddress = address;
+                        _expandedTxId = null;
+                      });
+                    },
+                  ),
+                  _StatsStrip(safe: selectedSafe, pending: queueTxs.length),
+                  ColoredBox(
+                    key: LaunchpadMultisigPage.tabsKey,
+                    color: AppColors.surface,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Divider(height: AppSpacing.hairlineStroke),
+                        Padding(
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalContentPadding,
+                          child: _Tabs(
+                            activeTab: _activeTab,
+                            onChanged: (tab) =>
+                                setState(() => _activeTab = tab),
+                          ),
+                        ),
+                        const Divider(height: AppSpacing.hairlineStroke),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: LaunchpadMultisigPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.compact,
+                          gap: VitContentGap.tight,
+                          children: [
+                            if (_activeTab == _MultisigTab.queue) ...[
+                              _CreateTxCard(
+                                onTap: () => setState(() => _showCreate = true),
+                              ),
+                              _QueueSection(
+                                txs: queueTxs,
+                                expandedTxId: _expandedTxId,
+                                copiedField: _copiedField,
+                                onToggle: _toggleTx,
+                                onCopy: _copyField,
+                                onSign: _signTx,
+                                onExecute: _executeTx,
+                              ),
+                            ] else if (_activeTab == _MultisigTab.history) ...[
+                              _HistorySection(
+                                txs: historyTxs,
+                                expandedTxId: _expandedTxId,
+                                copiedField: _copiedField,
+                                onToggle: _toggleTx,
+                                onCopy: _copyField,
+                              ),
+                            ] else ...[
+                              _OwnersSection(
+                                safe: selectedSafe,
+                                copiedField: _copiedField,
+                                onCopy: _copyField,
+                              ),
+                            ],
+                            _SecurityNotice(safe: selectedSafe),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (_showCreate)
+              Positioned.fill(
+                child: _CreateTxSheet(
+                  safe: selectedSafe,
+                  onClose: () => setState(() => _showCreate = false),
+                  onCreate: (tx) {
+                    setState(() {
+                      _transactions = [tx, ..._transactions];
+                      _expandedTxId = tx.id;
+                      _showCreate = false;
+                    });
+                  },
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<LaunchpadMultisigTxDraft> _queueTxs(String safeAddress) {
+    return _transactions
+        .where(
+          (tx) =>
+              tx.safeAddress == safeAddress &&
+              {
+                LaunchpadMultisigTxStatus.draft,
+                LaunchpadMultisigTxStatus.pendingSignatures,
+                LaunchpadMultisigTxStatus.ready,
+                LaunchpadMultisigTxStatus.executing,
+              }.contains(tx.status),
+        )
+        .toList();
+  }
+
+  List<LaunchpadMultisigTxDraft> _historyTxs(String safeAddress) {
+    return _transactions
+        .where(
+          (tx) =>
+              tx.safeAddress == safeAddress &&
+              {
+                LaunchpadMultisigTxStatus.executed,
+                LaunchpadMultisigTxStatus.expired,
+                LaunchpadMultisigTxStatus.cancelled,
+              }.contains(tx.status),
+        )
+        .toList();
+  }
+
+  void _toggleTx(String id) {
+    setState(() => _expandedTxId = _expandedTxId == id ? null : id);
+  }
+
+  void _copyField(String text, String field) {
+    Clipboard.setData(ClipboardData(text: text));
+    setState(() => _copiedField = field);
+  }
+
+  void _signTx(String id) {
+    setState(() {
+      _transactions = [
+        for (final tx in _transactions)
+          if (tx.id != id) tx else _signedTransaction(tx),
+      ];
+    });
+  }
+
+  void _executeTx(String id) {
+    setState(() {
+      _transactions = [
+        for (final tx in _transactions)
+          tx.id == id
+              ? tx.copyWith(
+                  status: LaunchpadMultisigTxStatus.executed,
+                  executedAt: '07/03/2026 10:15',
+                  executeTxHash: '0xExec...313',
+                )
+              : tx,
+      ];
+    });
+  }
+}
+
+LaunchpadMultisigTxDraft _signedTransaction(LaunchpadMultisigTxDraft tx) {
+  var changed = false;
+  final signers = [
+    for (final signer in tx.signers)
+      if (!changed && !signer.signed)
+        (() {
+          changed = true;
+          return signer.copyWith(signed: true, signedAt: '07/03/2026 10:10');
+        })()
+      else
+        signer,
+  ];
+  final signedCount = signers.where((signer) => signer.signed).length;
+  return tx.copyWith(
+    signers: signers,
+    signedCount: signedCount,
+    status: signedCount >= tx.threshold
+        ? LaunchpadMultisigTxStatus.ready
+        : LaunchpadMultisigTxStatus.pendingSignatures,
+  );
 }

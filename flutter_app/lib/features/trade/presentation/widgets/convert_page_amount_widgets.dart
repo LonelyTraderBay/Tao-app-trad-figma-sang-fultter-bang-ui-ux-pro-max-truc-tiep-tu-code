@@ -102,7 +102,7 @@ class _ConvertHeroCard extends StatelessWidget {
             ),
           ),
           if (favoritePairs.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             SizedBox(
               height: TradeSpacingTokens.convertFavoriteChipHeight,
               child: ListView.separated(
@@ -184,7 +184,7 @@ class _AmountSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         Row(
           children: [
             _AssetButton(
@@ -228,7 +228,7 @@ class _AmountSection extends StatelessWidget {
           ],
         ),
         if (input) ...[
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitPresetChipRow.percentBalance(
             onTap: onPercent!,
             keyFor: ConvertPage.pctKey,
@@ -236,7 +236,7 @@ class _AmountSection extends StatelessWidget {
             height: TradeSpacingTokens.convertChipHeight,
             padding: AppSpacing.zeroInsets,
           ),
-          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [
               Text(

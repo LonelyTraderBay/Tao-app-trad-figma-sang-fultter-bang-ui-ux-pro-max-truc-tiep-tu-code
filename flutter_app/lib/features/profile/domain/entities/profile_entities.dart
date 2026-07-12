@@ -78,6 +78,7 @@ final class ProfileSecuritySnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    this.highRiskContractId,
   });
 
   final int score;
@@ -89,6 +90,7 @@ final class ProfileSecuritySnapshot {
   final String endpoint;
   final String actionDraft;
   final List<ProfileScreenState> supportedStates;
+  final String? highRiskContractId;
 }
 
 final class ProfileKycSnapshot {

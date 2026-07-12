@@ -1,22 +1,5 @@
 part of 'referral_home_page.dart';
 
-class _MetricBox extends StatelessWidget {
-  const _MetricBox({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitMetricCard(label: label, value: value, accentColor: color);
-  }
-}
-
 class _NoticeCard extends StatelessWidget {
   const _NoticeCard({
     required this.icon,
@@ -67,39 +50,6 @@ class _NoticeCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({
-    required this.icon,
-    required this.color,
-    required this.background,
-    this.size = 40,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color background;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: size,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: background,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: color.withValues(alpha: .22)),
-            borderRadius: AppRadii.smRadius,
-          ),
-        ),
-        child: Center(
-          child: Icon(icon, color: color, size: size * .45),
-        ),
       ),
     );
   }
@@ -320,18 +270,7 @@ _DetailStyle _detailStyle(String id) {
   };
 }
 
-String _formatUsd(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final fromEnd = whole.length - i;
-    buffer.write(whole[i]);
-    if (fromEnd > 1 && fromEnd % 3 == 1) buffer.write(',');
-  }
-  return '\$${buffer.toString()}.${parts.last}';
-}
+String _formatUsd(double value) => formatUsd(value);
 
 String _formatCompactInt(int value) {
   if (value < 1000) return '$value';

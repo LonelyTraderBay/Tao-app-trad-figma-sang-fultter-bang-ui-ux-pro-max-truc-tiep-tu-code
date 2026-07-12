@@ -41,7 +41,7 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final outputFile = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Behavior-Audit.md',
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Behavior-Audit.md',
   );
 
   final entries = _collectHeaderRouteEntries(appRoot, repoRoot);

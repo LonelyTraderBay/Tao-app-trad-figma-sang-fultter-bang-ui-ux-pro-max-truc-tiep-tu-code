@@ -291,15 +291,7 @@ String _formatTransactionAmount(double value, String asset) {
   return _formatComma(value, asset == 'BTC' ? 8 : 2);
 }
 
-String _formatVnd(double value) {
-  final digits = value.round().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < digits.length; i++) {
-    if (i > 0 && (digits.length - i) % 3 == 0) buffer.write('.');
-    buffer.write(digits[i]);
-  }
-  return buffer.toString();
-}
+String _formatVnd(double value) => formatP2PVnd(value);
 
 String _formatComma(double value, int decimals) {
   final fixed = value.toStringAsFixed(decimals);

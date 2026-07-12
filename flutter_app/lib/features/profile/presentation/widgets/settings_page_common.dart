@@ -56,11 +56,3 @@ class _AppInfoCard extends StatelessWidget {
     );
   }
 }
-
-IconData _iconFor(String key) {
-  return switch (key) {
-    'bell' => Icons.notifications_none_rounded,
-    'shield' => Icons.shield_outlined,
-    _ => Icons.circle_outlined,
-  };
-}

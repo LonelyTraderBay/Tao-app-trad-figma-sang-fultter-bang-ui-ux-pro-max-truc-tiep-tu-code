@@ -129,9 +129,10 @@ class _DisclaimerCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _IconBubble(
+          const VitAccentIconBox(
             icon: Icons.warning_amber_rounded,
             color: AppColors.warn,
+            iconSize: AppSpacing.iconSm,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

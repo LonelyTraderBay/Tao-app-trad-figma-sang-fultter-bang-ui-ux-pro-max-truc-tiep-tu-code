@@ -54,10 +54,10 @@ class _VolumeHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _IconBubble(
+              const VitAccentIconBox(
                 icon: Icons.monitor_heart_outlined,
                 color: AppModuleAccents.p2p,
-                small: true,
+                iconSize: P2PSpacingTokens.p2pDashboardIconBubbleSmallIcon,
               ),
               const SizedBox(width: P2PSpacingTokens.p2pDashboardMetricRowGap),
               Expanded(
@@ -196,7 +196,11 @@ class _MetricCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _IconBubble(icon: config.icon, color: config.color, small: true),
+              VitAccentIconBox(
+                icon: config.icon,
+                color: config.color,
+                iconSize: P2PSpacingTokens.p2pDashboardIconBubbleSmallIcon,
+              ),
               if (config.trend != null) _TrendBadge(value: config.trend!),
             ],
           ),

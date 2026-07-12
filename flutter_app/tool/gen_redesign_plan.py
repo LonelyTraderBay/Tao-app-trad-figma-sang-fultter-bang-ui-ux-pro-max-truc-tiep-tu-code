@@ -17,9 +17,9 @@ from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
-CSV_PATH = REPO / "docs/02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv"
-OUT_MD = REPO / "docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md"
-OUT_BATCHES = REPO / "docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-batches.csv"
+CSV_PATH = REPO / "docs/02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.csv"
+OUT_MD = REPO / "docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md"
+OUT_BATCHES = REPO / "docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-batches.csv"
 OUT_PLAYBOOK = REPO / "docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PLAYBOOK.md"
 TRADING_BOTS_PROMPT = "prompt-redesign/trading-bots-hub.md"
 
@@ -190,7 +190,7 @@ def completion_line(batch_id: str, module_id: str, special_prompt: str) -> str:
 
 def load_lines_for_batch(special_prompt: str, module_prompt: str) -> list[str]:
     lines = [
-        "- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4",
+        "- docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-theo-module.md §1-4",
         "- docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md",
         "- ke-hoach-redesign-batches.csv row <batch_id>",
         "- VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)",
@@ -224,7 +224,7 @@ def render_execution_playbook(batch_rows: list[dict[str, str]], today: str) -> s
         "| File | Vai trò |",
         "| --- | --- |",
         "| [REDESIGN-CONTRACT.md](REDESIGN-CONTRACT.md) | Chuẩn chung — load 1 lần đầu session |",
-        "| [ke-hoach-redesign-theo-module.md](../ke-hoach-redesign-theo-module.md) | Routing §1–4 mỗi chat |",
+        "| [ke-hoach-redesign-theo-module.md](../redesign/ke-hoach-redesign-theo-module.md) | Routing §1–4 mỗi chat |",
         "| [README.md](README.md) | 11 hub Tier A + SC-059 |",
         "| Hub prompts trong folder này | Tier A full / parent Tier B |",
         "",
@@ -508,7 +508,7 @@ def render_slim_markdown(
         "**Lấy row batch (PowerShell):**",
         "",
         "```powershell",
-        "Import-Csv docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-batches.csv |",
+        "Import-Csv docs/02_FLUTTER_MIGRATION/redesign/ke-hoach-redesign-batches.csv |",
         "  Where-Object batch_id -eq 'RD-M02-B01'",
         "```",
         "",

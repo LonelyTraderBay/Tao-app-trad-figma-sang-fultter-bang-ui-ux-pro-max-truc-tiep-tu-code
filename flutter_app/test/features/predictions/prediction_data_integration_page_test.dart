@@ -144,6 +144,49 @@ void main() {
     );
   });
 
+  testWidgets('SC-043 add-source CTA shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpDataIntegration(tester);
+
+    await tester.ensureVisible(
+      find.byKey(PredictionDataIntegrationPage.addSourceKey),
+    );
+    await tester.tap(find.byKey(PredictionDataIntegrationPage.addSourceKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Thêm nguồn dữ liệu sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-043 create-API-key CTA shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpDataIntegration(tester);
+
+    await tester.tap(find.byKey(PredictionDataIntegrationPage.apiKeysTabKey));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(PredictionDataIntegrationPage.createApiKeyKey),
+    );
+    await tester.tap(find.byKey(PredictionDataIntegrationPage.createApiKeyKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Tạo API Key sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-043 add-webhook CTA shows a placeholder snackbar', (
+    tester,
+  ) async {
+    await pumpDataIntegration(tester);
+
+    await tester.tap(find.byKey(PredictionDataIntegrationPage.webhooksTabKey));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(PredictionDataIntegrationPage.addWebhookKey),
+    );
+    await tester.tap(find.byKey(PredictionDataIntegrationPage.addWebhookKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Thêm Webhook sẽ sớm ra mắt'), findsOneWidget);
+  });
+
   testWidgets('SC-043 back button returns to Predictions home', (tester) async {
     await pumpDataIntegration(tester);
 

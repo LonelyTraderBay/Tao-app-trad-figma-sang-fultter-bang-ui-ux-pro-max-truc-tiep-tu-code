@@ -9,21 +9,15 @@ void main() {
     return value;
   }
 
-  test('AdminHomeController exposes dashboard lookup', () {
+  test('AdminHomeController exposes home snapshot state', () {
     final controller = container().read(adminHomeControllerProvider);
 
-    expect(controller.state.hasDashboards, isTrue);
-    expect(controller.dashboardById('analytics')?.route, '/admin/analytics');
-    expect(controller.dashboardById('missing'), isNull);
+    expect(controller.state.snapshot.dashboards, isNotEmpty);
   });
 
-  test('AdminAnalyticsController resolves active range fallback', () {
+  test('AdminAnalyticsController exposes analytics snapshot state', () {
     final controller = container().read(adminAnalyticsControllerProvider);
 
-    expect(
-      controller.activeRange(AdminAnalyticsRange.sevenDays).range,
-      AdminAnalyticsRange.sevenDays,
-    );
     expect(controller.state.snapshot.realtimeRefresh, isTrue);
   });
 

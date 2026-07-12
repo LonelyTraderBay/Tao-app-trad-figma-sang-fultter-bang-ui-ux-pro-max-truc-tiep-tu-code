@@ -71,18 +71,6 @@ class _LogoutButton extends StatelessWidget {
   }
 }
 
-class _TinyPill extends StatelessWidget {
-  const _TinyPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
-  }
-}
-
 IconData _deviceIcon(String type) {
   return switch (type) {
     'mobile' => Icons.phone_iphone_rounded,

@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Service tile badges (Mandatory)
 
-Full contract: [Service-Tile-Badge-Standard.md](../../docs/02_FLUTTER_MIGRATION/Service-Tile-Badge-Standard.md)
+Full contract: [Service-Tile-Badge-Standard.md](../../docs/02_FLUTTER_MIGRATION/standards/Service-Tile-Badge-Standard.md)
 
 ## When editing Tier B grids (`VitServiceTile`, `VitActionTileGrid`, Home products)
 

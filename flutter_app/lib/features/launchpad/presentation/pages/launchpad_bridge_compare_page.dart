@@ -19,9 +19,13 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
-part 'launchpad_bridge_compare_page_part_01.dart';
-part 'launchpad_bridge_compare_page_part_02.dart';
-part 'launchpad_bridge_compare_page_part_03.dart';
+part '../widgets/launchpad_bridge_compare_hero.dart';
+part '../widgets/launchpad_bridge_compare_quick_compare.dart';
+part '../widgets/launchpad_bridge_compare_route_list.dart';
+part '../widgets/launchpad_bridge_compare_route_metrics.dart';
+part '../widgets/launchpad_bridge_compare_route_details.dart';
+part '../widgets/launchpad_bridge_compare_confirm.dart';
+part '../widgets/launchpad_bridge_compare_common.dart';
 
 class LaunchpadBridgeComparePage extends ConsumerStatefulWidget {
   const LaunchpadBridgeComparePage({super.key, this.shellRenderMode});

@@ -66,18 +66,23 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                             onChanged: (value) =>
                                 setState(() => _query = value),
                             onClear: () => setState(() => _query = ''),
-                            onGuide: () => _go(AppRoutePaths.arenaGuide),
-                            onRewards: () =>
-                                _go('${AppRoutePaths.rewards}?tab=arena'),
-                            onLeaderboard: () =>
-                                _go(AppRoutePaths.arenaLeaderboard),
-                            onMyArena: () => _go(AppRoutePaths.profileArena),
+                            onGuide: () =>
+                                context.goHaptic(AppRoutePaths.arenaGuide),
+                            onRewards: () => context.goHaptic(
+                              '${AppRoutePaths.rewards}?tab=arena',
+                            ),
+                            onLeaderboard: () => context.goHaptic(
+                              AppRoutePaths.arenaLeaderboard,
+                            ),
+                            onMyArena: () =>
+                                context.goHaptic(AppRoutePaths.profileArena),
                           )
                         else ...[
                           _HeroCard(
                             pointsBalance: pointsBalance,
                             activeChallenges: activeChallenges,
-                            onCreate: () => _go(AppRoutePaths.arenaStudio),
+                            onCreate: () =>
+                                context.goHaptic(AppRoutePaths.arenaStudio),
                             onExplore: _scrollToTemplates,
                           ),
                           _IntroBlock(
@@ -87,23 +92,30 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                             onChanged: (value) =>
                                 setState(() => _query = value),
                             onClear: () => setState(() => _query = ''),
-                            onGuide: () => _go(AppRoutePaths.arenaGuide),
-                            onRewards: () =>
-                                _go('${AppRoutePaths.rewards}?tab=arena'),
-                            onLeaderboard: () =>
-                                _go(AppRoutePaths.arenaLeaderboard),
-                            onMyArena: () => _go(AppRoutePaths.profileArena),
+                            onGuide: () =>
+                                context.goHaptic(AppRoutePaths.arenaGuide),
+                            onRewards: () => context.goHaptic(
+                              '${AppRoutePaths.rewards}?tab=arena',
+                            ),
+                            onLeaderboard: () => context.goHaptic(
+                              AppRoutePaths.arenaLeaderboard,
+                            ),
+                            onMyArena: () =>
+                                context.goHaptic(AppRoutePaths.profileArena),
                           ),
                         ],
                         if (hasSearch)
                           _SearchResults(
                             query: _query,
                             snapshot: snapshot,
-                            onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                            onRoom: (id) =>
-                                _go(AppRoutePaths.arenaChallenge(id)),
-                            onCreator: (id) =>
-                                _go(AppRoutePaths.arenaCreator(id)),
+                            onMode: (id) =>
+                                context.goHaptic(AppRoutePaths.arenaMode(id)),
+                            onRoom: (id) => context.goHaptic(
+                              AppRoutePaths.arenaChallenge(id),
+                            ),
+                            onCreator: (id) => context.goHaptic(
+                              AppRoutePaths.arenaCreator(id),
+                            ),
                           )
                         else ...[
                           Column(
@@ -112,40 +124,50 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                               _TemplateSection(
                                 anchorKey: _templatesAnchorKey,
                                 templates: snapshot.templates,
-                                onTap: (_) => _go(AppRoutePaths.arenaStudio),
+                                onTap: (_) =>
+                                    context.goHaptic(AppRoutePaths.arenaStudio),
                               ),
                               const SizedBox(
                                 height: AppSpacing.pageRhythmCompactInnerGap,
                               ),
                               _FeaturedModesSection(
                                 modes: snapshot.featuredModes,
-                                onViewAll: () =>
-                                    _go(AppRoutePaths.arenaLeaderboard),
-                                onMode: (id) =>
-                                    _go(AppRoutePaths.arenaMode(id)),
+                                onViewAll: () => context.goHaptic(
+                                  AppRoutePaths.arenaLeaderboard,
+                                ),
+                                onMode: (id) => context.goHaptic(
+                                  AppRoutePaths.arenaMode(id),
+                                ),
                               ),
                             ],
                           ),
                           _LiveRoomsSection(
                             rooms: snapshot.liveRooms,
-                            onRoom: (id) =>
-                                _go(AppRoutePaths.arenaChallenge(id)),
-                            onGuide: () => _go(AppRoutePaths.arenaGuide),
+                            onRoom: (id) => context.goHaptic(
+                              AppRoutePaths.arenaChallenge(id),
+                            ),
+                            onGuide: () =>
+                                context.goHaptic(AppRoutePaths.arenaGuide),
                           ),
                           _CreatorSpotlightSection(
                             creators: snapshot.creators,
-                            onCreator: (id) =>
-                                _go(AppRoutePaths.arenaCreator(id)),
+                            onCreator: (id) => context.goHaptic(
+                              AppRoutePaths.arenaCreator(id),
+                            ),
                           ),
                           _PredictionBridge(
-                            onTap: () => _go(AppRoutePaths.marketsPredictions),
+                            onTap: () => context.goHaptic(
+                              AppRoutePaths.marketsPredictions,
+                            ),
                           ),
                           _VerifiedTeaser(
-                            onTap: () => _go(AppRoutePaths.arenaVerified),
+                            onTap: () =>
+                                context.goHaptic(AppRoutePaths.arenaVerified),
                           ),
                         ],
                         _ArenaFooter(
-                          onRules: () => _go(AppRoutePaths.arenaSafety),
+                          onRules: () =>
+                              context.goHaptic(AppRoutePaths.arenaSafety),
                         ),
                       ],
                     ),
@@ -159,17 +181,12 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
     );
   }
 
-  void _go(String route) {
-    HapticFeedback.selectionClick();
-    context.go(route);
-  }
-
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.home);
+    goBackOrFallback(
+      context,
+      fallbackPath: AppRoutePaths.home,
+      mode: BackNavigationMode.historyThenFallback,
+    );
   }
 
   void _scrollToTemplates() {

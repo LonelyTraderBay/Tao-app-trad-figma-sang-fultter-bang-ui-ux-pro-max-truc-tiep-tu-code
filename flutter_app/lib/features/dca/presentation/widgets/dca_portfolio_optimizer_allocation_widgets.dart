@@ -151,11 +151,12 @@ class _SuggestionRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _IconBubble(
+          VitAccentIconBox(
             icon: positive
                 ? Icons.trending_up_rounded
                 : Icons.trending_down_rounded,
             color: color,
+            iconSize: AppSpacing.iconSm,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

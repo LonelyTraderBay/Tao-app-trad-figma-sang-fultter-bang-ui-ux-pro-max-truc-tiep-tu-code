@@ -391,7 +391,8 @@ class _ModulesStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final module = modules[currentIndex];
-    final accent = _accentForId(module.id);
+    final visual = _visualForId(module.id);
+    final accent = visual.accent;
 
     return VitPageContent(
       rhythm: VitPageRhythm.form,
@@ -402,7 +403,7 @@ class _ModulesStep extends StatelessWidget {
           title: 'Khám phá 5 modules',
           subtitle: 'Mỗi module phục vụ một nhu cầu khác nhau',
         ),
-        _HeroIcon(icon: _iconForId(module.id), color: accent),
+        _HeroIcon(icon: visual.icon, color: accent),
         Column(
           children: [
             Text(

@@ -96,7 +96,8 @@ class _ClaimGuide extends StatelessWidget {
         ),
         VitCtaButton(
           density: VitDensity.compact,
-          onPressed: () {},
+          onPressed: () =>
+              _showComingSoon(context, 'Mở trang FSCS sẽ sớm ra mắt'),
           leading: const Icon(Icons.open_in_new_rounded),
           child: const Text('Visit FSCS Website'),
         ),
@@ -211,7 +212,8 @@ class _FaqButton extends StatelessWidget {
       key: InvestorCompensationPage.faqKey,
       density: VitDensity.compact,
       variant: VitCtaButtonVariant.secondary,
-      onPressed: () {},
+      onPressed: () =>
+          _showComingSoon(context, 'Câu hỏi thường gặp FSCS sẽ sớm ra mắt'),
       leading: const Icon(Icons.help_outline_rounded),
       trailing: const Icon(Icons.chevron_right_rounded),
       child: const Text('FSCS FAQs'),
@@ -232,4 +234,9 @@ class _Card extends StatelessWidget {
       child: child,
     );
   }
+}
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }

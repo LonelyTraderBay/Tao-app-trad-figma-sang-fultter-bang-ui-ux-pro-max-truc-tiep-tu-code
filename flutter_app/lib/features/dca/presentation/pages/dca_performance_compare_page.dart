@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_currency_formatters.dart';
 
 part '../widgets/dca_performance_compare_tabs.dart';
 part '../widgets/dca_performance_compare_charts.dart';

@@ -60,10 +60,10 @@ void main() {
 
   test('screen-level audit contract keeps product hubs at root module level', () {
     final markdown = File(
-      '../docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.md',
+      '../docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.md',
     ).readAsStringSync();
     final csv = File(
-      '../docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.csv',
+      '../docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.csv',
     ).readAsStringSync();
 
     expect(markdown, contains('screen_level_mismatches=0'));

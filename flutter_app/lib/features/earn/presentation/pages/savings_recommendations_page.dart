@@ -20,9 +20,13 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
-part 'savings_recommendations_page_part_01.dart';
-part 'savings_recommendations_page_part_02.dart';
-part 'savings_recommendations_page_part_03.dart';
+part '../widgets/savings_recommendations_hero.dart';
+part '../widgets/savings_recommendations_amount_panel.dart';
+part '../widgets/savings_recommendations_strategy_card.dart';
+part '../widgets/savings_recommendations_insights.dart';
+part '../widgets/savings_recommendations_strategy_detail_sheet.dart';
+part '../widgets/savings_recommendations_compare_sheet.dart';
+part '../widgets/savings_recommendations_shared.dart';
 
 class SavingsRecommendationsPage extends ConsumerStatefulWidget {
   const SavingsRecommendationsPage({super.key, this.shellRenderMode});
@@ -42,4 +46,200 @@ class SavingsRecommendationsPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<SavingsRecommendationsPage> createState() =>
       _SavingsRecommendationsPageState();
+}
+
+class _SavingsRecommendationsPageState
+    extends ConsumerState<SavingsRecommendationsPage> {
+  String _amountText = '15000';
+  late final TextEditingController _amountController;
+
+  double get _amount => double.tryParse(_amountText) ?? 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _amountController = TextEditingController(text: _amountText);
+  }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(savingsRecommendationsRepositoryProvider)
+        .getRecommendations();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-338 SavingsRecommendationsPage',
+      child: Material(
+        color: AppColors.bg,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _HeroCard(snapshot: snapshot),
+                      _ProfileCard(snapshot: snapshot),
+                      _AmountSimulator(
+                        controller: _amountController,
+                        amountText: _amountText,
+                        onAmountChanged: (value) =>
+                            setState(() => _amountText = value),
+                        onQuickAmount: (value) {
+                          HapticFeedback.selectionClick();
+                          _setAmountText('$value');
+                        },
+                      ),
+                      _CompareButton(
+                        onTap: () => _openCompareSheet(snapshot.strategies),
+                      ),
+                      VitPageSection(
+                        label: 'Chiến lược được Đề xuất',
+                        accentColor: AppColors.accent,
+                        children: [
+                          Column(
+                            key: SavingsRecommendationsPage.strategyListKey,
+                            children: [
+                              for (final strategy in snapshot.strategies)
+                                _StrategyCard(
+                                  key: SavingsRecommendationsPage.strategyKey(
+                                    strategy.id,
+                                  ),
+                                  strategy: strategy,
+                                  amount: _amount,
+                                  onTap: () => _openStrategySheet(
+                                    strategy,
+                                    snapshot.savingsRoute,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      VitPageSection(
+                        label: 'Gợi ý Cá nhân hóa',
+                        accentColor: AppColors.buy,
+                        children: [
+                          Column(
+                            children: [
+                              for (final insight in snapshot.insights)
+                                _InsightCard(insight: insight),
+                            ],
+                          ),
+                        ],
+                      ),
+                      _QuickLinks(snapshot: snapshot),
+                      const SavingsToolsYieldFooter(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _setAmountText(String value) {
+    _amountController.value = TextEditingValue(
+      text: value,
+      selection: TextSelection.collapsed(offset: value.length),
+    );
+    setState(() => _amountText = value);
+  }
+
+  Future<void> _openStrategySheet(
+    SavingsStrategyDraft strategy,
+    String savingsRoute,
+  ) async {
+    HapticFeedback.selectionClick();
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.86,
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopLargeRadius,
+              ),
+            ),
+            child: SafeArea(
+              top: false,
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                padding: EarnSpacingTokens.earnSheetContentPadding,
+                child: _StrategyDetailSheet(
+                  strategy: strategy,
+                  amount: _amount,
+                  savingsRoute: savingsRoute,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _openCompareSheet(List<SavingsStrategyDraft> strategies) async {
+    HapticFeedback.selectionClick();
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.72,
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopLargeRadius,
+              ),
+            ),
+            child: SafeArea(
+              top: false,
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                padding: EarnSpacingTokens.earnSheetContentPadding,
+                child: _CompareSheet(strategies: strategies, amount: _amount),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

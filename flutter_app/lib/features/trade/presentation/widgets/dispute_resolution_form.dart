@@ -81,16 +81,17 @@ class _FileComplaintTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
-          child: _UploadEvidenceButton(
-            attached: evidenceAttached,
-            onPressed: onUpload,
-          ),
+        VitPageSection(
+          label: 'Evidence',
+          density: VitDensity.compact,
+          children: [
+            _UploadEvidenceButton(
+              attached: evidenceAttached,
+              onPressed: onUpload,
+            ),
+            _SubmitButton(enabled: canSubmit, onPressed: onSubmit),
+          ],
         ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        _SubmitButton(enabled: canSubmit, onPressed: onSubmit),
       ],
     );
   }

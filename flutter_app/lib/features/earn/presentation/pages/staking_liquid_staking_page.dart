@@ -19,9 +19,13 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
-part 'staking_liquid_staking_page_part_01.dart';
-part 'staking_liquid_staking_page_part_02.dart';
-part 'staking_liquid_staking_page_part_03.dart';
+part '../widgets/staking_liquid_staking_common.dart';
+part '../widgets/staking_liquid_staking_stake.dart';
+part '../widgets/staking_liquid_staking_swap.dart';
+part '../widgets/staking_liquid_staking_swap_fields.dart';
+part '../widgets/staking_liquid_staking_holdings.dart';
+part '../widgets/staking_liquid_staking_benefits.dart';
+part '../widgets/staking_liquid_staking_detail_sheet.dart';
 
 enum _LiquidTab { stake, swap, holdings }
 
@@ -51,4 +55,128 @@ class StakingLiquidStakingPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<StakingLiquidStakingPage> createState() =>
       _StakingLiquidStakingPageState();
+}
+
+class _StakingLiquidStakingPageState
+    extends ConsumerState<StakingLiquidStakingPage> {
+  final _swapAmountController = TextEditingController();
+  _LiquidTab _tab = _LiquidTab.stake;
+  String _swapFrom = 'stETH';
+  String _swapTo = 'ETH';
+
+  @override
+  void dispose() {
+    _swapAmountController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(stakingLiquidStakingRepositoryProvider)
+        .getLiquidStaking();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-364 StakingLiquidStakingPage',
+      child: Material(
+        color: AppColors.bg,
+        child: VitAutoHideHeaderScaffold(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
+            title: snapshot.title,
+            subtitle: snapshot.infoTitle,
+            showBack: true,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    children: [
+                      _InfoBanner(snapshot: snapshot),
+                      _LiquidTabs(
+                        active: _tab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (_tab == _LiquidTab.stake)
+                        _StakeTab(
+                          snapshot: snapshot,
+                          onDetail: _showTokenDetail,
+                          onStake: (token) {
+                            HapticFeedback.lightImpact();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Đã chọn stake ${token.symbol}'),
+                              ),
+                            );
+                          },
+                        ),
+                      if (_tab == _LiquidTab.swap)
+                        _SwapTab(
+                          snapshot: snapshot,
+                          swapFrom: _swapFrom,
+                          swapTo: _swapTo,
+                          amountController: _swapAmountController,
+                          onFromChanged: (value) =>
+                              setState(() => _swapFrom = value),
+                          onToChanged: (value) =>
+                              setState(() => _swapTo = value),
+                          onAmountChanged: (_) => setState(() {}),
+                          onReverse: () {
+                            HapticFeedback.selectionClick();
+                            setState(() {
+                              final oldFrom = _swapFrom;
+                              _swapFrom = _swapTo;
+                              _swapTo = oldFrom;
+                            });
+                          },
+                        ),
+                      if (_tab == _LiquidTab.holdings)
+                        _HoldingsTab(
+                          snapshot: snapshot,
+                          onStakeNow: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tab = _LiquidTab.stake);
+                          },
+                        ),
+                      _BenefitsGrid(snapshot: snapshot),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showTokenDetail(StakingLiquidTokenDraft token) async {
+    HapticFeedback.selectionClick();
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.transparent,
+      builder: (context) {
+        return _SheetFrame(child: _TokenDetailSheet(token: token));
+      },
+    );
+  }
 }

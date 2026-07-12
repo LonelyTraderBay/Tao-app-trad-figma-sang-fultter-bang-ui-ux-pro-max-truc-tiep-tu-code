@@ -62,10 +62,13 @@ class _ProfileHero extends StatelessWidget {
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
                       children: [
-                        _HeroPill(label: user.vipLevel, color: _profileAmber),
-                        _HeroPill(
+                        VitAccentPill(
+                          label: user.vipLevel,
+                          accentColor: _profileAmber,
+                        ),
+                        VitAccentPill(
                           label: 'KYC ${user.kycLevel}',
-                          color: _profileGreen,
+                          accentColor: _profileGreen,
                         ),
                       ],
                     ),
@@ -117,18 +120,6 @@ class _ProfileHero extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _HeroPill extends StatelessWidget {
-  const _HeroPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

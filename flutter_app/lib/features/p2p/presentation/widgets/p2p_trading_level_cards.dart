@@ -195,7 +195,8 @@ class _LevelCard extends StatelessWidget {
                       height:
                           P2PSpacingTokens.p2pTradingLevelUpgradeButtonHeight,
                       leading: const Icon(Icons.trending_up_rounded),
-                      onPressed: () {},
+                      onPressed: () =>
+                          _upgradeComingSoon(context, level.nameVi),
                       child: Text('Nâng cấp lên ${level.nameVi}'),
                     ),
                   ],
@@ -205,6 +206,13 @@ class _LevelCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _upgradeComingSoon(BuildContext context, String levelName) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Nâng cấp lên $levelName sẽ sớm ra mắt')),
     );
   }
 }
@@ -366,18 +374,7 @@ String _formatCompact(int value) {
   return value.toString();
 }
 
-String _formatVnd(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final remaining = raw.length - i;
-    buffer.write(raw[i]);
-    if (remaining > 1 && remaining % 3 == 1) {
-      buffer.write('.');
-    }
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);
 
 int _discountFromBasic(
   P2PTradingLevelSnapshot snapshot,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -40,6 +41,11 @@ class LaunchpadDcaStrategiesSection extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 
 class _StrategyCard extends StatelessWidget {
@@ -91,13 +97,19 @@ class _StrategyCard extends StatelessWidget {
               _MiniIconButton(
                 icon: isActive ? Icons.pause_rounded : Icons.play_arrow_rounded,
                 color: isActive ? AppColors.text3 : AppColors.buy,
-                onTap: () {},
+                onTap: () => _showComingSoon(
+                  context,
+                  'Tạm dừng/tiếp tục chiến lược sẽ sớm ra mắt',
+                ),
               ),
               const SizedBox(width: AppSpacing.x2),
               _MiniIconButton(
                 icon: Icons.settings_outlined,
                 color: AppColors.text3,
-                onTap: () {},
+                onTap: () => _showComingSoon(
+                  context,
+                  'Cài đặt chiến lược sẽ sớm ra mắt',
+                ),
               ),
             ],
           ),

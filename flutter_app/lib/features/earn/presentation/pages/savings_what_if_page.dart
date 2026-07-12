@@ -23,8 +23,6 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custod
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 part 'savings_what_if_page_part_01.dart';
-part 'savings_what_if_page_part_02.dart';
-part 'savings_what_if_page_part_03.dart';
 part 'savings_what_if_page_part_04.dart';
 part '../widgets/savings_what_if_results.dart';
 part '../widgets/savings_what_if_stress.dart';

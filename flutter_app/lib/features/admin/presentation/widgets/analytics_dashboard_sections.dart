@@ -36,7 +36,8 @@ class _Controls extends StatelessWidget {
           key: AnalyticsDashboard.refreshKey,
           icon: Icons.refresh_rounded,
           tooltip: 'Refresh analytics',
-          onPressed: () {},
+          onPressed: () =>
+              _showComingSoon(context, 'Làm mới phân tích sẽ sớm ra mắt'),
           size: VitIconButtonSize.md,
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -44,11 +45,19 @@ class _Controls extends StatelessWidget {
           key: AnalyticsDashboard.exportKey,
           icon: Icons.download_rounded,
           tooltip: 'Export analytics',
-          onPressed: () {},
+          onPressed: () =>
+              _showComingSoon(context, 'Xuất phân tích sẽ sớm ra mắt'),
           size: VitIconButtonSize.md,
         ),
       ],
     );
+  }
+
+  void _showComingSoon(BuildContext context, String message) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 }
 
@@ -62,7 +71,7 @@ class _KeyMetrics extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _MetricCard(
+          child: AdminMetricCard(
             icon: Icons.monitor_heart_rounded,
             title: 'Tổng sự kiện',
             value: '${snapshot.totalEvents}',
@@ -71,11 +80,17 @@ class _KeyMetrics extends StatelessWidget {
             timeframe: 'Selected range',
             tint: AppColors.accent15,
             accent: AppColors.accent,
+            semanticsLabel:
+                'Admin analytics metric Tổng sự kiện: ${snapshot.totalEvents}. '
+                '${snapshot.eventsPerDayLabel}. 0.0% Selected range',
+            valueStyle: AppTextStyles.sectionTitle.copyWith(
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
         Expanded(
-          child: _MetricCard(
+          child: AdminMetricCard(
             icon: Icons.groups_2_outlined,
             title: 'Người dùng',
             value: '${snapshot.uniqueUsers}',
@@ -84,118 +99,15 @@ class _KeyMetrics extends StatelessWidget {
             timeframe: 'Selected range',
             tint: AppColors.primary15,
             accent: AppColors.primary,
+            semanticsLabel:
+                'Admin analytics metric Người dùng: ${snapshot.uniqueUsers}. '
+                'Unique users. 0.0% Selected range',
+            valueStyle: AppTextStyles.sectionTitle.copyWith(
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _MetricCard extends StatelessWidget {
-  const _MetricCard({
-    required this.icon,
-    required this.title,
-    required this.value,
-    required this.caption,
-    required this.delta,
-    required this.timeframe,
-    required this.tint,
-    required this.accent,
-  });
-
-  final IconData icon;
-  final String title;
-  final String value;
-  final String caption;
-  final String delta;
-  final String timeframe;
-  final Color tint;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label:
-          'Admin analytics metric $title: $value. $caption. $delta $timeframe',
-      child: VitCard(
-        padding: AdminSpacingTokens.adminCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox.square(
-                  dimension: AdminSpacingTokens.adminBox40,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: tint,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: AppRadii.inputRadius,
-                      ),
-                    ),
-                    child: Icon(
-                      icon,
-                      color: accent,
-                      size: AdminSpacingTokens.adminIconXl,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                      Text(
-                        value,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.sectionTitle.copyWith(
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            Text(
-              caption,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-            Wrap(
-              spacing: AppSpacing.x2,
-              runSpacing: AppSpacing.x1,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                VitStatusPill(
-                  label: delta,
-                  status: delta.startsWith('-')
-                      ? VitStatusPillStatus.error
-                      : VitStatusPillStatus.success,
-                  size: VitStatusPillSize.sm,
-                ),
-                Text(
-                  timeframe,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

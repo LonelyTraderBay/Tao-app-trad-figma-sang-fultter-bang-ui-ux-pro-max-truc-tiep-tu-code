@@ -11,7 +11,7 @@
 | --- | --- |
 | [AGENTS.md](../../../AGENTS.md) | Product boundaries, UI rules, points-only copy |
 | [DESIGN.md](../../../DESIGN.md) | Tokens, component ladder |
-| [Flutter-Native-Design-Standard.md](../Flutter-Native-Design-Standard.md) | Trust-first, no dark patterns |
+| [Flutter-Native-Design-Standard.md](../standards/Flutter-Native-Design-Standard.md) | Trust-first, no dark patterns |
 | [HomePage-Flutter-Native-Standard.md](../../04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md) | SC-007 visual standard |
 | [trading-bots-hub.md](trading-bots-hub.md) | Tier A reference |
 

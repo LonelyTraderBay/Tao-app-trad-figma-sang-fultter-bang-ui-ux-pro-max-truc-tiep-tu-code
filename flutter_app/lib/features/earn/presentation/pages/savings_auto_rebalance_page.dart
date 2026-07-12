@@ -22,9 +22,14 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
-part 'savings_auto_rebalance_page_part_01.dart';
-part 'savings_auto_rebalance_page_part_02.dart';
-part 'savings_auto_rebalance_page_part_03.dart';
+part '../widgets/savings_auto_rebalance_allocation.dart';
+part '../widgets/savings_auto_rebalance_drift_history.dart';
+part '../widgets/savings_auto_rebalance_strategy.dart';
+part '../widgets/savings_auto_rebalance_history.dart';
+part '../widgets/savings_auto_rebalance_settings.dart';
+part '../widgets/savings_auto_rebalance_preview.dart';
+part '../widgets/savings_auto_rebalance_painters.dart';
+part '../widgets/savings_auto_rebalance_shared.dart';
 
 TextStyle get _captionMedium =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.medium);

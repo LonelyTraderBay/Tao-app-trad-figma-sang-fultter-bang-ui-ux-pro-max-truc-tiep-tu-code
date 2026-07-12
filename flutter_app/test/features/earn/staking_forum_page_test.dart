@@ -114,4 +114,43 @@ void main() {
     expect(find.byType(StakingCommunityGovernancePage), findsOneWidget);
     expect(find.text('Governance'), findsOneWidget);
   });
+
+  testWidgets('SC-392 create thread CTA shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpForum(tester);
+
+    await tester.ensureVisible(find.byKey(StakingForumPage.createKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(StakingForumPage.createKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tạo chủ đề sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-392 category card tap shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpForum(tester);
+
+    await tester.tap(
+      find.byKey(StakingForumPage.categoryKey('General Discussion')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xem danh mục sẽ sớm ra mắt'), findsOneWidget);
+  });
+
+  testWidgets('SC-392 thread card tap shows coming-soon snack bar', (
+    tester,
+  ) async {
+    await pumpForum(tester);
+
+    await tester.ensureVisible(find.byKey(StakingForumPage.threadKey(0)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(StakingForumPage.threadKey(0)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xem chủ đề sẽ sớm ra mắt'), findsOneWidget);
+  });
 }

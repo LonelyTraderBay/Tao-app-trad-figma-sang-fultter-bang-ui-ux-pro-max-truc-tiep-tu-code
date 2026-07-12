@@ -60,7 +60,7 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final outputFile = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Screen-Navigation-Edges.csv',
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Screen-Navigation-Edges.csv',
   );
 
   final edges = _collectNavigationEdges(appRoot);

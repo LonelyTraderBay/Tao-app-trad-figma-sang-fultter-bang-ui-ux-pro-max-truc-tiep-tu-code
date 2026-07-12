@@ -8,7 +8,6 @@ final class EnterpriseStatesSpacingTokens {
 
   static const double enterpriseStatesLineHeightBody =
       SupportSpacingTokens.supportLineHeightExpanded;
-  static const double enterpriseStatesIconBox = AppSpacing.inputHeight;
   static EdgeInsets enterpriseStatesScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
   static const EdgeInsets enterpriseStatesHeroPadding = EdgeInsets.fromLTRB(

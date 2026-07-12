@@ -302,23 +302,6 @@ class _SignalResultRow extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.label, required this.accentColor});
-
-  final String label;
-  final Color accentColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: accentColor,
-    );
-  }
-}
-
 class _SignalsEmptyState extends StatelessWidget {
   const _SignalsEmptyState();
 
@@ -380,25 +363,6 @@ String _categoryLabel(TradingSignalCategory category) {
     TradingSignalCategory.swing => 'Swing',
     TradingSignalCategory.position => 'Position',
   };
-}
-
-String _formatPrice(double value) {
-  final decimals = value >= 1
-      ? 2
-      : value >= 0.01
-      ? 4
-      : 6;
-  final fixed = value.toStringAsFixed(decimals);
-  final parts = fixed.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var index = 0; index < whole.length; index += 1) {
-    if (index > 0 && (whole.length - index) % 3 == 0) {
-      buffer.write(',');
-    }
-    buffer.write(whole[index]);
-  }
-  return '${buffer.toString()}.${parts.last}';
 }
 
 String _formatPercent(double value) {

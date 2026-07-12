@@ -16,7 +16,7 @@ class _SummaryCard extends StatelessWidget {
           Expanded(
             child: _SummaryMetric(
               label: 'Đã stake',
-              value: _formatUsd(snapshot.totalStakedUsd),
+              value: EarnFormatters.usd(snapshot.totalStakedUsd),
               color: AppColors.buy,
             ),
           ),
@@ -24,7 +24,7 @@ class _SummaryCard extends StatelessWidget {
           Expanded(
             child: _SummaryMetric(
               label: 'Đã nhận',
-              value: '+${_formatUsd(snapshot.totalEarnedUsd)}',
+              value: '+${EarnFormatters.usd(snapshot.totalEarnedUsd)}',
               color: AppColors.primarySoft,
             ),
           ),
@@ -32,7 +32,7 @@ class _SummaryCard extends StatelessWidget {
           Expanded(
             child: _SummaryMetric(
               label: 'Đã rút',
-              value: _formatUsd(snapshot.totalUnstakedUsd),
+              value: EarnFormatters.usd(snapshot.totalUnstakedUsd),
               color: AppColors.warn,
             ),
           ),

@@ -131,14 +131,3 @@ class _SecuritySupportCard extends StatelessWidget {
     );
   }
 }
-
-IconData _iconFor(String key) {
-  return switch (key) {
-    'phone' => Icons.phone_android_rounded,
-    'key' => Icons.key_rounded,
-    'shield' => Icons.shield_outlined,
-    'laptop' => Icons.laptop_mac_rounded,
-    'activity' => Icons.monitor_heart_outlined,
-    _ => Icons.circle_outlined,
-  };
-}

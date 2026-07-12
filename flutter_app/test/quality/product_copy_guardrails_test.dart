@@ -92,9 +92,6 @@ void main() {
       final source = asciiFold(
         [
           'lib/features/arena/presentation/pages/arena_governance_gate_page.dart',
-          'lib/features/arena/presentation/pages/arena_governance_gate_page_part_01.dart',
-          'lib/features/arena/presentation/pages/arena_governance_gate_page_part_02.dart',
-          'lib/features/arena/presentation/pages/arena_governance_gate_page_part_03.dart',
           'lib/features/arena/presentation/pages/arena_governance_gate_page_part_04.dart',
           'lib/features/arena/presentation/pages/arena_report_case_page.dart',
           'lib/features/arena/presentation/pages/arena_challenge_detail_page.dart',
@@ -102,6 +99,7 @@ void main() {
           'lib/features/arena/presentation/pages/arena_challenge_detail_page_part_02.dart',
           'lib/features/arena/presentation/pages/arena_challenge_detail_page_part_03.dart',
           'lib/features/arena/presentation/controllers/arena_controller.dart',
+          'lib/features/arena/presentation/controllers/arena_creation_controller.dart',
           'lib/features/arena/presentation/widgets/arena_state_cards.dart',
         ].map(readSource).join('\n'),
       );

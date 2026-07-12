@@ -216,7 +216,7 @@ class _DisputeCaseCard extends StatelessWidget {
           if (!resolved) ...[
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCtaButton(
-              onPressed: () {},
+              onPressed: () => _escalate(context),
               variant: VitCtaButtonVariant.danger,
               density: VitDensity.compact,
               child: const Text('Escalate to Senior Support'),
@@ -224,6 +224,13 @@ class _DisputeCaseCard extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+
+  void _escalate(BuildContext context) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Chuyển lên hỗ trợ cấp cao sẽ sớm ra mắt')),
     );
   }
 }

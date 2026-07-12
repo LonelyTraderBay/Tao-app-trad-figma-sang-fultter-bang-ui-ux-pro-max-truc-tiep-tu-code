@@ -46,11 +46,11 @@ class _MasterSoundHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              _IconBubble(
+              VitAccentIconBox(
                 icon: masterEnabled
                     ? Icons.volume_up_rounded
                     : Icons.volume_off_rounded,
-                accent: masterEnabled
+                color: masterEnabled
                     ? AppModuleAccents.launchpad
                     : AppColors.text3,
               ),
@@ -208,7 +208,11 @@ class _QuickToggleRow extends StatelessWidget {
       padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
-          _IconBubble(icon: icon, accent: accent, small: true),
+          VitAccentIconBox(
+            icon: icon,
+            color: accent,
+            iconSize: AppSpacing.iconSm,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(

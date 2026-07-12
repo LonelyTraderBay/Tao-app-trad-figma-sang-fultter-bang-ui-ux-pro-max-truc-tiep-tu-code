@@ -8,43 +8,24 @@ class _RiskTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionRiskCalculatorPage.calculatorTabKey,
-        tab: _RiskTab.calculator,
-        label: 'May tinh',
-      ),
-      (
-        key: PredictionRiskCalculatorPage.scenariosTabKey,
-        tab: _RiskTab.scenarios,
-        label: 'Kich ban',
-      ),
-      (
-        key: PredictionRiskCalculatorPage.guideTabKey,
-        tab: _RiskTab.guide,
-        label: 'Huong dan',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      shape: const Border(bottom: BorderSide(color: AppColors.border)),
-      child: Semantics(
-        label: 'Prediction risk calculator tab',
-        child: VitTabBar(
-          variant: VitTabBarVariant.underline,
-          activeKey: activeTab.name,
-          onChanged: (key) => onChanged(_RiskTab.values.byName(key)),
-          tabs: [
-            for (final item in tabs)
-              VitTabItem(
-                key: item.tab.name,
-                label: item.label,
-                widgetKey: item.key,
-              ),
-          ],
+    return PredictionEnumTabBar<_RiskTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      showBottomBorder: true,
+      semanticsLabel: 'Prediction risk calculator tab',
+      items: [
+        (
+          PredictionRiskCalculatorPage.calculatorTabKey,
+          _RiskTab.calculator,
+          'May tinh',
         ),
-      ),
+        (
+          PredictionRiskCalculatorPage.scenariosTabKey,
+          _RiskTab.scenarios,
+          'Kich ban',
+        ),
+        (PredictionRiskCalculatorPage.guideTabKey, _RiskTab.guide, 'Huong dan'),
+      ],
     );
   }
 }

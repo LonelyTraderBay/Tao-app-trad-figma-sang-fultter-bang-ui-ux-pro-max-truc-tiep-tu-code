@@ -93,7 +93,10 @@ class _PredictionCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
-              _TinyTag(label: 'Prediction Market', color: _profilePurple),
+              VitAccentPill(
+                label: 'Prediction Market',
+                accentColor: _profilePurple,
+              ),
             ],
           ),
           SizedBox(height: VitDensity.compact.verticalSpace),

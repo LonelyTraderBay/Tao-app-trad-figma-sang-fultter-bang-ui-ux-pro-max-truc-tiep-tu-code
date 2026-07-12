@@ -130,7 +130,11 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                           totalAllocated,
                         )
                       else if (activeTab == 'timeline')
-                        TimelineTab(snapshot: snapshot, rungs: rungs)
+                        TimelineTab(
+                          snapshot: snapshot,
+                          rungs: rungs,
+                          onEmptyCta: _goToBuilderTab,
+                        )
                       else
                         AnalysisTab(
                           snapshot: snapshot,
@@ -139,6 +143,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                           weightedApy: weightedApy,
                           annualInterest: annualInterest,
                           liquidityScore: liquidityScore,
+                          onEmptyCta: _goToBuilderTab,
                         ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
@@ -221,6 +226,11 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
         lineHeight: _disclaimerLineHeight,
       ),
     ];
+  }
+
+  void _goToBuilderTab() {
+    HapticFeedback.selectionClick();
+    setState(() => _tab = 'builder');
   }
 
   void _removeRung(String id) {

@@ -227,9 +227,7 @@ class _QuestionsSummary extends StatelessWidget {
           if (question != snapshot.questions.last)
             const SizedBox(height: AppSpacing.rowGap),
         ],
-        const SizedBox(
-          height: TradeSpacingTokens.preCopyAssessmentCtaGap,
-        ),
+        const SizedBox(height: TradeSpacingTokens.preCopyAssessmentCtaGap),
         VitCtaButton(
           key: PreCopyAssessmentPage.continueKey,
           onPressed: () => context.go(

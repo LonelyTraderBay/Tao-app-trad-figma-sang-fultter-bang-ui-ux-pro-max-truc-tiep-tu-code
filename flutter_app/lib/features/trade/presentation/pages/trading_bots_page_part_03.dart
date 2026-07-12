@@ -43,7 +43,7 @@ class _StrategyCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: AppSpacing.pageRhythmCompactInnerGap,
+                      height: AppSpacing.pageRhythmStandardInnerGap,
                     ),
                     Text(
                       strategy.description,
@@ -58,7 +58,7 @@ class _StrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -75,7 +75,7 @@ class _StrategyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: TradingBotsPage.strategyCreateKey(strategy.id),
             onPressed: onCreate,

@@ -109,12 +109,12 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Đòn bẩy ${widget.leverage}x · Chỉnh trong Chế độ Pro',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Bước 2 · Số lượng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

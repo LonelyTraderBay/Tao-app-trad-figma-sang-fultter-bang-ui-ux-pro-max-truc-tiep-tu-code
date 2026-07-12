@@ -186,14 +186,18 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                           _SentimentHero(global: snapshot.global),
                           _SentimentStats(global: snapshot.global),
                           _SocialDominanceCard(global: snapshot.global),
-                          _SectionHeader(
-                            label: 'Diễn biến 7 ngày',
+                          VitSectionHeader(
+                            title: 'Diễn biến 7 ngày',
                             accentColor: _marketPrimary,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _TimelineCard(points: snapshot.timeline),
-                          _SectionHeader(
-                            label: 'Xu hướng nóng',
+                          VitSectionHeader(
+                            title: 'Xu hướng nóng',
                             accentColor: AppColors.warn,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _TrendingList(
                             tokens: snapshot.trendingTokens.take(4).toList(),
@@ -209,15 +213,19 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                             _TokenDetailCard(token: token),
                         ] else ...[
                           _TopicCloud(tokens: snapshot.tokens),
-                          _SectionHeader(
-                            label: 'Bản đồ tâm lý',
+                          VitSectionHeader(
+                            title: 'Bản đồ tâm lý',
                             accentColor: AppColors.accent,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _SentimentHeatmap(tokens: snapshot.tokens),
                           _TrendLeaderboards(tokens: snapshot.tokens),
-                          _SectionHeader(
-                            label: 'Tốc độ đề cập (24h)',
+                          VitSectionHeader(
+                            title: 'Tốc độ đề cập (24h)',
                             accentColor: AppAssetColors.cyanChain,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _MentionVelocity(tokens: snapshot.tokens),
                         ],

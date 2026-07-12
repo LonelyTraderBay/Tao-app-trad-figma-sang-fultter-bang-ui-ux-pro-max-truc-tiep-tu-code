@@ -115,7 +115,10 @@ class _ExportActions extends StatelessWidget {
           Expanded(
             child: VitCtaButton(
               key: AuditTrailPage.exportKey(format),
-              onPressed: () {},
+              onPressed: () => _showComingSoon(
+                context,
+                'Xuất nhật ký kiểm toán sẽ sớm ra mắt',
+              ),
               variant: VitCtaButtonVariant.secondary,
               height: 40,
               leading: const Icon(Icons.download_rounded, size: 14),
@@ -162,4 +165,9 @@ final class _AuditCategoryStyle {
 
   final Color color;
   final IconData icon;
+}
+
+void _showComingSoon(BuildContext context, String message) {
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }

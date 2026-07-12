@@ -6,10 +6,10 @@ void main() {
   final appRoot = Directory.current;
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final source = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Screen-Navigation-Edges.csv',
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Screen-Navigation-Edges.csv',
   );
   final output = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Trade-Navigation-Edges.csv',
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Trade-Navigation-Edges.csv',
   );
 
   if (!source.existsSync()) {

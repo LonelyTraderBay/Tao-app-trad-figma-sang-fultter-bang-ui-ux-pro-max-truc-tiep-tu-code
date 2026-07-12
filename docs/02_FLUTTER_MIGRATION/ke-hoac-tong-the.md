@@ -23,6 +23,8 @@ từng batch vẫn tra được qua git history):
 | Home UI Deep Standardization (Phases 0–7) | Closed 2026-07-01 | `total_debt=0`; P2P 173→0; Trade/Markets/Earn/Shared migrated; VitSegmentedTabBar/VitSegmentedChoice rollout. |
 | Shared components / typography / button / token plans | Absorbed | Rules live in `DESIGN.md`, `flutter_app/lib/app/theme/`, and `Guidelines.md`. |
 | E900 / Post-E900 file-size refactor waves | Closed | Large-file debt reduced; 4 files still >1200 lines (ongoing, not blocking UI). |
+| Card Tile migration execution plan/checklist | Closed 2026-07-07 | 993/993 files pass; compliance report + manifest/audit CSV kept as live CI baseline. |
+| VitTrade UI Redesign v2.5 pending-batch trackers | Closed 2026-07-10 | 66/66 batch done, 0 pending; playbook/contract/hub prompts kept as reference. |
 
 Active sources thay thế: `AGENTS.md`, `DESIGN.md`, `ke-hoach-san-sang-production.md`,
 `AI_PROMPT_SHELL.md`, audit tools under `flutter_app/tool/`.
@@ -166,8 +168,8 @@ lại đều là backend/release external hoặc manual QA text-entry completion
 3. `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`
 4. `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`
 5. `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md`
-6. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`
-7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
+6. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Native-Design-Standard.md`
+7. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Module-Identity-Standard.md`
 8. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
 9. `docs/03_DESIGN_SYSTEM/Guidelines.md`
 10. `DESIGN.md` (root)

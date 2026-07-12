@@ -76,10 +76,10 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
   final markdownFile = File(
-    '${docsDir.path}/VitTrade-Top-Header-Global-Access-Policy-Audit.md',
+    '${docsDir.path}/audits/VitTrade-Top-Header-Global-Access-Policy-Audit.md',
   );
   final csvFile = File(
-    '${docsDir.path}/VitTrade-Top-Header-Global-Access-Policy-Audit.csv',
+    '${docsDir.path}/audits/VitTrade-Top-Header-Global-Access-Policy-Audit.csv',
   );
 
   final report = _collectReport(appRoot, repoRoot);

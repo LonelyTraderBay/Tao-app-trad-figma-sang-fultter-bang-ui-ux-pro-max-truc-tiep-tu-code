@@ -24,7 +24,7 @@ class _OrderBookPanel extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
-                    'Mid ${_formatPrice(snapshot.depth.midPrice)}',
+                    'Mid ${formatMarketPriceFixed2(snapshot.depth.midPrice)}',
                     textAlign: TextAlign.right,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
@@ -62,7 +62,7 @@ class _DepthRow extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              _formatPrice(level.price),
+              formatMarketPriceFixed2(level.price),
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
@@ -158,7 +158,7 @@ class _TradeRow extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              _formatPrice(trade.price),
+              formatMarketPriceFixed2(trade.price),
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,

@@ -106,6 +106,31 @@ void main() {
     expect(find.text('Copy Trading Activated'), findsNothing);
   });
 
+  testWidgets(
+    'SC-115 export CSV shows a coming-soon SnackBar without crashing',
+    (tester) async {
+      // Regression test: the shared trade layout primitives (VitTradeHubScaffold
+      // / VitPageLayout) never construct a real Scaffold, so
+      // ScaffoldMessenger.of(context).showSnackBar previously crashed at
+      // tap-time with a '_scaffolds.isNotEmpty' assertion. AuditTrailPage now
+      // wraps its root in a page-scoped Scaffold to host the SnackBar.
+      await pumpAuditTrail(tester);
+
+      await tester.scrollUntilVisible(
+        find.byKey(AuditTrailPage.exportKey('CSV')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(AuditTrailPage.exportKey('CSV')));
+      await tester.pump();
+
+      expect(tester.takeException(), isNull);
+      expect(find.text('Xuất nhật ký kiểm toán sẽ sớm ra mắt'), findsOneWidget);
+    },
+  );
+
   testWidgets('SC-115 first viewport reaches audit search', (tester) async {
     await pumpAuditTrail(tester);
 

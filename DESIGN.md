@@ -199,36 +199,36 @@ Phone-first fluid layout with consistent horizontal padding.
 - **Page content:** use `VitPageLayout` + `VitPageContent` — not raw `Scaffold` +
   manual padding.
 
-Migration checklist: `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Migration-Checklist.md`.
-**Mandatory standard + CI:** `docs/02_FLUTTER_MIGRATION/Page-Rhythm-Standard.md`.
+Migration checklist: `docs/02_FLUTTER_MIGRATION/checklists/Page-Rhythm-Migration-Checklist.md`.
+**Mandatory standard + CI:** `docs/02_FLUTTER_MIGRATION/standards/Page-Rhythm-Standard.md`.
 Audit: `dart run tool/page_rhythm_audit.dart --check` from `flutter_app/`.
 Guardrail: `flutter test test/quality/page_rhythm_guardrail_test.dart`.
 
 **Card tiles (Tier A strip):** fixed-height horizontal tiles use
 `VitCardContentAlign.center`, `AppSpacing.cardTilePadding`, and
 `AppSpacing.cardTileInnerGap`. Canonical widgets: `VitCompactProductCard`,
-`VitMarketTickerCard`. Standard: `docs/02_FLUTTER_MIGRATION/Card-Tile-Standard.md`.
+`VitMarketTickerCard`. Standard: `docs/02_FLUTTER_MIGRATION/standards/Card-Tile-Standard.md`.
 Audit: `dart run tool/card_tile_audit.dart --check`.
 
 **Service tile badges (Tier B):** `VitServiceTile` corner badges use safe inset
 tokens (`serviceTileBadgeReserve*`) and grid aspect tokens — do not overlap the
-centered label. Standard: `docs/02_FLUTTER_MIGRATION/Service-Tile-Badge-Standard.md`.
+centered label. Standard: `docs/02_FLUTTER_MIGRATION/standards/Service-Tile-Badge-Standard.md`.
 Guardrail: `flutter test test/quality/service_tile_badge_guardrail_test.dart`.
 
 **Task cards (Tier E):** `VitTaskCard` mission rows use intrinsic height and
 `taskCard*` spacing tokens — no legacy `buttonHero + x7 + x5` minHeight.
-Standard: `docs/02_FLUTTER_MIGRATION/Task-Card-Standard.md`.
+Standard: `docs/02_FLUTTER_MIGRATION/standards/Task-Card-Standard.md`.
 Guardrail: `flutter test test/quality/task_card_guardrail_test.dart`.
 
 **Accent icon boxes:** `VitAccentIconBox` module row icons use `accentIconBoxSize`
 (34px) with shared fill/border tokens — no page-local `_AccentIcon`.
-Standard: `docs/02_FLUTTER_MIGRATION/Accent-Icon-Box-Standard.md`.
+Standard: `docs/02_FLUTTER_MIGRATION/standards/Accent-Icon-Box-Standard.md`.
 Guardrail: `flutter test test/quality/accent_icon_box_guardrail_test.dart`.
 
 **Segment pills (S1–S4):** page tabs → `VitTabBar.segment` / `VitSegmentedTabBar`;
 binary toggles → `VitSegmentedChoice`; preset rows → `VitPresetChipRow`;
 filters → `VitFilterChip`. No P0 local `_FilterButton` / `_FilterTabs`.
-Standard: `docs/02_FLUTTER_MIGRATION/Segment-Pill-Standard.md`.
+Standard: `docs/02_FLUTTER_MIGRATION/standards/Segment-Pill-Standard.md`.
 Audit: `dart run tool/segment_pill_audit.dart --check --strict-full`.
 Guardrail: `flutter test test/quality/segment_pill_guardrail_test.dart`.
 

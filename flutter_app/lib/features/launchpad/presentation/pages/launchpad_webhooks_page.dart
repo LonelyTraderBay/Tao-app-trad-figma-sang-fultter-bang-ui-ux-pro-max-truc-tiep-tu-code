@@ -22,11 +22,12 @@ import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.d
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'launchpad_webhooks_page_part_01.dart';
-part 'launchpad_webhooks_page_part_02.dart';
-part 'launchpad_webhooks_page_part_03.dart';
-part 'launchpad_webhooks_page_part_04.dart';
-part '../widgets/launchpad_webhooks_sheet_state.dart';
+part '../widgets/launchpad_webhooks_stats_header.dart';
+part '../widgets/launchpad_webhooks_subscription_list.dart';
+part '../widgets/launchpad_webhooks_subscription_detail.dart';
+part '../widgets/launchpad_webhooks_deliveries.dart';
+part '../widgets/launchpad_webhooks_create_sheet.dart';
+part '../widgets/launchpad_webhooks_status_utils.dart';
 part '../widgets/launchpad_webhooks_form_controls.dart';
 part '../widgets/launchpad_webhooks_common_widgets.dart';
 

@@ -203,6 +203,7 @@ final class WalletAddressAddSnapshot {
     required this.actionDraft,
     required this.supportedStates,
     required this.auditTrailNote,
+    this.highRiskContractId,
   });
 
   final List<WalletAddressNetwork> networks;
@@ -211,6 +212,7 @@ final class WalletAddressAddSnapshot {
   final String actionDraft;
   final List<WalletScreenState> supportedStates;
   final String auditTrailNote;
+  final String? highRiskContractId;
 }
 
 final class WalletAddressNetwork {

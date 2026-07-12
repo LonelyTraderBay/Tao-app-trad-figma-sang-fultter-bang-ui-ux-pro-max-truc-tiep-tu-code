@@ -237,7 +237,7 @@ class _QuickActionTile extends StatelessWidget {
       clip: true,
       child: Row(
         children: [
-          _IconBubble(icon: _quickIcon(action.iconKey), color: color),
+          VitAccentIconBox(icon: _quickIcon(action.iconKey), color: color),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
@@ -254,40 +254,6 @@ class _QuickActionTile extends StatelessWidget {
             size: AppSpacing.iconSm,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({
-    required this.icon,
-    required this.color,
-    this.small = false,
-  });
-
-  final IconData icon;
-  final Color color;
-  final bool small;
-
-  @override
-  Widget build(BuildContext context) {
-    final size = small ? AppSpacing.buttonCompact : AppSpacing.inputHeight;
-    return Material(
-      color: color.withValues(alpha: .12),
-      borderRadius: AppRadii.inputRadius,
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: Center(
-          child: Icon(
-            icon,
-            color: color,
-            size: small
-                ? P2PSpacingTokens.p2pDashboardIconBubbleSmallIcon
-                : AppSpacing.iconMd,
-          ),
-        ),
       ),
     );
   }

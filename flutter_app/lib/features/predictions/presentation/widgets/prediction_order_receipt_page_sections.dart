@@ -261,7 +261,12 @@ class _ShareReceiptButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: PredictionOrderReceiptPage.shareKey,
-      onPressed: () {},
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chia sẻ chi tiết lệnh sẽ sớm ra mắt')),
+        );
+      },
       variant: VitCtaButtonVariant.secondary,
       leading: const Icon(
         Icons.ios_share_rounded,

@@ -12,7 +12,7 @@ void main(List<String> args) {
   final docsDir = Directory('${repoRoot.path}/docs/02_FLUTTER_MIGRATION');
   final featuresRoot = Directory('${appRoot.path}/lib/features');
   final manifestCsv = File(
-    '${docsDir.path}/VitTrade-Segment-Pill-Migration-Manifest.csv',
+    '${docsDir.path}/audits/VitTrade-Segment-Pill-Migration-Manifest.csv',
   );
 
   final result = scanSegmentPillFeatures(featuresRoot);

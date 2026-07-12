@@ -72,8 +72,8 @@ jobs:
         with:
           name: design-token-consistency-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Design-Token-Consistency-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Design-Token-Consistency-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Design-Token-Consistency-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Design-Token-Consistency-Audit.csv
           if-no-files-found: error
 
       - name: Design token consistency guardrails
@@ -88,8 +88,8 @@ jobs:
         with:
           name: spacing-token-duplication-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Spacing-Token-Duplication-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Spacing-Token-Duplication-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Spacing-Token-Duplication-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Spacing-Token-Duplication-Audit.csv
           if-no-files-found: error
 
       - name: Spacing token duplication guardrails
@@ -104,8 +104,8 @@ jobs:
         with:
           name: page-content-width-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Content-Width-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Content-Width-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Content-Width-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Content-Width-Audit.csv
           if-no-files-found: error
 
       - name: Page content width guardrails
@@ -120,8 +120,8 @@ jobs:
         with:
           name: home-reference-consistency-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Reference-Consistency-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Reference-Consistency-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Reference-Consistency-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Reference-Consistency-Audit.csv
           if-no-files-found: error
 
       - name: Home reference consistency guardrails
@@ -145,9 +145,9 @@ jobs:
         with:
           name: page-rhythm-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Audit.csv
-            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Screen-Compliance.csv
-            docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Coverage-Matrix.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Coverage-Matrix.csv
           if-no-files-found: error
 
       - name: Page rhythm guardrails
@@ -168,10 +168,10 @@ jobs:
         with:
           name: card-tile-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Audit.csv
-            docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Migration-Manifest.csv
-            docs/02_FLUTTER_MIGRATION/Card-Tile-Compliance-Report.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Card-Tile-Manifest.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Card-Tile-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Card-Tile-Migration-Manifest.csv
+            docs/02_FLUTTER_MIGRATION/audits/Card-Tile-Compliance-Report.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Card-Tile-Manifest.csv
           if-no-files-found: error
 
       - name: Card tile guardrails
@@ -198,9 +198,9 @@ jobs:
         with:
           name: segment-pill-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Segment-Pill-Audit.csv
-            docs/02_FLUTTER_MIGRATION/VitTrade-Segment-Pill-Migration-Manifest.csv
-            docs/02_FLUTTER_MIGRATION/Segment-Pill-Compliance-Report.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Segment-Pill-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Segment-Pill-Migration-Manifest.csv
+            docs/02_FLUTTER_MIGRATION/audits/Segment-Pill-Compliance-Report.md
           if-no-files-found: error
 
       - name: Segment pill guardrails
@@ -214,7 +214,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: top-header-behavior-audit
-          path: docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Behavior-Audit.md
+          path: docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Behavior-Audit.md
           if-no-files-found: error
 
       - name: Top header behavior guardrails
@@ -229,8 +229,8 @@ jobs:
         with:
           name: top-header-action-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Action-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Action-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Action-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Action-Audit.csv
           if-no-files-found: error
 
       - name: Top header action guardrails
@@ -245,8 +245,8 @@ jobs:
         with:
           name: top-header-global-access-policy-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Global-Access-Policy-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Global-Access-Policy-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Global-Access-Policy-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Global-Access-Policy-Audit.csv
           if-no-files-found: error
 
       - name: Top header global access policy guardrails
@@ -261,8 +261,8 @@ jobs:
         with:
           name: top-header-visual-archetype-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Top-Header-Visual-Archetype-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.csv
           if-no-files-found: error
 
       - name: Top header visual archetype guardrails
@@ -277,8 +277,8 @@ jobs:
         with:
           name: back-navigation-behavior-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Header-Back-Navigation-Behavior-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Header-Back-Navigation-Behavior-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Header-Back-Navigation-Behavior-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Header-Back-Navigation-Behavior-Audit.csv
           if-no-files-found: error
 
       - name: Back navigation behavior guardrails
@@ -293,8 +293,8 @@ jobs:
         with:
           name: home-entry-back-navigation-audit
           path: |
-            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Entry-Back-Navigation-Audit.md
-            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Entry-Back-Navigation-Audit.csv
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Entry-Back-Navigation-Audit.md
+            docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Entry-Back-Navigation-Audit.csv
           if-no-files-found: error
 
       - name: Home entry back navigation guardrails

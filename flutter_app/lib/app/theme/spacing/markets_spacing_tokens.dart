@@ -225,7 +225,6 @@ final class MarketsSpacingTokens {
   static const double marketAnalyticsHeroHeight = 170;
   static const double marketAnalyticsStatCardHeight = 96;
   static const double marketAnalyticsSentimentCardHeight = 183;
-  static const double marketAnalyticsIconBubble = 24;
   static const double marketAnalyticsStatIcon = 14;
   static const double marketAnalyticsTrendIcon = 12;
   static const double marketAnalyticsBreadthDot = 8;
@@ -233,7 +232,6 @@ final class MarketsSpacingTokens {
   static const double marketAnalyticsGaugeWidth = 120;
   static const double marketAnalyticsGaugeHeight = 64;
   static const double marketOverviewQuickNavHeight = 90;
-  static const double marketOverviewQuickNavIcon = 40;
   static const double marketOverviewQuickNavGlyph = 18;
   static const double marketOverviewMoverCardHeight = 272;
   static const double marketOverviewMoverHeaderIcon = 14;
@@ -242,7 +240,6 @@ final class MarketsSpacingTokens {
   static const double marketOverviewMoverPriceWidth = 34;
   static const double marketOverviewMoverChangeWidth = 58;
   static const double marketOverviewSectorRowHeight = 61;
-  static const double marketOverviewSectorIcon = 36;
   static const double marketOverviewSectorGlyph = 18;
   static const double marketOverviewSectorChevron = 16;
   static const double marketOverviewHistoryHeight = 128;

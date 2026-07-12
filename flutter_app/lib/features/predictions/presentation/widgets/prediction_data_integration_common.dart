@@ -138,50 +138,24 @@ class _InlineIconButton extends StatelessWidget {
   }
 }
 
-class _IconBubble extends StatelessWidget {
-  const _IconBubble({
-    required this.icon,
-    required this.color,
-    required this.background,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color background;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: background,
-      borderRadius: AppRadii.mdRadius,
-      child: SizedBox.square(
-        dimension: PredictionsSpacingTokens.predictionDataIconBubble,
-        child: Icon(
-          icon,
-          color: color,
-          size: PredictionsSpacingTokens.predictionDataIconBubbleIcon,
-        ),
-      ),
-    );
-  }
-}
-
 class _PrimaryBlueButton extends StatelessWidget {
   const _PrimaryBlueButton({
     super.key,
     required this.icon,
     required this.label,
+    required this.onPressed,
   });
 
   final IconData icon;
   final String label;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
       density: VitDensity.compact,
       leading: Icon(icon),
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(label),
     );
   }

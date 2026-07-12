@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_formatters.dart';
 
 part 'wallet_transfer_confirm_sheet.dart';
 part 'wallet_transfer_wallet_cards.dart';
@@ -28,29 +29,9 @@ const _transferInlineGap = AppSpacing.rowGap;
 const _transferIconBox = AppSpacing.buttonCompact;
 const _transferActionIcon = WalletSpacingTokens.transferActionIcon;
 
-String formatTransferUsd(double value) {
-  return '\$${_withCommas(value.toStringAsFixed(2))}';
-}
+String formatTransferUsd(double value) => formatWalletUsdGrouped(value);
 
 String formatTransferAssetAmount(double value) {
   final decimals = value >= 1000 ? 2 : 4;
-  return _withCommas(value.toStringAsFixed(decimals));
-}
-
-String _withCommas(String value) {
-  final parts = value.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final remaining = whole.length - i;
-    buffer.write(whole[i]);
-    if (remaining > 1 && remaining % 3 == 1) {
-      buffer.write(',');
-    }
-  }
-  if (parts.length > 1) {
-    buffer.write('.');
-    buffer.write(parts[1]);
-  }
-  return buffer.toString();
+  return walletGroupThousands(value.toStringAsFixed(decimals));
 }

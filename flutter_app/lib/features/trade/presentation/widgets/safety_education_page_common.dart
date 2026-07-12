@@ -19,41 +19,48 @@ class _SeveritySection extends StatelessWidget {
       fullBleed: true,
       density: VitDensity.compact,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        for (final flag in flags) ...[
-          VitCard(
-            density: VitDensity.compact,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            borderColor: color.withValues(alpha: .65),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  flag.flag,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  flag.explanation,
-                  style: AppTextStyles.micro.copyWith(color: color),
-                ),
-              ],
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          if (flag != flags.last)
-            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        ],
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            for (final flag in flags) ...[
+              VitCard(
+                density: VitDensity.compact,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.standard,
+                borderColor: color.withValues(alpha: .65),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      flag.flag,
+                      style: AppTextStyles.micro.copyWith(
+                        color: color,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
+                    Text(
+                      flag.explanation,
+                      style: AppTextStyles.micro.copyWith(color: color),
+                    ),
+                  ],
+                ),
+              ),
+              if (flag != flags.last)
+                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            ],
+          ],
+        ),
       ],
     );
   }
@@ -174,7 +181,7 @@ class _ReportTab extends StatelessWidget {
                 height: TradeSpacingTokens.tradeBotControlTall,
               ),
               VitCtaButton(
-                onPressed: () {},
+                onPressed: () => _submitReport(context),
                 variant: VitCtaButtonVariant.danger,
                 density: VitDensity.compact,
                 child: Text(
@@ -190,6 +197,13 @@ class _ReportTab extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _submitReport(BuildContext context) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Gửi báo cáo sẽ sớm ra mắt')));
   }
 }
 

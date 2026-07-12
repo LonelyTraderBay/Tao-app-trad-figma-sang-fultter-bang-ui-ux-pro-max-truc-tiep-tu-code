@@ -138,7 +138,7 @@ class _TaxSettingsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _ImportantNoticeCard(),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        const _InfoPanel(
+        const CrossModuleInfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
           border: AppColors.primary20,
@@ -278,108 +278,6 @@ class _ToggleSwitch extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _IconBadge extends StatelessWidget {
-  const _IconBadge({
-    required this.icon,
-    required this.color,
-    required this.background,
-    this.size = AppSpacing.x6,
-    this.iconSize = AppSpacing.iconSm,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color background;
-  final double size;
-  final double iconSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: size,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: background,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-        ),
-        child: Icon(icon, color: color, size: iconSize),
-      ),
-    );
-  }
-}
-
-class _IconAction extends StatelessWidget {
-  const _IconAction({
-    required this.icon,
-    required this.color,
-    required this.background,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color background;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    // card-tile: allow-start — fixed surface, not horizontal strip tile
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: background,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        ),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}
-
-class _InfoPanel extends StatelessWidget {
-  const _InfoPanel({
-    required this.icon,
-    required this.color,
-    required this.border,
-    required this.text,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color border;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      borderColor: border,
-      padding: CrossModuleSpacingTokens.crossModulePanelPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
       ),
     );
   }

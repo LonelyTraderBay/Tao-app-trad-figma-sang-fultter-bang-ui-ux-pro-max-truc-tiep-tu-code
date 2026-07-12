@@ -36,7 +36,7 @@ class _ArenaCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
-              _TinyTag(label: 'Points only', color: _profileAmber),
+              VitAccentPill(label: 'Points only', accentColor: _profileAmber),
             ],
           ),
           SizedBox(height: VitDensity.compact.verticalSpace),
@@ -146,17 +146,5 @@ class _ModuleStat extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class _TinyTag extends StatelessWidget {
-  const _TinyTag({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
   }
 }

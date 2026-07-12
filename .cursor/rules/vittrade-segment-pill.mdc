@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Segment pills (Mandatory)
 
-Full contract: [Segment-Pill-Standard.md](../../docs/02_FLUTTER_MIGRATION/Segment-Pill-Standard.md)
+Full contract: [Segment-Pill-Standard.md](../../docs/02_FLUTTER_MIGRATION/standards/Segment-Pill-Standard.md)
 
 ## Decision tree
 

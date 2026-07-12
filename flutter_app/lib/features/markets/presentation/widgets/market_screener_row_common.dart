@@ -52,21 +52,3 @@ String _formatCompactUsd(double value) {
   }
   return '\$${value.toStringAsFixed(0)}';
 }
-
-String _formatPrice(double value) {
-  final fractionDigits = value >= 1000
-      ? 2
-      : value >= 1
-      ? 2
-      : 4;
-  final fixed = value.toStringAsFixed(fractionDigits);
-  final parts = fixed.split('.');
-  final integer = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < integer.length; i++) {
-    final remaining = integer.length - i;
-    buffer.write(integer[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
-  }
-  return '${buffer.toString()}.${parts.last}';
-}

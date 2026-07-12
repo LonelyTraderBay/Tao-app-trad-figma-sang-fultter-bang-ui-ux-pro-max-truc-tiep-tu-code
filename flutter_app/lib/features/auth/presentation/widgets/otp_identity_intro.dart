@@ -1,34 +1,5 @@
 part of '../pages/otp_page.dart';
 
-class _ShieldHero extends StatelessWidget {
-  const _ShieldHero();
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: SizedBox.square(
-        dimension: AuthSpacingTokens.authHeroIconBoxMd,
-        child: Material(
-          color: _authPrimary10,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardLargeRadius,
-            side: BorderSide(
-              color: _authPrimary30,
-              width: AppSpacing.borderWidth,
-            ),
-          ),
-          child: const Icon(
-            Icons.gpp_good_outlined,
-            color: _authPrimary,
-            size: AuthSpacingTokens.authHeroIconLg,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _OtpIntro extends StatelessWidget {
   const _OtpIntro({required this.contact});
 

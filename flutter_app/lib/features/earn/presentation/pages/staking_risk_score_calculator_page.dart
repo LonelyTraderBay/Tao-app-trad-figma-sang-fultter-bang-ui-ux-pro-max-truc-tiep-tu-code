@@ -144,7 +144,14 @@ class _StakingRiskScoreCalculatorPageState
                       VitCtaButton(
                         key: StakingRiskScoreCalculatorPage.footerButtonKey,
                         height: AppSpacing.buttonStandard,
-                        onPressed: () {},
+                        onPressed: () {
+                          HapticFeedback.selectionClick();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Tiếp tục sẽ sớm ra mắt'),
+                            ),
+                          );
+                        },
                         child: Text(snapshot.proceedLabel),
                       ),
                     ],

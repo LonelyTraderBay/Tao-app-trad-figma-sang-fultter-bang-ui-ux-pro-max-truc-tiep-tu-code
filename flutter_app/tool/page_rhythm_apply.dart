@@ -10,7 +10,7 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final manifestCsv = File(
-    '${repoRoot}docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Migration-Manifest.csv',
+    '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv',
   );
   if (!manifestCsv.existsSync()) {
     stderr.writeln('Run dart run tool/page_rhythm_manifest.dart first.');

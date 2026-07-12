@@ -161,7 +161,7 @@ class _SecurityRow extends StatelessWidget {
                     borderRadius: AppRadii.lgRadius,
                   ),
                   child: Icon(
-                    _iconFor(item.iconKey),
+                    profileIconFor(item.iconKey),
                     color: accent,
                     size: ProfileSpacingTokens.securityRowIcon,
                   ),
@@ -197,7 +197,10 @@ class _SecurityRow extends StatelessWidget {
               ),
               if (item.status != null) ...[
                 const SizedBox(width: ProfileSpacingTokens.securityStatusGap),
-                _StatusPill(label: item.status!, color: Color(item.statusHex!)),
+                VitAccentPill(
+                  label: item.status!,
+                  accentColor: Color(item.statusHex!),
+                ),
               ],
               const SizedBox(width: ProfileSpacingTokens.securityChevronGap),
               const Icon(
@@ -210,18 +213,6 @@ class _SecurityRow extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -307,9 +298,9 @@ class _DeviceRow extends StatelessWidget {
                         const SizedBox(
                           width: ProfileSpacingTokens.securityStatusGap,
                         ),
-                        _StatusPill(
+                        VitAccentPill(
                           label: 'Hi\u1EC7n t\u1EA1i',
-                          color: _securityGreen,
+                          accentColor: _securityGreen,
                         ),
                       ],
                     ],
@@ -335,9 +326,9 @@ class _DeviceRow extends StatelessWidget {
             ),
             if (!device.isCurrent) ...[
               const SizedBox(width: ProfileSpacingTokens.securityStatusGap),
-              const _StatusPill(
+              const VitAccentPill(
                 label: '\u0110\u0103ng xu\u1EA5t',
-                color: _securityRed,
+                accentColor: _securityRed,
               ),
             ],
           ],

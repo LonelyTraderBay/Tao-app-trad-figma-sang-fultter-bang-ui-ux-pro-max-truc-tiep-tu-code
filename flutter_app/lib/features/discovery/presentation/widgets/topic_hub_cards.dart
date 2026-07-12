@@ -17,7 +17,7 @@ class _PredictionEventCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _ModuleBadge(
+              const DiscoveryModuleBadge(
                 label: 'Prediction Market',
                 icon: Icons.track_changes_rounded,
                 color: AppModuleAccents.predictions,
@@ -60,7 +60,7 @@ class _PredictionEventCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              const _InlineCta(
+              const DiscoveryInlineCta(
                 label: 'Xem thị trường',
                 color: AppModuleAccents.predictions,
               ),
@@ -92,7 +92,7 @@ class _ArenaRoomCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _ModuleBadge(
+              const DiscoveryModuleBadge(
                 label: 'Arena Points only',
                 icon: Icons.stars_rounded,
                 color: AppModuleAccents.arena,
@@ -128,7 +128,7 @@ class _ArenaRoomCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              const _InlineCta(
+              const DiscoveryInlineCta(
                 label: 'Xem room',
                 color: AppModuleAccents.arena,
               ),
@@ -153,7 +153,7 @@ class _ArenaModeCard extends StatelessWidget {
       padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Row(
         children: [
-          _SmallAccentIcon(
+          VitAccentIconBox(
             icon: Icons.bolt_rounded,
             color: AppModuleAccents.arena,
           ),
@@ -193,7 +193,10 @@ class _ArenaModeCard extends StatelessWidget {
               ],
             ),
           ),
-          const _InlineCta(label: 'Xem mode', color: AppModuleAccents.arena),
+          const DiscoveryInlineCta(
+            label: 'Xem mode',
+            color: AppModuleAccents.arena,
+          ),
         ],
       ),
     );
@@ -216,7 +219,13 @@ class _CreatorChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _CreatorAvatar(initials: creator.initials),
+          DiscoveryInitialsAvatar(
+            initials: creator.initials,
+            size: LaunchpadSpacingTokens.discoveryCreatorAvatarBox,
+            fillAlpha: .16,
+            radius: AppRadii.smRadius,
+            textStyle: AppTextStyles.micro,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +265,7 @@ class _CreateRoomCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _SmallAccentIcon(
+              VitAccentIconBox(
                 icon: Icons.bolt_rounded,
                 color: AppModuleAccents.arena,
               ),

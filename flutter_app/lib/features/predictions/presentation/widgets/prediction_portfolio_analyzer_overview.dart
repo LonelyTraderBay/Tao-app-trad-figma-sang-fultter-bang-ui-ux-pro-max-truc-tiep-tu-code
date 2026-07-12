@@ -8,40 +8,27 @@ class _AnalyzerTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PredictionPortfolioAnalyzerPage.overviewTabKey,
-        tab: _AnalyzerTab.overview,
-        label: 'Tong quan',
-      ),
-      (
-        key: PredictionPortfolioAnalyzerPage.performanceTabKey,
-        tab: _AnalyzerTab.performance,
-        label: 'Hieu suat',
-      ),
-      (
-        key: PredictionPortfolioAnalyzerPage.riskTabKey,
-        tab: _AnalyzerTab.risk,
-        label: 'Rui ro',
-      ),
-    ];
-
-    return Material(
-      color: AppColors.surface,
-      shape: const Border(bottom: BorderSide(color: AppColors.border)),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_AnalyzerTab.values.byName(key)),
-        tabs: [
-          for (final item in tabs)
-            VitTabItem(
-              key: item.tab.name,
-              label: item.label,
-              widgetKey: item.key,
-            ),
-        ],
-      ),
+    return PredictionEnumTabBar<_AnalyzerTab>(
+      activeTab: activeTab,
+      onChanged: onChanged,
+      showBottomBorder: true,
+      items: [
+        (
+          PredictionPortfolioAnalyzerPage.overviewTabKey,
+          _AnalyzerTab.overview,
+          'Tong quan',
+        ),
+        (
+          PredictionPortfolioAnalyzerPage.performanceTabKey,
+          _AnalyzerTab.performance,
+          'Hieu suat',
+        ),
+        (
+          PredictionPortfolioAnalyzerPage.riskTabKey,
+          _AnalyzerTab.risk,
+          'Rui ro',
+        ),
+      ],
     );
   }
 }

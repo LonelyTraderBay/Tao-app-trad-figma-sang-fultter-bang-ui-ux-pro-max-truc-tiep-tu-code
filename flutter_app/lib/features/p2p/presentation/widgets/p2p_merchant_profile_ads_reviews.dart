@@ -279,9 +279,7 @@ String _formatInt(int value) {
   return buffer.toString();
 }
 
-String _formatVnd(int value) {
-  return _formatInt(value).replaceAll(',', '.');
-}
+String _formatVnd(int value) => formatP2PVnd(value);
 
 String _formatCompactUsd(int value) {
   if (value >= 1000000) {

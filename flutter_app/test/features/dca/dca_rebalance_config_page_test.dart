@@ -247,7 +247,9 @@ void main() {
       expect(exceptions, isEmpty);
 
       final overflowErrors = layoutErrors
-          .where((details) => details.exceptionAsString().contains('overflowed'))
+          .where(
+            (details) => details.exceptionAsString().contains('overflowed'),
+          )
           .toList();
       expect(overflowErrors, isEmpty);
     },

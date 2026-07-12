@@ -100,10 +100,10 @@ class _CategoryCard extends StatelessWidget {
             padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             child: Row(
               children: [
-                _IconBubble(
+                VitAccentIconBox(
                   icon: _categoryIcon(category.iconKey),
-                  accent: category.accent.resolve(),
-                  small: true,
+                  color: category.accent.resolve(),
+                  iconSize: AppSpacing.iconSm,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(

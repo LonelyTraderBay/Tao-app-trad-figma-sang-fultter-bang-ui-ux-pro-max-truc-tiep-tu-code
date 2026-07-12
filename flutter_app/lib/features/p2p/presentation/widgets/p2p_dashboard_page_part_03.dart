@@ -233,10 +233,10 @@ class _ActivityRow extends StatelessWidget {
           padding: P2PSpacingTokens.p2pDashboardActivityPadding,
           child: Row(
             children: [
-              _IconBubble(
+              VitAccentIconBox(
                 icon: buy ? Icons.south_west_rounded : Icons.north_east_rounded,
                 color: color,
-                small: true,
+                iconSize: P2PSpacingTokens.p2pDashboardIconBubbleSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(

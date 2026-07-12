@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Task cards (Mandatory)
 
-Full contract: [Task-Card-Standard.md](../../docs/02_FLUTTER_MIGRATION/Task-Card-Standard.md)
+Full contract: [Task-Card-Standard.md](../../docs/02_FLUTTER_MIGRATION/standards/Task-Card-Standard.md)
 
 ## When editing Rewards / Arena task lists (`VitTaskCard`, mission sections)
 

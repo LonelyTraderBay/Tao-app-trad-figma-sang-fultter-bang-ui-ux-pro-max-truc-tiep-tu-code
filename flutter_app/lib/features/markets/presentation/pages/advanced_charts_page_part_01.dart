@@ -102,9 +102,11 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                             tools: snapshot.drawingTools,
                             categories: snapshot.drawingCategories,
                           ),
-                          const _SectionHeader(
-                            label: 'Mẹo sử dụng',
+                          const VitSectionHeader(
+                            title: 'Mẹo sử dụng',
                             accentColor: AppColors.warn,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            variant: VitSectionHeaderVariant.accentBar,
                           ),
                           const _TipsCard(),
                         ] else ...[

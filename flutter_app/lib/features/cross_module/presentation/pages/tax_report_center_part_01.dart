@@ -184,7 +184,7 @@ class _GenerateTaxReportTab extends StatelessWidget {
         ),
         if (exportQueued) ...[
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          const _InfoPanel(
+          const CrossModuleInfoPanel(
             icon: Icons.check_circle_outline_rounded,
             color: AppColors.buy,
             border: AppColors.buy20,
@@ -193,7 +193,7 @@ class _GenerateTaxReportTab extends StatelessWidget {
           ),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        const _InfoPanel(
+        const CrossModuleInfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
           border: AppColors.warn15,
@@ -220,7 +220,7 @@ class _TaxSummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _IconBadge(
+              const CrossModuleIconBadge(
                 icon: Icons.description_outlined,
                 color: AppColors.buy,
                 background: AppColors.buy10,

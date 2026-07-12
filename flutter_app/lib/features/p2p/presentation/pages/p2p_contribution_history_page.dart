@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_formatters.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
@@ -481,15 +482,4 @@ class _CoinPill extends StatelessWidget {
   }
 }
 
-String _formatVnd(int value) {
-  final digits = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < digits.length; i++) {
-    final remaining = digits.length - i;
-    buffer.write(digits[i]);
-    if (remaining > 1 && remaining % 3 == 1) {
-      buffer.write('.');
-    }
-  }
-  return buffer.toString();
-}
+String _formatVnd(int value) => formatP2PVnd(value);

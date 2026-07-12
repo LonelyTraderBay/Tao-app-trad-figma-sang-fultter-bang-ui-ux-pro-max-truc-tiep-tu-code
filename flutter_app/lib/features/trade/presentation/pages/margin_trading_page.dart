@@ -88,42 +88,60 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
           activeProductId: 'margin',
           productPair: pair,
           children: [
-            VitTradeSimpleHero(
-              symbol: pair.symbol,
-              priceLabel: formatTradePrice(snapshot.referencePrices.lastPrice),
-              changePct: pair.changePct,
-              highLabel: formatTradePrice(snapshot.referencePrices.markPrice),
-              lowLabel: formatTradePrice(snapshot.referencePrices.indexPrice),
-              volumeLabel: snapshot.trade.pair.symbol,
-            ),
-            VitCard(
-              variant: VitCardVariant.inner,
-              density: VitDensity.compact,
-              padding: AppSpacing.cardPaddingCompact,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tổng vốn',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                VitTradeSimpleHero(
+                  symbol: pair.symbol,
+                  priceLabel: formatTradePrice(
+                    snapshot.referencePrices.lastPrice,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    formatTradeMoney(snapshot.account.totalEquity),
-                    style: AppTextStyles.sectionTitle.copyWith(
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
+                  changePct: pair.changePct,
+                  highLabel: formatTradePrice(
+                    snapshot.referencePrices.markPrice,
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-                  VitMetricDeltaPill(
-                    label:
-                        '${totalPnl >= 0 ? '+' : ''}${formatTradeMoney(totalPnl)}',
-                    tone: totalPnl >= 0
-                        ? VitMetricDeltaTone.positive
-                        : VitMetricDeltaTone.negative,
+                  lowLabel: formatTradePrice(
+                    snapshot.referencePrices.indexPrice,
                   ),
-                ],
-              ),
+                  volumeLabel: snapshot.trade.pair.symbol,
+                ),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  density: VitDensity.compact,
+                  padding: AppSpacing.cardPaddingCompact,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tổng vốn',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
+                      Text(
+                        formatTradeMoney(snapshot.account.totalEquity),
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
+                      VitMetricDeltaPill(
+                        label:
+                            '${totalPnl >= 0 ? '+' : ''}${formatTradeMoney(totalPnl)}',
+                        tone: totalPnl >= 0
+                            ? VitMetricDeltaTone.positive
+                            : VitMetricDeltaTone.negative,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
@@ -152,10 +170,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                 title: 'Tài sản của bạn',
                 child: _PositionsTab(positions: modePositions),
               ),
-            Text(
-              'Giá thị trường có thể thay đổi trước khi lệnh khớp.',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
           ],
         ),
         if (_notice != null)

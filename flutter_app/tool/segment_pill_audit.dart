@@ -14,8 +14,8 @@ void main(List<String> args) {
   final repoRoot = findSegmentPillRepoRoot(appRoot);
   final docsDir = Directory('${repoRoot.path}/docs/02_FLUTTER_MIGRATION');
   final featuresRoot = Directory('${appRoot.path}/lib/features');
-  final auditCsv = File('${docsDir.path}/VitTrade-Segment-Pill-Audit.csv');
-  final reportMd = File('${docsDir.path}/Segment-Pill-Compliance-Report.md');
+  final auditCsv = File('${docsDir.path}/audits/VitTrade-Segment-Pill-Audit.csv');
+  final reportMd = File('${docsDir.path}/audits/Segment-Pill-Compliance-Report.md');
 
   final result = scanSegmentPillFeatures(featuresRoot);
   final csv = renderSegmentPillAuditCsv(result);

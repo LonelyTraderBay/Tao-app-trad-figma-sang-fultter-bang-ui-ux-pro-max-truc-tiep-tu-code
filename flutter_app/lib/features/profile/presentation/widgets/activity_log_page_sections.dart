@@ -134,7 +134,10 @@ class _ActivityCard extends StatelessWidget {
                           width: ProfileSpacingTokens
                               .profileActivityTitleStatusGap,
                         ),
-                        _StatusPill(config: status),
+                        VitAccentPill(
+                          label: status.label,
+                          accentColor: status.color,
+                        ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -199,17 +202,6 @@ class _ActivityIcon extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.config});
-
-  final _ActivityStatusConfig config;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: config.label, accentColor: config.color);
   }
 }
 

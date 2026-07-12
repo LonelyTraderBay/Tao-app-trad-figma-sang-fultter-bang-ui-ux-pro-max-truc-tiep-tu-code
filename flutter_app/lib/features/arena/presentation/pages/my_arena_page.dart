@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -12,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -20,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_navigation_actions.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part 'my_arena_page_part_01.dart';
@@ -117,22 +117,26 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                       children: [
                         _PointsHero(
                           stats: snapshot.stats,
-                          onDetails: () => _go(AppRoutePaths.arenaPoints),
-                          onLedger: () => _go(AppRoutePaths.arenaLedger),
-                          onEarn: () => _go('/rewards'),
+                          onDetails: () =>
+                              context.goHaptic(AppRoutePaths.arenaPoints),
+                          onLedger: () =>
+                              context.goHaptic(AppRoutePaths.arenaLedger),
+                          onEarn: () => context.goHaptic('/rewards'),
                         ),
                         _StatsGrid(stats: snapshot.stats),
                         VitCtaButton(
                           key: MyArenaPage.createChallengeKey,
-                          onPressed: () => _go(AppRoutePaths.arenaStudio),
+                          onPressed: () =>
+                              context.goHaptic(AppRoutePaths.arenaStudio),
                           density: VitDensity.compact,
                           leading: const Icon(Icons.auto_awesome_rounded),
                           child: const Text('Tạo challenge mới'),
                         ),
                         _QuickLinks(
                           onLeaderboard: () =>
-                              _go(AppRoutePaths.arenaLeaderboard),
-                          onDiscover: () => _go(AppRoutePaths.arena),
+                              context.goHaptic(AppRoutePaths.arenaLeaderboard),
+                          onDiscover: () =>
+                              context.goHaptic(AppRoutePaths.arena),
                         ),
                         _ArenaTabs(
                           activeTab: _activeTab,
@@ -141,28 +145,38 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                         _TabContent(
                           tab: _activeTab,
                           snapshot: snapshot,
-                          onChallenge: (id) =>
-                              _go(AppRoutePaths.arenaChallenge(id)),
-                          onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
-                          onStudio: () => _go(AppRoutePaths.arenaStudio),
-                          onDiscover: () => _go(AppRoutePaths.arena),
+                          onChallenge: (id) => context.goHaptic(
+                            AppRoutePaths.arenaChallenge(id),
+                          ),
+                          onMode: (id) =>
+                              context.goHaptic(AppRoutePaths.arenaMode(id)),
+                          onStudio: () =>
+                              context.goHaptic(AppRoutePaths.arenaStudio),
+                          onDiscover: () =>
+                              context.goHaptic(AppRoutePaths.arena),
                         ),
                         _CreatedModesSection(
                           snapshot: snapshot,
-                          onTap: () => _go(AppRoutePaths.arenaStudio),
+                          onTap: () =>
+                              context.goHaptic(AppRoutePaths.arenaStudio),
                         ),
                         _RewardAnalyticsSection(
                           history: snapshot.rewardHistory,
-                          onViewChallenge: () =>
-                              _go(AppRoutePaths.arenaChallenge('sample')),
+                          onViewChallenge: () => context.goHaptic(
+                            AppRoutePaths.arenaChallenge('sample'),
+                          ),
                         ),
                         _SafetySection(
-                          onReports: () => _go(AppRoutePaths.arenaMyReports),
-                          onBlocked: () => _go(AppRoutePaths.arenaBlocked),
-                          onSafety: () => _go(AppRoutePaths.arenaSafety),
+                          onReports: () =>
+                              context.goHaptic(AppRoutePaths.arenaMyReports),
+                          onBlocked: () =>
+                              context.goHaptic(AppRoutePaths.arenaBlocked),
+                          onSafety: () =>
+                              context.goHaptic(AppRoutePaths.arenaSafety),
                         ),
                         _ArenaFooter(
-                          onRules: () => _go(AppRoutePaths.arenaSafety),
+                          onRules: () =>
+                              context.goHaptic(AppRoutePaths.arenaSafety),
                         ),
                       ],
                     ),
@@ -176,20 +190,13 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
     );
   }
 
-  void _go(String route) {
-    HapticFeedback.selectionClick();
-    context.go(route);
-  }
-
   void _close() {
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(
-      widget.contractScope == MyArenaContractScope.arena
+    goBackOrFallback(
+      context,
+      fallbackPath: widget.contractScope == MyArenaContractScope.arena
           ? AppRoutePaths.arena
           : AppRoutePaths.profile,
+      mode: BackNavigationMode.historyThenFallback,
     );
   }
 }
