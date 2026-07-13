@@ -223,16 +223,20 @@ final class _PageIndex {
     }
 
     for (final entry in sourceByGroup.entries) {
-      final source = entry.value
+      final baseSource = entry.value
           .map((file) {
             return file.readAsStringSync();
           })
           .join('\n');
+      final source = [
+        baseSource,
+        ..._extraSourceForPageGroup(appRoot, entry.key, baseSource),
+      ].join('\n');
       final pageGroup = PageGroup(
         file: entry.key,
         feature: _featureFromFeaturePath(entry.key),
         source: source,
-        classification: _classifyHeaderBehavior(source),
+        classification: _classifyHeaderBehavior(source, baseSource),
         variant: _classifyHeaderVariant(source),
       );
 
@@ -245,6 +249,134 @@ final class _PageIndex {
   }
 }
 
+/// A shell/wrapper widget reference used as extra classification source.
+/// When [className] is null, the whole file at [path] is safe to include
+/// (it defines exactly one relevant shell class). When [className] is
+/// set, the file defines *multiple* shell classes (e.g.
+/// `trade_module_layout.dart`), so only that one class's body is
+/// extracted via brace matching — including the whole file would leak an
+/// unrelated sibling class's behavior into the classification.
+typedef _ShellSourceRef = ({String path, String? className});
+
+/// Resolves indirection through shared wrapper/shell widgets that this
+/// tool's `part of`-only grouping can't see on its own: [baseSource] is
+/// the routed page's own literal source, and this returns extra source
+/// text for whichever shared shells it calls, so their header behavior
+/// (e.g. `VitAutoHideHeaderScaffold(` inside `VitAutoHidePageScaffold`)
+/// is visible to [_classifyHeaderBehavior]/[_classifyHeaderVariant].
+/// Mirrors `tool/top_header_visual_archetype_audit.dart`'s
+/// `_extraSourceForPageGroup`, which resolves the same indirection for a
+/// different classification axis (visual archetype vs. scroll behavior).
+List<String> _extraSourceForPageGroup(
+  Directory appRoot,
+  String relativeGroup,
+  String baseSource,
+) {
+  final extraPaths = <String>[];
+
+  if (relativeGroup ==
+      'flutter_app/lib/features/markets/presentation/pages/market_list_page.dart') {
+    extraPaths.add(
+      'lib/features/markets/presentation/widgets/market_list_header.dart',
+    );
+  }
+
+  const tradeModuleLayout =
+      'lib/features/trade_core/presentation/widgets/trade_module_layout.dart';
+
+  final shellSources = <String, List<_ShellSourceRef>>{
+    'VitTradeHubScaffold(': [
+      (path: tradeModuleLayout, className: 'VitTradeHubScaffold'),
+    ],
+    'VitTradeDetailScaffold(': [
+      (path: tradeModuleLayout, className: 'VitTradeDetailScaffold'),
+    ],
+    'VitTradeSimpleShell(': [
+      (
+        path:
+            'lib/features/trade_terminal/presentation/widgets/vit_trade_simple_shell.dart',
+        className: null,
+      ),
+      // VitTradeSimpleShell always wraps VitTradeHubScaffold (never
+      // VitTradeDetailScaffold) — see vit_trade_simple_shell.dart's build().
+      (path: tradeModuleLayout, className: 'VitTradeHubScaffold'),
+    ],
+    'VitTradeWorkspaceScaffold(': [
+      (path: tradeModuleLayout, className: 'VitTradeWorkspaceScaffold'),
+    ],
+    'VitWalletDetailScaffold(': [
+      (
+        path:
+            'lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+        className: null,
+      ),
+    ],
+    'CrossModuleTabbedPageShell(': [
+      (
+        path:
+            'lib/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
+        className: null,
+      ),
+    ],
+    'VitAutoHidePageScaffold(': [
+      (
+        path: 'lib/shared/layout/vit_auto_hide_page_scaffold.dart',
+        className: null,
+      ),
+    ],
+    'VitP2PFlowScaffold(': [
+      (
+        path:
+            'lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+        className: null,
+      ),
+    ],
+  };
+
+  final extraSources = <String>[];
+  for (final binding in shellSources.entries) {
+    if (!baseSource.contains(binding.key)) continue;
+    for (final ref in binding.value) {
+      final file = File('${appRoot.path}/${ref.path}');
+      if (!file.existsSync()) continue;
+      final content = file.readAsStringSync();
+      if (ref.className == null) {
+        extraSources.add(content);
+        continue;
+      }
+      final body = _extractClassBody(content, ref.className!);
+      if (body != null) extraSources.add(body);
+    }
+  }
+
+  return [
+    for (final path in extraPaths)
+      if (File('${appRoot.path}/$path').existsSync())
+        File('${appRoot.path}/$path').readAsStringSync(),
+    ...extraSources,
+  ];
+}
+
+/// Extracts the brace-matched body of `class [className] ... { ... }` from
+/// [source], from the `class` keyword through its balanced closing brace.
+/// Returns null if the class isn't found. Plain-text depth counting, not
+/// an AST parse — matches this file's existing substring-based
+/// classification approach.
+String? _extractClassBody(String source, String className) {
+  final match = RegExp('class\\s+$className\\b[^{]*\\{').firstMatch(source);
+  if (match == null) return null;
+
+  var depth = 1;
+  var i = match.end;
+  while (i < source.length && depth > 0) {
+    final char = source[i];
+    if (char == '{') depth++;
+    if (char == '}') depth--;
+    i++;
+  }
+  return source.substring(match.start, i);
+}
+
 String _featureFromFeaturePath(String path) {
   final parts = path.split('/');
   final featuresIndex = parts.indexOf('features');
@@ -252,7 +384,17 @@ String _featureFromFeaturePath(String path) {
   return parts[featuresIndex + 1];
 }
 
-String _classifyHeaderBehavior(String source) {
+/// Classifies how [source] renders its top header. [baseSource] is the
+/// page's own literal source with no extras appended — the "is the header
+/// inline inside a scroll view" ordering check below is only meaningful
+/// when [source] and [baseSource] describe the *same* widget's layout.
+/// When `VitHeader(` is found only inside appended extra source (a shared
+/// shell the page merely calls, not a header the page builds inline),
+/// text position relative to a scroll-container mention elsewhere in the
+/// page's own, unrelated body is meaningless — string concatenation order
+/// isn't widget-tree order — so that case always resolves to
+/// `fixed_vit_header`.
+String _classifyHeaderBehavior(String source, [String? baseSource]) {
   if (source.contains('VitAutoHideHeaderScaffold(')) {
     return 'auto_hide_header';
   }
@@ -268,12 +410,16 @@ String _classifyHeaderBehavior(String source) {
 
   final headerIndex = source.indexOf('VitHeader(');
   if (headerIndex >= 0) {
-    final scrollIndex = _firstIndexOfAny(source, const [
-      'SingleChildScrollView',
-      'ListView',
-      'CustomScrollView',
-      'NestedScrollView',
-    ]);
+    final headerInBaseSource =
+        baseSource == null || headerIndex < baseSource.length;
+    final scrollIndex = headerInBaseSource
+        ? _firstIndexOfAny(source, const [
+            'SingleChildScrollView',
+            'ListView',
+            'CustomScrollView',
+            'NestedScrollView',
+          ])
+        : -1;
     if (scrollIndex >= 0 && scrollIndex < headerIndex) {
       return 'custom_scroll_header';
     }

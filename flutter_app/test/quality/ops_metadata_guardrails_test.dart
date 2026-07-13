@@ -41,7 +41,7 @@ void main() {
 
     test('developer-facing sample snippets avoid direct print logging', () {
       final sampleFiles = [
-        'lib/features/trade/data/repositories/mock_trade_repository.dart',
+        'lib/features/trade_core/data/repositories/mock_trade_repository.dart',
         'lib/features/earn/data/repositories/mock_earn_repository.dart',
       ];
 

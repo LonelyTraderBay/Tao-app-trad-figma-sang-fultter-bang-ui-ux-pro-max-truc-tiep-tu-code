@@ -4,8 +4,47 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 
-enum VitBannerVariant { info, warning, error }
+enum VitBannerVariant { info, warning, error, success }
+
+/// Shows [title]/[message] as a [VitBanner] inside the shared bottom sheet
+/// chrome ([showVitBottomSheet] + [VitSheetPanel]). Use this instead of a
+/// hand-rolled scrim overlay or a bare [ScaffoldMessenger] SnackBar for any
+/// notice that needs the user's acknowledgement.
+Future<void> showVitNoticeSheet({
+  required BuildContext context,
+  required String title,
+  required String message,
+  VitBannerVariant variant = VitBannerVariant.info,
+  String ctaLabel = 'Đã hiểu',
+  bool isDismissible = true,
+}) {
+  return showVitBottomSheet<void>(
+    context: context,
+    isDismissible: isDismissible,
+    builder: (sheetContext) => VitSheetPanel(
+      title: title,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          VitBanner(variant: variant, message: message),
+          const SizedBox(height: AppSpacing.x4),
+          VitCtaButton(
+            density: VitDensity.compact,
+            onPressed: () => Navigator.of(sheetContext).pop(),
+            child: Text(ctaLabel),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
 class VitOfflineBanner extends StatelessWidget {
   const VitOfflineBanner({
@@ -38,13 +77,26 @@ class VitBanner extends StatelessWidget {
     required this.variant,
     required this.message,
     this.icon,
+    this.title,
     this.detail,
+    this.onDismiss,
+    this.action,
   });
 
   final VitBannerVariant variant;
   final String message;
   final IconData? icon;
+
+  /// Optional bold headline shown above [message]. When set, [message]
+  /// renders as a secondary line instead of the single-line banner style.
+  final String? title;
   final String? detail;
+
+  /// Trailing dismiss control (e.g. replacing a manually-closed toast).
+  final VoidCallback? onDismiss;
+
+  /// Optional content below the text, e.g. a CTA button.
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +104,9 @@ class VitBanner extends StatelessWidget {
       VitBannerVariant.info => _BannerPalette.info,
       VitBannerVariant.warning => _BannerPalette.warning,
       VitBannerVariant.error => _BannerPalette.error,
+      VitBannerVariant.success => _BannerPalette.success,
     };
+    final hasMultiline = detail != null || title != null;
 
     return DecoratedBox(
       decoration: ShapeDecoration(
@@ -68,9 +122,9 @@ class VitBanner extends StatelessWidget {
           vertical: AppSpacing.x2 + AppSpacing.x2,
         ),
         child: Row(
-          crossAxisAlignment: detail == null
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.start,
+          crossAxisAlignment: hasMultiline
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
           children: [
             if (icon != null) ...[
               Icon(icon, color: palette.foreground, size: 16),
@@ -81,12 +135,23 @@ class VitBanner extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  if (title != null)
+                    Text(
+                      title!,
+                      style: AppTextStyles.body.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   Text(
                     message,
-                    style: AppTextStyles.caption.copyWith(
-                      color: palette.foreground,
-                      fontWeight: AppTextStyles.medium,
-                    ),
+                    style: title == null
+                        ? AppTextStyles.caption.copyWith(
+                            color: palette.foreground,
+                            fontWeight: AppTextStyles.medium,
+                          )
+                        : AppTextStyles.caption.copyWith(
+                            color: AppColors.text3,
+                          ),
                   ),
                   if (detail != null) ...[
                     const SizedBox(height: AppSpacing.x1),
@@ -97,9 +162,23 @@ class VitBanner extends StatelessWidget {
                       ),
                     ),
                   ],
+                  if (action != null) ...[
+                    const SizedBox(height: AppSpacing.x3),
+                    action!,
+                  ],
                 ],
               ),
             ),
+            if (onDismiss != null) ...[
+              const SizedBox(width: AppSpacing.x3),
+              VitIconButton(
+                onPressed: onDismiss,
+                icon: Icons.close_rounded,
+                tooltip: 'Dismiss',
+                variant: VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.sm,
+              ),
+            ],
           ],
         ),
       ),
@@ -113,6 +192,12 @@ class _BannerPalette {
     required this.foreground,
     required this.border,
   });
+
+  static const success = _BannerPalette(
+    background: AppColors.buy15,
+    foreground: AppColors.buy,
+    border: AppColors.buy20,
+  );
 
   static const info = _BannerPalette(
     background: AppColors.primary08,

@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/launchpad/data/repositories/mock_launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/data/repositories/mock_p2p_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/data/repositories/mock_predictions_repository.dart';
-import 'package:vit_trade_flutter/features/trade/data/repositories/mock_trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_core/data/repositories/mock_trade_repository.dart';
 import 'package:vit_trade_flutter/features/wallet/data/repositories/mock_wallet_repository.dart';
 
 void main() {

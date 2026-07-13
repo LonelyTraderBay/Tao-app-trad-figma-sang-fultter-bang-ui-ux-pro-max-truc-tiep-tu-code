@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unifi
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_home_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/predictions_home_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 

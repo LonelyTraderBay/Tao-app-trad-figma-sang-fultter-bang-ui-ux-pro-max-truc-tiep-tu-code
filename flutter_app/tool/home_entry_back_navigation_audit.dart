@@ -449,7 +449,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02A',
     area: 'Trade pair entry',
-    file: 'lib/features/trade/presentation/pages/trade_page_part_01.dart',
+    file: 'lib/features/trade_terminal/presentation/pages/trade_page_part_01.dart',
     requiredSnippets: [
       'widget.chartVariant == TradeChartVariant.pairRoute || context.canPop()',
       'fallbackPath: AppRoutePaths.trade',
@@ -461,7 +461,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02B',
     area: 'Convert entry',
-    file: 'lib/features/trade/presentation/pages/convert_page.dart',
+    file: 'lib/features/trade_terminal/presentation/pages/convert_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -472,7 +472,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02C',
     area: 'Margin entry',
-    file: 'lib/features/trade/presentation/pages/margin_trading_page.dart',
+    file: 'lib/features/trade_terminal/presentation/pages/margin_trading_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -482,7 +482,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02D',
     area: 'Bot entry',
-    file: 'lib/features/trade/presentation/pages/trading_bots_page.dart',
+    file: 'lib/features/trade_bots/presentation/pages/trading_bots_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -492,7 +492,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02E',
     area: 'Copy Trade entry',
-    file: 'lib/features/trade/presentation/pages/copy_trading_page.dart',
+    file: 'lib/features/trade_copy/presentation/pages/copy_trading_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',

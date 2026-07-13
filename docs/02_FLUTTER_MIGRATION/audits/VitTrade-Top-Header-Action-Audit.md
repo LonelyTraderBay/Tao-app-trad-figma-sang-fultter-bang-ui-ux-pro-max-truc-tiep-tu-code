@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/top_header_action_audit.dart`.
 
 ```text
-vit_header_total=245
+vit_header_total=228
 vit_header_with_custom_trailing=0
 vit_header_with_legacy_action=0
 custom_header_targets=2
@@ -17,7 +17,7 @@ action_groups_over_limit=0
 
 | Classification | Count |
 | --- | ---: |
-| canonical | 233 |
+| canonical | 216 |
 | canonical_action_type | 7 |
 
 ## Action Inventory
@@ -238,23 +238,6 @@ action_groups_over_limit=0
 | vit_header | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | 79 | `_AnnouncementsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | 86 | `_HelpCenterPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | 91 | `_SupportPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page.dart` | 73 | `_AdvancedAnalyticsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/advanced_tools_demo_page.dart` | 82 | `_AdvancedToolsDemoPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/advanced_trading_demo_page.dart` | 75 | `_AdvancedTradingDemoPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/bot_backtesting_page.dart` | 89 | `_BotBacktestingPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/bot_emergency_stop_page.dart` | 77 | `_BotEmergencyStopPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/bot_optimization_page.dart` | 69 | `_BotOptimizationPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/bot_tax_reporting_page.dart` | 90 | `_BotTaxReportingPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/copy_configuration_page.dart` | 123 | `_CopyConfigurationPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/copy_confirmation_page.dart` | 85 | `_CopyConfirmationPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/copy_trading_card_demo.dart` | 53 | `CopyTradingCardDemo` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/execution_quality_demo_page.dart` | 78 | `_ExecutionQualityDemoPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/live_market_data_analytics_page.dart` | 52 | `_LiveMarketDataAnalyticsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/market_data_analytics_page.dart` | 76 | `_MarketDataAnalyticsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/order_receipt_page.dart` | 77 | `_OrderReceiptPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/provider_application_page.dart` | 101 | `_ProviderApplicationPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/risk_management_demo_page.dart` | 81 | `_RiskManagementDemoPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/trade/presentation/pages/trade_history_export_page.dart` | 97 | `_TradeHistoryExportPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/wallet/presentation/pages/address_add_page.dart` | 97 | `_AddressAddPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` | 87 | `_AddressBookPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/wallet/presentation/pages/network_status_page.dart` | 136 | `_NetworkStatusPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |

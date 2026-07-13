@@ -807,7 +807,7 @@ final class _PageIndex {
         file: entry.key,
         feature: _featureFromFeaturePath(entry.key),
         source: source,
-        headerBehavior: _classifyHeaderBehavior(source),
+        headerBehavior: _classifyHeaderBehavior(source, baseSource),
         headerVariant: _classifyHeaderVariant(source),
       );
 
@@ -820,12 +820,39 @@ final class _PageIndex {
   }
 }
 
+// Known residual gap: when a `part of` file group holds more than one
+// *routed* page class, each using a genuinely different shell (e.g.
+// ClientCategorizationPage's own file uses VitTradeHubScaffold, while its
+// `client_categorization_opt_up_page.dart` part-file sibling routes
+// ClientOptUpRequestPage through VitTradeDetailScaffold), both classes
+// share this single group-level classification, so one page's shell can
+// still bleed into the other's row. A per-class fix was attempted and
+// reverted: narrowing to `<Class>`/`_<Class>State` bodies broke unrelated
+// pages elsewhere that delegate header rendering to a third, differently
+// named helper class within the same group (e.g. markets' PairDetailPage
+// -> _PairDetailPageState -> _PairHeader). Resolving this correctly needs
+// per-routed-class body resolution that also follows arbitrary
+// custom-header helper classes, not just the State-class convention —
+// tracked separately, out of scope for the file-vs-class extra-source fix
+// above.
+
 String _featureFromFeaturePath(String path) {
   final parts = path.split('/');
   final featuresIndex = parts.indexOf('features');
   if (featuresIndex == -1 || featuresIndex + 1 >= parts.length) return '-';
   return parts[featuresIndex + 1];
 }
+
+/// A shell widget reference used as extra classification source. When
+/// [className] is null, the whole file at [path] is safe to include (it
+/// defines exactly one relevant shell class). When [className] is set, the
+/// file defines *multiple* shell classes (e.g.
+/// `trade_module_layout.dart`), so only that one class's body is extracted
+/// via brace matching — including the whole file would leak an unrelated
+/// sibling class's behavior (e.g. `VitTradeHubScaffold`'s
+/// `VitAutoHideHeaderScaffold(` bleeding into a `VitTradeDetailScaffold`
+/// page's classification).
+typedef _ShellSourceRef = ({String path, String? className});
 
 List<String> _extraSourceForPageGroup(
   Directory appRoot,
@@ -841,37 +868,71 @@ List<String> _extraSourceForPageGroup(
     );
   }
 
-  const shellSources = <String, List<String>>{
+  const tradeModuleLayout =
+      'lib/features/trade_core/presentation/widgets/trade_module_layout.dart';
+
+  const shellSources = <String, List<_ShellSourceRef>>{
     'VitTradeHubScaffold(': [
-      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+      (path: tradeModuleLayout, className: 'VitTradeHubScaffold'),
     ],
     'VitTradeDetailScaffold(': [
-      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+      (path: tradeModuleLayout, className: 'VitTradeDetailScaffold'),
     ],
     'VitTradeSimpleShell(': [
-      'lib/features/trade/presentation/widgets/vit_trade_simple_shell.dart',
-      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+      (
+        path:
+            'lib/features/trade_terminal/presentation/widgets/vit_trade_simple_shell.dart',
+        className: null,
+      ),
+      // VitTradeSimpleShell always wraps VitTradeHubScaffold (never
+      // VitTradeDetailScaffold) — see vit_trade_simple_shell.dart's build().
+      (path: tradeModuleLayout, className: 'VitTradeHubScaffold'),
     ],
     'VitTradeWorkspaceScaffold(': [
-      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+      (path: tradeModuleLayout, className: 'VitTradeWorkspaceScaffold'),
     ],
     'VitWalletDetailScaffold(': [
-      'lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+      (
+        path:
+            'lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+        className: null,
+      ),
     ],
     'CrossModuleTabbedPageShell(': [
-      'lib/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
+      (
+        path:
+            'lib/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
+        className: null,
+      ),
     ],
     'VitAutoHidePageScaffold(': [
-      'lib/shared/layout/vit_auto_hide_page_scaffold.dart',
+      (
+        path: 'lib/shared/layout/vit_auto_hide_page_scaffold.dart',
+        className: null,
+      ),
     ],
     'VitP2PFlowScaffold(': [
-      'lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+      (
+        path:
+            'lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+        className: null,
+      ),
     ],
   };
 
+  final extraSources = <String>[];
   for (final binding in shellSources.entries) {
-    if (baseSource.contains(binding.key)) {
-      extraPaths.addAll(binding.value);
+    if (!baseSource.contains(binding.key)) continue;
+    for (final ref in binding.value) {
+      final file = File('${appRoot.path}/${ref.path}');
+      if (!file.existsSync()) continue;
+      final content = file.readAsStringSync();
+      if (ref.className == null) {
+        extraSources.add(content);
+        continue;
+      }
+      final body = _extractClassBody(content, ref.className!);
+      if (body != null) extraSources.add(body);
     }
   }
 
@@ -879,10 +940,46 @@ List<String> _extraSourceForPageGroup(
     for (final path in extraPaths)
       if (File('${appRoot.path}/$path').existsSync())
         File('${appRoot.path}/$path').readAsStringSync(),
+    ...extraSources,
   ];
 }
 
-String _classifyHeaderBehavior(String source) {
+/// Extracts the brace-matched body of `class [className] ... { ... }` from
+/// [source], from the `class` keyword through its balanced closing brace.
+/// Returns null if the class isn't found. This is a plain-text depth
+/// counter (not an AST parse), matching the rest of this file's
+/// substring-based classification approach — sufficient for Dart source
+/// where `{`/`}` outside class bodies mostly appear in balanced pairs
+/// (including string interpolations like `'${x}'`).
+String? _extractClassBody(String source, String className) {
+  final match = RegExp('class\\s+$className\\b[^{]*\\{').firstMatch(source);
+  if (match == null) return null;
+
+  var depth = 1;
+  var i = match.end;
+  while (i < source.length && depth > 0) {
+    final char = source[i];
+    if (char == '{') depth++;
+    if (char == '}') depth--;
+    i++;
+  }
+  return source.substring(match.start, i);
+}
+
+/// Classifies how [source] (a page's own source, optionally concatenated
+/// with extra shell-wrapper source appended after it) renders its top
+/// header. [baseSource] is the page's own literal source with no extras
+/// appended — the "is the header inline inside a scroll view" ordering
+/// check below is only meaningful when [source] and [baseSource] describe
+/// the *same* widget's layout. When `VitHeader(` is found only inside
+/// appended extra source (i.e. a shared shell like `VitTradeDetailScaffold`
+/// that the page merely calls, rather than a header the page builds
+/// inline), text position relative to a scroll-container mention
+/// elsewhere in the *page's own, unrelated* body is meaningless — string
+/// concatenation order isn't widget-tree order — so that case always
+/// resolves to `fixed_vit_header` (a shared shell placing `VitHeader(` as
+/// a fixed sibling before its scrollable body, never inline-in-scroll).
+String _classifyHeaderBehavior(String source, [String? baseSource]) {
   if (source.contains('VitAutoHideHeaderScaffold(')) {
     return 'auto_hide_header';
   }
@@ -898,14 +995,18 @@ String _classifyHeaderBehavior(String source) {
 
   final headerIndex = source.indexOf('VitHeader(');
   if (headerIndex >= 0) {
-    final scrollIndex = _firstIndexOfAny(source, const [
-      'SingleChildScrollView',
-      'ListView',
-      'CustomScrollView',
-      'NestedScrollView',
-    ]);
-    if (scrollIndex >= 0 && scrollIndex < headerIndex) {
-      return 'custom_scroll_header';
+    final headerInBaseSource =
+        baseSource == null || headerIndex < baseSource.length;
+    if (headerInBaseSource) {
+      final scrollIndex = _firstIndexOfAny(source, const [
+        'SingleChildScrollView',
+        'ListView',
+        'CustomScrollView',
+        'NestedScrollView',
+      ]);
+      if (scrollIndex >= 0 && scrollIndex < headerIndex) {
+        return 'custom_scroll_header';
+      }
     }
     return 'fixed_vit_header';
   }

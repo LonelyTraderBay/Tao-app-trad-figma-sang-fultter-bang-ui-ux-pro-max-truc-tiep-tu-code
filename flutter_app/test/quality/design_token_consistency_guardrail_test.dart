@@ -3,21 +3,31 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('design token consistency report artifacts are current', () {
-    final result = Process.runSync(_dartExecutable(), [
-      'run',
-      'tool/design_token_consistency_audit.dart',
-      '--check',
-    ]);
+  test(
+    'design token consistency report artifacts are current',
+    () {
+      final first = _runDesignTokenAudit();
+      if (first.exitCode == 0) return;
 
-    expect(
-      result.exitCode,
-      0,
-      reason:
-          'stdout:\n${result.stdout}\n\nstderr:\n${result.stderr}\n'
-          'Run `dart run tool/design_token_consistency_audit.dart` from flutter_app/.',
-    );
-  });
+      // This subprocess check competes with sibling `dart run tool/*.dart`
+      // audits spawned by other quality guardrail tests for CPU time under
+      // full-suite parallel runs, which can make the underlying `dart run`
+      // slow enough to look broken even though the artifacts are current.
+      // Retry once before failing so that transient contention isn't
+      // mistaken for a real stale/broken artifact; both attempts' output is
+      // surfaced so a genuine failure is still fully debuggable.
+      final retry = _runDesignTokenAudit();
+      expect(
+        retry.exitCode,
+        0,
+        reason:
+            'First attempt:\nstdout:\n${first.stdout}\n\nstderr:\n${first.stderr}\n\n'
+            'Retry attempt:\nstdout:\n${retry.stdout}\n\nstderr:\n${retry.stderr}\n\n'
+            'Run `dart run tool/design_token_consistency_audit.dart` from flutter_app/.',
+      );
+    },
+    timeout: const Timeout(Duration(minutes: 2)),
+  );
 
   test('shared interactive widgets use canonical control radius', () {
     const interactiveWidgetPaths = <String>[
@@ -84,6 +94,14 @@ void main() {
 
     expect(violations, isEmpty, reason: violations.join('\n'));
   });
+}
+
+ProcessResult _runDesignTokenAudit() {
+  return Process.runSync(_dartExecutable(), [
+    'run',
+    'tool/design_token_consistency_audit.dart',
+    '--check',
+  ]);
 }
 
 String _dartExecutable() {

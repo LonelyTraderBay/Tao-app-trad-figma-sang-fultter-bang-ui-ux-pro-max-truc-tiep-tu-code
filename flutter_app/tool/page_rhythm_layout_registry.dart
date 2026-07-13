@@ -9,13 +9,13 @@ const shellWidgetToVpcPath = <String, String>{
   'VitP2PFlowScaffold':
       'features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
   'VitTradeHubScaffold':
-      'features/trade/presentation/widgets/trade_module_layout.dart',
+      'features/trade_core/presentation/widgets/trade_module_layout.dart',
   'VitTradeSimpleShell':
-      'features/trade/presentation/widgets/trade_module_layout.dart',
+      'features/trade_core/presentation/widgets/trade_module_layout.dart',
   'VitTradeWorkspaceScaffold':
-      'features/trade/presentation/widgets/trade_module_layout.dart',
+      'features/trade_core/presentation/widgets/trade_module_layout.dart',
   'VitTradeDetailScaffold':
-      'features/trade/presentation/widgets/trade_module_layout.dart',
+      'features/trade_core/presentation/widgets/trade_module_layout.dart',
   'CrossModuleTabbedPageShell':
       'features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
 };
@@ -212,7 +212,7 @@ List<String> collectVpcFilesForPage(
 
   if (relativePage.endsWith('trade/presentation/pages/trade_page.dart')) {
     const layout =
-        'features/trade/presentation/widgets/trade_module_layout.dart';
+        'features/trade_core/presentation/widgets/trade_module_layout.dart';
     if (auditRelativePaths.contains(layout)) files.add(layout);
   }
 

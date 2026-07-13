@@ -161,10 +161,8 @@ void main() {
     // needles as symbol-level substrings (not whole-line snippets) so a
     // `dart format` reflow doesn't spuriously break this test.
     const requiredNeedles = <String, List<String>>{
-      'lib/features/trade/presentation/pages/provider_leaderboard_page.dart': [
-        'entry.\$1 != providers.length - 1',
-        'AppSpacing.rowGap',
-      ],
+      'lib/features/trade_copy/presentation/pages/provider_leaderboard_page.dart':
+          ['entry.\$1 != providers.length - 1', 'AppSpacing.rowGap'],
       'lib/app/theme/spacing/wallet_spacing_tokens.dart': [
         'walletManagerAllWalletGap = AppSpacing.rowGap',
         'walletTokenCardGap = AppSpacing.rowGap',
@@ -175,10 +173,11 @@ void main() {
       'lib/app/theme/spacing/trade_spacing_tokens.dart': [
         'preCopyAssessmentCtaGap = 12',
       ],
-      'lib/features/trade/presentation/pages/pre_copy_assessment_page.dart': [
-        'question != snapshot.questions.last',
-        'TradeSpacingTokens.preCopyAssessmentCtaGap',
-      ],
+      'lib/features/trade_copy/presentation/pages/pre_copy_assessment_page.dart':
+          [
+            'question != snapshot.questions.last',
+            'TradeSpacingTokens.preCopyAssessmentCtaGap',
+          ],
       'lib/app/theme/spacing/p2p_spacing_tokens.dart': [
         'p2pPaymentMethodsListSectionGap = AppSpacing.rowGap',
       ],

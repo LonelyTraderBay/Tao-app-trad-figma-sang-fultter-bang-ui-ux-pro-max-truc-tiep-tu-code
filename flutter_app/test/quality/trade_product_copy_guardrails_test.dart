@@ -7,15 +7,14 @@ void main() {
     test('Trade copy high-risk flow keeps suitability review roles', () {
       final source = asciiFold(
         [
-          'lib/features/trade/presentation/pages/copy_trading_page.dart',
-          'lib/features/trade/presentation/widgets/copy_trading_hero.dart',
-          'lib/features/trade/presentation/widgets/copy_trading_list.dart',
-          'lib/features/trade/presentation/widgets/copy_trading_metrics_common.dart',
-          'lib/features/trade/presentation/pages/copy_trading_v2_page.dart',
-          'lib/features/trade/presentation/pages/copy_confirmation_page.dart',
-          'lib/features/trade/presentation/widgets/copy_confirmation_page_sections.dart',
-          'lib/features/trade/presentation/widgets/copy_confirmation_page_common.dart',
-          'lib/features/trade/presentation/controllers/trade_controller_models.dart',
+          'lib/features/trade_copy/presentation/pages/copy_trading_page.dart',
+          'lib/features/trade_copy/presentation/widgets/copy_trading_hero.dart',
+          'lib/features/trade_copy/presentation/widgets/copy_trading_list.dart',
+          'lib/features/trade_copy/presentation/widgets/copy_trading_metrics_common.dart',
+          'lib/features/trade_copy/presentation/pages/copy_confirmation_page.dart',
+          'lib/features/trade_copy/presentation/widgets/copy_confirmation_page_sections.dart',
+          'lib/features/trade_copy/presentation/widgets/copy_confirmation_page_common.dart',
+          'lib/features/trade_terminal/presentation/controllers/trade_controller_models.dart',
         ].map(readSource).join('\n'),
       );
 
@@ -51,11 +50,12 @@ void main() {
     test('Futures and margin flows keep leverage safety roles', () {
       final targets = [
         HighRiskCopyTarget(
-          path: 'lib/features/trade/presentation/pages/futures_page.dart',
+          path:
+              'lib/features/trade_terminal/presentation/pages/futures_page.dart',
           paths: [
-            'lib/features/trade/presentation/pages/futures_page.dart',
-            'lib/features/trade/presentation/pages/futures_page_part_01.dart',
-            'lib/features/trade/presentation/pages/futures_page_part_02.dart',
+            'lib/features/trade_terminal/presentation/pages/futures_page.dart',
+            'lib/features/trade_terminal/presentation/pages/futures_page_part_01.dart',
+            'lib/features/trade_terminal/presentation/pages/futures_page_part_02.dart',
           ],
           roles: {
             'risk': [RegExp(r'\brisk\b|rui ro', caseSensitive: false)],
@@ -75,19 +75,19 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/trade/presentation/pages/margin_trading_page.dart',
+              'lib/features/trade_terminal/presentation/pages/margin_trading_page.dart',
           paths: [
-            'lib/features/trade/presentation/pages/margin_trading_page.dart',
-            'lib/features/trade/presentation/pages/margin_trading_page_part_01.dart',
-            'lib/features/trade/presentation/pages/margin_trading_page_part_02.dart',
-            'lib/features/trade/presentation/pages/margin_trading_page_part_03.dart',
-            'lib/features/trade/presentation/pages/margin_trading_page_part_04.dart',
-            'lib/features/trade/presentation/pages/margin_trading_hub_page.dart',
-            'lib/features/trade/presentation/widgets/margin_trading_hub_widgets.dart',
-            'lib/features/trade/presentation/widgets/margin_trading_hub_hero_nav.dart',
-            'lib/features/trade/presentation/widgets/margin_trading_hub_cards.dart',
-            'lib/features/trade/presentation/widgets/margin_trading_order_summary.dart',
-            'lib/features/trade/presentation/widgets/margin_trading_positions_orders.dart',
+            'lib/features/trade_terminal/presentation/pages/margin_trading_page.dart',
+            'lib/features/trade_terminal/presentation/pages/margin_trading_page_part_01.dart',
+            'lib/features/trade_terminal/presentation/pages/margin_trading_page_part_02.dart',
+            'lib/features/trade_terminal/presentation/pages/margin_trading_page_part_03.dart',
+            'lib/features/trade_terminal/presentation/pages/margin_trading_page_part_04.dart',
+            'lib/features/trade_terminal/presentation/pages/margin_trading_hub_page.dart',
+            'lib/features/trade_terminal/presentation/widgets/margin_trading_hub_widgets.dart',
+            'lib/features/trade_terminal/presentation/widgets/margin_trading_hub_hero_nav.dart',
+            'lib/features/trade_terminal/presentation/widgets/margin_trading_hub_cards.dart',
+            'lib/features/trade_terminal/presentation/widgets/margin_trading_order_summary.dart',
+            'lib/features/trade_terminal/presentation/widgets/margin_trading_positions_orders.dart',
           ],
           roles: {
             'risk': [RegExp(r'\brisk\b|rui ro', caseSensitive: false)],

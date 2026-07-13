@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/onboarding/data/onboarding_repository.dart';
 import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

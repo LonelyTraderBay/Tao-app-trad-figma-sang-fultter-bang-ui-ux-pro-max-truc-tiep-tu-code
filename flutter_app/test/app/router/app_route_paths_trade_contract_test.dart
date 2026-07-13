@@ -52,7 +52,6 @@ void main() {
     c(AppRoutePaths.tradeExecutionQuality, '/trade/execution-quality'),
     c(AppRoutePaths.tradeAdvancedTools, '/trade/advanced-tools'),
     c(AppRoutePaths.tradeCopyTrading, '/trade/copy-trading'),
-    c(AppRoutePaths.tradeCopyTradingV2, '/trade/copy-trading/v2'),
     c(AppRoutePaths.tradeCopyEducation, '/trade/copy-trading/education'),
     c(AppRoutePaths.tradeCopyActive, '/trade/copy-trading/active'),
     c(AppRoutePaths.tradeCopySettings, '/trade/copy-trading/settings'),
@@ -70,9 +69,9 @@ void main() {
     c(
       AppRoutePaths.tradeCopyProvider(
         'ct001',
-        backPath: AppRoutePaths.tradeCopyTradingV2,
+        backPath: AppRoutePaths.tradeCopyTrading,
       ),
-      '/trade/copy-provider/ct001?back=%2Ftrade%2Fcopy-trading%2Fv2',
+      '/trade/copy-provider/ct001?back=%2Ftrade%2Fcopy-trading',
     ),
     c(
       AppRoutePaths.tradeCopyProviderConfiguration(

@@ -3,9 +3,9 @@
 Generated from `flutter_app/tool/back_navigation_behavior_audit.dart`.
 
 ```text
-visible_header_back_entries=290
+visible_header_back_entries=282
 strict_back_issues=0
-high_risk_entries=34
+high_risk_entries=33
 modal_close_baseline=73
 sheet_result_baseline=9
 ```
@@ -14,8 +14,8 @@ sheet_result_baseline=9
 
 | Classification | Count |
 | --- | ---: |
-| parent_route_only | 236 |
-| history_then_fallback | 54 |
+| parent_route_only | 227 |
+| history_then_fallback | 55 |
 
 ## Strict Issue Counts
 
@@ -248,6 +248,7 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` | 62 | `P2PRiskAssessmentPage` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.parentRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/pages/p2p_security_center_page.dart` | 74 | `P2PSecurityCenterPage` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.parentRoute` | yes | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/pages/p2p_security_center_page.dart` | 224 | `P2PWhitelistModePage` | `VitHeader` | parent_route_only | parent_route_only | `'/p2p/security/center'` | yes | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | 85 | `_P2PSelfieVerificationPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.parentRoute` | yes | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | 85 | `_P2PSettingsPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.parentRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` | 75 | `_P2PSourceOfFundsPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.parentRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` | 93 | `_P2PTaxReportingPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.parentRoute` | no | - | Back goes to an explicit parent route. |
@@ -258,6 +259,7 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/p2p/presentation/widgets/p2p_express_page_part_01.dart` | 49 | `_P2PExpressPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.p2p` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/widgets/p2p_home_page_part_01.dart` | 57 | `_P2PHomePageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.home` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/p2p/presentation/widgets/p2p_order_page_part_01.dart` | 29 | `_P2POrderPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.p2p` | yes | - | Uses shared back-navigation helper. |
+| `flutter_app/lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart` | 102 | `VitP2PFlowScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/predictions/presentation/pages/prediction_advanced_chart_page.dart` | 92 | `_PredictionAdvancedChartPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.marketsPredictions` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/predictions/presentation/pages/prediction_data_integration_page.dart` | 105 | `_PredictionDataIntegrationPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.marketsPredictions` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/predictions/presentation/pages/prediction_event_calendar_page.dart` | 78 | `_PredictionEventCalendarPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.marketsPredictions` | no | - | Back goes to an explicit parent route. |
@@ -286,6 +288,7 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` | 64 | `_SettingsPageState` | `VitHeader` | history_then_fallback | history_then_fallback | `AppRoutePaths.profile` | no | - | History pop is paired with an explicit fallback route. |
 | `flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart` | 73 | `_SubAccountPageState` | `VitHeader` | history_then_fallback | history_then_fallback | `AppRoutePaths.profile` | no | - | History pop is paired with an explicit fallback route. |
 | `flutter_app/lib/features/profile/presentation/pages/vip_page.dart` | 78 | `_VIPPageState` | `VitHeader` | history_then_fallback | history_then_fallback | `AppRoutePaths.profile` | no | - | History pop is paired with an explicit fallback route. |
+| `flutter_app/lib/features/profile/presentation/widgets/profile_api_key_create_result.dart` | 132 | `_SimpleStepScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | yes | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/referral/presentation/pages/referral_friend_detail_page.dart` | 34 | `ReferralFriendDetailPage` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/referral/presentation/pages/referral_history_page.dart` | 83 | `_ReferralHistoryPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/referral/presentation/pages/referral_home_page.dart` | 82 | `_ReferralHomePageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
@@ -295,23 +298,9 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | 79 | `_AnnouncementsPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | 86 | `_HelpCenterPageState` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | 91 | `_SupportPageState` | `VitHeader` | parent_route_only | parent_route_only | `-` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/advanced_analytics_page.dart` | 73 | `_AdvancedAnalyticsPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeMargin` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/advanced_tools_demo_page.dart` | 82 | `_AdvancedToolsDemoPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.trade` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/advanced_trading_demo_page.dart` | 75 | `_AdvancedTradingDemoPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeMargin` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/bot_backtesting_page.dart` | 89 | `_BotBacktestingPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeBots` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/bot_emergency_stop_page.dart` | 77 | `_BotEmergencyStopPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeBots` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/bot_optimization_page.dart` | 69 | `_BotOptimizationPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeBots` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/bot_tax_reporting_page.dart` | 90 | `_BotTaxReportingPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeBots` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/copy_configuration_page.dart` | 123 | `_CopyConfigurationPageState` | `VitHeader` | parent_route_only | parent_route_only | `resolvedBackPath` | yes | - | Uses shared back-navigation helper. |
-| `flutter_app/lib/features/trade/presentation/pages/copy_confirmation_page.dart` | 85 | `_CopyConfirmationPageState` | `VitHeader` | parent_route_only | parent_route_only | `-` | yes | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/copy_trading_card_demo.dart` | 53 | `CopyTradingCardDemo` | `VitHeader` | parent_route_only | parent_route_only | `snapshot.backRoute` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/execution_quality_demo_page.dart` | 78 | `_ExecutionQualityDemoPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.trade` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/live_market_data_analytics_page.dart` | 52 | `_LiveMarketDataAnalyticsPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeMargin` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/market_data_analytics_page.dart` | 76 | `_MarketDataAnalyticsPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeMargin` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/order_receipt_page.dart` | 77 | `_OrderReceiptPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.trade` | yes | - | Uses shared back-navigation helper. |
-| `flutter_app/lib/features/trade/presentation/pages/provider_application_page.dart` | 101 | `_ProviderApplicationPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.tradeCopyTrading` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/risk_management_demo_page.dart` | 81 | `_RiskManagementDemoPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.trade` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/trade/presentation/pages/trade_history_export_page.dart` | 97 | `_TradeHistoryExportPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.trade` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart` | 229 | `VitTradeDetailScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
+| `flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart` | 325 | `VitTradeHubScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
+| `flutter_app/lib/features/trade_terminal/presentation/widgets/vit_trade_terminal_header.dart` | 55 | `VitTradeTerminalHeader` | `VitTopChrome` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/wallet/presentation/pages/address_add_page.dart` | 97 | `_AddressAddPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.walletAddressBook` | yes | - | Uses shared back-navigation helper. |
 | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` | 87 | `_AddressBookPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/asset_detail_page.dart` | 69 | `_AssetDetailPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
@@ -321,7 +310,10 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/wallet/presentation/pages/transaction_history_page.dart` | 68 | `_TransactionHistoryPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/wallet_gas_optimizer_page.dart` | 80 | `_WalletGasOptimizerPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/wallet_multi_manager_page.dart` | 72 | `_WalletMultiManagerPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/wallet_page.dart` | 79 | `_WalletPageState` | `VitTopChrome` | history_then_fallback | history_then_fallback | `AppRoutePaths.home` | no | - | Uses shared back-navigation helper. |
 | `flutter_app/lib/features/wallet/presentation/pages/wallet_token_approval_page.dart` | 67 | `_WalletTokenApprovalPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | yes | - | Uses shared back-navigation helper. |
 | `flutter_app/lib/features/wallet/presentation/pages/withdraw_limits_page.dart` | 61 | `WithdrawLimitsPage` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | yes | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart` | 73 | `VitWalletDetailScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_preview.dart` | 124 | `AddressSavedState` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | yes | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/wallet/presentation/widgets/wallet_health_score_page_shell.dart` | 21 | `_WalletHealthScorePageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/shared/layout/vit_top_chrome.dart` | 87 | `VitTopChrome` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |

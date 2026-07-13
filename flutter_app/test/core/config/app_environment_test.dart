@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/features/notifications/data/notifications_repo
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
-import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
 import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
 
 void main() {

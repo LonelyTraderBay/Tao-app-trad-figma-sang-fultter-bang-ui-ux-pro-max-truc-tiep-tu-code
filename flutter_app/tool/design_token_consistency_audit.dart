@@ -13,14 +13,18 @@ const Set<String> _additionalRootPagePaths = <String>{
   'lib/features/cross_module/presentation/pages/tax_report_center.dart',
   'lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart',
   'lib/features/onboarding/presentation/pages/onboarding_flow.dart',
-  'lib/features/trade/presentation/pages/copy_trading_card_demo.dart',
+  'lib/features/trade_copy/presentation/pages/copy_trading_card_demo.dart',
 };
 
 const Map<String, int> _p0ModuleDebtBaselines = <String, int>{
   'markets': 2042,
   'p2p': 1911,
   'profile': 1037,
-  'trade': 9072,
+  'trade_bots': 0,
+  'trade_compliance': 0,
+  'trade_copy': 0,
+  'trade_core': 3,
+  'trade_terminal': 6,
   'wallet': 759,
 };
 
@@ -165,12 +169,14 @@ void main(List<String> args) {
       failures.add(
         'Missing token consistency markdown artifact: ${markdownFile.path}',
       );
-    } else if (markdownFile.readAsStringSync() != markdown) {
+    } else if (_normalizeLineEndings(markdownFile.readAsStringSync()) !=
+        _normalizeLineEndings(markdown)) {
       failures.add('Token consistency markdown artifact is stale.');
     }
     if (!csvFile.existsSync()) {
       failures.add('Missing token consistency CSV artifact: ${csvFile.path}');
-    } else if (csvFile.readAsStringSync() != csv) {
+    } else if (_normalizeLineEndings(csvFile.readAsStringSync()) !=
+        _normalizeLineEndings(csv)) {
       failures.add('Token consistency CSV artifact is stale.');
     }
     failures.addAll(_collectP0ModuleGateFailures(metrics));
@@ -201,6 +207,12 @@ void main(List<String> args) {
   stdout.writeln('Wrote ${csvFile.path}');
   stdout.writeln(_renderSummary(metrics));
 }
+
+// Windows checkouts of this repo (core.autocrlf=true) materialize tracked
+// files with CRLF line endings, while this tool always writes LF. Comparing
+// raw bytes would then report staleness on every checkout even though the
+// content is unchanged, so both sides are normalized before comparing.
+String _normalizeLineEndings(String value) => value.replaceAll('\r\n', '\n');
 
 Directory _findAppRoot() {
   final current = Directory.current;

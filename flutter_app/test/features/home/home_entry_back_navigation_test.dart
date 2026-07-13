@@ -24,11 +24,11 @@ import 'package:vit_trade_flutter/features/predictions/presentation/pages/predic
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
 import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
 import 'package:vit_trade_flutter/features/support/presentation/pages/support_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/convert_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/copy_trading_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/margin_trading_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/trading_bots_page.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/convert_page.dart';
+import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/copy_trading_page.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/margin_trading_page.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/trading_bots_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/withdraw_page.dart';
 

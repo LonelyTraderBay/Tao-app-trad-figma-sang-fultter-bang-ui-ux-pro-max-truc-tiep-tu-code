@@ -153,7 +153,7 @@ void main() {
     test('dynamic copy-trading back query is encoded and safety resolved', () {
       final providerRoute = AppRoutePaths.tradeCopyProvider(
         'ct001',
-        backPath: AppRoutePaths.tradeCopyTradingV2,
+        backPath: AppRoutePaths.tradeCopyTrading,
       );
       final configurationRoute = AppRoutePaths.tradeCopyProviderConfiguration(
         'ct001',
@@ -162,7 +162,7 @@ void main() {
 
       expect(
         Uri.parse(providerRoute).queryParameters['back'],
-        AppRoutePaths.tradeCopyTradingV2,
+        AppRoutePaths.tradeCopyTrading,
       );
       expect(
         Uri.parse(configurationRoute).queryParameters['back'],
@@ -174,7 +174,7 @@ void main() {
           fallbackPath: AppRoutePaths.tradeCopyTrading,
           allowedPrefixes: const [AppRoutePaths.trade],
         ),
-        AppRoutePaths.tradeCopyTradingV2,
+        AppRoutePaths.tradeCopyTrading,
       );
       expect(
         resolveSafeBackPath(

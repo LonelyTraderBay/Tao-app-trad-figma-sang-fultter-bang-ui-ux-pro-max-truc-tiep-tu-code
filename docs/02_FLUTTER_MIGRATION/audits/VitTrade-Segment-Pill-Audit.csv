@@ -231,72 +231,72 @@ referral,referral/presentation/widgets/referral_history_page_sections.dart,VitCh
 rewards,rewards/presentation/pages/rewards_hub_page_part_02.dart,VitFilterChip,filter_accent,1,44,hug_scroll,-,review,wrapper over VitChoicePill
 support,support/presentation/widgets/announcements_filters_widgets.dart,VitChoicePill,chip,1,44,hug,-,pass,
 support,support/presentation/widgets/support_quick_contacts_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/pages/active_copies_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/pages/bot_history_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/pages/client_categorization_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/pages/copy_audit_log_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/pages/copy_notifications_page.dart,VitFilterChip,filter_accent,1,44,hug_scroll,-,review,wrapper over VitChoicePill
-trade,trade/presentation/pages/futures_page_part_01.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
-trade,trade/presentation/pages/futures_page_part_02.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-trade,trade/presentation/pages/margin_trading_page_part_01.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
-trade,trade/presentation/pages/market_data_analytics_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/pages/regulatory_reports_dashboard_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/pages/trading_bots_page_part_01.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/advanced_analytics_page_ai_signals.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/advanced_analytics_page_hero.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/advanced_tools_tabs_sheets.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/widgets/advanced_trading_demo_page_sections.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
-trade,trade/presentation/widgets/advanced_trading_demo_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/audit_trail_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/best_execution_overview.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/widgets/bot_api_documentation_intro_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/widgets/bot_backtesting_widgets.dart,VitChoicePill,chip,2,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/bot_equity_curve_summary_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/widgets/bot_faq_search_tabs.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
-trade,trade/presentation/widgets/bot_guide_intro_tabs.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
-trade,trade/presentation/widgets/bot_performance_charts_strategy.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/cass_reconciliation_summary_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/client_money_protection_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/complaints_handling_overview_header_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/convert_page_amount_widgets.dart,VitChoicePill,chip,1,44,hug,-,pass,
-trade,trade/presentation/widgets/convert_page_amount_widgets.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-trade,trade/presentation/widgets/copy_configuration_provider_capital_mode.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-trade,trade/presentation/widgets/copy_education_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/copy_performance_summary_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/copy_safety_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/copy_settings_controls.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/copy_settings_modes.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/copy_trading_list.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-trade,trade/presentation/widgets/copy_trading_list.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
-trade,trade/presentation/widgets/ex_ante_costs_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/ex_ante_costs_scenarios_actions.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/ex_post_costs_report_summary.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/execution_quality_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/widgets/execution_venue_summary.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/execution_venue_summary.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/investor_compensation_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/leverage_controls_presets.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/leverage_controls_presets.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
-trade,trade/presentation/widgets/live_market_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/orders_history_page_sections.dart,VitSegmentedChoice,primaryAccent,4,44,equal_expanded,-,pass,
-trade,trade/presentation/widgets/orders_history_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/performance_attribution_summary_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/performance_scenarios_intro_widgets.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
-trade,trade/presentation/widgets/portfolio_risk_analysis_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/position_dashboard_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/product_governance_overview_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/provider_governance_page_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/provider_leaderboard_controls.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/regulatory_disclosures_hero_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/risk_management_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/safety_education_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/slippage_monitoring_overview.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/trade_history_export_selectors_includes.dart,VitChoicePill,chip,1,44,hug,-,pass,
-trade,trade/presentation/widgets/trade_settings_page_sections.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
-trade,trade/presentation/widgets/trader_profile_overview.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
-trade,trade/presentation/widgets/transaction_reporting_filters.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
-trade,trade/presentation/widgets/vit_trade_side_switch.dart,VitSegmentedChoice,primaryAccent,6,44,equal_expanded,-,pass,
-trade,trade/presentation/widgets/vit_trade_simple_order_form.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+trade_bots,trade_bots/presentation/pages/bot_history_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_bots,trade_bots/presentation/pages/trading_bots_page_part_01.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_bots,trade_bots/presentation/widgets/bot_api_documentation_intro_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_bots,trade_bots/presentation/widgets/bot_backtesting_widgets.dart,VitChoicePill,chip,2,44,full_or_hug,-,pass,
+trade_bots,trade_bots/presentation/widgets/bot_equity_curve_summary_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_bots,trade_bots/presentation/widgets/bot_faq_search_tabs.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
+trade_bots,trade_bots/presentation/widgets/bot_guide_intro_tabs.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
+trade_bots,trade_bots/presentation/widgets/bot_performance_charts_strategy.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_compliance,trade_compliance/presentation/pages/client_categorization_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_compliance,trade_compliance/presentation/pages/market_data_analytics_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_compliance,trade_compliance/presentation/pages/regulatory_reports_dashboard_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_compliance,trade_compliance/presentation/widgets/audit_trail_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/best_execution_overview.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_compliance,trade_compliance/presentation/widgets/cass_reconciliation_summary_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_compliance,trade_compliance/presentation/widgets/client_money_protection_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_compliance,trade_compliance/presentation/widgets/complaints_handling_overview_header_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/ex_ante_costs_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/ex_ante_costs_scenarios_actions.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_compliance,trade_compliance/presentation/widgets/ex_post_costs_report_summary.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/execution_venue_summary.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_compliance,trade_compliance/presentation/widgets/execution_venue_summary.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/investor_compensation_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/live_market_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/performance_scenarios_intro_widgets.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_compliance,trade_compliance/presentation/widgets/product_governance_overview_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/regulatory_disclosures_hero_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_compliance,trade_compliance/presentation/widgets/slippage_monitoring_overview.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_compliance,trade_compliance/presentation/widgets/transaction_reporting_filters.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_copy,trade_copy/presentation/pages/active_copies_page.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_copy,trade_copy/presentation/pages/copy_audit_log_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_copy,trade_copy/presentation/pages/copy_notifications_page.dart,VitFilterChip,filter_accent,1,44,hug_scroll,-,review,wrapper over VitChoicePill
+trade_copy,trade_copy/presentation/widgets/copy_configuration_provider_capital_mode.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+trade_copy,trade_copy/presentation/widgets/copy_education_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_copy,trade_copy/presentation/widgets/copy_performance_summary_tabs.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_copy,trade_copy/presentation/widgets/copy_safety_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_copy,trade_copy/presentation/widgets/copy_settings_controls.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_copy,trade_copy/presentation/widgets/copy_settings_modes.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_copy,trade_copy/presentation/widgets/copy_trading_list.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+trade_copy,trade_copy/presentation/widgets/copy_trading_list.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
+trade_copy,trade_copy/presentation/widgets/performance_attribution_summary_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_copy,trade_copy/presentation/widgets/portfolio_risk_analysis_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_copy,trade_copy/presentation/widgets/provider_governance_page_overview.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_copy,trade_copy/presentation/widgets/provider_leaderboard_controls.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_copy,trade_copy/presentation/widgets/safety_education_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_copy,trade_copy/presentation/widgets/trader_profile_overview.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_terminal,trade_terminal/presentation/pages/futures_page_part_01.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/pages/futures_page_part_02.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+trade_terminal,trade_terminal/presentation/pages/margin_trading_page_part_01.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/advanced_analytics_page_ai_signals.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/advanced_analytics_page_shared.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_terminal,trade_terminal/presentation/widgets/advanced_tools_tabs_sheets.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/advanced_trading_demo_page_sections.dart,VitSegmentedChoice,primaryAccent,3,44,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/advanced_trading_demo_page_sections.dart,VitTabBar,underline,1,54,equal_expanded,-,review,nav underline — different tier
+trade_terminal,trade_terminal/presentation/widgets/convert_page_amount_widgets.dart,VitChoicePill,chip,1,44,hug,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/convert_page_amount_widgets.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/execution_quality_tabs.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/leverage_controls_presets.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/leverage_controls_presets.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/orders_history_page_sections.dart,VitSegmentedChoice,primaryAccent,4,44,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/orders_history_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_terminal,trade_terminal/presentation/widgets/position_dashboard_page_sections.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_terminal,trade_terminal/presentation/widgets/risk_management_tabs.dart,VitSegmentedTabBar,segment_alias,1,~28,equal_expanded,-,pass,alias of VitTabBar.segment
+trade_terminal,trade_terminal/presentation/widgets/trade_history_export_selectors_includes.dart,VitChoicePill,chip,1,44,hug,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/trade_settings_page_sections.dart,VitChoicePill,chip,1,44,full_or_hug,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/vit_trade_side_switch.dart,VitSegmentedChoice,primaryAccent,6,44,equal_expanded,-,pass,
+trade_terminal,trade_terminal/presentation/widgets/vit_trade_simple_order_form.dart,VitPresetChipRow,preset_row,1,34,equal_full,-,pass,
 wallet,wallet/presentation/pages/network_status_page.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,
 wallet,wallet/presentation/pages/transaction_history_page.dart,VitTabBar,pill_wrap,1,~28,wrap_hug,-,review,
 wallet,wallet/presentation/widgets/asset_detail_page_sections.dart,VitTabBar,segment,1,~28,equal_expanded,-,pass,

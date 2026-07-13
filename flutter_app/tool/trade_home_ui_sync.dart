@@ -11,7 +11,7 @@ void main() {
   }
 
   const layoutImport =
-      "import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';";
+      "import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';";
 
   final patterns = <RegExp, String>{
     RegExp(

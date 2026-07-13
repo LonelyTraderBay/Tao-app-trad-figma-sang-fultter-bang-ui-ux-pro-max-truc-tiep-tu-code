@@ -239,7 +239,6 @@ final class AppRoutePaths {
   static const String tradeExecutionQuality = '/trade/execution-quality';
   static const String tradeAdvancedTools = '/trade/advanced-tools';
   static const String tradeCopyTrading = '/trade/copy-trading';
-  static const String tradeCopyTradingV2 = '/trade/copy-trading/v2';
   static const String tradeCopyEducation = '/trade/copy-trading/education';
   static const String tradeCopyActive = '/trade/copy-trading/active';
   static const String tradeCopySettings = '/trade/copy-trading/settings';

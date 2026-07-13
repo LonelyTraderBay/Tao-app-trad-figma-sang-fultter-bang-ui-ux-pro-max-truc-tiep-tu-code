@@ -184,13 +184,13 @@ const _tabRootPages = {
   'features/home/presentation/pages/home_page.dart',
   'features/profile/presentation/pages/profile_page.dart',
   'features/wallet/presentation/pages/wallet_page.dart',
-  'features/trade/presentation/pages/trade_page.dart',
+  'features/trade_terminal/presentation/pages/trade_page.dart',
   'features/predictions/presentation/pages/predictions_home_page.dart',
 };
 
 /// Tab rhythm lives in layout widgets when the page file has no [VitPageContent].
 const _tabRootLayouts = {
-  'features/trade/presentation/widgets/trade_module_layout.dart',
+  'features/trade_core/presentation/widgets/trade_module_layout.dart',
 };
 
 bool _isTabRootPage(String relativePath) => _tabRootPages.contains(relativePath);

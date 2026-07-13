@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/watchlist_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';

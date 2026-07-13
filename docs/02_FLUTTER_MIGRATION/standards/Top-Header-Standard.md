@@ -44,6 +44,8 @@ A second `variant` field refines the same source further:
 
 **Current gap:** `HomePage` renders through the shared `VitAutoHidePageScaffold(` wrapper (`lib/shared/layout/vit_auto_hide_page_scaffold.dart`), which itself opens `VitAutoHideHeaderScaffold(` — but this tool only scans the routed page's own `part of` file group, never the widgets a wrapper indirects into, so it never sees that literal string. `VitTrade-Top-Header-Behavior-Audit.md` therefore lists `HomePage` as `no_top_header`/`no_top_header` today. That is a tool blind spot, not a missing header: the visual archetype audit (section D) resolves the same indirection via its own extra-source lookup and correctly reports `HomePage` as `rootBrand` with zero screen-level mismatch.
 
+The same blind spot is much larger for `trade`: all 87 routed screens indirect through one of three shells in `lib/features/trade/presentation/widgets/trade_module_layout.dart` (`VitTradeHubScaffold`/`VitTradeDetailScaffold`/`VitTradeSimpleShell`), none of which this tool's `part of` grouping ever reads — so **69 of 87** trade screens are misclassified `no_top_header` (ground truth: 61 `auto_hide_header` + 8 `fixed_vit_header`). No CI impact (this domain only gates artifact freshness), but do not trust this artifact's per-page classification for `trade`. See [Trade-Header-Navigation-Conventions.md](./Trade-Header-Navigation-Conventions.md).
+
 ## B. Trailing actions
 
 `tool/top_header_action_audit.dart` (regenerates `VitTrade-Top-Header-Action-Audit.md` + `.csv`) walks every `VitHeader(` call plus a curated `_customHeaderTargets` allowlist of 5 files / 6 classes (`_HomeHeader` in `home_page_part_01.dart`, `MarketListHeader`, `_PairHeader`, `_TradeHeader`, and `LaunchpadHomeHeaderActions`/`_HeaderActions` together in `launchpad_home_header_widgets.dart`) and classifies every icon/action it finds. `--check` verifies both artifacts are current; `--strict` additionally fails when the sum of `vit_header_with_custom_trailing` + `vit_header_with_legacy_action` + `migration_candidates` + `banned_icon_usages` + `custom_button_usages` + `action_groups_over_limit` is greater than zero.
@@ -140,6 +142,8 @@ The guardrail test also asserts a static token contract independent of the audit
 
 **Module identity inside the header stays accent-only** — icon, pill, border, tab indicator, chart marker, or restrained accent color; no per-module header background or local header palette (see [Flutter-Module-Identity-Standard.md](./Flutter-Module-Identity-Standard.md)).
 
+**Known gap (`trade` module):** `_extraSourceForPageGroup` includes the whole `lib/features/trade/presentation/widgets/trade_module_layout.dart` file as extra source for any page matching `'VitTradeDetailScaffold('`, but that file also defines `VitTradeHubScaffold` (which does contain `VitAutoHideHeaderScaffold(`). The classifier's `source.contains('VitAutoHideHeaderScaffold(')` check then false-positives on the borrowed class body, so all 8 pages that actually use the fixed-header `VitTradeDetailScaffold` (`client_categorization_opt_up_page.dart`, `copy_audit_log_page.dart`, `copy_notifications_page.dart`, `copy_performance_page.dart`, `copy_provider_detail_page.dart`, `copy_settings_page.dart`, `performance_attribution_page.dart`, `pre_copy_assessment_page.dart`) show as `auto_hide_header`/`shared_auto_hide_scaffold` — reproducibly, not from a stale artifact. See [Trade-Header-Navigation-Conventions.md](./Trade-Header-Navigation-Conventions.md) for the manually-verified ground truth and the actual auto-hide-vs-fixed convention this module follows.
+
 ## Anti-patterns
 
 | Anti-pattern | Why | Fix |
@@ -175,4 +179,5 @@ flutter test test/quality/top_header_visual_guardrail_test.dart --reporter=compa
 - Module accent boundaries for header identity: [Flutter-Module-Identity-Standard.md](./Flutter-Module-Identity-Standard.md)
 - Shared design tokens backing `VitHeader`/`VitTopChrome`: [Flutter-Design-System-Reference.md](../Flutter-Design-System-Reference.md)
 - Tabbed-detail/form-wizard page shells that sit under `auto_hide_header`: [Flutter-Page-Archetype-Standard.md](./Flutter-Page-Archetype-Standard.md)
+- Trade-module auto-hide-vs-fixed convention and known classifier gap detail: [Trade-Header-Navigation-Conventions.md](./Trade-Header-Navigation-Conventions.md)
 - Generated inventories: [VitTrade-Top-Header-Behavior-Audit.md](../audits/VitTrade-Top-Header-Behavior-Audit.md) · [VitTrade-Top-Header-Action-Audit.md](../audits/VitTrade-Top-Header-Action-Audit.md) · [VitTrade-Top-Header-Global-Access-Policy-Audit.md](../audits/VitTrade-Top-Header-Global-Access-Policy-Audit.md) · [VitTrade-Top-Header-Visual-Archetype-Audit.md](../audits/VitTrade-Top-Header-Visual-Archetype-Audit.md)

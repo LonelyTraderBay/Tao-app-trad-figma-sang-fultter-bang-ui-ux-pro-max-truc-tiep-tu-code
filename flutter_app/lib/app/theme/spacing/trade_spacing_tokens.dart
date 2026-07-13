@@ -752,13 +752,6 @@ final class TradeSpacingTokens {
       EdgeInsets.all(AppSpacing.x4);
   static const EdgeInsets transactionReportingComplianceNoticePadding =
       EdgeInsets.all(AppSpacing.x4);
-  static const EdgeInsets transactionReportingNoticePanelPadding =
-      EdgeInsets.fromLTRB(
-        AppSpacing.rowPy,
-        AppSpacing.x4,
-        AppSpacing.rowGapRegular,
-        AppSpacing.x4,
-      );
   static const double transactionReportingLineHeightTight =
       tradeBotLineHeightTight;
   static const double transactionReportingNoticeLineHeight =
@@ -1118,10 +1111,21 @@ final class TradeSpacingTokens {
   static const double tradeBotAttributionMetricAspectRatio = 2.18;
   static const double tradeBotAttributionTabHeight = 54;
   static const double tradeBotAttributionTabIndicatorWidth = 70;
+  // Target sizes for PerformanceAttributionPage's four tab charts, pending
+  // product/design review — see tradeBotAttributionCompactChartHeight and
+  // tradeBotAttributionReturnsCompactChartHeight below for the values the
+  // page currently ships at (roughly half of these).
   static const double tradeBotAttributionReturnsChartHeight = 260;
   static const double tradeBotAttributionDrawdownChartHeight = 252;
   static const double tradeBotAttributionProjectionChartHeight = 270;
   static const double tradeBotAttributionCorrelationChartHeight = 250;
+  // Current (pre-review) chart heights actually rendered by
+  // PerformanceAttributionPage's Drawdown/Projection/Correlation tabs
+  // (compact) and its Attribution/Returns tab (returns). Do not swap these
+  // for the *ChartHeight tokens above without a design sign-off, since that
+  // would roughly double the on-screen chart size.
+  static const double tradeBotAttributionCompactChartHeight = 132;
+  static const double tradeBotAttributionReturnsCompactChartHeight = 148;
   static const double tradeBotAttributionProgressHeight = 8;
   static const double tradeBotAttributionLegendLineWidth = 18;
   static const double tradeBotAttributionLegendLineHeight =
@@ -2253,4 +2257,10 @@ final class TradeSpacingTokens {
         AppSpacing.contentPad,
         bottomChrome + tradeToolBottomInsetExport,
       );
+  static const double tradeSettingsChipHeight = AppSpacing.x6;
+  static const double tradeSettingsChipHeightSm = 30;
+  static const double tradeSettingsToggleWidth = 42;
+  static const double tradeSettingsToggleHeight = 24;
+  static const double tradeSettingsToggleKnob = 18;
+  static const double tradeSettingsButtonHeight = 44;
 }

@@ -172,7 +172,11 @@ List<BackNavigationEntry> _collectWidgetBackEntries({
 
     final block = source.substring(start, end + 1);
     final showBack = _extractTopLevelArgument(block, 'showBack');
-    if (!(showBack?.contains('true') ?? false)) continue;
+    // A bare-identifier/expression argument (e.g. `showBack: showBack`
+    // forwarding a constructor parameter) is not a literal `false`, so it
+    // must still be audited rather than silently skipped — only a literal
+    // `false` means no back button is ever shown at this call site.
+    if (showBack == null || showBack == 'false') continue;
 
     final onBack = _extractTopLevelArgument(block, 'onBack');
     entries.add(

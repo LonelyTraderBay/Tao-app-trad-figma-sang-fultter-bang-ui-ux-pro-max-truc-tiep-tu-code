@@ -386,7 +386,7 @@ Map<String, String> _buildWidgetToPageMap(Directory appRoot) {
   map['InternalSurfaceGate'] =
       '${appRoot.path}/lib/app/router/internal_surface_gate.dart'.replaceAll('\\', '/');
   map['TradePage'] =
-      '${appRoot.path}/lib/features/trade/presentation/pages/trade_page.dart'.replaceAll('\\', '/');
+      '${appRoot.path}/lib/features/trade_terminal/presentation/pages/trade_page.dart'.replaceAll('\\', '/');
   map['_AuthRouteShell'] =
       '${appRoot.path}/lib/app/router/router_helpers.dart'.replaceAll('\\', '/');
   return map;

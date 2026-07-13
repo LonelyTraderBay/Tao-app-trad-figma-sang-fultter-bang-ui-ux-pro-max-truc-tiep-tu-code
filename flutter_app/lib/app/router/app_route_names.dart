@@ -74,7 +74,6 @@ final class AppRouteNames {
   static const String sc061ExecutionQuality = 'sc061ExecutionQuality';
   static const String sc062AdvancedTools = 'sc062AdvancedTools';
   static const String sc063CopyTrading = 'sc063CopyTrading';
-  static const String sc064CopyTradingV2 = 'sc064CopyTradingV2';
   static const String sc065CopyEducation = 'sc065CopyEducation';
   static const String sc066ActiveCopies = 'sc066ActiveCopies';
   static const String sc067CopySettings = 'sc067CopySettings';

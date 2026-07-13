@@ -81,15 +81,6 @@ List<RouteBase> _utilityRoutes(ShellRenderMode shellRenderMode) {
         child: DCAOverviewDemo(shellRenderMode: shellRenderMode),
       ),
     ),
-    GoRoute(
-      path: AppRoutePaths.demoCopyCard,
-      name: AppRouteNames.sc401CopyTradingCardDemo,
-      builder: (_, _) => InternalSurfaceGate(
-        kind: InternalSurfaceKind.qaDemo,
-        routePath: AppRoutePaths.demoCopyCard,
-        child: CopyTradingCardDemo(shellRenderMode: shellRenderMode),
-      ),
-    ),
   ];
 }
 

@@ -29,7 +29,11 @@ Generated from `flutter_app/tool/home_reference_consistency_audit.dart`. Measure
 | referral | 0 | 0 | pass |
 | rewards | 2 | 2 | pass |
 | support | 3 | 3 | pass |
-| trade | 0 | 0 | pass |
+| trade_bots | 0 | 0 | pass |
+| trade_compliance | 0 | 0 | pass |
+| trade_copy | 0 | 0 | pass |
+| trade_core | 0 | 0 | pass |
+| trade_terminal | 0 | 0 | pass |
 | wallet | 0 | 0 | pass |
 
 ## Top Divergence Files (non-exception)

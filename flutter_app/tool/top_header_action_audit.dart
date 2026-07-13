@@ -138,7 +138,7 @@ const _customHeaderTargets = <String, List<String>>{
   'lib/features/markets/presentation/widgets/pair_detail_header_widgets.dart': [
     '_PairHeader',
   ],
-  'lib/features/trade/presentation/pages/trade_page_part_01.dart': [
+  'lib/features/trade_terminal/presentation/pages/trade_page_part_01.dart': [
     '_TradeHeader',
   ],
   'lib/features/launchpad/presentation/widgets/launchpad_home_header_widgets.dart':

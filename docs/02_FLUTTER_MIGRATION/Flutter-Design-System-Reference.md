@@ -79,6 +79,7 @@ table surfaces, since it exists nowhere else in the repo.
 | [Visual density risk](./standards/UI-Density-Standard.md) | Cross-route visual-density risk scoring (derived from the two above) | `tool/visual_density_risk_audit.dart` | *(none)* | `dart run tool/visual_density_risk_audit.dart` | **Audit-only — not CI-enforced** |
 | [Spacing token duplication](./standards/Spacing-Token-Duplication-Standard.md) | Per-module literal values that duplicate a core `AppSpacing.x1..x7` scale step | `tool/spacing_token_duplication_audit.dart` | `spacing_token_duplication_guardrail_test.dart` | `dart run tool/spacing_token_duplication_audit.dart --check` | Named CI step + artifact upload |
 | [Page content width](./standards/Page-Content-Width-Standard.md) | Single horizontal `contentPad` owner on `ScrollView → VitPageContent`; Recipe A/B | `tool/page_content_width_audit.dart` | `page_content_width_guardrail_test.dart` | `dart run tool/page_content_width_audit.dart --check` | Named CI step + artifact upload |
+| [Trade hero section archetype](./standards/Trade-Hero-Section-Archetype-Standard.md) | Which of the 4 shared hero widgets (hub/detail/analytics/compliance) a `trade` page's hero uses; no new page-local hero/section widgets | — | — | Manual `flutter analyze` + `dart format` on touched files (no page consumes the widgets yet, so nothing to audit — see doc §4) | **Audit-only — not CI-enforced** |
 
 ## §3 — Domains with a dedicated standard doc
 
@@ -103,6 +104,7 @@ enforcement mechanics.
 - [UI-Density-Standard.md](./standards/UI-Density-Standard.md) — UI density (fullscreen density + visual density risk — 2 sub-domains, one doc)
 - [Spacing-Token-Duplication-Standard.md](./standards/Spacing-Token-Duplication-Standard.md) — Spacing token duplication (per-module literals reinventing a core `AppSpacing` scale step)
 - [Page-Content-Width-Standard.md](./standards/Page-Content-Width-Standard.md) — Horizontal content inset (Recipe A/B, no double `contentPad`)
+- [Trade-Hero-Section-Archetype-Standard.md](./standards/Trade-Hero-Section-Archetype-Standard.md) — Trade hero section archetype (hub/detail/analytics/compliance)
 
 ## §4 — Domains without a dedicated standard doc
 

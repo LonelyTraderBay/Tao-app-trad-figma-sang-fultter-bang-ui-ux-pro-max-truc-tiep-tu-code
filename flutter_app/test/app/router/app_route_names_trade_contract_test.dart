@@ -24,7 +24,6 @@ void main() {
     n(AppRouteNames.sc061ExecutionQuality, 'sc061ExecutionQuality'),
     n(AppRouteNames.sc062AdvancedTools, 'sc062AdvancedTools'),
     n(AppRouteNames.sc063CopyTrading, 'sc063CopyTrading'),
-    n(AppRouteNames.sc064CopyTradingV2, 'sc064CopyTradingV2'),
     n(AppRouteNames.sc065CopyEducation, 'sc065CopyEducation'),
     n(AppRouteNames.sc066ActiveCopies, 'sc066ActiveCopies'),
     n(AppRouteNames.sc067CopySettings, 'sc067CopySettings'),

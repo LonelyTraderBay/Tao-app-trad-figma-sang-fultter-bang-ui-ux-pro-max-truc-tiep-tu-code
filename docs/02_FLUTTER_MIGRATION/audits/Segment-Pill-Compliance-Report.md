@@ -49,7 +49,10 @@
 | referral | 3 |
 | rewards | 1 |
 | support | 2 |
-| trade | 66 |
+| trade_bots | 8 |
+| trade_compliance | 20 |
+| trade_copy | 17 |
+| trade_terminal | 21 |
 | wallet | 17 |
 
 ## Migration status

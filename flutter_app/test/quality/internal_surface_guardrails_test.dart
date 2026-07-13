@@ -13,7 +13,12 @@ void main() {
     );
     expect(utilityRoutes, contains('InternalSurfaceGate'));
     expect(utilityRoutes, contains('InternalSurfaceKind.developer'));
-    expect(utilityRoutes, contains('InternalSurfaceKind.qaDemo'));
+
+    final tradeCopyRoutes = _read(
+      'lib/app/router/route_groups/trade_copy_routes.dart',
+    );
+    expect(tradeCopyRoutes, contains('InternalSurfaceGate'));
+    expect(tradeCopyRoutes, contains('InternalSurfaceKind.qaDemo'));
   });
 
   test('customer IA fixtures do not expose internal route namespaces', () {
