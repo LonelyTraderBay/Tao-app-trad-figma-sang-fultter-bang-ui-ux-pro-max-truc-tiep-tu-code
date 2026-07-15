@@ -14,53 +14,40 @@ class _ApiDocsCard extends StatelessWidget {
       },
       density: VitDensity.compact,
       borderColor: _apiBorder,
-      child: Row(
-        children: [
-          SizedBox(
-            width: ProfileSpacingTokens.profileApiDocsIconBox,
-            height: ProfileSpacingTokens.profileApiDocsIconBox,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: _apiPrimary.withValues(alpha: .1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.cardRadius,
-                ),
-              ),
-              child: const Icon(
-                Icons.info_outline_rounded,
-                color: _apiPrimary,
-                size: ProfileSpacingTokens.profileApiDocsIcon,
-              ),
+      child: VitIconListRow(
+        gap: AppSpacing.x3,
+        leading: SizedBox(
+          width: ProfileSpacingTokens.profileApiDocsIconBox,
+          height: ProfileSpacingTokens.profileApiDocsIconBox,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: _apiPrimary.withValues(alpha: .1),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+            ),
+            child: const Icon(
+              Icons.info_outline_rounded,
+              color: _apiPrimary,
+              size: ProfileSpacingTokens.profileApiDocsIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'T\u00E0i li\u1EC7u API',
-                  style: AppTextStyles.body.copyWith(
-                    fontWeight: AppTextStyles.extraBold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Xem h\u01B0\u1EDBng d\u1EABn t\u00EDch h\u1EE3p v\u00E0 endpoint',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: _apiMuted),
-                ),
-              ],
-            ),
+        ),
+        title: Text(
+          'T\u00E0i li\u1EC7u API',
+          style: AppTextStyles.body.copyWith(
+            fontWeight: AppTextStyles.extraBold,
           ),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: _apiMuted,
-            size: ProfileSpacingTokens.profileApiDocsChevron,
-          ),
-        ],
+        ),
+        subtitle: Text(
+          'Xem h\u01B0\u1EDBng d\u1EABn t\u00EDch h\u1EE3p v\u00E0 endpoint',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: _apiMuted),
+        ),
+        trailing: const Icon(
+          Icons.chevron_right_rounded,
+          color: _apiMuted,
+          size: ProfileSpacingTokens.profileApiDocsChevron,
+        ),
       ),
     );
   }

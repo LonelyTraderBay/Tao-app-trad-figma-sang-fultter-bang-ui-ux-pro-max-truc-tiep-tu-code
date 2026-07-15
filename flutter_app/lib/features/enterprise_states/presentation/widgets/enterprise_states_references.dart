@@ -113,46 +113,14 @@ class _ReferenceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: EnterpriseStatesSpacingTokens.enterpriseStatesCardPadding,
-      child: Row(
-        children: [
-          VitAccentIconBox(
-            icon: icon,
-            color: AppModuleAccents.enterpriseStates,
-          ),
-          const SizedBox(width: AppSpacing.x4),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  subtitle,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          VitStatusPill(
-            key: actionKey,
-            label: actionLabel,
-            status: onTap == null
-                ? VitStatusPillStatus.neutral
-                : VitStatusPillStatus.orange,
-            size: VitStatusPillSize.md,
-            onTap: onTap,
-          ),
-        ],
-      ),
+    return VitNextActionCard(
+      key: actionKey,
+      icon: icon,
+      title: title,
+      subtitle: subtitle,
+      ctaLabel: actionLabel,
+      accentColor: AppModuleAccents.enterpriseStates,
+      onTap: onTap,
     );
   }
 }

@@ -25,10 +25,7 @@ void main() {
       continue;
     }
 
-    librarySource = librarySource.replaceFirst(
-      anchor,
-      '$anchor\n$importLine',
-    );
+    librarySource = librarySource.replaceFirst(anchor, '$anchor\n$importLine');
     libraryFile.writeAsStringSync(librarySource);
     fixed++;
     stdout.writeln('Fixed ${libraryFile.path}');

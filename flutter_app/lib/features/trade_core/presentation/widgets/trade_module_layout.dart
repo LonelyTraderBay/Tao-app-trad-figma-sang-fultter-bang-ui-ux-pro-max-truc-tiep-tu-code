@@ -126,28 +126,15 @@ class VitTradeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: VitSectionHeader(
-                title: title,
-                actionLabel: actionLabel,
-                onAction: onAction,
-              ),
-            ),
-            if (headerTrailing != null) ...[
-              const SizedBox(width: AppSpacing.x2),
-              headerTrailing!,
-            ],
-          ],
-        ),
-        const SizedBox(height: TradeCoreSpacingTokens.tradePageContentGap),
-        child,
-      ],
+    return VitPageSection(
+      label: title,
+      headerVariant: VitSectionHeaderVariant.plain,
+      headerDensity: VitDensity.standard,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      headerTrailing: headerTrailing,
+      gap: VitContentGap.tight,
+      children: [child],
     );
   }
 }

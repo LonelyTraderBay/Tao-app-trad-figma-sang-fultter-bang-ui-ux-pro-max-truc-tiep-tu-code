@@ -11,66 +11,53 @@ class _KycStatusCard extends StatelessWidget {
       key: KYCPage.statusCardKey,
       density: VitDensity.compact,
       borderColor: _kycGreen.withValues(alpha: .45),
-      child: Row(
-        children: [
-          SizedBox(
-            width: ProfileSpacingTokens.kycStatusIconBox,
-            height: ProfileSpacingTokens.kycStatusIconBox,
-            child: Material(
-              color: _kycGreen.withValues(alpha: .2),
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.cardLargeRadius,
-              ),
-              child: const Icon(
-                Icons.shield_outlined,
-                color: _kycGreen,
-                size: ProfileSpacingTokens.kycStatusIcon,
-              ),
+      child: VitIconListRow(
+        gap: ProfileSpacingTokens.kycStatusGap,
+        leading: SizedBox(
+          width: ProfileSpacingTokens.kycStatusIconBox,
+          height: ProfileSpacingTokens.kycStatusIconBox,
+          child: Material(
+            color: _kycGreen.withValues(alpha: .2),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.cardLargeRadius,
+            ),
+            child: const Icon(
+              Icons.shield_outlined,
+              color: _kycGreen,
+              size: ProfileSpacingTokens.kycStatusIcon,
             ),
           ),
-          const SizedBox(width: ProfileSpacingTokens.kycStatusGap),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.statusTitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        snapshot.statusDescription,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: _kycGreen,
-                          fontWeight: AppTextStyles.medium,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: ProfileSpacingTokens.kycStatusCheckGap,
-                    ),
-                    const Icon(
-                      Icons.check_rounded,
-                      color: _kycGreen,
-                      size: ProfileSpacingTokens.kycStatusCheckIcon,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+        ),
+        title: Text(
+          snapshot.statusTitle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
           ),
-        ],
+        ),
+        subtitle: Row(
+          children: [
+            Flexible(
+              child: Text(
+                snapshot.statusDescription,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: _kycGreen,
+                  fontWeight: AppTextStyles.medium,
+                ),
+              ),
+            ),
+            const SizedBox(width: ProfileSpacingTokens.kycStatusCheckGap),
+            const Icon(
+              Icons.check_rounded,
+              color: _kycGreen,
+              size: ProfileSpacingTokens.kycStatusCheckIcon,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -110,72 +97,54 @@ class _KycLevelCard extends StatelessWidget {
             onTap: onTap,
             variant: VitCardVariant.ghost,
             borderColor: AppColors.transparent,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+            child: VitIconListRow(
+              minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+              padding: ProfileSpacingTokens.kycLevelRowPadding,
+              gap: ProfileSpacingTokens.kycLevelRowGap,
+              leading: _LevelIcon(
+                level: level.level,
+                done: done,
+                accent: accent,
               ),
-              child: Padding(
-                padding: ProfileSpacingTokens.kycLevelRowPadding,
-                child: Row(
-                  children: [
-                    _LevelIcon(level: level.level, done: done, accent: accent),
-                    const SizedBox(width: ProfileSpacingTokens.kycLevelRowGap),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            level.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: done ? AppColors.text1 : AppColors.text2,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.x1),
-                          if (done)
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.check_rounded,
-                                  color: _kycMuted,
-                                  size: ProfileSpacingTokens.kycDetailIcon,
-                                ),
-                                const SizedBox(
-                                  width:
-                                      AppSpacing.dividerHairline +
-                                      AppSpacing.hairlineStroke,
-                                ),
-                                Text(
-                                  '\u0110\u00E3 ho\u00E0n th\u00E0nh',
-                                  style: AppTextStyles.badge.copyWith(
-                                    color: _kycMuted,
-                                  ),
-                                ),
-                              ],
-                            )
-                          else
-                            Text(
-                              'Ch\u01B0a x\u00E1c minh',
-                              style: AppTextStyles.badge.copyWith(
-                                color: _kycMuted,
-                              ),
-                            ),
-                        ],
-                      ),
+              title: Text(
+                level.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.baseMedium.copyWith(
+                  color: done ? AppColors.text1 : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              subtitle: done
+                  ? Row(
+                      children: [
+                        const Icon(
+                          Icons.check_rounded,
+                          color: _kycMuted,
+                          size: ProfileSpacingTokens.kycDetailIcon,
+                        ),
+                        const SizedBox(
+                          width:
+                              AppSpacing.dividerHairline +
+                              AppSpacing.hairlineStroke,
+                        ),
+                        Text(
+                          '\u0110\u00E3 ho\u00E0n th\u00E0nh',
+                          style: AppTextStyles.badge.copyWith(color: _kycMuted),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      'Ch\u01B0a x\u00E1c minh',
+                      style: AppTextStyles.badge.copyWith(color: _kycMuted),
                     ),
-                    AnimatedRotation(
-                      turns: expanded ? .25 : 0,
-                      duration: const Duration(milliseconds: 180),
-                      child: const Icon(
-                        Icons.chevron_right_rounded,
-                        color: AppColors.text3,
-                        size: ProfileSpacingTokens.kycLevelChevron,
-                      ),
-                    ),
-                  ],
+              trailing: AnimatedRotation(
+                turns: expanded ? .25 : 0,
+                duration: const Duration(milliseconds: 180),
+                child: const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: ProfileSpacingTokens.kycLevelChevron,
                 ),
               ),
             ),

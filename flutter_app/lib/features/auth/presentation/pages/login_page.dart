@@ -271,7 +271,11 @@ class _LoginForm extends StatelessWidget {
           ),
           if (error.isNotEmpty) ...[
             const Padding(padding: AuthSpacingTokens.authTopGapX4),
-            _authInlineErrorBanner(error),
+            VitBanner(
+              variant: VitBannerVariant.error,
+              message: error,
+              icon: Icons.error_outline_rounded,
+            ),
           ],
           const Padding(padding: AuthSpacingTokens.authTopGapX4),
           VitCtaButton(
@@ -460,33 +464,4 @@ class _VitTradeLogoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-Widget _authInlineErrorBanner(String error) {
-  return Material(
-    color: AppColors.sell10,
-    shape: const RoundedRectangleBorder(
-      borderRadius: AppRadii.inputRadius,
-      side: BorderSide(color: AppColors.sell20),
-    ),
-    child: Padding(
-      padding: AuthSpacingTokens.authErrorBannerPaddingSm,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.sell,
-            size: AuthSpacingTokens.authErrorIcon,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              error,
-              style: AppTextStyles.caption.copyWith(color: AppColors.sell),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

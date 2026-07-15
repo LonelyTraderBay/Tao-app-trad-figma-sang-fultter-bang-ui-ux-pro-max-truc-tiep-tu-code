@@ -74,93 +74,21 @@ class _FaqList extends StatelessWidget {
     return Column(
       key: ReferralRulesPage.faqKey,
       children: [
-        for (var i = 0; i < snapshot.faqs.length; i++) ...[
-          _FaqCard(
-            faq: snapshot.faqs[i],
-            open: openIndex == i,
-            onTap: () => onToggle(i),
-            index: i,
+        for (var index = 0; index < snapshot.faqs.length; index++) ...[
+          KeyedSubtree(
+            key: ReferralRulesPage.faqToggleKey(index),
+            child: VitFaqAccordion(
+              question: snapshot.faqs[index].question,
+              answer: snapshot.faqs[index].answer,
+              expanded: openIndex == index,
+              onTap: () => onToggle(index),
+              accentColor: AppColors.accent,
+            ),
           ),
-          if (i < snapshot.faqs.length - 1)
+          if (index < snapshot.faqs.length - 1)
             const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
-    );
-  }
-}
-
-class _FaqCard extends StatelessWidget {
-  const _FaqCard({
-    required this.faq,
-    required this.open,
-    required this.onTap,
-    required this.index,
-  });
-
-  final ReferralFaqDraft faq;
-  final bool open;
-  final VoidCallback onTap;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      clip: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Material(
-            color: AppColors.transparent,
-            child: InkWell(
-              key: ReferralRulesPage.faqToggleKey(index),
-              onTap: onTap,
-              child: Padding(
-                padding: ReferralSpacingTokens.referralCardPadding,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.help_outline_rounded,
-                      color: AppColors.accent,
-                      size: AppSpacing.iconMd,
-                    ),
-                    const SizedBox(width: AppSpacing.x3),
-                    Expanded(
-                      child: Text(
-                        faq.question,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      open
-                          ? Icons.expand_less_rounded
-                          : Icons.expand_more_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconMd,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          AnimatedCrossFade(
-            firstChild: const SizedBox.shrink(),
-            secondChild: Padding(
-              padding: ReferralSpacingTokens.referralFaqAnswerPadding,
-              child: Text(
-                faq.answer,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-            ),
-            crossFadeState: open
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 180),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -182,4 +110,4 @@ class _Disclaimer extends StatelessWidget {
   }
 }
 
-String _formatUsd(double value) => formatUsd(value);
+String _formatUsd(double value) => VitFormat.usd(value);

@@ -55,7 +55,12 @@ class _PendingCommissionCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          _ProgressBar(progress: item.progress / 100, color: AppColors.warn),
+          VitProgressBar(
+            progress: item.progress / 100,
+            color: AppColors.warn,
+            height: _progressExtent,
+            borderRadius: AppRadii.xsRadius,
+          ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             item.reasonDetail,
@@ -415,7 +420,12 @@ class _CampaignHistoryCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-                _ProgressBar(progress: progress, color: color),
+                VitProgressBar(
+                  progress: progress,
+                  color: color,
+                  height: _progressExtent,
+                  borderRadius: AppRadii.xsRadius,
+                ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Row(
                   children: [

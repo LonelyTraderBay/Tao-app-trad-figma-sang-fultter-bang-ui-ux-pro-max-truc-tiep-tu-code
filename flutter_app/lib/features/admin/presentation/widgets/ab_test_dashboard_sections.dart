@@ -58,71 +58,17 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AdminSpacingTokens.adminCardPadding,
-      child: Row(
-        children: [
-          SizedBox.square(
-            dimension: AdminSpacingTokens.adminBox40,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: tint,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                ),
-              ),
-              child: Icon(
-                icon,
-                color: accent,
-                size: AdminSpacingTokens.adminIconXl,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-                Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-                Wrap(
-                  spacing: AppSpacing.x2,
-                  runSpacing: AppSpacing.x1,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    VitStatusPill(
-                      label: delta,
-                      status: delta.startsWith('-')
-                          ? VitStatusPillStatus.error
-                          : VitStatusPillStatus.success,
-                      size: VitStatusPillSize.sm,
-                    ),
-                    Text(
-                      timeframe,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+    return AdminMetricCard(
+      icon: icon,
+      title: label,
+      value: value,
+      delta: delta,
+      timeframe: timeframe,
+      tint: tint,
+      accent: accent,
+      semanticsLabel: 'Admin A/B test metric $label: $value. $delta $timeframe',
+      valueStyle: AppTextStyles.sectionTitle.copyWith(
+        fontFeatures: AppTextStyles.tabularFigures,
       ),
     );
   }

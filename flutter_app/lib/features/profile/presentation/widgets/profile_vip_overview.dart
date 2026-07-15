@@ -55,85 +55,85 @@ class _ProgressCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: VitDensity.compact.verticalSpace),
-          _ProgressLine(
-            label: 'Kh\u1ED1i l\u01B0\u1EE3ng 30 ng\u00E0y',
-            value:
-                '${_formatUsd(snapshot.monthlyVolume)} / ${_formatUsd(nextTier.monthlyVolume)}',
-            progress: volumeProgress,
-            color: _vipAccent,
-            helper:
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Kh\u1ED1i l\u01B0\u1EE3ng 30 ng\u00E0y',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${_formatUsd(snapshot.monthlyVolume)} / ${_formatUsd(nextTier.monthlyVolume)}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.heavy,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: VitDensity.compact.verticalSpace),
+              VitProgressBar(
+                progress: volumeProgress,
+                color: _vipAccent,
+                height: AppSpacing.x3,
+                trackColor: AppColors.surface3,
+                borderRadius: AppRadii.pillRadius,
+              ),
+              SizedBox(height: VitDensity.compact.verticalSpace),
+              Text(
                 'C\u1EA7n th\u00EAm ${_formatUsd(nextTier.monthlyVolume - snapshot.monthlyVolume)} \u0111\u1EC3 \u0111\u1EA1t m\u1EE5c ti\u00EAu',
+                style: AppTextStyles.micro.copyWith(color: _vipMuted),
+              ),
+            ],
           ),
           SizedBox(height: VitDensity.compact.verticalSpace),
-          _ProgressLine(
-            label: 'T\u00E0i s\u1EA3n \u0111ang gi\u1EEF',
-            value:
-                '${_formatUsd(snapshot.assetHold)} / ${_formatUsd(nextTier.assetHold)}',
-            progress: assetProgress,
-            color: _vipSuccess,
-            helper:
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'T\u00E0i s\u1EA3n \u0111ang gi\u1EEF',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${_formatUsd(snapshot.assetHold)} / ${_formatUsd(nextTier.assetHold)}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.heavy,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: VitDensity.compact.verticalSpace),
+              VitProgressBar(
+                progress: assetProgress,
+                color: _vipSuccess,
+                height: AppSpacing.x3,
+                trackColor: AppColors.surface3,
+                borderRadius: AppRadii.pillRadius,
+              ),
+              SizedBox(height: VitDensity.compact.verticalSpace),
+              Text(
                 '\u2713 \u0110i\u1EC1u ki\u1EC7n t\u00E0i s\u1EA3n \u0111\u1EA1t \u2713',
-            helperColor: _vipSuccess,
+                style: AppTextStyles.micro.copyWith(color: _vipSuccess),
+              ),
+            ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ProgressLine extends StatelessWidget {
-  const _ProgressLine({
-    required this.label,
-    required this.value,
-    required this.progress,
-    required this.color,
-    required this.helper,
-    this.helperColor = _vipMuted,
-  });
-
-  final String label;
-  final String value;
-  final double progress;
-  final Color color;
-  final String helper;
-  final Color helperColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-            ),
-            Text(
-              value,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.heavy,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: VitDensity.compact.verticalSpace),
-        ClipRRect(
-          borderRadius: AppRadii.pillRadius,
-          child: LinearProgressIndicator(
-            minHeight: AppSpacing.x3,
-            value: progress,
-            color: color,
-            backgroundColor: AppColors.surface3,
-          ),
-        ),
-        SizedBox(height: VitDensity.compact.verticalSpace),
-        Text(helper, style: AppTextStyles.micro.copyWith(color: helperColor)),
-      ],
     );
   }
 }

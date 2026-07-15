@@ -7,7 +7,7 @@ const shellWidgetToVpcPath = <String, String>{
   'VitWalletDetailScaffold':
       'features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
   'VitP2PFlowScaffold':
-      'features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+      'features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart',
   'VitTradeHubScaffold':
       'features/trade_core/presentation/widgets/trade_module_layout.dart',
   'VitTradeSimpleShell':
@@ -62,7 +62,7 @@ const widgetClassPageOverrides = <String, String>{
   'PredictionTournamentDetailPage':
       'features/predictions/presentation/pages/prediction_tournaments_page.dart',
   'P2PWhitelistModePage':
-      'features/p2p/presentation/pages/p2p_security_center_page.dart',
+      'features/p2p/presentation/pages/security/p2p_security_center_page.dart',
   'PredictionAdvancedChartPage':
       'features/predictions/presentation/pages/prediction_advanced_chart_page.dart',
 };

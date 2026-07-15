@@ -9,9 +9,15 @@ void main(List<String> args) {
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
 
-  final auditCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv');
-  final screenCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv');
-  final outCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Coverage-Matrix.csv');
+  final auditCsv = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv',
+  );
+  final screenCsv = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv',
+  );
+  final outCsv = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Coverage-Matrix.csv',
+  );
 
   if (!auditCsv.existsSync() || !screenCsv.existsSync()) {
     stderr.writeln(
@@ -207,7 +213,9 @@ String _renderCsv(List<_MatrixRow> rows) {
 }
 
 String _summary(List<_MatrixRow> rows) {
-  final compliant = rows.where((r) => r.exceptionReason.isEmpty && r.l5 == 'pass').length;
+  final compliant = rows
+      .where((r) => r.exceptionReason.isEmpty && r.l5 == 'pass')
+      .length;
   final unknown = rows.where((r) => r.l1 == 'unknown').length;
   final innerGap = rows.where((r) => r.l5 == 'warn').length;
   final l3Manual = rows.where((r) => r.l3 == 'manual').length;

@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_depth_chart.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_depth_common.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_depth_order_book.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_depth_tabs.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
+
+class MarketDepthPage extends ConsumerStatefulWidget {
+  const MarketDepthPage({
+    super.key,
+    this.pairId = 'btcusdt',
+    this.backPath = AppRoutePaths.markets,
+    this.shellRenderMode,
+  });
+
+  static const contentKey = marketDepthContentKey;
+  static const depthChartTabKey = marketDepthChartTabKey;
+  static const orderBookTabKey = marketDepthOrderBookTabKey;
+  static const whaleAlertTabKey = marketDepthWhaleAlertTabKey;
+
+  static Key levelKey(int level) => marketDepthLevelKey(level);
+
+  final String pairId;
+  final String backPath;
+  final ShellRenderMode? shellRenderMode;
+
+  @override
+  ConsumerState<MarketDepthPage> createState() => _MarketDepthPageState();
+}
+
+class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
+  String _tab = 'depth';
+  int _levels = 25;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(marketControllerProvider)
+        .getMarketDepth(pairId: widget.pairId, levels: _levels);
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
+        MediaQuery.paddingOf(context).bottom;
+    final resolvedBackPath = resolveSafeBackPath(
+      candidate: widget.backPath,
+      fallbackPath: AppRoutePaths.pairDetail(widget.pairId),
+      allowedPrefixes: const [
+        AppRoutePaths.markets,
+        '/pair',
+        AppRoutePaths.trade,
+      ],
+    );
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-019 MarketDepthPage',
+      child: Material(
+        type: MaterialType.transparency,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Độ sâu ${snapshot.pair.baseAsset}',
+            subtitle: 'Sổ lệnh · Markets',
+            showBack: true,
+            onBack: () =>
+                goBackOrFallback(context, fallbackPath: resolvedBackPath),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketDepthTabs(
+                activeTab: _tab,
+                onChanged: (value) => setState(() => _tab = value),
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: MarketDepthPage.contentKey,
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      scrollEndClearance,
+                    ),
+                    child: VitPageContent(
+                      rhythm: VitPageRhythm.flush,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
+                      children: [
+                        MarketDepthPairSummary(pair: snapshot.pair),
+                        if (_tab == 'depth')
+                          MarketDepthChartView(
+                            snapshot: snapshot,
+                            levels: _levels,
+                            onLevelSelected: (level) =>
+                                setState(() => _levels = level),
+                          )
+                        else if (_tab == 'orderBook')
+                          MarketDepthOrderBookView(snapshot: snapshot)
+                        else
+                          MarketDepthWhaleAlertsView(snapshot: snapshot),
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message: 'Dữ liệu depth chỉ mang tính tham khảo',
+                          detail:
+                              'Không phải tín hiệu giao dịch. Giá và sổ lệnh có thể trễ so với thị trường thực.',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

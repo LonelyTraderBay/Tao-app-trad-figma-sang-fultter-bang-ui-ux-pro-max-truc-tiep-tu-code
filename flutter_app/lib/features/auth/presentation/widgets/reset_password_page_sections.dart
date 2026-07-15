@@ -99,9 +99,9 @@ class _PasswordRulesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final rule in _passwordRules) ...[
+        for (final rule in passwordPolicyRules) ...[
           _PasswordRuleRow(label: rule.label, pass: rule.test(password)),
-          if (rule != _passwordRules.last)
+          if (rule != passwordPolicyRules.last)
             const Padding(padding: AuthSpacingTokens.authCompactTopPadding),
         ],
       ],

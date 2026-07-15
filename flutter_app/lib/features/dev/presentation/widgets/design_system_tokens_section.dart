@@ -30,43 +30,24 @@ class DesignSystemTokensSection extends StatelessWidget {
           child: Column(
             children: [
               for (final token in tokens) ...[
-                _TokenRow(token: token),
+                VitKeyValueRow(
+                  padding: AdminSpacingTokens.devVerticalPaddingX3,
+                  label: token.label,
+                  value: token.value,
+                  labelStyle: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                  ),
+                  valueStyle: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
                 if (token != tokens.last) const DesignSystemDivider(),
               ],
             ],
           ),
         ),
       ],
-    );
-  }
-}
-
-class _TokenRow extends StatelessWidget {
-  const _TokenRow({required this.token});
-
-  final DesignTokenDraft token;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: AdminSpacingTokens.devVerticalPaddingX3,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              token.label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-          Text(
-            token.value,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -43,56 +43,21 @@ class _PerformanceScoreCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Row(
-            children: [
-              for (final metric in snapshot.summaryMetrics) ...[
-                Expanded(child: _SummaryTile(metric: metric)),
-                if (metric != snapshot.summaryMetrics.last)
-                  const SizedBox(width: AppSpacing.x3),
-              ],
+          VitStatsGrid(
+            padding: EdgeInsets.zero,
+            gap: AppSpacing.x3,
+            cellBackground: true,
+            cells: [
+              for (final metric in snapshot.summaryMetrics)
+                VitStatCell(
+                  label: metric.label,
+                  value: metric.value,
+                  valueColor: _toneColor(metric.tone),
+                  valueStyle: AppTextStyles.amountXs,
+                ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _SummaryTile extends StatelessWidget {
-  const _SummaryTile({required this.metric});
-
-  final PerformanceSummaryMetric metric;
-
-  @override
-  Widget build(BuildContext context) {
-    final toneColor = _toneColor(metric.tone);
-
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-      ),
-      child: Padding(
-        padding: AdminSpacingTokens.devTokenCardPadding,
-        child: Column(
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                metric.value,
-                maxLines: 1,
-                style: AppTextStyles.amountXs.copyWith(color: toneColor),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              metric.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -152,7 +117,12 @@ class _VitalRow extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          _ProgressBar(progress: metric.progress, color: toneColor),
+          VitProgressBar(
+            progress: metric.progress,
+            color: toneColor,
+            trackColor: AppColors.surface2,
+            height: AppSpacing.x3,
+          ),
         ],
       ),
     );
@@ -202,7 +172,12 @@ class _MemoryCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          _ProgressBar(progress: memory.progress, color: AppColors.buy),
+          VitProgressBar(
+            progress: memory.progress,
+            color: AppColors.buy,
+            trackColor: AppColors.surface2,
+            height: AppSpacing.x3,
+          ),
         ],
       ),
     );

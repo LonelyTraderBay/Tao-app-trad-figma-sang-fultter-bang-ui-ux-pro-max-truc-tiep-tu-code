@@ -7,6 +7,15 @@ void main() {
     test(
       'all feature modules expose domain, data, and presentation layers',
       () {
+        // `trade` is a documented exception: the trade module split moved
+        // all of its domain/data logic into trade_core (and the other 4
+        // sibling modules) by design. See the doc comment on
+        // `tradeRepositoryProvider` in
+        // lib/features/trade_core/data/providers/trade_repository_provider.dart
+        // ("...once it became a pure delegation hub with no domain logic
+        // of its own") — `trade` is intentionally presentation-only.
+        const presentationOnlyModules = {'trade'};
+
         final featureDirs = Directory(
           'lib/features',
         ).listSync().whereType<Directory>().toList();
@@ -14,6 +23,8 @@ void main() {
 
         for (final feature in featureDirs) {
           final path = _normalize(feature.path);
+          final moduleName = path.split('/').last;
+          if (presentationOnlyModules.contains(moduleName)) continue;
           for (final layer in ['domain', 'data', 'presentation']) {
             final layerPath = '$path/$layer';
             if (!Directory(layerPath).existsSync()) {
@@ -278,11 +289,11 @@ void main() {
 
     test('wallet uses presentation widgets for high-volume UI', () {
       final walletWidgetFiles =
-          Directory(
-            'lib/features/wallet/presentation/widgets',
-          ).listSync().whereType<File>().where((file) {
-            return file.path.endsWith('.dart');
-          }).toList();
+          Directory('lib/features/wallet/presentation/widgets')
+              .listSync(recursive: true)
+              .whereType<File>()
+              .where((file) => file.path.endsWith('.dart'))
+              .toList();
 
       expect(
         walletWidgetFiles,

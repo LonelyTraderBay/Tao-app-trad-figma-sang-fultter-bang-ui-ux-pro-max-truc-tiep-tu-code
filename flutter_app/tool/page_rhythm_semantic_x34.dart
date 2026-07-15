@@ -67,7 +67,10 @@ String _convertFile(String source, String path) {
     if (_plainX3Height.hasMatch(line)) {
       final prev = lines.sublist(i > 3 ? i - 3 : 0, i + 1).join(' ');
       if (_listItemContext.hasMatch(prev) || _listItemContext.hasMatch(line)) {
-        line = line.replaceAll(_plainX3Height, 'SizedBox(height: AppSpacing.rowGap');
+        line = line.replaceAll(
+          _plainX3Height,
+          'SizedBox(height: AppSpacing.rowGap',
+        );
       } else {
         line = line.replaceAll(
           _plainX3Height,
@@ -84,8 +87,12 @@ String _convertFile(String source, String path) {
         );
       } else {
         final prev = lines.sublist(i > 3 ? i - 3 : 0, i + 1).join(' ');
-        if (_listItemContext.hasMatch(prev) || _listItemContext.hasMatch(line)) {
-          line = line.replaceAll(_plainX4Height, 'SizedBox(height: AppSpacing.rowGap');
+        if (_listItemContext.hasMatch(prev) ||
+            _listItemContext.hasMatch(line)) {
+          line = line.replaceAll(
+            _plainX4Height,
+            'SizedBox(height: AppSpacing.rowGap',
+          );
         } else {
           line = line.replaceAll(
             _plainX4Height,
@@ -104,12 +111,8 @@ bool _isCompoundHeight(String line) {
   return RegExp(r'SizedBox\s*\(\s*height:\s*[^)]*[\+\-]').hasMatch(line);
 }
 
-final _plainX3Height = RegExp(
-  r'SizedBox\s*\(\s*height:\s*AppSpacing\.x3\b',
-);
-final _plainX4Height = RegExp(
-  r'SizedBox\s*\(\s*height:\s*AppSpacing\.x4\b',
-);
+final _plainX3Height = RegExp(r'SizedBox\s*\(\s*height:\s*AppSpacing\.x3\b');
+final _plainX4Height = RegExp(r'SizedBox\s*\(\s*height:\s*AppSpacing\.x4\b');
 final _listItemContext = RegExp(
   r'if\s*\(\s*(?:i|index|j)\b[^)]*(?:!=|\.length|last)',
 );

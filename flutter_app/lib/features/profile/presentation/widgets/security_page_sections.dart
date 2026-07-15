@@ -144,72 +144,52 @@ class _SecurityRow extends StatelessWidget {
       variant: VitCardVariant.ghost,
       borderColor: AppColors.transparent,
       padding: EdgeInsets.zero,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+      child: VitIconListRow(
+        minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+        padding: ProfileSpacingTokens.securityRowPadding,
+        gap: ProfileSpacingTokens.securityRowGap,
+        leading: VitAccentIconBox(
+          icon: profileIconFor(item.iconKey),
+          color: accent,
+          boxSize: ProfileSpacingTokens.securityRowIconBox,
+          iconSize: ProfileSpacingTokens.securityRowIcon,
+          bordered: false,
         ),
-        child: Padding(
-          padding: ProfileSpacingTokens.securityRowPadding,
-          child: Row(
-            children: [
-              SizedBox(
-                width: ProfileSpacingTokens.securityRowIconBox,
-                height: ProfileSpacingTokens.securityRowIconBox,
-                child: Material(
-                  color: accent.withValues(alpha: .13),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.lgRadius,
-                  ),
-                  child: Icon(
-                    profileIconFor(item.iconKey),
-                    color: accent,
-                    size: ProfileSpacingTokens.securityRowIcon,
-                  ),
-                ),
-              ),
-              const SizedBox(width: ProfileSpacingTokens.securityRowGap),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.control.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      item.description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.numericMicro.copyWith(
-                        color: _securityMuted,
-                        fontWeight: AppTextStyles.medium,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (item.status != null) ...[
-                const SizedBox(width: ProfileSpacingTokens.securityStatusGap),
-                VitAccentPill(
-                  label: item.status!,
-                  accentColor: Color(item.statusHex!),
-                ),
-              ],
-              const SizedBox(width: ProfileSpacingTokens.securityChevronGap),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: ProfileSpacingTokens.securityChevron,
+        title: Text(
+          item.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.control.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+        subtitle: Text(
+          item.description,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.numericMicro.copyWith(
+            color: _securityMuted,
+            fontWeight: AppTextStyles.medium,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (item.status != null) ...[
+              const SizedBox(width: ProfileSpacingTokens.securityStatusGap),
+              VitAccentPill(
+                label: item.status!,
+                accentColor: Color(item.statusHex!),
               ),
             ],
-          ),
+            const SizedBox(width: ProfileSpacingTokens.securityChevronGap),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: ProfileSpacingTokens.securityChevron,
+            ),
+          ],
         ),
       ),
     );

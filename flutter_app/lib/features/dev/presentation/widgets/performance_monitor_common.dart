@@ -127,34 +127,6 @@ class _Divider extends StatelessWidget {
   }
 }
 
-class _ProgressBar extends StatelessWidget {
-  const _ProgressBar({required this.progress, required this.color});
-
-  final double progress;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: AppRadii.xlRadius,
-      child: SizedBox(
-        height: AppSpacing.x3,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            const ColoredBox(color: AppColors.surface2),
-            FractionallySizedBox(
-              alignment: Alignment.centerLeft,
-              widthFactor: progress.clamp(0, 1),
-              child: ColoredBox(color: color),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,

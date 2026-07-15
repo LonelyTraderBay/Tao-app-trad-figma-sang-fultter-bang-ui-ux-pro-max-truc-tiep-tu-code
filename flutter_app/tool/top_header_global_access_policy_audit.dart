@@ -57,7 +57,7 @@ const _globalSearchAllowlist = <String>{
 
 const _moduleSearchAllowlist = <String>{
   'lib/features/discovery/presentation/pages/topic_hub_page.dart',
-  'lib/features/predictions/presentation/pages/predictions_home_page.dart',
+  'lib/features/predictions/presentation/pages/hub/predictions_home_page.dart',
 };
 
 const _globalNotificationAllowlist = <String>{
@@ -66,8 +66,8 @@ const _globalNotificationAllowlist = <String>{
 
 const _contextNotificationAllowlist = <String>{
   'lib/features/trade/presentation/widgets/convert_page_header_widgets.dart',
-  'lib/features/launchpad/presentation/pages/launchpad_claim_receipt_page.dart',
-  'lib/features/p2p/presentation/pages/p2p_claim_detail_page_part_01.dart',
+  'lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart',
+  'lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_part_01.dart',
 };
 
 void main(List<String> args) {

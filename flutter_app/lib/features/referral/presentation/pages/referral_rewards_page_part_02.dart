@@ -79,57 +79,21 @@ class _SortRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return VitSortRail<ReferralRewardSort>(
       key: ReferralRewardsPage.sortKey,
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.swap_vert_rounded,
-            color: AppColors.text3,
-            size: ReferralSpacingTokens.referralSortIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            'Sắp xếp:',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          for (final option in options) ...[
-            _SortChip(
-              option: option,
-              active: option.sort == active,
-              onTap: () => onChanged(option.sort),
-            ),
-            const SizedBox(width: AppSpacing.x2),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _SortChip extends StatelessWidget {
-  const _SortChip({
-    required this.option,
-    required this.active,
-    required this.onTap,
-  });
-
-  final ReferralRewardSortDraft option;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: ReferralRewardsPage.sortOptionKey(option.sort),
-      label: option.label,
       selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primary,
-      height: AppSpacing.buttonCompact - AppSpacing.x1,
-      padding: ReferralSpacingTokens.referralSortChipPadding,
+      onChanged: onChanged,
+      optionHeight: AppSpacing.buttonCompact - AppSpacing.x1,
+      optionPadding: ReferralSpacingTokens.referralSortChipPadding,
+      iconSize: ReferralSpacingTokens.referralSortIcon,
+      options: [
+        for (final option in options)
+          VitSortRailOption(
+            key: ReferralRewardsPage.sortOptionKey(option.sort),
+            value: option.sort,
+            label: option.label,
+          ),
+      ],
     );
   }
 }
@@ -250,7 +214,11 @@ class _RewardRecordRow extends StatelessWidget {
                       ),
                       if (pending) ...[
                         const SizedBox(width: AppSpacing.x2),
-                        _StatusPill(label: 'Đang chờ'),
+                        const VitStatusPill(
+                          label: 'Đang chờ',
+                          status: VitStatusPillStatus.warning,
+                          size: VitStatusPillSize.sm,
+                        ),
                       ],
                     ],
                   ),
@@ -324,21 +292,6 @@ class _RecordIcon extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      label: label,
-      status: VitStatusPillStatus.warning,
-      size: VitStatusPillSize.sm,
     );
   }
 }

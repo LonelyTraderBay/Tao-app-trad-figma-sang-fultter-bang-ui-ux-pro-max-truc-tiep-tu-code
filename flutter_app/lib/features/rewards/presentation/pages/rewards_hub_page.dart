@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
@@ -47,7 +48,4 @@ class RewardsHubPage extends ConsumerStatefulWidget {
   ConsumerState<RewardsHubPage> createState() => _RewardsHubPageState();
 }
 
-String _formatRewardPoints(int value) {
-  if (value >= 1000) return '${(value / 1000).toStringAsFixed(1)}K';
-  return value.toString();
-}
+String _formatRewardPoints(int value) => VitFormat.compactSuffix(value);

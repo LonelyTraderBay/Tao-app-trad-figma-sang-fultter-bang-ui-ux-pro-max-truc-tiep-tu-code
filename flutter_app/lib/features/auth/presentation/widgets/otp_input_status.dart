@@ -94,51 +94,11 @@ class _OtpProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (var index = 0; index < 6; index++) ...[
-          if (index > 0) const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: AppRadii.pillRadius,
-              child: ColoredBox(
-                color: index < filled ? _authPrimary : AppColors.borderSolid,
-                child: const SizedBox(
-                  height: AuthSpacingTokens.authOtpProgressHeight,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-class _OtpErrorBanner extends StatelessWidget {
-  const _OtpErrorBanner({required this.error});
-
-  final String error;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Material(
-        color: AppColors.sell10,
-        shape: const RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-          side: BorderSide(color: AppColors.sell20),
-        ),
-        child: Padding(
-          padding: AuthSpacingTokens.authErrorBannerPadding,
-          child: Text(
-            error,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.sell),
-          ),
-        ),
-      ),
+    return VitSegmentedProgressBar(
+      segmentCount: 6,
+      filledCount: filled,
+      filledColor: _authPrimary,
+      height: AuthSpacingTokens.authOtpProgressHeight,
     );
   }
 }

@@ -5,10 +5,14 @@ void main(List<String> args) {
   final appRoot = findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final csvFile = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv');
+  final csvFile = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv',
+  );
 
   final rows = <_Row>[];
-  for (final entity in Directory('${appRoot.path}/lib').listSync(recursive: true)) {
+  for (final entity in Directory(
+    '${appRoot.path}/lib',
+  ).listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
     final normalized = _normalizePath(entity.path, appRoot.path);
     if (normalized.endsWith('shared/layout/vit_page_content.dart')) continue;
@@ -17,7 +21,8 @@ void main(List<String> args) {
     if (!source.contains('VitPageContent(')) continue;
 
     final tier = _suggestTier(normalized);
-    final migrated = source.contains('rhythm: VitPageRhythm') ||
+    final migrated =
+        source.contains('rhythm: VitPageRhythm') ||
         source.contains('rhythm: VitPageRhythm.');
     rows.add(
       _Row(
@@ -32,7 +37,9 @@ void main(List<String> args) {
   }
 
   rows.sort((a, b) {
-    final cluster = _clusterOrder(a.cluster).compareTo(_clusterOrder(b.cluster));
+    final cluster = _clusterOrder(
+      a.cluster,
+    ).compareTo(_clusterOrder(b.cluster));
     if (cluster != 0) return cluster;
     return a.file.compareTo(b.file);
   });
@@ -46,9 +53,7 @@ void main(List<String> args) {
       rows[i] = row.copyWith(batch: 0);
       continue;
     }
-    if (lastCluster != null &&
-        row.cluster != lastCluster &&
-        inBatch > 0) {
+    if (lastCluster != null && row.cluster != lastCluster && inBatch > 0) {
       if (inBatch < 8) batch++;
       inBatch = 0;
     }
@@ -65,14 +70,18 @@ void main(List<String> args) {
   docsDir.createSync(recursive: true);
   csvFile.writeAsStringSync(csv);
 
-  final planFile = File('${docsDir.path}/checklists/Page-Rhythm-Migration-Execution-Plan.md');
+  final planFile = File(
+    '${docsDir.path}/checklists/Page-Rhythm-Migration-Execution-Plan.md',
+  );
   planFile.writeAsStringSync(_renderExecutionPlan(rows, batch));
 
   final pending = rows.where((r) => r.status == 'pending').length;
   final done = rows.where((r) => r.status == 'done').length;
   stdout.writeln('Wrote ${csvFile.path}');
   stdout.writeln('Wrote ${planFile.path}');
-  stdout.writeln('Total: ${rows.length}, done: $done, pending: $pending, batches: $batch');
+  stdout.writeln(
+    'Total: ${rows.length}, done: $done, pending: $pending, batches: $batch',
+  );
 }
 
 enum _Tier { compact, standard, form, relaxed, flush }
@@ -95,13 +104,13 @@ final class _Row {
   final int batch;
 
   _Row copyWith({int? batch, String? status}) => _Row(
-        cluster: cluster,
-        relative: relative,
-        file: file,
-        tier: tier,
-        status: status ?? this.status,
-        batch: batch ?? this.batch,
-      );
+    cluster: cluster,
+    relative: relative,
+    file: file,
+    tier: tier,
+    status: status ?? this.status,
+    batch: batch ?? this.batch,
+  );
 }
 
 String _normalizePath(String absolute, String appRoot) {
@@ -211,9 +220,7 @@ _Tier _suggestTier(String relative) {
 }
 
 String _renderCsv(List<_Row> rows) {
-  final buffer = StringBuffer(
-    'batch,cluster,file,tier,status\n',
-  );
+  final buffer = StringBuffer('batch,cluster,file,tier,status\n');
   for (final row in rows) {
     buffer.writeln(
       '${row.batch},${row.cluster},${_csv(row.file)},${row.tier},${row.status}',
@@ -379,13 +386,9 @@ last_verify: <flutter analyze OK | date>
         .map((r) => r.cluster)
         .firstWhere((c) => c != 'shared', orElse: () => 'shared');
     if (gateCluster == 'shared') {
-      buffer.writeln(
-        '**Gate:** `flutter analyze lib/app/ lib/shared/`',
-      );
+      buffer.writeln('**Gate:** `flutter analyze lib/app/ lib/shared/`');
     } else {
-      buffer.writeln(
-        '**Gate:** `flutter analyze lib/features/$gateCluster/`',
-      );
+      buffer.writeln('**Gate:** `flutter analyze lib/features/$gateCluster/`');
     }
     buffer.writeln('');
   }
@@ -404,9 +407,13 @@ last_verify: <flutter analyze OK | date>
   buffer.writeln('');
   buffer.writeln('## Phase 5 (sau khi pending = 0)');
   buffer.writeln('');
-  buffer.writeln('1. `dart run tool/page_rhythm_audit.dart --check` bật fail CI');
+  buffer.writeln(
+    '1. `dart run tool/page_rhythm_audit.dart --check` bật fail CI',
+  );
   buffer.writeln('2. Deprecate module `*SectionGap` tokens trùng global');
-  buffer.writeln('3. (Tuỳ chọn) VitDensity.standard.pageContentGap 16→13 khi ≥80% pass audit');
+  buffer.writeln(
+    '3. (Tuỳ chọn) VitDensity.standard.pageContentGap 16→13 khi ≥80% pass audit',
+  );
 
   return buffer.toString();
 }

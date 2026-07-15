@@ -10,7 +10,7 @@ import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repo
 import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/pair_detail_page.dart';
 import 'package:vit_trade_flutter/features/notifications/presentation/pages/notifications_page.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 

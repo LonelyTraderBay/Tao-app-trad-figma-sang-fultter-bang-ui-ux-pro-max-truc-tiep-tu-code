@@ -16,10 +16,7 @@ void main(List<String> args) {
 
   for (final entity in libDir.listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    final relative = entity.path
-        .replaceAll('\\', '/')
-        .split('/lib/')
-        .last;
+    final relative = entity.path.replaceAll('\\', '/').split('/lib/').last;
 
     if (!relative.contains('/presentation/')) continue;
     if (relative.contains('/dev/')) continue;
@@ -97,7 +94,8 @@ void main(List<String> args) {
       structural.add('section_header_missing_inner_gap:${innerGap.violations}');
     }
 
-    final status = wiring.isEmpty &&
+    final status =
+        wiring.isEmpty &&
             _blockingStructural(structural).isEmpty &&
             innerGap.violations == 0
         ? 'pass'
@@ -124,19 +122,24 @@ void main(List<String> args) {
   final csv = _renderCsv(rows);
   final summary = _renderSummary(rows);
 
-  final manifestFile =
-      File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Visual-Debt-Manifest.csv');
+  final manifestFile = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Visual-Debt-Manifest.csv',
+  );
 
   if (checkOnly) {
     if (!csvFile.existsSync()) {
       stderr.writeln('Page rhythm CSV artifact is missing.');
-      stderr.writeln('Run `dart run tool/page_rhythm_audit.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/page_rhythm_audit.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
     if (csvFile.readAsStringSync() != csv) {
       stderr.writeln('Page rhythm CSV artifact is stale.');
-      stderr.writeln('Run `dart run tool/page_rhythm_audit.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/page_rhythm_audit.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
@@ -144,14 +147,17 @@ void main(List<String> args) {
     if (!manifestFile.existsSync() ||
         manifestFile.readAsStringSync() != manifestCsv) {
       stderr.writeln('Page rhythm visual debt manifest is stale.');
-      stderr.writeln('Run `dart run tool/page_rhythm_audit.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/page_rhythm_audit.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
     stdout.write(summary);
     stdout.writeln('Page rhythm audit artifact is current.');
-    final openVisualDebt =
-        visualDebt.where((row) => row.status == 'open').length;
+    final openVisualDebt = visualDebt
+        .where((row) => row.status == 'open')
+        .length;
     if (strictFull && openVisualDebt > 0) {
       stderr.writeln(
         '--strict-full: $openVisualDebt open visual-debt row(s) in manifest.',
@@ -159,7 +165,8 @@ void main(List<String> args) {
       exitCode = 1;
       return;
     }
-    if (strictFull && rows.any((r) => r.status == 'warn' && _strictFullBlocks(r))) {
+    if (strictFull &&
+        rows.any((r) => r.status == 'warn' && _strictFullBlocks(r))) {
       stderr.writeln('--strict-full: repository has page rhythm warnings.');
       exitCode = 1;
       return;
@@ -184,7 +191,7 @@ const _tabRootPages = {
   'features/home/presentation/pages/home_page.dart',
   'features/profile/presentation/pages/profile_page.dart',
   'features/wallet/presentation/pages/wallet_page.dart',
-  'features/trade_terminal/presentation/pages/trade_page.dart',
+  'features/trade/presentation/pages/hub/trade_page.dart',
   'features/predictions/presentation/pages/predictions_home_page.dart',
 };
 
@@ -193,7 +200,8 @@ const _tabRootLayouts = {
   'features/trade_core/presentation/widgets/trade_module_layout.dart',
 };
 
-bool _isTabRootPage(String relativePath) => _tabRootPages.contains(relativePath);
+bool _isTabRootPage(String relativePath) =>
+    _tabRootPages.contains(relativePath);
 
 bool _isTabRootLayout(String relativePath) =>
     _tabRootLayouts.contains(relativePath);
@@ -210,9 +218,7 @@ bool _tabRootLayoutTierOk(String source) {
 
 List<String> _blockingStructural(List<String> structural) {
   return structural
-      .where(
-        (v) => !v.startsWith('section_header_missing_inner_gap'),
-      )
+      .where((v) => !v.startsWith('section_header_missing_inner_gap'))
       .toList();
 }
 
@@ -234,10 +240,7 @@ final class _InnerGapScan {
 }
 
 _InnerGapScan _scanInnerGapCompliance(String source) {
-  const headerNames = {
-    'VitSectionHeader',
-    'VitModuleSectionHeader',
-  };
+  const headerNames = {'VitSectionHeader', 'VitModuleSectionHeader'};
   var count = 0;
   var violations = 0;
   var index = 0;
@@ -427,10 +430,9 @@ bool _hasSingleChildSectionColumn(String source) {
     }
 
     final listBody = source.substring(listStart + 1, listEnd);
-    final items = _splitTopLevelListItems(listBody)
-        .map((item) => item.trim())
-        .where((item) => item.isNotEmpty)
-        .toList();
+    final items = _splitTopLevelListItems(
+      listBody,
+    ).map((item) => item.trim()).where((item) => item.isNotEmpty).toList();
 
     if (items.length == 1 && _looksLikeSectionAggregator(items.first)) {
       return true;
@@ -563,9 +565,7 @@ final _legacyX2PlainHeight = RegExp(
 );
 
 /// Raw customGap on Fibonacci scale (Phase 6).
-final _legacyCustomGapRawScale = RegExp(
-  r'customGap:\s*AppSpacing\.(x[1-7])\b',
-);
+final _legacyCustomGapRawScale = RegExp(r'customGap:\s*AppSpacing\.(x[1-7])\b');
 
 /// Compound x3/x4 in vertical rhythm SizedBox (Phase 6).
 final _legacyCompoundX34Height = RegExp(
@@ -666,10 +666,8 @@ bool _lineInRhythmOwnerDirectChildItem(
         if (itemStart < 0) continue;
         final itemStartLine =
             source.substring(0, itemStart).split('\n').length - 1;
-        final itemEndLine = source
-                .substring(0, itemStart + trimmed.length)
-                .split('\n')
-                .length -
+        final itemEndLine =
+            source.substring(0, itemStart + trimmed.length).split('\n').length -
             1;
         if (lineIndex >= itemStartLine && lineIndex <= itemEndLine) {
           return true;
@@ -711,7 +709,8 @@ List<_VisualDebtRow> _visualDebtEntries({
   final entries = <_VisualDebtRow>[];
   final lines = source.split('\n');
   final isDepthFlush = relative.contains('market_depth');
-  final isFormSurface = relative.contains('wallet_buy') ||
+  final isFormSurface =
+      relative.contains('wallet_buy') ||
       relative.contains('payment_method') ||
       relative.contains('token_approval');
 
@@ -737,8 +736,7 @@ List<_VisualDebtRow> _visualDebtEntries({
       final inCard = _lineInsideVitCard(source, i);
       final inColumn = _lineInColumnChildrenContext(lines, i);
       if (inColumn || inCard) {
-        final scaleMatch =
-            RegExp(r'AppSpacing\.(x[5-7])').firstMatch(line);
+        final scaleMatch = RegExp(r'AppSpacing\.(x[5-7])').firstMatch(line);
         entries.add(
           _VisualDebtRow(
             file: file,
@@ -747,8 +745,8 @@ List<_VisualDebtRow> _visualDebtEntries({
             px: scaleMatch?.group(1) == 'x6'
                 ? 34
                 : scaleMatch?.group(1) == 'x7'
-                    ? 55
-                    : 21,
+                ? 55
+                : 21,
             category: inCard
                 ? 'legacy_scale_sizedbox_in_card'
                 : 'orphan_major_sizedbox',
@@ -819,8 +817,7 @@ List<_VisualDebtRow> _visualDebtEntries({
         ),
       );
     }
-    if (_legacyX2PlainHeight.hasMatch(line) &&
-        !line.contains('pageRhythm')) {
+    if (_legacyX2PlainHeight.hasMatch(line) && !line.contains('pageRhythm')) {
       final inColumn = _lineInColumnChildrenContext(lines, i);
       if (inColumn && !_lineInsideVitCard(source, i)) {
         entries.add(
@@ -880,9 +877,7 @@ List<_VisualDebtRow> _visualDebtEntries({
 }
 
 String _renderVisualDebtCsv(List<_VisualDebtRow> rows) {
-  final buffer = StringBuffer(
-    'file,line,token,px,category,batch,status\n',
-  );
+  final buffer = StringBuffer('file,line,token,px,category,batch,status\n');
   for (final row in rows) {
     buffer.writeln(
       '${_csv(row.file)},${row.line},${_csv(row.token)},${row.px},'

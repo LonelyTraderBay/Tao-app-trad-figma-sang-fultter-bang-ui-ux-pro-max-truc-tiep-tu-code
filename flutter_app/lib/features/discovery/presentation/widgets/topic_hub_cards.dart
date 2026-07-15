@@ -325,10 +325,9 @@ class _DisclosureCard extends StatelessWidget {
       key: TopicHubPage.disclosureKey,
       variant: VitCardVariant.inner,
       padding: LaunchpadSpacingTokens.discoveryCardPadding,
-      child: Text(
-        'Lưu ý: Prediction Markets sử dụng USDT thật (vị thế thực). Arena Challenges chỉ dùng Arena Points (không phải tài sản tài chính). Topic Hub là trang khám phá, 2 module hoàn toàn riêng biệt.\n$notes',
-        textAlign: TextAlign.center,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      child: VitRiskDisclaimerNote(
+        message:
+            'Lưu ý: Prediction Markets sử dụng USDT thật (vị thế thực). Arena Challenges chỉ dùng Arena Points (không phải tài sản tài chính). Topic Hub là trang khám phá, 2 module hoàn toàn riêng biệt.\n$notes',
       ),
     );
   }

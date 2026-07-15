@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -222,7 +221,12 @@ class VitTradeDetailHero extends StatelessWidget {
         Row(
           children: [
             for (var i = 0; i < stats!.length; i++) ...[
-              Expanded(child: _DetailHeroAnalyticsStat(stat: stats![i])),
+              Expanded(
+                child: VitTradeAnalyticsStatChip(
+                  stat: stats![i],
+                  alignment: VitTradeAnalyticsStatChipAlignment.start,
+                ),
+              ),
               if (i != stats!.length - 1) const SizedBox(width: AppSpacing.x2),
             ],
           ],
@@ -375,42 +379,6 @@ class _DetailHeroIdentity extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _DetailHeroAnalyticsStat extends StatelessWidget {
-  const _DetailHeroAnalyticsStat({required this.stat});
-
-  final VitTradeAnalyticsStat stat;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      variant: VitCardVariant.inner,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            stat.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            stat.value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: stat.color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

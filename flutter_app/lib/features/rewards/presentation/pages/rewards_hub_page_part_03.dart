@@ -78,7 +78,12 @@ class _ProgressSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-              const _ProgressBar(value: .56, color: AppModuleAccents.rewards),
+              const VitProgressBar(
+                progress: .56,
+                color: AppModuleAccents.rewards,
+                trackColor: AppColors.surface3,
+                height: AppSpacing.x3,
+              ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(
                 'Bảng xếp hạng',
@@ -188,34 +193,6 @@ class _RewardsDisclaimer extends StatelessWidget {
   }
 }
 
-class _ProgressBar extends StatelessWidget {
-  const _ProgressBar({required this.value, required this.color});
-
-  final double value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final safeValue = value.clamp(0.0, 1.0).toDouble();
-    return ClipRRect(
-      borderRadius: AppRadii.xsRadius,
-      child: SizedBox(
-        height: AppSpacing.x3,
-        child: ColoredBox(
-          color: AppColors.surface3,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: safeValue,
-              child: ColoredBox(color: color),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _TinyStat extends StatelessWidget {
   const _TinyStat({
     required this.icon,
@@ -255,37 +232,6 @@ class _TinyStat extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class _Legend extends StatelessWidget {
-  const _Legend({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          width: AppSpacing.x2,
-          height: AppSpacing.x2,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: color,
-              shape: const CircleBorder(),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x1),
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );

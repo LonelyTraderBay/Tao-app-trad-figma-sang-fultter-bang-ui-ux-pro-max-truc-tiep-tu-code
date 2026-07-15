@@ -120,45 +120,14 @@ class _SectionShell extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            VitAccentIconBox(icon: icon, color: color),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  DiscoveryCountChip(
-                    count: count,
-                    padding: LaunchpadSpacingTokens.discoveryMiniBadgePadding,
-                  ),
-                ],
-              ),
-            ),
-            if (actionLabel != null && onAction != null)
-              VitCard(
-                onTap: onAction,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                borderColor: AppColors.transparent,
-                padding: LaunchpadSpacingTokens.discoveryInlineActionPadding,
-                child: Padding(
-                  padding: EdgeInsets.zero,
-                  child: DiscoveryInlineCta(label: actionLabel!, color: color),
-                ),
-              ),
-          ],
+        VitCountedSectionHeader(
+          icon: icon,
+          title: title,
+          count: count,
+          color: color,
+          countChipPadding: LaunchpadSpacingTokens.discoveryMiniBadgePadding,
+          actionLabel: actionLabel,
+          onAction: onAction,
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ..._withSectionGaps(children),

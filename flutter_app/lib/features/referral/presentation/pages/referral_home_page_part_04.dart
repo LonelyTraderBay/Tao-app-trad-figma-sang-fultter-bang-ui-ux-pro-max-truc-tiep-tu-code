@@ -164,34 +164,6 @@ class _InlineIconText extends StatelessWidget {
   }
 }
 
-class _ProgressBar extends StatelessWidget {
-  const _ProgressBar({required this.progress, required this.color});
-
-  final double progress;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: AppRadii.xsRadius,
-      child: SizedBox(
-        height: _progressExtent,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            const ColoredBox(color: AppColors.surface3),
-            FractionallySizedBox(
-              widthFactor: progress.clamp(0.0, 1.0),
-              alignment: Alignment.centerLeft,
-              child: ColoredBox(color: color),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _Avatar extends StatelessWidget {
   const _Avatar({required this.initial, required this.color});
 

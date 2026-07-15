@@ -54,16 +54,9 @@ String _permissionLabel(String permission) {
   };
 }
 
-String _formatUsd(double value) {
-  final fixed = value.toStringAsFixed(2);
-  final parts = fixed.split('.');
-  return '\$${insertThousandsSeparator(parts[0])}.${parts[1]}';
-}
+String _formatUsd(double value) => VitFormat.usd(value);
 
-String _formatSignedUsd(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign${_formatUsd(value.abs())}';
-}
+String _formatSignedUsd(double value) => VitFormat.usdSigned(value);
 
 String _formatCompact(double value, {String prefix = ''}) {
   final abs = value.abs();

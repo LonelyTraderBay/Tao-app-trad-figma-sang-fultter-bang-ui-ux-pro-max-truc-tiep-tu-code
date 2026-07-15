@@ -46,6 +46,7 @@ ShellRoute _appShellRoute(ShellRenderMode shellRenderMode) {
       ..._tradeComplianceRoutes(shellRenderMode),
       ..._tradeCopyRoutes(shellRenderMode),
       ..._tradeBotsRoutes(shellRenderMode),
+      ..._tradeRoutes(shellRenderMode),
       ..._tradeTerminalRoutes(shellRenderMode),
       ..._adminRoutes(shellRenderMode),
       ..._p2pRoutes(shellRenderMode),

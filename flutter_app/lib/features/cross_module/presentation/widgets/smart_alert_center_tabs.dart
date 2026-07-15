@@ -123,61 +123,31 @@ class _SmartAlertSummaryCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _MetricColumn(
+                child: VitMetricColumn(
                   label: 'Active',
                   value: '${snapshot.activeCount}',
                   valueColor: AppColors.buy,
+                  valueStyle: VitMetricValueStyle.sectionTitle,
                 ),
               ),
               Expanded(
-                child: _MetricColumn(
+                child: VitMetricColumn(
                   label: 'Triggered',
                   value: '${snapshot.totalTriggers}',
+                  valueStyle: VitMetricValueStyle.sectionTitle,
                 ),
               ),
               Expanded(
-                child: _MetricColumn(
+                child: VitMetricColumn(
                   label: 'Modules',
                   value: '${snapshot.moduleCount}',
+                  valueStyle: VitMetricValueStyle.sectionTitle,
                 ),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _MetricColumn extends StatelessWidget {
-  const _MetricColumn({
-    required this.label,
-    required this.value,
-    this.valueColor = AppColors.text1,
-  });
-
-  final String label;
-  final String value;
-  final Color valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        Text(
-          value,
-          style: AppTextStyles.sectionTitle.copyWith(
-            color: valueColor,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
-        ),
-      ],
     );
   }
 }

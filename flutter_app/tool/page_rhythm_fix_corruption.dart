@@ -4,11 +4,15 @@ void main() {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final tiers = _loadTiers(
-    File('${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv'),
+    File(
+      '${repoRoot}docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Migration-Manifest.csv',
+    ),
   );
 
   var fixed = 0;
-  for (final entity in Directory('${appRoot.path}/lib').listSync(recursive: true)) {
+  for (final entity in Directory(
+    '${appRoot.path}/lib',
+  ).listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
     var source = entity.readAsStringSync();
     if (!source.contains('VitPageContent(\$1')) continue;

@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_create_ad_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_my_ads_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_my_ads_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

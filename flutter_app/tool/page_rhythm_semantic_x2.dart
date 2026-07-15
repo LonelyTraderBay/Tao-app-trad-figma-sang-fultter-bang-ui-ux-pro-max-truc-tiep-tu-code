@@ -58,6 +58,4 @@ void main(List<String> args) {
   );
 }
 
-final _plainX2Height = RegExp(
-  r'SizedBox\s*\(\s*height:\s*AppSpacing\.x2\b',
-);
+final _plainX2Height = RegExp(r'SizedBox\s*\(\s*height:\s*AppSpacing\.x2\b');

@@ -95,24 +95,24 @@ void main() {
     // same 4 regexes as the home-reference divergence scan above, scoped
     // to just the two evidence-vetted canonical pages and their bundles.
     const tabbedDetailBundle = <String>[
-      'lib/features/wallet/presentation/pages/wallet_token_approval_page.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_approval_badges.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_approval_tabs.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_approval_cards.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_approval_history_tab.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_approval_settings_tab.dart',
-      'lib/features/wallet/presentation/widgets/wallet_token_approval_common.dart',
+      'lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_approval_badges.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_approval_tabs.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_revoke_sheet.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_approval_cards.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_approval_history_tab.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_active_approvals_tab.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_approval_settings_tab.dart',
+      'lib/features/wallet/presentation/widgets/tools/wallet_token_approval_common.dart',
     ];
     const formWizardBundle = <String>[
-      'lib/features/wallet/presentation/pages/address_add_page.dart',
-      'lib/features/wallet/presentation/widgets/wallet_address_add_form.dart',
-      'lib/features/wallet/presentation/widgets/wallet_address_add_sections.dart',
-      'lib/features/wallet/presentation/widgets/wallet_address_add_common.dart',
-      'lib/features/wallet/presentation/widgets/wallet_address_add_preview.dart',
-      'lib/features/wallet/presentation/widgets/wallet_address_add_agreement.dart',
-      'lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart',
+      'lib/features/wallet/presentation/pages/address/address_add_page.dart',
+      'lib/features/wallet/presentation/widgets/address/wallet_address_add_form.dart',
+      'lib/features/wallet/presentation/widgets/address/wallet_address_add_sections.dart',
+      'lib/features/wallet/presentation/widgets/address/wallet_address_add_common.dart',
+      'lib/features/wallet/presentation/widgets/address/wallet_address_add_preview.dart',
+      'lib/features/wallet/presentation/widgets/address/wallet_address_add_agreement.dart',
+      'lib/features/wallet/presentation/widgets/address/wallet_address_add_selectors.dart',
     ];
 
     final violations = <String>[];
@@ -136,9 +136,9 @@ void main() {
     }
 
     const structuralMarkers = <String, String>{
-      'lib/features/wallet/presentation/pages/wallet_token_approval_page.dart':
+      'lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart':
           'WalletTokenApprovalTabs(',
-      'lib/features/wallet/presentation/pages/address_add_page.dart':
+      'lib/features/wallet/presentation/pages/address/address_add_page.dart':
           'AddressAddForm.sections(',
     };
     structuralMarkers.forEach((path, needle) {
@@ -161,7 +161,7 @@ void main() {
     // needles as symbol-level substrings (not whole-line snippets) so a
     // `dart format` reflow doesn't spuriously break this test.
     const requiredNeedles = <String, List<String>>{
-      'lib/features/trade_copy/presentation/pages/provider_leaderboard_page.dart':
+      'lib/features/trade_copy/presentation/pages/provider/provider_leaderboard_page.dart':
           ['entry.\$1 != providers.length - 1', 'AppSpacing.rowGap'],
       'lib/app/theme/spacing/wallet_spacing_tokens.dart': [
         'walletManagerAllWalletGap = AppSpacing.rowGap',
@@ -173,7 +173,7 @@ void main() {
       'lib/app/theme/spacing/trade_spacing_tokens.dart': [
         'preCopyAssessmentCtaGap = 12',
       ],
-      'lib/features/trade_copy/presentation/pages/pre_copy_assessment_page.dart':
+      'lib/features/trade_copy/presentation/pages/flow/pre_copy_assessment_page.dart':
           [
             'question != snapshot.questions.last',
             'TradeSpacingTokens.preCopyAssessmentCtaGap',
@@ -181,13 +181,12 @@ void main() {
       'lib/app/theme/spacing/p2p_spacing_tokens.dart': [
         'p2pPaymentMethodsListSectionGap = AppSpacing.rowGap',
       ],
-      'lib/features/markets/presentation/pages/token_unlocks_page.dart': [
-        '_unlockListGap = AppSpacing.rowGap',
-      ],
-      'lib/features/p2p/presentation/pages/p2p_my_ads_page.dart': [
+      'lib/features/markets/presentation/pages/research/token_unlocks_page.dart':
+          ['_unlockListGap = AppSpacing.rowGap'],
+      'lib/features/p2p/presentation/pages/ads/p2p_my_ads_page.dart': [
         'if (index > 0) const SizedBox(height: AppSpacing.rowGap)',
       ],
-      'lib/features/markets/presentation/widgets/market_news_page_sections.dart':
+      'lib/features/markets/presentation/widgets/research/market_news_page_sections.dart':
           ['item != news.last', 'SizedBox(height: AppSpacing.rowGap)'],
       'lib/features/profile/presentation/widgets/vip_history_widgets.dart': [
         'row != snapshot.history.last',

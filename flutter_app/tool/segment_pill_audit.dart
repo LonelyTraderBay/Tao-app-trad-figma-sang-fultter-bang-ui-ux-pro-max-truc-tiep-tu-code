@@ -14,8 +14,12 @@ void main(List<String> args) {
   final repoRoot = findSegmentPillRepoRoot(appRoot);
   final docsDir = Directory('${repoRoot.path}/docs/02_FLUTTER_MIGRATION');
   final featuresRoot = Directory('${appRoot.path}/lib/features');
-  final auditCsv = File('${docsDir.path}/audits/VitTrade-Segment-Pill-Audit.csv');
-  final reportMd = File('${docsDir.path}/audits/Segment-Pill-Compliance-Report.md');
+  final auditCsv = File(
+    '${docsDir.path}/audits/VitTrade-Segment-Pill-Audit.csv',
+  );
+  final reportMd = File(
+    '${docsDir.path}/audits/Segment-Pill-Compliance-Report.md',
+  );
 
   final result = scanSegmentPillFeatures(featuresRoot);
   final csv = renderSegmentPillAuditCsv(result);
@@ -24,19 +28,25 @@ void main(List<String> args) {
   if (checkOnly) {
     if (!auditCsv.existsSync()) {
       stderr.writeln('Segment pill audit CSV is missing.');
-      stderr.writeln('Run `dart run tool/segment_pill_audit.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/segment_pill_audit.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
     if (auditCsv.readAsStringSync() != csv) {
       stderr.writeln('Segment pill audit CSV is stale.');
-      stderr.writeln('Run `dart run tool/segment_pill_audit.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/segment_pill_audit.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
     if (!reportMd.existsSync() || reportMd.readAsStringSync() != report) {
       stderr.writeln('Segment-Pill-Compliance-Report.md is stale.');
-      stderr.writeln('Run `dart run tool/segment_pill_audit.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/segment_pill_audit.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
@@ -46,7 +56,9 @@ void main(List<String> args) {
 
     if (strictP0) {
       if (result.p0Count > 0) {
-        stderr.writeln('--strict-p0: ${result.p0Count} P0 local class(es) remain:');
+        stderr.writeln(
+          '--strict-p0: ${result.p0Count} P0 local class(es) remain:',
+        );
         for (final lc in result.p0Locals) {
           stderr.writeln('  ${lc.file} → ${lc.className}');
         }
@@ -69,7 +81,9 @@ void main(List<String> args) {
 
     if (strictP1) {
       if (result.p1Count > 0) {
-        stderr.writeln('--strict-p1: ${result.p1Count} P1 local class(es) remain:');
+        stderr.writeln(
+          '--strict-p1: ${result.p1Count} P1 local class(es) remain:',
+        );
         for (final lc in result.p1Locals) {
           stderr.writeln('  ${lc.file} → ${lc.className}');
         }
@@ -122,9 +136,7 @@ void main(List<String> args) {
           'interactive local pill duplicates:',
         );
         for (final row in duplicateRows) {
-          stderr.writeln(
-            '  ${row.file} → ${row.localClasses.join('|')}',
-          );
+          stderr.writeln('  ${row.file} → ${row.localClasses.join('|')}');
         }
         exitCode = 1;
         return;

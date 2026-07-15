@@ -204,14 +204,11 @@ class _AllocationRow extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        ClipRRect(
+        VitProgressBar(
+          progress: allocation / 100,
+          color: unifiedModuleAccent(module.id),
+          trackColor: AppColors.surface3,
           borderRadius: AppRadii.xlRadius,
-          child: LinearProgressIndicator(
-            value: allocation / 100,
-            minHeight: AppSpacing.x2,
-            backgroundColor: AppColors.surface3,
-            color: unifiedModuleAccent(module.id),
-          ),
         ),
       ],
     );

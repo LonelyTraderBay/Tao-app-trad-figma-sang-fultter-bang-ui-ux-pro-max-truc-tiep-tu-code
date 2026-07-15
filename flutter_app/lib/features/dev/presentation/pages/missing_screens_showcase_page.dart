@@ -6,11 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/dev/presentation/widgets/dev_state_bar.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,8 +21,6 @@ import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/missing_screens_showcase_page_sections.dart';
 part '../widgets/missing_screens_showcase_page_common.dart';
-
-enum _DevUiMode { live, loading, empty, error, offline }
 
 class MissingScreensShowcasePage extends ConsumerStatefulWidget {
   const MissingScreensShowcasePage({super.key, this.shellRenderMode});
@@ -46,7 +44,7 @@ class MissingScreensShowcasePage extends ConsumerStatefulWidget {
 class _MissingScreensShowcasePageState
     extends ConsumerState<MissingScreensShowcasePage> {
   String _activeTab = 'new';
-  _DevUiMode _uiMode = _DevUiMode.live;
+  DevUiMode _uiMode = DevUiMode.live;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +82,7 @@ class _MissingScreensShowcasePageState
                     rhythm: VitPageRhythm.flush,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      _DevStateBar(
+                      DevStateBar(
                         key: MissingScreensShowcasePage.statesKey,
                         supportedStates: snapshot.supportedStates,
                         active: _uiMode,
@@ -94,20 +92,20 @@ class _MissingScreensShowcasePageState
                         },
                       ),
                       switch (_uiMode) {
-                        _DevUiMode.loading => const _ShowcaseLoading(),
-                        _DevUiMode.empty => const VitEmptyState(
+                        DevUiMode.loading => const _ShowcaseLoading(),
+                        DevUiMode.empty => const VitEmptyState(
                           title: 'No showcase entries',
                           message:
                               'Add missing screens to the dev registry to preview flows here.',
                         ),
-                        _DevUiMode.error => VitErrorState(
+                        DevUiMode.error => VitErrorState(
                           title: 'Showcase unavailable',
                           message:
                               'Could not load screen catalog. Retry when back online.',
                           onAction: () =>
-                              setState(() => _uiMode = _DevUiMode.live),
+                              setState(() => _uiMode = DevUiMode.live),
                         ),
-                        _DevUiMode.offline => Column(
+                        DevUiMode.offline => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             const VitOfflineBanner(
@@ -117,7 +115,7 @@ class _MissingScreensShowcasePageState
                             ..._liveSections(snapshot),
                           ],
                         ),
-                        _DevUiMode.live => Column(
+                        DevUiMode.live => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: _liveSections(snapshot),
                         ),
@@ -158,46 +156,6 @@ class _MissingScreensShowcasePageState
         ],
       ),
     ];
-  }
-}
-
-class _DevStateBar extends StatelessWidget {
-  const _DevStateBar({
-    super.key,
-    required this.supportedStates,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final Set<DevScreenState> supportedStates;
-  final _DevUiMode active;
-  final ValueChanged<_DevUiMode> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final items = <VitPresetChipItem<_DevUiMode>>[
-      const VitPresetChipItem(value: _DevUiMode.live, label: 'Live'),
-      if (supportedStates.contains(DevScreenState.loading))
-        const VitPresetChipItem(value: _DevUiMode.loading, label: 'Loading'),
-      if (supportedStates.contains(DevScreenState.empty))
-        const VitPresetChipItem(value: _DevUiMode.empty, label: 'Empty'),
-      if (supportedStates.contains(DevScreenState.error))
-        const VitPresetChipItem(value: _DevUiMode.error, label: 'Error'),
-      if (supportedStates.contains(DevScreenState.offline))
-        const VitPresetChipItem(value: _DevUiMode.offline, label: 'Offline'),
-    ];
-
-    return VitPageSection(
-      label: 'Screen states',
-      children: [
-        VitPresetChipRow<_DevUiMode>(
-          items: items,
-          selectedValue: active,
-          onTap: onChanged,
-          accentColor: AppModuleAccents.dev,
-        ),
-      ],
-    );
   }
 }
 

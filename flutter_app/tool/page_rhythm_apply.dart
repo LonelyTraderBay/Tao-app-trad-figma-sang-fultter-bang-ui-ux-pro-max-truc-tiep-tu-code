@@ -27,18 +27,16 @@ void main(List<String> args) {
   if (allPending) {
     targets = rows.where((r) => r.status == 'pending');
   } else if (singleBatch != null) {
-    targets = rows.where((r) => r.batch == singleBatch && r.status == 'pending');
+    targets = rows.where(
+      (r) => r.batch == singleBatch && r.status == 'pending',
+    );
   } else if (fromBatch != null && toBatch != null) {
     targets = rows.where(
       (r) =>
-          r.status == 'pending' &&
-          r.batch >= fromBatch &&
-          r.batch <= toBatch,
+          r.status == 'pending' && r.batch >= fromBatch && r.batch <= toBatch,
     );
   } else {
-    stderr.writeln(
-      'Usage: --batch N | --from N --to M | --all-pending',
-    );
+    stderr.writeln('Usage: --batch N | --from N --to M | --all-pending');
     exit(64);
   }
 

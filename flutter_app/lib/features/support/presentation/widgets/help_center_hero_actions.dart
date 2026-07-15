@@ -111,27 +111,12 @@ class _QuickActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.standard,
+    return VitIconLabelCard(
+      icon: icon,
+      label: label,
+      accentColor: color,
       padding: SupportSpacingTokens.supportQuickCardPadding,
       onTap: onTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(width: AppSpacing.x3),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.body.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

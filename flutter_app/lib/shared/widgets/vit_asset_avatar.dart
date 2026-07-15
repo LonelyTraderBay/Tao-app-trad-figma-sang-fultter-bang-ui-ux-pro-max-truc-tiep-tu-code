@@ -12,6 +12,11 @@ class VitAssetAvatar extends StatelessWidget {
     this.size = SharedSpacingTokens.homeCoinAvatarSize,
     this.radius = AppRadii.smRadius,
     this.border = false,
+    this.maxChars = 1,
+    this.fillAlpha = 0.16,
+    this.borderAlpha = 0.30,
+    this.borderColor,
+    this.textStyle,
   });
 
   final String label;
@@ -20,21 +25,41 @@ class VitAssetAvatar extends StatelessWidget {
   final BorderRadiusGeometry radius;
   final bool border;
 
+  /// Number of leading characters from [label] to render (default: 1).
+  final int maxChars;
+
+  /// Opacity applied to [accentColor] for the tile fill (default: 0.16).
+  final double fillAlpha;
+
+  /// Opacity applied to [borderColor] (or [accentColor]) for the outline
+  /// when [border] is true (default: 0.30).
+  final double borderAlpha;
+
+  /// Explicit outline color; falls back to [accentColor] when null.
+  final Color? borderColor;
+
+  /// Explicit label text style; falls back to the bold caption style tinted
+  /// with [accentColor] when null.
+  final TextStyle? textStyle;
+
   @override
   Widget build(BuildContext context) {
     final normalizedLabel = label.trim();
-    final initial = normalizedLabel.isEmpty
-        ? ''
-        : normalizedLabel.characters.first;
+    final chars = normalizedLabel.characters;
+    final clampedMaxChars = maxChars < 1 ? 1 : maxChars;
+    final initial = chars.isEmpty ? '' : chars.take(clampedMaxChars).toString();
+    final resolvedBorderColor = borderColor ?? accentColor;
     return SizedBox(
       width: size,
       height: size,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: accentColor.withValues(alpha: 0.16),
+          color: accentColor.withValues(alpha: fillAlpha),
           shape: RoundedRectangleBorder(
             side: border
-                ? BorderSide(color: accentColor.withValues(alpha: 0.30))
+                ? BorderSide(
+                    color: resolvedBorderColor.withValues(alpha: borderAlpha),
+                  )
                 : BorderSide.none,
             borderRadius: radius,
           ),
@@ -42,10 +67,12 @@ class VitAssetAvatar extends StatelessWidget {
         child: Center(
           child: Text(
             initial,
-            style: AppTextStyles.caption.copyWith(
-              color: accentColor,
-              fontWeight: AppTextStyles.bold,
-            ),
+            style:
+                textStyle ??
+                AppTextStyles.caption.copyWith(
+                  color: accentColor,
+                  fontWeight: AppTextStyles.bold,
+                ),
           ),
         ),
       ),

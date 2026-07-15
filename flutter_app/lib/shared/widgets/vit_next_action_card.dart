@@ -15,9 +15,9 @@ class VitNextActionCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.subtitle,
-    required this.statusLabel,
-    required this.ctaLabel,
     required this.accentColor,
+    this.statusLabel,
+    this.ctaLabel,
     this.onTap,
     this.onDismiss,
   });
@@ -25,14 +25,15 @@ class VitNextActionCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final String statusLabel;
-  final String ctaLabel;
+  final String? statusLabel;
+  final String? ctaLabel;
   final Color accentColor;
   final VoidCallback? onTap;
   final VoidCallback? onDismiss;
 
   @override
   Widget build(BuildContext context) {
+    final hasTrailingAction = onDismiss != null || ctaLabel != null;
     return VitCard(
       onTap: onTap,
       padding: const EdgeInsetsDirectional.all(
@@ -78,8 +79,13 @@ class VitNextActionCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x2),
-                    VitAccentPill(label: statusLabel, accentColor: accentColor),
+                    if (statusLabel != null) ...[
+                      const SizedBox(width: AppSpacing.x2),
+                      VitAccentPill(
+                        label: statusLabel!,
+                        accentColor: accentColor,
+                      ),
+                    ],
                   ],
                 ),
                 const SizedBox(height: SharedSpacingTokens.homeSectionInnerGap),
@@ -92,29 +98,33 @@ class VitNextActionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.x3),
-          if (onDismiss != null) ...[
-            VitInlineIconAction(
-              icon: Icons.close_rounded,
-              tooltip: 'Ẩn gợi ý',
-              color: AppColors.text3,
-              onPressed: onDismiss!,
-            ),
-            const SizedBox(width: AppSpacing.x2),
+          if (hasTrailingAction) ...[
+            const SizedBox(width: AppSpacing.x3),
+            if (onDismiss != null) ...[
+              VitInlineIconAction(
+                icon: Icons.close_rounded,
+                tooltip: 'Ẩn gợi ý',
+                color: AppColors.text3,
+                onPressed: onDismiss!,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+            ],
+            if (ctaLabel != null) ...[
+              Text(
+                ctaLabel!,
+                style: AppTextStyles.caption.copyWith(
+                  color: accentColor,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(width: SharedSpacingTokens.homeChevronGap),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: accentColor,
+                size: SharedSpacingTokens.homeActionChevronSize,
+              ),
+            ],
           ],
-          Text(
-            ctaLabel,
-            style: AppTextStyles.caption.copyWith(
-              color: accentColor,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(width: SharedSpacingTokens.homeChevronGap),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: accentColor,
-            size: SharedSpacingTokens.homeActionChevronSize,
-          ),
         ],
       ),
     );

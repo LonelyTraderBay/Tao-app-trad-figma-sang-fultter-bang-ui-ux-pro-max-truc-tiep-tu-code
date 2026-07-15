@@ -118,21 +118,13 @@ class _ResultSection extends StatelessWidget {
     return VitPageSection(
       gap: VitContentGap.tight,
       children: [
-        Row(
-          children: [
-            VitAccentIconBox(icon: icon, color: color),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                label,
-                style: AppTextStyles.base.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-            DiscoveryCountChip(count: count),
-          ],
+        VitCountedSectionHeader(
+          icon: icon,
+          title: label,
+          count: count,
+          color: color,
+          titleStyle: AppTextStyles.base,
+          layout: VitCountedSectionHeaderLayout.expanded,
         ),
         ...children,
       ],

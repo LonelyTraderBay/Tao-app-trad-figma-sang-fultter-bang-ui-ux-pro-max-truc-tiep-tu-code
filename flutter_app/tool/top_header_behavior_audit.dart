@@ -294,7 +294,7 @@ List<String> _extraSourceForPageGroup(
     'VitTradeSimpleShell(': [
       (
         path:
-            'lib/features/trade_terminal/presentation/widgets/vit_trade_simple_shell.dart',
+            'lib/features/trade/presentation/widgets/hub/vit_trade_simple_shell.dart',
         className: null,
       ),
       // VitTradeSimpleShell always wraps VitTradeHubScaffold (never
@@ -327,7 +327,7 @@ List<String> _extraSourceForPageGroup(
     'VitP2PFlowScaffold(': [
       (
         path:
-            'lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+            'lib/features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart',
         className: null,
       ),
     ],

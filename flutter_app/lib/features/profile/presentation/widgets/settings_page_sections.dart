@@ -279,22 +279,16 @@ class _SettingsSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: label,
-      toggled: value,
-      button: true,
-      child: GestureDetector(
-        onTap: () => onChanged(!value),
-        child: VitTogglePill(
-          enabled: value,
-          width: ProfileSpacingTokens.settingsSwitchWidth,
-          height: ProfileSpacingTokens.settingsSwitchHeight,
-          knobSize: ProfileSpacingTokens.settingsSwitchKnob,
-          knobMargin: ProfileSpacingTokens.settingsSwitchKnobMargin,
-          activeColor: AppColors.buy,
-          inactiveColor: AppColors.toggleTrackOff,
-        ),
-      ),
+    return VitTogglePill(
+      enabled: value,
+      onChanged: onChanged,
+      semanticLabel: label,
+      width: ProfileSpacingTokens.settingsSwitchWidth,
+      height: ProfileSpacingTokens.settingsSwitchHeight,
+      knobSize: ProfileSpacingTokens.settingsSwitchKnob,
+      knobMargin: ProfileSpacingTokens.settingsSwitchKnobMargin,
+      activeColor: AppColors.buy,
+      inactiveColor: AppColors.toggleTrackOff,
     );
   }
 }

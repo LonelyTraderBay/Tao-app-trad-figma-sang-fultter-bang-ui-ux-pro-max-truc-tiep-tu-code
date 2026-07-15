@@ -7,76 +7,37 @@ class _StatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return VitStatsGrid(
       key: ReferralHistoryPage.statsKey,
-      children: [
-        Expanded(
-          child: _StatCard(
-            value: stats.totalFriends,
-            label: 'Tổng bạn bè',
-            color: AppColors.primary,
+      padding: EdgeInsets.zero,
+      gap: AppSpacing.x4,
+      cellBackground: true,
+      cells: [
+        VitStatCell(
+          label: 'Tổng bạn bè',
+          value: '${stats.totalFriends}',
+          valueColor: AppColors.primary,
+          valueStyle: AppTextStyles.base.copyWith(
+            fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
-        Expanded(
-          child: _StatCard(
-            value: stats.kycCompleted,
-            label: 'Đã KYC',
-            color: AppColors.buy,
+        VitStatCell(
+          label: 'Đã KYC',
+          value: '${stats.kycCompleted}',
+          valueColor: AppColors.buy,
+          valueStyle: AppTextStyles.base.copyWith(
+            fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
-        Expanded(
-          child: _StatCard(
-            value: stats.activeFriends,
-            label: 'Hoạt động',
-            color: AppColors.accent,
+        VitStatCell(
+          label: 'Hoạt động',
+          value: '${stats.activeFriends}',
+          valueColor: AppColors.accent,
+          valueStyle: AppTextStyles.base.copyWith(
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],
-    );
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  const _StatCard({
-    required this.value,
-    required this.label,
-    required this.color,
-  });
-
-  final int value;
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-      ),
-      child: Padding(
-        padding: ReferralSpacingTokens.referralHeroMetricPadding,
-        child: Column(
-          children: [
-            Text(
-              '$value',
-              style: AppTextStyles.base.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -130,57 +91,21 @@ class _SortRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return VitSortRail<ReferralHistorySort>(
       key: ReferralHistoryPage.sortKey,
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.swap_vert_rounded,
-            color: AppColors.text3,
-            size: ReferralSpacingTokens.referralSortIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            'Sắp xếp:',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          for (final option in options) ...[
-            _SortChip(
-              option: option,
-              active: option.sort == active,
-              onTap: () => onChanged(option.sort),
-            ),
-            const SizedBox(width: AppSpacing.x2),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _SortChip extends StatelessWidget {
-  const _SortChip({
-    required this.option,
-    required this.active,
-    required this.onTap,
-  });
-
-  final ReferralSortDraft option;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: ReferralHistoryPage.sortOptionKey(option.sort),
-      label: option.label,
       selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primary,
-      height: ReferralSpacingTokens.referralStepBox,
-      padding: ReferralSpacingTokens.referralSortChipPadding,
+      onChanged: onChanged,
+      optionHeight: ReferralSpacingTokens.referralStepBox,
+      optionPadding: ReferralSpacingTokens.referralSortChipPadding,
+      iconSize: ReferralSpacingTokens.referralSortIcon,
+      options: [
+        for (final option in options)
+          VitSortRailOption(
+            key: ReferralHistoryPage.sortOptionKey(option.sort),
+            value: option.sort,
+            label: option.label,
+          ),
+      ],
     );
   }
 }

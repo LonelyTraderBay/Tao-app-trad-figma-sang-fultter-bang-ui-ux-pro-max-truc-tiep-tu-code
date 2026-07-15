@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/features/cross_module/domain/entities/unified_portfolio_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
@@ -126,21 +127,9 @@ class UnifiedArenaBoundaryPill extends StatelessWidget {
   }
 }
 
-String unifiedFormatUsd(int value) {
-  final negative = value < 0;
-  final raw = value.abs().toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final position = raw.length - i;
-    buffer.write(raw[i]);
-    if (position > 1 && position % 3 == 1) buffer.write(',');
-  }
-  return '${negative ? '-' : ''}\$${buffer.toString()}';
-}
+String unifiedFormatUsd(int value) => VitFormat.usdWhole(value);
 
-String unifiedFormatSignedUsd(int value) => value >= 0
-    ? '+${unifiedFormatUsd(value)}'
-    : '-${unifiedFormatUsd(value.abs()).replaceFirst('-', '')}';
+String unifiedFormatSignedUsd(int value) => VitFormat.usdWholeSigned(value);
 
 String unifiedShortModuleName(UnifiedPortfolioModuleDraft module) {
   switch (module.id) {

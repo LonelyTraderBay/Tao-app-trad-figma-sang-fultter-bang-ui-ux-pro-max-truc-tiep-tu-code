@@ -7,12 +7,13 @@ void main() {
     test('P2P order, escrow, and wallet surfaces stay boundary-safe', () {
       final targets = [
         HighRiskCopyTarget(
-          path: 'lib/features/p2p/presentation/pages/p2p_order_page.dart',
+          path:
+              'lib/features/p2p/presentation/pages/orders/p2p_order_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/p2p_order_page.dart',
-            'lib/features/p2p/presentation/widgets/p2p_order_page_part_01.dart',
-            'lib/features/p2p/presentation/widgets/p2p_order_page_part_02.dart',
-            'lib/features/p2p/presentation/widgets/p2p_order_page_part_03.dart',
+            'lib/features/p2p/presentation/pages/orders/p2p_order_page.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_part_01.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_part_02.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_part_03.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],
@@ -23,11 +24,11 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart',
+              'lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart',
-            'lib/features/p2p/presentation/widgets/p2p_escrow_balance_page_sections.dart',
-            'lib/features/p2p/presentation/widgets/p2p_escrow_balance_page_common.dart',
+            'lib/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_sections.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_balance_page_common.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],
@@ -38,12 +39,12 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart',
+              'lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart',
-            'lib/features/p2p/presentation/widgets/p2p_escrow_detail_status_address.dart',
-            'lib/features/p2p/presentation/widgets/p2p_escrow_detail_multisig_order.dart',
-            'lib/features/p2p/presentation/widgets/p2p_escrow_detail_timeline_actions.dart',
+            'lib/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_status_address.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_multisig_order.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_escrow_detail_timeline_actions.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],
@@ -55,12 +56,13 @@ void main() {
           },
         ),
         HighRiskCopyTarget(
-          path: 'lib/features/p2p/presentation/pages/p2p_wallet_page.dart',
+          path:
+              'lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/p2p_wallet_page.dart',
-            'lib/features/p2p/presentation/widgets/p2p_wallet_hero.dart',
-            'lib/features/p2p/presentation/widgets/p2p_wallet_balances.dart',
-            'lib/features/p2p/presentation/widgets/p2p_wallet_actions_history.dart',
+            'lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart',
+            'lib/features/p2p/presentation/widgets/wallet/p2p_wallet_hero.dart',
+            'lib/features/p2p/presentation/widgets/wallet/p2p_wallet_balances.dart',
+            'lib/features/p2p/presentation/widgets/wallet/p2p_wallet_actions_history.dart',
           ],
           roles: {
             'wallet': [RegExp(r'wallet', caseSensitive: false)],
@@ -99,13 +101,14 @@ void main() {
     test('high-risk wallet and P2P flows keep confirmation safety roles', () {
       final targets = [
         HighRiskCopyTarget(
-          path: 'lib/features/wallet/presentation/pages/withdraw_page.dart',
+          path:
+              'lib/features/wallet/presentation/pages/transfer/withdraw_page.dart',
           paths: [
-            'lib/features/wallet/presentation/pages/withdraw_page.dart',
-            'lib/features/wallet/presentation/widgets/withdraw_common.dart',
-            'lib/features/wallet/presentation/widgets/withdraw_form_sections.dart',
-            'lib/features/wallet/presentation/widgets/withdraw_network_picker.dart',
-            'lib/features/wallet/presentation/widgets/withdraw_preview_sheet.dart',
+            'lib/features/wallet/presentation/pages/transfer/withdraw_page.dart',
+            'lib/features/wallet/presentation/widgets/transfer/withdraw_common.dart',
+            'lib/features/wallet/presentation/widgets/transfer/withdraw_form_sections.dart',
+            'lib/features/wallet/presentation/widgets/transfer/withdraw_network_picker.dart',
+            'lib/features/wallet/presentation/widgets/transfer/withdraw_preview_sheet.dart',
             'lib/features/wallet/presentation/controllers/wallet_controller.dart',
           ],
           roles: {
@@ -124,10 +127,11 @@ void main() {
           },
         ),
         HighRiskCopyTarget(
-          path: 'lib/features/wallet/presentation/pages/address_add_page.dart',
+          path:
+              'lib/features/wallet/presentation/pages/address/address_add_page.dart',
           paths: [
-            'lib/features/wallet/presentation/pages/address_add_page.dart',
-            'lib/features/wallet/presentation/widgets/wallet_address_add_sections.dart',
+            'lib/features/wallet/presentation/pages/address/address_add_page.dart',
+            'lib/features/wallet/presentation/widgets/address/wallet_address_add_sections.dart',
             'lib/features/wallet/presentation/controllers/wallet_controller.dart',
           ],
           roles: {
@@ -146,10 +150,10 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/wallet/presentation/pages/wallet_token_approval_page.dart',
+              'lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart',
           paths: [
-            'lib/features/wallet/presentation/pages/wallet_token_approval_page.dart',
-            'lib/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart',
+            'lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart',
+            'lib/features/wallet/presentation/widgets/tools/wallet_token_revoke_sheet.dart',
             'lib/features/wallet/presentation/controllers/wallet_controller.dart',
           ],
           roles: {
@@ -167,7 +171,7 @@ void main() {
         ),
         HighRiskCopyTarget(
           path:
-              'lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart',
+              'lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart',
           roles: {
             'preview': [RegExp(r'\bpreview\b|_PaymentPreview')],
             'confirm': [RegExp(r'confirmMessage|confirmTitle|\bconfirm\b')],
@@ -183,10 +187,11 @@ void main() {
           },
         ),
         HighRiskCopyTarget(
-          path: 'lib/features/p2p/presentation/pages/p2p_create_ad_page.dart',
+          path:
+              'lib/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart',
           paths: [
-            'lib/features/p2p/presentation/pages/p2p_create_ad_page.dart',
-            'lib/features/p2p/presentation/widgets/p2p_create_ad_sections.dart',
+            'lib/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart',
+            'lib/features/p2p/presentation/widgets/ads/p2p_create_ad_sections.dart',
             'lib/features/p2p/presentation/controllers/p2p_controller.dart',
           ],
           roles: {

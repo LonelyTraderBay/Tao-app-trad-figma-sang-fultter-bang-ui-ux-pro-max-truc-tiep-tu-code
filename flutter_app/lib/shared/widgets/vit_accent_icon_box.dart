@@ -15,6 +15,8 @@ class VitAccentIconBox extends StatelessWidget {
     required this.color,
     this.muted = false,
     this.iconSize,
+    this.bordered = true,
+    this.boxSize,
   });
 
   final IconData icon;
@@ -22,14 +24,22 @@ class VitAccentIconBox extends StatelessWidget {
   final bool muted;
   final double? iconSize;
 
+  /// When false, renders the tinted fill without the accent border stroke.
+  /// Defaults to true to match the original bordered visual.
+  final bool bordered;
+
+  /// Overrides [AppSpacing.accentIconBoxSize] (34px) when set.
+  final double? boxSize;
+
   @override
   Widget build(BuildContext context) {
     final resolvedIconSize = iconSize ?? AppSpacing.iconMd;
+    final resolvedBoxSize = boxSize ?? AppSpacing.accentIconBoxSize;
 
     if (muted) {
       return SizedBox(
-        width: AppSpacing.accentIconBoxSize,
-        height: AppSpacing.accentIconBoxSize,
+        width: resolvedBoxSize,
+        height: resolvedBoxSize,
         child: DecoratedBox(
           decoration: const ShapeDecoration(
             color: AppColors.surface2,
@@ -43,15 +53,19 @@ class VitAccentIconBox extends StatelessWidget {
     }
 
     return SizedBox(
-      width: AppSpacing.accentIconBoxSize,
-      height: AppSpacing.accentIconBoxSize,
+      width: resolvedBoxSize,
+      height: resolvedBoxSize,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: AppSpacing.accentIconFillAlpha),
           shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: color.withValues(alpha: AppSpacing.accentIconBorderAlpha),
-            ),
+            side: bordered
+                ? BorderSide(
+                    color: color.withValues(
+                      alpha: AppSpacing.accentIconBorderAlpha,
+                    ),
+                  )
+                : BorderSide.none,
             borderRadius: AppRadii.mdRadius,
           ),
         ),

@@ -18,31 +18,13 @@ import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/widgets/auth_hero_icon_box.dart';
+import 'package:vit_trade_flutter/features/auth/domain/validators/password_policy.dart';
 
 part '../widgets/reset_password_page_sections.dart';
 
 const _authPrimary = AppColors.primary;
 const _authPrimary10 = AppColors.primary12;
 const _authPrimary30 = AppColors.primary30;
-
-final class PasswordRule {
-  const PasswordRule({required this.label, required this.test});
-
-  final String label;
-  final bool Function(String value) test;
-}
-
-const _passwordRules = [
-  PasswordRule(label: 'Tối thiểu 8 ký tự', test: _hasMinLength),
-  PasswordRule(label: 'Có ít nhất 1 chữ cái', test: _hasLetter),
-  PasswordRule(label: 'Có ít nhất 1 chữ số', test: _hasDigit),
-];
-
-bool _hasMinLength(String value) => value.length >= 8;
-
-bool _hasLetter(String value) => RegExp('[a-zA-Z]').hasMatch(value);
-
-bool _hasDigit(String value) => RegExp(r'\d').hasMatch(value);
 
 class ResetPasswordPage extends ConsumerStatefulWidget {
   const ResetPasswordPage({super.key});
@@ -87,8 +69,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   String get _confirmPassword => _confirmPasswordController.text;
 
-  bool get _allRulesPass =>
-      _passwordRules.every((rule) => rule.test(_newPassword));
+  bool get _allRulesPass => passwordMeetsPolicy(_newPassword);
 
   bool get _passwordsMatch => _newPassword == _confirmPassword;
 

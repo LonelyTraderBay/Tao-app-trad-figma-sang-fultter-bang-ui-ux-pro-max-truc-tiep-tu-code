@@ -163,40 +163,15 @@ class _QuickLinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.standard,
+    return VitIconLabelCard(
+      icon: icon,
+      label: title,
+      eyebrow: eyebrow,
+      accentColor: color,
       borderColor: color.withValues(alpha: .28),
       padding: SupportSpacingTokens.supportQuickCardPadding,
+      labelHeight: SupportSpacingTokens.supportLineHeightTight,
       onTap: onTap,
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  eyebrow,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.navLabel.copyWith(color: color),
-                ),
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                    height: SupportSpacingTokens.supportLineHeightTight,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

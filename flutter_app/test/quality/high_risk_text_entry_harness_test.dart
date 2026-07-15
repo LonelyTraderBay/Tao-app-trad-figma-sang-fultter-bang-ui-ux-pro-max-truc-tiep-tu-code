@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_payment_method_add_page.dart';
-import 'package:vit_trade_flutter/features/wallet/presentation/pages/address_add_page.dart';
-import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_sections.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/address/address_add_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/address/wallet_address_add_sections.dart';
 
 void main() {
   Future<void> pumpRoute(WidgetTester tester, String initialLocation) async {

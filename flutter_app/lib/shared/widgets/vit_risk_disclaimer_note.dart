@@ -10,10 +10,14 @@ class VitRiskDisclaimerNote extends StatelessWidget {
     super.key,
     required this.message,
     this.semanticsLabel,
+    this.height,
   });
 
   final String message;
   final String? semanticsLabel;
+
+  /// Optional line-height override applied to the caption style.
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,10 @@ class VitRiskDisclaimerNote extends StatelessWidget {
       child: Text(
         message,
         textAlign: TextAlign.center,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          height: height,
+        ),
       ),
     );
   }

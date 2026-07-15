@@ -197,47 +197,36 @@ class _ProfileProductTile extends StatelessWidget {
       onTap: () => context.go(shortcut.route),
       density: VitDensity.compact,
       borderColor: accent.withValues(alpha: .22),
-      child: Row(
-        children: [
-          SizedBox(
-            width: ProfileSpacingTokens.profileProductIconBox,
-            height: ProfileSpacingTokens.profileProductIconBox,
-            child: Material(
-              color: accent.withValues(alpha: .12),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-              child: Icon(
-                profileIconFor(shortcut.iconKey),
-                color: accent,
-                size: ProfileSpacingTokens.profileProductIcon,
-              ),
+      child: VitIconListRow(
+        gap: ProfileSpacingTokens.profileProductGap,
+        leading: SizedBox(
+          width: ProfileSpacingTokens.profileProductIconBox,
+          height: ProfileSpacingTokens.profileProductIconBox,
+          child: Material(
+            color: accent.withValues(alpha: .12),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+            child: Icon(
+              profileIconFor(shortcut.iconKey),
+              color: accent,
+              size: ProfileSpacingTokens.profileProductIcon,
             ),
           ),
-          const SizedBox(width: ProfileSpacingTokens.profileProductGap),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  shortcut.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  shortcut.stateLabel,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.badge.copyWith(color: accent),
-                ),
-              ],
-            ),
+        ),
+        title: Text(
+          shortcut.label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
           ),
-        ],
+        ),
+        subtitle: Text(
+          shortcut.stateLabel,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.badge.copyWith(color: accent),
+        ),
       ),
     );
   }
@@ -256,68 +245,48 @@ class _MenuRow extends StatelessWidget {
       child: InkWell(
         key: ProfilePage.menuKey(item.id),
         onTap: () => context.go(item.route),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: VitDensity.standard.controlHeight,
-          ),
-          child: Padding(
-            padding: ProfileSpacingTokens.profileMenuRowPadding,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: ProfileSpacingTokens.profileMenuIconBox,
-                  height: ProfileSpacingTokens.profileMenuIconBox,
-                  child: Material(
-                    color: accent.withValues(alpha: .12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.cardRadius,
-                    ),
-                    child: Icon(
-                      profileIconFor(item.iconKey),
-                      color: accent,
-                      size: ProfileSpacingTokens.profileMenuIcon,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: ProfileSpacingTokens.profileMenuGap),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      if (item.subtitle != null) ...[
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmCompactInnerGap,
-                        ),
-                        Text(
-                          item.subtitle!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: item.subtitleHex == null
-                                ? _profileMuted
-                                : Color(item.subtitleHex!),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: _profileMuted,
-                  size: ProfileSpacingTokens.profileMenuChevron,
-                ),
-              ],
+        child: VitIconListRow(
+          minHeight: VitDensity.standard.controlHeight,
+          padding: ProfileSpacingTokens.profileMenuRowPadding,
+          gap: ProfileSpacingTokens.profileMenuGap,
+          subtitleGap: AppSpacing.pageRhythmCompactInnerGap,
+          leading: SizedBox(
+            width: ProfileSpacingTokens.profileMenuIconBox,
+            height: ProfileSpacingTokens.profileMenuIconBox,
+            child: Material(
+              color: accent.withValues(alpha: .12),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+              child: Icon(
+                profileIconFor(item.iconKey),
+                color: accent,
+                size: ProfileSpacingTokens.profileMenuIcon,
+              ),
             ),
+          ),
+          title: Text(
+            item.label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          subtitle: item.subtitle == null
+              ? null
+              : Text(
+                  item.subtitle!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: item.subtitleHex == null
+                        ? _profileMuted
+                        : Color(item.subtitleHex!),
+                  ),
+                ),
+          trailing: const Icon(
+            Icons.chevron_right_rounded,
+            color: _profileMuted,
+            size: ProfileSpacingTokens.profileMenuChevron,
           ),
         ),
       ),

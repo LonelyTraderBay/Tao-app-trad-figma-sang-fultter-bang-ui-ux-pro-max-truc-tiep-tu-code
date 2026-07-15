@@ -21,24 +21,24 @@ class _SubAccountDetails extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _DetailMetric(
+                child: VitMetricColumn(
                   label: 'Volume 30d',
                   value: _formatCompact(account.tradingVolume30d, prefix: r'$'),
-                  color: AppColors.text1,
+                  valueColor: AppColors.text1,
                 ),
               ),
               Expanded(
-                child: _DetailMetric(
+                child: VitMetricColumn(
                   label: 'API Keys',
                   value: '${account.apiKeyCount}',
-                  color: AppColors.warn,
+                  valueColor: AppColors.warn,
                 ),
               ),
               Expanded(
-                child: _DetailMetric(
+                child: VitMetricColumn(
                   label: 'T\u1EA1o ng\u00E0y',
                   value: account.createdAt,
-                  color: AppColors.text2,
+                  valueColor: AppColors.text2,
                 ),
               ),
             ],
@@ -67,7 +67,7 @@ class _SubAccountDetails extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               children: [
                 TextSpan(
-                  text: maskEmail(account.email),
+                  text: VitFormat.email(account.email),
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
@@ -110,43 +110,6 @@ class _SubAccountDetails extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _DetailMetric extends StatelessWidget {
-  const _DetailMetric({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        Text(
-          value,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
     );
   }
 }

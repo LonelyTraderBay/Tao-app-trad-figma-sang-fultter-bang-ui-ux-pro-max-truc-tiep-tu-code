@@ -6,8 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_earn_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -87,7 +87,7 @@ void main() {
 
   test('SC-327 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/earn/presentation/pages/staking_earn_page.dart',
+      'lib/features/earn/presentation/pages/staking/staking_earn_page.dart',
     ).readAsStringSync();
 
     expect(pageSource, contains('VitInsetScrollView'));
@@ -102,7 +102,7 @@ void main() {
 
   test('SC-327 keeps positions cards compact and readable', () {
     final positionsSource = File(
-      'lib/features/earn/presentation/widgets/staking_earn_positions_common.dart',
+      'lib/features/earn/presentation/widgets/staking/staking_earn_positions_common.dart',
     ).readAsStringSync();
 
     expect(positionsSource, contains('_PositionStatRow'));

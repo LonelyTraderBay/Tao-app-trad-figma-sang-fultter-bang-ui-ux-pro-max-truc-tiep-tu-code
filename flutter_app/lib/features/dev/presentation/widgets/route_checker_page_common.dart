@@ -187,29 +187,3 @@ class _InternalNotice extends StatelessWidget {
     );
   }
 }
-
-class _IconBadge extends StatelessWidget {
-  const _IconBadge({
-    required this.icon,
-    required this.color,
-    required this.background,
-  });
-
-  final IconData icon;
-  final Color color;
-  final Color background;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: AppSpacing.x6,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: background,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        ),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}

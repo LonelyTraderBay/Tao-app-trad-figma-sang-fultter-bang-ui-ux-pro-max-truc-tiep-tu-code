@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_asset_avatar.dart';
 
 /// Shared discovery-module card tiles used by both `TopicHubPage` and
 /// `UnifiedSearchPage` card families.
@@ -147,23 +148,16 @@ class DiscoveryInitialsAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      height: size,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: fillAlpha),
-          shape: RoundedRectangleBorder(borderRadius: radius),
-        ),
-        child: Center(
-          child: Text(
-            initials,
-            style: textStyle.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
+    return VitAssetAvatar(
+      label: initials,
+      accentColor: color,
+      size: size,
+      radius: radius,
+      fillAlpha: fillAlpha,
+      maxChars: initials.characters.length,
+      textStyle: textStyle.copyWith(
+        color: color,
+        fontWeight: AppTextStyles.bold,
       ),
     );
   }

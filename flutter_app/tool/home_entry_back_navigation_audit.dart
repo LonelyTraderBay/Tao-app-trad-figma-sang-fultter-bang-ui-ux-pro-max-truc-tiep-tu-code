@@ -449,7 +449,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02A',
     area: 'Trade pair entry',
-    file: 'lib/features/trade_terminal/presentation/pages/trade_page_part_01.dart',
+    file: 'lib/features/trade/presentation/widgets/hub/trade_page_part_01.dart',
     requiredSnippets: [
       'widget.chartVariant == TradeChartVariant.pairRoute || context.canPop()',
       'fallbackPath: AppRoutePaths.trade',
@@ -461,7 +461,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02B',
     area: 'Convert entry',
-    file: 'lib/features/trade_terminal/presentation/pages/convert_page.dart',
+    file: 'lib/features/trade/presentation/pages/convert/convert_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -472,7 +472,8 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02C',
     area: 'Margin entry',
-    file: 'lib/features/trade_terminal/presentation/pages/margin_trading_page.dart',
+    file:
+        'lib/features/trade/presentation/pages/margin/margin_trading_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -482,7 +483,8 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02D',
     area: 'Bot entry',
-    file: 'lib/features/trade_bots/presentation/pages/trading_bots_page.dart',
+    file:
+        'lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -492,7 +494,8 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02E',
     area: 'Copy Trade entry',
-    file: 'lib/features/trade_copy/presentation/pages/copy_trading_page.dart',
+    file:
+        'lib/features/trade_copy/presentation/pages/hub/copy_trading_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -502,7 +505,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02F',
     area: 'DCA entry',
-    file: 'lib/features/dca/presentation/pages/dca_page_part_01.dart',
+    file: 'lib/features/dca/presentation/pages/hub/dca_page_part_01.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -512,7 +515,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02G',
     area: 'Savings entry',
-    file: 'lib/features/earn/presentation/pages/savings_page.dart',
+    file: 'lib/features/earn/presentation/pages/savings/savings_page.dart',
     requiredSnippets: [
       'fallbackPath: snapshot.backRoute',
       'mode: BackNavigationMode.historyThenFallback',
@@ -524,7 +527,7 @@ const _homeEntryContractRules = [
     id: 'HEB-C02H',
     area: 'Prediction Markets entry',
     file:
-        'lib/features/predictions/presentation/pages/predictions_home_page.dart',
+        'lib/features/predictions/presentation/pages/hub/predictions_home_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.markets',
       'mode: BackNavigationMode.historyThenFallback',
@@ -534,7 +537,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02I',
     area: 'Wallet entry',
-    file: 'lib/features/wallet/presentation/pages/wallet_page.dart',
+    file: 'lib/features/wallet/presentation/pages/hub/wallet_page.dart',
     requiredSnippets: [
       'final showBack = context.canPop();',
       'fallbackPath: AppRoutePaths.home',
@@ -545,7 +548,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02J',
     area: 'Withdraw next action',
-    file: 'lib/features/wallet/presentation/pages/withdraw_page.dart',
+    file: 'lib/features/wallet/presentation/pages/transfer/withdraw_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.wallet',
       'mode: BackNavigationMode.historyThenFallback',
@@ -556,7 +559,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02K',
     area: 'Pair detail entry',
-    file: 'lib/features/markets/presentation/pages/pair_detail_page.dart',
+    file: 'lib/features/markets/presentation/pages/pair/pair_detail_page.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.markets',
       'mode: BackNavigationMode.historyThenFallback',

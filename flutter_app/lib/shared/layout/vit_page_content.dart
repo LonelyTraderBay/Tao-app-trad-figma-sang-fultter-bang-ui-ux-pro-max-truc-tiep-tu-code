@@ -109,6 +109,7 @@ class VitPageSection extends StatelessWidget {
     this.rhythm,
     this.innerGap,
     this.customGap,
+    this.headerTrailing,
   });
 
   final List<Widget> children;
@@ -129,30 +130,47 @@ class VitPageSection extends StatelessWidget {
   final double? innerGap;
   final double? customGap;
 
+  /// Optional widget rendered alongside the section header (e.g. a status
+  /// pill/badge). When non-null, the header is wrapped in a
+  /// `Row([Expanded(header), gap, headerTrailing])`; when null, the header
+  /// renders bare (unchanged behavior).
+  final Widget? headerTrailing;
+
   double get _labelBottomGap =>
       innerGap ?? rhythm?.innerGap ?? AppSpacing.pageRhythmStandardInnerGap;
+
+  Widget _buildHeader() {
+    final header = VitSectionHeader(
+      title: label!,
+      icon: headerIcon,
+      iconColor: headerIconColor,
+      variant: headerVariant,
+      accentColor: accentColor,
+      density: headerDensity,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      actionKey: actionKey,
+      actionSemanticLabel: actionSemanticLabel,
+      actionShowChevron: actionShowChevron,
+      bottomGap: _labelBottomGap,
+    );
+    if (headerTrailing == null) return header;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(child: header),
+        const SizedBox(width: AppSpacing.x2),
+        headerTrailing!,
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (label != null) ...[
-          VitSectionHeader(
-            title: label!,
-            icon: headerIcon,
-            iconColor: headerIconColor,
-            variant: headerVariant,
-            accentColor: accentColor,
-            density: headerDensity,
-            actionLabel: actionLabel,
-            onAction: onAction,
-            actionKey: actionKey,
-            actionSemanticLabel: actionSemanticLabel,
-            actionShowChevron: actionShowChevron,
-            bottomGap: _labelBottomGap,
-          ),
-        ],
+        if (label != null) _buildHeader(),
         ..._withGaps(
           children,
           customGap ??

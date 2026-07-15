@@ -18,6 +18,8 @@ class VitTogglePill extends StatelessWidget {
     this.inactiveKnobColor = AppColors.textDisabledBlue,
     this.inactiveBorderColor = AppColors.borderSolid,
     this.duration = const Duration(milliseconds: 160),
+    this.onChanged,
+    this.semanticLabel,
   });
 
   final bool enabled;
@@ -32,8 +34,29 @@ class VitTogglePill extends StatelessWidget {
   final Color inactiveBorderColor;
   final Duration duration;
 
+  /// When non-null, wraps the pill in a tappable, toggle-semantics region.
+  /// Leave null to keep the current presentation-only (no tap) behavior.
+  final ValueChanged<bool>? onChanged;
+
+  /// Accessibility label applied when [onChanged] is non-null.
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
+    final pill = _buildPill();
+    final changed = onChanged;
+    if (changed == null) {
+      return pill;
+    }
+    return Semantics(
+      label: semanticLabel,
+      toggled: enabled,
+      button: true,
+      child: GestureDetector(onTap: () => changed(!enabled), child: pill),
+    );
+  }
+
+  Widget _buildPill() {
     return SizedBox(
       width: width,
       height: height,

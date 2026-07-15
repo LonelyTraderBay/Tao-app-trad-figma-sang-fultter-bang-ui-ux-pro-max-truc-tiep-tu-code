@@ -7,30 +7,10 @@ class _WarningBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      width: double.infinity,
-      padding: AuthSpacingTokens.authTwoFaBannerPadding,
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.warn15,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AuthSpacingTokens.authTwoFaWarningIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.warn,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return VitBanner(
+      variant: VitBannerVariant.warning,
+      message: text,
+      icon: Icons.warning_amber_rounded,
     );
   }
 }
@@ -175,16 +155,6 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      width: double.infinity,
-      padding: AuthSpacingTokens.authErrorBannerPadding,
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.sell20,
-      child: Text(
-        error,
-        textAlign: TextAlign.center,
-        style: AppTextStyles.caption.copyWith(color: AppColors.sell),
-      ),
-    );
+    return VitBanner(variant: VitBannerVariant.error, message: error);
   }
 }

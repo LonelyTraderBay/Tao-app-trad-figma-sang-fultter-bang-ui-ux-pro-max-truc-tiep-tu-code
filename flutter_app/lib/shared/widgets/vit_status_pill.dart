@@ -28,6 +28,8 @@ class VitStatusPill extends StatelessWidget {
     this.outline = false,
     this.count,
     this.onTap,
+    this.backgroundAlpha,
+    this.radiusOverride,
   });
 
   final String label;
@@ -38,6 +40,14 @@ class VitStatusPill extends StatelessWidget {
   final bool outline;
   final int? count;
   final VoidCallback? onTap;
+
+  /// Overrides the palette's default background alpha. Null preserves the
+  /// existing per-status background token unchanged.
+  final double? backgroundAlpha;
+
+  /// Overrides the default [AppRadii.pillRadius]. Null preserves current
+  /// pill-shaped corners unchanged.
+  final BorderRadius? radiusOverride;
 
   _StatusPalette get _palette {
     switch (status) {
@@ -115,14 +125,18 @@ class VitStatusPill extends StatelessWidget {
     final palette = _palette;
     final metrics = _metrics;
     final hasCount = count != null && count! > 0;
+    final resolvedBackground = backgroundAlpha != null
+        ? palette.background.withValues(alpha: backgroundAlpha)
+        : palette.background;
+    final resolvedRadius = radiusOverride ?? AppRadii.pillRadius;
 
     Widget content = SizedBox(
       height: metrics.height,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: outline ? AppColors.transparent : palette.background,
+          color: outline ? AppColors.transparent : resolvedBackground,
           shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.pillRadius,
+            borderRadius: resolvedRadius,
             side: BorderSide(color: palette.border),
           ),
         ),
@@ -212,7 +226,7 @@ class VitStatusPill extends StatelessWidget {
         type: MaterialType.transparency,
         child: InkWell(
           onTap: onTap,
-          borderRadius: AppRadii.pillRadius,
+          borderRadius: resolvedRadius,
           child: content,
         ),
       );

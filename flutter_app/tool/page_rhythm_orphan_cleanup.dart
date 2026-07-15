@@ -12,7 +12,9 @@ void main(List<String> args) {
 
   for (final entity in libRoot.listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    if (entity.path.contains('${Platform.pathSeparator}dev${Platform.pathSeparator}')) {
+    if (entity.path.contains(
+      '${Platform.pathSeparator}dev${Platform.pathSeparator}',
+    )) {
       continue;
     }
 
@@ -51,7 +53,9 @@ final _orphanSizedBoxLine = RegExp(
   r'^\s*(?:const\s+)?SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x[3-7]|sectionGap|sectionGapCompact|pageContentGap)[^)]*\)\s*,?\s*$',
 );
 
-({String source, int removed}) _removeOrphanSizedBoxFromVitPageContent(String source) {
+({String source, int removed}) _removeOrphanSizedBoxFromVitPageContent(
+  String source,
+) {
   var removed = 0;
   final buffer = StringBuffer();
   var index = 0;
@@ -88,10 +92,16 @@ final _orphanSizedBoxLine = RegExp(
     buffer.write(source.substring(start, bracketStart + 1));
     final listBody = source.substring(bracketStart + 1, listEnd);
     final cleanedLines = <String>[];
-    for (var lineIndex = 0; lineIndex < listBody.split('\n').length; lineIndex++) {
+    for (
+      var lineIndex = 0;
+      lineIndex < listBody.split('\n').length;
+      lineIndex++
+    ) {
       final line = listBody.split('\n')[lineIndex];
       if (_orphanSizedBoxLine.hasMatch(line)) {
-        final prev = lineIndex > 0 ? listBody.split('\n')[lineIndex - 1].trim() : '';
+        final prev = lineIndex > 0
+            ? listBody.split('\n')[lineIndex - 1].trim()
+            : '';
         if (prev.startsWith('if (')) continue;
         removed++;
         continue;

@@ -267,7 +267,11 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                       onKey: _handleKey,
                     ),
                     _OtpProgress(filled: filled),
-                    if (_error.isNotEmpty) _OtpErrorBanner(error: _error),
+                    if (_error.isNotEmpty)
+                      VitBanner(
+                        variant: VitBannerVariant.error,
+                        message: _error,
+                      ),
                     VitCtaButton(
                       key: OTPPage.submitKey,
                       onPressed: filled < 6 || _submitting

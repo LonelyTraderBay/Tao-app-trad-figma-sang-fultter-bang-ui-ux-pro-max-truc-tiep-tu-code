@@ -33,16 +33,19 @@ class _FaqPanel extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        for (var i = 0; i < items.length; i++) ...[
-          if (i > 0)
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          _FaqCard(
-            index: i,
-            item: items[i],
-            expanded: expandedIndex == i,
-            onTap: () => onToggle(i),
-          ),
-        ],
+        VitFaqList(
+          items: [
+            for (var i = 0; i < items.length; i++)
+              VitFaqItem(
+                question: items[i].question,
+                answer: items[i].answer,
+                widgetKey: SupportPage.faqKey(i),
+              ),
+          ],
+          expandedIndex: expandedIndex,
+          onToggle: onToggle,
+          accentColor: AppModuleAccents.support,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
@@ -54,71 +57,6 @@ class _FaqPanel extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _FaqCard extends StatelessWidget {
-  const _FaqCard({
-    required this.index,
-    required this.item,
-    required this.expanded,
-    required this.onTap,
-  });
-
-  final int index;
-  final SupportFaqDraft item;
-  final bool expanded;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: SupportPage.faqKey(index),
-      radius: VitCardRadius.standard,
-      padding: SupportSpacingTokens.supportCardPadding,
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  item.question,
-                  style: AppTextStyles.body.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              AnimatedRotation(
-                turns: expanded ? .5 : 0,
-                duration: const Duration(milliseconds: 160),
-                child: SizedBox.square(
-                  dimension: SupportSpacingTokens.supportFaqToggleIconBox,
-                  child: const Material(
-                    color: AppColors.primary12,
-                    shape: CircleBorder(),
-                    child: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppModuleAccents.support,
-                      size: AppSpacing.iconMd,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (expanded) ...[
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            Text(
-              item.answer,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

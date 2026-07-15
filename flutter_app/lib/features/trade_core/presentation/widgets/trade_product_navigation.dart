@@ -11,7 +11,7 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_t
 /// which routes/tabs any given caller supplies via it. The concrete factory
 /// that knows about specific routes (e.g. Spot/Futures/Margin/Convert)
 /// belongs in the module that owns those routes, not here. See
-/// `trade_terminal/presentation/widgets/trade_product_navigation.dart`'s
+/// `trade/presentation/widgets/hub/trade_product_navigation.dart`'s
 /// `buildTradeProductNavigation` for the one nav source `trade_terminal`
 /// pages should pass in.
 final class TradeProductNavigation {
@@ -26,7 +26,7 @@ final class TradeProductNavigation {
 /// `VitTradeDetailScaffold` via their `navigationBuilder` parameter.
 /// `trade_core` never supplies a default implementation for this — every
 /// caller that wants the product-tab bar must pass its own module-owned
-/// builder (currently only `trade_terminal`'s `buildTradeProductNavigation`
+/// builder (currently only `trade`'s `buildTradeProductNavigation`
 /// exists). This keeps `trade_core` free of any specific-route knowledge.
 typedef TradeProductNavigationBuilder =
     TradeProductNavigation Function({

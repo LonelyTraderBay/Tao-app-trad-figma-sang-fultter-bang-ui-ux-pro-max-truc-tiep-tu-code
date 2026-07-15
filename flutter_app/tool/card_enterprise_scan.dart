@@ -40,10 +40,12 @@ void main() {
       final fixed = _hasFixedHeightParams(params);
       if (!fixed) continue;
 
-      final allow = block.contains('card-tile: allow-start') ||
+      final allow =
+          block.contains('card-tile: allow-start') ||
           _hasAllowStartComment(source, start);
-      final centered =
-          params.contains('contentAlign: VitCardContentAlign.center');
+      final centered = params.contains(
+        'contentAlign: VitCardContentAlign.center',
+      );
       if (!allow && !centered) {
         fixedNoAllow.add(rel);
         break;
@@ -61,7 +63,9 @@ void main() {
   for (final path in fixedNoAllow.toSet()) {
     stdout.writeln('  FIXED_NO_CENTER: $path');
   }
-  stdout.writeln('legacy task minHeight (buttonHero+x7+x5): ${legacyMin.length}');
+  stdout.writeln(
+    'legacy task minHeight (buttonHero+x7+x5): ${legacyMin.length}',
+  );
   for (final path in legacyMin) {
     stdout.writeln('  LEGACY_MIN: $path');
   }
@@ -73,9 +77,9 @@ void main() {
 
 bool _hasAllowStartComment(String source, int vitCardStart) {
   final scanStart = vitCardStart > 400 ? vitCardStart - 400 : 0;
-  return source.substring(scanStart, vitCardStart).contains(
-        'card-tile: allow-start',
-      );
+  return source
+      .substring(scanStart, vitCardStart)
+      .contains('card-tile: allow-start');
 }
 
 bool _hasFixedHeightParams(String params) {

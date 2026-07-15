@@ -103,19 +103,10 @@ class _PasswordStrength extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final checks = [
-      _PasswordCheck('Ít nhất 8 ký tự', password.length >= 8),
-      _PasswordCheck(
-        'Chữ hoa & thường',
-        RegExp('[A-Z]').hasMatch(password) &&
-            RegExp('[a-z]').hasMatch(password),
-      ),
-      _PasswordCheck('Có số', RegExp(r'\d').hasMatch(password)),
-      _PasswordCheck(
-        'Ký tự đặc biệt',
-        RegExp(r'[!@#$%^&*]').hasMatch(password),
-      ),
+      for (final rule in passwordPolicyRules)
+        _PasswordCheck(rule.label, rule.test(password)),
     ];
-    final score = checks.where((item) => item.ok).length;
+    final score = passwordStrengthScore(password);
     final color = switch (score) {
       0 || 1 => AppColors.sell,
       2 => AppColors.warn,
@@ -133,23 +124,11 @@ class _PasswordStrength extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            for (var index = 0; index < 4; index++) ...[
-              if (index > 0) const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: AppRadii.pillRadius,
-                  child: ColoredBox(
-                    color: index < score ? color : AppColors.borderSolid,
-                    child: const SizedBox(
-                      height: AuthSpacingTokens.authPasswordStrengthHeight,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ],
+        VitSegmentedProgressBar(
+          segmentCount: 4,
+          filledCount: score,
+          filledColor: color,
+          height: AuthSpacingTokens.authPasswordStrengthHeight,
         ),
         const Padding(padding: AuthSpacingTokens.authTopGapX3),
         Wrap(

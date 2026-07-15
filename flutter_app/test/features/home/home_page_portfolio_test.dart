@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repo
 import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
-import 'package:vit_trade_flutter/features/wallet/presentation/pages/wallet_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/hub/wallet_page.dart';
 
 void main() {
   Future<void> pumpHome(

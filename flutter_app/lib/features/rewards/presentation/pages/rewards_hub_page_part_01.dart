@@ -475,11 +475,23 @@ class _CategoryProgress extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         const Row(
           children: [
-            _Legend(label: 'Đã nhận', color: AppColors.buy),
+            VitLegendItem(
+              label: 'Đã nhận',
+              color: AppColors.buy,
+              dotSize: AppSpacing.x2,
+            ),
             SizedBox(width: AppSpacing.x3),
-            _Legend(label: 'Chờ nhận', color: AppColors.warn),
+            VitLegendItem(
+              label: 'Chờ nhận',
+              color: AppColors.warn,
+              dotSize: AppSpacing.x2,
+            ),
             SizedBox(width: AppSpacing.x3),
-            _Legend(label: 'Đang làm', color: AppColors.text3),
+            VitLegendItem(
+              label: 'Đang làm',
+              color: AppColors.text3,
+              dotSize: AppSpacing.x2,
+            ),
           ],
         ),
       ],
@@ -526,7 +538,12 @@ class _CategoryRow extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: _ProgressBar(value: value, color: color),
+          child: VitProgressBar(
+            progress: value,
+            color: color,
+            trackColor: AppColors.surface3,
+            height: AppSpacing.x3,
+          ),
         ),
         const SizedBox(width: AppSpacing.x3),
         Text(

@@ -8,19 +8,17 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: VitTogglePill(
-        enabled: active,
-        width: ProfileSpacingTokens.profileApiToggleWidth,
-        height: ProfileSpacingTokens.profileApiToggleHeight,
-        knobSize: ProfileSpacingTokens.profileApiToggleKnob,
-        knobMargin: ProfileSpacingTokens.profileApiToggleKnobMargin,
-        activeColor: _apiGreen.withValues(alpha: .16),
-        activeKnobColor: _apiGreen,
-        inactiveColor: AppColors.transparent,
-        inactiveKnobColor: AppColors.borderSolid,
-      ),
+    return VitTogglePill(
+      enabled: active,
+      onChanged: (_) => onTap(),
+      width: ProfileSpacingTokens.profileApiToggleWidth,
+      height: ProfileSpacingTokens.profileApiToggleHeight,
+      knobSize: ProfileSpacingTokens.profileApiToggleKnob,
+      knobMargin: ProfileSpacingTokens.profileApiToggleKnobMargin,
+      activeColor: _apiGreen.withValues(alpha: .16),
+      activeKnobColor: _apiGreen,
+      inactiveColor: AppColors.transparent,
+      inactiveKnobColor: AppColors.borderSolid,
     );
   }
 }

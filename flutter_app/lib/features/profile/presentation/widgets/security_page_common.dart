@@ -80,53 +80,42 @@ class _SecuritySupportCard extends StatelessWidget {
       onTap: () => context.go(supportRoute),
       density: VitDensity.compact,
       borderColor: _securityBorder,
-      child: Row(
-        children: [
-          SizedBox(
-            width: ProfileSpacingTokens.securitySupportIconBox,
-            height: ProfileSpacingTokens.securitySupportIconBox,
-            child: Material(
-              color: _securityPrimary.withValues(alpha: .13),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
-              child: const Icon(
-                Icons.support_agent_rounded,
-                color: _securityPrimary,
-                size: ProfileSpacingTokens.securitySupportIcon,
-              ),
+      child: VitIconListRow(
+        gap: ProfileSpacingTokens.securitySupportGap,
+        leading: SizedBox(
+          width: ProfileSpacingTokens.securitySupportIconBox,
+          height: ProfileSpacingTokens.securitySupportIconBox,
+          child: Material(
+            color: _securityPrimary.withValues(alpha: .13),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+            child: const Icon(
+              Icons.support_agent_rounded,
+              color: _securityPrimary,
+              size: ProfileSpacingTokens.securitySupportIcon,
             ),
           ),
-          const SizedBox(width: ProfileSpacingTokens.securitySupportGap),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Hỗ trợ bảo mật',
-                  style: AppTextStyles.control.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: _securityMuted,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ],
-            ),
+        ),
+        title: Text(
+          'Hỗ trợ bảo mật',
+          style: AppTextStyles.control.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
           ),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.text3,
-            size: ProfileSpacingTokens.securityChevron,
+        ),
+        subtitle: Text(
+          'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.numericMicro.copyWith(
+            color: _securityMuted,
+            fontWeight: AppTextStyles.medium,
           ),
-        ],
+        ),
+        trailing: const Icon(
+          Icons.chevron_right_rounded,
+          color: AppColors.text3,
+          size: ProfileSpacingTokens.securityChevron,
+        ),
       ),
     );
   }

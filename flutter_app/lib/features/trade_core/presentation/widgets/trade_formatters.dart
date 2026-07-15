@@ -1,42 +1,25 @@
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
+
 /// Shared price/money formatters for trade terminal surfaces.
-String formatTradePrice(double value) {
-  final raw = value.toStringAsFixed(2);
-  final parts = raw.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    final fromEnd = whole.length - i;
-    buffer.write(whole[i]);
-    if (fromEnd > 1 && fromEnd % 3 == 1) buffer.write(',');
-  }
-  return '$buffer.${parts.last}';
-}
+String formatTradePrice(double value) =>
+    VitFormat.usd(value).replaceFirst('\$', '');
 
 String formatTradeMoney(double value) => formatTradePrice(value);
 
 /// Thousands-grouped non-negative integer, e.g. `1,234`.
-String formatTradeInt(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    final remaining = raw.length - i;
-    buffer.write(raw[i]);
-    if (remaining > 1 && remaining % 3 == 1) buffer.write(',');
-  }
-  return buffer.toString();
-}
+String formatTradeInt(int value) => VitFormat.count(value);
 
 /// USD amount with thousands separators and exact cents, e.g. `$1,234.56`.
-String formatTradeUsd(double value) => '\$${formatTradeMoney(value)}';
+String formatTradeUsd(double value) => VitFormat.usd(value);
 
 /// Whole-dollar USD amount with thousands separators, e.g. `$1,235.00`.
 String formatTradeUsdWhole(double value) =>
-    '\$${formatTradeMoney(value.roundToDouble())}';
+    VitFormat.usd(value.roundToDouble());
 
 /// Rounded whole-dollar USD amount with thousands separators and no
 /// decimal places, e.g. `$1,235`.
 String formatTradeUsdRounded(double value) =>
-    '\$${formatTradeInt(value.round())}';
+    '\$${VitFormat.count(value.round())}';
 
 /// Signed, rounded whole-dollar USD amount, e.g. `+$1,235` / `-$1,235`.
 String formatTradeSignedUsdRounded(double value) =>
@@ -44,8 +27,7 @@ String formatTradeSignedUsdRounded(double value) =>
 
 /// Signed USD amount with thousands separators and exact cents,
 /// e.g. `+$1,234.56` / `-$1,234.56`.
-String formatTradeSignedMoney(double value) =>
-    '${value >= 0 ? '+' : '-'}\$${formatTradeMoney(value.abs())}';
+String formatTradeSignedMoney(double value) => VitFormat.usdSigned(value);
 
 /// EUR amount with thousands separators, sign before the currency symbol,
 /// e.g. `-€1,234`.

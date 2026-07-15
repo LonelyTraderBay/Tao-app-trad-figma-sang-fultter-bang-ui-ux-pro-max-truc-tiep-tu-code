@@ -7,16 +7,18 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-/// Shared icon-box metric card used by the admin analytics and funnel
-/// dashboards. `semanticsLabel` and `valueStyle` are supplied by the caller
-/// so each dashboard keeps its own accessibility copy and value emphasis.
+/// Shared icon-box metric card used by the admin analytics, funnel, and
+/// A/B test dashboards. `semanticsLabel` and `valueStyle` are supplied by
+/// the caller so each dashboard keeps its own accessibility copy and value
+/// emphasis. `caption` is optional: pass `null` to omit the caption line
+/// entirely for callers that only need the delta/timeframe row.
 class AdminMetricCard extends StatelessWidget {
   const AdminMetricCard({
     super.key,
     required this.icon,
     required this.title,
     required this.value,
-    required this.caption,
+    this.caption,
     required this.delta,
     required this.timeframe,
     required this.tint,
@@ -28,7 +30,7 @@ class AdminMetricCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String value;
-  final String caption;
+  final String? caption;
   final String delta;
   final String timeframe;
   final Color tint;
@@ -86,13 +88,15 @@ class AdminMetricCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            Text(
-              caption,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
+            if (caption != null) ...[
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+              Text(
+                caption!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             Wrap(
               spacing: AppSpacing.x2,

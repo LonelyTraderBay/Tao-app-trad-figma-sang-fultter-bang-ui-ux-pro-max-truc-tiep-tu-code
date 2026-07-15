@@ -165,45 +165,15 @@ class _DistributionCard extends StatelessWidget {
             spacing: AppSpacing.x6,
             runSpacing: AppSpacing.x3,
             children: [
-              for (final module in modules) _LegendItem(module: module),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LegendItem extends StatelessWidget {
-  const _LegendItem({required this.module});
-
-  final UnifiedPortfolioModuleDraft module;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.buttonHero + AppSpacing.x7,
-      child: Row(
-        children: [
-          SizedBox.square(
-            dimension: AppSpacing.x4,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: unifiedModuleAccent(module.id),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.xsRadius,
+              for (final module in modules)
+                VitLegendItem(
+                  label: unifiedShortModuleName(module),
+                  color: unifiedModuleAccent(module.id),
+                  shape: VitLegendSwatchShape.square,
+                  swatchSize: AppSpacing.x4,
+                  maxWidth: AppSpacing.buttonHero + AppSpacing.x7,
                 ),
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Flexible(
-            child: Text(
-              unifiedShortModuleName(module),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
+            ],
           ),
         ],
       ),

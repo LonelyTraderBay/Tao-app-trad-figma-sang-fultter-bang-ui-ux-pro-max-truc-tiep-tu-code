@@ -19,12 +19,18 @@ class VitTradeComplianceHero extends StatelessWidget {
     required this.description,
     this.icon = Icons.balance_rounded,
     this.accentColor = AppColors.primary,
+    this.titleMaxLines = 1,
   });
 
   final String title;
   final String description;
   final IconData icon;
   final Color accentColor;
+
+  /// Max lines for [title] before it ellipsizes. Defaults to `1` to match
+  /// every existing call site; pass `2` when a longer banner title (e.g. a
+  /// migrated page-local intro heading) needs to wrap instead of truncate.
+  final int titleMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,7 @@ class VitTradeComplianceHero extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  maxLines: 1,
+                  maxLines: titleMaxLines,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     color: accentColor,

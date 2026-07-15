@@ -102,15 +102,17 @@ class _AlertHistoryTab extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: _MetricColumn(
+                    child: VitMetricColumn(
                       label: 'Total Triggered',
                       value: '${snapshot.totalTriggers}',
+                      valueStyle: VitMetricValueStyle.sectionTitle,
                     ),
                   ),
                   Expanded(
-                    child: _MetricColumn(
+                    child: VitMetricColumn(
                       label: 'Avg per Day',
                       value: (snapshot.totalTriggers / 30).toStringAsFixed(1),
+                      valueStyle: VitMetricValueStyle.sectionTitle,
                     ),
                   ),
                 ],

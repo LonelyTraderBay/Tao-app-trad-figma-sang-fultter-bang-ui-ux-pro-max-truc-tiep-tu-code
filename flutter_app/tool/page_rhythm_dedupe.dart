@@ -5,7 +5,9 @@ void main() {
   final appRoot = _findAppRoot();
   var fixed = 0;
 
-  for (final entity in Directory('${appRoot.path}/lib').listSync(recursive: true)) {
+  for (final entity in Directory(
+    '${appRoot.path}/lib',
+  ).listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
     var source = entity.readAsStringSync();
     if (!source.contains('rhythm: VitPageRhythm')) continue;

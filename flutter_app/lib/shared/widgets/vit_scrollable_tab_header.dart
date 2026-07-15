@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+
+/// Chrome that a page's top-of-content tab/section switcher is wrapped in.
+///
+/// Two shapes are covered, both extracted from repeated local
+/// `_SectionTabs` / `_TopTabs` widgets:
+/// - [VitScrollableTabHeader.pillRow]: a horizontally scrollable, unpadded
+///   row of self-contained pill widgets (e.g. `VitStatusPill`), with no
+///   surface background.
+/// - [VitScrollableTabHeader.surfaceDivider]: a fixed-width tab bar (e.g.
+///   `VitTabBar`) wrapped in a surface-colored background with a trailing
+///   hairline divider.
+enum VitScrollableTabHeaderStyle { pillRow, surfaceDivider }
+
+class VitScrollableTabHeader extends StatelessWidget {
+  const VitScrollableTabHeader.pillRow({
+    super.key,
+    required this.items,
+    this.headerKey,
+  }) : style = VitScrollableTabHeaderStyle.pillRow,
+       tabBar = null;
+
+  const VitScrollableTabHeader.surfaceDivider({
+    super.key,
+    required this.tabBar,
+    this.headerKey,
+  }) : style = VitScrollableTabHeaderStyle.surfaceDivider,
+       items = const <Widget>[];
+
+  /// Key applied to the outer scroll/surface container, matching the key
+  /// previously placed on the local `_SectionTabs`/`_TopTabs` root widget.
+  final Key? headerKey;
+  final VitScrollableTabHeaderStyle style;
+
+  /// Pre-built pill widgets for [VitScrollableTabHeaderStyle.pillRow].
+  /// A [AppSpacing.x2] gap is inserted between items automatically.
+  final List<Widget> items;
+
+  /// The tab bar wrapped for [VitScrollableTabHeaderStyle.surfaceDivider].
+  final Widget? tabBar;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (style) {
+      case VitScrollableTabHeaderStyle.pillRow:
+        return SingleChildScrollView(
+          key: headerKey,
+          scrollDirection: Axis.horizontal,
+          physics: const ClampingScrollPhysics(),
+          child: Row(
+            children: [
+              for (var i = 0; i < items.length; i++) ...[
+                items[i],
+                if (i != items.length - 1) const SizedBox(width: AppSpacing.x2),
+              ],
+            ],
+          ),
+        );
+      case VitScrollableTabHeaderStyle.surfaceDivider:
+        return ColoredBox(
+          key: headerKey,
+          color: AppColors.surface,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              tabBar!,
+              const Divider(
+                height: AppSpacing.hairlineStroke,
+                thickness: AppSpacing.hairlineStroke,
+                color: AppColors.border,
+              ),
+            ],
+          ),
+        );
+    }
+  }
+}

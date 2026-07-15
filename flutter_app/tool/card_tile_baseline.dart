@@ -44,7 +44,8 @@ void main(List<String> args) {
       final insertAt = lineStart < 0 ? 0 : lineStart + 1;
       final indent = _lineIndent(source, insertAt);
       final line = '$indent$comment\n';
-      source = source.substring(0, insertAt) + line + source.substring(insertAt);
+      source =
+          source.substring(0, insertAt) + line + source.substring(insertAt);
       fileChanged = true;
       inserted++;
     }

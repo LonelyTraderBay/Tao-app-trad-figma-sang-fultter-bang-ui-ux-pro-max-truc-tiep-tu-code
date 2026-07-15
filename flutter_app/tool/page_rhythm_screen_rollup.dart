@@ -9,18 +9,26 @@ void main(List<String> args) {
   final appRoot = _findAppRoot();
   final repoRoot = appRoot.uri.resolve('..').toFilePath();
   final docsDir = Directory('${repoRoot}docs/02_FLUTTER_MIGRATION');
-  final auditCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv');
+  final auditCsv = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Audit.csv',
+  );
   final routeMd = File('${docsDir.path}/Flutter-Route-Coverage-Truth-Table.md');
-  final outCsv = File('${docsDir.path}/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv');
+  final outCsv = File(
+    '${docsDir.path}/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv',
+  );
   final outMd = File('${docsDir.path}/audits/Page-Rhythm-Compliance-Report.md');
 
   if (!auditCsv.existsSync()) {
-    stderr.writeln('Missing ${auditCsv.path}. Run page_rhythm_audit.dart first.');
+    stderr.writeln(
+      'Missing ${auditCsv.path}. Run page_rhythm_audit.dart first.',
+    );
     exitCode = 1;
     return;
   }
   if (!routeMd.existsSync()) {
-    stderr.writeln('Missing ${routeMd.path}. Run route_coverage_audit.dart first.');
+    stderr.writeln(
+      'Missing ${routeMd.path}. Run route_coverage_audit.dart first.',
+    );
     exitCode = 1;
     return;
   }
@@ -64,20 +72,21 @@ void main(List<String> args) {
       pageSource: pageSource,
     );
 
-    final hasException = pattern == LayoutPattern.flushChart ||
+    final hasException =
+        pattern == LayoutPattern.flushChart ||
         pattern == LayoutPattern.gateShell ||
         pattern == LayoutPattern.bottomSheet ||
         pattern == LayoutPattern.customScroll;
 
     var l1 = audits.isEmpty
         ? (hasException ? 'pass' : 'unknown')
-        : _worstStatus(
-            audits.map((a) => a.wiringCount > 0 ? 'warn' : 'pass'),
-          );
+        : _worstStatus(audits.map((a) => a.wiringCount > 0 ? 'warn' : 'pass'));
     var l2 = audits.isEmpty
         ? (hasException ? 'pass' : 'unknown')
         : _worstStatus(
-            audits.map((a) => _blockingStructuralCount(a) > 0 ? 'warn' : 'pass'),
+            audits.map(
+              (a) => _blockingStructuralCount(a) > 0 ? 'warn' : 'pass',
+            ),
           );
 
     if (hasException && audits.isEmpty) {
@@ -86,12 +95,15 @@ void main(List<String> args) {
     }
 
     final screenId = _screenIdFromPage(pageFile, route.name);
-    final isTabRoot = tabRootScreens.contains(screenId) ||
+    final isTabRoot =
+        tabRootScreens.contains(screenId) ||
         tabRootScreens.contains(route.widgetClass);
 
     var l3 = 'manual';
-    final innerGapViolations =
-        audits.fold<int>(0, (sum, a) => sum + a.innerGapViolations);
+    final innerGapViolations = audits.fold<int>(
+      0,
+      (sum, a) => sum + a.innerGapViolations,
+    );
     final declaredTierByLibKey = {
       for (final f in vpcFiles)
         if (auditByFile[auditLibKey(f)] != null)
@@ -157,8 +169,8 @@ void main(List<String> args) {
 
     final vpcOwner = vpcFiles.isEmpty
         ? (pattern == LayoutPattern.sharedShell
-            ? shellWidgetToVpcPath.values.first
-            : '')
+              ? shellWidgetToVpcPath.values.first
+              : '')
         : vpcFiles.first;
 
     rows.add(
@@ -189,7 +201,9 @@ void main(List<String> args) {
   if (checkOnly) {
     if (!outCsv.existsSync() || outCsv.readAsStringSync() != csv) {
       stderr.writeln('Screen compliance CSV is stale.');
-      stderr.writeln('Run `dart run tool/page_rhythm_screen_rollup.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/page_rhythm_screen_rollup.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
@@ -368,7 +382,9 @@ Map<String, String> _buildWidgetToPageMap(Directory appRoot) {
   final features = Directory('${appRoot.path}/lib/features');
   for (final entity in features.listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    if (!entity.path.contains('${Platform.pathSeparator}presentation${Platform.pathSeparator}')) {
+    if (!entity.path.contains(
+      '${Platform.pathSeparator}presentation${Platform.pathSeparator}',
+    )) {
       continue;
     }
     if (entity.path.contains('_part_')) continue;
@@ -379,16 +395,19 @@ Map<String, String> _buildWidgetToPageMap(Directory appRoot) {
   }
 
   for (final entry in widgetClassPageOverrides.entries) {
-    map[entry.key] =
-        '${appRoot.path}/lib/${entry.value}'.replaceAll('\\', '/');
+    map[entry.key] = '${appRoot.path}/lib/${entry.value}'.replaceAll('\\', '/');
   }
 
   map['InternalSurfaceGate'] =
-      '${appRoot.path}/lib/app/router/internal_surface_gate.dart'.replaceAll('\\', '/');
+      '${appRoot.path}/lib/app/router/internal_surface_gate.dart'.replaceAll(
+        '\\',
+        '/',
+      );
   map['TradePage'] =
-      '${appRoot.path}/lib/features/trade_terminal/presentation/pages/trade_page.dart'.replaceAll('\\', '/');
-  map['_AuthRouteShell'] =
-      '${appRoot.path}/lib/app/router/router_helpers.dart'.replaceAll('\\', '/');
+      '${appRoot.path}/lib/features/trade/presentation/pages/hub/trade_page.dart'
+          .replaceAll('\\', '/');
+  map['_AuthRouteShell'] = '${appRoot.path}/lib/app/router/router_helpers.dart'
+      .replaceAll('\\', '/');
   return map;
 }
 
@@ -396,9 +415,9 @@ String _screenIdFromPage(String? pageFile, String routeName) {
   if (pageFile == null) return routeName;
   final file = File(pageFile);
   if (!file.existsSync()) return routeName;
-  final match = RegExp(r"semanticLabel:\s*'([^']+)'").firstMatch(
-    file.readAsStringSync(),
-  );
+  final match = RegExp(
+    r"semanticLabel:\s*'([^']+)'",
+  ).firstMatch(file.readAsStringSync());
   if (match != null) {
     final label = match.group(1)!;
     final sc = RegExp(r'SC-\d+').firstMatch(label);
@@ -416,7 +435,10 @@ int _blockingStructuralCount(_AuditRow row) {
   if (row.structuralViolations.isEmpty) return 0;
   return row.structuralViolations
       .split(';')
-      .where((v) => v.isNotEmpty && !v.startsWith('section_header_missing_inner_gap'))
+      .where(
+        (v) =>
+            v.isNotEmpty && !v.startsWith('section_header_missing_inner_gap'),
+      )
       .length;
 }
 
@@ -510,7 +532,8 @@ String _renderReport(List<_ScreenRow> rows, {required DateTime generated}) {
     ..writeln()
     ..writeln('## By module')
     ..writeln();
-  for (final entry in byModule.entries.toList()..sort((a, b) => a.key.compareTo(b.key))) {
+  for (final entry
+      in byModule.entries.toList()..sort((a, b) => a.key.compareTo(b.key))) {
     final modRows = entry.value;
     final l2w = modRows.where((r) => r.l2Status == 'warn').length;
     final unk = modRows.where((r) => r.l1Status == 'unknown').length;
@@ -588,7 +611,9 @@ final class _L3EvidenceRow {
 }
 
 Map<String, _L3EvidenceRow> _loadL3Evidence(Directory appRoot) {
-  final file = File('${appRoot.path}/run-artifacts/page-rhythm-l3/evidence.csv');
+  final file = File(
+    '${appRoot.path}/run-artifacts/page-rhythm-l3/evidence.csv',
+  );
   if (!file.existsSync()) return {};
   final map = <String, _L3EvidenceRow>{};
   final lines = file.readAsLinesSync();

@@ -504,7 +504,12 @@ class _TierProgress extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          _ProgressBar(progress: progress, color: AppColors.primarySoft),
+          VitProgressBar(
+            progress: progress,
+            color: AppColors.primarySoft,
+            height: _progressExtent,
+            borderRadius: AppRadii.xsRadius,
+          ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
             children: [

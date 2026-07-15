@@ -133,24 +133,13 @@ class _BulletRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          color: color,
-          size: icon == Icons.circle
-              ? OnboardingSpacingTokens.onboardingBulletDotIcon
-              : OnboardingSpacingTokens.onboardingBulletIcon,
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ],
+    return VitBulletRow(
+      text: text,
+      icon: icon,
+      color: color,
+      iconSize: icon == Icons.circle
+          ? OnboardingSpacingTokens.onboardingBulletDotIcon
+          : OnboardingSpacingTokens.onboardingBulletIcon,
     );
   }
 }

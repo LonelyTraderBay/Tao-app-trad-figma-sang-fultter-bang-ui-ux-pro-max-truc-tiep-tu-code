@@ -109,32 +109,46 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = switch (status) {
-      SmartAlertStatus.active => AppColors.buy,
-      SmartAlertStatus.paused => AppColors.text3,
-      SmartAlertStatus.triggered => AppColors.primary,
-    };
-    final background = switch (status) {
-      SmartAlertStatus.active => AppColors.buy10,
-      SmartAlertStatus.paused => AppColors.surface3,
-      SmartAlertStatus.triggered => AppColors.primary12,
-    };
-
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: background,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
-      ),
-      child: Padding(
-        padding: CrossModuleSpacingTokens.crossModulePillPadding,
-        child: Text(
-          status.name.toUpperCase(),
-          style: AppTextStyles.chartLabelTiny.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
+    // `paused` uses a solid neutral surface background (not a tint derived
+    // from its own foreground color), so it can't be expressed through
+    // VitAccentPill's single-accentColor tint model — kept as local
+    // rendering; `active`/`triggered` are plain color-tinted-at-alpha pairs
+    // and migrate cleanly.
+    if (status == SmartAlertStatus.paused) {
+      return DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface3,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
+        ),
+        child: Padding(
+          padding: CrossModuleSpacingTokens.crossModulePillPadding,
+          child: Text(
+            status.name.toUpperCase(),
+            style: AppTextStyles.chartLabelTiny.copyWith(
+              color: AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
         ),
-      ),
+      );
+    }
+
+    final color = switch (status) {
+      SmartAlertStatus.active => AppColors.buy,
+      SmartAlertStatus.triggered => AppColors.primary,
+      SmartAlertStatus.paused => AppColors.text3, // unreachable, see above
+    };
+    final backgroundAlpha = switch (status) {
+      SmartAlertStatus.active => 26 / 255, // matches AppColors.buy10
+      SmartAlertStatus.triggered => 31 / 255, // matches AppColors.primary12
+      SmartAlertStatus.paused => 0.0, // unreachable, see above
+    };
+
+    return VitAccentPill(
+      label: status.name.toUpperCase(),
+      accentColor: color,
+      backgroundAlpha: backgroundAlpha,
+      radiusOverride: AppRadii.xlRadius,
     );
   }
 }

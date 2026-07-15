@@ -58,7 +58,9 @@ void main(List<String> args) {
   }
 
   rows.sort((a, b) {
-    final cluster = _clusterOrder(a.cluster).compareTo(_clusterOrder(b.cluster));
+    final cluster = _clusterOrder(
+      a.cluster,
+    ).compareTo(_clusterOrder(b.cluster));
     if (cluster != 0) return cluster;
     return a.file.compareTo(b.file);
   });
@@ -74,12 +76,16 @@ void main(List<String> args) {
     }
     if (manifestCsv.readAsStringSync() != csv) {
       stderr.writeln('Card tile migration manifest is stale.');
-      stderr.writeln('Run `dart run tool/card_tile_manifest.dart` from flutter_app/.');
+      stderr.writeln(
+        'Run `dart run tool/card_tile_manifest.dart` from flutter_app/.',
+      );
       exitCode = 1;
       return;
     }
     final pending = rows.where((r) => r.status == 'pending').length;
-    stdout.writeln('Card tile migration manifest is current ($pending pending).');
+    stdout.writeln(
+      'Card tile migration manifest is current ($pending pending).',
+    );
     return;
   }
 

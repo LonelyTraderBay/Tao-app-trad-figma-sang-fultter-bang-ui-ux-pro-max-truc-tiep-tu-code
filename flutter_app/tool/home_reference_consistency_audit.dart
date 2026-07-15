@@ -44,6 +44,7 @@ const Map<String, int> _allModuleDivergenceBaselines = <String, int>{
   'referral': 0,
   'rewards': 2,
   'support': 3,
+  'trade': 0,
   'trade_bots': 0,
   'trade_compliance': 0,
   'trade_copy': 0,
@@ -63,7 +64,7 @@ const Set<String> _additionalRootPagePaths = <String>{
   'lib/features/cross_module/presentation/pages/tax_report_center.dart',
   'lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart',
   'lib/features/onboarding/presentation/pages/onboarding_flow.dart',
-  'lib/features/trade_copy/presentation/pages/copy_trading_card_demo.dart',
+  'lib/features/trade_copy/presentation/pages/hub/copy_trading_card_demo.dart',
   'lib/features/dca/presentation/pages/dca_overview_demo.dart',
 };
 

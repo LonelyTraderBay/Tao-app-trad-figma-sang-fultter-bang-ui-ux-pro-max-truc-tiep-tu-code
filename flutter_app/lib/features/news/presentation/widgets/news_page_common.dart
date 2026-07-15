@@ -20,13 +20,10 @@ class _ArticleSheet extends StatelessWidget {
                 MediaQuery.sizeOf(context).height *
                 NewsSpacingTokens.newsSheetMaxHeightFactor,
           ),
-          child: DecoratedBox(
-            decoration: const ShapeDecoration(
-              color: AppColors.bg,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.sheetTopLargeRadius,
-              ),
-            ),
+          child: VitSheetSurface(
+            color: AppColors.bg,
+            borderRadius: AppRadii.sheetTopLargeRadius,
+            padding: AppSpacing.zeroInsets,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

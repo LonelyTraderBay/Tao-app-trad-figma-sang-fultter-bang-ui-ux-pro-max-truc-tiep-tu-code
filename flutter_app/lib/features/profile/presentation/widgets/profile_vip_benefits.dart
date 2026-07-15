@@ -359,9 +359,7 @@ String _formatFee(double value) {
   return '${value.toStringAsFixed(2)}%';
 }
 
-String _formatUsd(double value) {
-  return '\$${_formatNumber(value)}.00';
-}
+String _formatUsd(double value) => '\$${_formatNumber(value)}.00';
 
 String _formatCompactUsd(double value) {
   if (value >= 1000000) {
@@ -373,5 +371,4 @@ String _formatCompactUsd(double value) {
   return '\$${value.toStringAsFixed(0)}';
 }
 
-String _formatNumber(double value) =>
-    insertThousandsSeparator(value.toStringAsFixed(0));
+String _formatNumber(double value) => VitFormat.count(value.round());

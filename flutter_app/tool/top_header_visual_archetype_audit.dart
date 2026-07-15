@@ -862,9 +862,9 @@ List<String> _extraSourceForPageGroup(
   final extraPaths = <String>[];
 
   if (relativeGroup ==
-      'flutter_app/lib/features/markets/presentation/pages/market_list_page.dart') {
+      'flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart') {
     extraPaths.add(
-      'lib/features/markets/presentation/widgets/market_list_header.dart',
+      'lib/features/markets/presentation/widgets/hub/market_list_header.dart',
     );
   }
 
@@ -881,7 +881,7 @@ List<String> _extraSourceForPageGroup(
     'VitTradeSimpleShell(': [
       (
         path:
-            'lib/features/trade_terminal/presentation/widgets/vit_trade_simple_shell.dart',
+            'lib/features/trade/presentation/widgets/hub/vit_trade_simple_shell.dart',
         className: null,
       ),
       // VitTradeSimpleShell always wraps VitTradeHubScaffold (never
@@ -894,7 +894,7 @@ List<String> _extraSourceForPageGroup(
     'VitWalletDetailScaffold(': [
       (
         path:
-            'lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+            'lib/features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart',
         className: null,
       ),
     ],
@@ -914,7 +914,7 @@ List<String> _extraSourceForPageGroup(
     'VitP2PFlowScaffold(': [
       (
         path:
-            'lib/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart',
+            'lib/features/p2p/presentation/widgets/hub/vit_p2p_flow_scaffold.dart',
         className: null,
       ),
     ],

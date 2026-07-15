@@ -13,12 +13,22 @@ class VitAccentPill extends StatelessWidget {
     required this.accentColor,
     this.size = VitStatusPillSize.sm,
     this.semanticStatus,
+    this.backgroundAlpha,
+    this.radiusOverride,
   });
 
   final String label;
   final Color accentColor;
   final VitStatusPillSize size;
   final VitStatusPillStatus? semanticStatus;
+
+  /// Overrides the default `.14` background tint alpha. Null preserves
+  /// current behavior unchanged.
+  final double? backgroundAlpha;
+
+  /// Overrides the default [AppRadii.pillRadius]. Null preserves current
+  /// pill-shaped corners unchanged.
+  final BorderRadius? radiusOverride;
 
   _AccentPillMetrics get _metrics {
     return switch (size) {
@@ -52,10 +62,10 @@ class VitAccentPill extends StatelessWidget {
         constraints: BoxConstraints(minHeight: metrics.minHeight),
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: accentColor.withValues(alpha: .14),
+            color: accentColor.withValues(alpha: backgroundAlpha ?? .14),
             shape: RoundedRectangleBorder(
               side: BorderSide(color: accentColor.withValues(alpha: .26)),
-              borderRadius: AppRadii.pillRadius,
+              borderRadius: radiusOverride ?? AppRadii.pillRadius,
             ),
           ),
           child: Padding(

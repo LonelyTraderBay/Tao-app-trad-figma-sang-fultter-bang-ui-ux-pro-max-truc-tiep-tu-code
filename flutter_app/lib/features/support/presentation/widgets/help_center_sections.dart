@@ -272,11 +272,5 @@ Color _categoryColor(String id) => switch (id) {
   _ => AppColors.text2,
 };
 
-String _compactViews(int value) {
-  if (value >= 1000) {
-    final number = value / 1000;
-    final text = number.toStringAsFixed(1);
-    return '${text.replaceAll('.0', '')}K';
-  }
-  return '$value';
-}
+String _compactViews(int value) =>
+    VitFormat.compactSuffix(value, stripTrailingZero: true);

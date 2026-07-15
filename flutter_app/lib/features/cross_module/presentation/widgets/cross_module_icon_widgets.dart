@@ -97,23 +97,13 @@ class CrossModuleInfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      borderColor: border,
+    return VitInfoCallout(
+      message: text,
+      icon: icon,
+      accentColor: color,
+      iconSize: AppSpacing.iconSm,
       padding: CrossModuleSpacingTokens.crossModulePanelPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
-      ),
+      messageStyle: AppTextStyles.micro,
     );
   }
 }

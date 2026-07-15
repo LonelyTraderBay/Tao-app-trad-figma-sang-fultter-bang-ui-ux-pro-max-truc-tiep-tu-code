@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/otp_page.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/auth/domain/validators/password_policy.dart';
 
 part '../widgets/register_page_sections.dart';
 
@@ -108,6 +109,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     }
     if (password.length < 8) {
       nextErrors['password'] = 'Mật khẩu tối thiểu 8 ký tự';
+    } else if (!passwordMeetsPolicy(password)) {
+      nextErrors['password'] = 'Mật khẩu cần chữ hoa, chữ thường và chữ số';
     }
     if (password != _confirmController.text) {
       nextErrors['confirm'] = 'Mật khẩu xác nhận không khớp';
@@ -312,7 +315,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         },
                       ),
                       if (_errors['form'] case final formError?)
-                        _authInlineErrorBanner(formError),
+                        VitBanner(
+                          variant: VitBannerVariant.error,
+                          message: formError,
+                          icon: Icons.error_outline_rounded,
+                        ),
                       VitCtaButton(
                         key: RegisterPage.submitKey,
                         onPressed: _submitting ? null : _handleRegister,
@@ -359,33 +366,4 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       ),
     );
   }
-}
-
-Widget _authInlineErrorBanner(String error) {
-  return Material(
-    color: AppColors.sell10,
-    shape: const RoundedRectangleBorder(
-      borderRadius: AppRadii.inputRadius,
-      side: BorderSide(color: AppColors.sell20),
-    ),
-    child: Padding(
-      padding: AuthSpacingTokens.authErrorBannerPaddingSm,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.sell,
-            size: AuthSpacingTokens.authErrorIcon,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              error,
-              style: AppTextStyles.caption.copyWith(color: AppColors.sell),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

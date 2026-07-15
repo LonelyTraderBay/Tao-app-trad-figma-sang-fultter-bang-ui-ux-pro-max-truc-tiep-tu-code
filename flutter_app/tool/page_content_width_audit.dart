@@ -37,7 +37,9 @@ void main(List<String> args) {
   final markdownFile = File(
     '${docsDir.path}/audits/VitTrade-Page-Content-Width-Audit.md',
   );
-  final csvFile = File('${docsDir.path}/audits/VitTrade-Page-Content-Width-Audit.csv');
+  final csvFile = File(
+    '${docsDir.path}/audits/VitTrade-Page-Content-Width-Audit.csv',
+  );
 
   final horizontalScrollTokens = _loadHorizontalScrollPaddingTokens(appRoot);
   final findings = _scanPresentationPages(appRoot, horizontalScrollTokens);

@@ -111,7 +111,13 @@ class _DisputeHistoryCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const SizedBox(width: AppSpacing.x2),
-              Flexible(child: _StatusPill(label: dispute.statusLabel)),
+              Flexible(
+                child: VitStatusPill(
+                  label: dispute.statusLabel,
+                  status: VitStatusPillStatus.warning,
+                  size: VitStatusPillSize.sm,
+                ),
+              ),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 dispute.createdDate,

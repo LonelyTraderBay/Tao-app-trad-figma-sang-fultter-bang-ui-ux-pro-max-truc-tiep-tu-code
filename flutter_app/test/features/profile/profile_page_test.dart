@@ -10,7 +10,7 @@ import 'package:vit_trade_flutter/features/profile/presentation/pages/edit_profi
 import 'package:vit_trade_flutter/features/profile/presentation/pages/kyc_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/settings_page.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/pages/my_arena_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/my_arena_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';

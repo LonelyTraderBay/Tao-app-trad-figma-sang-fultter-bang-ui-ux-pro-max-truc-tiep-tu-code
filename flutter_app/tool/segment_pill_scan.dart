@@ -82,27 +82,23 @@ class SegmentPillLocalClass {
 }
 
 class SegmentPillScanResult {
-  SegmentPillScanResult({
-    required this.fileRows,
-    required this.localClasses,
-  });
+  SegmentPillScanResult({required this.fileRows, required this.localClasses});
 
   final List<SegmentPillFileAudit> fileRows;
   final List<SegmentPillLocalClass> localClasses;
 
-  Map<String, int> get summary => buildSegmentPillSummary(fileRows, localClasses);
+  Map<String, int> get summary =>
+      buildSegmentPillSummary(fileRows, localClasses);
 
   List<SegmentPillLocalClass> get interactiveLocals =>
       localClasses.where((c) => c.isInteractive).toList();
 
-  int get p0Count =>
-      interactiveLocals.where((c) => c.priority == 'P0').length;
+  int get p0Count => interactiveLocals.where((c) => c.priority == 'P0').length;
 
   List<SegmentPillLocalClass> get p0Locals =>
       interactiveLocals.where((c) => c.priority == 'P0').toList();
 
-  int get p1Count =>
-      interactiveLocals.where((c) => c.priority == 'P1').length;
+  int get p1Count => interactiveLocals.where((c) => c.priority == 'P1').length;
 
   List<SegmentPillLocalClass> get p1Locals =>
       interactiveLocals.where((c) => c.priority == 'P1').toList();
@@ -129,10 +125,7 @@ SegmentPillScanResult scanSegmentPillFeatures(Directory featuresRoot) {
   for (final entity in featuresRoot.listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
 
-    final rel = entity.path
-        .replaceAll(r'\', '/')
-        .split('lib/features/')
-        .last;
+    final rel = entity.path.replaceAll(r'\', '/').split('lib/features/').last;
     final module = rel.split('/').first;
     final src = entity.readAsStringSync();
 
@@ -187,9 +180,7 @@ SegmentPillScanResult scanSegmentPillFeatures(Directory featuresRoot) {
           heightTier: height,
           widthMode: variant == 'pill_wrap' ? 'wrap_hug' : 'equal_expanded',
           compliance: variant == 'segment' ? 'pass' : 'review',
-          notes: variant == 'underline'
-              ? 'nav underline — different tier'
-              : '',
+          notes: variant == 'underline' ? 'nav underline — different tier' : '',
         ),
       );
     }
@@ -349,11 +340,15 @@ String renderSegmentPillComplianceReport(SegmentPillScanResult result) {
     ..writeln('| Metric | Count |')
     ..writeln('| --- | ---: |')
     ..writeln('| Audit rows | ${result.fileRows.length} |')
-    ..writeln('| Files with shared widgets | ${summary['files_with_shared'] ?? 0} |')
+    ..writeln(
+      '| Files with shared widgets | ${summary['files_with_shared'] ?? 0} |',
+    )
     ..writeln('| Compliance pass | ${summary['pass'] ?? 0} |')
     ..writeln('| Compliance warn | ${summary['warn'] ?? 0} |')
     ..writeln('| Compliance review | ${summary['review'] ?? 0} |')
-    ..writeln('| Interactive local classes | ${summary['local_interactive_classes'] ?? 0} |')
+    ..writeln(
+      '| Interactive local classes | ${summary['local_interactive_classes'] ?? 0} |',
+    )
     ..writeln('| P0 local classes | ${result.p0Count} |')
     ..writeln()
     ..writeln('## Shared widget call sites')
@@ -496,13 +491,16 @@ Map<String, int> buildSegmentPillSummary(
     totals[row.family.family] =
         (totals[row.family.family] ?? 0) + row.family.count;
   }
-  totals['local_interactive_classes'] =
-      locals.where((c) => c.isInteractive).length;
+  totals['local_interactive_classes'] = locals
+      .where((c) => c.isInteractive)
+      .length;
   totals['files_with_shared'] = rows.map((r) => r.file).toSet().length;
   totals['pass'] = rows.where((r) => r.family.compliance == 'pass').length;
   totals['warn'] = rows.where((r) => r.family.compliance == 'warn').length;
   totals['review'] = rows.where((r) => r.family.compliance == 'review').length;
-  totals['p0_locals'] = locals.where((c) => c.isInteractive && c.priority == 'P0').length;
+  totals['p0_locals'] = locals
+      .where((c) => c.isInteractive && c.priority == 'P0')
+      .length;
   return totals;
 }
 

@@ -15,10 +15,11 @@ class _IntroBlock extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _IconBadge(
+              const VitAccentIconBox(
                 icon: Icons.science_outlined,
                 color: AppColors.buy,
-                background: AppColors.buy10,
+                iconSize: AppSpacing.iconSm,
+                bordered: false,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(

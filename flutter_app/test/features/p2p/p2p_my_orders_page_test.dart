@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_dashboard_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_dispute_detail_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_my_orders_page.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_detail_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {

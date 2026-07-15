@@ -151,24 +151,16 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: ReferralSpacingTokens.referralHistoryAvatarBox,
-      height: ReferralSpacingTokens.referralHistoryFilterHeight,
-      child: DecoratedBox(
-        decoration: const ShapeDecoration(
-          color: AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: AppColors.borderSolid),
-            borderRadius: AppRadii.lgRadius,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            initial,
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ),
+    return VitAssetAvatar(
+      label: initial,
+      accentColor: AppColors.surface2,
+      size: ReferralSpacingTokens.referralHistoryAvatarBox,
+      radius: AppRadii.lgRadius,
+      border: true,
+      fillAlpha: 1,
+      borderAlpha: 1,
+      borderColor: AppColors.borderSolid,
+      textStyle: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
     );
   }
 }
@@ -285,4 +277,4 @@ _ReferralStatusPalette _statusPalette(ReferralFriendStatus status) {
   };
 }
 
-String _formatUsd(double value) => formatUsd(value);
+String _formatUsd(double value) => VitFormat.usd(value);

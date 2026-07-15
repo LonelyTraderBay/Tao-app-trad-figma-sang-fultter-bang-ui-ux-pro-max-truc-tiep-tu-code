@@ -85,7 +85,7 @@ class VitTradeAnalyticsHero extends StatelessWidget {
           Row(
             children: [
               for (final stat in stats) ...[
-                Expanded(child: _AnalyticsHeroStat(stat: stat)),
+                Expanded(child: VitTradeAnalyticsStatChip(stat: stat)),
                 if (stat != stats.last) const SizedBox(width: AppSpacing.x3),
               ],
             ],
@@ -96,40 +96,71 @@ class VitTradeAnalyticsHero extends StatelessWidget {
   }
 }
 
-class _AnalyticsHeroStat extends StatelessWidget {
-  const _AnalyticsHeroStat({required this.stat});
+/// Alignment variant for [VitTradeAnalyticsStatChip].
+enum VitTradeAnalyticsStatChipAlignment {
+  /// Value stacked above label, both centered — used by
+  /// [VitTradeAnalyticsHero]'s metric row.
+  center,
+
+  /// Label stacked above value, both left-aligned — used by
+  /// [VitTradeDetailHero]'s stats grid.
+  start,
+}
+
+/// Shared metric chip for [VitTradeAnalyticsHero] and [VitTradeDetailHero]:
+/// an inner [VitCard] rendering one [VitTradeAnalyticsStat], with
+/// stack order/alignment/text style tuned per [alignment].
+class VitTradeAnalyticsStatChip extends StatelessWidget {
+  const VitTradeAnalyticsStatChip({
+    super.key,
+    required this.stat,
+    this.alignment = VitTradeAnalyticsStatChipAlignment.center,
+  });
 
   final VitTradeAnalyticsStat stat;
+  final VitTradeAnalyticsStatChipAlignment alignment;
 
   @override
   Widget build(BuildContext context) {
+    final isCenter = alignment == VitTradeAnalyticsStatChipAlignment.center;
+
+    final valueText = Text(
+      stat.value,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: (isCenter ? AppTextStyles.baseMedium : AppTextStyles.caption)
+          .copyWith(
+            color: stat.color,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+    );
+
+    final labelText = Text(
+      stat.label,
+      maxLines: isCenter ? 2 : 1,
+      textAlign: isCenter ? TextAlign.center : TextAlign.start,
+      overflow: TextOverflow.ellipsis,
+      style: AppTextStyles.micro.copyWith(
+        color: isCenter
+            ? AppColors.onAccent.withValues(alpha: .62)
+            : AppColors.text3,
+      ),
+    );
+
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            stat.value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: stat.color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            stat.label,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.onAccent.withValues(alpha: .62),
-            ),
-          ),
-        ],
+        mainAxisAlignment: isCenter
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
+        crossAxisAlignment: isCenter
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
+        children: isCenter
+            ? [valueText, const SizedBox(height: AppSpacing.x1), labelText]
+            : [labelText, const SizedBox(height: AppSpacing.x1), valueText],
       ),
     );
   }

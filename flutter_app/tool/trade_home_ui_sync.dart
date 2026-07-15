@@ -272,10 +272,7 @@ void main() {
           '      );',
     );
 
-    content = content.replaceAll(
-      'EdgeInsets.zero',
-      'AppSpacing.zeroInsets',
-    );
+    content = content.replaceAll('EdgeInsets.zero', 'AppSpacing.zeroInsets');
 
     if (content.contains('tradeScrollBottomInset(') ||
         content.contains('copyTradingScrollBottomInset(')) {

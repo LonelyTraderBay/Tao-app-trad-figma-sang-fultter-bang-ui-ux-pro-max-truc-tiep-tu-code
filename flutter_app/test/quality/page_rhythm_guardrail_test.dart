@@ -316,7 +316,7 @@ const _tabRootPages = {
   'features/home/presentation/pages/home_page.dart',
   'features/profile/presentation/pages/profile_page.dart',
   'features/wallet/presentation/pages/wallet_page.dart',
-  'features/trade_terminal/presentation/pages/trade_page.dart',
+  'features/trade/presentation/pages/hub/trade_page.dart',
   'features/predictions/presentation/pages/predictions_home_page.dart',
 };
 

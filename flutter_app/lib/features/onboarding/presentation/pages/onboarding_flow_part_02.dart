@@ -149,32 +149,15 @@ class _ProgressHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = (currentIndex + 1) / total;
 
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: AppRadii.xsRadius,
-          child: LinearProgressIndicator(
-            minHeight: AppSpacing.x2,
-            value: progress,
-            color: AppModuleAccents.onboarding,
-            backgroundColor: AppColors.divider,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        Row(
-          children: [
-            Text(
-              'Bước ${currentIndex + 1}/$total',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-            const Spacer(),
-            Text(
-              '${(progress * 100).round()}%',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
-      ],
+    return VitProgressBar(
+      progress: progress,
+      label: 'Bước ${currentIndex + 1}/$total',
+      trailingLabel: '${(progress * 100).round()}%',
+      color: AppModuleAccents.onboarding,
+      trackColor: AppColors.divider,
+      gap: AppSpacing.pageRhythmCompactInnerGap,
+      borderRadius: AppRadii.xsRadius,
+      headerPosition: VitProgressBarHeaderPosition.below,
     );
   }
 }
