@@ -19,35 +19,56 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     });
   }
 
-  Future<void> _submit() async {
+  TradeFuturesOrderControllerRequest get _orderRequest {
     final margin = double.tryParse(_marginController.text) ?? 0;
-    final draft = TradeFuturesOrderDraft(
+    return (
       pairId: widget.pairId,
-      side: _side,
-      type: TradeFuturesOrderType.market,
-      margin: margin,
-      leverage: _leverage,
-    );
-    final controller = ref.read(
-      tradeFuturesOrderControllerProvider((
+      draft: TradeFuturesOrderDraft(
         pairId: widget.pairId,
-        draft: draft,
-      )),
+        side: _side,
+        type: TradeFuturesOrderType.market,
+        margin: margin,
+        leverage: _leverage,
+      ),
     );
-    if (!controller.canSubmit) return;
-    // Await tối thiểu theo ADR-001; máy trạng thái submitting/error đầy đủ
-    // cho futures là STATE-S22 (lô kế tiếp cùng cụm).
-    final receipt = await controller.submit();
+  }
+
+  Future<void> _submit() async {
+    final request = _orderRequest;
+    final provider = tradeFuturesOrderControllerProvider(request);
+    final notifier = ref.read(provider.notifier);
+    if (!notifier.canSubmit) return;
+    await notifier.submit();
     if (!mounted) return;
-    setState(() {
-      _marginController.clear();
-      _lastOrderId = receipt.orderId;
-    });
+    final orderState = ref.read(provider);
+    if (orderState.status == TradeHighRiskFlowStatus.success) {
+      setState(() {
+        _marginController.clear();
+        // Banner giữ ở state trang: request đổi khi clear ô ký quỹ nên
+        // member Notifier cũ (nơi giữ receipt) sẽ bị dispose ngay sau đó.
+        _lastOrderId = orderState.receipt?.orderId;
+      });
+      return;
+    }
+    showVitNoticeSheet(
+      context: context,
+      title: 'Gửi lệnh thất bại',
+      message:
+          orderState.errorMessage ?? 'Không gửi được lệnh. Vui lòng thử lại.',
+      variant: VitBannerVariant.error,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeFuturesProvider(widget.pairId));
+    final orderRequest = _orderRequest;
+    final orderState = ref.watch(
+      tradeFuturesOrderControllerProvider(orderRequest),
+    );
+    final orderNotifier = ref.read(
+      tradeFuturesOrderControllerProvider(orderRequest).notifier,
+    );
     final pair = snapshot.pair;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
@@ -85,23 +106,41 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   VitHighRiskStatePanel(
-                    state: VitHighRiskUiState.riskReview,
+                    state: orderState.status.uiState,
                     density: VitDensity.compact,
-                    title: 'Rủi ro cao',
-                    message:
+                    title: switch (orderState.status.uiState) {
+                      VitHighRiskUiState.submitting => 'Đang gửi lệnh',
+                      VitHighRiskUiState.success => 'Đã gửi lệnh',
+                      VitHighRiskUiState.error => 'Gửi lệnh thất bại',
+                      VitHighRiskUiState.offline => 'Mất kết nối',
+                      _ => 'Rủi ro cao',
+                    },
+                    message: switch (orderState.status.uiState) {
+                      VitHighRiskUiState.submitting =>
+                        'Đang gửi lệnh tới sàn. Vui lòng chờ trong giây lát.',
+                      VitHighRiskUiState.success =>
+                        'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}.',
+                      VitHighRiskUiState.error || VitHighRiskUiState.offline =>
+                        orderState.errorMessage ??
+                            'Không gửi được lệnh. Vui lòng thử lại.',
+                      _ =>
                         'Hợp đồng tương lai có thể làm bạn mất toàn bộ ký quỹ. Chỉ dùng số tiền bạn chấp nhận mất.',
+                    },
                     contractId: snapshot.highRiskContractId,
                   ),
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   _FuturesSimpleForm(
                     snapshot: snapshot,
-                    pairId: widget.pairId,
+                    preview: orderState.preview,
+                    submitting: orderState.status.isBusy,
                     side: _side,
                     leverage: _leverage,
                     marginController: _marginController,
                     onSideChanged: (side) => setState(() => _side = side),
                     onPercent: _setPercent,
                     onChanged: () => setState(() {}),
+                    onPreviewOpened: orderNotifier.enterPreview,
+                    onPreviewDismissed: orderNotifier.cancelPreview,
                     onConfirmedSubmit: _submit,
                   ),
                 ],
@@ -126,34 +165,44 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
   }
 }
 
-class _FuturesSimpleForm extends ConsumerWidget {
+class _FuturesSimpleForm extends StatelessWidget {
   const _FuturesSimpleForm({
     required this.snapshot,
-    required this.pairId,
+    required this.preview,
+    required this.submitting,
     required this.side,
     required this.leverage,
     required this.marginController,
     required this.onSideChanged,
     required this.onPercent,
     required this.onChanged,
+    required this.onPreviewOpened,
+    required this.onPreviewDismissed,
     required this.onConfirmedSubmit,
   });
 
   final TradeFuturesSnapshot snapshot;
-  final String pairId;
+
+  /// Preview từ CÙNG family member mà trang watch — form không tự watch để
+  /// tránh hai member khác nhau khi record draft lệch một field.
+  final TradeFuturesPreview preview;
+  final bool submitting;
   final TradeFuturesSide side;
   final int leverage;
   final TextEditingController marginController;
   final ValueChanged<TradeFuturesSide> onSideChanged;
   final ValueChanged<int> onPercent;
   final VoidCallback onChanged;
+  final VoidCallback onPreviewOpened;
+  final VoidCallback onPreviewDismissed;
   final VoidCallback onConfirmedSubmit;
 
   Future<void> _openConfirm(
     BuildContext context,
     TradeFuturesPreview preview,
   ) async {
-    if (!preview.canOpen) return;
+    if (!preview.canOpen || submitting) return;
+    onPreviewOpened();
     final sideLabel = side == TradeFuturesSide.long ? 'Giá tăng' : 'Giá giảm';
     final confirmed = await showVitTradeConfirmSheet(
       context: context,
@@ -178,27 +227,17 @@ class _FuturesSimpleForm extends ConsumerWidget {
       riskMessage:
           'Hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ.',
     );
-    if (confirmed && context.mounted) {
+    if (!context.mounted) return;
+    if (confirmed) {
       onConfirmedSubmit();
+    } else {
+      onPreviewDismissed();
     }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final margin = double.tryParse(marginController.text) ?? 0;
-    final draft = TradeFuturesOrderDraft(
-      pairId: pairId,
-      side: side,
-      type: TradeFuturesOrderType.market,
-      margin: margin,
-      leverage: leverage,
-    );
-    final preview = ref
-        .watch(
-          tradeFuturesOrderControllerProvider((pairId: pairId, draft: draft)),
-        )
-        .state
-        .preview;
 
     return VitCard(
       density: VitDensity.compact,
@@ -252,15 +291,18 @@ class _FuturesSimpleForm extends ConsumerWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: FuturesPage.submitKey,
-            onPressed: preview.canOpen
+            onPressed: preview.canOpen && !submitting
                 ? () => _openConfirm(context, preview)
                 : null,
+            loading: submitting,
             density: VitDensity.compact,
             variant: side == TradeFuturesSide.long
                 ? VitCtaButtonVariant.success
                 : VitCtaButtonVariant.danger,
             child: Text(
-              preview.canOpen
+              submitting
+                  ? 'Đang gửi lệnh…'
+                  : preview.canOpen
                   ? 'Xem lại & xác nhận'
                   : 'Nhập ký quỹ để tiếp tục',
             ),

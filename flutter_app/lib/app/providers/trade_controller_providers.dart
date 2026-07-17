@@ -16,12 +16,7 @@ final tradeReadModelControllerProvider = Provider<TradeRepository>((ref) {
   return ref.watch(tradeRepositoryProvider);
 });
 
-typedef TradeLeverageControllerRequest = ({String pairId, int leverage});
 typedef TradeMarginControllerRequest = ({String pairId, bool pairRouteVariant});
-typedef TradeFuturesOrderControllerRequest = ({
-  String pairId,
-  TradeFuturesOrderDraft draft,
-});
 
 final tradeScreenProvider = Provider.family<TradeScreenSnapshot, String>(
   (ref, pairId) => ref.watch(tradeRepositoryProvider).getTrade(pairId: pairId),
@@ -53,31 +48,18 @@ final tradeOrderControllerProvider = NotifierProvider.autoDispose
       TradeOrderControllerRequest
     >(TradeOrderController.new);
 
-final tradeLeverageControllerProvider =
-    Provider.family<TradeLeverageController, TradeLeverageControllerRequest>((
-      ref,
-      request,
-    ) {
-      final repository = ref.watch(tradeRepositoryProvider);
-      final snapshot = repository.getFuturesLeverage(pairId: request.pairId);
-      final leverage = TradeLeverageController.sanitize(request.leverage);
-      final leverageRequest = TradeFuturesLeverageRequest(
-        pairId: request.pairId,
-        leverage: leverage,
-        exampleMargin: snapshot.exampleMargin,
-      );
-      return TradeLeverageController(
-        repository: repository,
-        state: TradeLeverageViewState(
-          snapshot: snapshot,
-          request: leverageRequest,
-          preview: repository.previewFuturesLeverage(leverageRequest),
-        ),
-      );
-    });
+/// STATE-S22: Notifier theo ADR-001, family key thu về `String pairId` —
+/// nấc đòn bẩy là state trong Notifier, không còn nằm trong key (trước đây
+/// mỗi nấc slider tạo một element cache riêng — leak allowlist S24).
+final tradeLeverageControllerProvider = NotifierProvider.autoDispose
+    .family<TradeLeverageController, TradeLeverageViewState, String>(
+      TradeLeverageController.new,
+    );
 
-final tradeMarginControllerProvider =
-    Provider.family<TradeMarginController, TradeMarginControllerRequest>((
+/// Read-model thuần (không có mutation) — giữ Provider theo chuẩn AGENTS.md;
+/// autoDispose để member theo request không tích lũy.
+final tradeMarginControllerProvider = Provider.autoDispose
+    .family<TradeMarginController, TradeMarginControllerRequest>((
       ref,
       request,
     ) {
@@ -92,18 +74,10 @@ final tradeMarginControllerProvider =
       );
     });
 
-final tradeFuturesOrderControllerProvider = Provider.autoDispose
-    .family<TradeFuturesOrderController, TradeFuturesOrderControllerRequest>((
-      ref,
-      request,
-    ) {
-      final repository = ref.watch(tradeRepositoryProvider);
-      return TradeFuturesOrderController(
-        repository: repository,
-        state: TradeFuturesOrderViewState(
-          snapshot: repository.getFutures(pairId: request.pairId),
-          draft: request.draft,
-          preview: repository.previewFuturesOrder(request.draft),
-        ),
-      );
-    });
+/// STATE-S22: Notifier theo ADR-001 (mirror tradeOrderControllerProvider).
+final tradeFuturesOrderControllerProvider = NotifierProvider.autoDispose
+    .family<
+      TradeFuturesOrderController,
+      TradeFuturesOrderViewState,
+      TradeFuturesOrderControllerRequest
+    >(TradeFuturesOrderController.new);

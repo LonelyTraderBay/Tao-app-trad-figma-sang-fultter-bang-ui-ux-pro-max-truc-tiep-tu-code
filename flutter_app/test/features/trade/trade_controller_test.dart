@@ -176,48 +176,33 @@ void main() {
   test(
     'Trade leverage controller clamps leverage and submits previewed risk',
     () async {
-      final repository = const MockTradeRepository(loadDelay: Duration.zero);
-      final snapshot = repository.getFuturesLeverage(pairId: 'btcusdt');
-      final request = TradeFuturesLeverageRequest(
-        pairId: 'btcusdt',
-        leverage: 25,
-        exampleMargin: snapshot.exampleMargin,
-      );
-      final controller = TradeLeverageController(
-        repository: repository,
-        state: TradeLeverageViewState(
-          snapshot: snapshot,
-          request: request,
-          preview: repository.previewFuturesLeverage(request),
-        ),
-      );
+      const repository = MockTradeRepository(loadDelay: Duration.zero);
+      final container = containerWith(repository);
+      final provider = tradeLeverageControllerProvider('btcusdt');
+      final subscription = container.listen(provider, (_, _) {});
+      addTearDown(subscription.close);
+      final controller = container.read(provider.notifier);
+
       expect(controller.sanitizeLeverage(150), 100);
       expect(controller.sanitizeLeverage(0), 1);
-      expect(controller.state.preview.showRiskTips, isTrue);
+      // build() seed từ snapshot.currentLeverage của read-model.
+      expect(container.read(provider).request.leverage, 10);
+
+      controller.setLeverage(25);
+      expect(container.read(provider).request.leverage, 25);
+      expect(container.read(provider).preview.showRiskTips, isTrue);
       expect(controller.canSubmit, isTrue);
       expect(controller.validationMessage(), isNull);
-      expect(
-        TradeLeverageController(
-          repository: repository,
-          state: TradeLeverageViewState(
-            snapshot: snapshot,
-            request: const TradeFuturesLeverageRequest(
-              pairId: 'btcusdt',
-              leverage: 101,
-            ),
-            preview: repository.previewFuturesLeverage(
-              const TradeFuturesLeverageRequest(
-                pairId: 'btcusdt',
-                leverage: 100,
-              ),
-            ),
-          ),
-        ).validationMessage(),
-        'Leverage must stay between 1x and 100x.',
-      );
-      final receipt = await controller.submit();
-      expect(receipt.pairId, 'btcusdt');
-      expect(receipt.status, 'submitted');
+
+      // setLeverage sanitize tại nguồn — không thể vượt 100 qua API công khai.
+      controller.setLeverage(150);
+      expect(container.read(provider).request.leverage, 100);
+
+      await controller.submit();
+      final state = container.read(provider);
+      expect(state.status, TradeHighRiskFlowStatus.success);
+      expect(state.receipt?.pairId, 'btcusdt');
+      expect(state.receipt?.status, 'submitted');
     },
   );
 
@@ -257,7 +242,8 @@ void main() {
   test(
     'Trade futures order and orders history controllers own submit intents',
     () async {
-      final repository = const MockTradeRepository(loadDelay: Duration.zero);
+      const repository = MockTradeRepository(loadDelay: Duration.zero);
+      final container = containerWith(repository);
       final futures = repository.getFutures(pairId: 'btcusdt');
       final futuresDraft = TradeFuturesOrderDraft(
         pairId: futures.pair.id,
@@ -266,17 +252,34 @@ void main() {
         margin: 100,
         leverage: 10,
       );
-      final futuresController = TradeFuturesOrderController(
-        repository: repository,
-        state: TradeFuturesOrderViewState(
-          snapshot: futures,
-          draft: futuresDraft,
-          preview: repository.previewFuturesOrder(futuresDraft),
-        ),
+      final provider = tradeFuturesOrderControllerProvider((
+        pairId: futures.pair.id,
+        draft: futuresDraft,
+      ));
+      final statuses = <TradeHighRiskFlowStatus>[];
+      final subscription = container.listen(
+        provider,
+        (previous, next) => statuses.add(next.status),
+        fireImmediately: true,
       );
+      addTearDown(subscription.close);
+      final futuresController = container.read(provider.notifier);
+
       expect(futuresController.canSubmit, isTrue);
       expect(futuresController.validationMessage(), isNull);
-      expect((await futuresController.submit()).status, 'submitted');
+
+      await futuresController.submit();
+      final state = container.read(provider);
+      expect(state.status, TradeHighRiskFlowStatus.success);
+      expect(state.receipt?.orderId, 'FUT-DEMO-057');
+      expect(state.receipt?.status, 'submitted');
+      expect(statuses, const [
+        TradeHighRiskFlowStatus.ready,
+        TradeHighRiskFlowStatus.confirming,
+        TradeHighRiskFlowStatus.submitting,
+        TradeHighRiskFlowStatus.submitted,
+        TradeHighRiskFlowStatus.success,
+      ]);
 
       final ordersController = TradeOrdersHistoryController(
         repository: repository,
@@ -288,4 +291,31 @@ void main() {
       expect(ordersController.cancelOrder('ord001').action, 'cancel');
     },
   );
+
+  test('Trade futures order controller rẽ nhánh error khi repo ném', () async {
+    const repository = MockTradeRepository(
+      loadDelay: Duration.zero,
+      simulateError: true,
+    );
+    final container = containerWith(repository);
+    final futures = repository.getFutures(pairId: 'btcusdt');
+    final provider = tradeFuturesOrderControllerProvider((
+      pairId: futures.pair.id,
+      draft: TradeFuturesOrderDraft(
+        pairId: futures.pair.id,
+        side: TradeFuturesSide.long,
+        type: TradeFuturesOrderType.market,
+        margin: 100,
+        leverage: 10,
+      ),
+    ));
+    final subscription = container.listen(provider, (_, _) {});
+    addTearDown(subscription.close);
+
+    await container.read(provider.notifier).submit();
+    final state = container.read(provider);
+    expect(state.status, TradeHighRiskFlowStatus.error);
+    expect(state.errorMessage, 'Gửi lệnh futures thất bại. Vui lòng thử lại.');
+    expect(state.receipt, isNull);
+  });
 }

@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_high_risk_status_ui.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_detail_hero.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
@@ -47,30 +48,19 @@ class LeveragePage extends ConsumerStatefulWidget {
 }
 
 class _LeveragePageState extends ConsumerState<LeveragePage> {
-  late int _leverage;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(
-          tradeLeverageControllerProvider((pairId: widget.pairId, leverage: 1)),
-        )
-        .state
-        .snapshot;
-    _leverage = snapshot.currentLeverage;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
-      tradeLeverageControllerProvider((
-        pairId: widget.pairId,
-        leverage: _leverage,
-      )),
+    // STATE-S22: nấc đòn bẩy sống trong Notifier (family key = pairId) —
+    // hết dual-source `late int _leverage` + setState của bản cũ.
+    final leverageState = ref.watch(
+      tradeLeverageControllerProvider(widget.pairId),
     );
-    final snapshot = controller.state.snapshot;
-    final preview = controller.state.preview;
+    final notifier = ref.read(
+      tradeLeverageControllerProvider(widget.pairId).notifier,
+    );
+    final snapshot = leverageState.snapshot;
+    final preview = leverageState.preview;
+    final leverage = leverageState.request.leverage;
     final riskColor = Color(preview.riskColorHex);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
@@ -98,36 +88,49 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
         ),
         _RiskMeter(preview: preview, riskColor: riskColor),
         _LeverageSlider(
-          leverage: _leverage,
+          leverage: leverage,
           stops: snapshot.sliderStops,
           riskColor: riskColor,
-          onChanged: _setLeverage,
+          onChanged: notifier.setLeverage,
         ),
         _PresetGrid(
           presets: snapshot.presets,
-          active: _leverage,
-          onChanged: _setLeverage,
+          active: leverage,
+          onChanged: notifier.setLeverage,
         ),
         _ImpactCard(margin: snapshot.exampleMargin, preview: preview),
-        _WarningCard(preview: preview),
+        _WarningCard(
+          preview: preview,
+          status: leverageState.status,
+          errorMessage: leverageState.errorMessage,
+        ),
         if (preview.showRiskTips) const _RiskTipsCard(),
         _ConfirmButton(
-          leverage: _leverage,
-          onPressed: () => _confirm(controller),
+          leverage: leverage,
+          submitting: leverageState.status.isBusy,
+          onPressed: _confirm,
         ),
       ],
     );
   }
 
-  void _setLeverage(int leverage) {
-    setState(() => _leverage = TradeLeverageController.sanitize(leverage));
-  }
-
-  Future<void> _confirm(TradeLeverageController controller) async {
-    // Await tối thiểu theo ADR-001; máy trạng thái đầy đủ là STATE-S22.
-    await controller.submit();
+  Future<void> _confirm() async {
+    final provider = tradeLeverageControllerProvider(widget.pairId);
+    await ref.read(provider.notifier).submit();
     if (!mounted) return;
-    _returnToFutures();
+    final state = ref.read(provider);
+    if (state.status == TradeHighRiskFlowStatus.success) {
+      _returnToFutures();
+      return;
+    }
+    showVitNoticeSheet(
+      context: context,
+      title: 'Điều chỉnh đòn bẩy thất bại',
+      message:
+          state.errorMessage ??
+          'Không điều chỉnh được đòn bẩy. Vui lòng thử lại.',
+      variant: VitBannerVariant.error,
+    );
   }
 
   void _returnToFutures() {

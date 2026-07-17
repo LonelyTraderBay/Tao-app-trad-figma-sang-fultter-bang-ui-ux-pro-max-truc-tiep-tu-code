@@ -23,8 +23,9 @@ void main() {
         // fixed by PERF-HN1 (2026-07-16): now .autoDispose.family, and
         // their draft key types (TradeOrderDraft/TradeFuturesOrderDraft)
         // gained value equality — no longer need an allowlist entry.
-        'lib/app/providers/trade_controller_providers.dart:tradeLeverageControllerProvider',
-        'lib/app/providers/trade_controller_providers.dart:tradeMarginControllerProvider',
+        // tradeLeverageControllerProvider / tradeMarginControllerProvider
+        // fixed by STATE-S22 (2026-07-17): leverage thành NotifierProvider
+        // family key String; margin thêm .autoDispose.
         'lib/app/providers/p2p_controller_providers.dart:p2pHomeProvider',
         'lib/app/providers/p2p_controller_providers.dart:p2pExpressConfirmProvider',
         'lib/app/providers/p2p_controller_providers.dart:p2pTaxReportingProvider',
@@ -136,9 +137,9 @@ void main() {
       // Controller read-model thuần (không match marker ghi) được phép giữ
       // Provider const theo đúng chuẩn AGENTS.md.
       const allowlist = {
+        // tradeLeverageControllerProvider + tradeFuturesOrderControllerProvider
+        // đã thành NotifierProvider ở STATE-S22 (2026-07-17) — xóa khỏi baseline.
         'lib/app/providers/trade_controller_providers.dart:tradeOrdersHistoryControllerProvider',
-        'lib/app/providers/trade_controller_providers.dart:tradeLeverageControllerProvider',
-        'lib/app/providers/trade_controller_providers.dart:tradeFuturesOrderControllerProvider',
         'lib/app/providers/trade_bots_controller_providers.dart:tradeBotEmergencyStopControllerProvider',
         'lib/app/providers/trade_bots_controller_providers.dart:tradeBotSecuritySettingsControllerProvider',
         'lib/app/providers/trade_copy_controller_providers.dart:tradeActiveCopiesControllerProvider',
