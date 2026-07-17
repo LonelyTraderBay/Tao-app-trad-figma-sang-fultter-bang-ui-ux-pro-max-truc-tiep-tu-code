@@ -254,6 +254,17 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Entry-Back-Navigation-Audit.csv
           if-no-files-found: error
 
+      - name: Duplicate private widget artifact is current
+        run: dart run tool/duplicate_private_widget_audit.dart --check
+
+      - name: Upload duplicate private widget audit report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: duplicate-private-widget-audit
+          path: docs/02_FLUTTER_MIGRATION/audits/VitTrade-Duplicate-Private-Widget-Audit.csv
+          if-no-files-found: error
+
   guardrails:
     # Toàn bộ test/quality + router contracts + golden trong MỘT bước quét
     # thư mục — guardrail mới tự động được phủ, không cần nhớ thêm step
@@ -292,6 +303,10 @@ jobs:
           test/quality
           test/app/router
           test/features/home/golden
+          test/features/trade/golden
+          test/features/wallet/golden
+          test/features/p2p/golden
+          test/features/earn/golden
           --reporter=compact
 
   tests:
