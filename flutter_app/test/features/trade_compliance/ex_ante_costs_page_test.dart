@@ -83,7 +83,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-105 ExAnteCostsPage',
-      semanticLabel: 'SC-105 ExAnteCostsPage',
+      semanticLabel: 'Công bố chi phí dự kiến trước khi đầu tư',
     );
     expectFirstViewportVisible(
       tester,

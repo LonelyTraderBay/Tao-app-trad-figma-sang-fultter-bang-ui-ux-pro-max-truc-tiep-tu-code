@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'RegulatoryReportsDashboardPage',
-      semanticLabel: 'SC-094 RegulatoryReportsDashboardPage',
+      semanticLabel: 'Bảng báo cáo tuân thủ quy định',
     );
     expectFirstViewportVisible(
       tester,

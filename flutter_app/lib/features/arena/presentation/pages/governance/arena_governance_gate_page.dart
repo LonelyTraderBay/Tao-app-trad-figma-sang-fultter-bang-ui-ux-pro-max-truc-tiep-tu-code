@@ -113,7 +113,9 @@ class _ArenaGovernanceGatePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-188 ArenaGovernanceGatePage',
+      semanticLabel:
+          'Xác nhận và publish thử thách - bước cuối trong Arena Studio',
+      semanticIdentifier: 'SC-188',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

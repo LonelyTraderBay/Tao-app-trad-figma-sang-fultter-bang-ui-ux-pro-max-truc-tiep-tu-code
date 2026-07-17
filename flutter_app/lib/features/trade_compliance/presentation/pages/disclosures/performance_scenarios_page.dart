@@ -58,7 +58,8 @@ class _PerformanceScenariosPageState
     return VitTradeHubScaffold(
       title: 'Performance Scenarios',
       subtitle: 'Potential Outcomes',
-      semanticLabel: 'SC-109 PerformanceScenariosPage',
+      semanticLabel: 'Các kịch bản hiệu suất đầu tư có thể xảy ra',
+      semanticIdentifier: 'SC-109',
       contentKey: PerformanceScenariosPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

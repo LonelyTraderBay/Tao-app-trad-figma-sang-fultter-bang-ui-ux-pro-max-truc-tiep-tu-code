@@ -44,7 +44,8 @@ class P2PDisputesPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-222 P2PDisputesPage',
+      semanticLabel: 'Tranh chấp P2P',
+      semanticIdentifier: 'SC-222',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

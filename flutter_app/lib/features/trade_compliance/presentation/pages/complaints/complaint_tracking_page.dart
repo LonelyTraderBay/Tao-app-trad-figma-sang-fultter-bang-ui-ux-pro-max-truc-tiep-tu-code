@@ -53,7 +53,8 @@ class ComplaintTrackingPage extends ConsumerWidget {
         .getComplaintTracking(complaintId: complaintId);
     return VitTradeHubScaffold(
       title: 'Complaint ${snapshot.complaintId}',
-      semanticLabel: 'SC-113 ComplaintTrackingPage',
+      semanticLabel: 'Theo dõi tiến trình xử lý khiếu nại',
+      semanticIdentifier: 'SC-113',
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       onBack: () => goBackOrFallback(

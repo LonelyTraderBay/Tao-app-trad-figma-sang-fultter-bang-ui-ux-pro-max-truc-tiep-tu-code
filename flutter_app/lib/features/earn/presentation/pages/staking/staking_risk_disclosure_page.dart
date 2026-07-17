@@ -86,7 +86,8 @@ class _StakingRiskDisclosurePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-354 StakingRiskDisclosurePage',
+      semanticLabel: 'Công bố rủi ro staking theo từng danh mục',
+      semanticIdentifier: 'SC-354',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

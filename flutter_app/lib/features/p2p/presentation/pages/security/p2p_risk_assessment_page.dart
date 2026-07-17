@@ -55,7 +55,8 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-271 P2PRiskAssessmentPage',
+      semanticLabel: 'Đánh giá rủi ro P2P',
+      semanticIdentifier: 'SC-271',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

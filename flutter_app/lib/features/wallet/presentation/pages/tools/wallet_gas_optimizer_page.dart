@@ -73,7 +73,8 @@ class _WalletGasOptimizerPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-149 WalletGasOptimizerPage',
+      semanticLabel: 'Tối ưu phí gas giao dịch trên mạng',
+      semanticIdentifier: 'SC-149',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

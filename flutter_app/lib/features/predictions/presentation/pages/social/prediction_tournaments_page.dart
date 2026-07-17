@@ -68,7 +68,8 @@ class _PredictionTournamentsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-042 PredictionTournamentsPage',
+      semanticLabel: 'Giải đấu dự đoán',
+      semanticIdentifier: 'SC-042',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

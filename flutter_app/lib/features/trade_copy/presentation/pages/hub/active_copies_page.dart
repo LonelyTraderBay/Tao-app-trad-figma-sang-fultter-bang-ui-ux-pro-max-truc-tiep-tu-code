@@ -64,7 +64,8 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
       children: [
         VitTradeHubScaffold(
           title: 'Copy đang chạy',
-          semanticLabel: 'SC-066 ActiveCopiesPage',
+          semanticLabel: 'Copy đang chạy',
+          semanticIdentifier: 'SC-066',
           contentKey: ActiveCopiesPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           onBack: () => goBackOrFallback(

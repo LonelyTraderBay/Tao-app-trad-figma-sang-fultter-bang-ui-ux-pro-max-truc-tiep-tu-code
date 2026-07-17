@@ -74,7 +74,8 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
   Widget build(BuildContext context) {
     return VitTradeHubScaffold(
       title: 'Cài đặt giao dịch',
-      semanticLabel: 'SC-052 TradeSettingsPage',
+      semanticLabel: 'Cài đặt giao dịch',
+      semanticIdentifier: 'SC-052',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(
         context,

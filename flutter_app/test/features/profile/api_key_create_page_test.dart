@@ -102,7 +102,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ApiKeyCreatePage',
-      semanticLabel: 'SC-162 ApiKeyCreatePage',
+      semanticLabel: 'Tạo API Key mới',
     );
     expectFirstViewportVisible(
       tester,

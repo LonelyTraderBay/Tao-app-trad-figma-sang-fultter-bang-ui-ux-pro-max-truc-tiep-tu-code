@@ -144,7 +144,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-150 WalletTokenApprovalPage',
-      semanticLabel: 'SC-150 WalletTokenApprovalPage',
+      semanticLabel: 'Phê duyệt token - xem và thu hồi quyền truy cập',
     );
     expectActionableInFirstViewport(
       tester,

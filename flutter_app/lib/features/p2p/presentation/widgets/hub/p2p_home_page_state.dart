@@ -37,7 +37,8 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-282 P2PHomePage',
+      semanticLabel: 'Trang chủ giao dịch P2P',
+      semanticIdentifier: 'SC-282',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

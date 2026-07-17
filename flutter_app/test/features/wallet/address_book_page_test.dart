@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'AddressBookPage',
-      semanticLabel: 'SC-144 AddressBookPage',
+      semanticLabel: 'Sổ địa chỉ - quản lý địa chỉ ví đã lưu',
     );
     expectActionableInFirstViewport(
       tester,

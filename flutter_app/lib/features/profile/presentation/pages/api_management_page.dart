@@ -74,7 +74,8 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-163 ApiManagementPage',
+      semanticLabel: 'Quản lý API',
+      semanticIdentifier: 'SC-163',
       child: Material(
         color: _apiBackground,
         child: VitAutoHideHeaderScaffold(

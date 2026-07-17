@@ -65,7 +65,8 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
     return VitTradeDetailScaffold(
       title: 'Emergency Stop',
       subtitle: 'Dừng khẩn cấp tất cả bot đang chạy',
-      semanticLabel: 'SC-121 BotEmergencyStopPage',
+      semanticLabel: 'Dừng khẩn cấp toàn bộ bot giao dịch',
+      semanticIdentifier: 'SC-121',
       contentKey: BotEmergencyStopPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       bottomInset: scrollEndClearance,

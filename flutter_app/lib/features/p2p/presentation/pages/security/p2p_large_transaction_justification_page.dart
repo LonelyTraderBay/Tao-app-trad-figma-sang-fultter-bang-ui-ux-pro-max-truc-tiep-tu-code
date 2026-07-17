@@ -86,7 +86,8 @@ class _P2PLargeTransactionJustificationPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-270 P2PLargeTransactionJustificationPage',
+      semanticLabel: 'Giải trình giao dịch lớn P2P',
+      semanticIdentifier: 'SC-270',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

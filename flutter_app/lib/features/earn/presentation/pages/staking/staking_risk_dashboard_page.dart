@@ -53,7 +53,8 @@ class StakingRiskDashboardPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-381 StakingRiskDashboardPage',
+      semanticLabel: 'Bảng điều khiển rủi ro staking — tổng quan và cảnh báo',
+      semanticIdentifier: 'SC-381',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

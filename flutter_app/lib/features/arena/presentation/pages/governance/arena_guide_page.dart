@@ -83,7 +83,9 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-209 ArenaGuidePage',
+      semanticLabel:
+          'Hướng dẫn sử dụng Arena - mẹo, an toàn và câu hỏi thường gặp',
+      semanticIdentifier: 'SC-209',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

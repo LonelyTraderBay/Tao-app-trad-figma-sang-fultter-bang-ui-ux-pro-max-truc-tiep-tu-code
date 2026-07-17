@@ -98,7 +98,9 @@ class _PredictionDataIntegrationPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-043 PredictionDataIntegrationPage',
+      semanticLabel:
+          'Tích hợp dữ liệu dự đoán: nguồn dữ liệu, khóa API và webhook',
+      semanticIdentifier: 'SC-043',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

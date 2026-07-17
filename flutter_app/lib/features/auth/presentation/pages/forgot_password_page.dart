@@ -233,7 +233,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return VitPageLayout(
-      semanticLabel: 'SC-005 ForgotPasswordPage',
+      semanticLabel: 'Quên mật khẩu',
+      semanticIdentifier: 'SC-005',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Quên mật khẩu',

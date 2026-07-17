@@ -71,7 +71,9 @@ class _PredictionEventCalendarPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-039 PredictionEventCalendarPage',
+      semanticLabel:
+          'Lịch sự kiện dự đoán: theo dõi ngày đóng và các yếu tố tác động',
+      semanticIdentifier: 'SC-039',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -69,7 +69,8 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-203 ArenaBlockedUsersPage',
+      semanticLabel: 'Danh sách người dùng đã chặn trong Open Arena',
+      semanticIdentifier: 'SC-203',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

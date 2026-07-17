@@ -98,7 +98,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-149 WalletGasOptimizerPage',
-      semanticLabel: 'SC-149 WalletGasOptimizerPage',
+      semanticLabel: 'Tối ưu phí gas giao dịch trên mạng',
     );
     expectFirstViewportVisible(
       tester,

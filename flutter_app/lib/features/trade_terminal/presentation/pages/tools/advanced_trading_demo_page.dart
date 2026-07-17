@@ -61,7 +61,8 @@ class _AdvancedTradingDemoPageState
         VitTradeHubScaffold(
           title: 'Giao dịch nâng cao',
           subtitle: 'Vị thế & lệnh',
-          semanticLabel: 'SC-088 AdvancedTradingDemoPage',
+          semanticLabel: 'Giao dịch nâng cao',
+          semanticIdentifier: 'SC-088',
           contentKey: AdvancedTradingDemoPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           onBack: () => goBackOrFallback(

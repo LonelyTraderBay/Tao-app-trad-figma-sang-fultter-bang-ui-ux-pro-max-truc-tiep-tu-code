@@ -78,7 +78,8 @@ class _P2PSelfieVerificationPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: '$screenContract P2PSelfieVerificationPage',
+      semanticLabel: isFaceMatchRoute ? 'So khớp khuôn mặt' : 'Xác minh selfie',
+      semanticIdentifier: screenContract,
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -22,7 +22,8 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-397 OnboardingFlow',
+      semanticLabel: 'Giới thiệu ứng dụng',
+      semanticIdentifier: 'SC-397',
       child: Material(
         color: AppColors.bg,
         child: blocking

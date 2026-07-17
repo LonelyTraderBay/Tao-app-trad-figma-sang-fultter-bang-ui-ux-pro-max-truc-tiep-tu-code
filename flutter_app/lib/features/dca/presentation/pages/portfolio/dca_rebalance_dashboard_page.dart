@@ -44,7 +44,8 @@ class DCARebalanceDashboard extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-171 DCARebalanceDashboard',
+      semanticLabel: 'Bảng điều khiển cân bằng lại danh mục DCA',
+      semanticIdentifier: 'SC-171',
       child: VitAutoHideHeaderScaffold(
         header: VitTopChrome(
           type: VitTopChromeType.detail,

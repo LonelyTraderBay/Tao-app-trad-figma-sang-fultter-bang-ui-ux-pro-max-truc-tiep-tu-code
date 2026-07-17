@@ -85,7 +85,9 @@ class _PredictionAdvancedChartPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-041 PredictionAdvancedChartPage',
+      semanticLabel:
+          'Biểu đồ nâng cao của sự kiện dự đoán: nến giá, chỉ báo kỹ thuật và phân tích',
+      semanticIdentifier: 'SC-041',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

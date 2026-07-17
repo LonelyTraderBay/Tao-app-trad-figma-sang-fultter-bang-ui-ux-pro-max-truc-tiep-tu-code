@@ -87,7 +87,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-385 StakingEmergencyActionsPage',
-      semanticLabel: 'SC-385 StakingEmergencyActionsPage',
+      semanticLabel: 'Hành động khẩn cấp cần xác nhận',
     );
     expectActionableInFirstViewport(
       tester,

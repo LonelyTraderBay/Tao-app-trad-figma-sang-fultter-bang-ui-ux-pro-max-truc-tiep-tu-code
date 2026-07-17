@@ -109,7 +109,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-167 PredictionsPortfolioPage',
-      semanticLabel: 'SC-167 PredictionsPortfolioPage',
+      semanticLabel: 'Danh mục dự đoán',
     );
     expectActionableInFirstViewport(
       tester,
@@ -168,7 +168,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-031 PredictionsPortfolioPage',
-      semanticLabel: 'SC-031 PredictionsPortfolioPage',
+      semanticLabel: 'Danh mục dự đoán',
     );
     expectActionableInFirstViewport(
       tester,

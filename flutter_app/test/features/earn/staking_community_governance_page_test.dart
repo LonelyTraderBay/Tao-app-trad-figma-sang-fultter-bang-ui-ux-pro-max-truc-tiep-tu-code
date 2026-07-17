@@ -95,7 +95,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-388 StakingCommunityGovernancePage',
-      semanticLabel: 'SC-388 StakingCommunityGovernancePage',
+      semanticLabel: 'Quản trị cộng đồng stake',
     );
     expectFirstViewportVisible(
       tester,

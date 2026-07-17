@@ -74,7 +74,8 @@ class _ArenaUniversalPresetLibraryPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-187 ArenaUniversalPresetLibraryPage',
+      semanticLabel: 'Thư viện preset Arena Studio cho thử thách bằng điểm',
+      semanticIdentifier: 'SC-187',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

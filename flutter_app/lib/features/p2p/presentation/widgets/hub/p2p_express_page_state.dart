@@ -42,7 +42,8 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
         MediaQuery.paddingOf(context).bottom;
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-211 P2PExpressPage',
+      semanticLabel: 'Giao dịch nhanh P2P',
+      semanticIdentifier: 'SC-211',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

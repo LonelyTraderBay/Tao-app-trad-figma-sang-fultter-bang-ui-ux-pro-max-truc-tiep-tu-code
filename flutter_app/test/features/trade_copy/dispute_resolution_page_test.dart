@@ -125,7 +125,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'DisputeResolutionPage',
-      semanticLabel: 'SC-082 DisputeResolutionPage',
+      semanticLabel: 'Giải quyết khiếu nại',
     );
     expectFirstViewportVisible(
       tester,

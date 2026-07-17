@@ -60,7 +60,8 @@ class _WalletTokenApprovalPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-150 WalletTokenApprovalPage',
+      semanticLabel: 'Phê duyệt token - xem và thu hồi quyền truy cập',
+      semanticIdentifier: 'SC-150',
       child: Material(
         color: walletTokenApprovalBackground,
         child: VitAutoHideHeaderScaffold(

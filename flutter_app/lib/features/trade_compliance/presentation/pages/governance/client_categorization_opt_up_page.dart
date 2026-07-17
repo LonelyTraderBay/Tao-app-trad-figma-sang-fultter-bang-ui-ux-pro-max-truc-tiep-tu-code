@@ -35,7 +35,9 @@ class _ClientOptUpRequestPageState
     return VitTradeDetailScaffold(
       title: 'Client Opt-Up Request',
       subtitle: 'MiFID II Classification',
-      semanticLabel: 'SC-099 ClientOptUpRequestPage',
+      semanticLabel:
+          'Yêu cầu nâng hạng lên khách hàng chuyên nghiệp (MiFID II)',
+      semanticIdentifier: 'SC-099',
       contentKey: ClientOptUpRequestPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

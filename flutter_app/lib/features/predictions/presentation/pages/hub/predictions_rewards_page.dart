@@ -86,7 +86,8 @@ class _PredictionsRewardsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-032 PredictionsRewardsPage',
+      semanticLabel: 'Phần thưởng hằng ngày của thị trường dự đoán',
+      semanticIdentifier: 'SC-032',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

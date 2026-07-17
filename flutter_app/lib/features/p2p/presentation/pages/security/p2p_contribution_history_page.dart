@@ -59,7 +59,8 @@ class _P2PContributionHistoryPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-242 P2PContributionHistoryPage',
+      semanticLabel: 'Lịch sử đóng góp bảo hiểm P2P',
+      semanticIdentifier: 'SC-242',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

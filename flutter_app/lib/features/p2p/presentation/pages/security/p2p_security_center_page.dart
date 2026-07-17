@@ -67,7 +67,8 @@ class P2PSecurityCenterPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-253 P2PSecurityCenterPage',
+      semanticLabel: 'Trung tâm bảo mật P2P',
+      semanticIdentifier: 'SC-253',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
@@ -217,7 +218,8 @@ class P2PWhitelistModePage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-404 P2PWhitelistModePage',
+      semanticLabel: 'Chế độ danh sách trắng P2P',
+      semanticIdentifier: 'SC-404',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

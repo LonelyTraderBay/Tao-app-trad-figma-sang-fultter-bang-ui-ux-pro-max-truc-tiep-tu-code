@@ -78,7 +78,9 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-359 StakingAnalyticsPage',
+      semanticLabel:
+          'Phân tích hiệu suất staking — lợi nhuận, APY và ROI theo thời gian',
+      semanticIdentifier: 'SC-359',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

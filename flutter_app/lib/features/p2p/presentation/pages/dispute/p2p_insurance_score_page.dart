@@ -43,7 +43,8 @@ class P2PInsuranceScorePage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-240 P2PInsuranceScorePage',
+      semanticLabel: 'Điểm bảo vệ P2P',
+      semanticIdentifier: 'SC-240',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

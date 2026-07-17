@@ -87,7 +87,8 @@ class _P2PAntiPhishingCodePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-256 P2PAntiPhishingCodePage',
+      semanticLabel: 'Mã chống lừa đảo P2P',
+      semanticIdentifier: 'SC-256',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

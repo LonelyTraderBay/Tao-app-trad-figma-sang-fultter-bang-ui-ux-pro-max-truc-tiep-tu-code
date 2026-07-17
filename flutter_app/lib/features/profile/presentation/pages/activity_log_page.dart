@@ -69,7 +69,8 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-161 ActivityLogPage',
+      semanticLabel: 'Nhật ký hoạt động tài khoản',
+      semanticIdentifier: 'SC-161',
       background: _activityBackground,
       header: VitHeader(
         title: 'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng',

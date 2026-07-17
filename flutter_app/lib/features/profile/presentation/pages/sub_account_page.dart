@@ -68,7 +68,8 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-166 SubAccountPage',
+      semanticLabel: 'Quản lý tài khoản phụ',
+      semanticIdentifier: 'SC-166',
       header: VitHeader(
         title: 'T\u00E0i kho\u1EA3n ph\u1EE5',
         subtitle: 'T\u00E0i kho\u1EA3n \u00B7 Profile',

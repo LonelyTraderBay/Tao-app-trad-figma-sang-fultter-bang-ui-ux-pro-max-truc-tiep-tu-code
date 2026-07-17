@@ -54,7 +54,8 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
     return VitTradeHubScaffold(
       title: 'Audit Trail',
       subtitle: 'MiFID II Record-Keeping',
-      semanticLabel: 'SC-115 AuditTrailPage',
+      semanticLabel: 'Nhật ký kiểm toán lưu trữ hồ sơ theo MiFID II',
+      semanticIdentifier: 'SC-115',
       contentKey: AuditTrailPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

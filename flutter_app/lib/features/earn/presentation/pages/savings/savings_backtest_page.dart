@@ -89,7 +89,8 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-349 SavingsBacktestPage',
+      semanticLabel: 'Mô phỏng đầu tư',
+      semanticIdentifier: 'SC-349',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

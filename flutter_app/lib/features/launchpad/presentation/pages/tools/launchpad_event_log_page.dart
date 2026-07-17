@@ -96,14 +96,16 @@ class _LaunchpadEventLogPageState extends ConsumerState<LaunchpadEventLogPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-307 LaunchpadEventLogPage',
+      semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
+      semanticIdentifier: 'SC-307',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-307 LaunchpadEventLogPage scroll surface',
+              semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
+              semanticIdentifier: 'SC-307',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Nhật ký sự kiện on-chain · Tham khảo rủi ro',

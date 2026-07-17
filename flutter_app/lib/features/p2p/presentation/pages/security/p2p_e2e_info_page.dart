@@ -61,7 +61,8 @@ class P2PE2EInfoPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-259 P2PE2EInfoPage',
+      semanticLabel: 'Mã hóa đầu cuối P2P',
+      semanticIdentifier: 'SC-259',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

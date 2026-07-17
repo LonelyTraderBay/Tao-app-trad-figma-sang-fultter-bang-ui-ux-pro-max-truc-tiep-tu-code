@@ -91,7 +91,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-068 CopyNotificationsPage',
-      semanticLabel: 'SC-068 CopyNotificationsPage',
+      semanticLabel: 'Thông báo',
     );
     expectActionableInFirstViewport(
       tester,

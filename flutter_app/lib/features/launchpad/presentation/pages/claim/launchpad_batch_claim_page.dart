@@ -81,14 +81,16 @@ class _LaunchpadBatchClaimPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-304 LaunchpadBatchClaimPage',
+      semanticLabel: 'Nhận thưởng hàng loạt Launchpad',
+      semanticIdentifier: 'SC-304',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: bottomInset,
-              semanticLabel: 'SC-304 LaunchpadBatchClaimPage scroll surface',
+              semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
+              semanticIdentifier: 'SC-304',
               header: VitHeader(
                 title: _step == _BatchClaimStep.success
                     ? 'Hoàn tất'

@@ -34,7 +34,8 @@ class SavingsRedeemPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-331 SavingsRedeemPage',
+      semanticLabel: 'Rút Tiết kiệm',
+      semanticIdentifier: 'SC-331',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

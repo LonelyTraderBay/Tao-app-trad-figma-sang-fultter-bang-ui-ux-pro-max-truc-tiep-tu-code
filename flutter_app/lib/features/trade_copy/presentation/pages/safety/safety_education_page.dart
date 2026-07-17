@@ -55,7 +55,8 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
 
     return VitTradeHubScaffold(
       title: 'An toàn & Bảo mật',
-      semanticLabel: 'SC-080 SafetyEducationPage',
+      semanticLabel: 'An toàn & Bảo mật',
+      semanticIdentifier: 'SC-080',
       contentKey: SafetyEducationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

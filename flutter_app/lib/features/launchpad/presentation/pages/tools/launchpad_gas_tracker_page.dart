@@ -103,14 +103,16 @@ class _LaunchpadGasTrackerPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-311 LaunchpadGasTrackerPage',
+      semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
+      semanticIdentifier: 'SC-311',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-311 LaunchpadGasTrackerPage scroll surface',
+              semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
+              semanticIdentifier: 'SC-311',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Theo dõi phí gas · Lập kế hoạch giao dịch',

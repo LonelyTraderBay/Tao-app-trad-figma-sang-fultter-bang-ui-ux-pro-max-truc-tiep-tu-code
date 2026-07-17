@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ClientMoneyProtectionPage',
-      semanticLabel: 'SC-102 ClientMoneyProtectionPage',
+      semanticLabel: 'Bảo vệ tiền của khách hàng theo quy định CASS 7',
     );
     expectFirstViewportVisible(
       tester,

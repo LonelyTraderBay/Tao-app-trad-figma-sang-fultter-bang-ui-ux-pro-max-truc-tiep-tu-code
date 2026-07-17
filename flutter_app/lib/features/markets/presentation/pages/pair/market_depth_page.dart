@@ -69,7 +69,8 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-019 MarketDepthPage',
+      semanticLabel: 'Độ sâu thị trường',
+      semanticIdentifier: 'SC-019',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

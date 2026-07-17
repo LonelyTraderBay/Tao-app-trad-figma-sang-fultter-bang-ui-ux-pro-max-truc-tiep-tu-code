@@ -38,12 +38,12 @@ void main() {
     return true;
   };
 
-  runZonedGuarded(
-    () => runApp(const VitTradeApp()),
-    (Object error, StackTrace stack) {
-      _globalErrorReporter.report(error, stack, context: 'runZonedGuarded');
-    },
-  );
+  runZonedGuarded(() => runApp(const VitTradeApp()), (
+    Object error,
+    StackTrace stack,
+  ) {
+    _globalErrorReporter.report(error, stack, context: 'runZonedGuarded');
+  });
 }
 
 void _disableDebugVisualOverlays() {

@@ -117,7 +117,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'PendingDepositsPage',
-      semanticLabel: 'SC-152 PendingDepositsPage',
+      semanticLabel: 'Nạp tiền đang chờ xác nhận',
     );
     expectActionableInFirstViewport(
       tester,
@@ -146,10 +146,7 @@ void main() {
     await tester.tap(find.byKey(PendingDepositsPage.copyKey('pd001')));
     await tester.pumpAndSettle();
     expect(find.text('\u0110\u00E3 ch\u00E9p'), findsOneWidget);
-    expect(
-      semanticsLabel('Đã sao chép mã giao dịch của USDT'),
-      findsOneWidget,
-    );
+    expect(semanticsLabel('Đã sao chép mã giao dịch của USDT'), findsOneWidget);
   });
 
   testWidgets('SC-152 refresh shows visible status feedback', (tester) async {

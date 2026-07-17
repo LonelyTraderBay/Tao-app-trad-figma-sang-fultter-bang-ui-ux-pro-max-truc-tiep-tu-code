@@ -58,7 +58,8 @@ class _BotStrategyComparePageState
     return VitTradeHubScaffold(
       title: 'Strategy Compare',
       subtitle: 'So sánh hiệu suất các chiến lược bot',
-      semanticLabel: 'SC-126 BotStrategyComparePage',
+      semanticLabel: 'So sánh chiến lược bot giao dịch',
+      semanticIdentifier: 'SC-126',
       contentKey: BotStrategyComparePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

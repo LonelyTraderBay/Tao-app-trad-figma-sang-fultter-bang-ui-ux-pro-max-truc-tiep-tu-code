@@ -105,7 +105,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-305 LaunchpadBridgeComparePage',
-      semanticLabel: 'SC-305 LaunchpadBridgeComparePage',
+      semanticLabel: 'So sánh route bridge trước khi chuyển',
     );
     expectActionableInFirstViewport(
       tester,

@@ -90,7 +90,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-195 VerifiedChallengesPage',
-      semanticLabel: 'SC-195 VerifiedChallengesPage',
+      semanticLabel:
+          'Xem trước tính năng Thử thách đã xác minh - đang chờ duyệt tuân thủ và KYC',
     );
     expectActionableInFirstViewport(
       tester,

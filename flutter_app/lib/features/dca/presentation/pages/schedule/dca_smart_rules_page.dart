@@ -56,7 +56,9 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-179 DCASmartRulesPage',
+      semanticLabel:
+          'Quy tắc DCA thông minh – tự động hóa mua theo điều kiện thị trường',
+      semanticIdentifier: 'SC-179',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Smart DCA Rules',

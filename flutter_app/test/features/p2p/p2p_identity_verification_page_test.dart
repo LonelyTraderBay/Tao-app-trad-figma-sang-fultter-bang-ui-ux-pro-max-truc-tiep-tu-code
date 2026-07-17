@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-249 P2PIdentityVerificationPage',
-      semanticLabel: 'SC-249 P2PIdentityVerificationPage',
+      semanticLabel: 'Xác minh danh tính P2P',
     );
     expectActionableInFirstViewport(
       tester,

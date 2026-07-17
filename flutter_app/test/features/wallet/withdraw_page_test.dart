@@ -129,7 +129,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-139 WithdrawPage',
-      semanticLabel: 'SC-139 WithdrawPage',
+      semanticLabel: 'Rút tiền',
     );
     expectActionableInFirstViewport(
       tester,

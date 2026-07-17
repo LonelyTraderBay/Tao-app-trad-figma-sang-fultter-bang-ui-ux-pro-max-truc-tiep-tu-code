@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-109 PerformanceScenariosPage',
-      semanticLabel: 'SC-109 PerformanceScenariosPage',
+      semanticLabel: 'Các kịch bản hiệu suất đầu tư có thể xảy ra',
     );
     expectFirstViewportVisible(
       tester,

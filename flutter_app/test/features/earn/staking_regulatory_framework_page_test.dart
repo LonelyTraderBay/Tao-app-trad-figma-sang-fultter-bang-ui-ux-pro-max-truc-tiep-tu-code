@@ -113,7 +113,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-373 StakingRegulatoryFrameworkPage',
-      semanticLabel: 'SC-373 StakingRegulatoryFrameworkPage',
+      semanticLabel: 'Khung pháp lý staking — giấy phép, bảo vệ và khiếu nại',
     );
     expectFirstViewportVisible(
       tester,

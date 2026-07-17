@@ -97,14 +97,16 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-313 LaunchpadMultisigPage',
+      semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
+      semanticIdentifier: 'SC-313',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-313 LaunchpadMultisigPage scroll surface',
+              semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
+              semanticIdentifier: 'SC-313',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Hàng đợi multisig · Xác nhận đa chữ ký',

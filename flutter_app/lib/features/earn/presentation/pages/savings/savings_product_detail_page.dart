@@ -46,7 +46,8 @@ class SavingsProductDetailPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-330 SavingsProductDetailPage',
+      semanticLabel: 'Chi tiết sản phẩm tiết kiệm',
+      semanticIdentifier: 'SC-330',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

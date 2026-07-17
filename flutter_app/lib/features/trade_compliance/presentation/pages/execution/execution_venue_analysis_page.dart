@@ -66,7 +66,8 @@ class _ExecutionVenueAnalysisPageState
           VitTradeHubScaffold(
             title: 'Execution Venue Analysis',
             subtitle: 'Detailed Comparison',
-            semanticLabel: 'SC-097 ExecutionVenueAnalysisPage',
+            semanticLabel: 'Phân tích chi tiết các sàn thực thi lệnh giao dịch',
+            semanticIdentifier: 'SC-097',
             contentKey: ExecutionVenueAnalysisPage.contentKey,
             shellRenderMode: widget.shellRenderMode,
             onBack: () => goBackOrFallback(

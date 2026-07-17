@@ -65,7 +65,8 @@ class _StakingRegulatoryFrameworkPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-373 StakingRegulatoryFrameworkPage',
+      semanticLabel: 'Khung pháp lý staking — giấy phép, bảo vệ và khiếu nại',
+      semanticIdentifier: 'SC-373',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

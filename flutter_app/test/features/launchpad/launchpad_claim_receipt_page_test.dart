@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-302 LaunchpadClaimReceiptPage',
-      semanticLabel: 'SC-302 LaunchpadClaimReceiptPage',
+      semanticLabel: 'Chi tiết phần thưởng và lịch vesting',
     );
     expectActionableInFirstViewport(
       tester,

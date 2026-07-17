@@ -63,7 +63,8 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
     return VitTradeHubScaffold(
       title: 'Cost Disclosure (Ex-Ante)',
       subtitle: 'Before You Invest',
-      semanticLabel: 'SC-105 ExAnteCostsPage',
+      semanticLabel: 'Công bố chi phí dự kiến trước khi đầu tư',
+      semanticIdentifier: 'SC-105',
       contentKey: ExAnteCostsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

@@ -57,7 +57,8 @@ class _StakingValidatorHealthMonitorPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-383 StakingValidatorHealthMonitorPage',
+      semanticLabel: 'Giám sát sức khỏe validator staking',
+      semanticIdentifier: 'SC-383',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

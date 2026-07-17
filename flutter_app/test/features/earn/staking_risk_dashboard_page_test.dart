@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-381 StakingRiskDashboardPage',
-      semanticLabel: 'SC-381 StakingRiskDashboardPage',
+      semanticLabel: 'Bảng điều khiển rủi ro staking — tổng quan và cảnh báo',
     );
     expectActionableInFirstViewport(
       tester,

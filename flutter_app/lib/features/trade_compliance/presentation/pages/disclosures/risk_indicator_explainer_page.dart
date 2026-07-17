@@ -42,7 +42,8 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Risk Indicator',
       subtitle: 'Summary Risk Indicator (SRI)',
-      semanticLabel: 'SC-110 RiskIndicatorExplainerPage',
+      semanticLabel: 'Giải thích chỉ số rủi ro tổng hợp (SRI) của sản phẩm',
+      semanticIdentifier: 'SC-110',
       contentKey: RiskIndicatorExplainerPage.contentKey,
       shellRenderMode: shellRenderMode,
       useCopyTradingInset: true,

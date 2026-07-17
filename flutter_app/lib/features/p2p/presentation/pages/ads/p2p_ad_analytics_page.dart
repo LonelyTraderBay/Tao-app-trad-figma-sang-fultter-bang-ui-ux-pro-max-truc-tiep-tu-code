@@ -75,7 +75,8 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-223 P2PAdAnalyticsPage',
+      semanticLabel: 'Phân tích quảng cáo P2P',
+      semanticIdentifier: 'SC-223',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

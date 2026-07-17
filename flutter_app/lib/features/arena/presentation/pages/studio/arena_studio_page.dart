@@ -74,7 +74,8 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-185 ArenaStudioPage',
+      semanticLabel: 'Tạo thử thách mới trong Arena Studio',
+      semanticIdentifier: 'SC-185',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

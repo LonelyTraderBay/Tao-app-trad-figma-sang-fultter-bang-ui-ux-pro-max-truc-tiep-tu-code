@@ -46,12 +46,14 @@ class LaunchpadIdoBridgePage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-299 LaunchpadIdoBridgePage',
+      semanticLabel: 'Bridge token để tham gia IDO',
+      semanticIdentifier: 'SC-299',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           bottomInset: bottomInset,
-          semanticLabel: 'SC-299 LaunchpadIdoBridgePage scroll surface',
+          semanticLabel: 'Bridge token IDO – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-299',
           header: VitHeader(
             title: snapshot.title,
             subtitle: snapshot.project == null

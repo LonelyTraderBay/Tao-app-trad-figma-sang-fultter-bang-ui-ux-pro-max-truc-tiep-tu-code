@@ -71,7 +71,9 @@ class _StakingAdvancedOrdersPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-366 StakingAdvancedOrdersPage',
+      semanticLabel:
+          'Lệnh stake nâng cao — đặt chốt lời, cắt lỗ tự động và xem lịch sử lệnh',
+      semanticIdentifier: 'SC-366',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

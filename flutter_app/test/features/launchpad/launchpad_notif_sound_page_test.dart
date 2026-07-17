@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-306 LaunchpadNotifSoundPage',
-      semanticLabel: 'SC-306 LaunchpadNotifSoundPage',
+      semanticLabel: 'Cài đặt âm thanh và thông báo Launchpad',
     );
     expectActionableInFirstViewport(
       tester,

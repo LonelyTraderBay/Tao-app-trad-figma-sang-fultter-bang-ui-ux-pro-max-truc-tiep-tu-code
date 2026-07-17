@@ -65,7 +65,8 @@ class _ExecutionQualityDemoPageState
         VitTradeHubScaffold(
           title: 'Chất lượng khớp lệnh',
           subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
-          semanticLabel: 'SC-061 ExecutionQualityDemoPage',
+          semanticLabel: 'Chất lượng khớp lệnh',
+          semanticIdentifier: 'SC-061',
           contentKey: ExecutionQualityDemoPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           onBack: () => goBackOrFallback(

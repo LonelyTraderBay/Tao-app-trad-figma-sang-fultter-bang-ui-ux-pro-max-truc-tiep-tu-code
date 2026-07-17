@@ -104,7 +104,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-170 DCARebalanceConfig',
-      semanticLabel: 'SC-170 DCARebalanceConfig',
+      semanticLabel: 'Cấu hình tự động cân bằng lại danh mục DCA',
     );
     expectActionableInFirstViewport(
       tester,

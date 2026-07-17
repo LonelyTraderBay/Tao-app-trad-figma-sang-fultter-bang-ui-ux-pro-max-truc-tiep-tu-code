@@ -169,7 +169,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     final isEmail = _contactType == _RegisterContactType.email;
 
     return VitPageLayout(
-      semanticLabel: 'SC-002 RegisterPage',
+      semanticLabel: 'Tạo tài khoản',
+      semanticIdentifier: 'SC-002',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Tạo tài khoản',

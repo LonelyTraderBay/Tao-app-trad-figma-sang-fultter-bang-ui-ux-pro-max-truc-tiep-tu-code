@@ -58,7 +58,8 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-335 SavingsGuidePage',
+      semanticLabel: 'Hướng dẫn Tiết kiệm',
+      semanticIdentifier: 'SC-335',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

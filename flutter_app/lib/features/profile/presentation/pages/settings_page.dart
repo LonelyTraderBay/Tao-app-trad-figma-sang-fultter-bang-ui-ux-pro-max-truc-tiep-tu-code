@@ -60,7 +60,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-160 SettingsPage',
+      semanticLabel: 'Cài đặt tài khoản',
+      semanticIdentifier: 'SC-160',
       header: VitHeader(
         title: 'C\u00E0i \u0111\u1EB7t',
         subtitle: 'C\u00E0i \u0111\u1EB7t \u00B7 Profile',

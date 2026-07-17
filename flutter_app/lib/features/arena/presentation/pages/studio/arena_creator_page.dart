@@ -75,7 +75,8 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-193 ArenaCreatorPage',
+      semanticLabel: 'Hồ sơ nhà sáng tạo (creator) trong Open Arena',
+      semanticIdentifier: 'SC-193',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

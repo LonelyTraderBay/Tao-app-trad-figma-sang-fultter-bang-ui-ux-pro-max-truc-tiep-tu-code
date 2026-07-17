@@ -68,7 +68,8 @@ class _P2PDisputeEvidencePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-219 P2PDisputeEvidencePage',
+      semanticLabel: 'Bằng chứng tranh chấp P2P',
+      semanticIdentifier: 'SC-219',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

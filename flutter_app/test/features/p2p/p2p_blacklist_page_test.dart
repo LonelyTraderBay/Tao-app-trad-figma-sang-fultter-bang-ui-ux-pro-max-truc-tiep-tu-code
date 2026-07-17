@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-277 P2PBlacklistPage',
-      semanticLabel: 'SC-277 P2PBlacklistPage',
+      semanticLabel: 'Danh sách chặn P2P',
     );
     expectActionableInFirstViewport(
       tester,

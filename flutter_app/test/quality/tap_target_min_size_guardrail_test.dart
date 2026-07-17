@@ -19,7 +19,9 @@ import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 void main() {
   Future<void> pumpCentered(WidgetTester tester, Widget child) {
     return tester.pumpWidget(
-      MaterialApp(home: Scaffold(body: Center(child: child))),
+      MaterialApp(
+        home: Scaffold(body: Center(child: child)),
+      ),
     );
   }
 

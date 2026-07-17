@@ -9,25 +9,24 @@ import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 /// OS-level font-scaling accessibility settings must never be silently
 /// neutralized by the app.
 void main() {
-  testWidgets(
-    'VitTradeApp clamps extreme OS text scaling to at most 1.3x',
-    (tester) async {
-      tester.platformDispatcher.textScaleFactorTestValue = 3.0;
-      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+  testWidgets('VitTradeApp clamps extreme OS text scaling to at most 1.3x', (
+    tester,
+  ) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 3.0;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
 
-      await tester.pumpWidget(
-        VitTradeApp(
-          routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
-        ),
-      );
-      await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      VitTradeApp(
+        routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      final scaler = MediaQuery.textScalerOf(
-        tester.element(find.byType(VitBottomNav)),
-      );
-      expect(scaler.scale(100), closeTo(130, 0.01));
-    },
-  );
+    final scaler = MediaQuery.textScalerOf(
+      tester.element(find.byType(VitBottomNav)),
+    );
+    expect(scaler.scale(100), closeTo(130, 0.01));
+  });
 
   testWidgets(
     'VitCtaButton label grows to fit larger OS text scaling instead of '

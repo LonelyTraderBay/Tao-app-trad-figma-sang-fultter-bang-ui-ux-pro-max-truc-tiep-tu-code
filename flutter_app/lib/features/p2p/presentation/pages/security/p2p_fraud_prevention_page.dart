@@ -82,7 +82,8 @@ class _P2PFraudPreventionPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-260 P2PFraudPreventionPage',
+      semanticLabel: 'Phòng chống gian lận P2P',
+      semanticIdentifier: 'SC-260',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

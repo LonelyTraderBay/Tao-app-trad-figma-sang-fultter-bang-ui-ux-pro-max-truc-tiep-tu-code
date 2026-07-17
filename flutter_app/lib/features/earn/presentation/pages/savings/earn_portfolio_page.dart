@@ -19,7 +19,8 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-333 SavingsPortfolioPage',
+      semanticLabel: 'Danh mục tiết kiệm',
+      semanticIdentifier: 'SC-333',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

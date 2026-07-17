@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-312 LaunchpadRebalancePage',
-      semanticLabel: 'SC-312 LaunchpadRebalancePage',
+      semanticLabel: 'Cân bằng lại danh mục đầu tư',
     );
     expectActionableInFirstViewport(
       tester,

@@ -99,7 +99,7 @@ void main() {
       expectRouteSemanticInFirstViewport(
         tester,
         routeName: 'AssetDetailPage',
-        semanticLabel: 'SC-147 AssetDetailPage',
+        semanticLabel: 'Chi tiết tài sản - số dư minh bạch',
       );
       expectActionableInFirstViewport(
         tester,

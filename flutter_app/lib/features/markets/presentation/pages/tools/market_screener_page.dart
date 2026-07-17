@@ -190,7 +190,8 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-015 MarketScreenerPage',
+      semanticLabel: 'Bộ lọc thị trường',
+      semanticIdentifier: 'SC-015',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

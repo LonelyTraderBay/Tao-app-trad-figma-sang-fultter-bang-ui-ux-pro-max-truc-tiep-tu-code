@@ -83,7 +83,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'PortfolioRiskAnalysisPage',
-      semanticLabel: 'SC-078 PortfolioRiskAnalysisPage',
+      semanticLabel: 'Phân tích rủi ro',
     );
     expectFirstViewportVisible(
       tester,

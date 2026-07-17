@@ -81,7 +81,8 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-276 P2PBlacklistAddPage',
+      semanticLabel: 'Thêm vào danh sách chặn P2P',
+      semanticIdentifier: 'SC-276',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

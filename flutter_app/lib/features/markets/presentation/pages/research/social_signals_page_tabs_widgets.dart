@@ -25,7 +25,8 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-025 SocialSignalsPage',
+      semanticLabel: 'Tín hiệu giao dịch',
+      semanticIdentifier: 'SC-025',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

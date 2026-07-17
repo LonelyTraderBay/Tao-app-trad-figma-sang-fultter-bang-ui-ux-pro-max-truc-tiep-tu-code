@@ -51,7 +51,8 @@ class StakingContingencyPlanPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-386 StakingContingencyPlanPage',
+      semanticLabel: 'Kế hoạch dự phòng và khôi phục earn',
+      semanticIdentifier: 'SC-386',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

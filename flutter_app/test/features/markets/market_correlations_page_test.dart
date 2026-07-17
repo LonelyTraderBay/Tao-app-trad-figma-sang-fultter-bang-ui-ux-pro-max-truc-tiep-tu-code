@@ -120,7 +120,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'MarketCorrelationsPage',
-      semanticLabel: 'SC-026 MarketCorrelationsPage',
+      semanticLabel: 'Tương quan thị trường',
     );
     expectFirstViewportVisible(
       tester,

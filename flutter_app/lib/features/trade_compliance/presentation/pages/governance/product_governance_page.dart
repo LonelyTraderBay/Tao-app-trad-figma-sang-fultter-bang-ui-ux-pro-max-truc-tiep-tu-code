@@ -63,7 +63,8 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
     return VitTradeHubScaffold(
       title: 'Product Governance',
       subtitle: 'MiFID II Oversight',
-      semanticLabel: 'SC-100 ProductGovernancePage',
+      semanticLabel: 'Quản trị sản phẩm và giám sát theo MiFID II',
+      semanticIdentifier: 'SC-100',
       contentKey: ProductGovernancePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

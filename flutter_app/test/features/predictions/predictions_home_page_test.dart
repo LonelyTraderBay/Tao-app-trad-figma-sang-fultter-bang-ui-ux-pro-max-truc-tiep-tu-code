@@ -109,7 +109,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-027 PredictionsHomePage',
-      semanticLabel: 'SC-027 PredictionsHomePage',
+      semanticLabel:
+          'Trang chủ thị trường dự đoán: xác suất và sự kiện đang mở',
     );
     expectFirstViewportVisible(
       tester,

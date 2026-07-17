@@ -79,7 +79,8 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-229 P2PReportMerchantPage',
+      semanticLabel: 'Báo cáo và chặn người bán P2P',
+      semanticIdentifier: 'SC-229',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -74,7 +74,8 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-360 StakingHistoryPage',
+      semanticLabel: 'Lịch sử Staking — tra cứu và lọc giao dịch stake',
+      semanticIdentifier: 'SC-360',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

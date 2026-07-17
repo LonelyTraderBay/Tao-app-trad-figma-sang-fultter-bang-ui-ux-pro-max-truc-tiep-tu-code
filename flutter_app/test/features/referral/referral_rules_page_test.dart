@@ -80,7 +80,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-288 ReferralRulesPage',
-      semanticLabel: 'SC-288 ReferralRulesPage',
+      semanticLabel: 'Quy tắc chương trình',
     );
     expectActionableInFirstViewport(
       tester,

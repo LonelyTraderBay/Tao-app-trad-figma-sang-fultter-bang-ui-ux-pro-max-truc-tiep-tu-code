@@ -54,7 +54,8 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
     return VitTradeHubScaffold(
       title: 'Equity Curve',
       subtitle: 'Đường cong vốn và so sánh thị trường',
-      semanticLabel: 'SC-130 BotEquityCurvePage',
+      semanticLabel: 'Đường cong vốn bot và so sánh với thị trường',
+      semanticIdentifier: 'SC-130',
       contentKey: BotEquityCurvePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

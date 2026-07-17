@@ -73,7 +73,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-157 EditProfilePage',
+      semanticLabel: 'Chỉnh sửa hồ sơ cá nhân',
+      semanticIdentifier: 'SC-157',
       background: _editBackground,
       header: VitHeader(
         title: 'Ch\u1EC9nh s\u1EEDa h\u1ED3 s\u01A1',

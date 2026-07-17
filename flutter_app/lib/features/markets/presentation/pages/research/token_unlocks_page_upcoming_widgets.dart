@@ -23,7 +23,8 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-024 TokenUnlocksPage',
+      semanticLabel: 'Mở khóa token',
+      semanticIdentifier: 'SC-024',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

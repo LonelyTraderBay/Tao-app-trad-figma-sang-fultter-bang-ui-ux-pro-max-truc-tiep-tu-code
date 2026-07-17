@@ -133,7 +133,8 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-045 TokenInfoPage',
+      semanticLabel: 'Thông tin token',
+      semanticIdentifier: 'SC-045',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

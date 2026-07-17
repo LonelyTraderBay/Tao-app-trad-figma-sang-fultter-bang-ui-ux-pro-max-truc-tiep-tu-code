@@ -88,7 +88,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ArenaFlowMapPage',
-      semanticLabel: 'SC-197 ArenaFlowMapPage',
+      semanticLabel:
+          'Sơ đồ luồng điều hướng Open Arena - route, node và checklist QA nội bộ',
     );
     expectFirstViewportVisible(
       tester,

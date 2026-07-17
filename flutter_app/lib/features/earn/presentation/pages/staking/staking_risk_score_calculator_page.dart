@@ -87,7 +87,8 @@ class _StakingRiskScoreCalculatorPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-384 StakingRiskScoreCalculatorPage',
+      semanticLabel: 'Máy tính điểm rủi ro staking theo kịch bản',
+      semanticIdentifier: 'SC-384',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

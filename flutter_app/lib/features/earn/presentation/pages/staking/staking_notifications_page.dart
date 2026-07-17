@@ -75,7 +75,8 @@ class _StakingNotificationsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-371 StakingNotificationsPage',
+      semanticLabel: 'Cảnh báo APY và sự kiện stake',
+      semanticIdentifier: 'SC-371',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

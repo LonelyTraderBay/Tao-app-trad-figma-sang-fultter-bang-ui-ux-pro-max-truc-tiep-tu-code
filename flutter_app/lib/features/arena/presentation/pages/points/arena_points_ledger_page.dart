@@ -68,7 +68,8 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-201 ArenaPointsLedgerPage',
+      semanticLabel: 'Lịch sử sổ điểm Arena Points trong Open Arena',
+      semanticIdentifier: 'SC-201',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

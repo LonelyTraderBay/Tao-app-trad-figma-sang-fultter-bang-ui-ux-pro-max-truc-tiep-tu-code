@@ -62,7 +62,8 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-369 StakingGuidePage',
+      semanticLabel: 'Hướng dẫn stake — APY ước tính có thể thay đổi',
+      semanticIdentifier: 'SC-369',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

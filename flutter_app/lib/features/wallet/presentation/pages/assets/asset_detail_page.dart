@@ -64,7 +64,8 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
     final bottomInset = _assetScrollBottomInset(context, mode);
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-147 AssetDetailPage',
+      semanticLabel: 'Chi tiết tài sản - số dư minh bạch',
+      semanticIdentifier: 'SC-147',
       background: _assetBackground,
       header: VitTopChrome(
         type: VitTopChromeType.detail,

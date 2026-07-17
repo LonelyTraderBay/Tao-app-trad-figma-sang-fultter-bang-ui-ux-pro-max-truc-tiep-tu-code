@@ -81,7 +81,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-199 ArenaTrustBreakdownPage',
-      semanticLabel: 'SC-199 ArenaTrustBreakdownPage',
+      semanticLabel: 'Chi tiết độ tin cậy (Trust Score) trong Open Arena',
     );
     expectActionableInFirstViewport(
       tester,

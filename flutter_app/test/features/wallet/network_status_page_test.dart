@@ -94,7 +94,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'NetworkStatusPage',
-      semanticLabel: 'SC-155 NetworkStatusPage',
+      semanticLabel: 'Trạng thái mạng - phí, độ trễ và tắc nghẽn',
     );
     expectActionableInFirstViewport(
       tester,

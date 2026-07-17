@@ -96,7 +96,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'DustConverterPage',
-      semanticLabel: 'SC-154 DustConverterPage',
+      semanticLabel: 'Chuyển đổi số dư nhỏ',
     );
     expectActionableInFirstViewport(
       tester,

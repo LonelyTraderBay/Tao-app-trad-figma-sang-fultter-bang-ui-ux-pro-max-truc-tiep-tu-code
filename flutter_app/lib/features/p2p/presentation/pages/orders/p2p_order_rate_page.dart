@@ -78,7 +78,8 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-213 P2POrderRatePage',
+      semanticLabel: 'Đánh giá giao dịch P2P',
+      semanticIdentifier: 'SC-213',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

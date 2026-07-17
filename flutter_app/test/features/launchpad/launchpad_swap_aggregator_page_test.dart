@@ -106,7 +106,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-314 LaunchpadSwapAggregatorPage',
-      semanticLabel: 'SC-314 LaunchpadSwapAggregatorPage',
+      semanticLabel: 'So sánh giá swap trên nhiều DEX',
     );
     expectActionableInFirstViewport(
       tester,

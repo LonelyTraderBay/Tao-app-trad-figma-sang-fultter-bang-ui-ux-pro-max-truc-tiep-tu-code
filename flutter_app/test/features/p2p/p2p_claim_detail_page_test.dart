@@ -107,7 +107,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-243 P2PClaimDetailPage',
-      semanticLabel: 'SC-243 P2PClaimDetailPage',
+      semanticLabel: 'Chi tiết yêu cầu bảo hiểm P2P',
     );
     expectFirstViewportVisible(
       tester,

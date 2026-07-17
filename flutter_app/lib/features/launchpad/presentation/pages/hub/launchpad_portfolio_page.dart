@@ -69,11 +69,13 @@ class _LaunchpadPortfolioPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-296 LaunchpadPortfolioPage',
+      semanticLabel: 'Danh mục dự án Launchpad đã tham gia',
+      semanticIdentifier: 'SC-296',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'SC-296 LaunchpadPortfolioPage scroll surface',
+          semanticLabel: 'Danh mục dự án Launchpad – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-296',
           header: VitHeader(
             title: snapshot.title,
             subtitle: snapshot.subtitle,

@@ -48,7 +48,8 @@ class StakingWebhooksPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-393 StakingWebhooksPage',
+      semanticLabel: 'Quản lý webhook thông báo sự kiện staking',
+      semanticIdentifier: 'SC-393',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

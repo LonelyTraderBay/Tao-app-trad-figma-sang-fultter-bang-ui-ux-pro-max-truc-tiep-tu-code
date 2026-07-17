@@ -46,7 +46,8 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-236 P2PPaymentMethodHistoryPage',
+      semanticLabel: 'Lịch sử thanh toán P2P',
+      semanticIdentifier: 'SC-236',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

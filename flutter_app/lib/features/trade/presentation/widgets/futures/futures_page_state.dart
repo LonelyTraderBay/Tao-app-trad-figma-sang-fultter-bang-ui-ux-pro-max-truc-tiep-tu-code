@@ -53,7 +53,8 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
         VitTradeSimpleShell(
           title: pair.symbol,
           subtitle: 'Hợp đồng tương lai',
-          semanticLabel: 'SC-057 FuturesPage',
+          semanticLabel: 'Giao dịch hợp đồng tương lai (Futures)',
+          semanticIdentifier: 'SC-057',
           contentKey: const Key('sc057_futures_scroll_content'),
           shellRenderMode: mode,
           showBack: true,

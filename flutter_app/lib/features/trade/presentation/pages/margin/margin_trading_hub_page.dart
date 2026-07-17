@@ -54,7 +54,8 @@ class MarginTradingHubPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Hub ký quỹ',
       subtitle: 'Công cụ · Tuân thủ',
-      semanticLabel: 'SC-090 MarginTradingHubPage',
+      semanticLabel: 'Trung tâm giao dịch ký quỹ',
+      semanticIdentifier: 'SC-090',
       contentKey: contentKey,
       shellRenderMode: mode,
       onBack: () => goBackOrFallback(

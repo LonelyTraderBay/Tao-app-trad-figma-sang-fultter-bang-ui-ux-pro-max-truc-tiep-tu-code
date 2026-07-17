@@ -96,14 +96,16 @@ class _LaunchpadDcaBuilderPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-316 LaunchpadDcaBuilderPage',
+      semanticLabel: 'Xây dựng chiến lược đầu tư định kỳ DCA',
+      semanticIdentifier: 'SC-316',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-316 LaunchpadDcaBuilderPage scroll surface',
+              semanticLabel: 'Xây dựng chiến lược đầu tư định kỳ DCA',
+              semanticIdentifier: 'SC-316',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Chiến lược DCA · Không cam kết lợi nhuận',

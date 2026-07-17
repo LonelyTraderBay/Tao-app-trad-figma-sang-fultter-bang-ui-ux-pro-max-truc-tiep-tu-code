@@ -28,7 +28,9 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-184 ArenaHomePage',
+      semanticLabel:
+          'Trang chủ Open Arena - khám phá và tham gia thử thách công bằng',
+      semanticIdentifier: 'SC-184',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

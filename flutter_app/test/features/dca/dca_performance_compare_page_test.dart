@@ -98,7 +98,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-178 DCAPerformanceComparePage',
-      semanticLabel: 'SC-178 DCAPerformanceComparePage',
+      semanticLabel: 'So sánh hiệu suất giữa đầu tư DCA và đầu tư một lần',
     );
     expectActionableInFirstViewport(
       tester,

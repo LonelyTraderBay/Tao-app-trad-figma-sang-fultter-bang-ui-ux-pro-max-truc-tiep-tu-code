@@ -18,7 +18,8 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-287 ReferralRewardsPage',
+      semanticLabel: 'Phần thưởng',
+      semanticIdentifier: 'SC-287',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

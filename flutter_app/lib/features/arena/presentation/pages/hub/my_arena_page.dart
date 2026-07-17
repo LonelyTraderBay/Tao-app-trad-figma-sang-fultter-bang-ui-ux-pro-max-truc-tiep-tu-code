@@ -84,9 +84,11 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: widget.contractScope == MyArenaContractScope.arena
-          ? 'SC-205 MyArenaPage'
-          : 'SC-168 MyArenaPage',
+      semanticLabel:
+          'Sân chơi của tôi - quản lý phòng, thử thách đã tham gia và lịch sử trong Open Arena',
+      semanticIdentifier: widget.contractScope == MyArenaContractScope.arena
+          ? 'SC-205'
+          : 'SC-168',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

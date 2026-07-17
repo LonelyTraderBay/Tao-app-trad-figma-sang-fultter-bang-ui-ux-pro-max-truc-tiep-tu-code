@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-298 LaunchpadStakingPage',
-      semanticLabel: 'SC-298 LaunchpadStakingPage',
+      semanticLabel: 'Stake token Launchpool và nhận phần thưởng',
     );
     expectActionableInFirstViewport(
       tester,

@@ -117,7 +117,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-056 ConvertPage',
-      semanticLabel: 'SC-056 ConvertPage',
+      semanticLabel: 'Chuyển đổi tài sản (Convert)',
     );
     expectFirstViewportVisible(
       tester,

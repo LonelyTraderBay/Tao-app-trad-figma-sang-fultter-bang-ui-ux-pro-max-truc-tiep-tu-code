@@ -51,7 +51,8 @@ class CopyProviderDetailPage extends ConsumerWidget {
     if (provider == null) {
       return VitTradeDetailScaffold(
         title: 'Không tìm thấy provider',
-        semanticLabel: 'SC-070 CopyProviderDetailPage not found',
+        semanticLabel: 'Không tìm thấy provider',
+        semanticIdentifier: 'SC-070',
         shellRenderMode: shellRenderMode,
         useCopyTradingInset: true,
         onBack: () => goBackOrFallback(
@@ -84,7 +85,8 @@ class CopyProviderDetailPage extends ConsumerWidget {
 
     return VitTradeDetailScaffold(
       title: provider.name,
-      semanticLabel: 'SC-070 CopyProviderDetailPage',
+      semanticLabel: 'Chi tiết provider',
+      semanticIdentifier: 'SC-070',
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       useCopyTradingInset: true,

@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-264 P2PWalletPage',
-      semanticLabel: 'SC-264 P2PWalletPage',
+      semanticLabel: 'Ví P2P',
     );
     expectActionableInFirstViewport(
       tester,

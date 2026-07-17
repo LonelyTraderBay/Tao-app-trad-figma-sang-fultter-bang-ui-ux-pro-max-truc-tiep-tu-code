@@ -49,7 +49,8 @@ class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-326 PerformanceMonitor',
+      semanticLabel: 'Công cụ theo dõi hiệu năng ứng dụng (nội bộ)',
+      semanticIdentifier: 'SC-326',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

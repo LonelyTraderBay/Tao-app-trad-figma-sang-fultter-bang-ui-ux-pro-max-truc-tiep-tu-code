@@ -43,7 +43,8 @@ class StakingForumPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-392 StakingForumPage',
+      semanticLabel: 'Diễn đàn cộng đồng stake',
+      semanticIdentifier: 'SC-392',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

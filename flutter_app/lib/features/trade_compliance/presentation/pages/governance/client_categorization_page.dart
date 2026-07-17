@@ -62,7 +62,8 @@ class _ClientCategorizationPageState
     return VitTradeHubScaffold(
       title: 'Client Categorization',
       subtitle: 'MiFID II Classification',
-      semanticLabel: 'SC-099 ClientCategorizationPage',
+      semanticLabel: 'Phân loại khách hàng theo quy định MiFID II',
+      semanticIdentifier: 'SC-099',
       contentKey: ClientCategorizationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

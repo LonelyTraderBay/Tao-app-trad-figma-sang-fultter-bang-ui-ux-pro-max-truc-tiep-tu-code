@@ -73,7 +73,8 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     return VitP2PFlowScaffold(
       title: '2FA cho P2P',
       subtitle: 'Bảo mật · P2P',
-      semanticLabel: 'SC-254 P2P2FASettingsPage',
+      semanticLabel: 'Cài đặt 2FA cho P2P',
+      semanticIdentifier: 'SC-254',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       children: [

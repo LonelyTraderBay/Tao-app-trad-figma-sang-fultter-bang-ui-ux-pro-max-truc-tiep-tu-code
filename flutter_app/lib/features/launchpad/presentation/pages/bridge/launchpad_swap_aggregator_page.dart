@@ -107,15 +107,16 @@ class _LaunchpadSwapAggregatorPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-314 LaunchpadSwapAggregatorPage',
+      semanticLabel: 'So sánh giá swap trên nhiều DEX',
+      semanticIdentifier: 'SC-314',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel:
-                  'SC-314 LaunchpadSwapAggregatorPage scroll surface',
+              semanticLabel: 'So sánh giá swap – vùng cuộn nội dung',
+              semanticIdentifier: 'SC-314',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'So sánh swap · Xác nhận route trước khi đổi',

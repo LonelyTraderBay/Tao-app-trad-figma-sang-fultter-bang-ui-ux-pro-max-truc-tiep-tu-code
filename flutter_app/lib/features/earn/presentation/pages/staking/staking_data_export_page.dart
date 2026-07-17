@@ -66,7 +66,8 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-394 StakingDataExportPage',
+      semanticLabel: 'Xuất dữ liệu stake và yield',
+      semanticIdentifier: 'SC-394',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

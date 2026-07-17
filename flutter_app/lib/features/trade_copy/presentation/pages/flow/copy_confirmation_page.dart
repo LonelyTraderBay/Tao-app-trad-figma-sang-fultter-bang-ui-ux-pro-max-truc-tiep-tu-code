@@ -64,7 +64,8 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
     if (snapshot.isNotFound) {
       return const VitPageLayout(
         variant: VitPageVariant.flush,
-        semanticLabel: 'SC-073 CopyConfirmationPage blank',
+        semanticLabel: 'Xác nhận Copy',
+        semanticIdentifier: 'SC-073',
         child: SizedBox.expand(),
       );
     }
@@ -73,7 +74,8 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
 
     return VitTradeDetailScaffold(
       title: 'Xác nhận Copy',
-      semanticLabel: 'SC-073 CopyConfirmationPage',
+      semanticLabel: 'Xác nhận Copy',
+      semanticIdentifier: 'SC-073',
       contentKey: CopyConfirmationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

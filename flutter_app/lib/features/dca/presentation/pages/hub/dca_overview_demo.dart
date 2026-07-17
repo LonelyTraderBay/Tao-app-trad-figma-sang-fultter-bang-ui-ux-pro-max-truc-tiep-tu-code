@@ -62,7 +62,8 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-400 DCAOverviewDemo',
+      semanticLabel: 'Demo thẻ tổng quan DCA với các kịch bản lãi, lỗ và lỗi',
+      semanticIdentifier: 'SC-400',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

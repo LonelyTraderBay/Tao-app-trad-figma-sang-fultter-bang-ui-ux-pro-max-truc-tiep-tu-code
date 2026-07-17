@@ -52,7 +52,8 @@ class _P2PSuspiciousActivityPageState
     return VitP2PFlowScaffold(
       title: 'Hoạt động đáng ngờ',
       subtitle: 'An toàn · P2P',
-      semanticLabel: 'SC-258 P2PSuspiciousActivityPage',
+      semanticLabel: 'Hoạt động đáng ngờ',
+      semanticIdentifier: 'SC-258',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       onRefresh: () async {

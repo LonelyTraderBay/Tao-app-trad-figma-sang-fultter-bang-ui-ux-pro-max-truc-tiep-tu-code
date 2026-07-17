@@ -112,14 +112,16 @@ class _LaunchpadLimitOrdersPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-315 LaunchpadLimitOrdersPage',
+      semanticLabel: 'Quản lý lệnh giới hạn giao dịch token',
+      semanticIdentifier: 'SC-315',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-315 LaunchpadLimitOrdersPage scroll surface',
+              semanticLabel: 'Quản lý lệnh giới hạn giao dịch token',
+              semanticIdentifier: 'SC-315',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Lệnh giới hạn · Xem trước trước khi đặt',

@@ -65,7 +65,8 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
         VitTradeHubScaffold(
           title: 'Trading Bots',
           subtitle: 'Tự động hóa giao dịch theo chiến lược',
-          semanticLabel: 'SC-059 TradingBotsPage',
+          semanticLabel: 'Bot giao dịch tự động',
+          semanticIdentifier: 'SC-059',
           contentKey: TradingBotsPage.contentKey,
           backKey: TradingBotsPage.backKey,
           shellRenderMode: widget.shellRenderMode,

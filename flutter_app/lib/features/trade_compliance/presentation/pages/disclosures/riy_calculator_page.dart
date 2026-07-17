@@ -85,7 +85,8 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
     return VitTradeHubScaffold(
       title: 'RIY Calculator',
       subtitle: 'Cost Impact Analysis',
-      semanticLabel: 'SC-106 RIYCalculatorPage',
+      semanticLabel: 'Máy tính mức giảm lợi suất do chi phí (RIY)',
+      semanticIdentifier: 'SC-106',
       contentKey: RIYCalculatorPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

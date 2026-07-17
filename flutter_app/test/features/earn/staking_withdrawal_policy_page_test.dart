@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-355 StakingWithdrawalPolicyPage',
-      semanticLabel: 'SC-355 StakingWithdrawalPolicyPage',
+      semanticLabel: 'Chính sách rút tiền staking',
     );
     expectActionableInFirstViewport(
       tester,

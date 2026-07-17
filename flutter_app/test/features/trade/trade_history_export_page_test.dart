@@ -104,7 +104,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'TradeHistoryExportPage',
-      semanticLabel: 'SC-054 TradeHistoryExportPage',
+      semanticLabel: 'Xuất lịch sử giao dịch',
     );
     expectFirstViewportVisible(
       tester,

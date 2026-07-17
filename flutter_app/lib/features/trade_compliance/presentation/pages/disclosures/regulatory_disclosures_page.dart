@@ -62,7 +62,8 @@ class _RegulatoryDisclosuresPageState
 
     return VitTradeHubScaffold(
       title: 'Regulatory Disclosures',
-      semanticLabel: 'SC-084 RegulatoryDisclosuresPage',
+      semanticLabel: 'Công bố thông tin quy định pháp lý',
+      semanticIdentifier: 'SC-084',
       contentKey: RegulatoryDisclosuresPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

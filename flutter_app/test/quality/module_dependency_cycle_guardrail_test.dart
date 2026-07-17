@@ -105,31 +105,28 @@ void main() {
     );
   });
 
-  test(
-    'trade_core does not gain new sibling import/export edges '
-    '(ARCH-A1 removes the existing 4)',
-    () {
-      // Baseline: trade_core -> {trade_terminal, trade_bots,
-      // trade_compliance, trade_copy}, all pre-existing entity re-exports
-      // from trade_controller.dart / trade_read_model.dart. This is a
-      // ratchet, not a hard ban, because ARCH-A1 (removing these) is a
-      // separate, larger GD2 task — this guardrail's job is to stop the
-      // count from growing while that fix is pending.
-      const maxTradeCoreSiblingEdges = 4;
+  test('trade_core does not gain new sibling import/export edges '
+      '(ARCH-A1 removes the existing 4)', () {
+    // Baseline: trade_core -> {trade_terminal, trade_bots,
+    // trade_compliance, trade_copy}, all pre-existing entity re-exports
+    // from trade_controller.dart / trade_read_model.dart. This is a
+    // ratchet, not a hard ban, because ARCH-A1 (removing these) is a
+    // separate, larger GD2 task — this guardrail's job is to stop the
+    // count from growing while that fix is pending.
+    const maxTradeCoreSiblingEdges = 4;
 
-      final edges = _buildFeatureGraph();
-      final siblingEdges = (edges['trade_core'] ?? const <String>{})
-          .where((to) => to != 'trade')
-          .toList();
+    final edges = _buildFeatureGraph();
+    final siblingEdges = (edges['trade_core'] ?? const <String>{})
+        .where((to) => to != 'trade')
+        .toList();
 
-      expect(
-        siblingEdges.length,
-        lessThanOrEqualTo(maxTradeCoreSiblingEdges),
-        reason:
-            'trade_core imports/exports a NEW sibling module '
-            '($siblingEdges) — trade_core is meant to be a leaf that '
-            'siblings depend on, not the reverse. See ARCH-A1.',
-      );
-    },
-  );
+    expect(
+      siblingEdges.length,
+      lessThanOrEqualTo(maxTradeCoreSiblingEdges),
+      reason:
+          'trade_core imports/exports a NEW sibling module '
+          '($siblingEdges) — trade_core is meant to be a leaf that '
+          'siblings depend on, not the reverse. See ARCH-A1.',
+    );
+  });
 }

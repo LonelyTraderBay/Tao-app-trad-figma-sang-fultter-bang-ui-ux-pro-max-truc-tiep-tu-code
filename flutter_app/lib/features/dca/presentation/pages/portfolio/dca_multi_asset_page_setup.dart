@@ -39,7 +39,9 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
         navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-177 DCAMultiAssetPage',
+      semanticLabel:
+          'Thiết lập DCA đa tài sản – phân bổ ngân sách, tần suất và tự động cân bằng',
+      semanticIdentifier: 'SC-177',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Multi-Asset DCA',

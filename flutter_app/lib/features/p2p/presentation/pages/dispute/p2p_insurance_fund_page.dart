@@ -81,7 +81,8 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
       children: [
         VitPageLayout(
           variant: VitPageVariant.flush,
-          semanticLabel: 'SC-238 P2PInsuranceFundPage',
+          semanticLabel: 'Quỹ bảo hiểm P2P',
+          semanticIdentifier: 'SC-238',
           child: Material(
             type: MaterialType.transparency,
             child: VitAutoHideHeaderScaffold(

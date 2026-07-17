@@ -69,7 +69,8 @@ class _RiskManagementDemoPageState
         VitTradeHubScaffold(
           title: 'Quản lý rủi ro',
           subtitle: 'OCO · Vị thế · Khối lượng',
-          semanticLabel: 'SC-060 RiskManagementDemoPage',
+          semanticLabel: 'Quản lý rủi ro',
+          semanticIdentifier: 'SC-060',
           contentKey: RiskManagementDemoPage.contentKey,
           backKey: RiskManagementDemoPage.backKey,
           shellRenderMode: widget.shellRenderMode,

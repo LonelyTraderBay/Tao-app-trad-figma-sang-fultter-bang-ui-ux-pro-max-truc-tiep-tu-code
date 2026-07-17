@@ -77,7 +77,8 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-350 SavingsAutoPilotPage',
+      semanticLabel: 'Chế độ tiết kiệm tự động',
+      semanticIdentifier: 'SC-350',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

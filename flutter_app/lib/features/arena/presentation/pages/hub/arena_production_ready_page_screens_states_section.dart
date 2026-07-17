@@ -20,7 +20,9 @@ class _ArenaProductionReadyPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-206 ArenaProductionReadyPage',
+      semanticLabel:
+          'Tổng hợp mức độ sẵn sàng phát hành Open Arena - màn hình, trạng thái và tài liệu bàn giao nội bộ',
+      semanticIdentifier: 'SC-206',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -70,7 +70,9 @@ class _StakingDeveloperConsolePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-396 StakingDeveloperConsolePage',
+      semanticLabel:
+          'Console API dành cho nhà phát triển — quản lý khóa API, nhật ký yêu cầu và tài liệu tích hợp staking',
+      semanticIdentifier: 'SC-396',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
@@ -481,4 +483,3 @@ Color _toneColor(String tone) {
     _ => AppColors.text1,
   };
 }
-

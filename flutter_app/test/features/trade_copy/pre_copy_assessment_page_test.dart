@@ -76,7 +76,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-071 PreCopyAssessmentPage',
-      semanticLabel: 'SC-071 PreCopyAssessmentPage',
+      semanticLabel: 'Đánh giá rủi ro trước khi copy',
     );
     expectActionableInFirstViewport(
       tester,

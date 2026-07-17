@@ -66,7 +66,8 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
         VitTradeHubScaffold(
           title: 'Công cụ nâng cao',
           subtitle: 'Thang giá · Hàng loạt · Phím tắt',
-          semanticLabel: 'SC-062 AdvancedToolsDemoPage',
+          semanticLabel: 'Công cụ nâng cao',
+          semanticIdentifier: 'SC-062',
           contentKey: AdvancedToolsDemoPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           onBack: () => goBackOrFallback(

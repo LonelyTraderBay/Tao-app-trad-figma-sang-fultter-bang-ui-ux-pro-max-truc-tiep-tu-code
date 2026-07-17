@@ -53,7 +53,8 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-353 StakingTermsPage',
+      semanticLabel: 'Điều khoản dịch vụ staking',
+      semanticIdentifier: 'SC-353',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

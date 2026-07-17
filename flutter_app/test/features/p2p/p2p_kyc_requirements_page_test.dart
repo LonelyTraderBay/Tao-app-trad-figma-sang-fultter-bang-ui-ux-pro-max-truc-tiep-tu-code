@@ -101,7 +101,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-247 P2PKycRequirementsPage',
-      semanticLabel: 'SC-247 P2PKycRequirementsPage',
+      semanticLabel: 'Yêu cầu KYC P2P',
     );
     expectActionableInFirstViewport(
       tester,

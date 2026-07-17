@@ -7,9 +7,7 @@ void main() {
   testWidgets('VitErrorFallbackScreen renders brand fallback copy', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      const MaterialApp(home: VitErrorFallbackScreen()),
-    );
+    await tester.pumpWidget(const MaterialApp(home: VitErrorFallbackScreen()));
 
     expect(find.text('Đã xảy ra lỗi'), findsOneWidget);
     expect(

@@ -91,7 +91,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-380 StakingProofOfReservesPage',
-      semanticLabel: 'SC-380 StakingProofOfReservesPage',
+      semanticLabel:
+          'Bằng chứng dự trữ staking — minh bạch tài sản và kiểm toán độc lập',
     );
     expectFirstViewportVisible(
       tester,

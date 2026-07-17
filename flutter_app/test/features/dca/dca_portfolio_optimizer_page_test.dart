@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-174 DCAPortfolioOptimizer',
-      semanticLabel: 'SC-174 DCAPortfolioOptimizer',
+      semanticLabel: 'Tối ưu hóa phân bổ danh mục đầu tư DCA',
     );
     expectActionableInFirstViewport(
       tester,

@@ -94,7 +94,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-018 DerivativesOverviewPage',
-      semanticLabel: 'SC-018 DerivativesOverviewPage',
+      semanticLabel: 'Phái sinh',
     );
     expectActionableInFirstViewport(
       tester,

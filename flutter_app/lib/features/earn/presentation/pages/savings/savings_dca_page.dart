@@ -64,7 +64,8 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-346 SavingsDCAPage',
+      semanticLabel: 'DCA Tiết kiệm',
+      semanticIdentifier: 'SC-346',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

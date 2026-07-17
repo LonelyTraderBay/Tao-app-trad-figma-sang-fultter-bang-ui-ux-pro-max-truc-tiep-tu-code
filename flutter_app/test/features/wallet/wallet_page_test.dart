@@ -123,7 +123,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-135',
-      semanticLabel: 'SC-135 WalletPage',
+      semanticLabel: 'Ví - số dư minh bạch, bảo mật đa lớp',
     );
     expectFirstViewportVisible(
       tester,

@@ -59,7 +59,9 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-358 StakingDashboardPage',
+      semanticLabel:
+          'Bảng điều khiển staking — hiệu suất, phân bổ tài sản và các vị thế đang stake',
+      semanticIdentifier: 'SC-358',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

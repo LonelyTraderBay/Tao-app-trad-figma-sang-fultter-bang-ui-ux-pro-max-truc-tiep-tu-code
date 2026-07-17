@@ -82,7 +82,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'BotDrawdownAnalyzerPage',
-      semanticLabel: 'SC-129 BotDrawdownAnalyzerPage',
+      semanticLabel: 'Phân tích mức sụt giảm vốn của bot',
     );
     expectFirstViewportVisible(
       tester,

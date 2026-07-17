@@ -68,11 +68,13 @@ class _LaunchpadBridgeOrderPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-303 LaunchpadBridgeOrderPage',
+      semanticLabel: 'Theo dõi trạng thái đơn bridge',
+      semanticIdentifier: 'SC-303',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'SC-303 LaunchpadBridgeOrderPage scroll surface',
+          semanticLabel: 'Đơn bridge – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-303',
           header: VitHeader(
             title: snapshot.title,
             subtitle:

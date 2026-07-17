@@ -67,7 +67,8 @@ class _BestExecutionReportsPageState
           VitTradeHubScaffold(
             title: 'Best Execution Reports',
             subtitle: 'RTS 27 / RTS 28 Compliance',
-            semanticLabel: 'SC-096 BestExecutionReportsPage',
+            semanticLabel: 'Báo cáo thực thi lệnh tốt nhất theo RTS 27/28',
+            semanticIdentifier: 'SC-096',
             contentKey: BestExecutionReportsPage.contentKey,
             shellRenderMode: widget.shellRenderMode,
             onBack: () => goBackOrFallback(

@@ -39,6 +39,7 @@ class VitP2PFlowScaffold extends StatelessWidget {
     required this.title,
     required this.children,
     this.semanticLabel,
+    this.semanticIdentifier,
     this.subtitle,
     this.contentKey,
     this.showBack = true,
@@ -57,6 +58,10 @@ class VitP2PFlowScaffold extends StatelessWidget {
   final String title;
   final List<Widget> children;
   final String? semanticLabel;
+
+  /// Internal screen code (e.g. `SC-007`) for tooling/debugging — see A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  final String? semanticIdentifier;
   final String? subtitle;
   final Key? contentKey;
   final bool showBack;
@@ -96,6 +101,7 @@ class VitP2PFlowScaffold extends StatelessWidget {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: semanticLabel,
+      semanticIdentifier: semanticIdentifier,
       child: Material(
         color: backgroundColor,
         child: VitAutoHideHeaderScaffold(

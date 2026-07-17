@@ -77,7 +77,8 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
         VitTradeHubScaffold(
           title: 'Tax Reporting',
           subtitle: 'Báo cáo thuế bot giao dịch',
-          semanticLabel: 'SC-133 BotTaxReportingPage',
+          semanticLabel: 'Báo cáo thuế cho giao dịch bot',
+          semanticIdentifier: 'SC-133',
           contentKey: BotTaxReportingPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           activeProductId: 'bots',

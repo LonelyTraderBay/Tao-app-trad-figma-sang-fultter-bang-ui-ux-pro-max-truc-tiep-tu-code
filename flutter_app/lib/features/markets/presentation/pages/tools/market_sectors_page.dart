@@ -75,8 +75,9 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: selectedSector == null
-          ? 'SC-011 MarketSectorsPage'
-          : 'SC-011 MarketSectorDetail',
+          ? 'Ngành thị trường'
+          : 'Chi tiết ngành thị trường',
+      semanticIdentifier: 'SC-011',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

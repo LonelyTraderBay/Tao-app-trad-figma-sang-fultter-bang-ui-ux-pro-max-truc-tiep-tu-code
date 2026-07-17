@@ -62,7 +62,8 @@ class _StakingInsuranceFundTransparencyPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-377 StakingInsuranceFundTransparencyPage',
+      semanticLabel: 'Quỹ bảo hiểm — không cam kết bồi thường 100%',
+      semanticIdentifier: 'SC-377',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

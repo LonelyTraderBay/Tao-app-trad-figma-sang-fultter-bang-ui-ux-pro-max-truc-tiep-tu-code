@@ -87,7 +87,8 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         .getDisputeResolution();
     return VitTradeHubScaffold(
       title: 'Dispute Resolution',
-      semanticLabel: 'SC-082 DisputeResolutionPage',
+      semanticLabel: 'Giải quyết khiếu nại',
+      semanticIdentifier: 'SC-082',
       contentKey: DisputeResolutionPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

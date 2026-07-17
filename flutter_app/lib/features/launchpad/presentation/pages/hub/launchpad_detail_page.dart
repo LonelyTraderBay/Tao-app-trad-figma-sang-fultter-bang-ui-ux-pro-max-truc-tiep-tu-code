@@ -47,12 +47,14 @@ class LaunchpadDetailPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-318 LaunchpadDetailPage',
+      semanticLabel: 'Chi tiết dự án Launchpad',
+      semanticIdentifier: 'SC-318',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           bottomInset: bottomInset,
-          semanticLabel: 'SC-318 LaunchpadDetailPage scroll surface',
+          semanticLabel: 'Chi tiết dự án – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-318',
           header: VitHeader(
             title: snapshot.title,
             subtitle: snapshot.project == null

@@ -72,7 +72,8 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-283 UnifiedSearchPage',
+      semanticLabel: 'Tìm kiếm',
+      semanticIdentifier: 'SC-283',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

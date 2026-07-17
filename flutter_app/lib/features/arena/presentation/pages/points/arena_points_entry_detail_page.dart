@@ -72,7 +72,8 @@ class _ArenaPointsEntryDetailPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-200 ArenaPointsEntryDetailPage',
+      semanticLabel: 'Chi tiết giao dịch điểm Arena Points trong Open Arena',
+      semanticIdentifier: 'SC-200',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

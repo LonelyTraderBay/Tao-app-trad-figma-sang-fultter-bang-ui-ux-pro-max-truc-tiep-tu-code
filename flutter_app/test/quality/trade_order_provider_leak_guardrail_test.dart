@@ -24,71 +24,65 @@ base class _CountingObserver extends ProviderObserver {
     if (identical(context.provider.from, tradeOrderControllerProvider)) {
       spotAddCount += 1;
     }
-    if (identical(
-      context.provider.from,
-      tradeFuturesOrderControllerProvider,
-    )) {
+    if (identical(context.provider.from, tradeFuturesOrderControllerProvider)) {
       futuresAddCount += 1;
     }
   }
 }
 
 void main() {
-  test(
-    'tradeOrderControllerProvider reuses its cache entry for two distinct '
-    'TradeOrderDraft instances with identical field values',
-    () {
-      final observer = _CountingObserver();
-      final container = ProviderContainer(observers: [observer]);
-      addTearDown(container.dispose);
+  test('tradeOrderControllerProvider reuses its cache entry for two distinct '
+      'TradeOrderDraft instances with identical field values', () {
+    final observer = _CountingObserver();
+    final container = ProviderContainer(observers: [observer]);
+    addTearDown(container.dispose);
 
-      // Non-const on purpose: the real widget builds a draft from runtime
-      // TextEditingController/state values every build, so `const` (which
-      // Dart canonicalizes to a single shared instance) would not
-      // reproduce the bug — two builds with the same on-screen amount must
-      // still yield two distinct object instances here.
-      TradeOrderDraft buildDraft(double amount) => TradeOrderDraft(
+    // Non-const on purpose: the real widget builds a draft from runtime
+    // TextEditingController/state values every build, so `const` (which
+    // Dart canonicalizes to a single shared instance) would not
+    // reproduce the bug — two builds with the same on-screen amount must
+    // still yield two distinct object instances here.
+    TradeOrderDraft buildDraft(double amount) => TradeOrderDraft(
+      pairId: 'btcusdt',
+      side: TradeOrderSide.buy,
+      type: TradeOrderType.market,
+      price: 65000,
+      amount: amount,
+    );
+
+    final draftA = buildDraft(0.5);
+    final draftB = buildDraft(0.5);
+    expect(identical(draftA, draftB), isFalse);
+    expect(draftA, equals(draftB));
+
+    container.read(
+      tradeOrderControllerProvider((pairId: 'btcusdt', draft: draftA)),
+    );
+    final afterFirst = observer.spotAddCount;
+    expect(afterFirst, 1);
+
+    container.read(
+      tradeOrderControllerProvider((pairId: 'btcusdt', draft: draftB)),
+    );
+
+    expect(
+      observer.spotAddCount,
+      afterFirst,
+      reason:
+          'tradeOrderControllerProvider cached a second element for a '
+          'value-equal draft — TradeOrderDraft value equality regressed.',
+    );
+
+    // A genuinely different amount is a genuinely different order and
+    // must still get its own cache entry.
+    container.read(
+      tradeOrderControllerProvider((
         pairId: 'btcusdt',
-        side: TradeOrderSide.buy,
-        type: TradeOrderType.market,
-        price: 65000,
-        amount: amount,
-      );
-
-      final draftA = buildDraft(0.5);
-      final draftB = buildDraft(0.5);
-      expect(identical(draftA, draftB), isFalse);
-      expect(draftA, equals(draftB));
-
-      container.read(
-        tradeOrderControllerProvider((pairId: 'btcusdt', draft: draftA)),
-      );
-      final afterFirst = observer.spotAddCount;
-      expect(afterFirst, 1);
-
-      container.read(
-        tradeOrderControllerProvider((pairId: 'btcusdt', draft: draftB)),
-      );
-
-      expect(
-        observer.spotAddCount,
-        afterFirst,
-        reason:
-            'tradeOrderControllerProvider cached a second element for a '
-            'value-equal draft — TradeOrderDraft value equality regressed.',
-      );
-
-      // A genuinely different amount is a genuinely different order and
-      // must still get its own cache entry.
-      container.read(
-        tradeOrderControllerProvider((
-          pairId: 'btcusdt',
-          draft: buildDraft(0.75),
-        )),
-      );
-      expect(observer.spotAddCount, afterFirst + 1);
-    },
-  );
+        draft: buildDraft(0.75),
+      )),
+    );
+    expect(observer.spotAddCount, afterFirst + 1);
+  });
 
   test(
     'tradeFuturesOrderControllerProvider reuses its cache entry for two '
@@ -98,13 +92,14 @@ void main() {
       final container = ProviderContainer(observers: [observer]);
       addTearDown(container.dispose);
 
-      TradeFuturesOrderDraft buildDraft(double margin) => TradeFuturesOrderDraft(
-        pairId: 'btcusdt',
-        side: TradeFuturesSide.long,
-        type: TradeFuturesOrderType.market,
-        margin: margin,
-        leverage: 10,
-      );
+      TradeFuturesOrderDraft buildDraft(double margin) =>
+          TradeFuturesOrderDraft(
+            pairId: 'btcusdt',
+            side: TradeFuturesSide.long,
+            type: TradeFuturesOrderType.market,
+            margin: margin,
+            leverage: 10,
+          );
 
       final draftA = buildDraft(100);
       final draftB = buildDraft(100);
@@ -112,19 +107,13 @@ void main() {
       expect(draftA, equals(draftB));
 
       container.read(
-        tradeFuturesOrderControllerProvider((
-          pairId: 'btcusdt',
-          draft: draftA,
-        )),
+        tradeFuturesOrderControllerProvider((pairId: 'btcusdt', draft: draftA)),
       );
       final afterFirst = observer.futuresAddCount;
       expect(afterFirst, 1);
 
       container.read(
-        tradeFuturesOrderControllerProvider((
-          pairId: 'btcusdt',
-          draft: draftB,
-        )),
+        tradeFuturesOrderControllerProvider((pairId: 'btcusdt', draft: draftB)),
       );
 
       expect(observer.futuresAddCount, afterFirst);

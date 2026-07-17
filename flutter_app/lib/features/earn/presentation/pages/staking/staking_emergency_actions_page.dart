@@ -47,7 +47,8 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-385 StakingEmergencyActionsPage',
+      semanticLabel: 'Hành động khẩn cấp cần xác nhận',
+      semanticIdentifier: 'SC-385',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

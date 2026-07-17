@@ -78,7 +78,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
     if (snapshot.isNotFound) {
       return const VitPageLayout(
         variant: VitPageVariant.flush,
-        semanticLabel: 'SC-072 CopyConfigurationPage blank',
+        semanticLabel: 'Cấu hình Copy',
+        semanticIdentifier: 'SC-072',
         child: SizedBox.expand(),
       );
     }
@@ -102,7 +103,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
 
     return VitTradeDetailScaffold(
       title: 'Cấu hình Copy',
-      semanticLabel: 'SC-072 CopyConfigurationPage',
+      semanticLabel: 'Cấu hình Copy',
+      semanticIdentifier: 'SC-072',
       contentKey: CopyConfigurationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

@@ -109,7 +109,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final showDemoLogin = ref.watch(appConfigProvider).enableMockData;
 
     return VitPageLayout(
-      semanticLabel: 'SC-001 LoginPage',
+      semanticLabel: 'Đăng nhập',
+      semanticIdentifier: 'SC-001',
       child: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(

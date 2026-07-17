@@ -142,13 +142,15 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-310 LaunchpadWebhooksPage',
+      semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
+      semanticIdentifier: 'SC-310',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              semanticLabel: 'SC-310 LaunchpadWebhooksPage scroll surface',
+              semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
+              semanticIdentifier: 'SC-310',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Webhook tích hợp · Chỉ dùng cho developer',

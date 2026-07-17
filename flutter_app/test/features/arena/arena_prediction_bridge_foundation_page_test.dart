@@ -92,7 +92,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ArenaPredictionBridgeFoundationPage',
-      semanticLabel: 'SC-207 ArenaPredictionBridgeFoundationPage',
+      semanticLabel:
+          'Nền tảng kết nối Arena và Dự đoán - nguyên tắc, ranh giới và ví dụ an toàn',
     );
     expectFirstViewportVisible(
       tester,

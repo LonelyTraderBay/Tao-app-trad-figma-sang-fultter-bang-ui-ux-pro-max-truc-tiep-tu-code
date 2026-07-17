@@ -98,7 +98,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'CopyAuditLogPage',
-      semanticLabel: 'SC-077 CopyAuditLogPage',
+      semanticLabel: 'Nhật ký kiểm toán copy',
     );
     expectFirstViewportVisible(
       tester,

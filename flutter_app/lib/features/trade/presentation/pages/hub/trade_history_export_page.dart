@@ -89,7 +89,8 @@ class _TradeHistoryExportPageState
       children: [
         VitTradeDetailScaffold(
           title: 'Xuất lịch sử giao dịch',
-          semanticLabel: 'SC-054 TradeHistoryExportPage',
+          semanticLabel: 'Xuất lịch sử giao dịch',
+          semanticIdentifier: 'SC-054',
           contentKey: TradeHistoryExportPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           bottomInset: scrollEndClearance,

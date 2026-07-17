@@ -135,7 +135,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-175 DCADynamicAmount',
-      semanticLabel: 'SC-175 DCADynamicAmount',
+      semanticLabel:
+          'Điều chỉnh số tiền DCA linh hoạt theo biến động thị trường',
     );
     expectActionableInFirstViewport(
       tester,

@@ -97,7 +97,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-187 ArenaUniversalPresetLibraryPage',
-      semanticLabel: 'SC-187 ArenaUniversalPresetLibraryPage',
+      semanticLabel: 'Thư viện preset Arena Studio cho thử thách bằng điểm',
     );
     expectActionableInFirstViewport(
       tester,

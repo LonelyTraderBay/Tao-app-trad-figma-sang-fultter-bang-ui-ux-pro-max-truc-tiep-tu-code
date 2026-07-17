@@ -99,7 +99,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-177 DCAMultiAssetPage',
-      semanticLabel: 'SC-177 DCAMultiAssetPage',
+      semanticLabel:
+          'Thiết lập DCA đa tài sản – phân bổ ngân sách, tần suất và tự động cân bằng',
     );
     expectActionableInFirstViewport(
       tester,

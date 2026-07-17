@@ -60,7 +60,8 @@ class _P2PInsuranceCertificatePageState
         MediaQuery.paddingOf(context).bottom;
 
     return VitP2PFlowScaffold(
-      semanticLabel: 'SC-239 P2PInsuranceCertificatePage',
+      semanticLabel: 'Chứng nhận bảo hiểm',
+      semanticIdentifier: 'SC-239',
       title: 'Chứng nhận bảo hiểm',
       subtitle: 'Bảo hiểm · P2P',
       onBack: () => context.go(AppRoutePaths.p2pInsurance),

@@ -74,9 +74,8 @@ class _DepositPageState extends ConsumerState<DepositPage> {
     return VitWalletDetailScaffold(
       title: 'Nạp ${snapshot.asset}',
       subtitle: 'Nạp tiền · Wallet',
-      semanticLabel: widget.assetScoped
-          ? 'SC-138 DepositPage Asset'
-          : 'SC-137 DepositPage',
+      semanticLabel: widget.assetScoped ? 'Nạp tiền theo tài sản' : 'Nạp tiền',
+      semanticIdentifier: widget.assetScoped ? 'SC-138' : 'SC-137',
       contentKey: DepositPage.contentKey,
       shellRenderMode: mode,
       onBack: () => context.go(AppRoutePaths.wallet),

@@ -60,7 +60,8 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-288 ReferralRulesPage',
+      semanticLabel: 'Quy tắc chương trình',
+      semanticIdentifier: 'SC-288',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

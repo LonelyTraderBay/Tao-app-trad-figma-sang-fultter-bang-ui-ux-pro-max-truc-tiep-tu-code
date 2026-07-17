@@ -83,7 +83,8 @@ class _SavingsNotificationPreferencesPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-345 SavingsNotificationPreferencesPage',
+      semanticLabel: 'Cài đặt thông báo',
+      semanticIdentifier: 'SC-345',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

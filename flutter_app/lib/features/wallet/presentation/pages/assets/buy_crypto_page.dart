@@ -80,7 +80,8 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
     return VitWalletDetailScaffold(
       title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
       subtitle: 'Giao dịch · Wallet',
-      semanticLabel: 'SC-145 BuyCryptoPage',
+      semanticLabel: 'Mua tiền mã hoá',
+      semanticIdentifier: 'SC-145',
       contentKey: BuyCryptoPage.contentKey,
       bottomInset: bottomInset,
       onBack: () => _confirming

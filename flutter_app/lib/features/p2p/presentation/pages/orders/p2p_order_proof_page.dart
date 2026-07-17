@@ -69,7 +69,8 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-215 P2POrderProofPage',
+      semanticLabel: 'Bằng chứng thanh toán đơn hàng P2P',
+      semanticIdentifier: 'SC-215',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

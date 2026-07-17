@@ -88,7 +88,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-278 P2PNotificationsSettingsPage',
-      semanticLabel: 'SC-278 P2PNotificationsSettingsPage',
+      semanticLabel: 'Cài đặt thông báo P2P',
     );
     expectActionableInFirstViewport(
       tester,

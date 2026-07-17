@@ -88,7 +88,8 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-399 DesignSystemPage',
+      semanticLabel: 'Hệ thống thiết kế (công cụ nội bộ)',
+      semanticIdentifier: 'SC-399',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

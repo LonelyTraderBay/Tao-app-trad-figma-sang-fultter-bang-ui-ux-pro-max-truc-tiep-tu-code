@@ -20,7 +20,8 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
     return VitP2PFlowScaffold(
       title: claim.claimCode,
       subtitle: 'Bảo hiểm · P2P',
-      semanticLabel: 'SC-243 P2PClaimDetailPage',
+      semanticLabel: 'Chi tiết yêu cầu bảo hiểm P2P',
+      semanticIdentifier: 'SC-243',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       headerActions: [

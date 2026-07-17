@@ -107,7 +107,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-301 LaunchpadReceiptPage',
-      semanticLabel: 'SC-301 LaunchpadReceiptPage',
+      semanticLabel: 'Biên lai đăng ký tham gia IDO',
     );
     expectFirstViewportVisible(
       tester,

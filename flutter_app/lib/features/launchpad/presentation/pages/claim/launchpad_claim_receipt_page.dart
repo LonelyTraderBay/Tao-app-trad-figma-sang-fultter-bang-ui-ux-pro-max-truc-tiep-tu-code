@@ -83,13 +83,15 @@ class _LaunchpadClaimReceiptPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-302 LaunchpadClaimReceiptPage',
+      semanticLabel: 'Chi tiết phần thưởng và lịch vesting',
+      semanticIdentifier: 'SC-302',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              semanticLabel: 'SC-302 LaunchpadClaimReceiptPage scroll surface',
+              semanticLabel: 'Phần thưởng Launchpad – vùng cuộn nội dung',
+              semanticIdentifier: 'SC-302',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: '${receipt.projectSymbol} · Vesting & nhận thưởng',

@@ -81,12 +81,14 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-308 LaunchpadABIDiffPage',
+      semanticLabel: 'So sánh thay đổi ABI hợp đồng thông minh',
+      semanticIdentifier: 'SC-308',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           bottomInset: scrollTailReserve,
-          semanticLabel: 'SC-308 LaunchpadABIDiffPage scroll surface',
+          semanticLabel: 'So sánh thay đổi ABI hợp đồng thông minh',
+          semanticIdentifier: 'SC-308',
           header: VitHeader(
             title: snapshot.title,
             subtitle: 'So sánh ABI contract · Xem trước thay đổi',

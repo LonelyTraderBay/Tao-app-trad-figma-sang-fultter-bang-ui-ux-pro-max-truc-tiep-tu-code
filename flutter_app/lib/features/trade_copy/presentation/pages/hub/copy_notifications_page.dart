@@ -59,7 +59,8 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
 
     return VitTradeDetailScaffold(
       title: 'Thông báo',
-      semanticLabel: 'SC-068 CopyNotificationsPage',
+      semanticLabel: 'Thông báo',
+      semanticIdentifier: 'SC-068',
       contentKey: CopyNotificationsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

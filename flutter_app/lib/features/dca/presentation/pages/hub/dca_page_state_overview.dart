@@ -19,7 +19,8 @@ class _DCAPageState extends ConsumerState<DCAPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-169 DCAPage',
+      semanticLabel: 'Mua tự động (DCA) – đầu tư định kỳ có kỷ luật',
+      semanticIdentifier: 'SC-169',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

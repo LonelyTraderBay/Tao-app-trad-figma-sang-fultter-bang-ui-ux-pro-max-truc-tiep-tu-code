@@ -59,7 +59,8 @@ class _ComplaintsHandlingPageState
     return VitTradeHubScaffold(
       title: 'Complaints Handling',
       subtitle: 'FCA Regulated Process',
-      semanticLabel: 'SC-111 ComplaintsHandlingPage',
+      semanticLabel: 'Xử lý khiếu nại theo quy trình được FCA quản lý',
+      semanticIdentifier: 'SC-111',
       contentKey: ComplaintsHandlingPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

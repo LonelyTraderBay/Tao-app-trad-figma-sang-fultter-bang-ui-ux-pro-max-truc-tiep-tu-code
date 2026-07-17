@@ -24,7 +24,8 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-023 AdvancedChartsPage',
+      semanticLabel: 'Phân tích kỹ thuật',
+      semanticIdentifier: 'SC-023',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

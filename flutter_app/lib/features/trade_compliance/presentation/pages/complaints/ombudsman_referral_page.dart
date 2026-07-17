@@ -42,7 +42,8 @@ class OmbudsmanReferralPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Financial Ombudsman',
       subtitle: 'Independent Dispute Resolution',
-      semanticLabel: 'SC-114 OmbudsmanReferralPage',
+      semanticLabel: 'Chuyển khiếu nại đến Cơ quan Thanh tra Tài chính độc lập',
+      semanticIdentifier: 'SC-114',
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       onBack: () => goBackOrFallback(

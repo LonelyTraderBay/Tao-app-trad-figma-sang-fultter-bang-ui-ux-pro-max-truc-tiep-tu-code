@@ -151,7 +151,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-186 ArenaSmartRuleBuilderPage',
-      semanticLabel: 'SC-186 ArenaSmartRuleBuilderPage',
+      semanticLabel:
+          'Đặt luật thử thách - bước xây dựng luật trong Arena Studio',
     );
     expectFirstViewportVisible(
       tester,

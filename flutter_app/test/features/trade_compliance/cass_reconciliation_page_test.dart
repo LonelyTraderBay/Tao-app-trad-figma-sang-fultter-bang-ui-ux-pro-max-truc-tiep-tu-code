@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-103 CASSReconciliationPage',
-      semanticLabel: 'SC-103 CASSReconciliationPage',
+      semanticLabel: 'Đối soát CASS: khớp tiền của khách hàng theo từng ngày',
     );
     expectFirstViewportVisible(
       tester,

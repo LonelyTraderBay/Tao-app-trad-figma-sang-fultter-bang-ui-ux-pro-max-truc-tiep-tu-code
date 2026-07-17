@@ -195,7 +195,8 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
   @override
   Widget build(BuildContext context) {
     return VitPageLayout(
-      semanticLabel: 'SC-004 TwoFASetupPage',
+      semanticLabel: 'Thiết lập 2FA',
+      semanticIdentifier: 'SC-004',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Thiết lập 2FA',

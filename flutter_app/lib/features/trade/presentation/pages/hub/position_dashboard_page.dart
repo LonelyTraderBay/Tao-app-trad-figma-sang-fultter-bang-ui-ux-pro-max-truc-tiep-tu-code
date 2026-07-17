@@ -47,7 +47,8 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
 
     return VitTradeHubScaffold(
       title: 'Vị thế đang mở',
-      semanticLabel: 'SC-053 PositionDashboardPage',
+      semanticLabel: 'Vị thế đang mở',
+      semanticIdentifier: 'SC-053',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(
         context,

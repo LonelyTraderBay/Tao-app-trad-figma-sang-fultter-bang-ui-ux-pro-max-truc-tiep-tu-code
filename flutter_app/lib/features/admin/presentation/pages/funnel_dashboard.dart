@@ -63,7 +63,8 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
         MediaQuery.paddingOf(context).bottom;
 
     return AdminDashboardPageShell(
-      semanticLabel: 'SC-183 FunnelDashboard',
+      semanticLabel: 'Bảng phân tích phễu chuyển đổi',
+      semanticIdentifier: 'SC-183',
       scrollKey: FunnelDashboard.contentKey,
       scrollBottom: scrollEndClearance,
       header: VitHeader(

@@ -132,7 +132,8 @@ class _PredictionEventDetailPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-030 PredictionEventDetailPage',
+      semanticLabel: 'Chi tiết sự kiện dự đoán: xác suất, vị thế và quy tắc',
+      semanticIdentifier: 'SC-030',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

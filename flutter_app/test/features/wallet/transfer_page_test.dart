@@ -102,7 +102,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'TransferPage',
-      semanticLabel: 'SC-146 TransferPage',
+      semanticLabel: 'Chuyển nội bộ',
     );
     expectActionableInFirstViewport(
       tester,

@@ -83,12 +83,14 @@ class _LaunchpadNotifSoundPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-306 LaunchpadNotifSoundPage',
+      semanticLabel: 'Cài đặt âm thanh và thông báo Launchpad',
+      semanticIdentifier: 'SC-306',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           bottomInset: scrollTailReserve,
-          semanticLabel: 'SC-306 LaunchpadNotifSoundPage scroll surface',
+          semanticLabel: 'Cài đặt âm thanh và thông báo Launchpad',
+          semanticIdentifier: 'SC-306',
           header: VitHeader(
             title: snapshot.title,
             subtitle: 'Cài đặt thông báo · Không ảnh hưởng tham gia IDO',

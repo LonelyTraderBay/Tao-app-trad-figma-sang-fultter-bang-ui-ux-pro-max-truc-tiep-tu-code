@@ -63,7 +63,8 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-013 MarketHeatmapPage',
+      semanticLabel: 'Bản đồ thị trường',
+      semanticIdentifier: 'SC-013',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -159,7 +159,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-376 StakingSuitabilityAssessmentPage',
-      semanticLabel: 'SC-376 StakingSuitabilityAssessmentPage',
+      semanticLabel: 'Đánh giá mức độ phù hợp trước khi staking',
     );
     expectActionableInFirstViewport(
       tester,

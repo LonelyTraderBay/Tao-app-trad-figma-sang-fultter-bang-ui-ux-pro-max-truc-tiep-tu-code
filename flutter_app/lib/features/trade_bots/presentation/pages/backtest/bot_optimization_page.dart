@@ -58,7 +58,8 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
         VitTradeDetailScaffold(
           title: 'Parameter Optimization',
           subtitle: 'Tối ưu tham số chiến lược bot',
-          semanticLabel: 'SC-127 BotOptimizationPage',
+          semanticLabel: 'Tối ưu hóa tham số chiến lược bot',
+          semanticIdentifier: 'SC-127',
           contentKey: BotOptimizationPage.contentKey,
           shellRenderMode: widget.shellRenderMode,
           bottomInset: scrollEndClearance,

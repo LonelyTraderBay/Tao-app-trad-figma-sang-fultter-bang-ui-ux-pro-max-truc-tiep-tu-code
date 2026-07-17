@@ -55,7 +55,8 @@ class WithdrawLimitsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-153 WithdrawLimitsPage',
+      semanticLabel: 'Hạn mức rút tiền theo cấp KYC',
+      semanticIdentifier: 'SC-153',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

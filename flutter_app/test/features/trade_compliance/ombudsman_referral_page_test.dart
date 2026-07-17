@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'OmbudsmanReferralPage',
-      semanticLabel: 'SC-114 OmbudsmanReferralPage',
+      semanticLabel: 'Chuyển khiếu nại đến Cơ quan Thanh tra Tài chính độc lập',
     );
     expectFirstViewportVisible(
       tester,

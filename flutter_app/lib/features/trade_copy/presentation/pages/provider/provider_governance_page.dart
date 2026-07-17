@@ -61,7 +61,8 @@ class _ProviderGovernancePageState
         children: [
           VitTradeHubScaffold(
             title: 'Provider Governance',
-            semanticLabel: 'SC-081 ProviderGovernancePage',
+            semanticLabel: 'Quản trị provider',
+            semanticIdentifier: 'SC-081',
             contentKey: ProviderGovernancePage.contentKey,
             shellRenderMode: widget.shellRenderMode,
             onBack: () => goBackOrFallback(

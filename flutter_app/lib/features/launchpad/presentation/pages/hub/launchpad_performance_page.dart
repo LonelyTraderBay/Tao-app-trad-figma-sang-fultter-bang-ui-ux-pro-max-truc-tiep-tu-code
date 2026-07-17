@@ -89,11 +89,13 @@ class _LaunchpadPerformancePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-297 LaunchpadPerformancePage',
+      semanticLabel: 'Hiệu suất lịch sử các dự án Launchpad',
+      semanticIdentifier: 'SC-297',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'SC-297 LaunchpadPerformancePage scroll surface',
+          semanticLabel: 'Hiệu suất Launchpad – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-297',
           header: VitHeader(
             title: snapshot.title,
             subtitle: snapshot.subtitle,

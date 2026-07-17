@@ -88,7 +88,8 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-170 DCARebalanceConfig',
+      semanticLabel: 'Cấu hình tự động cân bằng lại danh mục DCA',
+      semanticIdentifier: 'SC-170',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

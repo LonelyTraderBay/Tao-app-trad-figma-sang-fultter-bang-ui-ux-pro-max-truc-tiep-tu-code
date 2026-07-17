@@ -72,7 +72,8 @@ class _StakingValidatorSelectionPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-362 StakingValidatorSelectionPage',
+      semanticLabel: 'Chọn validator cho staking',
+      semanticIdentifier: 'SC-362',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

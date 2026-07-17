@@ -116,7 +116,8 @@ class AddressSavedState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageLayout(
-      semanticLabel: 'SC-143 AddressAddPage Success',
+      semanticLabel: 'Thêm địa chỉ mới - đã lưu thành công',
+      semanticIdentifier: 'SC-143',
       child: Material(
         color: addressAddBackground,
         child: Column(

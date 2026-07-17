@@ -88,7 +88,8 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-040 PredictionSocialPage',
+      semanticLabel: 'Thảo luận xã hội về sự kiện dự đoán',
+      semanticIdentifier: 'SC-040',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

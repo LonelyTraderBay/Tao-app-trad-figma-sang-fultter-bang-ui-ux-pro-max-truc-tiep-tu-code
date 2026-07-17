@@ -81,7 +81,7 @@ List<RouteBase> profileRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) => PredictionsPortfolioPage(
         shellRenderMode: shellRenderMode,
         backPath: AppRoutePaths.profile,
-        semanticLabel: 'SC-167 PredictionsPortfolioPage',
+        semanticIdentifier: 'SC-167',
       ),
     ),
     GoRoute(

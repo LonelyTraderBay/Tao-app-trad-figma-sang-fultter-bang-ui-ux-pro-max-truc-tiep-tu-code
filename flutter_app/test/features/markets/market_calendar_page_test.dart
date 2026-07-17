@@ -99,7 +99,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-017 MarketCalendarPage',
-      semanticLabel: 'SC-017 MarketCalendarPage',
+      semanticLabel: 'Lịch sự kiện',
     );
     expectActionableInFirstViewport(
       tester,

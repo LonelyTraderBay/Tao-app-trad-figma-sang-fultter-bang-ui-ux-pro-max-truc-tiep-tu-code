@@ -98,7 +98,8 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-194 ArenaLeaderboardPage',
+      semanticLabel: 'Bảng xếp hạng fair play trong Open Arena',
+      semanticIdentifier: 'SC-194',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

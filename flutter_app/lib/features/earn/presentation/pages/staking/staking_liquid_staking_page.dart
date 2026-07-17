@@ -84,7 +84,9 @@ class _StakingLiquidStakingPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-364 StakingLiquidStakingPage',
+      semanticLabel:
+          'Về Liquid Staking — stake, hoán đổi và quản lý token thanh khoản',
+      semanticIdentifier: 'SC-364',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

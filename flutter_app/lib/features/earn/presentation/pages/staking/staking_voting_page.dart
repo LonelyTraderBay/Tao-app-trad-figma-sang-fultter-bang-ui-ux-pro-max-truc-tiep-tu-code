@@ -53,7 +53,8 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-390 StakingVotingPage',
+      semanticLabel: 'Bỏ phiếu đề xuất staking',
+      semanticIdentifier: 'SC-390',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
@@ -400,4 +401,3 @@ Color _toneColor(String tone) {
       return AppColors.primary;
   }
 }
-

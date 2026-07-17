@@ -120,7 +120,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ProfilePage',
-      semanticLabel: 'SC-156 ProfilePage',
+      semanticLabel: 'Trang tài khoản: hồ sơ cá nhân, giới thiệu bạn bè và VIP',
     );
     expectFirstViewportVisible(
       tester,

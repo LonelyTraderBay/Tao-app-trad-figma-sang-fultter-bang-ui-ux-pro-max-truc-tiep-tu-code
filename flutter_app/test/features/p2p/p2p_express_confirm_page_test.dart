@@ -81,7 +81,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-210 P2PExpressConfirmPage',
-      semanticLabel: 'SC-210 P2PExpressConfirmPage',
+      semanticLabel: 'Xác nhận giao dịch nhanh P2P',
     );
     expectActionableInFirstViewport(
       tester,

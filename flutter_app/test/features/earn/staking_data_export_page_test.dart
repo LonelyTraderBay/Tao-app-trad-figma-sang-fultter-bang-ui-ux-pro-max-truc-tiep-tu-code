@@ -103,7 +103,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-394 StakingDataExportPage',
-      semanticLabel: 'SC-394 StakingDataExportPage',
+      semanticLabel: 'Xuất dữ liệu stake và yield',
     );
     expectActionableInFirstViewport(
       tester,

@@ -77,7 +77,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-351 SavingsLadderPage',
-      semanticLabel: 'SC-351 SavingsLadderPage',
+      semanticLabel: 'Thang đáo hạn tiết kiệm',
     );
     expectFirstViewportVisible(
       tester,

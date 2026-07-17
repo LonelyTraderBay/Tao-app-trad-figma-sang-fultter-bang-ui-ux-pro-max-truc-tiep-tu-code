@@ -62,7 +62,8 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-280 P2PGuidePage',
+      semanticLabel: 'Hướng dẫn P2P',
+      semanticIdentifier: 'SC-280',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

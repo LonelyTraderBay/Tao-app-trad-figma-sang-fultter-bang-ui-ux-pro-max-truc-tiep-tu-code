@@ -78,7 +78,8 @@ class _StakingEarningsCalendarPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-361 StakingEarningsCalendarPage',
+      semanticLabel: 'Lịch nhận lãi staking — xem sự kiện sắp tới và xuất lịch',
+      semanticIdentifier: 'SC-361',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

@@ -44,7 +44,8 @@ class DCAScheduleAnalytics extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-173 DCAScheduleAnalytics',
+      semanticLabel: 'Phân tích lịch mua DCA',
+      semanticIdentifier: 'SC-173',
       child: VitAutoHideHeaderScaffold(
         header: VitTopChrome(
           type: VitTopChromeType.detail,

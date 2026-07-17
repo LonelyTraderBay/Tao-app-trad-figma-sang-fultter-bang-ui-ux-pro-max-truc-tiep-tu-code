@@ -57,7 +57,8 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
         VitTradeHubScaffold(
           title: 'Lịch sử lệnh',
           subtitle: 'Lệnh · Trade',
-          semanticLabel: 'SC-050 OrdersHistoryPage',
+          semanticLabel: 'Lịch sử lệnh giao dịch',
+          semanticIdentifier: 'SC-050',
           shellRenderMode: widget.shellRenderMode,
           onBack: () => goBackOrFallback(
             context,

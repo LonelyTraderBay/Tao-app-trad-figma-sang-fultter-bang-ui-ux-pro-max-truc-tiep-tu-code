@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-053 PositionDashboardPage',
-      semanticLabel: 'SC-053 PositionDashboardPage',
+      semanticLabel: 'Vị thế đang mở',
     );
     expectFirstViewportVisible(
       tester,

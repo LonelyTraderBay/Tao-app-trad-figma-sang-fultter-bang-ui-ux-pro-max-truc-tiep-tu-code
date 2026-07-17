@@ -146,7 +146,8 @@ class BuySuccessState extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-145 BuyCryptoPage Success',
+      semanticLabel: 'Mua Crypto - đặt lệnh thành công',
+      semanticIdentifier: 'SC-145',
       child: Material(
         color: _buyBackground,
         child: VitAutoHideHeaderScaffold(

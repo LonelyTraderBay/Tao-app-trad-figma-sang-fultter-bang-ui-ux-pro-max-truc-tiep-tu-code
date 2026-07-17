@@ -82,7 +82,8 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
     return Stack(
       children: [
         VitP2PFlowScaffold(
-          semanticLabel: 'SC-237 P2PPaymentMethodsPage',
+          semanticLabel: 'Phương thức thanh toán',
+          semanticIdentifier: 'SC-237',
           title: 'Phương thức thanh toán',
           subtitle: 'Thanh toán · P2P',
           onBack: () => context.go(AppRoutePaths.p2p),

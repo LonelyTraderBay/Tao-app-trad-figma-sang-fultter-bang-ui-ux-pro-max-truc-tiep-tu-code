@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'PortfolioAnalyticsPage',
-      semanticLabel: 'SC-142 PortfolioAnalyticsPage',
+      semanticLabel: 'Phân tích danh mục - tổng quan tài sản',
     );
     expectActionableInFirstViewport(
       tester,

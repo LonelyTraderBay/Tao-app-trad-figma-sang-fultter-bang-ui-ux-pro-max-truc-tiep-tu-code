@@ -71,7 +71,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-156 ProfilePage',
+      semanticLabel: 'Trang tài khoản: hồ sơ cá nhân, giới thiệu bạn bè và VIP',
+      semanticIdentifier: 'SC-156',
       background: _profileBackground,
       header: const VitTopChrome(
         type: VitTopChromeType.rootModule,

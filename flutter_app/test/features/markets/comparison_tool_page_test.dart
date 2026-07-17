@@ -118,7 +118,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-016 ComparisonToolPage',
-      semanticLabel: 'SC-016 ComparisonToolPage',
+      semanticLabel: 'So sánh token',
     );
     expectActionableInFirstViewport(
       tester,

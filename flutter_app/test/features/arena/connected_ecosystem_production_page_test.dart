@@ -92,7 +92,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ConnectedEcosystemProductionPage',
-      semanticLabel: 'SC-208 ConnectedEcosystemProductionPage',
+      semanticLabel:
+          'Hệ sinh thái kết nối Arena - trạng thái canonical, luồng E2E và tài liệu bàn giao release',
     );
     expectFirstViewportVisible(
       tester,

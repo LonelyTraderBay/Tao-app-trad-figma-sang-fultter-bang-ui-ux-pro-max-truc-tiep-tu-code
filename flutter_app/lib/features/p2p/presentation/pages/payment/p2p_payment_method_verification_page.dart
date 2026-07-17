@@ -79,7 +79,8 @@ class _P2PPaymentMethodVerificationPageState
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-233 P2PPaymentMethodVerificationPage',
+      semanticLabel: 'Xác minh phương thức thanh toán P2P',
+      semanticIdentifier: 'SC-233',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

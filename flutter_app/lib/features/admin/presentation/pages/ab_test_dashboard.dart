@@ -51,7 +51,8 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
         MediaQuery.paddingOf(context).bottom;
 
     return AdminDashboardPageShell(
-      semanticLabel: 'SC-182 ABTestDashboard',
+      semanticLabel: 'Bảng điều khiển thử nghiệm A/B',
+      semanticIdentifier: 'SC-182',
       scrollKey: ABTestDashboard.contentKey,
       scrollBottom: scrollBottom,
       header: VitHeader(

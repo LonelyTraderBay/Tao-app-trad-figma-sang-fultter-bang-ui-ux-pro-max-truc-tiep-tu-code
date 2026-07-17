@@ -69,7 +69,9 @@ class _StakingInstitutionalPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-368 StakingInstitutionalPage',
+      semanticLabel:
+          'Bảng điều khiển staking tổ chức — phê duyệt đa chữ ký và xử lý theo lô cho doanh nghiệp',
+      semanticIdentifier: 'SC-368',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

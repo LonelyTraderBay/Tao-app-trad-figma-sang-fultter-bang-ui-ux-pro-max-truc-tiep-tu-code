@@ -21,7 +21,9 @@ class _ArenaPredictionBridgeFoundationPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-207 ArenaPredictionBridgeFoundationPage',
+      semanticLabel:
+          'Nền tảng kết nối Arena và Dự đoán - nguyên tắc, ranh giới và ví dụ an toàn',
+      semanticIdentifier: 'SC-207',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

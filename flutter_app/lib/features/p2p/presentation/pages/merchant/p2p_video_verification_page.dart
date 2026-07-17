@@ -46,7 +46,8 @@ class _P2PVideoVerificationPageState
     return VitP2PFlowScaffold(
       title: 'Xác minh video',
       subtitle: 'KYC · P2P',
-      semanticLabel: 'SC-252 P2PVideoVerificationPage',
+      semanticLabel: 'Xác minh video',
+      semanticIdentifier: 'SC-252',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       children: [

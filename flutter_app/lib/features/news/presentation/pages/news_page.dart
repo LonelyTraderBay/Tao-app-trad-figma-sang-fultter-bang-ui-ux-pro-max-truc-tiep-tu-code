@@ -80,7 +80,8 @@ class _NewsPageState extends ConsumerState<NewsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-047 NewsPage',
+      semanticLabel: 'Tin tức & Thông báo',
+      semanticIdentifier: 'SC-047',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

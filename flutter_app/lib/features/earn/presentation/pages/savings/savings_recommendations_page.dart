@@ -81,7 +81,8 @@ class _SavingsRecommendationsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-338 SavingsRecommendationsPage',
+      semanticLabel: 'Gợi ý Tiết kiệm',
+      semanticIdentifier: 'SC-338',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

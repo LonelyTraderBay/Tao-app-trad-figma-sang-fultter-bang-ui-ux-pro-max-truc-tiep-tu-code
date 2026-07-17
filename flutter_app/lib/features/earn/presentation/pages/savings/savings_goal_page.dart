@@ -68,7 +68,8 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-342 SavingsGoalPage',
+      semanticLabel: 'Mục tiêu tiết kiệm',
+      semanticIdentifier: 'SC-342',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

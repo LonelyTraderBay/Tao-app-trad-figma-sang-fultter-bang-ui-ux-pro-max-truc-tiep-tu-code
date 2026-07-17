@@ -65,7 +65,8 @@ class _WalletMultiManagerPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-148 WalletMultiManagerPage',
+      semanticLabel: 'Quản lý đa ví - kiểm soát địa chỉ và sao chép',
+      semanticIdentifier: 'SC-148',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

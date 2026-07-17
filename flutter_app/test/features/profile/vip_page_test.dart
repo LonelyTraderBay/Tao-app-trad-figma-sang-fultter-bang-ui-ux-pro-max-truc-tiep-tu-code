@@ -81,7 +81,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'VIPPage',
-      semanticLabel: 'SC-164 VIPPage',
+      semanticLabel: 'Chương trình hội viên VIP',
     );
     expectFirstViewportVisible(
       tester,

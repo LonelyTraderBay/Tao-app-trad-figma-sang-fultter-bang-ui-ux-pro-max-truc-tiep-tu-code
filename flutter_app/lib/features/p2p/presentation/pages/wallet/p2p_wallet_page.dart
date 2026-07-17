@@ -85,7 +85,8 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-264 P2PWalletPage',
+      semanticLabel: 'Ví P2P',
+      semanticIdentifier: 'SC-264',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

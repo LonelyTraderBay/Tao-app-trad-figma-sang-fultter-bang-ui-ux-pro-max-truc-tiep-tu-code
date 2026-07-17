@@ -78,7 +78,8 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-279 P2PSettingsPage',
+      semanticLabel: 'Cài đặt P2P',
+      semanticIdentifier: 'SC-279',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

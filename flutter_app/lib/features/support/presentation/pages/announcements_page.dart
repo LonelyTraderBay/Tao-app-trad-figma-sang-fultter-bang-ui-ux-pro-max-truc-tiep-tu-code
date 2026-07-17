@@ -72,7 +72,8 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-293 AnnouncementsPage',
+      semanticLabel: 'Thông báo',
+      semanticIdentifier: 'SC-293',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -58,7 +58,8 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
 
     return VitTradeDetailScaffold(
       title: 'Phân tích hiệu suất',
-      semanticLabel: 'SC-074 CopyPerformancePage',
+      semanticLabel: 'Phân tích hiệu suất',
+      semanticIdentifier: 'SC-074',
       contentKey: CopyPerformancePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

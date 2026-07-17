@@ -40,7 +40,8 @@ class P2PInsurancePolicyPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-241 P2PInsurancePolicyPage',
+      semanticLabel: 'Điều khoản Bảo hiểm P2P',
+      semanticIdentifier: 'SC-241',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

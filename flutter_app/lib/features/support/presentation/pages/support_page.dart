@@ -84,7 +84,8 @@ class _SupportPageState extends ConsumerState<SupportPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-294 SupportPage',
+      semanticLabel: 'Hỗ trợ',
+      semanticIdentifier: 'SC-294',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

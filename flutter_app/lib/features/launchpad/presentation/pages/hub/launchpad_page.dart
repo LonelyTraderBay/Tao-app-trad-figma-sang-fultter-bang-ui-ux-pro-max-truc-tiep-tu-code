@@ -86,11 +86,13 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-295 LaunchpadPage',
+      semanticLabel: 'Trung tâm dự án Launchpad',
+      semanticIdentifier: 'SC-295',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'SC-295 LaunchpadPage scroll surface',
+          semanticLabel: 'Trung tâm dự án Launchpad – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-295',
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
             title: snapshot.title,

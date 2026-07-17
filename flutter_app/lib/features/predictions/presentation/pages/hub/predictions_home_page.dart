@@ -102,7 +102,9 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-027 PredictionsHomePage',
+      semanticLabel:
+          'Trang chủ thị trường dự đoán: xác suất và sự kiện đang mở',
+      semanticIdentifier: 'SC-027',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

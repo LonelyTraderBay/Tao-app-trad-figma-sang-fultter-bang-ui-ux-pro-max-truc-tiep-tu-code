@@ -54,7 +54,8 @@ class KIDGeneratorPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Key Information Document',
       subtitle: 'PRIIPs KID',
-      semanticLabel: 'SC-108 KIDGeneratorPage',
+      semanticLabel: 'Tạo và xem trước Tài liệu Thông tin Chính (KID)',
+      semanticIdentifier: 'SC-108',
       contentKey: KIDGeneratorPage.contentKey,
       shellRenderMode: shellRenderMode,
       useCopyTradingInset: true,

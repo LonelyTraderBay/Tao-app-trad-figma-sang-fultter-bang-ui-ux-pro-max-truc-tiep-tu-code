@@ -60,7 +60,8 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-320 EnterpriseStatesPage',
+      semanticLabel: 'Thư viện trạng thái giao diện dùng chung',
+      semanticIdentifier: 'SC-320',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

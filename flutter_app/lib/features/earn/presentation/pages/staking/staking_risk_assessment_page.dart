@@ -65,7 +65,8 @@ class _StakingRiskAssessmentPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-357 StakingRiskAssessmentPage',
+      semanticLabel: 'Đánh giá rủi ro trước khi chọn sản phẩm staking',
+      semanticIdentifier: 'SC-357',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

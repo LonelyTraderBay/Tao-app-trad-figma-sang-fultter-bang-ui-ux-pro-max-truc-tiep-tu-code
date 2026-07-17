@@ -67,7 +67,8 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-340 SavingsComparisonPage',
+      semanticLabel: 'So sánh sản phẩm',
+      semanticIdentifier: 'SC-340',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

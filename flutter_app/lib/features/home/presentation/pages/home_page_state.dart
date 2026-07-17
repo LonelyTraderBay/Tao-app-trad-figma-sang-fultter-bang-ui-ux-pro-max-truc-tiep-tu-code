@@ -148,7 +148,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return VitAutoHidePageScaffold(
       variant: nativeShell ? VitPageVariant.flush : VitPageVariant.defaultPage,
-      semanticLabel: 'SC-007 HomePage',
+      semanticLabel: 'Trang chủ',
+      semanticIdentifier: 'SC-007',
       headerKey: HomePage.headerKey,
       header: HomeHeader(
         notifications: notificationUnreadCount,

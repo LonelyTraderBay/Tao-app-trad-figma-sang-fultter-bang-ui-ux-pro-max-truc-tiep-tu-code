@@ -68,7 +68,8 @@ class _BotSecuritySettingsPageState
     return VitTradeHubScaffold(
       title: 'Security Settings',
       subtitle: 'Bảo mật API key và quyền truy cập bot',
-      semanticLabel: 'SC-122 BotSecuritySettingsPage',
+      semanticLabel: 'Cài đặt bảo mật bot giao dịch',
+      semanticIdentifier: 'SC-122',
       contentKey: BotSecuritySettingsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

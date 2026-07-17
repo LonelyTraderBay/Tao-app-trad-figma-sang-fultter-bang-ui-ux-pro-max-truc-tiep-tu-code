@@ -28,7 +28,8 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-042 PredictionTournamentDetailPage',
+      semanticLabel: 'Chi tiết giải đấu dự đoán',
+      semanticIdentifier: 'SC-042',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
