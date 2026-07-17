@@ -88,7 +88,7 @@ void main() {
         'lib/features/launchpad/presentation/pages/tools/launchpad_gas_tracker_page.dart',
         'lib/features/launchpad/presentation/pages/tools/launchpad_multisig_page.dart',
         'lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart',
-        'lib/features/markets/presentation/pages/hub/watchlist_page.dart',
+        // watchlist_page migrate STATE-S23 lô markets (2026-07-17).
         'lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart',
         'lib/features/markets/presentation/pages/tools/comparison_tool_page.dart',
         'lib/features/p2p/presentation/pages/security/p2p_2fa_settings_page.dart',
