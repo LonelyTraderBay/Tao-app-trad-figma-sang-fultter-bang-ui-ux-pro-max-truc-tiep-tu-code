@@ -178,7 +178,11 @@ List<DuplicationEntry> _collectEntries(Directory appRoot, String repoRoot) {
           .whereType<File>()
           .where((file) => file.path.endsWith('_spacing_tokens.dart'))
           .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+        ..sort(
+          (a, b) => a.path
+              .replaceAll(r'', '/')
+              .compareTo(b.path.replaceAll(r'', '/')),
+        );
 
   for (final file in files) {
     final fileName = file.uri.pathSegments.last;

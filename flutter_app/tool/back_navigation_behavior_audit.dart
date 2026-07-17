@@ -120,7 +120,11 @@ List<BackNavigationEntry> _collectBackNavigationEntries(
           .whereType<File>()
           .where((file) => file.path.endsWith('.dart'))
           .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+        ..sort(
+          (a, b) => a.path
+              .replaceAll(r'', '/')
+              .compareTo(b.path.replaceAll(r'', '/')),
+        );
 
   for (final file in files) {
     final relativeFile = _relativePath(file, repoRoot);
