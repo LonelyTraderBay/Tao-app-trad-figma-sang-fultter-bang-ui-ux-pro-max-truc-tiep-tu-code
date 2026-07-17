@@ -253,9 +253,9 @@ class _RiskFactorRow extends StatelessWidget {
       padding: P2PSpacingTokens.p2pRiskAssessmentCardPadding,
       child: Row(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: _p2pRiskFactorIconBox,
-            child: const Material(
+            child: Material(
               color: AppColors.buy15,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
               child: Icon(

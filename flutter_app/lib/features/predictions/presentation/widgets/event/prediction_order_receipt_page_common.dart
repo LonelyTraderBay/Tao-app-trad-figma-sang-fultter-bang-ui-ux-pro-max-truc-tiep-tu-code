@@ -144,11 +144,11 @@ class _TimelineStep extends StatelessWidget {
                 ),
               ),
               if (!isLast)
-                Expanded(
+                const Expanded(
                   child: Padding(
                     padding: PredictionsSpacingTokens
                         .predictionReceiptTimelineLineMargin,
-                    child: const SizedBox(
+                    child: SizedBox(
                       width: PredictionsSpacingTokens
                           .predictionReceiptTimelineLineWidth,
                       child: ColoredBox(color: AppColors.borderSolid),

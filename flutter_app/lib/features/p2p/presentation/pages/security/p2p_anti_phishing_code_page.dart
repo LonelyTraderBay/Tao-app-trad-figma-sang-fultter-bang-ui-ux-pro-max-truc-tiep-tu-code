@@ -141,11 +141,11 @@ class _P2PAntiPhishingCodePageState
                           height: AppSpacing.pageRhythmStandardInnerGap,
                         ),
                         _WarningCard(snapshot: snapshot),
-                        VitPageContent(
+                        const VitPageContent(
                           rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          children: const [
+                          children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Anti-phishing code state review',
@@ -201,9 +201,9 @@ class _P2PAntiPhishingCodePageState
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
-              side: const BorderSide(color: AppColors.borderSolid),
+              side: BorderSide(color: AppColors.borderSolid),
             ),
             child: Padding(
               padding: const EdgeInsetsDirectional.symmetric(

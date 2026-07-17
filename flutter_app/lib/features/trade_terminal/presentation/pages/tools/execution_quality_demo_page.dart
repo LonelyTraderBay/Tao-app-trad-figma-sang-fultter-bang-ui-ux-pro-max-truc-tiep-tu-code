@@ -78,7 +78,7 @@ class _ExecutionQualityDemoPageState
           navigationBuilder: buildTradeProductNavigation,
           children: [
             const ExecutionQualityIntroCard(),
-            VitHighRiskStatePanel(
+            const VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
               title: 'Xem lại chất lượng khớp lệnh',
               message:

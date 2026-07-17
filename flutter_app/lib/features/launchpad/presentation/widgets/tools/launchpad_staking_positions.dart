@@ -241,13 +241,13 @@ class _PositionCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              Expanded(
+              const Expanded(
                 child: VitCtaButton(
                   variant: VitCtaButtonVariant.ghost,
                   height: AppSpacing.buttonCompact,
-                  leading: const Icon(Icons.lock_open_rounded),
+                  leading: Icon(Icons.lock_open_rounded),
                   onPressed: HapticFeedback.selectionClick,
-                  child: const Text('Unstake'),
+                  child: Text('Unstake'),
                 ),
               ),
             ],

@@ -21,7 +21,7 @@ class _DepthChartPainter extends CustomPainter {
       ..color = AppColors.borderSolid.withValues(alpha: .25)
       ..strokeWidth = .7;
 
-    canvas.drawLine(Offset(chartLeft, chartTop), origin, axisPaint);
+    canvas.drawLine(const Offset(chartLeft, chartTop), origin, axisPaint);
     canvas.drawLine(
       origin,
       Offset(size.width - chartRight, origin.dy),

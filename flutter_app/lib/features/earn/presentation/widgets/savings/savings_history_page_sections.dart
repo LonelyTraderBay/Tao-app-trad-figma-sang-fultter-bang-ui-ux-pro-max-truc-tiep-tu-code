@@ -93,10 +93,10 @@ class _SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface3,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(color: AppColors.cardBorder),
+          side: BorderSide(color: AppColors.cardBorder),
           borderRadius: AppRadii.xlRadius,
         ),
       ),
@@ -197,12 +197,12 @@ class _DateFilterRow extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
-        DecoratedBox(
-          decoration: const ShapeDecoration(
+        const DecoratedBox(
+          decoration: ShapeDecoration(
             color: AppColors.surface2,
             shape: CircleBorder(),
           ),
-          child: const SizedBox(
+          child: SizedBox(
             width: EarnSpacingTokens.savingsHistoryFilterButton,
             height: EarnSpacingTokens.savingsHistoryFilterButton,
             child: Icon(

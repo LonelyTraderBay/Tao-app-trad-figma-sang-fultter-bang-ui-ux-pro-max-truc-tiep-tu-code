@@ -52,10 +52,10 @@ class _SettingsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary08,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
+          side: BorderSide(
             color: AppColors.primary20,
             width: EarnSpacingTokens.savingsNotificationSummaryBorderWidth,
           ),

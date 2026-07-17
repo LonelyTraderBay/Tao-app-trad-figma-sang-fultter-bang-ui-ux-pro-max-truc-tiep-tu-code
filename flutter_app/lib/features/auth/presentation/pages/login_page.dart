@@ -170,20 +170,20 @@ class _LoginHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox.square(
+        const SizedBox.square(
           dimension: AuthSpacingTokens.authLogoBoxSize,
           child: Material(
             color: AppColors.primaryDark,
             elevation: AuthSpacingTokens.authLogoElevation,
             shadowColor: AppColors.primary40,
             borderRadius: AppRadii.cardRadius,
-            child: const Center(child: _VitTradeLogoMark()),
+            child: Center(child: _VitTradeLogoMark()),
           ),
         ),
         const Padding(padding: AuthSpacingTokens.authTopGapX4),
-        Text('VitTrade', style: AppTextStyles.pageTitle),
+        const Text('VitTrade', style: AppTextStyles.pageTitle),
         const Padding(padding: AuthSpacingTokens.authTopGapX2),
-        Text(
+        const Text(
           'Đăng nhập an toàn',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,

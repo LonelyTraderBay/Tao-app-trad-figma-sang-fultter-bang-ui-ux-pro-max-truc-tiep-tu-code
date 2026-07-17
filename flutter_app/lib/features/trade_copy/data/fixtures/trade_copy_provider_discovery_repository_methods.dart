@@ -26,7 +26,7 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
 
   @override
   TradeProviderLeaderboardSnapshot getProviderLeaderboard() {
-    return TradeProviderLeaderboardSnapshot(
+    return const TradeProviderLeaderboardSnapshot(
       trade: _providerDiscoveryTradeSnapshot,
       providers: _copyTraders,
       sortOptions: _providerLeaderboardSortOptions,
@@ -41,7 +41,7 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
       disclaimer:
           'Rankings dựa trên hiệu suất lịch sử và không đảm bảo kết quả tương lai. Provider xếp hạng cao vẫn có thể thua lỗ trong tương lai. Luôn đọc kỹ risk disclosure trước khi copy.',
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -53,11 +53,11 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
 
   @override
   TradeProviderGovernanceSnapshot getProviderGovernance() {
-    return TradeProviderGovernanceSnapshot(
+    return const TradeProviderGovernanceSnapshot(
       trade: _providerDiscoveryTradeSnapshot,
       tabs: _providerGovernanceTabs,
       defaultTabId: 'modifications',
-      stats: const TradeProviderGovernanceStats(
+      stats: TradeProviderGovernanceStats(
         followers: 245,
         aum: 125000,
         monthlyFeesEarned: 1850,
@@ -71,7 +71,7 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
       feeContributors: _feeContributors,
       complianceItems: _complianceItems,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -106,9 +106,9 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
 
   @override
   TradeProviderApplicationSnapshot getProviderApplication() {
-    return TradeProviderApplicationSnapshot(
+    return const TradeProviderApplicationSnapshot(
       trade: _providerDiscoveryTradeSnapshot,
-      steps: const [
+      steps: [
         TradeProviderApplicationStep.intro,
         TradeProviderApplicationStep.requirements,
         TradeProviderApplicationStep.disclosure,
@@ -121,7 +121,7 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
       responsibilities: _providerApplicationResponsibilities,
       defaultDraft: _defaultProviderApplicationDraft,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,

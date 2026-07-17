@@ -100,7 +100,10 @@ class _LicenseCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _RoundIcon(icon: Icons.location_on_outlined, color: AppColors.buy),
+          const _RoundIcon(
+            icon: Icons.location_on_outlined,
+            color: AppColors.buy,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(

@@ -21,6 +21,11 @@ linter:
     close_sinks: true
     prefer_final_locals: true
     always_use_package_imports: true
+    # PERF-HN6 (A-Plus GĐ3): const-hóa widget/literal bất biến — cắt rebuild
+    # không cần thiết; vi phạm mới bị CI chặn qua flutter analyze.
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_literals_to_create_immutables: true
     # unawaited_futures / discarded_futures: deliberately NOT enabled yet.
     # Enabling them today surfaces ~723 sites (669 discarded_futures + 54
     # unawaited_futures) that each need a real judgment call (await vs.

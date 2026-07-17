@@ -45,11 +45,11 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Center(
+              const Center(
                 child: SizedBox(
                   width: _stakingWithdrawalSheetHandleWidth,
                   height: _stakingWithdrawalSheetHandleHeight,
-                  child: const Material(
+                  child: Material(
                     color: AppColors.borderSolid,
                     borderRadius: AppRadii.hairlineRadius,
                   ),
@@ -213,7 +213,7 @@ class _CalculatorResult extends StatelessWidget {
             ),
             if (previewRequested) ...[
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              _SmallBadge(
+              const _SmallBadge(
                 label: 'Preview mock đã sẵn sàng - cần xác nhận trước khi rút',
                 color: AppColors.primary,
               ),

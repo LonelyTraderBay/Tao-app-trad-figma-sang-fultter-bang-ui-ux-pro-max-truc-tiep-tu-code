@@ -186,7 +186,7 @@ class _PositionCard extends StatelessWidget {
           if (position.autoCompound)
             _CompoundDetails(position: position)
           else
-            _DisabledWarning(),
+            const _DisabledWarning(),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [

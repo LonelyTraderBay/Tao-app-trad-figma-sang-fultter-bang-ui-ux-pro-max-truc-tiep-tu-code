@@ -207,10 +207,10 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                                 P2PSpacingTokens.p2pBlacklistHorizontalPadding,
                             child: _InfoNote(snapshot: snapshot),
                           ),
-                          VitPageContent(
+                          const VitPageContent(
                             rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.compact,
-                            children: const [
+                            children: [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Rà soát danh sách chặn',

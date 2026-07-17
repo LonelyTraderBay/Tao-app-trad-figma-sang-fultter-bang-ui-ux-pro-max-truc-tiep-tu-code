@@ -22,7 +22,9 @@ class _ApiDocsCard extends StatelessWidget {
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: _apiPrimary.withValues(alpha: .1),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+              ),
             ),
             child: const Icon(
               Icons.info_outline_rounded,

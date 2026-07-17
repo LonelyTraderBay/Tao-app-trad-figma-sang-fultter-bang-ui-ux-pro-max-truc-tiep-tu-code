@@ -65,7 +65,9 @@ class _VitStepRow extends StatelessWidget {
         DecoratedBox(
           decoration: ShapeDecoration(
             color: accentColor,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+            ),
           ),
           child: SizedBox.square(
             dimension: AppSpacing.x6,

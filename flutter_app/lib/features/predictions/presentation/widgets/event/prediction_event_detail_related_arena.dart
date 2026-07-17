@@ -165,10 +165,10 @@ class _ArenaBridgeSection extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    Wrap(
+                    const Wrap(
                       spacing: PredictionsSpacingTokens
                           .predictionDetailArenaBadgeGap,
-                      children: const [
+                      children: [
                         _ArenaBadge('Arena Points only'),
                         _ArenaBadge('Event context only'),
                         _ArenaBadge('Không liên quan Wallet'),
@@ -260,9 +260,9 @@ class _ArenaRoomRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.surface2,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.mdRadius,
-        side: const BorderSide(color: AppColors.borderSolid),
+        side: BorderSide(color: AppColors.borderSolid),
       ),
       child: Padding(
         padding: PredictionsSpacingTokens.predictionDetailArenaRoomPadding,

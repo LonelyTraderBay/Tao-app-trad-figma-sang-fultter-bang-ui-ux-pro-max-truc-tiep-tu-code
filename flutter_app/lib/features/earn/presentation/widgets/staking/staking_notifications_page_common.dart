@@ -83,7 +83,7 @@ class _UnreadDot extends StatelessWidget {
       padding: EarnSpacingTokens.earnLeftPaddingX2(
         true,
       ).add(EarnSpacingTokens.earnTopPaddingX1),
-      child: SizedBox(
+      child: const SizedBox(
         width: AppSpacing.x2,
         height: AppSpacing.x2,
         child: DecoratedBox(

@@ -342,10 +342,10 @@ class _SafetyBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
+          const Material(
             color: AppColors.sell10,
-            shape: const CircleBorder(),
-            child: const SizedBox(
+            shape: CircleBorder(),
+            child: SizedBox(
               width: _p2pOrderSafetyIconBox,
               height: _p2pOrderSafetyIconBox,
               child: Center(

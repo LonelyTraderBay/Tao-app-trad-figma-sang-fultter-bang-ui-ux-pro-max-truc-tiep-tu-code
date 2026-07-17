@@ -18,7 +18,7 @@ class _FeaturedGasCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.local_gas_station_outlined,
                 color: AppModuleAccents.launchpad,
                 size: LaunchpadSpacingTokens.launchpadIconLg,

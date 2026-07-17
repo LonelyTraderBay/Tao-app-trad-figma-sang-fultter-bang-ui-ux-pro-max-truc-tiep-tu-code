@@ -6,7 +6,7 @@ Flags `lib/app/theme/spacing/<module>_spacing_tokens.dart` constants whose liter
 
 ```text
 total_duplication_entries=295
-modules_with_entries=12
+modules_with_entries=13
   arena=5
   auth=3
   earn=3
@@ -17,7 +17,8 @@ modules_with_entries=12
   predictions=38
   profile=19
   support=3
-  trade=17
+  trade=8
+  trade_bots=9
   wallet=46
 ```
 
@@ -44,7 +45,10 @@ modules_with_entries=12
 | referral | 0 | 0 | pass |
 | shared | 0 | 0 | pass |
 | support | 3 | 3 | pass |
-| trade | 17 | 17 | pass |
+| trade | 8 | 8 | pass |
+| trade_bots | 9 | 9 | pass |
+| trade_compliance | 0 | 0 | pass |
+| trade_copy | 0 | 0 | pass |
 | wallet | 46 | 46 | pass |
 
 ## Duplication Entries
@@ -283,16 +287,7 @@ modules_with_entries=12
 | support | `flutter_app/lib/app/theme/spacing/support_spacing_tokens.dart` | `supportArticleIcon` | 21 | `AppSpacing.x5` |
 | support | `flutter_app/lib/app/theme/spacing/support_spacing_tokens.dart` | `supportContextIconBox` | 34 | `AppSpacing.x6` |
 | support | `flutter_app/lib/app/theme/spacing/support_spacing_tokens.dart` | `supportFilterChipHeight` | 34 | `AppSpacing.x6` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotAttributionProgressHeight` | 8 | `AppSpacing.x3` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotCardIcon` | 21 | `AppSpacing.x5` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotClientCurrentIcon` | 21 | `AppSpacing.x5` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotDisputeFileTopGap` | 13 | `AppSpacing.x4` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotInlineIconGap` | 8 | `AppSpacing.x3` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotMetricGap` | 5 | `AppSpacing.x2` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotProgressHeight` | 8 | `AppSpacing.x3` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotSelectionDotInner` | 8 | `AppSpacing.x3` |
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotSmallGap` | 8 | `AppSpacing.x3` |
-| trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeBotTinyGap` | 5 | `AppSpacing.x2` |
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeDataTabsHeight` | 34 | `AppSpacing.x6` |
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeHistoryFilterHeight` | 34 | `AppSpacing.x6` |
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeReceiptHeroIcon` | 34 | `AppSpacing.x6` |
@@ -300,6 +295,15 @@ modules_with_entries=12
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeToolInlineGap` | 8 | `AppSpacing.x3` |
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeToolProgressHeight` | 8 | `AppSpacing.x3` |
 | trade | `flutter_app/lib/app/theme/spacing/trade_spacing_tokens.dart` | `tradeToolTinyGap` | 5 | `AppSpacing.x2` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotAttributionProgressHeight` | 8 | `AppSpacing.x3` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotCardIcon` | 21 | `AppSpacing.x5` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotClientCurrentIcon` | 21 | `AppSpacing.x5` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotDisputeFileTopGap` | 13 | `AppSpacing.x4` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotInlineIconGap` | 8 | `AppSpacing.x3` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotMetricGap` | 5 | `AppSpacing.x2` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotProgressHeight` | 8 | `AppSpacing.x3` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotSelectionDotInner` | 8 | `AppSpacing.x3` |
+| trade_bots | `flutter_app/lib/app/theme/spacing/trade_bots_spacing_tokens.dart` | `tradeBotTinyGap` | 5 | `AppSpacing.x2` |
 | wallet | `flutter_app/lib/app/theme/spacing/wallet_spacing_tokens.dart` | `walletAddressAddAddressSectionGap` | 34 | `AppSpacing.x6` |
 | wallet | `flutter_app/lib/app/theme/spacing/wallet_spacing_tokens.dart` | `walletAddressAddAssetChipHeight` | 34 | `AppSpacing.x6` |
 | wallet | `flutter_app/lib/app/theme/spacing/wallet_spacing_tokens.dart` | `walletAddressAddHintGap` | 5 | `AppSpacing.x2` |

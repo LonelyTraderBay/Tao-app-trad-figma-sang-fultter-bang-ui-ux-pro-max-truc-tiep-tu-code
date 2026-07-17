@@ -80,7 +80,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                   ? AppColors.text3
                   : _optimizationPrimary,
             ),
-            VitTradeSection(title: 'Overview', child: const _IntroCard()),
+            const VitTradeSection(title: 'Overview', child: _IntroCard()),
             VitTradeSection(
               title: 'Optimization Target',
               child: _TargetCard(

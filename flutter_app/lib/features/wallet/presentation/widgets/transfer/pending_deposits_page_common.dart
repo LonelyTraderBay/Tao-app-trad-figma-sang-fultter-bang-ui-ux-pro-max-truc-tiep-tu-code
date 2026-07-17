@@ -130,7 +130,7 @@ class _InfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitInfoCallout(
+    return const VitInfoCallout(
       message:
           'S\u1ED1 x\u00E1c nh\u1EADn c\u1EA7n thi\u1EBFt ph\u1EE5 thu\u1ED9c v\u00E0o m\u1EA1ng blockchain. N\u1EA1p d\u01B0\u1EDBi m\u1EE9c t\u1ED1i thi\u1EC3u s\u1EBD kh\u00F4ng \u0111\u01B0\u1EE3c ghi nh\u1EADn. Li\u00EAn h\u1EC7 h\u1ED7 tr\u1EE3 n\u1EBFu giao d\u1ECBch ch\u01B0a xu\u1EA5t hi\u1EC7n sau 1 gi\u1EDD.',
       icon: Icons.warning_amber_rounded,

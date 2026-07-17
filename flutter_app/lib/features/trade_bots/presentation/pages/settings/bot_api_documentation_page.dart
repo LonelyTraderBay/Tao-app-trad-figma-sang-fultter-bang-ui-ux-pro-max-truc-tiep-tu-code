@@ -83,7 +83,7 @@ class _BotApiDocumentationPageState
           secondaryLabel: 'Sự kiện WS',
           secondaryValue: '${snapshot.websocketEvents.length}',
         ),
-        VitTradeSection(title: 'Tổng quan', child: const _IntroCard()),
+        const VitTradeSection(title: 'Tổng quan', child: _IntroCard()),
         VitTradeSection(
           title: 'Tài liệu',
           child: VitTabBar(

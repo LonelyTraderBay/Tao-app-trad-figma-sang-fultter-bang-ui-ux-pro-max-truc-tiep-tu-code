@@ -123,7 +123,7 @@ class _AutoCompoundSettingsPageState
                                 ),
                             ],
                           ),
-                          _CalculatorPreview(),
+                          const _CalculatorPreview(),
                           _NoteCard(text: snapshot.note),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,

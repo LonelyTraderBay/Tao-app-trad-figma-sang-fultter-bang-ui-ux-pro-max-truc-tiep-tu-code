@@ -98,7 +98,7 @@ class _OpenInterestCard extends StatelessWidget {
               ),
             ],
           ),
-          _InfoStrip(
+          const _InfoStrip(
             text:
                 'OI tang + gia tang = bullish strong. OI tang + gia giam = bearish momentum. OI giam = positions dong.',
           ),
@@ -122,13 +122,13 @@ class _LongShortRatioCard extends StatelessWidget {
         fullBleed: true,
         density: VitDensity.compact,
         children: [
-          _CardHeader(
+          const _CardHeader(
             icon: Icons.groups_2_outlined,
             iconColor: _analyticsPurple,
             title: 'Long/Short Ratio',
             badge: 'Long',
           ),
-          _ToggleBar(left: 'By Accounts', right: 'By Volume'),
+          const _ToggleBar(left: 'By Accounts', right: 'By Volume'),
           Row(
             children: [
               Expanded(

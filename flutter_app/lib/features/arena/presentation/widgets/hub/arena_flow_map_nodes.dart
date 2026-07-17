@@ -156,7 +156,7 @@ class _SharedComponents extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _FlowIcon(kind: ArenaFlowKind.verified),
+                    const _FlowIcon(kind: ArenaFlowKind.verified),
                     const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Text(

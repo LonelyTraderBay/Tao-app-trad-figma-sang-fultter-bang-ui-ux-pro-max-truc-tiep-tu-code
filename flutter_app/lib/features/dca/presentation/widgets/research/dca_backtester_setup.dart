@@ -304,10 +304,10 @@ class _DipThresholdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return const VitCard(
       variant: VitCardVariant.inner,
       padding: DcaSpacingTokens.dcaPaddingX4,
-      child: const DcaReadOnlyField(label: 'Dip Threshold (%)', value: '5'),
+      child: DcaReadOnlyField(label: 'Dip Threshold (%)', value: '5'),
     );
   }
 }

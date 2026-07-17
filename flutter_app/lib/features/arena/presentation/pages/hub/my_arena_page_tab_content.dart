@@ -420,7 +420,7 @@ class _CreatedModesSection extends StatelessWidget {
           density: VitDensity.compact,
           child: Row(
             children: [
-              _ActionIcon(
+              const _ActionIcon(
                 icon: Icons.bar_chart_rounded,
                 color: AppColors.accent,
               ),

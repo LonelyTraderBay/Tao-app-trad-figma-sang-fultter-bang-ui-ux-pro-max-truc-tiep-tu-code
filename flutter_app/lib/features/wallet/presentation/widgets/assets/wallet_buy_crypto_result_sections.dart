@@ -180,7 +180,7 @@ class BuySuccessState extends StatelessWidget {
                       const SizedBox(
                         height: WalletSpacingTokens.walletBuySuccessTitleGap,
                       ),
-                      Text(
+                      const Text(
                         'Đặt lệnh thành công!',
                         textAlign: TextAlign.center,
                         style: AppTextStyles.sectionTitle,

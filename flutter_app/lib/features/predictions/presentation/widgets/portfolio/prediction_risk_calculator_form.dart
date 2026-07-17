@@ -13,7 +13,7 @@ class _RiskTabBar extends StatelessWidget {
       onChanged: onChanged,
       showBottomBorder: true,
       semanticsLabel: 'Tab máy tính rủi ro dự đoán',
-      items: [
+      items: const [
         (
           PredictionRiskCalculatorPage.calculatorTabKey,
           _RiskTab.calculator,

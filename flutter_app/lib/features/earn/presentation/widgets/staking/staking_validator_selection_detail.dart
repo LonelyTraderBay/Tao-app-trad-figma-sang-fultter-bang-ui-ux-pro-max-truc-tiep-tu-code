@@ -31,7 +31,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Chi tiết Validator',
                   style: AppTextStyles.baseMedium,

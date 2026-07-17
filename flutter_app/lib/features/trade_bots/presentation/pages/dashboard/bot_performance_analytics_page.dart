@@ -128,7 +128,7 @@ class _BotPerformanceAnalyticsPageState
           title: 'Summary',
           child: _PerformanceSummaryCard(metrics: snapshot.metrics),
         ),
-        VitTradeSection(title: 'Rating', child: const _RatingCard()),
+        const VitTradeSection(title: 'Rating', child: _RatingCard()),
         const VitBotRiskReviewFooter(
           title: 'Bot analytics review',
           message:

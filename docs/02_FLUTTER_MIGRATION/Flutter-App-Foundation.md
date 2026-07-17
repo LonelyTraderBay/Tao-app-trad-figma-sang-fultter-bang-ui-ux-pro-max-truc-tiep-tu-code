@@ -55,6 +55,22 @@ flutter test
 flutter run
 ```
 
+## God-Family Mock Chấp Nhận Được (DEBT-87)
+
+Một số họ mock repository rất lớn (earn 26 file/~11k dòng fixtures, p2p 26 file,
+arena 10, launchpad 9, trade_compliance 8). Đây là **nợ có chủ đích, chấp nhận
+được** ở giai đoạn mock-UI:
+
+- Chúng là DATA TĨNH thay thế backend chưa tồn tại — sẽ bị thay nguyên khối
+  bằng repository backend thật sau DEC-backend; refactor cấu trúc chúng bây giờ
+  là công sức đổ vào lớp sắp bị vứt.
+- Quy ước bắt buộc: KHÔNG thêm logic hiển thị vào mock (logic thuộc
+  presentation/controller); KHÔNG tách/gộp part-file của family.
+- Kích thước 5 họ lớn bị đóng băng bởi
+  `flutter_app/test/quality/mock_fixture_baseline_guardrail_test.dart`
+  (dung sai +10%) — phình vượt dung sai là tín hiệu logic đang chảy nhầm tầng,
+  không phải lý do nới baseline.
+
 ## Hard Rules
 
 - Do not reintroduce root npm/Vite tooling.

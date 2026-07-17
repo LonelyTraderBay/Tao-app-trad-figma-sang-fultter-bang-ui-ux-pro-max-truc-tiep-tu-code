@@ -35,15 +35,15 @@ class _DCAPageState extends ConsumerState<DCAPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: DCAPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị kế hoạch DCA đã lưu gần nhất.',
                   ),
@@ -95,7 +95,7 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                             DcaScreenState.offline
                                 when snapshot.plans.isEmpty =>
                               [
-                                VitEmptyState(
+                                const VitEmptyState(
                                   key: DCAPage.offlineKey,
                                   icon: Icons.wifi_off_rounded,
                                   title: 'Đang ngoại tuyến',

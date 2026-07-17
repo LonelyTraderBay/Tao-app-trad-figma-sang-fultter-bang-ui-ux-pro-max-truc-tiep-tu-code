@@ -2,6 +2,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'product_copy_guardrail_test_utils.dart';
 
+/// SEC-S42 (A-Plus GĐ3): stem tài chính TIẾNG VIỆT đã fold ASCII — bắt copy
+/// vi phạm ranh giới Arena dù viết tiếng Việt có dấu (nguồn được asciiFold
+/// trước khi so). Dùng CỤM GHÉP thay vì từ đơn: 'vi' đơn lẻ đụng 'vì/với'
+/// sau fold (bẫy tiếng Việt không dấu đã biết), cụm 'vi tien'/'lien ket vi'
+/// thì không nhập nhằng. Mở rộng cụm mới tại một chỗ này.
+const viFinancialStems =
+    r'vi tien|lien ket vi|rut tien|nap tien|chuyen tien|loi nhuan|'
+    r'tien mat|dat cuoc|thanh toan|thang tien|thua tien';
+
 void main() {
   group('product copy guardrails - Arena and auth', () {
     test('Arena and RewardsHub reward surfaces stay points-only', () {
@@ -39,12 +48,14 @@ void main() {
       ];
 
       final unsafeRewardLabel = RegExp(
-        r"rewardLabel:\s*'[^']*\b(USDT|USD|wallet|payout|profit|cash)\b",
+        "rewardLabel:\\s*'[^']*\\b(USDT|USD|wallet|payout|profit|cash|"
+        '$viFinancialStems)\\b',
         caseSensitive: false,
       );
 
       for (final path in files) {
-        final source = readSource(path);
+        // SEC-S42: fold dấu trước khi so — bắt cả copy tiếng Việt có dấu.
+        final source = asciiFold(readSource(path));
         expect(unsafeRewardLabel.allMatches(source), isEmpty, reason: path);
       }
     });
@@ -52,18 +63,27 @@ void main() {
     test('Arena user-facing pages avoid prohibited financial terms', () {
       final arenaPages = listDartFiles('lib/features/arena/presentation/pages');
       final prohibited = RegExp(
-        r'\b(wallet|profit|payout|stake|USDT|USD|cash|PnL|P/L)\b',
+        r'\b(wallet|profit|payout|stake|USDT|USD|cash|PnL|P/L|'
+        '$viFinancialStems)\\b',
         caseSensitive: false,
       );
+      // SEC-S42: câu CẤM dùng thuật ngữ tài chính là đồng minh của ranh
+      // giới, không phải vi phạm — allowlist theo NỘI DUNG fold chính xác
+      // (exact substring, không mở lỗ hổng theo file hay pattern).
+      const negativePolicyAllowlist = {
+        'Khong dung vi, gia tri tien, loi nhuan hoac cam ket hoan diem.',
+      };
       final findings = <String>[];
 
       for (final file in arenaPages) {
         final lines = file.readAsLinesSync();
         for (var index = 0; index < lines.length; index += 1) {
-          final line = lines[index];
-          if (prohibited.hasMatch(line)) {
-            findings.add('${file.path}:${index + 1}: ${line.trim()}');
-          }
+          // SEC-S42: fold dấu từng dòng — copy tiếng Việt có dấu vi phạm
+          // ranh giới cũng bị bắt, không chỉ thuật ngữ tiếng Anh.
+          final line = asciiFold(lines[index]);
+          if (!prohibited.hasMatch(line)) continue;
+          if (negativePolicyAllowlist.any(line.contains)) continue;
+          findings.add('${file.path}:${index + 1}: ${lines[index].trim()}');
         }
       }
 
@@ -105,7 +125,8 @@ void main() {
       );
 
       final unsafe = RegExp(
-        r'\b(wallet|profit|payout|stake-return|USDT|USD|cash|PnL|P/L)\b',
+        r'\b(wallet|profit|payout|stake-return|USDT|USD|cash|PnL|P/L|'
+        '$viFinancialStems)\\b',
         caseSensitive: false,
       );
       expect(unsafe.allMatches(source), isEmpty);

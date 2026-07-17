@@ -16,12 +16,12 @@ class _OptimizerApplyAction extends StatelessWidget {
           padding: DcaSpacingTokens.dcaPaddingX2,
           child: Column(
             children: [
-              VitInfoRow(
+              const VitInfoRow(
                 label: 'Trước khi áp dụng',
                 value: 'Chưa đặt lệnh',
                 valueColor: AppColors.warn,
                 density: VitDensity.compact,
-                leading: const Icon(Icons.verified_user_outlined),
+                leading: Icon(Icons.verified_user_outlined),
               ),
               VitInfoRow(
                 label: 'Cần kiểm tra',

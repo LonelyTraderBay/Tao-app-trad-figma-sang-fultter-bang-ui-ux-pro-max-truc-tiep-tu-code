@@ -172,7 +172,7 @@ class _MetricTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.help_outline_rounded,
                   color: AppColors.portfolioTextMuted,
                   size: DcaSpacingTokens.dcaOverviewMetricIcon,

@@ -52,13 +52,13 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      headerActions: [
+      headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
             title: 'Review inspection readiness evidence',

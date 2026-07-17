@@ -41,21 +41,21 @@ class OverviewTab extends StatelessWidget {
           hideBalance: hideBalance,
           onToggleBalance: onToggleBalance,
         ),
-        SectionLabel(label: 'Phân bổ tài sản', color: AppColors.primary),
+        const SectionLabel(label: 'Phân bổ tài sản', color: AppColors.primary),
         _AllocationCard(
           positions: snapshot.positions,
           total: snapshot.totalDepositedUsd,
         ),
-        SectionLabel(label: 'Dự phóng thu nhập', color: AppColors.buy),
+        const SectionLabel(label: 'Dự phóng thu nhập', color: AppColors.buy),
         _IncomeProjectionRow(items: snapshot.incomeProjections),
-        EarnInfoBanner(
+        const EarnInfoBanner(
           text:
               'Ước tính dựa trên APY hiện tại. Lãi suất có thể thay đổi theo điều kiện thị trường.',
         ),
-        SectionLabel(label: 'Lịch đáo hạn', color: AppColors.warn),
+        const SectionLabel(label: 'Lịch đáo hạn', color: AppColors.warn),
         MaturitySummary(events: snapshot.maturityEvents),
         for (final event in snapshot.maturityEvents) MaturityCard(event: event),
-        EarnWarningBanner(
+        const EarnWarningBanner(
           text:
               'Khi đáo hạn, bạn có thể gia hạn để tiếp tục nhận lãi hoặc rút về ví. Rút trước hạn có thể mất lãi tích lũy.',
         ),

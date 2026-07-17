@@ -22,7 +22,7 @@ class _TaskSection extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
+            const Expanded(
               child: VitSectionHeader(
                 title: 'Nhiệm vụ',
                 icon: Icons.task_alt_outlined,
@@ -104,8 +104,8 @@ class _BonusSection extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: const VitSectionHeader(
+            const Expanded(
+              child: VitSectionHeader(
                 title: 'Khu vực Bonus',
                 icon: Icons.auto_awesome_outlined,
                 iconColor: AppColors.warn,
@@ -161,7 +161,7 @@ class _ProgressSection extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
+            const Expanded(
               child: VitSectionHeader(
                 title: 'Tiến trình & Phần thưởng',
                 icon: Icons.workspace_premium_outlined,

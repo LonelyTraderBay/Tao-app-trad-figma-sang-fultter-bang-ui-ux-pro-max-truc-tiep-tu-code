@@ -88,11 +88,11 @@ class _YieldLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return const Wrap(
       alignment: WrapAlignment.center,
       spacing: AppSpacing.x4,
       runSpacing: AppSpacing.x2,
-      children: const [
+      children: [
         VitLegendItem(label: 'USDT', color: AppColors.buy),
         VitLegendItem(label: 'BTC', color: AppColors.warn),
         VitLegendItem(label: 'SOL', color: AppColors.accent),

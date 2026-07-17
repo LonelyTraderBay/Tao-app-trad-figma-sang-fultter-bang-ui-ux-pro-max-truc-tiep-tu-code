@@ -14,7 +14,7 @@ class _DataIntegrationTabBar extends StatelessWidget {
     return PredictionEnumTabBar<_DataIntegrationTab>(
       activeTab: activeTab,
       onChanged: onChanged,
-      items: [
+      items: const [
         (
           PredictionDataIntegrationPage.sourcesTabKey,
           _DataIntegrationTab.sources,

@@ -72,13 +72,13 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      headerActions: [
+      headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Ex-ante cost preview',
             message:
@@ -105,9 +105,9 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
             ),
           ],
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Notice',
-          child: const VitTradeComplianceHero(
+          child: VitTradeComplianceHero(
             title: 'PRIIPs Cost Disclosure',
             description:
                 'This document shows all costs you will pay before investing. '

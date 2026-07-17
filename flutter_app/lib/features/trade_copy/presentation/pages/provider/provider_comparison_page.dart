@@ -99,14 +99,14 @@ class ProviderComparisonPage extends ConsumerWidget {
           title: 'Chú thích',
           child: _LegendPanel(text: snapshot.legend),
         ),
-        VitTradeComplianceSection(
+        const VitTradeComplianceSection(
           title: 'Compliance review',
-          statusPill: const VitStatusPill(
+          statusPill: VitStatusPill(
             label: 'Review required',
             status: VitStatusPillStatus.info,
             size: VitStatusPillSize.sm,
           ),
-          items: const [
+          items: [
             VitTradeComplianceItem(
               label: 'Scope',
               value: 'Performance, risk, execution, fees, drawdown',

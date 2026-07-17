@@ -48,7 +48,7 @@ class _RiskAnalysis extends StatelessWidget {
                 density: VitDensity.compact,
               ),
               VitInfoRow(
-                leading: Icon(
+                leading: const Icon(
                   Icons.percent_rounded,
                   color: _predictionPrimary,
                   size: PredictionsSpacingTokens.predictionRiskMetricIcon,

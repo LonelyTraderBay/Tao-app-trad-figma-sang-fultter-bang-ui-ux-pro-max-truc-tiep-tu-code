@@ -23,14 +23,14 @@ class _StrategyCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (strategy.recommended) ...[
-            Row(
+            const Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.auto_awesome_rounded,
                   color: AppColors.primary,
                   size: AppSpacing.iconSm,
                 ),
-                const SizedBox(width: AppSpacing.x2),
+                SizedBox(width: AppSpacing.x2),
                 _SmallPill(
                   label: 'Phù hợp nhất với bạn',
                   color: AppColors.primary,

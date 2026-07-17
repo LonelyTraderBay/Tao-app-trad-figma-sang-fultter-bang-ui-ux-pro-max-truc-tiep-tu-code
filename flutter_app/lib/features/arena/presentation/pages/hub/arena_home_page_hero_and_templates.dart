@@ -384,7 +384,7 @@ class _HeroCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
                 child: ColoredBox(color: AppColors.border),
@@ -485,7 +485,7 @@ class _TemplateSection extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         GridView.builder(
-          padding: EdgeInsetsDirectional.all(AppSpacing.zero),
+          padding: const EdgeInsetsDirectional.all(AppSpacing.zero),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: templates.length,

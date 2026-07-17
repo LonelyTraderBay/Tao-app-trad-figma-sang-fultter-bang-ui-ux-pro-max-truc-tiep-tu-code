@@ -143,8 +143,8 @@ class _SkeletonPreview extends StatelessWidget {
         children: [
           const VitSkeleton(width: 150, height: AppSpacing.x4),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Row(
-            children: const [
+          const Row(
+            children: [
               VitSkeleton(width: 76, height: AppSpacing.x5),
               SizedBox(width: AppSpacing.x3),
               VitSkeleton(width: 60, height: AppSpacing.x5),
@@ -173,8 +173,8 @@ class _SkeletonMarketRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [
+    return const Row(
+      children: [
         VitSkeleton(
           width: AppSpacing.inputHeight,
           height: AppSpacing.inputHeight,
@@ -272,11 +272,11 @@ class _GatePreview extends StatelessWidget {
     return Padding(
       padding: EnterpriseStatesSpacingTokens.enterpriseStatesPreviewPadding,
       child: DecoratedBox(
-        decoration: ShapeDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.surface2,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.cardRadius,
-            side: const BorderSide(color: AppColors.divider),
+            side: BorderSide(color: AppColors.divider),
           ),
         ),
         child: Padding(

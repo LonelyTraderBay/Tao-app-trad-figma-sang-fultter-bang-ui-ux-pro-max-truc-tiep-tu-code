@@ -15,15 +15,15 @@ class _BackupCodesStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox.square(
+        const SizedBox.square(
           dimension: AuthSpacingTokens.authHeroIconBoxSm,
           child: Material(
             color: AppColors.buy10,
-            shape: const RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.cardRadius,
               side: BorderSide(color: AppColors.buy20),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.file_download_outlined,
               color: AppColors.buy,
               size: AuthSpacingTokens.authHeroIconMd,
@@ -31,7 +31,7 @@ class _BackupCodesStep extends StatelessWidget {
           ),
         ),
         const Padding(padding: AuthSpacingTokens.authTwoFaHeroTopPadding),
-        Text(
+        const Text(
           'Bước 3: Mã dự phòng',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
@@ -46,7 +46,7 @@ class _BackupCodesStep extends StatelessWidget {
           ),
         ),
         const Padding(padding: AuthSpacingTokens.authTwoFaSectionTopPadding),
-        _BackupCodeList(codes: _backupCodes),
+        const _BackupCodeList(codes: _backupCodes),
         const Padding(padding: AuthSpacingTokens.authTwoFaSectionTopPadding),
         const _WarningBanner(text: 'Mỗi mã chỉ dùng được 1 lần.'),
         const Padding(

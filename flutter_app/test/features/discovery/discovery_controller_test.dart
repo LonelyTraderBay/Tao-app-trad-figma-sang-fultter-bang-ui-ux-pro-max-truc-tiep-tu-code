@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/features/discovery/presentation/controllers/di
 void main() {
   group('DiscoveryController', () {
     test('returns unified search snapshots through repository contract', () {
-      final controller = DiscoveryController(const MockDiscoveryRepository());
+      final controller = const DiscoveryController(MockDiscoveryRepository());
 
       final empty = controller.unifiedSearch();
       final bitcoin = controller.unifiedSearch(query: ' bitcoin ');
@@ -18,7 +18,7 @@ void main() {
     });
 
     test('returns topic snapshots without mixing product boundaries', () {
-      final controller = DiscoveryController(const MockDiscoveryRepository());
+      final controller = const DiscoveryController(MockDiscoveryRepository());
 
       final snapshot = controller.topicHub(
         topicId: 'crypto',

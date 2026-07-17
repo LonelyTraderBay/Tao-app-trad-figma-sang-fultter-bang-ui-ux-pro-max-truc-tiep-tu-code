@@ -171,7 +171,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                         onChanged: (key) => setState(
                           () => _filter = _AlertFilter.values.byName(key),
                         ),
-                        tabs: [
+                        tabs: const [
                           VitTabItem(
                             key: 'all',
                             label: 'T\u1EA5t c\u1EA3',

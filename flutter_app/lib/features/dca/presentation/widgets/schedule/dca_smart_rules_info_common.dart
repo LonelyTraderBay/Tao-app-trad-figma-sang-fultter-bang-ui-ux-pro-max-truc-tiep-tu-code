@@ -174,7 +174,7 @@ class _TinyBadge extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: background,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
         padding: DcaSpacingTokens.dcaChipPadding,

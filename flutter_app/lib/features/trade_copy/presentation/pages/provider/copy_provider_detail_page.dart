@@ -96,7 +96,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        CopyTradingRiskWarningCard(
+        const CopyTradingRiskWarningCard(
           title: 'Copy trading không đảm bảo lợi nhuận',
           message:
               'Quá khứ không báo hiệu tương lai. Bạn có thể mất toàn bộ vốn khi sao chép chiến lược.',

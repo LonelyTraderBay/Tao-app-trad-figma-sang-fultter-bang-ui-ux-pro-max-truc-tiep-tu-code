@@ -11,7 +11,7 @@ class _TournamentTabBar extends StatelessWidget {
     return PredictionEnumTabBar<_TournamentTab>(
       activeTab: activeTab,
       onChanged: onChanged,
-      items: [
+      items: const [
         (
           PredictionTournamentsPage.activeTabKey,
           _TournamentTab.active,

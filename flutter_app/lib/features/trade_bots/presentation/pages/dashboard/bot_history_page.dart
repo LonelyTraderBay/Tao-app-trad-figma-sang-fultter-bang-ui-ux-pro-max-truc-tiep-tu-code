@@ -88,9 +88,9 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
             totalFees: totalFees,
           ),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Search',
-          child: const VitSearchBar(
+          child: VitSearchBar(
             enabled: false,
             placeholder: 'Search by bot name or pair...',
           ),

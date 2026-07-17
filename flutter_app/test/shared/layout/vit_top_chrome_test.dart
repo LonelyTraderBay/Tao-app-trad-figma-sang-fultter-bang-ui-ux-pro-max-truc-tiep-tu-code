@@ -54,11 +54,11 @@ void main() {
 
     await tester.pumpWidget(
       _wrap(
-        VitTopChrome(
+        const VitTopChrome(
           type: VitTopChromeType.rootModule,
           title: 'Markets and portfolio workspace',
           subtitle: 'Live overview',
-          actions: const [
+          actions: [
             VitHeaderActionItem(
               type: VitHeaderActionType.overview,
               onPressed: _noop,

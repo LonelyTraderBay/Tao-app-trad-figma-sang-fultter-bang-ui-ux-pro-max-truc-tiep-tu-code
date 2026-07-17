@@ -234,7 +234,7 @@ class _TradeAmountInputState extends State<_TradeAmountInput> {
       textStyle: AppTextStyles.body.copyWith(
         fontFeatures: AppTextStyles.tabularFigures,
       ),
-      suffix: _TinyBadge(
+      suffix: const _TinyBadge(
         label: 'USDT',
         color: AppColors.text2,
         background: AppColors.surface3,

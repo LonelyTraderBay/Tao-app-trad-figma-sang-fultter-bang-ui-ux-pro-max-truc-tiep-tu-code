@@ -59,7 +59,7 @@ class _AddressCard extends StatelessWidget {
                           ),
                           if (address.isDefault) ...[
                             const SizedBox(width: AppSpacing.x2),
-                            _Badge(
+                            const _Badge(
                               label: 'MAC DINH',
                               color: AppModuleAccents.launchpad,
                             ),

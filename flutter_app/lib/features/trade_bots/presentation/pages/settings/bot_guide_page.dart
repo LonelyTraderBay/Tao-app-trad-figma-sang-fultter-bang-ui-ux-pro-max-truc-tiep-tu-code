@@ -68,7 +68,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
           secondaryLabel: 'Thực hành',
           secondaryValue: '${snapshot.bestPractices.length}',
         ),
-        VitTradeSection(title: 'Tổng quan', child: const _IntroBanner()),
+        const VitTradeSection(title: 'Tổng quan', child: _IntroBanner()),
         VitTradeSection(
           title: 'Chủ đề',
           child: VitTabBar(
@@ -110,9 +110,9 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
               ? _BestPracticesView(items: snapshot.bestPractices)
               : _MistakesView(items: snapshot.mistakes),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Video tutorials',
-          child: const _VideoTutorialsCard(),
+          child: _VideoTutorialsCard(),
         ),
         const VitBotRiskReviewFooter(
           title: 'Bot education review',

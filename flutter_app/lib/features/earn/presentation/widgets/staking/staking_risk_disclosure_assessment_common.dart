@@ -20,18 +20,18 @@ class _AssessmentTab extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox.square(
+                  const SizedBox.square(
                     dimension: _stakingRiskAssessmentIconBox,
                     child: Material(
                       color: AppColors.primary12,
-                      shape: const RoundedRectangleBorder(
+                      shape: RoundedRectangleBorder(
                         borderRadius: AppRadii.cardLargeRadius,
                         side: BorderSide(
                           color: AppColors.primary30,
                           width: _stakingRiskBorderWidth,
                         ),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.balance_rounded,
                         color: AppColors.primary,
                         size: _stakingRiskAssessmentIcon,

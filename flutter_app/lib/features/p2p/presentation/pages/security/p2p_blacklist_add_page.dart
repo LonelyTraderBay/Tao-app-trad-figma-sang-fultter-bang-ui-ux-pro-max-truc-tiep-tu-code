@@ -310,9 +310,9 @@ class _NoteField extends StatelessWidget {
           height: AppSpacing.ctaHeight + AppSpacing.x4,
           child: Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
-              side: const BorderSide(
+              side: BorderSide(
                 color: AppColors.borderSolid,
                 width: AppSpacing.borderWidth,
               ),

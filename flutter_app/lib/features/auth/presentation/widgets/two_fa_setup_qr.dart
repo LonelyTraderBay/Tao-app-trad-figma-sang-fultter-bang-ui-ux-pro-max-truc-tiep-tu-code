@@ -12,7 +12,7 @@ class _QrStep extends StatelessWidget {
       children: [
         const _ShieldHero(),
         const Padding(padding: AuthSpacingTokens.authTwoFaHeroTopPadding),
-        Text(
+        const Text(
           'Bước 1: Quét mã QR',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
@@ -64,16 +64,16 @@ class _ShieldHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return const Align(
       alignment: Alignment.center,
       child: AuthHeroIconBox(
         dimension: AuthSpacingTokens.authHeroIconBoxSm,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardRadius,
           side: BorderSide(color: _authPrimary30),
         ),
         fillColor: _authPrimary10,
-        child: const Icon(
+        child: Icon(
           Icons.shield_outlined,
           color: _authPrimary,
           size: AuthSpacingTokens.authHeroIconMd,
@@ -88,14 +88,14 @@ class _QrPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return const Align(
       alignment: Alignment.center,
       child: SizedBox.square(
         dimension: AuthSpacingTokens.authTwoFaQrSize,
         child: Material(
           color: AppColors.onAccent,
           borderRadius: AppRadii.cardLargeRadius,
-          child: const Padding(
+          child: Padding(
             padding: AuthSpacingTokens.authTwoFaQrPadding,
             child: CustomPaint(painter: _QrPainter()),
           ),

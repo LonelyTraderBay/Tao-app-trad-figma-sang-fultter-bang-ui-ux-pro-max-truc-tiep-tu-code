@@ -12,7 +12,7 @@ class _DrawdownTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Underwater Chart',
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,
@@ -70,7 +70,7 @@ class _ProjectionTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Monte Carlo Simulation (30 ngày)',
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,
@@ -134,7 +134,7 @@ class _CorrelationTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Daily Returns Correlation',
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,

@@ -44,7 +44,7 @@ class _PredictionResultCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const Spacer(),
-              DiscoveryInlineCta(
+              const DiscoveryInlineCta(
                 label: 'Xem thị trường',
                 color: AppModuleAccents.predictions,
               ),

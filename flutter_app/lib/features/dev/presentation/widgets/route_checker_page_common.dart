@@ -29,7 +29,7 @@ class _ActionsRow extends StatelessWidget {
         ),
         if (complete) ...[
           const SizedBox(width: AppSpacing.x3),
-          Expanded(
+          const Expanded(
             child: Center(
               child: VitAccentPill(
                 label: 'All Routes Tested',

@@ -66,7 +66,13 @@ const _moduleBaselines = <String, int>{
   'referral': 0,
   'shared': 0,
   'support': 3,
-  'trade': 17,
+  // DEBT-89 (2026-07-18): trade_spacing_tokens.dart tách 3 khu — 9/17 entry
+  // của 'trade' di cư sang module mới 'trade_bots'; baseline hạ theo đúng
+  // ratchet (tổng họ trade vẫn 17, không tăng).
+  'trade': 8,
+  'trade_bots': 9,
+  'trade_compliance': 0,
+  'trade_copy': 0,
   'wallet': 46,
 };
 

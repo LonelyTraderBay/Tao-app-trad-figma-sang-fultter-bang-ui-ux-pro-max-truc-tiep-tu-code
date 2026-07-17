@@ -9,8 +9,8 @@ class _AddAlertNotice extends StatelessWidget {
       width: double.infinity,
       child: Material(
         color: AppColors.surface3,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: AppColors.cardBorder),
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.cardBorder),
           borderRadius: AppRadii.mdRadius,
         ),
         child: Padding(

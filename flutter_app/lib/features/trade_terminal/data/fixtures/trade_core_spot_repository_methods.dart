@@ -126,7 +126,7 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
 
   @override
   TradeAdvancedTradingDemoSnapshot getAdvancedTradingDemo() {
-    return TradeAdvancedTradingDemoSnapshot(
+    return const TradeAdvancedTradingDemoSnapshot(
       position: _advancedDemoPosition,
       positionActions: _advancedDemoPositionActions,
       orderTypes: _advancedDemoOrderTypes,
@@ -137,7 +137,7 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
       defaultTab: 'position',
       defaultPositionMode: 'one-way',
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,

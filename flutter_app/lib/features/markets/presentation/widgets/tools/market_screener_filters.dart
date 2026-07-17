@@ -270,12 +270,12 @@ class _RangeInput extends StatelessWidget {
           horizontal: AppSpacing.x3,
           vertical: _rangeInputVerticalPadding,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.borderSolid),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.borderSolid),
           borderRadius: AppRadii.smRadius,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: _marketPrimary),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: _marketPrimary),
           borderRadius: AppRadii.smRadius,
         ),
       ),

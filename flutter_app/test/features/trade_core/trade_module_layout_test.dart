@@ -91,12 +91,12 @@ void main() {
 
   testWidgets('VitTradeDetailScaffold uses flush page variant', (tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: VitTradeDetailScaffold(
           title: 'Compliance detail',
           showBack: false,
           showProductTabs: false,
-          children: const [Text('Body')],
+          children: [Text('Body')],
         ),
       ),
     );
@@ -111,15 +111,15 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: Scaffold(
           body: VitTradeComplianceSection(
             title: 'Regulatory status',
-            statusPill: const VitStatusPill(
+            statusPill: VitStatusPill(
               label: 'Compliant',
               status: VitStatusPillStatus.success,
             ),
-            items: const [
+            items: [
               VitTradeComplianceItem(label: 'Framework', value: 'MiFID II'),
               VitTradeComplianceItem(label: 'Last review', value: '2026-01-15'),
             ],
@@ -141,13 +141,13 @@ void main() {
     'VitTradeHubScaffold renders product tabs as first scroll child',
     (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: VitTradeHubScaffold(
             title: 'Orders',
             showBack: false,
             showProductTabs: true,
             navigationBuilder: _fakeProductNavigation,
-            children: const [Text('Order body')],
+            children: [Text('Order body')],
           ),
         ),
       );

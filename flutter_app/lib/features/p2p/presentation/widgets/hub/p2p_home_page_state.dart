@@ -250,7 +250,7 @@ class _KycComplianceBanner extends StatelessWidget {
       key: P2PHomePage.kycBannerKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitBanner(
+        const VitBanner(
           variant: VitBannerVariant.warning,
           icon: Icons.verified_user_outlined,
           message: 'P2P yêu cầu xác minh KYC trước khi giao dịch',
@@ -287,7 +287,7 @@ class _QuickHub extends StatelessWidget {
         children: [
           Row(
             children: [
-              VitAccentIconBox(
+              const VitAccentIconBox(
                 icon: Icons.shield_outlined,
                 color: AppModuleAccents.p2p,
               ),
@@ -313,7 +313,7 @@ class _QuickHub extends StatelessWidget {
                   ],
                 ),
               ),
-              VitStatusPill(
+              const VitStatusPill(
                 label: 'Escrow',
                 status: VitStatusPillStatus.success,
                 icon: Icons.lock_outline_rounded,

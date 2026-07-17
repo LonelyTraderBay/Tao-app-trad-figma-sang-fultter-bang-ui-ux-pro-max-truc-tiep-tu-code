@@ -13,10 +13,10 @@ class _SafetyCenterCard extends StatelessWidget {
       padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: ArenaSpacingTokens.arenaGuideFeatureIconBox,
             height: ArenaSpacingTokens.arenaGuideFeatureIconBox,
-            child: const DecoratedBox(
+            child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
@@ -137,10 +137,10 @@ class _SupportCard extends StatelessWidget {
       padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: ArenaSpacingTokens.arenaGuideFeatureIconBox,
             height: ArenaSpacingTokens.arenaGuideFeatureIconBox,
-            child: const DecoratedBox(
+            child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),

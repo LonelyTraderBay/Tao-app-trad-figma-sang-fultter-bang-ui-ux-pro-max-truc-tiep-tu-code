@@ -115,7 +115,7 @@ class _SearchFilterSection extends StatelessWidget {
         VitSegmentedChoice<PredictionStatusFilter>(
           selected: status,
           onChanged: onStatusSelected,
-          options: [
+          options: const [
             VitSegmentedChoiceOption(
               value: PredictionStatusFilter.active,
               label: 'Đang mở',

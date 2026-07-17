@@ -32,8 +32,8 @@ class _OrderFlowCard extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(
                 child: _LegendItem(label: 'Buy Volume', color: AppColors.buy),
               ),

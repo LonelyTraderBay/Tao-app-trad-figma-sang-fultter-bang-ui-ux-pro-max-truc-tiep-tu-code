@@ -98,9 +98,9 @@ class _ProviderGovernancePageState
                   ],
                 ),
               ),
-              VitTradeSection(
+              const VitTradeSection(
                 title: 'Review',
-                child: const VitHighRiskStatePanel(
+                child: VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
                   title: 'Provider governance review',
                   message:

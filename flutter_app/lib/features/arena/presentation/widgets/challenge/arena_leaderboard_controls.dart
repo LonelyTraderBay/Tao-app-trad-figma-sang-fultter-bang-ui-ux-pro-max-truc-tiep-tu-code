@@ -22,7 +22,7 @@ class _MyRankCard extends StatelessWidget {
                   borderRadius: AppRadii.smRadius,
                 ),
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.emoji_events_outlined,
                   color: _arenaAccent,

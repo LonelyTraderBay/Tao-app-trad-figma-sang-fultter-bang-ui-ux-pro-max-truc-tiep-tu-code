@@ -15,13 +15,13 @@ class _IdentityHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
+          const Material(
             color: AppColors.primary15,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
-              side: const BorderSide(color: AppColors.primary20),
+              side: BorderSide(color: AppColors.primary20),
             ),
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsetsDirectional.all(AppSpacing.x2),
               child: Icon(
                 Icons.description_outlined,
@@ -153,7 +153,7 @@ class _GuidelinesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          VitSectionHeader(
+          const VitSectionHeader(
             title: 'Hướng dẫn chụp ảnh',
             icon: Icons.info_outline_rounded,
             iconColor: AppModuleAccents.p2p,
@@ -273,10 +273,10 @@ class _UploadCard extends StatelessWidget {
           child: uploaded
               ? Row(
                   children: [
-                    Material(
+                    const Material(
                       color: AppColors.buy10,
                       borderRadius: AppRadii.lgRadius,
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsetsDirectional.all(AppSpacing.x2),
                         child: Icon(
                           Icons.check_circle_outline_rounded,
@@ -323,10 +323,10 @@ class _UploadCard extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Material(
+                        const Material(
                           color: AppColors.primary12,
-                          shape: const CircleBorder(),
-                          child: const Padding(
+                          shape: CircleBorder(),
+                          child: Padding(
                             padding: EdgeInsetsDirectional.all(AppSpacing.x3),
                             child: Icon(
                               Icons.photo_camera_outlined,

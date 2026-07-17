@@ -11,7 +11,7 @@ class _SocialTabBar extends StatelessWidget {
     return PredictionEnumTabBar<_SocialTab>(
       activeTab: activeTab,
       onChanged: onChanged,
-      items: [
+      items: const [
         (PredictionSocialPage.commentsTabKey, _SocialTab.comments, 'Binh luan'),
         (PredictionSocialPage.analysisTabKey, _SocialTab.analysis, 'Phan tich'),
         (PredictionSocialPage.shareTabKey, _SocialTab.share, 'Chia se'),

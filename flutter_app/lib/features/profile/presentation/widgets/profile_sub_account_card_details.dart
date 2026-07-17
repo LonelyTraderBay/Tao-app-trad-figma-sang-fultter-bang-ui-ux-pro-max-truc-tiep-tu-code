@@ -74,7 +74,7 @@ class _SubAccountDetails extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          Row(
+          const Row(
             children: [
               Expanded(
                 child: _ActionChip(
@@ -84,9 +84,7 @@ class _SubAccountDetails extends StatelessWidget {
                   background: AppColors.primary08,
                 ),
               ),
-              const SizedBox(
-                width: ProfileSpacingTokens.profileSubAccountActionGap,
-              ),
+              SizedBox(width: ProfileSpacingTokens.profileSubAccountActionGap),
               Expanded(
                 child: _ActionChip(
                   icon: Icons.key_rounded,
@@ -95,9 +93,7 @@ class _SubAccountDetails extends StatelessWidget {
                   background: AppColors.warn08,
                 ),
               ),
-              const SizedBox(
-                width: ProfileSpacingTokens.profileSubAccountActionGap,
-              ),
+              SizedBox(width: ProfileSpacingTokens.profileSubAccountActionGap),
               Expanded(
                 child: _ActionChip(
                   icon: Icons.settings_outlined,
@@ -133,7 +129,7 @@ class _ActionChip extends StatelessWidget {
       constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
       child: Material(
         color: background,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

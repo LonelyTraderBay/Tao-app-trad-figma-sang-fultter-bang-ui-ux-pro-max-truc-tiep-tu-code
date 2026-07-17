@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/features/support/presentation/controllers/supp
 void main() {
   group('SupportController', () {
     test('exposes support snapshots through repository contract', () {
-      final controller = SupportController(const MockSupportRepository());
+      final controller = const SupportController(MockSupportRepository());
 
       final hub = controller.getSupportHub();
       final help = controller.getHelpCenter();

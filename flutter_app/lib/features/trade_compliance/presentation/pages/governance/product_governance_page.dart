@@ -74,9 +74,9 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
             title: 'Product governance review',

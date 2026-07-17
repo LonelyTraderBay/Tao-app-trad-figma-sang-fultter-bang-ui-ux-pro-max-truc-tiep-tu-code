@@ -110,7 +110,9 @@ class VitSectionHeader extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accentColor,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
               ),
             ),
           ),

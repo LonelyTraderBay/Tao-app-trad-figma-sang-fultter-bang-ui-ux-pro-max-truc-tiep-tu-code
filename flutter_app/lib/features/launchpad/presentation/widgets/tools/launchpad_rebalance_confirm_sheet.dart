@@ -48,12 +48,12 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Center(
+                    const Center(
                       child: SizedBox(
                         width: LaunchpadSpacingTokens.launchpadBox40,
                         height: AppSpacing.x1,
                         child: DecoratedBox(
-                          decoration: const ShapeDecoration(
+                          decoration: ShapeDecoration(
                             color: AppColors.borderSolid,
                             shape: RoundedRectangleBorder(
                               borderRadius: AppRadii.xsRadius,

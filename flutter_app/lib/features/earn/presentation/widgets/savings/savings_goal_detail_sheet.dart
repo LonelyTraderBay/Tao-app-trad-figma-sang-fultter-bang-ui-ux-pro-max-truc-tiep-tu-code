@@ -99,7 +99,7 @@ class _GoalDetailSheet extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        _SheetHeading(
+        const _SheetHeading(
           icon: Icons.emoji_events_outlined,
           label: 'Milestone Rewards',
         ),
@@ -111,7 +111,7 @@ class _GoalDetailSheet extends StatelessWidget {
         ],
         if (goal.contributions.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _SheetHeading(
+          const _SheetHeading(
             icon: Icons.arrow_upward_rounded,
             label: 'Đóng góp gần đây',
           ),

@@ -62,9 +62,9 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
           title: 'Tổng quan',
           child: _SummaryCard(positions: snapshot.positions),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Đánh giá rủi ro',
-          child: const VitCard(
+          child: VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.cardPaddingCompact,
             child: VitHighRiskStatePanel(

@@ -119,10 +119,10 @@ class _TradeHistoryExportPageState
                 onToggle: _toggleInclude,
               ),
             ),
-            VitTradeSection(title: 'Thuế', child: const _TaxNote()),
-            VitTradeSection(
+            const VitTradeSection(title: 'Thuế', child: _TaxNote()),
+            const VitTradeSection(
               title: 'Đánh giá xuất',
-              child: const VitCard(
+              child: VitCard(
                 variant: VitCardVariant.inner,
                 padding: EdgeInsetsDirectional.symmetric(
                   horizontal: AppSpacing.x3,

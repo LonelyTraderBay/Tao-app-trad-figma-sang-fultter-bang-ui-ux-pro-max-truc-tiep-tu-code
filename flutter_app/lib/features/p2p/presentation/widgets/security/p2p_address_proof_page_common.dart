@@ -14,7 +14,7 @@ class _AddressConfirmCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          VitSectionHeader(
+          const VitSectionHeader(
             title: 'Xác nhận địa chỉ',
             icon: Icons.location_on_outlined,
             iconColor: AppModuleAccents.p2p,

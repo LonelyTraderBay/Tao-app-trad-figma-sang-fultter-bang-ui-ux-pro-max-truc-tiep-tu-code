@@ -63,7 +63,7 @@ class _IntroStep extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Lợi ích',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
@@ -78,7 +78,7 @@ class _IntroStep extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ResponsibilitiesCard(items: snapshot.responsibilities),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Yêu cầu cơ bản',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,

@@ -109,7 +109,7 @@ class _SentimentHero extends StatelessWidget {
                     widthFactor: gaugePct.toDouble(),
                     child: ColoredBox(
                       color: scoreColor,
-                      child: SizedBox.expand(),
+                      child: const SizedBox.expand(),
                     ),
                   ),
                 ],

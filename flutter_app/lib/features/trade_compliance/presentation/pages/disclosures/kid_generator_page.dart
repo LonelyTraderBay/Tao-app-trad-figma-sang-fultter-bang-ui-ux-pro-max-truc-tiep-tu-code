@@ -64,13 +64,13 @@ class KIDGeneratorPage extends ConsumerWidget {
         fallbackPath: AppRoutePaths.tradeCopyExAnteCosts,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      headerActions: [
+      headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'KID document review required',
             message:
@@ -86,16 +86,19 @@ class KIDGeneratorPage extends ConsumerWidget {
             size: VitStatusPillSize.sm,
           ),
           items: [
-            VitTradeComplianceItem(label: 'Regulation', value: 'PRIIPs KID'),
+            const VitTradeComplianceItem(
+              label: 'Regulation',
+              value: 'PRIIPs KID',
+            ),
             VitTradeComplianceItem(
               label: 'Sections',
               value: '${snapshot.sections.length} required',
             ),
           ],
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Notice',
-          child: const VitTradeComplianceHero(
+          child: VitTradeComplianceHero(
             title: 'Mandatory PRIIPs Document',
             description:
                 'This Key Information Document must be provided before you '

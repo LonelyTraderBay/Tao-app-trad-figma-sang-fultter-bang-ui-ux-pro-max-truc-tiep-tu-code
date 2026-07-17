@@ -228,9 +228,9 @@ class _CorrelationCard extends StatelessWidget {
           ],
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text.rich(
-            TextSpan(
+            const TextSpan(
               children: [
-                const TextSpan(
+                TextSpan(
                   text: 'Low correlation (<0.2) = Good diversification ',
                 ),
                 WidgetSpan(

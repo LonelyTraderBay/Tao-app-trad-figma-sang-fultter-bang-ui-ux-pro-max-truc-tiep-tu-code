@@ -68,9 +68,9 @@ class _PerformanceScenariosPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Review performance scenario risk',
             message:

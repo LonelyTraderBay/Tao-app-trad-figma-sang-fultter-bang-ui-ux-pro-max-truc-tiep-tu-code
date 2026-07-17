@@ -132,12 +132,12 @@ class _TimelineHeroCard extends StatelessWidget {
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: AppSpacing.buttonCompact,
             child: Material(
               color: AppColors.primary12,
               borderRadius: AppRadii.smRadius,
-              child: const Icon(
+              child: Icon(
                 Icons.schedule_rounded,
                 color: AppColors.primary,
                 size: AppSpacing.iconSm,
@@ -179,11 +179,11 @@ class _TimelineList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
+        const Positioned(
           left: AppSpacing.x6 / 2,
           top: AppSpacing.x1,
           bottom: AppSpacing.x6,
-          child: const SizedBox(
+          child: SizedBox(
             width: P2PSpacingTokens.p2pOrderTimelineConnectorWidth,
             child: ColoredBox(color: AppColors.borderSolid),
           ),

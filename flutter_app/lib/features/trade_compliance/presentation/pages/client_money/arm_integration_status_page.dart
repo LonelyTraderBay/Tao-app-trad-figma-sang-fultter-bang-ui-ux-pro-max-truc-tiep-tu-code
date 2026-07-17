@@ -79,9 +79,9 @@ class _ArmIntegrationStatusPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
             title: 'Review ARM integration health',

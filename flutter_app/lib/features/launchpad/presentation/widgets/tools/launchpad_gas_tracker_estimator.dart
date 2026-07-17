@@ -61,13 +61,13 @@ class _EstimateCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final cost in estimate.costs) _EstimateCostRow(cost: cost),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _Legend(label: 'Slow', color: AppColors.buy),
-              const SizedBox(width: AppSpacing.x3),
+              SizedBox(width: AppSpacing.x3),
               _Legend(label: 'Standard', color: AppColors.primary),
-              const SizedBox(width: AppSpacing.x3),
+              SizedBox(width: AppSpacing.x3),
               _Legend(label: 'Fast', color: AppColors.warn),
             ],
           ),

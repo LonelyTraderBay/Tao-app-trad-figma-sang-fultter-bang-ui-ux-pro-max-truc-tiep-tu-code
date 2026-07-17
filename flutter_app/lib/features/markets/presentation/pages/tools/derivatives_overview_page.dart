@@ -97,7 +97,7 @@ class _DerivativesOverviewPageState
                           MarketDerivativesOverviewStatGrid(
                             stats: snapshot.globalStats,
                           ),
-                          MarketDerivativesSectionHeader(
+                          const MarketDerivativesSectionHeader(
                             label: 'Thanh lý theo thời gian (24h)',
                             accentColor: AppColors.sell,
                           ),
@@ -105,7 +105,7 @@ class _DerivativesOverviewPageState
                             history: snapshot.liquidationHistory,
                             pairs: snapshot.pairs,
                           ),
-                          MarketDerivativesSectionHeader(
+                          const MarketDerivativesSectionHeader(
                             label: 'Top Open Interest',
                             accentColor: marketDerivativesPrimary,
                           ),
@@ -125,7 +125,7 @@ class _DerivativesOverviewPageState
                           MarketDerivativesLiquidationSummary(
                             stats: snapshot.globalStats,
                           ),
-                          MarketDerivativesSectionHeader(
+                          const MarketDerivativesSectionHeader(
                             label: 'Thanh lý theo cặp',
                             accentColor: AppColors.sell,
                           ),

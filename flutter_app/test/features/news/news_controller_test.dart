@@ -40,7 +40,7 @@ void main() {
             NewsScreenState.offline,
           ],
         );
-        final controller = NewsController(snapshot: snapshot);
+        final controller = const NewsController(snapshot: snapshot);
 
         final filtered = controller.filterBy(NewsArticleType.security);
 

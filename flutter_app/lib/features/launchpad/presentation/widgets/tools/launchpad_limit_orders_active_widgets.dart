@@ -143,7 +143,7 @@ class _LimitOrderCard extends StatelessWidget {
                 ),
               ),
               if (order.partialFill)
-                _TinyPill(label: 'PARTIAL OK', color: AppColors.primary),
+                const _TinyPill(label: 'PARTIAL OK', color: AppColors.primary),
             ],
           ),
         ],

@@ -10,8 +10,8 @@ class _CommentsContent extends StatelessWidget {
       children: [
         Material(
           color: AppColors.warn08,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: AppColors.warningBorder),
+          shape: const RoundedRectangleBorder(
+            side: BorderSide(color: AppColors.warningBorder),
             borderRadius: AppRadii.mdRadius,
           ),
           child: Padding(
@@ -40,13 +40,13 @@ class _CommentsContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        _CommentRow(
+        const _CommentRow(
           name: 'MacroAlpha',
           side: 'Yes',
           text: 'Strong ETF flow and liquidity backdrop support this market.',
           likes: 18,
         ),
-        _CommentRow(
+        const _CommentRow(
           name: 'RiskDesk',
           side: 'No',
           text: 'Watch macro rates and exchange liquidity before sizing up.',
@@ -57,8 +57,8 @@ class _CommentsContent extends StatelessWidget {
           height: VitDensity.compact.controlHeight,
           child: Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: AppColors.borderSolid),
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(color: AppColors.borderSolid),
               borderRadius: AppRadii.mdRadius,
             ),
             child: Padding(

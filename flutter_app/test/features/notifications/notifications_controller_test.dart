@@ -6,8 +6,8 @@ import 'package:vit_trade_flutter/features/notifications/data/repositories/mock_
 void main() {
   group('NotificationsController', () {
     test('exposes notifications snapshot through repository contract', () {
-      final controller = NotificationsController(
-        const MockNotificationsRepository(),
+      final controller = const NotificationsController(
+        MockNotificationsRepository(),
       );
 
       final snapshot = controller.getNotifications();

@@ -152,7 +152,10 @@ class _MethodRow extends StatelessWidget {
                         ),
                         if (method.isPrimary) ...[
                           const SizedBox(width: AppSpacing.x2),
-                          _SmallBadge(label: 'Chính', color: AppColors.buy),
+                          const _SmallBadge(
+                            label: 'Chính',
+                            color: AppColors.buy,
+                          ),
                         ],
                       ],
                     ),
@@ -180,7 +183,7 @@ class _MethodRow extends StatelessWidget {
           ),
           if (method.setupRequired && !method.enabled) ...[
             const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-            _InlineNotice(
+            const _InlineNotice(
               text: 'Cần setup Authenticator App trước khi sử dụng',
               color: AppColors.warn,
             ),
@@ -221,16 +224,16 @@ class _ThresholdSection extends StatelessWidget {
       key: P2P2FASettingsPage.thresholdsKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
+        const Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(
+            Expanded(
               child: VitSectionHeader(
                 title: 'Ngưỡng giao dịch',
                 bottomGap: AppSpacing.pageRhythmStandardInnerGap,
               ),
             ),
-            const Icon(
+            Icon(
               Icons.info_outline_rounded,
               color: AppColors.text3,
               size: AppSpacing.iconSm,

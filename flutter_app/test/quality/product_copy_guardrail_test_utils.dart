@@ -9,9 +9,13 @@ String readSource(String path) {
 }
 
 Iterable<File> listDartFiles(String directoryPath) {
-  return Directory(
-    directoryPath,
-  ).listSync().whereType<File>().where((file) => file.path.endsWith('.dart'));
+  // SEC-S42: PHẢI đệ quy — page Arena nằm trong thư mục con (hub/,
+  // governance/, challenge/...); bản không đệ quy trước đây quét RỖNG làm
+  // test ranh giới Arena pass chay (lỗ hổng phát hiện qua canary 2026-07-18).
+  return Directory(directoryPath)
+      .listSync(recursive: true)
+      .whereType<File>()
+      .where((file) => file.path.endsWith('.dart'));
 }
 
 String asciiFold(String value) {

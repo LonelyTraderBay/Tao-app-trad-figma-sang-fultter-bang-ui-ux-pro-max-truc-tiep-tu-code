@@ -257,7 +257,7 @@ class SavingsSmartSuggestionIcon extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x6,

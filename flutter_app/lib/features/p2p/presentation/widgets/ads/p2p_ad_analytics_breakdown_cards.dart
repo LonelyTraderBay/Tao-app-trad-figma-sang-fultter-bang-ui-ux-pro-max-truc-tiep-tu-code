@@ -103,12 +103,12 @@ class _HeatmapCard extends StatelessWidget {
             },
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const _LegendDot(color: AppColors.buy10, label: 'Ít'),
+              _LegendDot(color: AppColors.buy10, label: 'Ít'),
               Row(
-                children: const [
+                children: [
                   _HeatLegendCell(alpha: .22),
                   SizedBox(width: AppSpacing.x1),
                   _HeatLegendCell(alpha: .38),
@@ -118,7 +118,7 @@ class _HeatmapCard extends StatelessWidget {
                   _HeatLegendCell(alpha: .70),
                 ],
               ),
-              const _LegendDot(color: AppColors.buy, label: 'Nhiều'),
+              _LegendDot(color: AppColors.buy, label: 'Nhiều'),
             ],
           ),
         ],

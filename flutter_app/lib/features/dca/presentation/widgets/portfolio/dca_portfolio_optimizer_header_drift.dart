@@ -24,7 +24,7 @@ class _DriftBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             width: _dcaPortfolioAlertIconExtent,
             height: _dcaPortfolioAlertIconExtent,
             child: DecoratedBox(
@@ -32,10 +32,10 @@ class _DriftBanner extends StatelessWidget {
                 color: AppColors.sell10,
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.mdRadius,
-                  side: const BorderSide(color: AppColors.sell20),
+                  side: BorderSide(color: AppColors.sell20),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.sell,
                 size: AppSpacing.iconSm,

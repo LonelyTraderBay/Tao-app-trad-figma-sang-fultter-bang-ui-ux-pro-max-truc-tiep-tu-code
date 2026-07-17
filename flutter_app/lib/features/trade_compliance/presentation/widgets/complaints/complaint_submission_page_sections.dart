@@ -24,7 +24,9 @@ class _CategoryField extends StatelessWidget {
           onSelected: onChanged,
           padding: AppSpacing.zeroInsets,
           position: PopupMenuPosition.under,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
           itemBuilder: (_) => [
             for (final category in categories)
               PopupMenuItem(

@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.d
 void main() {
   group('LaunchpadController', () {
     test('exposes core launchpad snapshots through repository contract', () {
-      final controller = LaunchpadController(const MockLaunchpadRepository());
+      final controller = const LaunchpadController(MockLaunchpadRepository());
 
       final home = controller.getHome();
       final detail = controller.getDetail('vitx');
@@ -19,7 +19,7 @@ void main() {
     });
 
     test('exposes advanced tool read models without data imports', () {
-      final controller = LaunchpadController(const MockLaunchpadRepository());
+      final controller = const LaunchpadController(MockLaunchpadRepository());
 
       expect(controller.getBridgeCompare().comparison.routes, isNotEmpty);
       expect(controller.getGasTracker().prices, isNotEmpty);

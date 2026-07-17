@@ -95,9 +95,9 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Review cost impact before proceeding',
             message:

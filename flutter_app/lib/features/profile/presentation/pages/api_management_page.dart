@@ -191,7 +191,10 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: _apiPanel,
-          title: Text('Xo\u00E1 API Key?', style: AppTextStyles.sectionTitleSm),
+          title: const Text(
+            'Xo\u00E1 API Key?',
+            style: AppTextStyles.sectionTitleSm,
+          ),
           content: Text(
             'Thao t\u00E1c n\u00E0y kh\u00F4ng th\u1EC3 ho\u00E0n t\u00E1c. T\u1EA5t c\u1EA3 k\u1EBFt n\u1ED1i s\u1EED d\u1EE5ng key n\u00E0y s\u1EBD ng\u1EEBng ho\u1EA1t \u0111\u1ED9ng.',
             style: AppTextStyles.body.copyWith(color: AppColors.text2),

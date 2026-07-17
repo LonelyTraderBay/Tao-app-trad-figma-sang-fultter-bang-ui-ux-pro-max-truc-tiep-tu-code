@@ -87,15 +87,15 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: AnnouncementsPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị thông báo đã lưu gần nhất.',
                   ),

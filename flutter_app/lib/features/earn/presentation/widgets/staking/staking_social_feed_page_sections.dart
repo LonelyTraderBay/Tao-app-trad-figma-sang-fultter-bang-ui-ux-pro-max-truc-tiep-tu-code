@@ -295,7 +295,7 @@ class _CommunityStats extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Community Stats', style: AppTextStyles.baseMedium),
+          const Text('Community Stats', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Row(
             children: [

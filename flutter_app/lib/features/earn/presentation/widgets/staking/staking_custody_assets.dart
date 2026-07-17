@@ -96,9 +96,9 @@ class StakingCustodyHotColdSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-              Row(
+              const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Expanded(
                     child: StakingCustodyStorageTile(
                       icon: Icons.lock_outline_rounded,

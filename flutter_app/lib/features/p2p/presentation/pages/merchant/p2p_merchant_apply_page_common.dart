@@ -52,9 +52,9 @@ class _MultilineInput extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Material(
           color: AppColors.surface2,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: AppRadii.inputRadius,
-            side: const BorderSide(
+            side: BorderSide(
               color: AppColors.borderSolid,
               width: AppSpacing.borderWidth,
             ),
@@ -250,7 +250,7 @@ class _IconBadge extends StatelessWidget {
       dimension: size,
       child: Material(
         color: color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         child: Icon(
           icon,
           color: color,

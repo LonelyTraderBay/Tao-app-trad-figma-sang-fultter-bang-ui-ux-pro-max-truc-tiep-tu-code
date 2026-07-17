@@ -41,7 +41,7 @@ Future<bool> showVitConfirmDialog({
     builder: (dialogContext) => AlertDialog(
       backgroundColor: AppColors.surface,
       surfaceTintColor: AppColors.surface,
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       title: Text(
         title,
         style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),

@@ -42,17 +42,17 @@ class StakingInsuranceFundHistoryTab extends StatelessWidget {
                   const SizedBox(
                     height: AppSpacing.pageRhythmStandardSectionGap,
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: StakingInsuranceFundInlineStatCard(
                           label: '12M Growth',
                           value: '+10.6%',
                           color: AppColors.primarySoft,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.x3),
-                      const Expanded(
+                      SizedBox(width: AppSpacing.x3),
+                      Expanded(
                         child: StakingInsuranceFundInlineStatCard(
                           label: 'Avg Ratio',
                           value: '161%',
@@ -66,11 +66,11 @@ class StakingInsuranceFundHistoryTab extends StatelessWidget {
             ),
           ],
         ),
-        VitPageSection(
+        const VitPageSection(
           key: StakingInsuranceFundKeys.audits,
           label: 'Monthly Audit Reports',
           accentColor: AppColors.primarySoft,
-          children: const [
+          children: [
             StakingInsuranceFundAuditRow(month: 'March 2026'),
             StakingInsuranceFundAuditRow(month: 'February 2026'),
             StakingInsuranceFundAuditRow(month: 'January 2026'),

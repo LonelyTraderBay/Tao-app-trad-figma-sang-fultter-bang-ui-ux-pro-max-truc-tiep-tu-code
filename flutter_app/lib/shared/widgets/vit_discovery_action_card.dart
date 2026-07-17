@@ -73,7 +73,9 @@ class VitDiscoveryActionCard extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 gradient: background,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                ),
               ),
               child: Center(
                 child: Icon(icon, color: accentColor, size: metrics.iconSize),

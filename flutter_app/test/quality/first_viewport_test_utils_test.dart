@@ -22,18 +22,21 @@ void main() {
                     children: [
                       Semantics(
                         label: 'SC-TEST Account Summary',
-                        child: SizedBox(
+                        child: const SizedBox(
                           height: 80,
                           child: Text('Account Summary'),
                         ),
                       ),
-                      SizedBox(height: 12),
-                      ElevatedButton(onPressed: _noop, child: Text('Continue')),
+                      const SizedBox(height: 12),
+                      const ElevatedButton(
+                        onPressed: _noop,
+                        child: Text('Continue'),
+                      ),
                     ],
                   ),
                 ),
               ),
-              bottomNavigationBar: VitBottomNav(),
+              bottomNavigationBar: const VitBottomNav(),
             ),
           ),
         );

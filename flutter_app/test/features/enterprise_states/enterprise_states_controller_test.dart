@@ -5,8 +5,8 @@ import 'package:vit_trade_flutter/features/enterprise_states/presentation/contro
 void main() {
   group('EnterpriseStatesController', () {
     test('exposes reference snapshot through repository contract', () {
-      final controller = EnterpriseStatesController(
-        const MockEnterpriseStatesRepository(),
+      final controller = const EnterpriseStatesController(
+        MockEnterpriseStatesRepository(),
       );
 
       final snapshot = controller.reference();

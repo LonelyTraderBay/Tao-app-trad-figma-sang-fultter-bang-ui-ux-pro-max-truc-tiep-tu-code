@@ -83,14 +83,14 @@ class _BacktestContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         VitCard(
           padding: _dcaPortfolioHeroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VitSectionHeader(
+              VitSectionHeader(
                 title: 'DCA vs HODL (12 tháng)',
                 icon: Icons.bar_chart_rounded,
                 iconColor: AppColors.buy,
@@ -104,9 +104,9 @@ class _BacktestContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
+        Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
         Row(
-          children: const [
+          children: [
             Expanded(
               child: _MiniStatCard(
                 label: 'DCA Final',
@@ -132,8 +132,8 @@ class _BacktestContent extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
-        const _DisclaimerCard(
+        Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
+        _DisclaimerCard(
           text:
               'Kết quả dựa trên dữ liệu lịch sử, không đảm bảo hiệu suất tương lai.',
         ),

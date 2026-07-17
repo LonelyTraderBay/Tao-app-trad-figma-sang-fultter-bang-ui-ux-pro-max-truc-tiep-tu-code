@@ -65,9 +65,9 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Đánh giá rủi ro',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
             title: 'Xem lại tín hiệu an toàn copy trading',

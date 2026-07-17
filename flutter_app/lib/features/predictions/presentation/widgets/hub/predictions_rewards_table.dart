@@ -46,34 +46,34 @@ class _TableHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: VitDensity.compact.controlHeight - AppSpacing.x2,
-      child: Stack(
+      child: const Stack(
         children: [
           Padding(
             padding: PredictionsSpacingTokens.predictionRewardsTablePadding,
             child: Row(
               children: [
                 Expanded(child: _HeaderText('MARKET')),
-                const SizedBox(width: AppSpacing.x1),
-                const SizedBox(
+                SizedBox(width: AppSpacing.x1),
+                SizedBox(
                   width: PredictionsSpacingTokens.predictionRewardsSpreadWidth,
                   child: Center(child: _HeaderText('SPREAD')),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: PredictionsSpacingTokens.predictionRewardsMinWidth,
                   child: Center(child: _HeaderText('MIN')),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: PredictionsSpacingTokens.predictionRewardsRewardWidth,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: _HeaderText('REWARD'),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x2),
+                SizedBox(width: AppSpacing.x2),
               ],
             ),
           ),
-          const _RewardsDivider(),
+          _RewardsDivider(),
         ],
       ),
     );

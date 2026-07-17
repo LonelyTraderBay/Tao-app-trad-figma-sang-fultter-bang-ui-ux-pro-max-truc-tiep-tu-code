@@ -14,7 +14,7 @@ class _TopTradersCard extends StatelessWidget {
         fullBleed: true,
         density: VitDensity.compact,
         children: [
-          _CardHeader(
+          const _CardHeader(
             icon: Icons.visibility_rounded,
             iconColor: _analyticsAmber,
             title: 'Top Traders',
@@ -183,7 +183,7 @@ class _FundingRateCard extends StatelessWidget {
               ),
             ),
           ),
-          _InfoStrip(
+          const _InfoStrip(
             text:
                 'Funding rate duong (do) = Long tra Short. Am (xanh) = Short tra Long. Thanh toan moi 8 gio.',
           ),

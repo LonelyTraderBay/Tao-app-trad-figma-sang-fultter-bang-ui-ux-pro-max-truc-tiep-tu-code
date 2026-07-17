@@ -87,7 +87,7 @@ class StakingCustodyTransparencySection extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       'Real-time On-Chain Verification',
                       style: AppTextStyles.baseMedium,
                     ),

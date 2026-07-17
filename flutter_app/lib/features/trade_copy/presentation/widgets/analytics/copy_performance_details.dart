@@ -9,9 +9,9 @@ class _TradesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _InfoBox(
+        const _InfoBox(
           title: 'So sánh từng giao dịch',
-          lines: const ['Chênh lệch chủ yếu do slippage và execution delay.'],
+          lines: ['Chênh lệch chủ yếu do slippage và execution delay.'],
         ),
         const SizedBox(height: _performanceSpace),
         for (final trade in snapshot.tradeComparisons) ...[

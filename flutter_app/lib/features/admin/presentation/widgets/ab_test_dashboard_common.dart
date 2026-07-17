@@ -80,9 +80,9 @@ class _ExpandedDetails extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-        ClipRRect(
+        const ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: const SizedBox(
+          child: SizedBox(
             height: AdminSpacingTokens.adminProgressHeight,
             child: ColoredBox(color: AppColors.surface2),
           ),

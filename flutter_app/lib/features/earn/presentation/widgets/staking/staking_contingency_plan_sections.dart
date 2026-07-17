@@ -14,7 +14,7 @@ class _RecoveryMetrics extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Recovery Metrics', style: AppTextStyles.baseMedium),
+          const Text('Recovery Metrics', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           GridView.builder(
             shrinkWrap: true,

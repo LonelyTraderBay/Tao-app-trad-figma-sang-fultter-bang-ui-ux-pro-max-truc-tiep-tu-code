@@ -22,7 +22,7 @@ class _LegendItem extends StatelessWidget {
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: AppRadii.deviceRadius,
               ),
             ),

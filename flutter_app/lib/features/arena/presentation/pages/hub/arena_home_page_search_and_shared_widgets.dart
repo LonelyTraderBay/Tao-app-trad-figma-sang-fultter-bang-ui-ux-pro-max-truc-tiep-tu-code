@@ -15,7 +15,7 @@ class _VerifiedTeaser extends StatelessWidget {
         density: VitDensity.compact,
         child: Row(
           children: [
-            _ActionIcon(
+            const _ActionIcon(
               icon: Icons.lock_outline_rounded,
               color: AppColors.accent,
             ),

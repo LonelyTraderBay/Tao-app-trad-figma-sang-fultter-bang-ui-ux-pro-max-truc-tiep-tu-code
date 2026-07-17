@@ -138,7 +138,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                   ],
                 ),
         ),
-        VitTradeSection(title: 'Hỗ trợ', child: const _HelpCard()),
+        const VitTradeSection(title: 'Hỗ trợ', child: _HelpCard()),
         const VitBotRiskDisclaimer(),
       ],
     );

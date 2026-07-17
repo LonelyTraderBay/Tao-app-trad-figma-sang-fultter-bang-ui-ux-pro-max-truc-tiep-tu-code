@@ -66,7 +66,7 @@ class _StepsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Copy Trading hoạt động như thế nào?',
             style: AppTextStyles.baseMedium,
           ),
@@ -155,7 +155,7 @@ class _CopyModesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Các chế độ sao chép', style: AppTextStyles.baseMedium),
+          const Text('Các chế độ sao chép', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final mode in modes) ...[
             _CopyModeTile(mode: mode),
@@ -251,7 +251,7 @@ class _ConceptsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Khái niệm quan trọng', style: AppTextStyles.baseMedium),
+          const Text('Khái niệm quan trọng', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final concept in concepts) ...[
             _ConceptRow(concept: concept),

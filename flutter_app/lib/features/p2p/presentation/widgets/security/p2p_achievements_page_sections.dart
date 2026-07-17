@@ -317,20 +317,20 @@ class _AchievementIconBubble extends StatelessWidget {
           ),
         ),
         if (!large && !locked && showBadge)
-          Positioned(
+          const Positioned(
             right: P2PSpacingTokens.p2pTrustProgressBadgeInset,
             bottom: P2PSpacingTokens.p2pTrustProgressBadgeInset,
             child: SizedBox.square(
               dimension: P2PSpacingTokens.p2pTrustProgressBadgeSize,
               child: Material(
                 color: AppColors.buy,
-                shape: const CircleBorder(
+                shape: CircleBorder(
                   side: BorderSide(
                     color: AppColors.surface,
                     width: P2PSpacingTokens.p2pTrustProgressBadgeBorderWidth,
                   ),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.check_rounded,
                   color: AppColors.onAccent,
                   size: P2PSpacingTokens.p2pTrustProgressBadgeIcon,

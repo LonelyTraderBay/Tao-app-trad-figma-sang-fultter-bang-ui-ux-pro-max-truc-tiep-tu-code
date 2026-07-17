@@ -22,10 +22,10 @@ class _ReserveProgress extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: AppSpacing.x6,
                 height: AppSpacing.x6,
-                child: const Material(
+                child: Material(
                   color: AppColors.transparent,
                   shape: CircleBorder(
                     side: BorderSide(

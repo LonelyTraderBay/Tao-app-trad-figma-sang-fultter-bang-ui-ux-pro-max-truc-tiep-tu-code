@@ -285,13 +285,13 @@ class _TextFieldShell extends StatelessWidget {
         filled: true,
         fillColor: _disputeField,
         contentPadding: TradeSpacingTokens.tradeBotDisputeTextFieldPadding,
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadii.cardRadius,
-          borderSide: const BorderSide(color: _disputeFieldBorder),
+          borderSide: BorderSide(color: _disputeFieldBorder),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadii.cardRadius,
-          borderSide: const BorderSide(color: _disputePrimary, width: 1.5),
+          borderSide: BorderSide(color: _disputePrimary, width: 1.5),
         ),
       ),
     );

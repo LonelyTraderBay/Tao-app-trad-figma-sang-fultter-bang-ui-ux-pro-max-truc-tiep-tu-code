@@ -147,7 +147,7 @@ class EarningsTab extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: StatusPill(label: '+0.752%', color: AppColors.buy),
@@ -171,7 +171,7 @@ class EarningsTab extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        SectionLabel(label: 'Lãi theo tài sản', color: AppColors.accent),
+        const SectionLabel(label: 'Lãi theo tài sản', color: AppColors.accent),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           radius: VitCardRadius.large,

@@ -332,13 +332,13 @@ class _HourSelector extends StatelessWidget {
         labelStyle: AppTextStyles.micro.copyWith(color: AppColors.text3),
         filled: true,
         fillColor: AppColors.surface2,
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadii.inputRadius,
-          borderSide: const BorderSide(color: AppColors.cardBorder),
+          borderSide: BorderSide(color: AppColors.cardBorder),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadii.inputRadius,
-          borderSide: const BorderSide(color: AppColors.primary),
+          borderSide: BorderSide(color: AppColors.primary),
         ),
       ),
       style: AppTextStyles.caption.copyWith(color: AppColors.text1),

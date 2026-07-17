@@ -21,7 +21,7 @@ class SavingsNotificationProductsTab extends StatelessWidget {
     return Column(
       key: SavingsNotificationPreferencesKeys.productsList,
       children: [
-        _InfoCard(
+        const _InfoCard(
           icon: Icons.info_outline_rounded,
           text:
               'Tùy chỉnh thông báo cho từng sản phẩm đang ký. Chỉ áp dụng cho sản phẩm bạn đang có vị thế hoạt động.',

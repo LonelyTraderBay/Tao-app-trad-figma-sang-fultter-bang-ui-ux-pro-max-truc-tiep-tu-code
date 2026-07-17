@@ -242,7 +242,7 @@ class _SimplePositionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (positions.isEmpty) {
-      return VitEmptyState(
+      return const VitEmptyState(
         icon: Icons.account_balance_wallet_outlined,
         title: 'Chưa có tài sản Spot',
         message: 'Mua coin đầu tiên để bắt đầu.',

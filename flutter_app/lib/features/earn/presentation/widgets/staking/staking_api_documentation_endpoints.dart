@@ -87,7 +87,7 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                   const SizedBox(
                     height: AppSpacing.pageRhythmStandardSectionGap,
                   ),
-                  Text('Parameters', style: AppTextStyles.caption),
+                  const Text('Parameters', style: AppTextStyles.caption),
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final param in selected.params) ...[
                     _ParameterCard(param: param),
@@ -101,7 +101,7 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           'Response Example',
                           style: AppTextStyles.caption,

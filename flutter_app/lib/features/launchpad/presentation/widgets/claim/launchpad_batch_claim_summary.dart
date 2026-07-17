@@ -87,7 +87,7 @@ class _TokenPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
         shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),

@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/features/onboarding/presentation/controllers/o
 void main() {
   group('OnboardingController', () {
     test('exposes onboarding flow through repository contract', () {
-      final controller = OnboardingController(const MockOnboardingRepository());
+      final controller = const OnboardingController(MockOnboardingRepository());
 
       final snapshot = controller.getFlow();
 

@@ -152,18 +152,18 @@ void main() {
   ) async {
     await tester.pumpWidget(
       _wrap(
-        Column(
+        const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VitModuleSectionHeader(title: 'Standard section'),
-            const Text('Body'),
-            const SizedBox(height: 16),
-            const VitModuleSectionHeader(
+            VitModuleSectionHeader(title: 'Standard section'),
+            Text('Body'),
+            SizedBox(height: 16),
+            VitModuleSectionHeader(
               title: 'Compact section',
               density: VitDensity.compact,
             ),
-            const Text('Compact body'),
+            Text('Compact body'),
           ],
         ),
       ),

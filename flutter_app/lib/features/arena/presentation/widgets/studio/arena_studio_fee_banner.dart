@@ -24,10 +24,10 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: ArenaSpacingTokens.arenaStudioFeeIconBox,
                 height: ArenaSpacingTokens.arenaStudioFeeIconBox,
-                child: const DecoratedBox(
+                child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.warn10,
                     shape: RoundedRectangleBorder(

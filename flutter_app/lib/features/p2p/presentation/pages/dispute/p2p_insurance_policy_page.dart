@@ -304,9 +304,9 @@ class _PolicyBullet extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        const Padding(
           padding: P2PSpacingTokens.p2pDocumentBulletTopPadding,
-          child: const SizedBox.square(
+          child: SizedBox.square(
             dimension: P2PSpacingTokens.p2pDocumentBullet,
             child: Material(color: AppColors.text3, shape: CircleBorder()),
           ),

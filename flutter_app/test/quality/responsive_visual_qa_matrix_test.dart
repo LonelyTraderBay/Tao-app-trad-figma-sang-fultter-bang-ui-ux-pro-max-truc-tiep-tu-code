@@ -121,25 +121,25 @@ const _responsiveViewports = [
 ];
 
 final _priorityRoutes = [
-  _PriorityRoute('Home', AppRoutePaths.home, 'Trang chủ'),
-  _PriorityRoute('Markets', AppRoutePaths.markets, 'Thị trường'),
+  const _PriorityRoute('Home', AppRoutePaths.home, 'Trang chủ'),
+  const _PriorityRoute('Markets', AppRoutePaths.markets, 'Thị trường'),
   _PriorityRoute(
     'Pair Detail',
     AppRoutePaths.pairDetail('btcusdt'),
     'Chi tiết cặp giao dịch',
   ),
-  _PriorityRoute('Trade', AppRoutePaths.trade, 'Giao dịch Spot'),
-  _PriorityRoute(
+  const _PriorityRoute('Trade', AppRoutePaths.trade, 'Giao dịch Spot'),
+  const _PriorityRoute(
     'Orders History',
     AppRoutePaths.tradeOrdersHistory,
     'Lịch sử lệnh giao dịch',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Order Receipt',
     AppRoutePaths.tradeOrderReceipt,
     'Chi tiết lệnh giao dịch',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Wallet',
     AppRoutePaths.wallet,
     'Ví - số dư minh bạch, bảo mật đa lớp',
@@ -154,45 +154,49 @@ final _priorityRoutes = [
     AppRoutePaths.walletTransaction('tx001'),
     'Chi tiết giao dịch',
   ),
-  _PriorityRoute('Deposit', AppRoutePaths.walletDeposit, 'Nạp tiền'),
-  _PriorityRoute(
+  const _PriorityRoute('Deposit', AppRoutePaths.walletDeposit, 'Nạp tiền'),
+  const _PriorityRoute(
     'Pending Deposits',
     AppRoutePaths.walletPendingDeposits,
     'Nạp tiền đang chờ xác nhận',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Portfolio Analytics',
     AppRoutePaths.walletPortfolioAnalytics,
     'Phân tích danh mục - tổng quan tài sản',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Wallet Health',
     AppRoutePaths.walletHealthScore,
     'Điểm sức khỏe ví - tổng quan, bảo mật và đa dạng hóa',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Dust Converter',
     AppRoutePaths.walletDustConverter,
     'Chuyển đổi số dư nhỏ',
   ),
-  _PriorityRoute('Withdraw', AppRoutePaths.walletWithdraw, 'Rút tiền'),
-  _PriorityRoute('Transfer', AppRoutePaths.walletTransfer, 'Chuyển nội bộ'),
-  _PriorityRoute(
+  const _PriorityRoute('Withdraw', AppRoutePaths.walletWithdraw, 'Rút tiền'),
+  const _PriorityRoute(
+    'Transfer',
+    AppRoutePaths.walletTransfer,
+    'Chuyển nội bộ',
+  ),
+  const _PriorityRoute(
     'Address Book',
     AppRoutePaths.walletAddressBook,
     'Sổ địa chỉ - quản lý địa chỉ ví đã lưu',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Address Add',
     AppRoutePaths.walletAddressBookAdd,
     'Thêm địa chỉ mới vào sổ địa chỉ ví',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Profile',
     AppRoutePaths.profile,
     'Trang tài khoản: hồ sơ cá nhân, giới thiệu bạn bè và VIP',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Prediction Home',
     AppRoutePaths.marketsPredictions,
     'Trang chủ thị trường dự đoán: xác suất và sự kiện đang mở',
@@ -202,7 +206,7 @@ final _priorityRoutes = [
     AppRoutePaths.marketsPredictionEvent('pred-1'),
     'Chi tiết sự kiện dự đoán: xác suất, vị thế và quy tắc',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Prediction Risk',
     AppRoutePaths.marketsPredictionsRiskCalculator,
     'Máy tính rủi ro dự đoán',
@@ -212,12 +216,12 @@ final _priorityRoutes = [
     AppRoutePaths.marketsPredictionReceipt('po-1'),
     'Chi tiết lệnh dự đoán: biên lai, phí và tiến trình',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Prediction Portfolio',
     AppRoutePaths.marketsPredictionsPortfolio,
     'Danh mục dự đoán',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Arena Home',
     AppRoutePaths.arena,
     'Trang chủ Open Arena - khám phá và tham gia thử thách công bằng',
@@ -232,18 +236,22 @@ final _priorityRoutes = [
     AppRoutePaths.arenaJoin('ch003'),
     'Xác nhận tham gia thử thách trong Open Arena',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Token Approval',
     AppRoutePaths.walletTokenApproval,
     'Phê duyệt token - xem và thu hồi quyền truy cập',
   ),
-  _PriorityRoute('P2P Dashboard', AppRoutePaths.p2pDashboard, 'Tổng quan P2P'),
-  _PriorityRoute(
+  const _PriorityRoute(
+    'P2P Dashboard',
+    AppRoutePaths.p2pDashboard,
+    'Tổng quan P2P',
+  ),
+  const _PriorityRoute(
     'P2P Payment Methods',
     AppRoutePaths.p2pPaymentMethods,
     'Phương thức thanh toán',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'P2P Payment Add',
     AppRoutePaths.p2pPaymentMethodAdd,
     'Thêm phương thức thanh toán',
@@ -258,18 +266,22 @@ final _priorityRoutes = [
     AppRoutePaths.p2pDispute('p2p001'),
     'Mở tranh chấp P2P',
   ),
-  _PriorityRoute('Admin Home', AppRoutePaths.admin, 'Trang tổng quan quản trị'),
-  _PriorityRoute(
+  const _PriorityRoute(
+    'Admin Home',
+    AppRoutePaths.admin,
+    'Trang tổng quan quản trị',
+  ),
+  const _PriorityRoute(
     'Analytics Dashboard',
     AppRoutePaths.adminAnalytics,
     'Bảng phân tích dữ liệu',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'Funnel Dashboard',
     AppRoutePaths.adminFunnels,
     'Bảng phân tích phễu chuyển đổi',
   ),
-  _PriorityRoute(
+  const _PriorityRoute(
     'A/B Test Dashboard',
     AppRoutePaths.adminAbtests,
     'Bảng điều khiển thử nghiệm A/B',

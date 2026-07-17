@@ -210,7 +210,7 @@ class _EventCard extends StatelessWidget {
                       ),
                     ),
                     if (event.severe)
-                      VitAccentPill(
+                      const VitAccentPill(
                         label: 'Severe',
                         accentColor: _drawdownRed,
                         size: VitStatusPillSize.sm,

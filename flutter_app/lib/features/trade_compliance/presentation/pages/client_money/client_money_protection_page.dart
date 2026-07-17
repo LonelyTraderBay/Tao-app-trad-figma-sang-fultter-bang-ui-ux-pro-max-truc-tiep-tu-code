@@ -66,9 +66,9 @@ class _ClientMoneyProtectionPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Protection notice',
-          child: const VitTradeComplianceHero(
+          child: VitTradeComplianceHero(
             title: 'Your Funds Are Protected',
             description:
                 'All client money is held in segregated bank accounts and '
@@ -123,7 +123,10 @@ class _ClientMoneyProtectionPageState
               label: 'Trust account',
               value: snapshot.trustAccount,
             ),
-            VitTradeComplianceItem(label: 'Framework', value: 'FCA CASS 7'),
+            const VitTradeComplianceItem(
+              label: 'Framework',
+              value: 'FCA CASS 7',
+            ),
           ],
         ),
       ],

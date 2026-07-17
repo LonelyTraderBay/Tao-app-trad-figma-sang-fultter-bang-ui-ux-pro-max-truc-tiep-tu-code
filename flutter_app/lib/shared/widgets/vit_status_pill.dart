@@ -193,7 +193,7 @@ class VitStatusPill extends StatelessWidget {
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: palette.foreground,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: AppRadii.pillRadius,
                         ),
                       ),

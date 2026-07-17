@@ -61,24 +61,18 @@ class _MetricTabs extends StatelessWidget {
           child: VitSegmentedChoice<PredictionLeaderboardMetric>(
             selected: active,
             onChanged: onSelected,
-            options: [
+            options: const [
               VitSegmentedChoiceOption(
                 value: PredictionLeaderboardMetric.pnl,
                 label: 'Profit/Loss',
                 key: PredictionsLeaderboardPage.pnlMetricKey,
-                leading: const Icon(
-                  Icons.trending_up_rounded,
-                  size: AppSpacing.x3,
-                ),
+                leading: Icon(Icons.trending_up_rounded, size: AppSpacing.x3),
               ),
               VitSegmentedChoiceOption(
                 value: PredictionLeaderboardMetric.volume,
                 label: 'Volume',
                 key: PredictionsLeaderboardPage.volumeMetricKey,
-                leading: const Icon(
-                  Icons.bar_chart_rounded,
-                  size: AppSpacing.x3,
-                ),
+                leading: Icon(Icons.bar_chart_rounded, size: AppSpacing.x3),
               ),
             ],
           ),

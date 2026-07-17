@@ -95,15 +95,15 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: HelpCenterPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị bài viết trợ giúp đã lưu gần nhất.',
                   ),

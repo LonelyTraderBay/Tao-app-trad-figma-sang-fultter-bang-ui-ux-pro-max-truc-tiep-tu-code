@@ -69,9 +69,9 @@ class _ComplaintsHandlingPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
             title: 'Complaint process review',
@@ -98,9 +98,9 @@ class _ComplaintsHandlingPageState
             ),
           ],
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Rights',
-          child: const VitTradeComplianceHero(
+          child: VitTradeComplianceHero(
             title: 'Your Rights',
             description:
                 'You have the right to complain. We will investigate fairly '

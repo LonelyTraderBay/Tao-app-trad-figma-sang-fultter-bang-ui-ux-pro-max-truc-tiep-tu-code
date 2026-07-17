@@ -65,7 +65,7 @@ class _DynamicIsland extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
+    return const Positioned(
       key: VitPhoneFrame.dynamicIslandKey,
       top: DeviceMetrics.dynamicIslandTop,
       left: (DeviceMetrics.width - DeviceMetrics.dynamicIslandWidth) / 2,
@@ -73,7 +73,7 @@ class _DynamicIsland extends StatelessWidget {
         width: DeviceMetrics.dynamicIslandWidth,
         height: DeviceMetrics.dynamicIslandHeight,
         child: DecoratedBox(
-          decoration: const ShapeDecoration(
+          decoration: ShapeDecoration(
             color: AppColors.dynamicIslandBg,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: AppColors.divider),
@@ -97,7 +97,7 @@ class _DynamicIsland extends StatelessWidget {
                 child: SizedBox.square(
                   dimension: DeviceMetrics.dynamicIslandSensorSize,
                   child: DecoratedBox(
-                    decoration: const ShapeDecoration(
+                    decoration: ShapeDecoration(
                       color: AppColors.phoneSensor,
                       shape: CircleBorder(),
                     ),
@@ -113,7 +113,7 @@ class _DynamicIsland extends StatelessWidget {
                 child: SizedBox.square(
                   dimension: DeviceMetrics.dynamicIslandLensSize,
                   child: DecoratedBox(
-                    decoration: const ShapeDecoration(
+                    decoration: ShapeDecoration(
                       gradient: RadialGradient(
                         center: Alignment(-0.3, -0.3),
                         colors: [
@@ -141,7 +141,7 @@ class _HomeIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
+    return const Positioned(
       key: VitPhoneFrame.homeIndicatorKey,
       left: (DeviceMetrics.width - DeviceMetrics.homeBarWidth) / 2,
       bottom: DeviceMetrics.homeBarBottomInset,
@@ -149,7 +149,7 @@ class _HomeIndicator extends StatelessWidget {
         width: DeviceMetrics.homeBarWidth,
         height: DeviceMetrics.homeBarHeight,
         child: DecoratedBox(
-          decoration: const ShapeDecoration(
+          decoration: ShapeDecoration(
             color: AppColors.homeBar,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
           ),

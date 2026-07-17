@@ -70,7 +70,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Profile của bạn', style: AppTextStyles.baseMedium),
+          const Text('Profile của bạn', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {

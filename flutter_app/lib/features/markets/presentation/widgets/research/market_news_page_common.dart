@@ -143,7 +143,7 @@ class _NewsTags extends StatelessWidget {
       runSpacing: _marketTinySpace,
       children: [
         if (news.isBreaking)
-          _TagPill(label: 'NÓNG', color: AppColors.sell, strong: true),
+          const _TagPill(label: 'NÓNG', color: AppColors.sell, strong: true),
         _TagPill(
           label: category.label,
           color: category.color.resolve(),

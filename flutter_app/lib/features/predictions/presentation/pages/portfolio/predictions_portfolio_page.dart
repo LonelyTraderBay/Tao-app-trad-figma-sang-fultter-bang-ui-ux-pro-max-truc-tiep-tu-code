@@ -128,7 +128,7 @@ class _PredictionsPortfolioPageState
                             }),
                           ),
                         ),
-                        VitAnnouncementBanner(
+                        const VitAnnouncementBanner(
                           message: predictionPortfolioSharesNoteMessage,
                           icon: Icons.info_outline_rounded,
                           accentColor: AppColors.primary,

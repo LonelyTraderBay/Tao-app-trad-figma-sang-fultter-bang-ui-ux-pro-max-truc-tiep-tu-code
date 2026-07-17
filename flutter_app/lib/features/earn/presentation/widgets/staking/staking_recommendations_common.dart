@@ -37,7 +37,7 @@ class StakingRecommendationsSmallPill extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
         padding: EarnSpacingTokens.earnSmallPillPadding,

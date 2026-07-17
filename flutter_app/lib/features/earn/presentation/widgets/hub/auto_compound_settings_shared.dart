@@ -86,7 +86,7 @@ class _SuccessToast extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Đã lưu cài đặt!', style: AppTextStyles.baseMedium),
+                const Text('Đã lưu cài đặt!', style: AppTextStyles.baseMedium),
                 Text(
                   'Compound sẽ áp dụng từ kỳ tiếp theo.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),

@@ -7,20 +7,20 @@ class _RiskMetricsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitSectionHeader(
+        VitSectionHeader(
           title: 'Risk Exposure',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
-        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+        SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           density: VitDensity.compact,
           child: Column(
-            children: const [
+            children: [
               VitInfoRow(
                 leading: Icon(
                   Icons.shield_outlined,

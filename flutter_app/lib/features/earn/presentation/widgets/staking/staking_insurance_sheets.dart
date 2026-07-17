@@ -150,14 +150,14 @@ class _ClaimSheet extends StatelessWidget {
             child: _StaticSelect(value: snapshot.claimReasons.first),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _FieldGroup(
+          const _FieldGroup(
             label: 'Số lượng bị mất (USD)',
-            child: const _TextInput(hint: '0.00', numeric: true),
+            child: _TextInput(hint: '0.00', numeric: true),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _FieldGroup(
+          const _FieldGroup(
             label: 'Mô tả chi tiết',
-            child: const _TextInput(
+            child: _TextInput(
               hint: 'Mô tả sự cố và cung cấp bằng chứng...',
               minLines: 4,
             ),

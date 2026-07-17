@@ -24,7 +24,7 @@ class LaunchpadRebalanceHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.pie_chart_outline_rounded,
                 color: AppModuleAccents.launchpad,
                 size: LaunchpadSpacingTokens.launchpadIconLg,

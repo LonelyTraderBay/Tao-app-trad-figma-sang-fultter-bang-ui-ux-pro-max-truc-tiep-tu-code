@@ -63,9 +63,9 @@ class ComplaintTrackingPage extends ConsumerWidget {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Review complaint case status',
             message:
@@ -134,10 +134,10 @@ class _StatusCard extends StatelessWidget {
                 side: BorderSide(color: _trackingAmber.withValues(alpha: .24)),
               ),
             ),
-            child: SizedBox(
+            child: const SizedBox(
               width: _trackingIconTile,
               height: _trackingIconTile,
-              child: const Icon(
+              child: Icon(
                 Icons.schedule_rounded,
                 color: _trackingAmber,
                 size: AppSpacing.x4,
@@ -363,7 +363,7 @@ class _TimelineIcon extends StatelessWidget {
         color: _trackingAmber,
         size: AppSpacing.x4,
       ),
-      TradeComplaintTrackingStepState.pending => Center(
+      TradeComplaintTrackingStepState.pending => const Center(
         child: Icon(Icons.circle, color: AppColors.text3, size: AppSpacing.x3),
       ),
     };

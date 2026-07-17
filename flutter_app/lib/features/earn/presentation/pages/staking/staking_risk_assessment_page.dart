@@ -107,7 +107,7 @@ class _StakingRiskAssessmentPageState
                               currentQuestion: _currentQuestion,
                               totalQuestions: snapshot.questions.length,
                             ),
-                            VitHighRiskStatePanel(
+                            const VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Đánh giá rủi ro staking',
                               message:

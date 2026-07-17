@@ -182,11 +182,11 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                             height: AppSpacing.pageRhythmStandardInnerGap,
                           ),
                           _SecurityInfo(snapshot: snapshot),
-                          VitPageContent(
+                          const VitPageContent(
                             rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.none,
                             fullBleed: true,
-                            children: const [
+                            children: [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Rà soát lịch sử đăng nhập',

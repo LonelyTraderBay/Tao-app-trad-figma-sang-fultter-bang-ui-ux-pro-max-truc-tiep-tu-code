@@ -68,9 +68,9 @@ class _TransactionReportingPageState
               mode: BackNavigationMode.historyThenFallback,
             ),
             children: [
-              VitTradeSection(
+              const VitTradeSection(
                 title: 'Review',
-                child: const VitHighRiskStatePanel(
+                child: VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
                   title: 'Review regulatory reporting queue',
                   message:

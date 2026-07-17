@@ -85,9 +85,9 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
       showProductTabs: true,
       navigationBuilder: buildTradeProductNavigation,
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'An toàn giao dịch',
-          child: const VitCard(
+          child: VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.cardPaddingCompact,
             child: VitHighRiskStatePanel(

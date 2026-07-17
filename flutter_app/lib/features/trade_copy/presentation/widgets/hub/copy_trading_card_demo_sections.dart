@@ -15,14 +15,14 @@ class _AnalysisHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.analytics_outlined,
                 color: AppColors.primary,
                 size: 22,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   'Enterprise Fintech Card Analysis',
@@ -121,11 +121,11 @@ class _ComparisonMatrix extends StatelessWidget {
           _MatrixHeader(),
           for (final issue in issues) _IssueRow(issue: issue),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Wrap(
+          const Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x5,
             runSpacing: AppSpacing.x2,
-            children: const [
+            children: [
               _Legend(status: TradeCopyCardCompliance.pass, label: 'Compliant'),
               _Legend(status: TradeCopyCardCompliance.warn, label: 'Partial'),
               _Legend(

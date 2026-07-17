@@ -72,9 +72,9 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
             accentColor: _copyPrimary,
           ),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Đánh giá rủi ro',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Review copy trading education',
             message:

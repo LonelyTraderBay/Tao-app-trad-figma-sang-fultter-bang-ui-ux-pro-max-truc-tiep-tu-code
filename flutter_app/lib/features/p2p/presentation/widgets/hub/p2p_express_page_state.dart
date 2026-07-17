@@ -226,7 +226,9 @@ class _ExpressHero extends StatelessWidget {
             dimension: _p2pExpressIconBox,
             child: Material(
               color: color.withValues(alpha: .12),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+              ),
               child: Icon(
                 Icons.bolt_outlined,
                 color: color,
@@ -282,13 +284,13 @@ class _ExpressTradeTabs extends StatelessWidget {
       onChanged: onChanged,
       height: _p2pExpressToggleHeight,
       borderRadius: AppRadii.lgRadius,
-      options: [
+      options: const [
         VitSegmentedChoiceOption(
           key: P2PExpressPage.buyToggleKey,
           value: P2PTradeType.buy,
           label: 'MUA NHANH',
           accentColor: AppColors.buy,
-          leading: const Icon(Icons.bolt_outlined),
+          leading: Icon(Icons.bolt_outlined),
           semanticLabel: 'Chọn mua nhanh P2P Express',
         ),
         VitSegmentedChoiceOption(
@@ -296,7 +298,7 @@ class _ExpressTradeTabs extends StatelessWidget {
           value: P2PTradeType.sell,
           label: 'BÁN NHANH',
           accentColor: AppColors.sell,
-          leading: const Icon(Icons.bolt_outlined),
+          leading: Icon(Icons.bolt_outlined),
           semanticLabel: 'Chọn bán nhanh P2P Express',
         ),
       ],
@@ -350,9 +352,9 @@ class _AssetCard extends StatelessWidget {
                 ],
                 child: Material(
                   color: AppColors.surface2,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.inputRadius,
-                    side: const BorderSide(color: AppColors.borderSolid),
+                    side: BorderSide(color: AppColors.borderSolid),
                   ),
                   child: Padding(
                     padding: P2PSpacingTokens.p2pExpressSelectorPadding,
@@ -383,7 +385,9 @@ class _AssetCard extends StatelessWidget {
           const SizedBox(height: _p2pExpressTightGap),
           Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+            ),
             child: Padding(
               padding: P2PSpacingTokens.p2pExpressSelectorPadding,
               child: Row(

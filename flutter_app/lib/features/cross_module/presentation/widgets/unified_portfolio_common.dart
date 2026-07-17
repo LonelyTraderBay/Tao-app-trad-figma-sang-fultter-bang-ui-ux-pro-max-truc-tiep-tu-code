@@ -93,7 +93,9 @@ class UnifiedPortfolioModuleIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: accent.withValues(alpha: .14),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
         ),
         child: Center(
           child: Icon(

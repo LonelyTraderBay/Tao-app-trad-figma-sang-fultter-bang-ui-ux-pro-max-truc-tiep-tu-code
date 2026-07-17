@@ -199,10 +199,10 @@ class _BiggestWinCard extends StatelessWidget {
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
-          Material(
+          const Material(
             color: AppColors.buy10,
             borderRadius: AppRadii.cardRadius,
-            child: const SizedBox.square(
+            child: SizedBox.square(
               dimension: _boardWinTile,
               child: Icon(
                 Icons.emoji_events_outlined,

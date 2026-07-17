@@ -194,7 +194,7 @@ class _ActivityIcon extends StatelessWidget {
       height: ProfileSpacingTokens.profileActivityIconBox,
       child: Material(
         color: config.color.withValues(alpha: .16),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
         child: Icon(
           config.icon,
           color: config.color,
@@ -214,7 +214,7 @@ class _ActivityDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: _activityPanel2.withValues(alpha: .72),
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       child: Padding(
         padding: ProfileSpacingTokens.profileActivityDetailsPadding,
         child: Column(

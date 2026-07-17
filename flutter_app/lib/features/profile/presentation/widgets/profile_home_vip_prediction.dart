@@ -93,7 +93,7 @@ class _PredictionCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
-              VitAccentPill(
+              const VitAccentPill(
                 label: 'Prediction Market',
                 accentColor: _profilePurple,
               ),

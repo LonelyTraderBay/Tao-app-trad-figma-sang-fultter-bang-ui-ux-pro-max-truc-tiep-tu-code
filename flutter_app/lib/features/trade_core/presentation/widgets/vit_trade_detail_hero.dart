@@ -158,7 +158,7 @@ class VitTradeDetailHero extends StatelessWidget {
                       color: primaryColor,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 1,
                     height: AppSpacing.x6,
                     child: ColoredBox(color: AppColors.border),

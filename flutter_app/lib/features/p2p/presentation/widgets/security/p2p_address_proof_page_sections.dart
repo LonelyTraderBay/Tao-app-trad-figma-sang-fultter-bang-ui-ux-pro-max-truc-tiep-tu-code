@@ -15,13 +15,13 @@ class _AddressHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
+          const Material(
             color: AppColors.primary15,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
-              side: const BorderSide(color: AppColors.primary20),
+              side: BorderSide(color: AppColors.primary20),
             ),
-            child: const Padding(
+            child: Padding(
               padding: P2PSpacingTokens.p2pAddressProofHeroIconPadding,
               child: Icon(
                 Icons.location_on_outlined,
@@ -74,7 +74,7 @@ class _RequirementsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          VitSectionHeader(
+          const VitSectionHeader(
             title: 'Yêu cầu tài liệu',
             icon: Icons.info_outline_rounded,
             iconColor: AppModuleAccents.p2p,
@@ -254,10 +254,10 @@ class _UploadSection extends StatelessWidget {
           child: uploaded
               ? Row(
                   children: [
-                    Material(
+                    const Material(
                       color: AppColors.buy10,
                       borderRadius: AppRadii.lgRadius,
-                      child: const Padding(
+                      child: Padding(
                         padding:
                             P2PSpacingTokens.p2pAddressProofUploadIconPadding,
                         child: Icon(
@@ -301,10 +301,10 @@ class _UploadSection extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Material(
+                      const Material(
                         color: AppColors.primary12,
-                        shape: const CircleBorder(),
-                        child: const Padding(
+                        shape: CircleBorder(),
+                        child: Padding(
                           padding:
                               P2PSpacingTokens.p2pAddressProofUploadIconPadding,
                           child: Icon(

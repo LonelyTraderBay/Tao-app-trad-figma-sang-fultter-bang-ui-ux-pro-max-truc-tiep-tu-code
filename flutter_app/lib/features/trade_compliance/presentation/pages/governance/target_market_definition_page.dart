@@ -51,9 +51,9 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
       ),
       useCopyTradingInset: true,
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Target market review',
             message:

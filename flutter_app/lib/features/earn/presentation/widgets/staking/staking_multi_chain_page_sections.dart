@@ -140,7 +140,7 @@ class _AllocationCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Chain Allocation', style: AppTextStyles.baseMedium),
+          const Text('Chain Allocation', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
             height: EarnSpacingTokens.stakingProductDonutChartHeight,

@@ -301,7 +301,7 @@ class _GainsPanel extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Total Capital Gains',
                   style: AppTextStyles.baseMedium,

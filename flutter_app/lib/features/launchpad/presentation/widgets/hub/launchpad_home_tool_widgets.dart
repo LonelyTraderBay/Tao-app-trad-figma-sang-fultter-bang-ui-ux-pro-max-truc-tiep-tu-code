@@ -15,14 +15,14 @@ class _StakingEntry extends StatelessWidget {
       padding: VitDensity.compact.cardPadding,
       child: Row(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: LaunchpadSpacingTokens.launchpadBox48,
             child: DecoratedBox(
-              decoration: const ShapeDecoration(
+              decoration: ShapeDecoration(
                 color: AppColors.buy10,
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.savings_outlined,
                 color: AppColors.buy,
                 size: AppSpacing.iconMd,
@@ -110,7 +110,9 @@ class _ToolTile extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: tool.accent.resolve().withValues(alpha: .12),
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
               ),
               child: Icon(
                 _toolIcon(tool.iconKey),
@@ -152,11 +154,11 @@ class _SafetyWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       key: LaunchpadPage.safetyKey,
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.sell10,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardRadius,
-          side: const BorderSide(color: AppColors.sell20),
+          side: BorderSide(color: AppColors.sell20),
         ),
       ),
       child: Padding(

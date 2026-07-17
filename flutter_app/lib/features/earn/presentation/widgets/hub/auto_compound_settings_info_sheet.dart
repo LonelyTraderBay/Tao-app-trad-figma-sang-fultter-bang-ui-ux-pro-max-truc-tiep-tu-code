@@ -13,7 +13,7 @@ class _InfoSheet extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: Text('Lãi kép là gì?', style: AppTextStyles.sectionTitle),
             ),
             VitIconButton(
@@ -37,7 +37,7 @@ class _InfoSheet extends StatelessWidget {
                 size: AppSpacing.iconLg,
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              Text('Auto-Compound', style: AppTextStyles.baseMedium),
+              const Text('Auto-Compound', style: AppTextStyles.baseMedium),
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Lãi kép tự động cộng phần lãi kiếm được vào số gốc, giúp bạn kiếm lãi trên cả lãi theo thời gian.',

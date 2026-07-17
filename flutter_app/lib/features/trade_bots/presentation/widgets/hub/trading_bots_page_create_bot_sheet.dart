@@ -81,7 +81,7 @@ class _StrategyCard extends StatelessWidget {
             onPressed: onCreate,
             height: AppSpacing.inputHeight,
             leading: const Icon(Icons.add_rounded),
-            child: Text('Tạo bot'),
+            child: const Text('Tạo bot'),
           ),
         ],
       ),

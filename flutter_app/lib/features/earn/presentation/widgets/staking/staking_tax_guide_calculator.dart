@@ -44,10 +44,10 @@ class StakingTaxCalculatorTab extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox.square(
+                  const SizedBox.square(
                     dimension: EarnSpacingTokens.stakingTaxCalculatorIconBox,
                     child: DecoratedBox(
-                      decoration: const ShapeDecoration(
+                      decoration: ShapeDecoration(
                         color: AppColors.primary12,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
@@ -57,7 +57,7 @@ class StakingTaxCalculatorTab extends StatelessWidget {
                           borderRadius: AppRadii.cardRadius,
                         ),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.calculate_rounded,
                         color: AppColors.primary,
                         size: EarnSpacingTokens.stakingTaxCalculatorIcon,

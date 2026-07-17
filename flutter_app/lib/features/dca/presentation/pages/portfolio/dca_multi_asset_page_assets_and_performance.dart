@@ -208,7 +208,7 @@ class _AssetDetailCard extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: accent,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: AppRadii.xsRadius,
                     ),
                   ),
@@ -297,10 +297,10 @@ class _GrowthCard extends StatelessWidget {
             child: CustomPaint(painter: _StackedBarsPainter(points: points)),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Wrap(
+          const Wrap(
             spacing: AppSpacing.x4,
             runSpacing: AppSpacing.x3,
-            children: const [
+            children: [
               VitLegendItem(
                 label: 'BTC',
                 color: AppColors.primary,

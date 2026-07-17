@@ -22,7 +22,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
       maxApyLabel: 'APY toi da 24.5%',
       fundProtectionLabel: 'Bao hiem quy',
       products: [
-        EarnProductDraft(
+        const EarnProductDraft(
           id: 'btc-fixed-90',
           asset: 'BTC',
           name: 'Bitcoin Fixed',
@@ -36,7 +36,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
           riskLevel: EarnRiskLevel.low,
           isHot: true,
         ),
-        EarnProductDraft(
+        const EarnProductDraft(
           id: 'eth-flexible',
           asset: 'ETH',
           name: 'Ethereum Flexible',
@@ -49,7 +49,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
           progress: 0.85,
           riskLevel: EarnRiskLevel.low,
         ),
-        EarnProductDraft(
+        const EarnProductDraft(
           id: 'sol-fixed-30',
           asset: 'SOL',
           name: 'Solana Fixed 30D',
@@ -64,7 +64,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
           riskLevel: EarnRiskLevel.medium,
           isNew: true,
         ),
-        EarnProductDraft(
+        const EarnProductDraft(
           id: 'usdt-flexible',
           asset: 'USDT',
           name: 'USDT Savings',
@@ -78,7 +78,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
           riskLevel: EarnRiskLevel.low,
           isHot: true,
         ),
-        EarnProductDraft(
+        const EarnProductDraft(
           id: 'bnb-fixed-60',
           asset: 'BNB',
           name: 'BNB Fixed 60D',
@@ -91,7 +91,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
           progress: 0.58,
           riskLevel: EarnRiskLevel.medium,
         ),
-        EarnProductDraft(
+        const EarnProductDraft(
           id: 'defi-pool-1',
           asset: 'ETH/USDT',
           name: 'ETH-USDT LP Pool',
@@ -107,7 +107,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
         ),
       ],
       positions: [
-        EarnPositionDraft(
+        const EarnPositionDraft(
           id: 'p1',
           product: 'Bitcoin Fixed',
           asset: 'BTC',
@@ -118,7 +118,7 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
           endDate: '01/04/2026',
           type: EarnProductType.fixed,
         ),
-        EarnPositionDraft(
+        const EarnPositionDraft(
           id: 'p2',
           product: 'USDT Savings',
           asset: 'USDT',
@@ -131,9 +131,9 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
         ),
       ],
       estimatedIncome: [
-        EarnIncomeEstimateDraft(label: 'Hang ngay', value: '+\$1.42'),
-        EarnIncomeEstimateDraft(label: 'Hang thang', value: '+\$42.60'),
-        EarnIncomeEstimateDraft(label: 'Hang nam', value: '+\$511.20'),
+        const EarnIncomeEstimateDraft(label: 'Hang ngay', value: '+\$1.42'),
+        const EarnIncomeEstimateDraft(label: 'Hang thang', value: '+\$42.60'),
+        const EarnIncomeEstimateDraft(label: 'Hang nam', value: '+\$511.20'),
       ],
       contractNotes:
           'Match screenshot first; wire BE after visual parity. Include earnProducts, stakingPositions, savingsPositions, validators, rewards, and riskData.',

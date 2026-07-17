@@ -138,7 +138,7 @@ class _LoadingPanel extends StatelessWidget {
       border: AppColors.borderSolid,
       density: density,
       trailing: ConstrainedBox(
-        constraints: BoxConstraints.tightFor(
+        constraints: const BoxConstraints.tightFor(
           width:
               AppSpacing.buttonStandard +
               AppSpacing.buttonCompact +

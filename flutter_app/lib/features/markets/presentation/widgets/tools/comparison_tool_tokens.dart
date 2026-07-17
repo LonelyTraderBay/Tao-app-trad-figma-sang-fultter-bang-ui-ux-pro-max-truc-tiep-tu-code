@@ -56,8 +56,8 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
           return Material(
             key: ComparisonToolKeys.token(pair.id),
             color: AppColors.surface,
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: AppColors.cardBorder),
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(color: AppColors.cardBorder),
               borderRadius: AppRadii.cardRadius,
             ),
             child: SizedBox(

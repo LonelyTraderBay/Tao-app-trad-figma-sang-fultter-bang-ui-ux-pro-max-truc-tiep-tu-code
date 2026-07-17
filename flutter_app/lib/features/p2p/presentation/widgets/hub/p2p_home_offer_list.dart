@@ -328,7 +328,7 @@ class _OfferCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
-              Icon(
+              const Icon(
                 Icons.schedule_rounded,
                 color: AppColors.text3,
                 size: AppSpacing.iconSm,
@@ -434,7 +434,7 @@ class _MerchantAvatar extends StatelessWidget {
             height: AppSpacing.x3,
             child: Material(
               color: ad.isOnline ? AppColors.buy : AppColors.text3,
-              shape: CircleBorder(
+              shape: const CircleBorder(
                 side: BorderSide(
                   color: AppColors.surface,
                   width: AppSpacing.dividerHairline,

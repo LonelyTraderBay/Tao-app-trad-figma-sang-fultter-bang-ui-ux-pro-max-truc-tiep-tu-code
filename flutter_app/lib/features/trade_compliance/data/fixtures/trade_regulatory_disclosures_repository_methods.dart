@@ -4,7 +4,7 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
     on _MockTradeRegulatoryRepositoryBase {
   @override
   TradeRegulatoryDisclosuresSnapshot getRegulatoryDisclosures() {
-    return TradeRegulatoryDisclosuresSnapshot(
+    return const TradeRegulatoryDisclosuresSnapshot(
       trade: _regulatoryDisclosuresTradeSnapshot,
       tabs: _regulatoryTabs,
       defaultTabId: 'mifid',
@@ -22,7 +22,7 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
       whistleblower: _regulatoryWhistleblower,
       terms: _regulatoryTerms,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,

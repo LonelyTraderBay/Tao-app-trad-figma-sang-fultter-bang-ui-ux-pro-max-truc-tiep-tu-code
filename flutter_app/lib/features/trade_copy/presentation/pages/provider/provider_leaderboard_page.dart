@@ -82,14 +82,14 @@ class _ProviderLeaderboardPageState
           title: 'Disclaimer',
           child: _SurvivorshipWarning(snapshot: snapshot),
         ),
-        VitTradeComplianceSection(
+        const VitTradeComplianceSection(
           title: 'Compliance review',
-          statusPill: const VitStatusPill(
+          statusPill: VitStatusPill(
             label: 'Review required',
             status: VitStatusPillStatus.info,
             size: VitStatusPillSize.sm,
           ),
-          items: const [
+          items: [
             VitTradeComplianceItem(
               label: 'Scope',
               value: 'Ranking, verified status, risk, drawdown',

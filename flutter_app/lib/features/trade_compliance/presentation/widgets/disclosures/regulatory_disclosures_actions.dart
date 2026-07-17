@@ -152,7 +152,7 @@ class _RegulatoryNoticePanel extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Regulatory document', style: AppTextStyles.baseMedium),
+          const Text('Regulatory document', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.x1),
           Text(
             text,

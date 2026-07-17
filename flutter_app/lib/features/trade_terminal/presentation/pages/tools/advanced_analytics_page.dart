@@ -111,7 +111,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
           _TradeJournalTab(snapshot: snapshot)
         else
           _PositionSizingTab(snapshot: snapshot),
-        VitTradeSection(title: 'Model info', child: _ModelInfoCard()),
+        const VitTradeSection(title: 'Model info', child: _ModelInfoCard()),
         VitTradeSection(
           title: 'Features',
           child: _FeaturesCard(features: snapshot.features),

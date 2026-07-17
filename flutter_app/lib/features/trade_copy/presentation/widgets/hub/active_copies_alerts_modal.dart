@@ -7,7 +7,7 @@ class _RiskAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitHighRiskStatePanel(
+    return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
       density: VitDensity.compact,
       title: 'Cảnh báo rủi ro',

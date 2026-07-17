@@ -164,12 +164,12 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
               _EmptyAddressState(
                 onAdd: () => context.go(AppRoutePaths.walletAddressBookAdd),
               ),
-            VitPageSection(
+            const VitPageSection(
               label: 'B\u1EA3o m\u1EADt \u0111\u1ECBa ch\u1EC9',
               headerIcon: Icons.shield_outlined,
               headerIconColor: AppColors.primary,
               innerGap: AppSpacing.pageRhythmStandardInnerGap,
-              children: const [_SecurityTip()],
+              children: [_SecurityTip()],
             ),
           ],
         ),

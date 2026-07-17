@@ -133,7 +133,7 @@ class _DynamicHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           DecoratedBox(
-            decoration: ShapeDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface2,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
@@ -335,7 +335,7 @@ class _StrategyVisualization extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: DcaSpacingTokens.dcaSectionHeaderPadding,
             child: _SectionHeader(
               icon: Icons.show_chart_rounded,

@@ -277,7 +277,7 @@ class _LimitTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.stacked_line_chart_rounded,
                 color: AppColors.text3,
                 size: P2PSpacingTokens.p2pTradingLevelInlineIcon,

@@ -412,7 +412,7 @@ List<File> _collectBundleFiles(File rootPageFile) {
   return files;
 }
 
-TokenAuditFileMetric _emptyBundleMetric() => TokenAuditFileMetric(
+TokenAuditFileMetric _emptyBundleMetric() => const TokenAuditFileMetric(
   scope: 'bundle',
   bundle: '',
   path: '',

@@ -20,8 +20,8 @@ class _HistoryTab extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _CategoryIcon(
-                  style: const _CategoryStyle(
+                const _CategoryIcon(
+                  style: _CategoryStyle(
                     color: _clientPrimary,
                     icon: Icons.schedule_rounded,
                   ),

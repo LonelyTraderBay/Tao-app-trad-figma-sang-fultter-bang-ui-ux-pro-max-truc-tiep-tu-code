@@ -241,7 +241,7 @@ class _BestOfferCard extends StatelessWidget {
                     dimension: _p2pExpressIconBox,
                     child: Material(
                       color: color,
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.smRadius,
                       ),
                       child: const Icon(
@@ -301,7 +301,7 @@ class _BestOfferCard extends StatelessWidget {
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
                 children: [
-                  _SmallTextChip('Chấp nhận:'),
+                  const _SmallTextChip('Chấp nhận:'),
                   for (final method in ad.paymentMethods)
                     _SmallTextChip(method),
                 ],
@@ -360,9 +360,9 @@ class _EscrowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.buy10,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
-        side: const BorderSide(color: AppColors.buy20),
+        side: BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
         padding: P2PSpacingTokens.p2pExpressEscrowPadding,
@@ -444,7 +444,7 @@ class _HowItWorksCard extends StatelessWidget {
                     dimension: _p2pExpressIconBox,
                     child: Material(
                       color: AppColors.primary12,
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.smRadius,
                       ),
                       child: Icon(

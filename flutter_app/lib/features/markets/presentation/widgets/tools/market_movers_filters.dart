@@ -118,9 +118,9 @@ class _CategoryDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.surface2,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.inputRadius,
-        side: const BorderSide(color: AppColors.divider),
+        side: BorderSide(color: AppColors.divider),
       ),
       child: InkWell(
         key: MarketMoversPage.categoryDropdownKey,

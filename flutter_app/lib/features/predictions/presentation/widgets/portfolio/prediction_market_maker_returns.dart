@@ -21,7 +21,7 @@ class _EstimatedReturns extends StatelessWidget {
               small: true,
             ),
           ),
-          Expanded(
+          const Expanded(
             child: _OverviewMetric(
               label: 'Est. APR',
               value: '~22.5%',

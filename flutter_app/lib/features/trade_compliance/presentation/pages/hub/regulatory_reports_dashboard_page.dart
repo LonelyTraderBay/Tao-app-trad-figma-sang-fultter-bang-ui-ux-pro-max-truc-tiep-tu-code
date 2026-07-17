@@ -92,9 +92,9 @@ class _RegulatoryReportsDashboardPageState
                 title: 'KPIs',
                 child: _KpiGrid(totals: snapshot.totals),
               ),
-              VitTradeSection(
+              const VitTradeSection(
                 title: 'Review',
-                child: const VitHighRiskStatePanel(
+                child: VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
                   title: 'Regulatory report review',
                   message:

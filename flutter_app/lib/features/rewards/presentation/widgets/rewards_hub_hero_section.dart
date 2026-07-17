@@ -198,8 +198,8 @@ class _CheckInSection extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: const VitSectionHeader(
+            const Expanded(
+              child: VitSectionHeader(
                 title: 'Check-in hằng ngày',
                 icon: Icons.calendar_month_outlined,
                 iconColor: AppModuleAccents.rewards,

@@ -73,9 +73,9 @@ class _ClientCategorizationPageState
       ),
       useCopyTradingInset: true,
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Client classification review',
             message:

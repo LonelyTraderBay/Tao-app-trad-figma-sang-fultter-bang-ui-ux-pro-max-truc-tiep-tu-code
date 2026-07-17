@@ -262,11 +262,11 @@ class _CreatePlanSheet extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        SizedBox.square(
+                        const SizedBox.square(
                           dimension:
                               AppSpacing.buttonCompact +
                               AppSpacing.hairlineStroke,
-                          child: const DecoratedBox(
+                          child: DecoratedBox(
                             decoration: ShapeDecoration(
                               color: AppColors.primary12,
                               shape: CircleBorder(),

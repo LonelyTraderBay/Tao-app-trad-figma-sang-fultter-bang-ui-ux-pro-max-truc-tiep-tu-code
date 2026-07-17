@@ -108,8 +108,8 @@ class _WatchingSection extends StatelessWidget {
                   width: double.infinity,
                   child: Material(
                     color: AppColors.bg,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: AppColors.border),
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: AppColors.border),
                       borderRadius: AppRadii.mdRadius,
                     ),
                     child: Row(

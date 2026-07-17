@@ -115,11 +115,11 @@ class _P2PContributionHistoryPageState
                         _MonthlyContributionGroups(
                           groups: snapshot.monthlyGroups,
                         ),
-                        VitPageContent(
+                        const VitPageContent(
                           rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          children: const [
+                          children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Xem lại lịch sử đóng góp',

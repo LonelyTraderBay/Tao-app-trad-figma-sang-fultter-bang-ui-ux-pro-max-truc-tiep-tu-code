@@ -107,9 +107,9 @@ class BotRiskDashboardPage extends ConsumerWidget {
             onTap: () => context.go(snapshot.emergencyPath),
           ),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Risk explanation',
-          child: const _RiskExplanationCard(),
+          child: _RiskExplanationCard(),
         ),
         const VitBotRiskReviewFooter(
           title: 'Risk dashboard review',

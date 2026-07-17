@@ -195,7 +195,7 @@ class _ApyComparison extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('APY Comparison', style: AppTextStyles.baseMedium),
+          const Text('APY Comparison', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (final position in sorted) ...[
             Row(

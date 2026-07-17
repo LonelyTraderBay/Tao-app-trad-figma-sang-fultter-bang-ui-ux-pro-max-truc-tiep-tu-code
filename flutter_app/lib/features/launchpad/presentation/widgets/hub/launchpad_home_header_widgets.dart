@@ -30,7 +30,7 @@ class _HeroCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.rocket_launch_outlined,
                     color: AppModuleAccents.launchpad,
                     size: AppSpacing.iconLg,

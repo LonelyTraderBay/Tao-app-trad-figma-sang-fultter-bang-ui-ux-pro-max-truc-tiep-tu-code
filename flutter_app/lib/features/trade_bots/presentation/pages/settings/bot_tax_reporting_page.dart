@@ -88,7 +88,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
             mode: BackNavigationMode.historyThenFallback,
           ),
           children: [
-            VitTradeSection(title: 'Notice', child: const _TaxNotice()),
+            const VitTradeSection(title: 'Notice', child: _TaxNotice()),
             VitTradeSection(
               title: 'Select Tax Year',
               child: _YearPicker(

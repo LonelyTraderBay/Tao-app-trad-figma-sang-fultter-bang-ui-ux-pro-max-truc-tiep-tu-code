@@ -52,9 +52,9 @@ class OmbudsmanReferralPage extends ConsumerWidget {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Review',
-          child: const VitHighRiskStatePanel(
+          child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Review ombudsman referral route',
             message:

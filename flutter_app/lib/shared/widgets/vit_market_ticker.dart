@@ -105,7 +105,9 @@ class VitMarketTickerCard extends StatelessWidget {
             DecoratedBox(
               decoration: ShapeDecoration(
                 color: data.trend.background,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.symmetric(

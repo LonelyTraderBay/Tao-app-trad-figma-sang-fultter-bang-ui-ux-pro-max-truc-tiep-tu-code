@@ -40,16 +40,16 @@ class _HoldingsTab extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Material(
+                  const Material(
                     color: AppColors.primary12,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.xlRadius,
-                      side: const BorderSide(
+                      side: BorderSide(
                         color: AppColors.primary30,
                         width: EarnSpacingTokens.stakingProductIconBorderWidth,
                       ),
                     ),
-                    child: const SizedBox(
+                    child: SizedBox(
                       width: AppSpacing.buttonHero,
                       height: AppSpacing.buttonHero,
                       child: Icon(
@@ -62,8 +62,8 @@ class _HoldingsTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(child: _HoldingMetric(label: 'stETH Balance')),
                   SizedBox(width: AppSpacing.x3),
                   Expanded(child: _HoldingMetric(label: 'rETH Balance')),
@@ -98,7 +98,7 @@ class _HoldingMetric extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x1),
-          Text('0.0000', style: AppTextStyles.baseMedium),
+          const Text('0.0000', style: AppTextStyles.baseMedium),
         ],
       ),
     );

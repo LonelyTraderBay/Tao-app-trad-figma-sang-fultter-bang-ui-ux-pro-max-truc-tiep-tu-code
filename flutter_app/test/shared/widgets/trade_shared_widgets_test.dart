@@ -46,7 +46,7 @@ void main() {
 
   testWidgets('VitTradeOrderList uses dense list-in-card', (tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: Scaffold(
           body: VitTradeOrderList(
             records: [

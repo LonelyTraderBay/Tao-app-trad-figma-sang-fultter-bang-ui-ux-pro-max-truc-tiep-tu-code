@@ -145,8 +145,8 @@ class _OptUpCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _CategoryIcon(
-                style: const _CategoryStyle(
+              const _CategoryIcon(
+                style: _CategoryStyle(
                   color: _clientPrimary,
                   icon: Icons.trending_up_rounded,
                 ),
@@ -203,7 +203,7 @@ class _OptUpCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text:
                               'Opting up means you waive certain investor protections. This cannot be reversed easily.',
                         ),

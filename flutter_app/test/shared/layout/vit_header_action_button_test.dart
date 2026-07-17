@@ -66,7 +66,7 @@ void main() {
     await tester.pumpWidget(
       _wrap(
         VitHeaderActionButton.fromItem(
-          VitHeaderActionItem(
+          const VitHeaderActionItem(
             key: actionKey,
             type: VitHeaderActionType.export,
             tooltip: 'Xuất CSV',

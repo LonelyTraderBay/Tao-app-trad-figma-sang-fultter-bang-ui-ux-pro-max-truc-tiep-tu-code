@@ -115,14 +115,14 @@ class _InvestorCompensationPageState
             ],
           ),
         ),
-        VitTradeComplianceSection(
+        const VitTradeComplianceSection(
           title: 'Coverage review',
-          statusPill: const VitStatusPill(
+          statusPill: VitStatusPill(
             label: 'Coverage has limits',
             status: VitStatusPillStatus.info,
             size: VitStatusPillSize.sm,
           ),
-          items: const [
+          items: [
             VitTradeComplianceItem(label: 'Scheme', value: 'FSCS protection'),
             VitTradeComplianceItem(
               label: 'Action',

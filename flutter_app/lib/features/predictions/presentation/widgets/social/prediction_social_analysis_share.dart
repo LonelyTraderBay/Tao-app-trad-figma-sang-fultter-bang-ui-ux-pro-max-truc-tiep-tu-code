@@ -63,13 +63,13 @@ class _SocialShareButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageSection(
+    return const VitPageSection(
       label: 'Chia se qua mang xa hoi',
       accentColor: _predictionPrimary,
       density: VitDensity.compact,
       children: [
         Row(
-          children: const [
+          children: [
             Expanded(
               child: PredictionSocialShareButton(
                 label: 'Twitter',
@@ -124,8 +124,8 @@ class _CopyLinkCard extends StatelessWidget {
                   height: VitDensity.compact.controlHeight,
                   child: Material(
                     color: AppColors.bg,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: AppColors.border),
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: AppColors.border),
                       borderRadius: AppRadii.mdRadius,
                     ),
                     child: Padding(
@@ -178,7 +178,7 @@ class _ShareStatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return const VitCard(
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -218,10 +218,10 @@ class _SharePreviewCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Material(
+              const Material(
                 color: _predictionPrimary,
                 borderRadius: AppRadii.mdRadius,
-                child: const SizedBox.square(
+                child: SizedBox.square(
                   dimension:
                       PredictionsSpacingTokens.predictionSocialPreviewImage,
                   child: Icon(

@@ -87,7 +87,9 @@ class _SecuritySupportCard extends StatelessWidget {
           height: ProfileSpacingTokens.securitySupportIconBox,
           child: Material(
             color: _securityPrimary.withValues(alpha: .13),
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+            ),
             child: const Icon(
               Icons.support_agent_rounded,
               color: _securityPrimary,

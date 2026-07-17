@@ -34,11 +34,11 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (snapshot.screenState == OnboardingScreenState.offline)
-                      Padding(
+                      const Padding(
                         key: OnboardingFlow.offlineKey,
                         padding: OnboardingSpacingTokens
                             .onboardingHeaderProgressPadding,
-                        child: const VitOfflineBanner(
+                        child: VitOfflineBanner(
                           message:
                               'Mất kết nối. Bạn vẫn có thể hoàn thành onboarding.',
                         ),

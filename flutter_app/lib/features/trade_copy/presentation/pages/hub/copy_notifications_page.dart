@@ -132,9 +132,9 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                   ],
                 ),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Đánh giá rủi ro',
-          child: const VitCard(
+          child: VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.cardPaddingCompact,
             child: VitHighRiskStatePanel(

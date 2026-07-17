@@ -148,7 +148,7 @@ class _TimelineRow extends StatelessWidget {
                   ),
                 ),
                 if (!isLast)
-                  Expanded(
+                  const Expanded(
                     child: SizedBox(
                       width: SupportSpacingTokens.supportTimelineLineWidth,
                       child: ColoredBox(color: AppColors.divider),

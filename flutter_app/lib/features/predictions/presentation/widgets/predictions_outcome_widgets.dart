@@ -58,7 +58,7 @@ class PredictionSmallBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: background,
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
       child: Padding(
         padding: PredictionsSpacingTokens.predictionHomeBadgePadding,
         child: Text(

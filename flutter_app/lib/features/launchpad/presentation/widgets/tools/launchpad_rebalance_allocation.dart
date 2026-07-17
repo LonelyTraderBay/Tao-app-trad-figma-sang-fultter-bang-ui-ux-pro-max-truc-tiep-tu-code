@@ -70,7 +70,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
                           color: asset.accent.resolve(),
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: AppRadii.xsRadius,
                           ),
                         ),

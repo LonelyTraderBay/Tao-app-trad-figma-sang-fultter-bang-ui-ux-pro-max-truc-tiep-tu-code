@@ -335,8 +335,8 @@ class _FeeSavingsCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: VitDensity.compact.verticalSpace),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(
                 child: _SavingBox(
                   label: 'Th\u00E1ng n\u00E0y',

@@ -83,9 +83,9 @@ class _BestExecutionReportsPageState
               ),
             ],
             children: [
-              VitTradeSection(
+              const VitTradeSection(
                 title: 'Notice',
-                child: const _ComplianceNotice(),
+                child: _ComplianceNotice(),
               ),
               VitTradeComplianceSection(
                 title: 'Execution review',

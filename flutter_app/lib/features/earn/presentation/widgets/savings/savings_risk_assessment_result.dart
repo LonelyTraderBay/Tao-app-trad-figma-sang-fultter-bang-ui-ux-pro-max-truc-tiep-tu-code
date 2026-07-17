@@ -20,7 +20,7 @@ class _ResultView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitHighRiskStatePanel(
+        const VitHighRiskStatePanel(
           state: VitHighRiskUiState.success,
           title: 'Risk profile ready',
           message:

@@ -144,7 +144,7 @@ class _RiskDisclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitInfoCallout(
+    return const VitInfoCallout(
       key: LaunchpadStakingPage.disclaimerKey,
       icon: Icons.warning_amber_rounded,
       accentColor: AppColors.warn,
@@ -152,7 +152,7 @@ class _RiskDisclosure extends StatelessWidget {
       message: 'Lưu ý rủi ro đầu tư',
       messageColor: AppColors.warn,
       messageWeight: AppTextStyles.bold,
-      trailing: const Icon(
+      trailing: Icon(
         Icons.chevron_right_rounded,
         color: AppColors.text3,
         size: AppSpacing.iconSm,

@@ -325,11 +325,11 @@ class _HeaderActionBadge extends StatelessWidget {
         minHeight: AppTopHeaderTokens.badgeMinSize,
       ),
       child: DecoratedBox(
-        decoration: ShapeDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.sell,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.pillRadius,
-            side: const BorderSide(
+            side: BorderSide(
               color: AppColors.bg,
               width: AppTopHeaderTokens.badgeBorderWidth,
             ),

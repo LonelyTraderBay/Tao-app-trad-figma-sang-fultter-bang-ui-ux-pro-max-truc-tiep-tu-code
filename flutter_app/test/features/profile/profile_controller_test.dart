@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/features/profile/presentation/controllers/prof
 void main() {
   group('ProfileController', () {
     test('exposes profile snapshots through repository contract', () {
-      final controller = ProfileController(const MockProfileRepository());
+      final controller = const ProfileController(MockProfileRepository());
 
       final profile = controller.getProfile();
       final security = controller.getSecurity();

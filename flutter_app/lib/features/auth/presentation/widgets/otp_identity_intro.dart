@@ -9,7 +9,7 @@ class _OtpIntro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
+        const Text(
           'Nhập mã xác minh',
           textAlign: TextAlign.center,
           style: AppTextStyles.pageTitle,

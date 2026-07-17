@@ -100,14 +100,14 @@ class _WelcomeAssessment extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        CopyTradingRiskWarningCard(
+        const CopyTradingRiskWarningCard(
           title: 'Đánh giá bắt buộc trước khi copy',
           message:
               'Copy trading không đảm bảo lợi nhuận. Quá khứ không báo hiệu tương lai.',
           contractId: 'sc071-pre-copy-risk',
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        _NoticeCard(
+        const _NoticeCard(
           title: 'Đánh giá bắt buộc (MiFID II)',
           text:
               'Chúng tôi cần đánh giá sự phù hợp của Copy Trading với kiến thức, kinh nghiệm và mục tiêu đầu tư của bạn.',
@@ -194,7 +194,7 @@ class _QuestionsSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitHighRiskStatePanel(
+        const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Xác nhận kết quả phù hợp',
           message:

@@ -73,10 +73,10 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
           ),
           const SizedBox(height: WalletSpacingTokens.walletTokenStatValueGap),
         ],
-        VitCard(
+        const VitCard(
           density: VitDensity.compact,
           borderColor: walletTokenApprovalBorder,
-          child: const Row(
+          child: Row(
             children: [
               WalletTokenApprovalHistoryMetric(
                 label: 'Total Revoked',

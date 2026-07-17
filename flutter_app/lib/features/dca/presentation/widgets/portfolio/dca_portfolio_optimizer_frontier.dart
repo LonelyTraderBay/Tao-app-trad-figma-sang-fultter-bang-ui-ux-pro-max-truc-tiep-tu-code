@@ -22,7 +22,7 @@ class _FrontierContent extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
+            const Expanded(
               child: VitSectionHeader(
                 title: 'Efficient Frontier',
                 icon: Icons.adjust_rounded,
@@ -48,7 +48,7 @@ class _FrontierContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _CardLabel(
+              const _CardLabel(
                 color: AppColors.accent,
                 title: 'Risk-Return Scatter',
                 subtitle:
@@ -152,17 +152,17 @@ class _SelectedPortfolioCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: _dcaPortfolioHeroIconExtent,
                 height: _dcaPortfolioHeroIconExtent,
                 child: DecoratedBox(
-                  decoration: const ShapeDecoration(
+                  decoration: ShapeDecoration(
                     color: AppColors.accent10,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.mdRadius,
                     ),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.pie_chart_outline_rounded,
                     color: AppColors.accent,
                     size: AppSpacing.iconMd,

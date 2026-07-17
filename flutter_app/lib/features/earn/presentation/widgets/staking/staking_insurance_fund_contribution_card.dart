@@ -38,7 +38,10 @@ class StakingInsuranceFundContributionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('How the Fund Grows', style: AppTextStyles.baseMedium),
+                    const Text(
+                      'How the Fund Grows',
+                      style: AppTextStyles.baseMedium,
+                    ),
                     const SizedBox(
                       height: AppSpacing.pageRhythmCompactInnerGap,
                     ),

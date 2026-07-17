@@ -47,14 +47,44 @@ class _MetricsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      _MetricRowData('Total Return', 'totalReturn', '%', _BestMode.highest),
-      _MetricRowData('Sharpe Ratio', 'sharpeRatio', '', _BestMode.highest),
-      _MetricRowData('Max Drawdown', 'maxDrawdown', '%', _BestMode.lowest),
-      _MetricRowData('Win Rate', 'winRate', '%', _BestMode.highest),
-      _MetricRowData('Profit Factor', 'profitFactor', '', _BestMode.highest),
-      _MetricRowData('Total Trades', 'totalTrades', '', _BestMode.neutral),
-      _MetricRowData('Avg Duration', 'avgTradeDuration', '', _BestMode.neutral),
-      _MetricRowData('Volatility', 'volatility', '%', _BestMode.lowest),
+      const _MetricRowData(
+        'Total Return',
+        'totalReturn',
+        '%',
+        _BestMode.highest,
+      ),
+      const _MetricRowData(
+        'Sharpe Ratio',
+        'sharpeRatio',
+        '',
+        _BestMode.highest,
+      ),
+      const _MetricRowData(
+        'Max Drawdown',
+        'maxDrawdown',
+        '%',
+        _BestMode.lowest,
+      ),
+      const _MetricRowData('Win Rate', 'winRate', '%', _BestMode.highest),
+      const _MetricRowData(
+        'Profit Factor',
+        'profitFactor',
+        '',
+        _BestMode.highest,
+      ),
+      const _MetricRowData(
+        'Total Trades',
+        'totalTrades',
+        '',
+        _BestMode.neutral,
+      ),
+      const _MetricRowData(
+        'Avg Duration',
+        'avgTradeDuration',
+        '',
+        _BestMode.neutral,
+      ),
+      const _MetricRowData('Volatility', 'volatility', '%', _BestMode.lowest),
     ];
 
     return _Card(
