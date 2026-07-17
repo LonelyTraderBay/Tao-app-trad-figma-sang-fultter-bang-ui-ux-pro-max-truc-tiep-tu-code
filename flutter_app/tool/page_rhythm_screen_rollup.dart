@@ -37,6 +37,10 @@ void main(List<String> args) {
   final auditRelativePaths = auditByFile.keys
       .map((k) => k.replaceFirst('flutter_app/lib/', ''))
       .toSet();
+  // page_file is written repo-relative (flutter_app/lib/...) like the other
+  // audit CSVs — an absolute path would differ per machine/OS and make the
+  // committed artifact permanently stale on CI.
+  final appRootPrefix = '${appRoot.path.replaceAll(r'\', '/')}/';
   final widgetToPage = _buildWidgetToPageMap(appRoot);
   final tabRootScreens = _tabRootScreenIds();
   final routes = _parseRealPageRoutes(routeMd.readAsStringSync());
@@ -179,7 +183,7 @@ void main(List<String> args) {
         routePath: route.path,
         routeName: route.name,
         pageWidget: route.widgetClass,
-        pageFile: pageFile ?? '',
+        pageFile: (pageFile ?? '').replaceFirst(appRootPrefix, 'flutter_app/'),
         layoutPattern: pattern.label,
         vpcFiles: vpcFiles.join(';'),
         vpcOwnerFile: vpcOwner,
