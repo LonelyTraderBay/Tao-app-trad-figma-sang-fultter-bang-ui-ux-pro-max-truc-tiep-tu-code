@@ -4,7 +4,7 @@
 **Tech Stack:** Flutter, Dart, Riverpod, GoRouter  
 **Package Manager:** Flutter/Dart pub  
 **Test Framework:** flutter_test  
-**Last Updated:** 2026-07-17 (I18N-1: chính sách ngôn ngữ vi-VN-only)
+**Last Updated:** 2026-07-18 (ARCH-A4: quy ước part-file; DOC-D4: hệ ADR)
 
 Read `docs/00_START_HERE.md` before using long-form design, architecture, or QA
 guidance.
@@ -81,6 +81,20 @@ Chuẩn chốt tại GĐ2 · STATE-S26 (2026-07-17), chi tiết trong
   (STATE-S24).
 - Máy trạng thái high-risk dùng enum `TradeHighRiskFlowStatus` (10 giá trị),
   KHÔNG bọc `AsyncValue` — xem bảng điểm ghi trong ADR-001.
+
+### Quy ước part-file
+
+Chuẩn chốt tại GĐ3 · ARCH-A4 (2026-07-18):
+
+- Tách một file lớn thành `part`/`part of` là hợp lệ, nhưng **tên part phải
+  mang vai trò ổn định**: `_sections` (các section UI của trang), `_common`
+  (widget/helper dùng chung trong trang), `_widgets`, `_state`, `_methods`
+  (nhóm method của mock repo), `_entities`...
+- **KHÔNG dùng suffix số thứ tự `_part_NN`** — đó là tách cơ học tạm thời, là
+  "nợ có theo dõi". Toàn lib/ hiện đã về 0 và bị khóa ở 0 bởi guardrail
+  `test/quality/architecture_size_style_debt_guardrails_test.dart`.
+- UI tái dùng nên chuyển vào `presentation/widgets/` thay vì phình part-file
+  của trang.
 
 ## Product Boundaries
 

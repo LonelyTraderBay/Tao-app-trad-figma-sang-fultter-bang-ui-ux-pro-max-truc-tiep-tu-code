@@ -6,6 +6,29 @@ import 'architecture_baseline_guardrails_test_utils.dart';
 
 void main() {
   group('architecture baseline guardrails - size and style debt', () {
+    // ARCH-A4 (A-Plus GĐ3): suffix `_part_NN` = tách CƠ HỌC tạm thời (nợ theo
+    // dõi). Toàn lib/ hiện = 0 (đã trả sạch, migrate về tên vai trò ổn định
+    // _sections/_common/_widgets). Khóa ở 0 để chặn tái lập tách cơ học mới —
+    // part-file mới phải mang tên vai trò ổn định, không phải số thứ tự. Quy
+    // ước: AGENTS.md mục "Quy ước part-file".
+    test('không tái lập part-file tách cơ học _part_NN (ARCH-A4)', () {
+      final mechanicalParts = Directory('lib')
+          .listSync(recursive: true)
+          .whereType<File>()
+          .map((file) => normalizePath(file.path))
+          .where((path) => RegExp(r'_part_\d+\.dart$').hasMatch(path))
+          .toList();
+
+      expect(
+        mechanicalParts,
+        isEmpty,
+        reason:
+            'part-file _part_NN là tách cơ học tạm (nợ đã trả về 0) — đặt tên '
+            'vai trò ổn định (_sections/_common/_widgets) thay vì số thứ tự '
+            '(AGENTS.md "Quy ước part-file"): $mechanicalParts',
+      );
+    });
+
     test('presentation page part-file debt does not increase', () {
       final pagePartFiles = Directory('lib/features')
           .listSync(recursive: true)
