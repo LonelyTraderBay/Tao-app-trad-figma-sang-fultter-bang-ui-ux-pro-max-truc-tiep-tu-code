@@ -13,10 +13,25 @@ import 'package:vit_trade_flutter/features/trade/domain/repositories/trade_repos
 /// delegation pattern `trade_core`'s own `MockTradeRepository` already uses
 /// for its terminal slice.
 final class MockTradeRepository implements TradeRepository {
-  const MockTradeRepository();
+  const MockTradeRepository({
+    this.loadDelay = const Duration(milliseconds: 300),
+    this.simulateError = false,
+  });
 
-  static const MockTradeTerminalRepository _terminal =
-      MockTradeTerminalRepository();
+  /// Xem [MockTradeTerminalRepository.loadDelay] — forward cho delegate.
+  final Duration loadDelay;
+
+  /// Xem [MockTradeTerminalRepository.simulateError] — forward cho delegate.
+  final bool simulateError;
+
+  // Getter (không phải field) để giữ được `const MockTradeRepository()` ở
+  // mọi call site: initializer của const constructor không được dựng
+  // sub-object từ tham số. Delegate stateless nên dựng mới mỗi lần gọi là
+  // không đáng kể.
+  MockTradeTerminalRepository get _terminal => MockTradeTerminalRepository(
+    loadDelay: loadDelay,
+    simulateError: simulateError,
+  );
 
   @override
   TradeScreenSnapshot getTrade({String pairId = 'btcusdt'}) =>
@@ -51,7 +66,7 @@ final class MockTradeRepository implements TradeRepository {
       _terminal.previewOrder(draft);
 
   @override
-  TradeOrderReceipt submitOrder(TradeOrderDraft draft) =>
+  Future<TradeOrderReceipt> submitOrder(TradeOrderDraft draft) =>
       _terminal.submitOrder(draft);
 
   @override
@@ -143,8 +158,9 @@ final class MockTradeRepository implements TradeRepository {
       _terminal.previewFuturesOrder(draft);
 
   @override
-  TradeFuturesReceipt submitFuturesOrder(TradeFuturesOrderDraft draft) =>
-      _terminal.submitFuturesOrder(draft);
+  Future<TradeFuturesReceipt> submitFuturesOrder(
+    TradeFuturesOrderDraft draft,
+  ) => _terminal.submitFuturesOrder(draft);
 
   @override
   TradeFuturesLeveragePreview previewFuturesLeverage(
@@ -152,7 +168,7 @@ final class MockTradeRepository implements TradeRepository {
   ) => _terminal.previewFuturesLeverage(request);
 
   @override
-  TradeFuturesLeverageReceipt submitFuturesLeverage(
+  Future<TradeFuturesLeverageReceipt> submitFuturesLeverage(
     TradeFuturesLeverageRequest request,
   ) => _terminal.submitFuturesLeverage(request);
 }

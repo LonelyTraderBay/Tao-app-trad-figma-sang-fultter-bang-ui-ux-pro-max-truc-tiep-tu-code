@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-058 mock repository exposes leverage BE draft', () {
-    final repo = const MockTradeRepository();
+  test('SC-058 mock repository exposes leverage BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
     final snapshot = repo.getFuturesLeverage(pairId: 'btcusdt');
     final preview = repo.previewFuturesLeverage(
       const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 10),
@@ -40,7 +40,7 @@ void main() {
     final highRiskPreview = repo.previewFuturesLeverage(
       const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 100),
     );
-    final receipt = repo.submitFuturesLeverage(
+    final receipt = await repo.submitFuturesLeverage(
       const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 50),
     );
 

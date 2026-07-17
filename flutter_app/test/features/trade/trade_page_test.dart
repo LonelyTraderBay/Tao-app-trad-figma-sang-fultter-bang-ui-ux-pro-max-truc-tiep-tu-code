@@ -18,6 +18,7 @@ void main() {
     WidgetTester tester, {
     String initialLocation = AppRoutePaths.trade,
     Size viewport = const Size(440, 956),
+    TradeRepository? repository,
   }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = viewport;
@@ -26,6 +27,10 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (repository != null)
+            tradeRepositoryProvider.overrideWithValue(repository),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: initialLocation),
         ),
@@ -190,6 +195,37 @@ void main() {
 
     expect(find.textContaining('ORD-'), findsWidgets);
   });
+
+  testWidgets(
+    'SC-048 nhánh lỗi ADR-001: repo ném thì ở lại trang, hiện error, không điều hướng receipt',
+    (tester) async {
+      await pumpTrade(
+        tester,
+        repository: const MockTradeRepository(
+          loadDelay: Duration.zero,
+          simulateError: true,
+        ),
+      );
+
+      await tester.scrollUntilVisible(
+        find.byKey(TradePage.pctKey(25)),
+        120,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.byKey(TradePage.pctKey(25)));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(TradePage.submitKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(VitTradeConfirmKeys.confirmSubmit));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(TradePage), findsOneWidget);
+      expect(find.textContaining('ORD-'), findsNothing);
+      expect(find.text('Gửi lệnh thất bại'), findsWidgets);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('SC-048 quick nav opens SC-056 ConvertPage', (tester) async {
     await pumpTrade(tester);

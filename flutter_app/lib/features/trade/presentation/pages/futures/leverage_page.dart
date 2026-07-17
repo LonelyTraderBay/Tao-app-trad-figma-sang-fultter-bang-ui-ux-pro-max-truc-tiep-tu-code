@@ -123,8 +123,10 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
     setState(() => _leverage = TradeLeverageController.sanitize(leverage));
   }
 
-  void _confirm(TradeLeverageController controller) {
-    controller.submit();
+  Future<void> _confirm(TradeLeverageController controller) async {
+    // Await tối thiểu theo ADR-001; máy trạng thái đầy đủ là STATE-S22.
+    await controller.submit();
+    if (!mounted) return;
     _returnToFutures();
   }
 

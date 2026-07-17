@@ -1,78 +1,182 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/core/data/offline_failure.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
+/// Double chỉ phục vụ nhánh offline của máy trạng thái ADR-001: đường đọc
+/// forward sang mock thật, submitOrder ném [OfflineFailure].
+final class _OfflineSubmitTradeRepository implements TradeRepository {
+  const _OfflineSubmitTradeRepository();
+
+  static const _mock = MockTradeRepository(loadDelay: Duration.zero);
+
+  @override
+  TradeScreenSnapshot getTrade({String pairId = 'btcusdt'}) =>
+      _mock.getTrade(pairId: pairId);
+
+  @override
+  TradeOrderPreview previewOrder(TradeOrderDraft draft) =>
+      _mock.previewOrder(draft);
+
+  @override
+  Future<TradeOrderReceipt> submitOrder(TradeOrderDraft draft) async {
+    throw const OfflineFailure();
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('${invocation.memberName}');
+}
+
 void main() {
-  test('Trade order controller previews and submits a valid order intent', () {
-    final repository = const MockTradeRepository();
-    final snapshot = repository.getTrade();
-    final draft = TradeOrderDraft(
+  ProviderContainer containerWith(TradeRepository repository) {
+    final container = ProviderContainer(
+      overrides: [tradeRepositoryProvider.overrideWithValue(repository)],
+    );
+    addTearDown(container.dispose);
+    return container;
+  }
+
+  TradeOrderDraft draftFor(
+    TradeScreenSnapshot snapshot, {
+    double? price,
+    double amount = .01,
+  }) {
+    return TradeOrderDraft(
       pairId: snapshot.pair.id,
       side: TradeOrderSide.buy,
       type: TradeOrderType.limit,
-      price: snapshot.pair.price,
-      amount: .01,
+      price: price ?? snapshot.pair.price,
+      amount: amount,
     );
-    final controller = TradeOrderController(
-      repository: repository,
-      state: TradeOrderViewState(
-        snapshot: snapshot,
-        draft: draft,
-        preview: repository.previewOrder(draft),
-      ),
+  }
+
+  test(
+    'Trade order controller đi trọn chuỗi ready→confirming→submitting→submitted→success',
+    () async {
+      const repository = MockTradeRepository(loadDelay: Duration.zero);
+      final container = containerWith(repository);
+      final snapshot = repository.getTrade();
+      final request = (pairId: snapshot.pair.id, draft: draftFor(snapshot));
+      final provider = tradeOrderControllerProvider(request);
+
+      final statuses = <TradeHighRiskFlowStatus>[];
+      final subscription = container.listen(
+        provider,
+        (previous, next) => statuses.add(next.status),
+        fireImmediately: true,
+      );
+      addTearDown(subscription.close);
+
+      final controller = container.read(provider.notifier);
+      expect(controller.canSubmit, isTrue);
+      expect(controller.validationMessage(), isNull);
+      expect(container.read(provider).preview.total, greaterThan(0));
+      expect(TradeHighRiskFlowStatus.confirming.isBusy, isTrue);
+      expect(TradeHighRiskFlowStatus.preview.hasPreview, isTrue);
+      expect(TradeHighRiskFlowStatus.validationError.isFailure, isTrue);
+
+      await controller.submit();
+
+      final state = container.read(provider);
+      expect(state.status, TradeHighRiskFlowStatus.success);
+      expect(state.receipt?.orderId, 'ORD-DEMO-048');
+      expect(state.receipt?.status, 'submitted');
+      expect(state.errorMessage, isNull);
+      expect(statuses, const [
+        TradeHighRiskFlowStatus.ready,
+        TradeHighRiskFlowStatus.confirming,
+        TradeHighRiskFlowStatus.submitting,
+        TradeHighRiskFlowStatus.submitted,
+        TradeHighRiskFlowStatus.success,
+      ]);
+    },
+  );
+
+  test('Trade order controller seed draft/validationError từ build()', () {
+    const repository = MockTradeRepository(loadDelay: Duration.zero);
+    final container = containerWith(repository);
+    final snapshot = repository.getTrade();
+
+    final emptyRequest = (
+      pairId: snapshot.pair.id,
+      draft: draftFor(snapshot, amount: 0),
     );
-    expect(controller.canSubmit, isTrue);
-    expect(controller.validationMessage(), isNull);
-    expect(TradeHighRiskFlowStatus.confirming.isBusy, isTrue);
-    expect(TradeHighRiskFlowStatus.preview.hasPreview, isTrue);
-    expect(TradeHighRiskFlowStatus.validationError.isFailure, isTrue);
-    expect(controller.state.preview.total, greaterThan(0));
     expect(
-      TradeOrderController(
-        repository: repository,
-        state: TradeOrderViewState(
-          snapshot: snapshot,
-          draft: TradeOrderDraft(
-            pairId: snapshot.pair.id,
-            side: TradeOrderSide.buy,
-            type: TradeOrderType.limit,
-            price: 0,
-            amount: .01,
-          ),
-          preview: repository.previewOrder(
-            TradeOrderDraft(
-              pairId: snapshot.pair.id,
-              side: TradeOrderSide.buy,
-              type: TradeOrderType.limit,
-              price: 0,
-              amount: .01,
-            ),
-          ),
-        ),
-      ).validationMessage(),
+      container.read(tradeOrderControllerProvider(emptyRequest)).status,
+      TradeHighRiskFlowStatus.draft,
+    );
+
+    final invalidRequest = (
+      pairId: snapshot.pair.id,
+      draft: draftFor(snapshot, price: 0),
+    );
+    expect(
+      container.read(tradeOrderControllerProvider(invalidRequest)).status,
+      TradeHighRiskFlowStatus.validationError,
+    );
+    expect(
+      container
+          .read(tradeOrderControllerProvider(invalidRequest).notifier)
+          .validationMessage(),
       'Enter a valid order price before preview.',
     );
-    expect(
-      TradeOrderController(
-        repository: repository,
-        state: TradeOrderViewState(
-          snapshot: snapshot,
-          draft: draft,
-          preview: repository.previewOrder(draft),
-          status: TradeHighRiskFlowStatus.offline,
-        ),
-      ).validationMessage(),
-      'Offline: reconnect before previewing this order.',
-    );
-    final receipt = controller.submit();
-    expect(receipt.orderId, 'ORD-DEMO-048');
-    expect(receipt.status, 'submitted');
   });
 
   test(
+    'Trade order controller preview mở/đóng và nhánh error khi repo ném',
+    () async {
+      const repository = MockTradeRepository(
+        loadDelay: Duration.zero,
+        simulateError: true,
+      );
+      final container = containerWith(repository);
+      final snapshot = repository.getTrade();
+      final request = (pairId: snapshot.pair.id, draft: draftFor(snapshot));
+      final provider = tradeOrderControllerProvider(request);
+      // Giữ listener suốt test: provider autoDispose không có listener sẽ
+      // dispose notifier ngay sau mỗi read → mutation bị reset về build().
+      final subscription = container.listen(provider, (_, _) {});
+      addTearDown(subscription.close);
+      final controller = container.read(provider.notifier);
+
+      controller.enterPreview();
+      expect(container.read(provider).status, TradeHighRiskFlowStatus.preview);
+      controller.cancelPreview();
+      expect(container.read(provider).status, TradeHighRiskFlowStatus.ready);
+
+      await controller.submit();
+      final state = container.read(provider);
+      expect(state.status, TradeHighRiskFlowStatus.error);
+      expect(state.errorMessage, 'Gửi lệnh thất bại. Vui lòng thử lại.');
+      expect(state.receipt, isNull);
+    },
+  );
+
+  test(
+    'Trade order controller phân loại OfflineFailure về status offline',
+    () async {
+      final container = containerWith(const _OfflineSubmitTradeRepository());
+      final snapshot = const _OfflineSubmitTradeRepository().getTrade();
+      final request = (pairId: snapshot.pair.id, draft: draftFor(snapshot));
+      final provider = tradeOrderControllerProvider(request);
+      final subscription = container.listen(provider, (_, _) {});
+      addTearDown(subscription.close);
+
+      await container.read(provider.notifier).submit();
+
+      final state = container.read(provider);
+      expect(state.status, TradeHighRiskFlowStatus.offline);
+      expect(state.errorMessage, isNotEmpty);
+    },
+  );
+
+  test(
     'Trade leverage controller clamps leverage and submits previewed risk',
-    () {
-      final repository = const MockTradeRepository();
+    () async {
+      final repository = const MockTradeRepository(loadDelay: Duration.zero);
       final snapshot = repository.getFuturesLeverage(pairId: 'btcusdt');
       final request = TradeFuturesLeverageRequest(
         pairId: 'btcusdt',
@@ -111,7 +215,7 @@ void main() {
         ).validationMessage(),
         'Leverage must stay between 1x and 100x.',
       );
-      final receipt = controller.submit();
+      final receipt = await controller.submit();
       expect(receipt.pairId, 'btcusdt');
       expect(receipt.status, 'submitted');
     },
@@ -152,8 +256,8 @@ void main() {
 
   test(
     'Trade futures order and orders history controllers own submit intents',
-    () {
-      final repository = const MockTradeRepository();
+    () async {
+      final repository = const MockTradeRepository(loadDelay: Duration.zero);
       final futures = repository.getFutures(pairId: 'btcusdt');
       final futuresDraft = TradeFuturesOrderDraft(
         pairId: futures.pair.id,
@@ -172,7 +276,7 @@ void main() {
       );
       expect(futuresController.canSubmit, isTrue);
       expect(futuresController.validationMessage(), isNull);
-      expect(futuresController.submit().status, 'submitted');
+      expect((await futuresController.submit()).status, 'submitted');
 
       final ordersController = TradeOrdersHistoryController(
         repository: repository,

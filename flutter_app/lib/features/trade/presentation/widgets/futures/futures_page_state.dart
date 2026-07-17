@@ -19,7 +19,7 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     });
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final margin = double.tryParse(_marginController.text) ?? 0;
     final draft = TradeFuturesOrderDraft(
       pairId: widget.pairId,
@@ -35,7 +35,10 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       )),
     );
     if (!controller.canSubmit) return;
-    final receipt = controller.submit();
+    // Await tối thiểu theo ADR-001; máy trạng thái submitting/error đầy đủ
+    // cho futures là STATE-S22 (lô kế tiếp cùng cụm).
+    final receipt = await controller.submit();
+    if (!mounted) return;
     setState(() {
       _marginController.clear();
       _lastOrderId = receipt.orderId;

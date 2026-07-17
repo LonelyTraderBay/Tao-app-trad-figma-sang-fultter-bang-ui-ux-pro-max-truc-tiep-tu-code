@@ -13,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/data/trade_terminal_repository.dart';
 
 void main() {
-  const repo = MockTradeTerminalRepository();
+  const repo = MockTradeTerminalRepository(loadDelay: Duration.zero);
 
   group('MockTradeTerminalRepository smoke test', () {
     group('getters', () {
@@ -123,7 +123,7 @@ void main() {
         expect(repo.submitConvert(request), isA<TradeConvertReceipt>());
       });
 
-      test('previewFuturesOrder / submitFuturesOrder', () {
+      test('previewFuturesOrder / submitFuturesOrder', () async {
         const draft = TradeFuturesOrderDraft(
           pairId: 'btcusdt',
           side: TradeFuturesSide.long,
@@ -132,10 +132,13 @@ void main() {
           leverage: 10,
         );
         expect(repo.previewFuturesOrder(draft), isA<TradeFuturesPreview>());
-        expect(repo.submitFuturesOrder(draft), isA<TradeFuturesReceipt>());
+        expect(
+          await repo.submitFuturesOrder(draft),
+          isA<TradeFuturesReceipt>(),
+        );
       });
 
-      test('previewFuturesLeverage / submitFuturesLeverage', () {
+      test('previewFuturesLeverage / submitFuturesLeverage', () async {
         expect(
           repo.previewFuturesLeverage(
             const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 10),
@@ -143,7 +146,7 @@ void main() {
           isA<TradeFuturesLeveragePreview>(),
         );
         expect(
-          repo.submitFuturesLeverage(
+          await repo.submitFuturesLeverage(
             const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 50),
           ),
           isA<TradeFuturesLeverageReceipt>(),
@@ -207,7 +210,7 @@ void main() {
         expect(result, isA<TradeAdvancedToolActionResult>());
       });
 
-      test('previewOrder / submitOrder', () {
+      test('previewOrder / submitOrder', () async {
         const draft = TradeOrderDraft(
           pairId: 'btcusdt',
           side: TradeOrderSide.buy,
@@ -218,7 +221,7 @@ void main() {
         final preview = repo.previewOrder(draft);
         expect(preview, isA<TradeOrderPreview>());
         expect(preview.total, closeTo(6754.321, .001));
-        final receipt = repo.submitOrder(draft);
+        final receipt = await repo.submitOrder(draft);
         expect(receipt, isA<TradeOrderReceipt>());
       });
 

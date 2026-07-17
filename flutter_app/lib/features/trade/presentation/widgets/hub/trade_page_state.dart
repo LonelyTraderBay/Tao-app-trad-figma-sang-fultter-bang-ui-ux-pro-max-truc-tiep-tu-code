@@ -16,17 +16,32 @@ class _TradePageState extends ConsumerState<TradePage> {
     super.dispose();
   }
 
-  void _submitOrder(TradeOrderController orderController) {
-    final receipt = orderController.submit();
-    context.go(AppRoutePaths.tradeOrderReceipt);
-    if (context.mounted) {
-      showVitNoticeSheet(
-        context: context,
-        title: 'Lệnh đã gửi',
-        message: 'Đã gửi ${receipt.orderId}',
-        variant: VitBannerVariant.success,
-      );
+  Future<void> _submitOrder(TradeOrderControllerRequest request) async {
+    final provider = tradeOrderControllerProvider(request);
+    await ref.read(provider.notifier).submit();
+    if (!mounted) return;
+    final orderState = ref.read(provider);
+    if (orderState.status == TradeHighRiskFlowStatus.success) {
+      context.go(AppRoutePaths.tradeOrderReceipt);
+      if (context.mounted) {
+        showVitNoticeSheet(
+          context: context,
+          title: 'Lệnh đã gửi',
+          message: 'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}',
+          variant: VitBannerVariant.success,
+        );
+      }
+      return;
     }
+    // Nhánh error/offline: ở lại trang, panel rủi ro hiển thị trạng thái;
+    // sheet thông báo cho phép người dùng biết ngay lý do.
+    showVitNoticeSheet(
+      context: context,
+      title: 'Gửi lệnh thất bại',
+      message:
+          orderState.errorMessage ?? 'Không gửi được lệnh. Vui lòng thử lại.',
+      variant: VitBannerVariant.error,
+    );
   }
 
   _TradeNextAction _resolveNextAction(TradeScreenSnapshot snapshot) {
@@ -80,11 +95,14 @@ class _TradePageState extends ConsumerState<TradePage> {
       price: pair.price,
       amount: amount,
     );
-    final orderController = ref.watch(
-      tradeOrderControllerProvider((pairId: widget.pairId, draft: draft)),
+    final orderRequest = (pairId: widget.pairId, draft: draft);
+    final orderState = ref.watch(tradeOrderControllerProvider(orderRequest));
+    final orderNotifier = ref.read(
+      tradeOrderControllerProvider(orderRequest).notifier,
     );
-    final preview = orderController.state.preview;
-    final canSubmit = orderController.canSubmit;
+    final preview = orderState.preview;
+    final canSubmit = orderNotifier.canSubmit;
+    final submitting = orderState.status.isBusy;
     final showBack =
         widget.chartVariant == TradeChartVariant.pairRoute || context.canPop();
     final marketPrice = formatTradePrice(pair.price);
@@ -140,16 +158,34 @@ class _TradePageState extends ConsumerState<TradePage> {
             _amountController.text = (available * pct / 100).toStringAsFixed(6);
           }),
           onChanged: () => setState(() {}),
-          onConfirmedSubmit: () => _submitOrder(orderController),
+          submitting: submitting,
+          onPreviewOpened: orderNotifier.enterPreview,
+          onPreviewDismissed: orderNotifier.cancelPreview,
+          onConfirmedSubmit: () => _submitOrder(orderRequest),
         ),
         if (snapshot.highRiskContractId != null)
           VitTradeSection(
             title: 'Đánh giá rủi ro',
             child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Review spot order risk',
-              message:
+              state: orderState.status.uiState,
+              title: switch (orderState.status.uiState) {
+                VitHighRiskUiState.submitting => 'Đang gửi lệnh',
+                VitHighRiskUiState.success => 'Lệnh đã gửi',
+                VitHighRiskUiState.error => 'Gửi lệnh thất bại',
+                VitHighRiskUiState.offline => 'Mất kết nối',
+                _ => 'Review spot order risk',
+              },
+              message: switch (orderState.status.uiState) {
+                VitHighRiskUiState.submitting =>
+                  'Đang gửi lệnh tới sàn. Vui lòng chờ trong giây lát.',
+                VitHighRiskUiState.success =>
+                  'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}.',
+                VitHighRiskUiState.error || VitHighRiskUiState.offline =>
+                  orderState.errorMessage ??
+                      'Không gửi được lệnh. Vui lòng thử lại.',
+                _ =>
                   'Preview fees, slippage, and available balance before submitting a market order.',
+              },
               contractId: snapshot.highRiskContractId,
               density: VitDensity.compact,
             ),

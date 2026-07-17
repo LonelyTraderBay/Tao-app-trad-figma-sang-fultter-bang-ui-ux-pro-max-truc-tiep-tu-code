@@ -15,7 +15,14 @@ part '../fixtures/trade_futures_leverage_repository_methods.dart';
 part '../fixtures/trade_futures_leverage_repository_fixtures.dart';
 
 mixin _MockTradeTerminalRepositoryBase
-    implements SpotTradeRepository, TradeFuturesMarginRepository {}
+    implements SpotTradeRepository, TradeFuturesMarginRepository {
+  /// Độ trễ mô phỏng cho các đường ghi async (ADR-001); test truyền
+  /// `Duration.zero`.
+  Duration get loadDelay;
+
+  /// Khi bật, các đường ghi async ném [StateError] để test nhánh lỗi.
+  bool get simulateError;
+}
 
 /// Independent mock implementation of both [SpotTradeRepository] and
 /// [TradeFuturesMarginRepository] (trade_terminal extraction, Batch 3 of
@@ -55,5 +62,14 @@ final class MockTradeTerminalRepository
         _MockTradeTerminalRepositoryConversionsUtilitiesMethods,
         _MockTradeTerminalRepositoryCoreSpotMethods,
         _MockTradeTerminalRepositoryFuturesLeverageMethods {
-  const MockTradeTerminalRepository();
+  const MockTradeTerminalRepository({
+    this.loadDelay = const Duration(milliseconds: 300),
+    this.simulateError = false,
+  });
+
+  @override
+  final Duration loadDelay;
+
+  @override
+  final bool simulateError;
 }

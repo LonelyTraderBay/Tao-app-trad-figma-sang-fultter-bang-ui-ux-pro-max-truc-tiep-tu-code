@@ -16,7 +16,6 @@ final tradeReadModelControllerProvider = Provider<TradeRepository>((ref) {
   return ref.watch(tradeRepositoryProvider);
 });
 
-typedef TradeOrderControllerRequest = ({String pairId, TradeOrderDraft draft});
 typedef TradeLeverageControllerRequest = ({String pairId, int leverage});
 typedef TradeMarginControllerRequest = ({String pairId, bool pairRouteVariant});
 typedef TradeFuturesOrderControllerRequest = ({
@@ -44,18 +43,15 @@ final tradeOrdersHistoryControllerProvider =
       );
     });
 
-final tradeOrderControllerProvider = Provider.autoDispose
-    .family<TradeOrderController, TradeOrderControllerRequest>((ref, request) {
-      final repository = ref.watch(tradeRepositoryProvider);
-      return TradeOrderController(
-        repository: repository,
-        state: TradeOrderViewState(
-          snapshot: repository.getTrade(pairId: request.pairId),
-          draft: request.draft,
-          preview: repository.previewOrder(request.draft),
-        ),
-      );
-    });
+/// Notifier theo ADR-001 — family key giữ nguyên record request (PERF-HN1
+/// đã cho record này value equality qua TradeOrderDraft ==), autoDispose để
+/// member theo từng draft không tích lũy.
+final tradeOrderControllerProvider = NotifierProvider.autoDispose
+    .family<
+      TradeOrderController,
+      TradeOrderViewState,
+      TradeOrderControllerRequest
+    >(TradeOrderController.new);
 
 final tradeLeverageControllerProvider =
     Provider.family<TradeLeverageController, TradeLeverageControllerRequest>((

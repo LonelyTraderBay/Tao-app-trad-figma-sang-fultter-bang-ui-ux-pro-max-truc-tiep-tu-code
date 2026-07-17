@@ -54,7 +54,9 @@ final class TradeLeverageController {
     return null;
   }
 
-  TradeFuturesLeverageReceipt submit() {
+  // Chữ ký async theo ADR-001; chuyển máy trạng thái Notifier đầy đủ là
+  // STATE-S22 (lô kế tiếp cùng cụm).
+  Future<TradeFuturesLeverageReceipt> submit() {
     return _repository.submitFuturesLeverage(state.request);
   }
 }
@@ -170,7 +172,9 @@ final class TradeFuturesOrderController {
     return null;
   }
 
-  TradeFuturesReceipt submit() {
+  // Chữ ký async theo ADR-001; chuyển máy trạng thái Notifier đầy đủ là
+  // STATE-S22 (lô kế tiếp cùng cụm).
+  Future<TradeFuturesReceipt> submit() {
     return _repository.submitFuturesOrder(state.draft);
   }
 }

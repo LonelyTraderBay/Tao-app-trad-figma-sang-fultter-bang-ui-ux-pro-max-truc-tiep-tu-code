@@ -1,8 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:vit_trade_flutter/core/data/offline_failure.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_read_model.dart'
     show TradeHighRiskFlowStatus, TradeHighRiskFlowStatusX;
 
+import 'package:vit_trade_flutter/features/trade/data/providers/trade_repository_provider.dart';
 import 'package:vit_trade_flutter/features/trade/domain/entities/trade_entities.dart';
 import 'package:vit_trade_flutter/features/trade/domain/repositories/trade_repository.dart';
+
+typedef TradeOrderControllerRequest = ({String pairId, TradeOrderDraft draft});
 
 final class TradeOrderViewState {
   const TradeOrderViewState({
@@ -11,6 +17,7 @@ final class TradeOrderViewState {
     required this.preview,
     this.status = TradeHighRiskFlowStatus.ready,
     this.errorMessage,
+    this.receipt,
   });
 
   final TradeScreenSnapshot snapshot;
@@ -18,20 +25,62 @@ final class TradeOrderViewState {
   final TradeOrderPreview preview;
   final TradeHighRiskFlowStatus status;
   final String? errorMessage;
+  final TradeOrderReceipt? receipt;
+
+  /// `errorMessage` cố ý KHÔNG giữ giá trị cũ khi không truyền — mỗi
+  /// transition mới xóa lỗi của lượt trước (retry sạch).
+  TradeOrderViewState copyWith({
+    TradeHighRiskFlowStatus? status,
+    String? errorMessage,
+    TradeOrderReceipt? receipt,
+  }) {
+    return TradeOrderViewState(
+      snapshot: snapshot,
+      draft: draft,
+      preview: preview,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+      receipt: receipt ?? this.receipt,
+    );
+  }
 }
 
-final class TradeOrderController {
-  const TradeOrderController({
-    required this.state,
-    required TradeRepository repository,
-  }) : _repository = repository;
+/// Máy trạng thái đặt lệnh Spot — implementation tham chiếu của ADR-001
+/// (docs/05_ARCHITECTURE/decisions/ADR-001-async-error-idiom.md).
+///
+/// Notifier theo family per-request (cặp + draft hiện tại của form):
+/// `build()` seed `draft`/`validationError`/`ready` từ read-model;
+/// `submit()` chạy chuỗi `confirming → submitting → submitted → success`,
+/// rẽ nhánh `error`/`offline` kèm `errorMessage`.
+final class TradeOrderController extends Notifier<TradeOrderViewState> {
+  TradeOrderController(this.request);
 
-  final TradeOrderViewState state;
-  final TradeRepository _repository;
+  final TradeOrderControllerRequest request;
+
+  TradeRepository get _repository => ref.read(tradeRepositoryProvider);
+
+  @override
+  TradeOrderViewState build() {
+    final repository = ref.watch(tradeRepositoryProvider);
+    final seeded = TradeOrderViewState(
+      snapshot: repository.getTrade(pairId: request.pairId),
+      draft: request.draft,
+      preview: repository.previewOrder(request.draft),
+    );
+    if (request.draft.amount <= 0) {
+      return seeded.copyWith(status: TradeHighRiskFlowStatus.draft);
+    }
+    if (_validationMessageFor(seeded) != null) {
+      return seeded.copyWith(status: TradeHighRiskFlowStatus.validationError);
+    }
+    return seeded;
+  }
 
   bool get canSubmit => validationMessage() == null;
 
-  String? validationMessage() {
+  String? validationMessage() => _validationMessageFor(state);
+
+  static String? _validationMessageFor(TradeOrderViewState state) {
     if (state.status == TradeHighRiskFlowStatus.offline) {
       return 'Offline: reconnect before previewing this order.';
     }
@@ -58,8 +107,45 @@ final class TradeOrderController {
     return null;
   }
 
-  TradeOrderReceipt submit() {
-    return _repository.submitOrder(state.draft);
+  /// Người dùng mở sheet 'Xem lại lệnh' — `ready → preview`.
+  void enterPreview() {
+    if (!canSubmit || state.status.isBusy) return;
+    state = state.copyWith(status: TradeHighRiskFlowStatus.preview);
+  }
+
+  /// Đóng sheet mà không xác nhận — quay về `ready`.
+  void cancelPreview() {
+    if (state.status.isBusy) return;
+    state = state.copyWith(status: TradeHighRiskFlowStatus.ready);
+  }
+
+  /// Người dùng bấm xác nhận trong sheet. Nhánh `offline` phân loại qua
+  /// [OfflineFailure]; mọi lỗi khác về `error` — không bao giờ ném ra UI.
+  Future<void> submit() async {
+    if (state.status.isBusy) return;
+    state = state.copyWith(status: TradeHighRiskFlowStatus.confirming);
+    state = state.copyWith(status: TradeHighRiskFlowStatus.submitting);
+    try {
+      final receipt = await _repository.submitOrder(state.draft);
+      if (!ref.mounted) return;
+      state = state.copyWith(
+        status: TradeHighRiskFlowStatus.submitted,
+        receipt: receipt,
+      );
+      state = state.copyWith(status: TradeHighRiskFlowStatus.success);
+    } on OfflineFailure catch (failure) {
+      if (!ref.mounted) return;
+      state = state.copyWith(
+        status: TradeHighRiskFlowStatus.offline,
+        errorMessage: failure.message,
+      );
+    } on Object {
+      if (!ref.mounted) return;
+      state = state.copyWith(
+        status: TradeHighRiskFlowStatus.error,
+        errorMessage: 'Gửi lệnh thất bại. Vui lòng thử lại.',
+      );
+    }
   }
 }
 

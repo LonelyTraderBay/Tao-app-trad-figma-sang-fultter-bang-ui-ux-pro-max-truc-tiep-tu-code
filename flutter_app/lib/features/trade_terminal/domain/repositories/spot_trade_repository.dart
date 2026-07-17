@@ -12,7 +12,10 @@ abstract interface class SpotTradeRepository {
   TradeAdvancedAnalyticsSnapshot getAdvancedAnalytics();
   TradeSettings patchTradeSettings(TradeSettings settings);
   TradeOrderPreview previewOrder(TradeOrderDraft draft);
-  TradeOrderReceipt submitOrder(TradeOrderDraft draft);
+
+  /// Đường ghi tài chính là async theo ADR-001 — backend thật sẽ là network
+  /// call; mock mô phỏng độ trễ/lỗi qua `loadDelay`/`simulateError`.
+  Future<TradeOrderReceipt> submitOrder(TradeOrderDraft draft);
   TradeOrderActionResult submitOrderAction({
     required String orderId,
     required String action,
