@@ -393,6 +393,13 @@ jobs:
     # .gitleaks.toml (repo root) allowlist marker VI_DU_KHONG_THAT của fixture.
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
+    # gitleaks-action gọi API liệt kê commit của PR — GITHUB_TOKEN cần thêm
+    # pull-requests: read, nếu không sẽ chết "Resource not accessible by
+    # integration" trước cả khi quét (permissions job-level GHI ĐÈ toàn bộ
+    # khối workflow-level nên phải khai lại contents: read).
+    permissions:
+      contents: read
+      pull-requests: read
 
     steps:
       - name: Checkout
