@@ -124,13 +124,11 @@ class _ChipGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
-          child: VitSectionHeader(
-            title: label,
-            titleColor: AppColors.text2,
-            titleFontWeight: AppTextStyles.normal,
-          ),
+        VitSectionHeader(
+          title: label,
+          titleColor: AppColors.text2,
+          titleFontWeight: AppTextStyles.normal,
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
         ),
         Wrap(
           spacing: AppSpacing.x2,

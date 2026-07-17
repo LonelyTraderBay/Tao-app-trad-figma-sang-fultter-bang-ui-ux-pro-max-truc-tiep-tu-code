@@ -17,6 +17,7 @@ class _DrawdownTab extends StatelessWidget {
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,
           titleLetterSpacing: .2,
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
         ),
         SizedBox(
           height: _attributionChartHeight,
@@ -74,6 +75,7 @@ class _ProjectionTab extends StatelessWidget {
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,
           titleLetterSpacing: .2,
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
         ),
         const VitBanner(
           variant: VitBannerVariant.info,
@@ -137,6 +139,7 @@ class _CorrelationTab extends StatelessWidget {
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,
           titleLetterSpacing: .2,
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
         ),
         SizedBox(
           height: _attributionChartHeight,

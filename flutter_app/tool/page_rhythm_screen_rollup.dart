@@ -215,16 +215,24 @@ void main(List<String> args) {
       return;
     }
     if (strictLayout) {
+      // flush_chart is a registered LayoutPattern archetype (full-bleed chart
+      // screens; today only SC-041 PredictionAdvancedChartPage) and is already
+      // recorded as `exception:flush_chart` in l3_status/notes by this rollup,
+      // so strict mode sanctions it alongside direct_vpc/shared_shell. Every
+      // other pattern (gate_shell, bottom_sheet, custom_scroll, unmapped)
+      // still fails strict.
+      final strictLayoutAllowed = {
+        LayoutPattern.directVpc.label,
+        LayoutPattern.sharedShell.label,
+        LayoutPattern.flushChart.label,
+      };
       final badLayout = rows
-          .where(
-            (r) =>
-                r.layoutPattern != LayoutPattern.directVpc.label &&
-                r.layoutPattern != LayoutPattern.sharedShell.label,
-          )
+          .where((r) => !strictLayoutAllowed.contains(r.layoutPattern))
           .length;
       if (badLayout > 0) {
         stderr.writeln(
-          'Layout strict check failed: $badLayout routes not direct_vpc/shared_shell.',
+          'Layout strict check failed: $badLayout routes not '
+          'direct_vpc/shared_shell/flush_chart.',
         );
         exitCode = 1;
         return;

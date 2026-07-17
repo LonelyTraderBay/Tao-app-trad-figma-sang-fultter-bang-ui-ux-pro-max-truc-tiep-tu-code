@@ -114,6 +114,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                           iconColor: AppColors.primary,
                           iconSize: AppSpacing.iconSm,
                           titleColor: AppColors.text2,
+                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                         ),
                         _TradeOptionsCard(
                           snapshot: snapshot,

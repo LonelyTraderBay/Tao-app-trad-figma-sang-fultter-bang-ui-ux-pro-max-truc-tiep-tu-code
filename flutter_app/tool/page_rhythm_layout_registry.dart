@@ -138,6 +138,13 @@ const tierProductRouteOverrides = <String, String>{
   // Archetype A): "Use VitPageRhythm.form when tab panels are data-entry
   // heavy (as in the canonical reference)" — refers to this exact page.
   'AppRouteNames.sc150TokenApproval': 'form',
+  // Insurance fund/policy pages are read-only stats & terms displays (standard),
+  // not data-entry flows — the form suggestion comes from the dispute/ path
+  // heuristic. Wallet hub is a deliberately dense asset list (compact).
+  'AppRouteNames.sc238P2PInsuranceFund': 'standard',
+  'AppRouteNames.sc244P2PInsuranceFundAlias': 'standard',
+  'AppRouteNames.sc241P2PInsurancePolicy': 'standard',
+  'AppRouteNames.sc135Wallet': 'compact',
 };
 
 final flushChartWidgetPatterns = RegExp(
