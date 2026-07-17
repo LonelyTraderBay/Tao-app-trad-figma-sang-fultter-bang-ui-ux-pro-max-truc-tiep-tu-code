@@ -7,35 +7,40 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 /// flutter_localizations với locale vi — widget hệ thống Material
 /// (date picker, time picker, tooltip, menu paste...) phải nói tiếng Việt,
 /// không rơi về tiếng Anh mặc định. Test bơm qua ĐÚNG cấu hình
-/// _VitTradeMaterialApp thật (không dựng MaterialApp riêng) và assert nhãn
-/// chuẩn Material qua MaterialLocalizations.
+/// _VitTradeMaterialApp thật (không dựng MaterialApp riêng).
 ///
-/// Ghi chú: không mở showDatePicker thật ở đây — clamp text-scaling A11Y-2/3
-/// của app (minScaleFactor 1.0) va assert `maxScale > minScale` với clamp
-/// nội bộ của _DatePickerHeader trong chế độ debug (bug interplay riêng,
-/// đã tách thành task xử lý độc lập; release không ảnh hưởng).
+/// Test thứ hai mở showDatePicker THẬT — vừa chốt nhãn dialog tiếng Việt,
+/// vừa là regression test cho fix text-scaler: builder A11Y-2/3 từng đặt
+/// minScaleFactor 1.0 làm clamp lồng nhau với _DatePickerHeader
+/// (maxScaleFactor <= 1.0) gộp thành min == max → nổ assert
+/// `maxScale > minScale` trong debug. Giữ trần 1.3x, bỏ sàn — dialog phải
+/// mở được sạch sẽ.
 void main() {
+  Future<GoRouter> pumpLocaleHost(WidgetTester tester) async {
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const _DatePickerHost(),
+        ),
+      ],
+    );
+    await tester.pumpWidget(VitTradeApp(routerConfig: router));
+    await tester.pumpAndSettle();
+    return router;
+  }
+
   testWidgets(
     'widget hệ thống Material dưới VitTradeApp dùng nhãn tiếng Việt',
     (tester) async {
-      final router = GoRouter(
-        routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) =>
-                const Scaffold(body: Center(child: Text('Trang thử locale'))),
-          ),
-        ],
-      );
-
-      await tester.pumpWidget(VitTradeApp(routerConfig: router));
-      await tester.pumpAndSettle();
+      await pumpLocaleHost(tester);
 
       final context = tester.element(find.byType(Scaffold).first);
       expect(Localizations.localeOf(context), const Locale('vi'));
 
       // Delegates đã nạp cho locale vi: nhãn chuẩn của date/time picker và
-      // các nút hệ thống là tiếng Việt (chính tả theo bản dịch Flutter: "Huỷ").
+      // các nút hệ thống là tiếng Việt (chính tả theo bản dịch Flutter:
+      // "Huỷ").
       final materialLoc = MaterialLocalizations.of(context);
       expect(materialLoc.cancelButtonLabel, 'Huỷ');
       expect(materialLoc.okButtonLabel, 'OK');
@@ -45,4 +50,47 @@ void main() {
       expect(materialLoc.searchFieldLabel, 'Tìm kiếm');
     },
   );
+
+  testWidgets(
+    'showDatePicker mở được dưới clamp A11Y và hiển thị nhãn tiếng Việt',
+    (tester) async {
+      await pumpLocaleHost(tester);
+
+      await tester.tap(find.text('Mở lịch'));
+      await tester.pumpAndSettle();
+
+      // Dialog thật render không nổ assert text-scaler, nhãn tiếng Việt.
+      expect(find.text('Chọn ngày'), findsOneWidget);
+      expect(find.text('Huỷ'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
+
+      // Đóng bằng nút Huỷ — dialog biến mất, không exception treo lại.
+      await tester.tap(find.text('Huỷ'));
+      await tester.pumpAndSettle();
+      expect(find.text('Chọn ngày'), findsNothing);
+    },
+  );
+}
+
+class _DatePickerHost extends StatelessWidget {
+  const _DatePickerHost();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            showDatePicker(
+              context: context,
+              initialDate: DateTime(2026, 7, 17),
+              firstDate: DateTime(2026),
+              lastDate: DateTime(2027),
+            );
+          },
+          child: const Text('Mở lịch'),
+        ),
+      ),
+    );
+  }
 }
