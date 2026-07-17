@@ -372,3 +372,118 @@ final class TradeFuturesOrderController
     return null;
   }
 }
+
+/// STATE-S23: view-state bất biến của Xuất lịch sử giao dịch — format/
+/// period/includes/isExporting/result sống ở Notifier (một nguồn sự thật),
+/// trang chỉ watch + gọi method.
+final class TradeHistoryExportViewState {
+  const TradeHistoryExportViewState({
+    required this.snapshot,
+    required this.format,
+    required this.period,
+    required this.includes,
+    required this.isExporting,
+    required this.result,
+  });
+
+  factory TradeHistoryExportViewState.fromSnapshot(
+    TradeExportSnapshot snapshot,
+  ) {
+    return TradeHistoryExportViewState(
+      snapshot: snapshot,
+      format: snapshot.formats.first.id,
+      period: '30d',
+      includes: List.unmodifiable(snapshot.includes),
+      isExporting: false,
+      result: null,
+    );
+  }
+
+  final TradeExportSnapshot snapshot;
+  final String format;
+  final String period;
+  final List<TradeExportInclude> includes;
+  final bool isExporting;
+  final TradeExportResult? result;
+
+  /// `result` cố ý KHÔNG giữ giá trị cũ khi không truyền — mỗi transition
+  /// mới (đổi format/period, toggle include, xuất mới) xóa kết quả xuất cũ
+  /// (khuôn `errorMessage` của TradeOrderViewState.copyWith).
+  TradeHistoryExportViewState copyWith({
+    String? format,
+    String? period,
+    List<TradeExportInclude>? includes,
+    bool? isExporting,
+    TradeExportResult? result,
+  }) {
+    return TradeHistoryExportViewState(
+      snapshot: snapshot,
+      format: format ?? this.format,
+      period: period ?? this.period,
+      includes: includes == null ? this.includes : List.unmodifiable(includes),
+      isExporting: isExporting ?? this.isExporting,
+      result: result,
+    );
+  }
+}
+
+/// STATE-S23 (khuôn MarketWatchlistStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — giữ nguyên
+/// khi điều hướng đi/về trong phiên xuất lịch sử.
+final class TradeHistoryExportStateController
+    extends Notifier<TradeHistoryExportViewState> {
+  TradeRepository get _repository => ref.read(tradeReadModelControllerProvider);
+
+  @override
+  TradeHistoryExportViewState build() {
+    return TradeHistoryExportViewState.fromSnapshot(
+      ref.watch(tradeReadModelControllerProvider).getTradeExport(),
+    );
+  }
+
+  void setFormat(String format) {
+    state = state.copyWith(format: format);
+  }
+
+  void setPeriod(String period) {
+    state = state.copyWith(period: period);
+  }
+
+  void toggleInclude(String id) {
+    state = state.copyWith(
+      includes: [
+        for (final item in state.includes)
+          item.id == id ? item.copyWith(checked: !item.checked) : item,
+      ],
+    );
+  }
+
+  /// Đóng kết quả xuất hiện tại — quay về form chọn định dạng/khoảng thời
+  /// gian ('Tạo mới').
+  void resetResult() {
+    state = state.copyWith();
+  }
+
+  Future<void> submitExport() async {
+    if (state.isExporting) return;
+    state = state.copyWith(isExporting: true);
+    await Future<void>.delayed(const Duration(milliseconds: 220));
+    final request = TradeExportRequest(
+      format: state.format,
+      period: state.period,
+      includeIds: [
+        for (final item in state.includes)
+          if (item.checked) item.id,
+      ],
+    );
+    final result = _repository.createTradeExport(request);
+    if (!ref.mounted) return;
+    state = state.copyWith(isExporting: false, result: result);
+  }
+}
+
+final tradeHistoryExportStateControllerProvider =
+    NotifierProvider<
+      TradeHistoryExportStateController,
+      TradeHistoryExportViewState
+    >(TradeHistoryExportStateController.new);

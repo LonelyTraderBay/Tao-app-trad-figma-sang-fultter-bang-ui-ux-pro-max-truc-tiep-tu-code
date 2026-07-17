@@ -52,28 +52,14 @@ class TradeHistoryExportPage extends ConsumerStatefulWidget {
 
 class _TradeHistoryExportPageState
     extends ConsumerState<TradeHistoryExportPage> {
-  late String _format;
-  late String _period;
-  late List<TradeExportInclude> _includes;
-  bool _isExporting = false;
-  TradeExportResult? _result;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(tradeReadModelControllerProvider)
-        .getTradeExport();
-    _format = snapshot.formats.first.id;
-    _period = '30d';
-    _includes = snapshot.includes.toList(growable: true);
-  }
+  // STATE-S23: format/period/includes/isExporting/result sống ở
+  // TradeHistoryExportStateController (một nguồn sự thật) — hết `late
+  // String`/`late List` seed từ ref.read + setState.
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeReadModelControllerProvider)
-        .getTradeExport();
+    final viewState = ref.watch(tradeHistoryExportStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerSafePadding =
         MediaQuery.paddingOf(context).bottom +
@@ -110,32 +96,26 @@ class _TradeHistoryExportPageState
               title: 'Định dạng file',
               child: _FormatSelector(
                 formats: snapshot.formats,
-                activeFormat: _format,
-                onChanged: (format) {
-                  setState(() {
-                    _format = format;
-                    _result = null;
-                  });
-                },
+                activeFormat: viewState.format,
+                onChanged: (format) => ref
+                    .read(tradeHistoryExportStateControllerProvider.notifier)
+                    .setFormat(format),
               ),
             ),
             VitTradeSection(
               title: 'Khoảng thời gian',
               child: _PeriodSelector(
                 periods: snapshot.periods,
-                activePeriod: _period,
-                onChanged: (period) {
-                  setState(() {
-                    _period = period;
-                    _result = null;
-                  });
-                },
+                activePeriod: viewState.period,
+                onChanged: (period) => ref
+                    .read(tradeHistoryExportStateControllerProvider.notifier)
+                    .setPeriod(period),
               ),
             ),
             VitTradeSection(
               title: 'Bao gồm dữ liệu',
               child: _IncludeList(
-                includes: _includes,
+                includes: viewState.includes,
                 onToggle: _toggleInclude,
               ),
             ),
@@ -175,12 +155,14 @@ class _TradeHistoryExportPageState
           right: 0,
           bottom: footerSafePadding,
           child: _ExportFooter(
-            format: _format,
-            period: _period,
-            isExporting: _isExporting,
-            result: _result,
+            format: viewState.format,
+            period: viewState.period,
+            isExporting: viewState.isExporting,
+            result: viewState.result,
             onExport: _handleExport,
-            onNewExport: () => setState(() => _result = null),
+            onNewExport: () => ref
+                .read(tradeHistoryExportStateControllerProvider.notifier)
+                .resetResult(),
           ),
         ),
       ],
@@ -188,37 +170,14 @@ class _TradeHistoryExportPageState
   }
 
   void _toggleInclude(String id) {
-    setState(() {
-      _result = null;
-      _includes = [
-        for (final item in _includes)
-          item.id == id ? item.copyWith(checked: !item.checked) : item,
-      ];
-    });
+    ref
+        .read(tradeHistoryExportStateControllerProvider.notifier)
+        .toggleInclude(id);
   }
 
   Future<void> _handleExport() async {
-    if (_isExporting) return;
-    setState(() {
-      _isExporting = true;
-      _result = null;
-    });
-    await Future<void>.delayed(const Duration(milliseconds: 220));
-    final request = TradeExportRequest(
-      format: _format,
-      period: _period,
-      includeIds: [
-        for (final item in _includes)
-          if (item.checked) item.id,
-      ],
-    );
-    final result = ref
-        .read(tradeReadModelControllerProvider)
-        .createTradeExport(request);
-    if (!mounted) return;
-    setState(() {
-      _isExporting = false;
-      _result = result;
-    });
+    await ref
+        .read(tradeHistoryExportStateControllerProvider.notifier)
+        .submitExport();
   }
 }

@@ -157,4 +157,38 @@ void main() {
 
     expect(find.byType(LaunchpadPage), findsOneWidget);
   });
+
+  testWidgets('SC-310 STATE-S23 round-trip: delete persists via Notifier', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final router = createAppRouter(
+      initialLocation: AppRoutePaths.launchpadWebhooks,
+    );
+    await tester.pumpWidget(
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(LaunchpadWebhooksPage.expandKey('wh1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(LaunchpadWebhooksPage.deleteKey('wh1')));
+    await tester.pumpAndSettle();
+    expect(find.text('NexaAI Staking Events'), findsNothing);
+
+    // STATE-S23 round-trip: điều hướng đi rồi quay lại — mutation giữ nguyên
+    // (state sống ở Notifier, không phải late List của trang).
+    router.go(AppRoutePaths.launchpad);
+    await tester.pumpAndSettle();
+    expect(find.byType(LaunchpadPage), findsOneWidget);
+
+    router.go(AppRoutePaths.launchpadWebhooks);
+    await tester.pumpAndSettle();
+    expect(find.byType(LaunchpadWebhooksPage), findsOneWidget);
+    expect(find.text('NexaAI Staking Events'), findsNothing);
+  });
 }

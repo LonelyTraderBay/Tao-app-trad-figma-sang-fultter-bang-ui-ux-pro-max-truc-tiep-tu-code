@@ -95,57 +95,31 @@ class PriceAlertsPage extends ConsumerStatefulWidget {
 
 class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
   _AlertFilter _filter = _AlertFilter.all;
-  late List<MarketPriceAlert> _alerts;
   bool _showAddNotice = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _alerts = [
-      ...ref.read(marketControllerProvider).getPriceAlerts().priceAlerts,
-    ];
-  }
+  // STATE-S23: alerts sống ở MarketPriceAlertsStateController (một nguồn sự
+  // thật) — hết `late List` seed từ ref.read + setState.
 
-  List<MarketPriceAlert> get _filteredAlerts {
+  List<MarketPriceAlert> _filteredAlerts(List<MarketPriceAlert> alerts) {
     return switch (_filter) {
       _AlertFilter.active => [
-        for (final alert in _alerts)
+        for (final alert in alerts)
           if (alert.isActive) alert,
       ],
       _AlertFilter.triggered => [
-        for (final alert in _alerts)
+        for (final alert in alerts)
           if (!alert.isActive && alert.triggeredAt != null) alert,
       ],
-      _AlertFilter.all => _alerts,
+      _AlertFilter.all => alerts,
     };
   }
 
   void _toggleAlert(String id) {
-    setState(() {
-      _alerts = [
-        for (final alert in _alerts)
-          if (alert.id == id)
-            MarketPriceAlert(
-              id: alert.id,
-              pairId: alert.pairId,
-              symbol: alert.symbol,
-              condition: alert.condition,
-              targetPrice: alert.targetPrice,
-              currentPrice: alert.currentPrice,
-              isActive: !alert.isActive,
-              createdAt: alert.createdAt,
-              triggeredAt: alert.triggeredAt,
-            )
-          else
-            alert,
-      ];
-    });
+    ref.read(marketPriceAlertsStateControllerProvider.notifier).toggleAlert(id);
   }
 
   void _deleteAlert(String id) {
-    setState(() {
-      _alerts = _alerts.where((alert) => alert.id != id).toList();
-    });
+    ref.read(marketPriceAlertsStateControllerProvider.notifier).deleteAlert(id);
   }
 
   void _showAddPlaceholder() {
@@ -154,15 +128,18 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketControllerProvider).getPriceAlerts();
+    final viewState = ref.watch(marketPriceAlertsStateControllerProvider);
+    final snapshot = viewState.snapshot;
+    final alerts = viewState.alerts;
+    final filteredAlerts = _filteredAlerts(alerts);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? _alertsVisualScrollClearance
             : _alertsNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final activeCount = _alerts.where((alert) => alert.isActive).length;
-    final triggeredCount = _alerts
+    final activeCount = alerts.where((alert) => alert.isActive).length;
+    final triggeredCount = alerts
         .where((alert) => !alert.isActive && alert.triggeredAt != null)
         .length;
 
@@ -235,17 +212,17 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                       density: VitDensity.compact,
                       children: [
                         _StatsSummary(
-                          total: _alerts.length,
+                          total: alerts.length,
                           active: activeCount,
                           triggered: triggeredCount,
                         ),
-                        if (_filteredAlerts.isEmpty)
+                        if (filteredAlerts.isEmpty)
                           const _EmptyAlertsCard()
                         else
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              for (final alert in _filteredAlerts) ...[
+                              for (final alert in filteredAlerts) ...[
                                 _AlertCard(
                                   alert: alert,
                                   pair: _findPair(
@@ -255,7 +232,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                                   onToggle: () => _toggleAlert(alert.id),
                                   onDelete: () => _deleteAlert(alert.id),
                                 ),
-                                if (alert != _filteredAlerts.last)
+                                if (alert != filteredAlerts.last)
                                   const SizedBox(height: _alertsCardGap),
                               ],
                             ],

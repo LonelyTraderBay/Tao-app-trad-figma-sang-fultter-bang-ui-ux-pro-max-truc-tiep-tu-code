@@ -106,3 +106,66 @@ final tokenApprovalControllerProvider = Provider<TokenApprovalController>((
     state: TokenApprovalViewState(snapshot: snapshot),
   );
 });
+
+/// STATE-S23: view-state bất biến của Sổ địa chỉ — danh sách địa chỉ sống ở
+/// Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
+final class AddressBookViewState {
+  const AddressBookViewState({required this.snapshot, required this.addresses});
+
+  factory AddressBookViewState.fromSnapshot(
+    WalletAddressBookSnapshot snapshot,
+  ) {
+    return AddressBookViewState(
+      snapshot: snapshot,
+      addresses: List.unmodifiable(snapshot.addresses),
+    );
+  }
+
+  final WalletAddressBookSnapshot snapshot;
+  final List<WalletSavedAddress> addresses;
+
+  AddressBookViewState copyWith({List<WalletSavedAddress>? addresses}) {
+    return AddressBookViewState(
+      snapshot: snapshot,
+      addresses: addresses == null
+          ? this.addresses
+          : List.unmodifiable(addresses),
+    );
+  }
+}
+
+/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state danh
+/// bạ giữ nguyên khi điều hướng đi/về trong phiên.
+final class AddressBookStateController extends Notifier<AddressBookViewState> {
+  @override
+  AddressBookViewState build() {
+    return AddressBookViewState.fromSnapshot(
+      ref.watch(walletAddressBookProvider),
+    );
+  }
+
+  void toggleFavorite(String addressId) {
+    state = state.copyWith(
+      addresses: [
+        for (final address in state.addresses)
+          address.id == addressId
+              ? address.copyWith(isFavorite: !address.isFavorite)
+              : address,
+      ],
+    );
+  }
+
+  void deleteAddress(String addressId) {
+    state = state.copyWith(
+      addresses: state.addresses
+          .where((address) => address.id != addressId)
+          .toList(growable: false),
+    );
+  }
+}
+
+final addressBookStateControllerProvider =
+    NotifierProvider<AddressBookStateController, AddressBookViewState>(
+      AddressBookStateController.new,
+    );

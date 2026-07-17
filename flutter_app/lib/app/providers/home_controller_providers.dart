@@ -8,7 +8,13 @@ final homeSnapshotProvider = FutureProvider<HomeSnapshot>((ref) {
   return ref.watch(homeRepositoryProvider).fetchHome();
 });
 
-final homeControllerProvider = Provider<HomeController>((ref) {
-  final snapshot = ref.watch(homeSnapshotProvider).requireValue;
-  return HomeController(state: HomeViewState(snapshot: snapshot));
+/// STATE-S25: trả AsyncValue thay vì `requireValue` (từng ném StateError khi
+/// đọc lúc snapshot còn loading/error) — consumer tự xử lý loading/error
+/// tường minh qua when/whenData.
+final homeControllerProvider = Provider<AsyncValue<HomeController>>((ref) {
+  return ref
+      .watch(homeSnapshotProvider)
+      .whenData(
+        (snapshot) => HomeController(state: HomeViewState(snapshot: snapshot)),
+      );
 });

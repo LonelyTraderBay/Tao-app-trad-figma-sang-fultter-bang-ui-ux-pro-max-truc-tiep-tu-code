@@ -58,26 +58,21 @@ class AdvancedChartPage extends ConsumerStatefulWidget {
 class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
   String _timeframe = '1h';
   String _chartType = 'candle';
-  late List<TradeChartIndicator> _indicators;
   bool _showIndicators = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _indicators = ref
-        .read(tradeReadModelControllerProvider)
-        .getAdvancedChart(pairId: widget.pairId)
-        .indicators
-        .toList(growable: true);
-  }
+  // STATE-S23: indicators sống ở AdvancedChartStateController (một nguồn
+  // sự thật) — hết `late List` seed từ ref.read + setState.
 
   @override
   Widget build(BuildContext context) {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getAdvancedChart(pairId: widget.pairId);
+    final indicators = ref
+        .watch(advancedChartStateControllerProvider(widget.pairId))
+        .indicators;
     final pair = snapshot.pair;
-    final enabledIndicators = _indicators
+    final enabledIndicators = indicators
         .where((indicator) => indicator.enabled)
         .toList(growable: false);
     final productTabs = tradeShellWithProductTabs(
@@ -132,7 +127,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                       ),
                       _ChartArea(
                         candles: snapshot.candles,
-                        indicators: _indicators,
+                        indicators: indicators,
                         chartType: _chartType,
                       ),
                       _ActionBar(pairId: pair.id),
@@ -140,7 +135,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                   ),
                   if (_showIndicators)
                     _IndicatorSheet(
-                      indicators: _indicators,
+                      indicators: indicators,
                       onToggle: _toggleIndicator,
                       onClose: () => setState(() => _showIndicators = false),
                     ),
@@ -154,13 +149,8 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
   }
 
   void _toggleIndicator(String id) {
-    setState(() {
-      _indicators = [
-        for (final indicator in _indicators)
-          indicator.id == id
-              ? indicator.copyWith(enabled: !indicator.enabled)
-              : indicator,
-      ];
-    });
+    ref
+        .read(advancedChartStateControllerProvider(widget.pairId).notifier)
+        .toggleIndicator(id);
   }
 }

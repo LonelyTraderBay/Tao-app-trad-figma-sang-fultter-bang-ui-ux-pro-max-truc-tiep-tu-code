@@ -58,27 +58,24 @@ class P2PFraudPreventionPage extends ConsumerStatefulWidget {
 
 class _P2PFraudPreventionPageState
     extends ConsumerState<P2PFraudPreventionPage> {
-  late List<P2PSafetyChecklistItemDraft> _checklist;
+  // STATE-S23: checklist sống ở P2PFraudPreventionStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
   String? _expandedPatternId;
   String _activeCategory = 'before';
 
   @override
-  void initState() {
-    super.initState();
-    _checklist = List.of(ref.read(p2pFraudPreventionProvider).checklist);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pFraudPreventionProvider);
+    final viewState = ref.watch(p2pFraudPreventionStateControllerProvider);
+    final snapshot = viewState.snapshot;
+    final checklist = viewState.checklist;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + _p2pFraudVisualClearance
             : DeviceMetrics.nativeBottomChrome + _p2pFraudNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final checkedCount = _checklist.where((item) => item.checked).length;
-    final score = (checkedCount / _checklist.length * 100).round();
+    final checkedCount = checklist.where((item) => item.checked).length;
+    final score = (checkedCount / checklist.length * 100).round();
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -115,7 +112,7 @@ class _P2PFraudPreventionPageState
                         _SafetyScoreCard(
                           score: score,
                           checkedCount: checkedCount,
-                          totalCount: _checklist.length,
+                          totalCount: checklist.length,
                         ),
                         _PatternSection(
                           patterns: snapshot.patterns,
@@ -123,7 +120,7 @@ class _P2PFraudPreventionPageState
                           onToggle: _togglePattern,
                         ),
                         _ChecklistCard(
-                          checklist: _checklist,
+                          checklist: checklist,
                           activeCategory: _activeCategory,
                           onCategoryChanged: _setCategory,
                           onToggle: _toggleChecklist,
@@ -165,11 +162,8 @@ class _P2PFraudPreventionPageState
 
   void _toggleChecklist(String id) {
     HapticFeedback.selectionClick();
-    setState(() {
-      _checklist = [
-        for (final item in _checklist)
-          if (item.id == id) item.copyWith(checked: !item.checked) else item,
-      ];
-    });
+    ref
+        .read(p2pFraudPreventionStateControllerProvider.notifier)
+        .toggleChecklistItem(id);
   }
 }

@@ -53,17 +53,12 @@ class AddressBookPage extends ConsumerStatefulWidget {
 }
 
 class _AddressBookPageState extends ConsumerState<AddressBookPage> {
-  late List<WalletSavedAddress> _addresses;
+  // STATE-S23: addresses sống ở AddressBookStateController (một nguồn sự
+  // thật) — hết `late List` seed từ ref.read + setState.
   final TextEditingController _searchController = TextEditingController();
   String _networkFilter = 'Tất cả';
   String? _copiedId;
   bool _whitelistOnly = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _addresses = ref.read(walletAddressBookProvider).addresses;
-  }
 
   @override
   void dispose() {
@@ -73,10 +68,11 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletAddressBookProvider);
+    final viewState = ref.watch(addressBookStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _bookScrollBottomInset(context, mode);
-    final filtered = _filteredAddresses();
+    final filtered = _filteredAddresses(viewState.addresses);
     final favorites = filtered.where((address) => address.isFavorite).toList();
     final others = filtered.where((address) => !address.isFavorite).toList();
 
@@ -110,7 +106,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
               enabled: _whitelistOnly,
               onTap: () => setState(() => _whitelistOnly = !_whitelistOnly),
             ),
-            _AddressStats(addresses: _addresses),
+            _AddressStats(addresses: viewState.addresses),
             _SearchBox(
               controller: _searchController,
               onChanged: () => setState(() {}),
@@ -181,9 +177,11 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
     );
   }
 
-  List<WalletSavedAddress> _filteredAddresses() {
+  List<WalletSavedAddress> _filteredAddresses(
+    List<WalletSavedAddress> addresses,
+  ) {
     final query = _searchController.text.trim().toLowerCase();
-    return _addresses.where((address) {
+    return addresses.where((address) {
       final matchesNetwork =
           _networkFilter == 'Tất cả' || address.network == _networkFilter;
       final matchesSearch =
@@ -202,14 +200,9 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
   }
 
   void _toggleFavorite(String addressId) {
-    setState(() {
-      _addresses = [
-        for (final address in _addresses)
-          address.id == addressId
-              ? address.copyWith(isFavorite: !address.isFavorite)
-              : address,
-      ];
-    });
+    ref
+        .read(addressBookStateControllerProvider.notifier)
+        .toggleFavorite(addressId);
   }
 
   void _showActionNotice(String message) {
@@ -241,12 +234,9 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
             ),
             VitCtaButton(
               onPressed: () {
-                setState(() {
-                  _addresses = [
-                    for (final item in _addresses)
-                      if (item.id != address.id) item,
-                  ];
-                });
+                ref
+                    .read(addressBookStateControllerProvider.notifier)
+                    .deleteAddress(address.id);
                 Navigator.of(context).pop();
               },
               variant: VitCtaButtonVariant.destructive,

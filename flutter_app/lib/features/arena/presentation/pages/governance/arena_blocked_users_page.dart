@@ -46,18 +46,13 @@ class ArenaBlockedUsersPage extends ConsumerStatefulWidget {
 }
 
 class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
-  late List<ArenaBlockedUserDraft> _blockedUsers;
-  bool _initialized = false;
+  // STATE-S23: danh sách chặn sống ở ArenaBlockedUsersStateController (một
+  // nguồn sự thật) — hết `late List` seed từ snapshot + setState.
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaBlockedUsers();
-    if (!_initialized) {
-      _blockedUsers = List<ArenaBlockedUserDraft>.of(snapshot.users);
-      _initialized = true;
-    }
+    final viewState = ref.watch(arenaBlockedUsersStateControllerProvider);
+    final snapshot = viewState.snapshot;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
@@ -94,7 +89,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                     padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       footerPadding,
                     ),
-                    child: _blockedUsers.isEmpty
+                    child: viewState.users.isEmpty
                         ? VitPageContent(
                             rhythm: VitPageRhythm.standard,
                             key: ArenaBlockedUsersPage.emptyKey,
@@ -113,7 +108,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                             children: [
                               _BlockInfoBanner(snapshot: snapshot),
                               _BlockedUsersCard(
-                                users: _blockedUsers,
+                                users: viewState.users,
                                 onUnblock: (user) => _requestUnblock(user),
                                 onViewProfile: (user) {
                                   HapticFeedback.selectionClick();
@@ -123,7 +118,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                                 },
                               ),
                               Text(
-                                '${_blockedUsers.length} người đã bị chặn',
+                                '${viewState.users.length} người đã bị chặn',
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.caption.copyWith(
                                   color: AppColors.text3,
@@ -155,11 +150,9 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
     );
     if (!confirmed || !mounted) return;
 
-    setState(() {
-      _blockedUsers = _blockedUsers
-          .where((blockedUser) => blockedUser.id != user.id)
-          .toList(growable: false);
-    });
+    ref
+        .read(arenaBlockedUsersStateControllerProvider.notifier)
+        .unblockUser(user.id);
   }
 
   static void _close(BuildContext context) {

@@ -73,32 +73,14 @@ void main() {
 
     test('presentation pages do not seed a mutable local list from ref.read '
         '(dual-source state)', () {
-      // Baseline (2026-07-16, A-Plus roadmap STATE-S24 / S2.3): these
-      // pages already seed a `late List<...>` field from `ref.read(...)`
-      // in initState and mutate it locally with setState, instead of
-      // going through a Notifier — this is the "two sources of truth"
-      // pattern S2.3 migrates away from. otp_page.dart's `late final
-      // List<TextEditingController>` is a legitimate UI controller list,
-      // not domain state, and is correctly NOT in this baseline.
-      const allowlist = {
-        'lib/features/arena/presentation/pages/governance/arena_blocked_users_page.dart',
-        'lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart',
-        'lib/features/earn/presentation/pages/savings/savings_notification_preferences_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_address_book_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_gas_tracker_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_multisig_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart',
-        // watchlist_page migrate STATE-S23 lô markets (2026-07-17).
-        'lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart',
-        'lib/features/markets/presentation/pages/tools/comparison_tool_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_2fa_settings_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_device_management_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_fraud_prevention_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart',
-        'lib/features/trade/presentation/pages/hub/trade_history_export_page.dart',
-        'lib/features/trade_terminal/presentation/pages/tools/advanced_chart_page.dart',
-        'lib/features/wallet/presentation/pages/address/address_book_page.dart',
-      };
+      // Baseline gốc (2026-07-16, STATE-S24 / S2.3) từng ghim 17 trang.
+      // STATE-S23 (2026-07-17) đã migrate TOÀN BỘ sang Notifier tại
+      // composition root (khuôn MarketWatchlistStateController) — allowlist
+      // về RỖNG và phải giữ rỗng: trang mới seed `late List` từ ref.read
+      // + setState là fail ngay. otp_page.dart's `late final
+      // List<TextEditingController>` là UI controller list hợp lệ, không
+      // thuộc phạm vi guardrail này.
+      const allowlist = <String>{};
 
       final violations = <String>[];
       for (final file in Directory(

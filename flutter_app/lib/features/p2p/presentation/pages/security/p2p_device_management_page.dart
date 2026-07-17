@@ -50,23 +50,19 @@ class P2PDeviceManagementPage extends ConsumerStatefulWidget {
 
 class _P2PDeviceManagementPageState
     extends ConsumerState<P2PDeviceManagementPage> {
-  late List<P2PTrustedDeviceDraft> _devices;
+  // STATE-S23: devices sống ở P2PDeviceManagementStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
   String? _expandedDeviceId;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(p2pDeviceManagementProvider);
-    _devices = List.of(snapshot.devices);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pDeviceManagementProvider);
-    final trustedDevices = _devices
+    final viewState = ref.watch(p2pDeviceManagementStateControllerProvider);
+    final snapshot = viewState.snapshot;
+    final devices = viewState.devices;
+    final trustedDevices = devices
         .where((device) => device.isTrusted)
         .toList(growable: false);
-    final otherDevices = _devices
+    final otherDevices = devices
         .where((device) => !device.isTrusted)
         .toList(growable: false);
 
@@ -83,7 +79,7 @@ class _P2PDeviceManagementPageState
       },
       children: [
         _DeviceStatsCard(
-          total: _devices.length,
+          total: devices.length,
           trusted: trustedDevices.length,
           untrusted: otherDevices.length,
         ),
@@ -133,20 +129,17 @@ class _P2PDeviceManagementPageState
 
   void _trustDevice(String deviceId) {
     HapticFeedback.selectionClick();
-    setState(() {
-      _devices = [
-        for (final device in _devices)
-          if (device.id == deviceId)
-            device.copyWith(isTrusted: true)
-          else
-            device,
-      ];
-      _expandedDeviceId = deviceId;
-    });
+    ref
+        .read(p2pDeviceManagementStateControllerProvider.notifier)
+        .trustDevice(deviceId);
+    setState(() => _expandedDeviceId = deviceId);
   }
 
   Future<void> _revokeTrust(String deviceId) async {
-    final targetDevice = _devices.firstWhere((device) => device.id == deviceId);
+    final devices = ref
+        .read(p2pDeviceManagementStateControllerProvider)
+        .devices;
+    final targetDevice = devices.firstWhere((device) => device.id == deviceId);
     final confirmed = await showVitConfirmDialog(
       context: context,
       title: 'Thu hồi tin cậy thiết bị?',
@@ -159,20 +152,17 @@ class _P2PDeviceManagementPageState
     if (!mounted || !confirmed) return;
 
     HapticFeedback.selectionClick();
-    setState(() {
-      _devices = [
-        for (final device in _devices)
-          if (device.id == deviceId)
-            device.copyWith(isTrusted: false)
-          else
-            device,
-      ];
-      _expandedDeviceId = deviceId;
-    });
+    ref
+        .read(p2pDeviceManagementStateControllerProvider.notifier)
+        .revokeTrust(deviceId);
+    setState(() => _expandedDeviceId = deviceId);
   }
 
   Future<void> _removeDevice(String deviceId) async {
-    final targetDevice = _devices.firstWhere((device) => device.id == deviceId);
+    final devices = ref
+        .read(p2pDeviceManagementStateControllerProvider)
+        .devices;
+    final targetDevice = devices.firstWhere((device) => device.id == deviceId);
     final confirmed = await showVitConfirmDialog(
       context: context,
       title: 'Xóa thiết bị?',
@@ -187,9 +177,9 @@ class _P2PDeviceManagementPageState
     if (!mounted || !confirmed) return;
 
     HapticFeedback.selectionClick();
-    setState(() {
-      _devices = _devices.where((device) => device.id != deviceId).toList();
-      if (_expandedDeviceId == deviceId) _expandedDeviceId = null;
-    });
+    ref
+        .read(p2pDeviceManagementStateControllerProvider.notifier)
+        .removeDevice(deviceId);
+    if (_expandedDeviceId == deviceId) setState(() => _expandedDeviceId = null);
   }
 }
