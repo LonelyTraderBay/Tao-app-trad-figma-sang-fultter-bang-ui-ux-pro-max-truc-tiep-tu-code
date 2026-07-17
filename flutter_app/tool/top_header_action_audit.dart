@@ -250,8 +250,8 @@ HeaderActionReport _collectHeaderActionReport(
           .toList()
         ..sort(
           (a, b) => a.path
-              .replaceAll(r'', '/')
-              .compareTo(b.path.replaceAll(r'', '/')),
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
         );
 
   for (final file in files) {

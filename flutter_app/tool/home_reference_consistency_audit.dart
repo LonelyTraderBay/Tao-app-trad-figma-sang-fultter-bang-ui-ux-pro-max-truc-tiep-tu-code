@@ -216,7 +216,7 @@ List<DivergenceFileMetric> _collectMetrics(Directory appRoot, String repoRoot) {
   reports.sort((a, b) {
     final moduleCompare = a.module.compareTo(b.module);
     if (moduleCompare != 0) return moduleCompare;
-    return a.path.replaceAll(r'', '/').compareTo(b.path.replaceAll(r'', '/'));
+    return a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/'));
   });
   return reports;
 }
@@ -234,8 +234,8 @@ List<File> _collectRootPages(Directory appRoot) {
           .toList()
         ..sort(
           (a, b) => a.path
-              .replaceAll(r'', '/')
-              .compareTo(b.path.replaceAll(r'', '/')),
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
         );
 
   final visited = <String>{};
@@ -276,7 +276,7 @@ List<File> _collectFeatureWidgets(Directory appRoot) {
       .toList()
     ..sort(
       (a, b) =>
-          a.path.replaceAll(r'', '/').compareTo(b.path.replaceAll(r'', '/')),
+          a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/')),
     );
 }
 
@@ -301,7 +301,7 @@ List<File> _collectBundleFiles(File rootPageFile) {
 
   files.sort(
     (a, b) =>
-        a.path.replaceAll(r'', '/').compareTo(b.path.replaceAll(r'', '/')),
+        a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/')),
   );
   return files;
 }

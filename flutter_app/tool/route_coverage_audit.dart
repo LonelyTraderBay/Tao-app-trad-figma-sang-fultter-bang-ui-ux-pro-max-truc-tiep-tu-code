@@ -77,8 +77,9 @@ List<RouteEntry> _collectRouteEntries(Directory appRoot) {
       in routeGroups.listSync().whereType<File>().where((file) {
         return file.path.endsWith('.dart');
       }).toList()..sort(
-        (a, b) =>
-            a.path.replaceAll(r'', '/').compareTo(b.path.replaceAll(r'', '/')),
+        (a, b) => a.path
+            .replaceAll(r'\', '/')
+            .compareTo(b.path.replaceAll(r'\', '/')),
       )) {
     final text = file.readAsStringSync();
     final relativeFile = file.path
