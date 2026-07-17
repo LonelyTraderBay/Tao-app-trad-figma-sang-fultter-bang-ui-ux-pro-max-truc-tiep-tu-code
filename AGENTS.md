@@ -4,7 +4,7 @@
 **Tech Stack:** Flutter, Dart, Riverpod, GoRouter  
 **Package Manager:** Flutter/Dart pub  
 **Test Framework:** flutter_test  
-**Last Updated:** 2026-05-26
+**Last Updated:** 2026-07-17
 
 Read `docs/00_START_HERE.md` before using long-form design, architecture, or QA
 guidance.
@@ -59,6 +59,28 @@ Rules:
   in `app/providers/<feature>_controller_providers.dart` (composition root —
   confirmed 100% consistent across all 23 feature modules).
 - Prefer `package:vit_trade_flutter/...` imports across modules.
+
+### State management / controller pattern
+
+Chuẩn chốt tại GĐ2 · STATE-S26 (2026-07-17), chi tiết trong
+`docs/05_ARCHITECTURE/decisions/ADR-001-async-error-idiom.md`:
+
+- Controller có **mutation / async / status transition** ⇒ `NotifierProvider`
+  (đường đọc async thuần dùng `AsyncNotifierProvider`). Family arg truyền qua
+  constructor (`ClassName.new` — idiom Riverpod 3). Khuôn mẫu:
+  `NotificationsStateController`
+  (`lib/app/providers/notifications_controller_providers.dart`) và
+  `TradeOrderController` (implementation tham chiếu ADR-001).
+- `Provider<Controller>` const CHỈ cho **read-model thuần** (không ghi status,
+  không repo-write). Ví dụ hợp lệ: `tradeReadModelControllerProvider`,
+  `TradeMarginController`.
+- Cấm seed `late List` từ `ref.read` rồi mutate bằng `setState`
+  (dual-source-of-truth — STATE-S23 đang gỡ). Guardrail:
+  `flutter_app/test/quality/state_management_guardrail_test.dart`.
+- Family key: scalar/record-of-scalar, hoặc bắt buộc `.autoDispose`
+  (STATE-S24).
+- Máy trạng thái high-risk dùng enum `TradeHighRiskFlowStatus` (10 giá trị),
+  KHÔNG bọc `AsyncValue` — xem bảng điểm ghi trong ADR-001.
 
 ## Product Boundaries
 

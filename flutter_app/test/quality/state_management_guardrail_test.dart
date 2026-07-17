@@ -127,5 +127,91 @@ void main() {
             'pattern S2.3 migrates away from: $violations',
       );
     });
+
+    test('write controllers are exposed via NotifierProvider, not Provider', () {
+      // Baseline (2026-07-17, A-Plus roadmap STATE-S26 / ADR-001): các
+      // controller CÓ đường ghi (gọi _repository.submit*/patch*/create*)
+      // nhưng vẫn bọc trong `Provider` thường — migrate dần theo
+      // STATE-S22/S23/TEST-HR3, xóa entry khi controller đã thành Notifier.
+      // Controller read-model thuần (không match marker ghi) được phép giữ
+      // Provider const theo đúng chuẩn AGENTS.md.
+      const allowlist = {
+        'lib/app/providers/trade_controller_providers.dart:tradeOrdersHistoryControllerProvider',
+        'lib/app/providers/trade_controller_providers.dart:tradeLeverageControllerProvider',
+        'lib/app/providers/trade_controller_providers.dart:tradeFuturesOrderControllerProvider',
+        'lib/app/providers/trade_bots_controller_providers.dart:tradeBotEmergencyStopControllerProvider',
+        'lib/app/providers/trade_bots_controller_providers.dart:tradeBotSecuritySettingsControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeActiveCopiesControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeCopySettingsControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeProviderApplicationControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeCopyConfirmationControllerProvider',
+        'lib/app/providers/trade_terminal_controller_providers.dart:tradeRiskManagementControllerProvider',
+        'lib/app/providers/trade_terminal_controller_providers.dart:tradeAdvancedToolsControllerProvider',
+      };
+
+      // Marker "đường ghi" trong body class controller (model file).
+      final writeMarker = RegExp(
+        r'_repository\.(submit|patch|create|update|amend|cancel)|'
+        r'\.submitOrderAction\(',
+      );
+
+      // Gom body class controller theo tên từ toàn bộ model files.
+      final controllerSources = <String, String>{};
+      for (final file in Directory(
+        'lib/features',
+      ).listSync(recursive: true).whereType<File>()) {
+        final path = file.path.replaceAll('\\', '/');
+        if (!path.contains('/presentation/controllers/')) continue;
+        if (!path.endsWith('.dart')) continue;
+        final source = file.readAsStringSync();
+        for (final match in RegExp(
+          r'class\s+(\w+Controller)[\s<]',
+        ).allMatches(source)) {
+          final name = match.group(1)!;
+          final next = source.indexOf('\nfinal class ', match.start + 1);
+          final end = next < 0 ? source.length : next;
+          controllerSources[name] = source.substring(match.start, end);
+        }
+      }
+
+      final violations = <String>[];
+      for (final file in Directory(
+        'lib/app/providers',
+      ).listSync().whereType<File>()) {
+        if (!file.path.endsWith('.dart')) continue;
+        final source = file.readAsStringSync();
+        final path = file.path.replaceAll('\\', '/');
+
+        // Anchor `= Provider` để KHÔNG match NotifierProvider/AsyncNotifier.
+        for (final match in RegExp(
+          r'final\s+(\w+)\s*=\s*Provider[\.<(]',
+        ).allMatches(source)) {
+          final providerName = match.group(1)!;
+          final declEnd = source.indexOf('\nfinal ', match.start + 1);
+          final body = source.substring(
+            match.start,
+            declEnd < 0 ? source.length : declEnd,
+          );
+          final ctor = RegExp(r'return\s+(\w+Controller)\(').firstMatch(body);
+          if (ctor == null) continue;
+          final controllerBody = controllerSources[ctor.group(1)!];
+          if (controllerBody == null) continue;
+          if (!writeMarker.hasMatch(controllerBody)) continue;
+
+          final id = '$path:$providerName';
+          if (allowlist.contains(id)) continue;
+          violations.add(id);
+        }
+      }
+
+      expect(
+        violations,
+        isEmpty,
+        reason:
+            'Controller có đường ghi (submit/patch/...) phải là '
+            'NotifierProvider theo ADR-001/AGENTS.md — Provider const chỉ '
+            'dành cho read-model thuần: $violations',
+      );
+    });
   });
 }
