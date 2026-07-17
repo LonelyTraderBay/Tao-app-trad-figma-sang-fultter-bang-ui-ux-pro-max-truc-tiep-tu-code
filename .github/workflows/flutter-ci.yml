@@ -1,3 +1,19 @@
+# CI-D2 (A-Plus GĐ2): pipeline song song thay cho 1 job ~50 bước tuần tự.
+#
+# Sơ đồ job:
+#   static ──┐
+#   guardrails ─┤
+#   tests (shard 0..2, --coverage) ─┼──> gate "Enterprise Flutter Gates"
+#   build-android (flavor dev) ─┤      (tên GIỮ NGUYÊN — required check của
+#   secret-scan (gitleaks) ──┘          branch protection main trỏ vào tên này)
+#
+# Gate dùng if: always() + bước tự fail khi có job thành phần đỏ/hủy/skip —
+# nếu để gate bị "skipped" thì branch protection của GitHub tính skip là ĐẠT
+# và PR đỏ vẫn merge được (bẫy đã biết). Gate cũng là nơi hợp nhất lcov các
+# shard và chạy sàn coverage (CI-D3, tool/coverage_floor.dart).
+#
+# Action pin theo SHA (CI-D4); comment ghi tag tương ứng — dependabot
+# (github-actions ecosystem) sẽ tự đề xuất nâng cả SHA lẫn comment.
 name: Flutter CI
 
 on:
@@ -15,8 +31,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  flutter:
-    name: Enterprise Flutter Gates
+  static:
+    name: Static & audit artifacts
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -24,20 +40,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: '3.41.9'
           channel: stable
           cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('flutter_app/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
 
       - name: Install dependencies
         run: flutter pub get
@@ -45,30 +62,21 @@ jobs:
       - name: Check formatting
         run: dart format --output=none --set-exit-if-changed .
 
+      - name: Analyze
+        run: flutter analyze
+
       - name: Route coverage artifact is current
         run: dart run tool/route_coverage_audit.dart --check
 
       - name: Navigation edge artifact is current
         run: dart run tool/navigation_edge_audit.dart --check
 
-      - name: Analyze
-        run: flutter analyze
-
-      - name: Router contracts
-        run: flutter test test/app/router --reporter=compact
-
-      - name: Navigation route guardrails
-        run: flutter test test/quality/navigation_route_guardrails_test.dart --reporter=compact
-
-      - name: Architecture guardrails
-        run: flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
-
       - name: Design token consistency artifact is current
         run: dart run tool/design_token_consistency_audit.dart --check
 
       - name: Upload design token consistency reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: design-token-consistency-audit
           path: |
@@ -76,15 +84,12 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Design-Token-Consistency-Audit.csv
           if-no-files-found: error
 
-      - name: Design token consistency guardrails
-        run: flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
-
       - name: Spacing token duplication artifact is current
         run: dart run tool/spacing_token_duplication_audit.dart --check
 
       - name: Upload spacing token duplication reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: spacing-token-duplication-audit
           path: |
@@ -92,15 +97,12 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Spacing-Token-Duplication-Audit.csv
           if-no-files-found: error
 
-      - name: Spacing token duplication guardrails
-        run: flutter test test/quality/spacing_token_duplication_guardrail_test.dart --reporter=compact
-
       - name: Page content width artifact is current
         run: dart run tool/page_content_width_audit.dart --check
 
       - name: Upload page content width reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: page-content-width-audit
           path: |
@@ -108,27 +110,18 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Content-Width-Audit.csv
           if-no-files-found: error
 
-      - name: Page content width guardrails
-        run: flutter test test/quality/page_content_width_guardrail_test.dart --reporter=compact
-
       - name: Home reference consistency artifact is current
         run: dart run tool/home_reference_consistency_audit.dart --check
 
       - name: Upload home reference consistency reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: home-reference-consistency-audit
           path: |
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Reference-Consistency-Audit.md
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Reference-Consistency-Audit.csv
           if-no-files-found: error
-
-      - name: Home reference consistency guardrails
-        run: flutter test test/quality/home_reference_consistency_guardrail_test.dart --reporter=compact
-
-      - name: Home golden tests
-        run: flutter test test/features/home/golden/ --reporter=compact
 
       - name: Page rhythm audit artifact is current
         run: dart run tool/page_rhythm_audit.dart --check --strict-full
@@ -141,7 +134,7 @@ jobs:
 
       - name: Upload page rhythm audit report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: page-rhythm-audit
           path: |
@@ -149,12 +142,6 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Screen-Compliance.csv
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Page-Rhythm-Coverage-Matrix.csv
           if-no-files-found: error
-
-      - name: Page rhythm guardrails
-        run: flutter test test/quality/page_rhythm_guardrail_test.dart --reporter=compact
-
-      - name: Page rhythm phone visual QA @ 360x800
-        run: flutter test test/quality/page_rhythm_phone_visual_qa_test.dart --reporter=compact
 
       - name: Card tile audit artifact is current
         run: dart run tool/card_tile_audit.dart --check --strict-full
@@ -164,7 +151,7 @@ jobs:
 
       - name: Upload card tile audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: card-tile-audit
           path: |
@@ -174,18 +161,6 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Card-Tile-Manifest.csv
           if-no-files-found: error
 
-      - name: Card tile guardrails
-        run: flutter test test/quality/card_tile_guardrail_test.dart --reporter=compact
-
-      - name: Service tile badge guardrails
-        run: flutter test test/quality/service_tile_badge_guardrail_test.dart --reporter=compact
-
-      - name: Task card guardrails
-        run: flutter test test/quality/task_card_guardrail_test.dart --reporter=compact
-
-      - name: Accent icon box guardrails
-        run: flutter test test/quality/accent_icon_box_guardrail_test.dart --reporter=compact
-
       - name: Segment pill audit artifact is current
         run: dart run tool/segment_pill_audit.dart --check --strict-full
 
@@ -194,7 +169,7 @@ jobs:
 
       - name: Upload segment pill audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: segment-pill-audit
           path: |
@@ -203,29 +178,23 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/Segment-Pill-Compliance-Report.md
           if-no-files-found: error
 
-      - name: Segment pill guardrails
-        run: flutter test test/quality/segment_pill_guardrail_test.dart --reporter=compact
-
       - name: Top header behavior artifact is current
         run: dart run tool/top_header_behavior_audit.dart --check --strict
 
       - name: Upload top header behavior audit report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: top-header-behavior-audit
           path: docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Behavior-Audit.md
           if-no-files-found: error
-
-      - name: Top header behavior guardrails
-        run: flutter test test/quality/top_header_behavior_guardrail_test.dart --reporter=compact
 
       - name: Top header action artifacts are current
         run: dart run tool/top_header_action_audit.dart --check --strict
 
       - name: Upload top header action audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: top-header-action-audit
           path: |
@@ -233,15 +202,12 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Action-Audit.csv
           if-no-files-found: error
 
-      - name: Top header action guardrails
-        run: flutter test test/quality/top_header_action_guardrail_test.dart --reporter=compact
-
       - name: Top header global access policy artifacts are current
         run: dart run tool/top_header_global_access_policy_audit.dart --check --strict
 
       - name: Upload top header global access policy audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: top-header-global-access-policy-audit
           path: |
@@ -249,15 +215,12 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Global-Access-Policy-Audit.csv
           if-no-files-found: error
 
-      - name: Top header global access policy guardrails
-        run: flutter test test/quality/top_header_global_access_policy_guardrail_test.dart --reporter=compact
-
       - name: Top header visual archetype artifacts are current
         run: dart run tool/top_header_visual_archetype_audit.dart --check --strict
 
       - name: Upload top header visual archetype audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: top-header-visual-archetype-audit
           path: |
@@ -265,15 +228,12 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Top-Header-Visual-Archetype-Audit.csv
           if-no-files-found: error
 
-      - name: Top header visual archetype guardrails
-        run: flutter test test/quality/top_header_visual_guardrail_test.dart --reporter=compact
-
       - name: Back navigation behavior artifacts are current
         run: dart run tool/back_navigation_behavior_audit.dart --check --strict
 
       - name: Upload back navigation behavior audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: back-navigation-behavior-audit
           path: |
@@ -281,15 +241,12 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Header-Back-Navigation-Behavior-Audit.csv
           if-no-files-found: error
 
-      - name: Back navigation behavior guardrails
-        run: flutter test test/quality/back_navigation_behavior_guardrail_test.dart --reporter=compact
-
       - name: Home entry back navigation artifacts are current
         run: dart run tool/home_entry_back_navigation_audit.dart --check
 
       - name: Upload home entry back navigation audit reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: home-entry-back-navigation-audit
           path: |
@@ -297,32 +254,214 @@ jobs:
             docs/02_FLUTTER_MIGRATION/audits/VitTrade-Home-Entry-Back-Navigation-Audit.csv
           if-no-files-found: error
 
-      - name: Home entry back navigation guardrails
-        run: flutter test test/quality/home_entry_back_navigation_guardrail_test.dart --reporter=compact
+  guardrails:
+    # Toàn bộ test/quality + router contracts + golden trong MỘT bước quét
+    # thư mục — guardrail mới tự động được phủ, không cần nhớ thêm step
+    # (danh sách step liệt kê tay từng bị drift). Các test này chạy lại trong
+    # full suite (shard) — trùng lặp có chủ đích để có tín hiệu nhanh ~3 phút.
+    name: Guardrails & router contracts
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
 
-      - name: Bottom sheet usage guardrails
-        run: flutter test test/quality/bottom_sheet_guardrail_test.dart --reporter=compact
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - name: Scroll physics guardrails
-        run: flutter test test/quality/scroll_physics_guardrail_test.dart --reporter=compact
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
 
-      - name: Scroll auto-hide guardrails
-        run: flutter test test/quality/scroll_auto_hide_guardrail_test.dart --reporter=compact
+      - name: Cache pub dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('flutter_app/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
 
-      - name: High-risk state primitives guardrails
-        run: flutter test test/quality/high_risk_state_primitives_guardrail_test.dart --reporter=compact
+      - name: Install dependencies
+        run: flutter pub get
 
-      - name: Product copy guardrails
+      - name: Quality guardrails, router contracts, goldens
         run: >
           flutter test
-          test/quality/product_copy_guardrails_test.dart
-          test/quality/trade_product_copy_guardrails_test.dart
-          test/quality/prediction_product_copy_guardrails_test.dart
-          test/quality/p2p_wallet_product_copy_guardrails_test.dart
+          test/quality
+          test/app/router
+          test/features/home/golden
           --reporter=compact
 
-      - name: Full test suite
-        run: flutter test --reporter=compact
+  tests:
+    name: Full test suite (shard ${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [0, 1, 2]
+    defaults:
+      run:
+        working-directory: flutter_app
 
-      - name: Build debug APK
-        run: flutter build apk --debug
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('flutter_app/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Full test suite shard (with coverage)
+        run: >
+          flutter test
+          --coverage
+          --total-shards 3
+          --shard-index ${{ matrix.shard }}
+          --reporter=compact
+
+      - name: Upload shard coverage
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-shard-${{ matrix.shard }}
+          path: flutter_app/coverage/lcov.info
+          if-no-files-found: error
+
+  build-android:
+    name: Build Android APK (flavor dev)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Java
+        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('flutter_app/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: Cache Gradle
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('flutter_app/android/**/*.gradle*', 'flutter_app/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # CI-D6: build theo flavor dev (applicationId suffix .dev) — chứng minh
+      # productFlavors hoạt động trên CI, không đụng signing guard (debug).
+      - name: Build debug APK (flavor dev)
+        run: flutter build apk --debug --flavor dev
+
+  secret-scan:
+    # CI-D4/SEC-S41: quét secret bằng gitleaks trên các commit của PR/push.
+    # .gitleaks.toml (repo root) allowlist marker VI_DU_KHONG_THAT của fixture.
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  gate:
+    # Job tổng hợp — TÊN PHẢI GIỮ "Enterprise Flutter Gates": đây là required
+    # status check của branch protection main. if: always() + bước tự fail
+    # bên dưới đảm bảo job này luôn CHẠY và đỏ thật khi có job thành phần đỏ
+    # (nếu để bị skip, branch protection tính skip là đạt và PR đỏ vẫn merge
+    # được). Đồng thời hợp nhất lcov 3 shard và chạy sàn coverage (CI-D3).
+    name: Enterprise Flutter Gates
+    runs-on: ubuntu-latest
+    needs: [static, guardrails, tests, build-android, secret-scan]
+    if: always()
+    defaults:
+      run:
+        working-directory: flutter_app
+
+    steps:
+      - name: All component jobs must be green
+        working-directory: .
+        run: |
+          echo 'static:        ${{ needs.static.result }}'
+          echo 'guardrails:    ${{ needs.guardrails.result }}'
+          echo 'tests:         ${{ needs.tests.result }}'
+          echo 'build-android: ${{ needs.build-android.result }}'
+          echo 'secret-scan:   ${{ needs.secret-scan.result }}'
+          if [ '${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}' = 'true' ]; then
+            echo 'Co job thanh phan khong xanh — gate FAIL.'
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('flutter_app/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Download shard coverage
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: coverage-shard-*
+          path: flutter_app/coverage-shards
+
+      - name: Coverage floor (CI-D3)
+        run: >
+          dart run tool/coverage_floor.dart
+          coverage-shards/coverage-shard-0/lcov.info
+          coverage-shards/coverage-shard-1/lcov.info
+          coverage-shards/coverage-shard-2/lcov.info

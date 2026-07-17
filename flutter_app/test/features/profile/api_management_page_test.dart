@@ -104,10 +104,7 @@ void main() {
 
     await tester.tap(find.byKey(ApiManagementPage.revealKey('key1')));
     await tester.pumpAndSettle();
-    expect(
-      find.text('sk_live_J8mK3pRtYxWvCqBnZ5hGfD2sLuNaE9cT'),
-      findsOneWidget,
-    );
+    expect(find.text('sk_live_VI_DU_KHONG_THAT_bot_alpha_02'), findsOneWidget);
 
     await tester.tap(find.byKey(ApiManagementPage.toggleKey('key1')));
     await tester.pumpAndSettle();

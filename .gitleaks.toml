@@ -1,0 +1,13 @@
+# SEC-S41: cấu hình gitleaks cho job secret-scan (flutter-ci.yml).
+# Fixture demo trong app dùng chuỗi dạng khóa API có marker tự khai
+# VI_DU_KHONG_THAT (xem mock_profile_repository_settings_fixtures.dart) —
+# allowlist theo marker, KHÔNG allowlist theo cả file để dòng khác trong
+# fixture vẫn được quét. Tuyến phòng thủ local tương ứng:
+# test/quality/secret_material_guardrail_test.dart.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Chuỗi ví dụ tự khai của VitTrade — không phải khóa thật"
+regexes = ['''VI_DU_KHONG_THAT''']

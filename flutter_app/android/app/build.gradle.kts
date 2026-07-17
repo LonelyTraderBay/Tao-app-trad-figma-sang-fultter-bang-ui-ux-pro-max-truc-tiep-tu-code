@@ -56,6 +56,29 @@ android {
         versionName = flutter.versionName
     }
 
+    // CI-D6 (DEC-ios: Android-only). Flavor chỉ đổi identity đóng gói
+    // (applicationId suffix); cấu hình phía Dart vẫn đi qua --dart-define
+    // (AppConfig.fromDartDefines đọc APP_ENV/API_BASE_URL/ENABLE_MOCK_DATA).
+    // Lệnh build chuẩn:
+    //   dev:     flutter build apk --flavor dev --debug
+    //   staging: flutter build apk --flavor staging --dart-define=APP_ENV=staging
+    //   prod:    flutter build appbundle --flavor prod --release \
+    //              --dart-define=APP_ENV=production   (bắt buộc có release signing)
+    flavorDimensions += "env"
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            applicationIdSuffix = ".dev"
+        }
+        create("staging") {
+            dimension = "env"
+            applicationIdSuffix = ".staging"
+        }
+        create("prod") {
+            dimension = "env"
+        }
+    }
+
     signingConfigs {
         create("release") {
             if (hasReleaseSigning) {
