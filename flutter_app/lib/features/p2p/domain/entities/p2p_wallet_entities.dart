@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Form data and balances for transferring funds between the main and P2P wallets.
 final class P2PWalletTransferSnapshot {
   const P2PWalletTransferSnapshot({
     required this.endpoint,
@@ -49,6 +50,7 @@ final class P2PWalletTransferSnapshot {
   }
 }
 
+/// A single asset selectable in the wallet transfer form.
 final class P2PWalletTransferAssetDraft {
   const P2PWalletTransferAssetDraft({required this.symbol, required this.name});
 
@@ -56,6 +58,7 @@ final class P2PWalletTransferAssetDraft {
   final String name;
 }
 
+/// Available balance of one asset in one wallet, used by the transfer form.
 final class P2PWalletTransferBalanceDraft {
   const P2PWalletTransferBalanceDraft({
     required this.walletKey,
@@ -72,6 +75,7 @@ final class P2PWalletTransferBalanceDraft {
   final String balanceLabel;
 }
 
+/// History of fund lock/unlock records for the P2P wallet.
 final class P2PFundLockHistorySnapshot {
   const P2PFundLockHistorySnapshot({
     required this.endpoint,
@@ -100,6 +104,7 @@ final class P2PFundLockHistorySnapshot {
   int get lockCount => records.where((item) => item.type == 'lock').length;
 }
 
+/// A single fund lock or unlock record.
 final class P2PFundLockRecordDraft {
   const P2PFundLockRecordDraft({
     required this.id,
@@ -118,6 +123,7 @@ final class P2PFundLockRecordDraft {
   final String timestamp;
 }
 
+/// P2P wallet balances and recent transactions for the wallet screen.
 final class P2PWalletSnapshot {
   const P2PWalletSnapshot({
     required this.endpoint,
@@ -163,6 +169,7 @@ final class P2PWalletSnapshot {
   }
 }
 
+/// Balance breakdown (available/escrow/locked) for a single asset in the P2P wallet.
 final class P2PWalletBalanceDraft {
   const P2PWalletBalanceDraft({
     required this.asset,
@@ -181,6 +188,7 @@ final class P2PWalletBalanceDraft {
   final double usdValue;
 }
 
+/// A single transaction row in the P2P wallet history.
 final class P2PWalletTransactionDraft {
   const P2PWalletTransactionDraft({
     required this.id,

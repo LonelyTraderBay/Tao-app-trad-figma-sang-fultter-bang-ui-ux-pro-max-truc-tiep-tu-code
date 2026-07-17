@@ -1,5 +1,6 @@
 part of 'earn_entities.dart';
 
+/// Data contract for the staking webhooks management screen.
 final class StakingWebhooksSnapshot {
   const StakingWebhooksSnapshot({
     required this.endpoint,
@@ -40,6 +41,7 @@ final class StakingWebhooksSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single registered outgoing webhook.
 final class StakingWebhookDraft {
   const StakingWebhookDraft({
     required this.id,
@@ -56,6 +58,7 @@ final class StakingWebhookDraft {
   final String lastTriggered;
 }
 
+/// Data contract for the staking data export screen.
 final class StakingDataExportSnapshot {
   const StakingDataExportSnapshot({
     required this.endpoint,
@@ -100,6 +103,7 @@ final class StakingDataExportSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable quick-export preset.
 final class StakingQuickExportDraft {
   const StakingQuickExportDraft({
     required this.id,
@@ -114,6 +118,7 @@ final class StakingQuickExportDraft {
   final String iconKey;
 }
 
+/// Data contract for the staking third-party integrations screen.
 final class StakingThirdPartyIntegrationsSnapshot {
   const StakingThirdPartyIntegrationsSnapshot({
     required this.endpoint,
@@ -148,6 +153,7 @@ final class StakingThirdPartyIntegrationsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single connectable third-party integration.
 final class StakingIntegrationDraft {
   const StakingIntegrationDraft({
     required this.id,
@@ -164,6 +170,7 @@ final class StakingIntegrationDraft {
   final String iconKey;
 }
 
+/// Data contract for the staking developer console screen.
 final class StakingDeveloperConsoleSnapshot {
   const StakingDeveloperConsoleSnapshot({
     required this.endpoint,
@@ -206,6 +213,7 @@ final class StakingDeveloperConsoleSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry in the developer console screen's tab bar.
 final class StakingConsoleTabDraft {
   const StakingConsoleTabDraft({required this.id, required this.label});
 
@@ -213,6 +221,7 @@ final class StakingConsoleTabDraft {
   final String label;
 }
 
+/// A single usage stat card on the developer console screen.
 final class StakingConsoleStatDraft {
   const StakingConsoleStatDraft({
     required this.id,
@@ -227,6 +236,7 @@ final class StakingConsoleStatDraft {
   final String tone;
 }
 
+/// A single issued API key entry.
 final class StakingApiKeyDraft {
   const StakingApiKeyDraft({
     required this.id,
@@ -245,6 +255,7 @@ final class StakingApiKeyDraft {
   final int requests;
 }
 
+/// A single recent API request log entry.
 final class StakingApiRequestDraft {
   const StakingApiRequestDraft({
     required this.endpoint,
@@ -259,6 +270,7 @@ final class StakingApiRequestDraft {
   final String timestamp;
 }
 
+/// A single documentation link entry on the developer console screen.
 final class StakingConsoleDocDraft {
   const StakingConsoleDocDraft({
     required this.title,
@@ -269,10 +281,13 @@ final class StakingConsoleDocDraft {
   final String description;
 }
 
+/// Kind of conditional order for staking positions.
 enum StakingAdvancedOrderType { takeProfit, stopLoss, trailingStop }
 
+/// Lifecycle status of a staking advanced order.
 enum StakingAdvancedOrderStatus { active, triggered, cancelled }
 
+/// Data contract for the staking advanced orders screen.
 final class StakingAdvancedOrdersSnapshot {
   const StakingAdvancedOrdersSnapshot({
     required this.endpoint,
@@ -317,6 +332,7 @@ final class StakingAdvancedOrdersSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single conditional (take-profit/stop-loss/trailing) staking order.
 final class StakingAdvancedOrderDraft {
   const StakingAdvancedOrderDraft({
     required this.id,
@@ -337,6 +353,7 @@ final class StakingAdvancedOrderDraft {
   final String created;
 }
 
+/// A single summary stat card on the advanced orders screen.
 final class StakingAdvancedOrderStatDraft {
   const StakingAdvancedOrderStatDraft({
     required this.label,
@@ -349,6 +366,7 @@ final class StakingAdvancedOrderStatDraft {
   final String tone;
 }
 
+/// An explainer card for how a staking order type works.
 final class StakingAdvancedOrderInfoDraft {
   const StakingAdvancedOrderInfoDraft({
     required this.title,
@@ -359,8 +377,10 @@ final class StakingAdvancedOrderInfoDraft {
   final String description;
 }
 
+/// Identifier for a blockchain network supported by multi-chain staking.
 enum StakingChainId { ethereum, polygon, avalanche, cosmos, solana }
 
+/// Data contract for the multi-chain staking overview screen.
 final class StakingMultiChainSnapshot {
   const StakingMultiChainSnapshot({
     required this.endpoint,
@@ -403,6 +423,7 @@ final class StakingMultiChainSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single staking position on a specific chain.
 final class StakingChainPositionDraft {
   const StakingChainPositionDraft({
     required this.chainId,
@@ -421,6 +442,8 @@ final class StakingChainPositionDraft {
   final double apy;
 }
 
+/// An informational card (quick action or benefit) on the multi-chain
+/// screen.
 final class StakingMultiChainInfoDraft {
   const StakingMultiChainInfoDraft({
     required this.title,
@@ -433,12 +456,16 @@ final class StakingMultiChainInfoDraft {
   final String icon;
 }
 
+/// Kind of operation within an institutional staking batch.
 enum StakingInstitutionalBatchType { stake, unstake, claim }
 
+/// Approval status of an institutional staking batch.
 enum StakingInstitutionalBatchStatus { pending, approved, executed }
 
+/// Approval status of an institutional multisig signer.
 enum StakingInstitutionalSignerStatus { approved, pending }
 
+/// Data contract for the institutional staking console screen.
 final class StakingInstitutionalSnapshot {
   const StakingInstitutionalSnapshot({
     required this.endpoint,
@@ -479,6 +506,7 @@ final class StakingInstitutionalSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single summary stat card on the institutional console screen.
 final class StakingInstitutionalStatDraft {
   const StakingInstitutionalStatDraft({
     required this.label,
@@ -493,6 +521,7 @@ final class StakingInstitutionalStatDraft {
   final String icon;
 }
 
+/// A single batch of pooled institutional staking operations.
 final class StakingInstitutionalBatchDraft {
   const StakingInstitutionalBatchDraft({
     required this.id,
@@ -515,6 +544,7 @@ final class StakingInstitutionalBatchDraft {
   final int requiredApprovals;
 }
 
+/// A single multisig signer entry on the institutional console screen.
 final class StakingInstitutionalSignerDraft {
   const StakingInstitutionalSignerDraft({
     required this.name,
@@ -529,6 +559,7 @@ final class StakingInstitutionalSignerDraft {
   final StakingInstitutionalSignerStatus status;
 }
 
+/// A single feature highlight card on the institutional console screen.
 final class StakingInstitutionalFeatureDraft {
   const StakingInstitutionalFeatureDraft({
     required this.title,

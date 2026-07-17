@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/referral/domain/entities/referral_entities.dart';
 
+/// Data source contract for the Referral feature: read snapshots for the
+/// home, history, rewards, rules, and friend-detail screens.
 abstract interface class ReferralRepository {
   ReferralHomeSnapshot getHome();
 

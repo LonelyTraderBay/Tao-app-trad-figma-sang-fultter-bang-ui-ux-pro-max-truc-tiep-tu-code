@@ -1,11 +1,17 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// What a [DcaSmartRule] governs: opening, closing, or adjusting a DCA
+/// action.
 enum DcaSmartRuleType { entry, exit, adjust }
 
+/// Lifecycle status of a [DcaSmartRule].
 enum DcaSmartRuleStatus { active, paused, triggered }
 
+/// Outcome of one [DcaSmartRule] trigger, shown in [DcaRuleHistoryEntry].
 enum DcaSmartRuleResult { executed, failed, pending }
 
+/// Data for the DCA smart-rules screen: configured [smartRules], starter
+/// [templates], and trigger [history] with a derived success rate.
 class DcaSmartRulesSnapshot {
   const DcaSmartRulesSnapshot({
     required this.endpoint,
@@ -46,6 +52,8 @@ class DcaSmartRulesSnapshot {
   }
 }
 
+/// One configured smart rule: condition, resulting action, status, and
+/// trigger count.
 class DcaSmartRule {
   const DcaSmartRule({
     required this.id,
@@ -68,6 +76,8 @@ class DcaSmartRule {
   final String? lastTriggeredLabel;
 }
 
+/// A pre-built smart-rule template (condition/action pair) users can add
+/// as-is.
 class DcaRuleTemplate {
   const DcaRuleTemplate({
     required this.id,
@@ -88,6 +98,8 @@ class DcaRuleTemplate {
   final int popularityPercent;
 }
 
+/// One past trigger event for a [DcaSmartRule], with its execution
+/// [result].
 class DcaRuleHistoryEntry {
   const DcaRuleHistoryEntry({
     required this.id,

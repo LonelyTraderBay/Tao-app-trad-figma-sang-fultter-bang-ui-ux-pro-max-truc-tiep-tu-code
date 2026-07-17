@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Full detail of a single dispute: escalation levels, evidence, timeline, and support messages.
 final class P2PDisputeDetailSnapshot {
   const P2PDisputeDetailSnapshot({
     required this.endpoint,
@@ -35,10 +36,13 @@ final class P2PDisputeDetailSnapshot {
   }
 }
 
+/// Lifecycle status of a P2P dispute.
 enum P2PDisputeStatus { submitted, underReview, resolved, rejected }
 
+/// Who sent a message in a dispute's support chat.
 enum P2PDisputeMessageSender { user, support }
 
+/// A P2P dispute as shown on dispute screens.
 final class P2PDisputeDraft {
   const P2PDisputeDraft({
     required this.id,
@@ -61,6 +65,7 @@ final class P2PDisputeDraft {
   final int currentLevel;
 }
 
+/// One escalation level in a dispute's resolution process.
 final class P2PDisputeLevelDraft {
   const P2PDisputeLevelDraft({
     required this.level,
@@ -79,6 +84,7 @@ final class P2PDisputeLevelDraft {
   final String iconKey;
 }
 
+/// A single uploaded evidence file attached to a dispute.
 final class P2PDisputeEvidenceDraft {
   const P2PDisputeEvidenceDraft({required this.id, required this.fileName});
 
@@ -86,6 +92,7 @@ final class P2PDisputeEvidenceDraft {
   final String fileName;
 }
 
+/// A single event in a dispute's timeline.
 final class P2PDisputeTimelineDraft {
   const P2PDisputeTimelineDraft({
     required this.id,
@@ -102,6 +109,7 @@ final class P2PDisputeTimelineDraft {
   final bool active;
 }
 
+/// A single message in a dispute's support chat.
 final class P2PDisputeSupportMessageDraft {
   const P2PDisputeSupportMessageDraft({
     required this.id,
@@ -116,6 +124,7 @@ final class P2PDisputeSupportMessageDraft {
   final String time;
 }
 
+/// Evidence documents submitted for a dispute.
 final class P2PDisputeEvidenceSnapshot {
   const P2PDisputeEvidenceSnapshot({
     required this.endpoint,
@@ -142,6 +151,7 @@ final class P2PDisputeEvidenceSnapshot {
   final String contractNotes;
 }
 
+/// A single evidence document slot for a dispute.
 final class P2PDisputeEvidenceDocumentDraft {
   const P2PDisputeEvidenceDocumentDraft({
     required this.id,
@@ -156,6 +166,7 @@ final class P2PDisputeEvidenceDocumentDraft {
   final bool uploaded;
 }
 
+/// Outcome of a resolved dispute, including refund and mediator details.
 final class P2PDisputeResolutionSnapshot {
   const P2PDisputeResolutionSnapshot({
     required this.endpoint,
@@ -190,6 +201,7 @@ final class P2PDisputeResolutionSnapshot {
   final String contractNotes;
 }
 
+/// Form data for opening a new dispute on an order.
 final class P2PDisputeOpenSnapshot {
   const P2PDisputeOpenSnapshot({
     required this.endpoint,
@@ -226,6 +238,7 @@ final class P2PDisputeOpenSnapshot {
   final String contractNotes;
 }
 
+/// A user's disputes plus guidance for the disputes overview screen.
 final class P2PDisputesSnapshot {
   const P2PDisputesSnapshot({
     required this.endpoint,
@@ -262,6 +275,7 @@ final class P2PDisputesSnapshot {
       disputes.where((item) => item.status == P2PDisputeStatus.resolved).length;
 }
 
+/// A single dispute row on the disputes list screen.
 final class P2PDisputeListItemDraft {
   const P2PDisputeListItemDraft({
     required this.id,

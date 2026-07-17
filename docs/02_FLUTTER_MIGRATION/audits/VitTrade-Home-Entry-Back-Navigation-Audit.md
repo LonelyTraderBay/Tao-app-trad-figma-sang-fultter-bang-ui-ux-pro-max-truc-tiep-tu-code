@@ -48,5 +48,5 @@ failed=0
 | HEB-C02I | Wallet entry | `lib/features/wallet/presentation/pages/hub/wallet_page.dart` | PASS | line 75 | Wallet shows a back button only when Home/source history exists. |
 | HEB-C02J | Withdraw next action | `lib/features/wallet/presentation/pages/transfer/withdraw_page.dart` | PASS | line 143 | Home next-action withdraw returns Home; direct withdraw falls back to Wallet. |
 | HEB-C02K | Pair detail entry | `lib/features/markets/presentation/pages/pair/pair_detail_page.dart` | PASS | line 99 | Home market rows return Home; direct pair detail falls back to Markets. |
-| HEB-C02L | Instrument chrome | `lib/shared/layout/vit_top_chrome.dart` | PASS | line 114 | Instrument headers can show both back and an instrument leading slot. |
+| HEB-C02L | Instrument chrome | `lib/shared/layout/vit_top_chrome.dart` | PASS | line 118 | Instrument headers can show both back and an instrument leading slot. |
 | HEB-C03 | Home source coverage | `lib/features/home/presentation/pages/home_page_common.dart` | PASS | line 1 | Part 03 currently has no Home outgoing route; update matrix if this changes. |

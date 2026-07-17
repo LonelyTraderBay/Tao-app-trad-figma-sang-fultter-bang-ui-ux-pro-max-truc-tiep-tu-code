@@ -1,9 +1,13 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Accent color choice for one asset in the portfolio optimizer.
 enum DcaPortfolioAssetAccent { btc, eth, usdt, sol, bnb }
 
+/// The rebalancing action a [DcaPortfolioSuggestion] recommends.
 enum DcaPortfolioSuggestionType { increase, decrease, add, remove }
 
+/// Data for the DCA portfolio optimizer screen: optimization score, current
+/// vs. optimal allocations, the efficient frontier, and suggestions.
 class DcaPortfolioOptimizerSnapshot {
   const DcaPortfolioOptimizerSnapshot({
     required this.endpoint,
@@ -44,6 +48,8 @@ class DcaPortfolioOptimizerSnapshot {
   final List<String> backtests;
 }
 
+/// One asset's current-vs-optimal allocation percentage in the portfolio
+/// optimizer.
 class DcaPortfolioAllocation {
   const DcaPortfolioAllocation({
     required this.symbol,
@@ -62,6 +68,8 @@ class DcaPortfolioAllocation {
   double get diffPercent => optimalPercent - currentPercent;
 }
 
+/// One risk/return/Sharpe data point on the portfolio optimizer's
+/// efficient-frontier chart.
 class DcaFrontierPoint {
   const DcaFrontierPoint({
     required this.label,
@@ -76,6 +84,8 @@ class DcaFrontierPoint {
   final double sharpe;
 }
 
+/// One recommended allocation change (increase/decrease/add/remove) with a
+/// stated reason, shown by the portfolio optimizer.
 class DcaPortfolioSuggestion {
   const DcaPortfolioSuggestion({
     required this.type,

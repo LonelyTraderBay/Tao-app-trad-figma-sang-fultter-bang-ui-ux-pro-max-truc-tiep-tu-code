@@ -8,8 +8,11 @@ import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Sizing density of a [VitDiscoveryActionCard]: `standard` or `compact`.
 enum VitDiscoveryActionCardVariant { standard, compact }
 
+/// Tappable discovery entry card: gradient icon tile, title with status
+/// badge, subtitle, optional action label, and trailing chevron.
 class VitDiscoveryActionCard extends StatelessWidget {
   const VitDiscoveryActionCard({
     super.key,

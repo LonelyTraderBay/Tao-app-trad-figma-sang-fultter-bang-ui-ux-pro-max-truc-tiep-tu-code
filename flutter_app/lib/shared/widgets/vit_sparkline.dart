@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Minimal line chart (optional gradient fill) rendering a series of
+/// [values] as a compact trend sparkline.
 class VitSparkline extends StatelessWidget {
   const VitSparkline({
     super.key,

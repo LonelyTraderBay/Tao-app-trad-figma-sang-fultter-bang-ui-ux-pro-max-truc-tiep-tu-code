@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Usage and breakdown data for the transaction-limit tracker screen.
 final class P2PLimitTrackerSnapshot {
   const P2PLimitTrackerSnapshot({
     required this.endpoint,
@@ -33,6 +34,7 @@ final class P2PLimitTrackerSnapshot {
   }
 }
 
+/// Limit usage for a single period (e.g. daily/weekly) on the limit tracker screen.
 final class P2PLimitUsageDraft {
   const P2PLimitUsageDraft({
     required this.period,
@@ -49,6 +51,7 @@ final class P2PLimitUsageDraft {
   final int percentage;
 }
 
+/// Buy/sell volume for a single day in the limit tracker's breakdown chart.
 final class P2PLimitBreakdownDraft {
   const P2PLimitBreakdownDraft({
     required this.date,
@@ -63,6 +66,7 @@ final class P2PLimitBreakdownDraft {
   double get total => buy + sell;
 }
 
+/// Current and next transaction-limit tiers plus usage detail for the limits screen.
 final class P2PTransactionLimitsSnapshot {
   const P2PTransactionLimitsSnapshot({
     required this.endpoint,
@@ -99,6 +103,7 @@ final class P2PTransactionLimitsSnapshot {
   final String contractNotes;
 }
 
+/// Overview of a user's compliance items (KYC, AML, source of funds, etc.).
 final class P2PComplianceOverviewSnapshot {
   const P2PComplianceOverviewSnapshot({
     required this.endpoint,
@@ -127,6 +132,7 @@ final class P2PComplianceOverviewSnapshot {
   final String contractNotes;
 }
 
+/// A single compliance item row on the compliance overview screen.
 final class P2PComplianceItemDraft {
   const P2PComplianceItemDraft({
     required this.id,
@@ -145,6 +151,7 @@ final class P2PComplianceItemDraft {
   final String route;
 }
 
+/// AML screening status and check history for the AML screening screen.
 final class P2PAmlScreeningSnapshot {
   const P2PAmlScreeningSnapshot({
     required this.endpoint,
@@ -185,6 +192,7 @@ final class P2PAmlScreeningSnapshot {
   final String contractNotes;
 }
 
+/// A single AML check result.
 final class P2PAmlCheckDraft {
   const P2PAmlCheckDraft({
     required this.id,
@@ -199,6 +207,7 @@ final class P2PAmlCheckDraft {
   final String detail;
 }
 
+/// Form data for declaring the source of funds for a P2P account.
 final class P2PSourceOfFundsSnapshot {
   const P2PSourceOfFundsSnapshot({
     required this.endpoint,
@@ -237,6 +246,7 @@ final class P2PSourceOfFundsSnapshot {
   final String contractNotes;
 }
 
+/// A single selectable source-of-funds option.
 final class P2PFundSourceDraft {
   const P2PFundSourceDraft({
     required this.id,
@@ -249,6 +259,7 @@ final class P2PFundSourceDraft {
   final String iconKey;
 }
 
+/// Form data for justifying a large transaction above the standard threshold.
 final class P2PLargeTransactionJustificationSnapshot {
   const P2PLargeTransactionJustificationSnapshot({
     required this.endpoint,
@@ -293,6 +304,7 @@ final class P2PLargeTransactionJustificationSnapshot {
   final String contractNotes;
 }
 
+/// A user's overall risk score and contributing factors for the risk assessment screen.
 final class P2PRiskAssessmentSnapshot {
   const P2PRiskAssessmentSnapshot({
     required this.endpoint,
@@ -329,6 +341,7 @@ final class P2PRiskAssessmentSnapshot {
   final String contractNotes;
 }
 
+/// A single factor contributing to the overall risk assessment score.
 final class P2PRiskFactorDraft {
   const P2PRiskFactorDraft({
     required this.id,
@@ -345,6 +358,7 @@ final class P2PRiskFactorDraft {
   final int score;
 }
 
+/// Tax reporting summary and documents for a selected year/jurisdiction.
 final class P2PTaxReportingSnapshot {
   const P2PTaxReportingSnapshot({
     required this.endpoint,
@@ -383,6 +397,7 @@ final class P2PTaxReportingSnapshot {
   final String contractNotes;
 }
 
+/// A selectable tax jurisdiction and its reporting form.
 final class P2PTaxJurisdictionDraft {
   const P2PTaxJurisdictionDraft({
     required this.code,
@@ -395,6 +410,7 @@ final class P2PTaxJurisdictionDraft {
   final String form;
 }
 
+/// Aggregated transaction/gains totals for a tax reporting summary.
 final class P2PTaxSummaryDraft {
   const P2PTaxSummaryDraft({
     required this.totalTransactions,
@@ -413,6 +429,7 @@ final class P2PTaxSummaryDraft {
   final String generatedAt;
 }
 
+/// A single downloadable tax document.
 final class P2PTaxDocumentDraft {
   const P2PTaxDocumentDraft({
     required this.id,
@@ -429,6 +446,7 @@ final class P2PTaxDocumentDraft {
   final String toneKey;
 }
 
+/// Bid/ask order book data for the selected asset.
 final class P2POrderBookSnapshot {
   const P2POrderBookSnapshot({
     required this.endpoint,
@@ -477,6 +495,7 @@ final class P2POrderBookSnapshot {
   }
 }
 
+/// Price and volume summary for one asset in the order book.
 final class P2POrderBookMarketDraft {
   const P2POrderBookMarketDraft({
     required this.asset,
@@ -497,6 +516,7 @@ final class P2POrderBookMarketDraft {
   final int trades24h;
 }
 
+/// A single bid or ask row in the order book.
 final class P2POrderBookEntryDraft {
   const P2POrderBookEntryDraft({
     required this.priceVnd,
@@ -511,6 +531,7 @@ final class P2POrderBookEntryDraft {
   final int orders;
 }
 
+/// A transaction-limit tier (daily/weekly/monthly caps and requirements).
 final class P2PTransactionLimitTierDraft {
   const P2PTransactionLimitTierDraft({
     required this.tier,
@@ -535,6 +556,7 @@ final class P2PTransactionLimitTierDraft {
   final List<String> requirements;
 }
 
+/// Current usage against a maximum for one limit category.
 final class P2PTransactionLimitUsageDraft {
   const P2PTransactionLimitUsageDraft({
     required this.id,
@@ -554,6 +576,7 @@ final class P2PTransactionLimitUsageDraft {
   double get remaining => max - current;
 }
 
+/// A single detail row describing a transaction limit.
 final class P2PTransactionLimitDetailDraft {
   const P2PTransactionLimitDetailDraft({
     required this.id,

@@ -20,11 +20,12 @@
 import 'dart:io';
 
 /// Sàn coverage hiện hành (%). CHỈ ĐƯỢC TĂNG — xem DEC-coverage.
-/// Khởi điểm 2026-07-17: đo thực local 94.5% (121079/128110 dòng, 3155 test)
-/// → min(40, 94.5−2) = 40.0. Số trên CI Linux sẽ thấp hơn chút (golden test
-/// skip ngoài Windows) — ratchet lên ~(số CI − 2) sau khi PR đầu tiên có
-/// số đo thật từ CI (kế hoạch: đóng gate GĐ2).
-const double coverageFloorPercent = 40.0;
+/// Lịch sử ratchet:
+/// - 2026-07-17: khởi điểm min(40, đo local 94.5 − 2) = 40.0 (chờ số CI).
+/// - 2026-07-18 (đóng gate GĐ3): CI Linux đo 94.5% (run 29603308977, gate
+///   job hợp nhất 3 shard) → nâng lên 94.5 − 2 ≈ 92.0. Golden skip trên
+///   Linux không làm lệch số đo đáng kể so Windows.
+const double coverageFloorPercent = 92.0;
 
 /// Vượt floor bao nhiêu điểm thì gợi ý ratchet lên.
 const double _ratchetSuggestionSlack = 5.0;

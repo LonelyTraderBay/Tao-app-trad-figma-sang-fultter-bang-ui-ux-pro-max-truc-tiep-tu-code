@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Thin [SingleChildScrollView] wrapper that reserves [bottomInset] padding
+/// (e.g. for a sticky footer/keyboard) below [child].
 class VitInsetScrollView extends StatelessWidget {
   const VitInsetScrollView({
     super.key,

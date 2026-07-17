@@ -1,11 +1,19 @@
 part of 'trade_copy_entities.dart';
 
+/// How a copy-trading position is sized against the provider's trades:
+/// mirror, fixed amount, or smart (risk-adjusted).
 enum TradeCopyConfigurationMode { mirror, fixed, smart }
 
+/// Method used to size each copied position: percentage of capital, fixed
+/// amount, or risk-based.
 enum TradePositionSizingMethod { percentage, fixedAmount, riskBased }
 
+/// Severity of a copy-configuration validation message: error, warning,
+/// or info.
 enum TradeCopyConfigurationValidationLevel { error, warning, info }
 
+/// Read-model for the Copy Configuration screen (provider, default draft,
+/// portfolio allocation, fee preview, validations).
 final class TradeCopyConfigurationSnapshot {
   const TradeCopyConfigurationSnapshot({
     required this.providerId,
@@ -34,6 +42,9 @@ final class TradeCopyConfigurationSnapshot {
   bool get isNotFound => provider == null;
 }
 
+/// Mutable draft form state for configuring a new copy-trading
+/// subscription (capital, mode, sizing, TP/SL/trailing stop overrides)
+/// before preview/submission.
 final class TradeCopyConfigurationDraft {
   const TradeCopyConfigurationDraft({
     required this.providerId,
@@ -89,6 +100,9 @@ final class TradeCopyConfigurationDraft {
   }
 }
 
+/// Computed fee preview (platform fee, estimated trading fees,
+/// performance-fee note) for a copy configuration draft — financial
+/// write path, see ADR-001.
 final class TradeCopyConfigurationFeePreview {
   const TradeCopyConfigurationFeePreview({
     required this.platformFee,
@@ -103,6 +117,8 @@ final class TradeCopyConfigurationFeePreview {
   double get totalFixedFees => platformFee + estimatedTradingFees;
 }
 
+/// A single validation message (severity + text) surfaced while editing
+/// a copy configuration draft.
 final class TradeCopyConfigurationValidation {
   const TradeCopyConfigurationValidation({
     required this.level,
@@ -113,6 +129,8 @@ final class TradeCopyConfigurationValidation {
   final String message;
 }
 
+/// Computed preview (status, draft, fees, validations) for a copy
+/// configuration before the user proceeds to confirmation.
 final class TradeCopyConfigurationPreview {
   const TradeCopyConfigurationPreview({
     required this.providerId,
@@ -133,6 +151,8 @@ final class TradeCopyConfigurationPreview {
   );
 }
 
+/// Read-model for the Copy Confirmation screen (final config, fee
+/// preview, projected scenarios, required consents, cooling-off period).
 final class TradeCopyConfirmationSnapshot {
   const TradeCopyConfirmationSnapshot({
     required this.providerId,
@@ -161,6 +181,8 @@ final class TradeCopyConfirmationSnapshot {
   bool get isNotFound => provider == null;
 }
 
+/// One projected outcome scenario (return %, gross/net PnL, fees,
+/// slippage) shown on the copy confirmation screen.
 final class TradeCopyScenarioProjection {
   const TradeCopyScenarioProjection({
     required this.id,
@@ -185,6 +207,8 @@ final class TradeCopyScenarioProjection {
   final double netReturnPct;
 }
 
+/// A single required/optional consent checkbox item on the copy
+/// confirmation screen.
 final class TradeCopyConsentItem {
   const TradeCopyConsentItem({
     required this.id,
@@ -197,6 +221,8 @@ final class TradeCopyConsentItem {
   final bool required;
 }
 
+/// Request to confirm and start a copy-trading subscription — financial
+/// write path, see ADR-001.
 final class TradeCopyConfirmationRequest {
   const TradeCopyConfirmationRequest({
     required this.providerId,
@@ -209,6 +235,8 @@ final class TradeCopyConfirmationRequest {
   final List<String> acceptedConsentIds;
 }
 
+/// Result of confirming a copy-trading subscription, including audit
+/// trail id and cooling-off period.
 final class TradeCopyConfirmationResult {
   const TradeCopyConfirmationResult({
     required this.providerId,
@@ -225,6 +253,8 @@ final class TradeCopyConfirmationResult {
   final String activeCopiesPath;
 }
 
+/// Read-model for the Copy Performance screen (your return vs. provider's,
+/// equity curve, slippage/cost breakdown, trade-by-trade comparison).
 final class TradeCopyPerformanceSnapshot {
   const TradeCopyPerformanceSnapshot({
     required this.copyId,
@@ -265,6 +295,7 @@ final class TradeCopyPerformanceSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// One day's equity value for you vs. the provider.
 final class TradeCopyEquityPoint {
   const TradeCopyEquityPoint({
     required this.day,
@@ -277,6 +308,7 @@ final class TradeCopyEquityPoint {
   final double provider;
 }
 
+/// A histogram bucket of copy-execution slippage, split you vs. provider.
 final class TradeCopySlippageBucket {
   const TradeCopySlippageBucket({
     required this.range,
@@ -289,6 +321,7 @@ final class TradeCopySlippageBucket {
   final double providerPct;
 }
 
+/// A single labelled slice of the copy-trading cost attribution chart.
 final class TradeCopyCostAttribution {
   const TradeCopyCostAttribution({
     required this.name,
@@ -301,6 +334,8 @@ final class TradeCopyCostAttribution {
   final int colorHex;
 }
 
+/// A single trade-by-trade comparison between the provider's execution
+/// and yours (entry/exit, PnL, slippage, delay).
 final class TradeCopyTradeComparison {
   const TradeCopyTradeComparison({
     required this.id,
@@ -331,6 +366,8 @@ final class TradeCopyTradeComparison {
   final String timestamp;
 }
 
+/// A single named metric compared between you and the provider (e.g.
+/// win rate, Sharpe).
 final class TradeCopyMetricComparison {
   const TradeCopyMetricComparison({
     required this.name,
@@ -347,6 +384,8 @@ final class TradeCopyMetricComparison {
   final String suffix;
 }
 
+/// Read-model for the Performance Attribution screen (alpha/beta,
+/// return/drawdown series, Monte Carlo projections, correlation).
 final class TradePerformanceAttributionSnapshot {
   const TradePerformanceAttributionSnapshot({
     required this.copyId,
@@ -389,6 +428,7 @@ final class TradePerformanceAttributionSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// One day's market vs. alpha return contribution, with derived total.
 final class TradePerformanceReturnPoint {
   const TradePerformanceReturnPoint({
     required this.day,
@@ -403,6 +443,7 @@ final class TradePerformanceReturnPoint {
   double get total => market + alpha;
 }
 
+/// One day's drawdown value on the performance attribution chart.
 final class TradePerformanceDrawdownPoint {
   const TradePerformanceDrawdownPoint({
     required this.day,
@@ -413,6 +454,7 @@ final class TradePerformanceDrawdownPoint {
   final double drawdown;
 }
 
+/// One day's simulated value along a single Monte Carlo projection path.
 final class TradePerformanceProjectionPoint {
   const TradePerformanceProjectionPoint({
     required this.day,
@@ -423,6 +465,8 @@ final class TradePerformanceProjectionPoint {
   final double value;
 }
 
+/// One day's market return vs. your return, used for correlation
+/// analysis.
 final class TradePerformanceCorrelationPoint {
   const TradePerformanceCorrelationPoint({
     required this.day,
@@ -435,10 +479,16 @@ final class TradePerformanceCorrelationPoint {
   final double yourReturn;
 }
 
+/// Category of a copy-trading audit log event: trade, config, risk, or
+/// system.
 enum TradeCopyAuditEventType { trade, config, risk, system }
 
+/// Severity of a copy-trading audit log event: info, warning, or
+/// critical.
 enum TradeCopyAuditSeverity { info, warning, critical }
 
+/// Read-model for the Copy Audit Log screen (filterable event log,
+/// export options, retention policy).
 final class TradeCopyAuditLogSnapshot {
   const TradeCopyAuditLogSnapshot({
     required this.copyId,
@@ -463,6 +513,8 @@ final class TradeCopyAuditLogSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A selectable filter tab on the audit log screen, with an event-count
+/// badge.
 final class TradeCopyAuditTab {
   const TradeCopyAuditTab({
     required this.id,
@@ -477,6 +529,7 @@ final class TradeCopyAuditTab {
   final TradeCopyAuditEventType? type;
 }
 
+/// A single copy-trading audit log event.
 final class TradeCopyAuditEvent {
   const TradeCopyAuditEvent({
     required this.id,
@@ -497,6 +550,8 @@ final class TradeCopyAuditEvent {
   final TradeCopyAuditMetadata? metadata;
 }
 
+/// Optional structured detail (trade prices, slippage, PnL, or old/new
+/// value diff) attached to an audit log event.
 final class TradeCopyAuditMetadata {
   const TradeCopyAuditMetadata({
     this.pair,
@@ -519,6 +574,7 @@ final class TradeCopyAuditMetadata {
   final String? newValue;
 }
 
+/// A selectable audit-log export format (id, label, description).
 final class TradeCopyAuditExportFormat {
   const TradeCopyAuditExportFormat({
     required this.id,
@@ -531,6 +587,7 @@ final class TradeCopyAuditExportFormat {
   final String description;
 }
 
+/// Request to export the copy audit log for a given format/filter/search.
 final class TradeCopyAuditExportRequest {
   const TradeCopyAuditExportRequest({
     required this.copyId,
@@ -545,6 +602,7 @@ final class TradeCopyAuditExportRequest {
   final String searchQuery;
 }
 
+/// Result of exporting the copy audit log.
 final class TradeCopyAuditExportResult {
   const TradeCopyAuditExportResult({
     required this.exportId,
@@ -559,6 +617,8 @@ final class TradeCopyAuditExportResult {
   final String downloadUrl;
 }
 
+/// Read-model for the Portfolio Risk Analysis screen (total exposure,
+/// VaR, diversification, per-asset exposure, stress scenarios).
 final class TradePortfolioRiskAnalysisSnapshot {
   const TradePortfolioRiskAnalysisSnapshot({
     required this.totalExposure,
@@ -585,6 +645,8 @@ final class TradePortfolioRiskAnalysisSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single asset's exposure amount and percentage within the copy
+/// portfolio.
 final class TradeAssetExposure {
   const TradeAssetExposure({
     required this.asset,
@@ -599,6 +661,7 @@ final class TradeAssetExposure {
   final int colorHex;
 }
 
+/// A selectable tab on the Portfolio Risk Analysis screen.
 final class TradePortfolioRiskTab {
   const TradePortfolioRiskTab({required this.id, required this.label});
 

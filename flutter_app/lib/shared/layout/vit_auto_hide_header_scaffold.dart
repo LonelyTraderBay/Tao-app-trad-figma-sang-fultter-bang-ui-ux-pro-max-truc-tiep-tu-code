@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// Scaffold that slides [header] out of view on downward scroll and back in
+/// on upward scroll or near the top, wrapping the scrollable [child].
 class VitAutoHideHeaderScaffold extends StatefulWidget {
   const VitAutoHideHeaderScaffold({
     super.key,

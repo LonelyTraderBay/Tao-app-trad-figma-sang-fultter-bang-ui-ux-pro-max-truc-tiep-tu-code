@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// A user's personal Arena hub: rooms, joined challenges, saved modes, and reward history.
 final class MyArenaSnapshot {
   const MyArenaSnapshot({
     required this.endpoint,
@@ -41,6 +42,7 @@ final class MyArenaSnapshot {
   }
 }
 
+/// A user's aggregate Arena points stats for the personal hub screen.
 final class MyArenaStats {
   const MyArenaStats({
     required this.currentBalance,
@@ -63,6 +65,7 @@ final class MyArenaStats {
   final int pendingNotifications;
 }
 
+/// A single unpublished challenge draft saved by the user.
 final class ArenaDraftChallenge {
   const ArenaDraftChallenge({
     required this.id,
@@ -79,6 +82,7 @@ final class ArenaDraftChallenge {
   final int entryPoints;
 }
 
+/// A user's Arena points reward receipt history and distribution.
 final class ArenaRewardHistory {
   const ArenaRewardHistory({
     required this.totalReceipts,
@@ -93,6 +97,7 @@ final class ArenaRewardHistory {
   final List<ArenaRewardDistribution> distribution;
 }
 
+/// Win count and total for a single reward category in the points history.
 final class ArenaRewardDistribution {
   const ArenaRewardDistribution({
     required this.label,

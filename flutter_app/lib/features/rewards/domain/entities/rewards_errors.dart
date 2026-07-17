@@ -1,3 +1,5 @@
+/// Thrown when mock data is disabled but no production rewards repository
+/// has been configured.
 final class RewardsBackendContractMissingException implements Exception {
   const RewardsBackendContractMissingException();
 

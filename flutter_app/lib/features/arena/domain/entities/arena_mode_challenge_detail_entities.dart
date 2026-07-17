@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// Full detail of a reusable challenge mode: rules, quality metrics, and related rooms.
 final class ArenaModeDetailSnapshot {
   const ArenaModeDetailSnapshot({
     required this.endpoint,
@@ -28,6 +29,7 @@ final class ArenaModeDetailSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A reusable challenge mode's description, tags, and fair-play metrics.
 final class ArenaModeDetailDraft {
   const ArenaModeDetailDraft({
     required this.id,
@@ -56,6 +58,7 @@ final class ArenaModeDetailDraft {
   final int repeatUsage;
 }
 
+/// Template metadata shown on the mode detail screen.
 final class ArenaTemplateDetailDraft {
   const ArenaTemplateDetailDraft({
     required this.id,
@@ -72,6 +75,7 @@ final class ArenaTemplateDetailDraft {
   final List<String> formatTags;
 }
 
+/// A mode's creator identity and trust score shown on the mode detail screen.
 final class ArenaModeCreatorDetailDraft {
   const ArenaModeCreatorDetailDraft({
     required this.id,
@@ -88,6 +92,7 @@ final class ArenaModeCreatorDetailDraft {
   final String badge;
 }
 
+/// A single label/value row summarizing a rule or governance setting.
 final class ArenaRuleSummaryRow {
   const ArenaRuleSummaryRow({required this.label, required this.value});
 
@@ -95,6 +100,7 @@ final class ArenaRuleSummaryRow {
   final String value;
 }
 
+/// A single quality metric shown on the mode detail screen.
 final class ArenaQualityMetricDraft {
   const ArenaQualityMetricDraft({
     required this.label,
@@ -109,8 +115,10 @@ final class ArenaQualityMetricDraft {
   final VitArenaMetricStatus status;
 }
 
+/// Visual status used to color a quality metric.
 enum VitArenaMetricStatus { success, warning, info, neutral }
 
+/// Read-only context linking an Arena challenge to its source prediction event.
 final class ArenaPredictionContextDraft {
   const ArenaPredictionContextDraft({
     required this.eventId,
@@ -125,6 +133,7 @@ final class ArenaPredictionContextDraft {
   final int probability;
 }
 
+/// Full detail of a single Arena challenge room: teams, rules, rewards, and activity.
 final class ArenaChallengeDetailSnapshot {
   const ArenaChallengeDetailSnapshot({
     required this.endpoint,
@@ -157,6 +166,7 @@ final class ArenaChallengeDetailSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// Confirmation data shown before a user joins a challenge.
 final class ArenaJoinSnapshot {
   const ArenaJoinSnapshot({
     required this.endpoint,
@@ -179,6 +189,7 @@ final class ArenaJoinSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// Placeholder data for the Arena dispute-resolution center screen.
 final class ArenaResolutionCenterSnapshot {
   const ArenaResolutionCenterSnapshot({
     required this.endpoint,
@@ -195,6 +206,7 @@ final class ArenaResolutionCenterSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// Full detail of a single Arena challenge room's rules, points pool, and status.
 final class ArenaChallengeDetailDraft {
   const ArenaChallengeDetailDraft({
     required this.id,
@@ -255,6 +267,7 @@ final class ArenaChallengeDetailDraft {
   final String policyVersion;
 }
 
+/// A challenge room's creator identity and trust score.
 final class ArenaChallengeCreatorDraft {
   const ArenaChallengeCreatorDraft({
     required this.id,
@@ -271,6 +284,7 @@ final class ArenaChallengeCreatorDraft {
   final String role;
 }
 
+/// A single team and its members in a team-based challenge.
 final class ArenaTeamDraft {
   const ArenaTeamDraft({
     required this.id,
@@ -285,6 +299,7 @@ final class ArenaTeamDraft {
   final List<ArenaTeamMemberDraft> members;
 }
 
+/// A single member of a challenge team.
 final class ArenaTeamMemberDraft {
   const ArenaTeamMemberDraft({
     required this.id,
@@ -297,8 +312,10 @@ final class ArenaTeamMemberDraft {
   final String role;
 }
 
+/// Visual accent color assigned to a challenge team.
 enum VitArenaTeamAccent { sol, avax }
 
+/// A single reward tier row shown on the challenge detail screen.
 final class ArenaRewardTierDraft {
   const ArenaRewardTierDraft({required this.label, required this.value});
 

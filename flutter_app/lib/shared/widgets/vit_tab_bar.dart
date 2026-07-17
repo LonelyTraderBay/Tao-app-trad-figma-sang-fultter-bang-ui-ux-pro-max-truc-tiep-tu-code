@@ -12,8 +12,11 @@ TextStyle _vitTabBarLabelStyle({required bool active}) {
   );
 }
 
+/// Visual shape of a [VitTabBar]: wrapping pills, fill-width segments, or
+/// an underlined tab row.
 enum VitTabBarVariant { pill, segment, underline }
 
+/// One tab entry (key/label/icon) rendered by [VitTabBar].
 class VitTabItem {
   const VitTabItem({
     required this.key,
@@ -28,6 +31,8 @@ class VitTabItem {
   final Key? widgetKey;
 }
 
+/// Shared tab switcher rendering [tabs] as pill/segment/underline tabs per
+/// [VitTabBarVariant].
 class VitTabBar extends StatelessWidget {
   const VitTabBar({
     super.key,

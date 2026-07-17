@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Custom pill-shaped switch: animated knob position with configurable
+/// colors, optionally tappable when [onChanged] is provided.
 class VitTogglePill extends StatelessWidget {
   const VitTogglePill({
     super.key,

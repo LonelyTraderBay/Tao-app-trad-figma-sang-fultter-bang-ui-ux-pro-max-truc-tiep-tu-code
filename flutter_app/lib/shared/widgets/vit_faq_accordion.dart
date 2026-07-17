@@ -111,6 +111,8 @@ class VitFaqAccordion extends StatelessWidget {
   }
 }
 
+/// One question/answer entry rendered as a [VitFaqAccordion] inside a
+/// [VitFaqList].
 class VitFaqItem {
   const VitFaqItem({
     required this.question,

@@ -18,13 +18,17 @@ final class PasswordRule {
   final bool Function(String value) test;
 }
 
+/// Whether [value] is at least 8 characters long.
 bool passwordHasMinLength(String value) => value.length >= 8;
 
+/// Whether [value] contains both an uppercase and a lowercase letter.
 bool passwordHasUpperAndLowerCase(String value) =>
     RegExp('[A-Z]').hasMatch(value) && RegExp('[a-z]').hasMatch(value);
 
+/// Whether [value] contains at least one digit.
 bool passwordHasDigit(String value) => RegExp(r'\d').hasMatch(value);
 
+/// Whether [value] contains at least one special character (`!@#$%^&*`).
 bool passwordHasSpecialCharacter(String value) =>
     RegExp(r'[!@#$%^&*]').hasMatch(value);
 

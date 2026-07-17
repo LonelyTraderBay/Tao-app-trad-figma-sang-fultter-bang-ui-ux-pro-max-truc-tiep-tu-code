@@ -1,7 +1,9 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Strategy used to dynamically size DCA buy amounts.
 enum DcaDynamicStrategy { fixed, volatility, performance, balance, target }
 
+/// The direction/outcome of a dynamic-amount adjustment for one buy.
 enum DcaDynamicAdjustmentAction {
   normal,
   increased,
@@ -10,6 +12,7 @@ enum DcaDynamicAdjustmentAction {
   paused,
 }
 
+/// Accent color choice for a [DcaDynamicConfigItem]/[DcaDynamicStrategyOption].
 enum DcaDynamicConfigAccent {
   neutral,
   primary,
@@ -19,6 +22,8 @@ enum DcaDynamicConfigAccent {
   accent,
 }
 
+/// Data for the DCA dynamic-amount screen: active strategy, current
+/// [adjustment], volatility/amount history, and config summary items.
 class DcaDynamicAmountSnapshot {
   const DcaDynamicAmountSnapshot({
     required this.endpoint,
@@ -53,6 +58,8 @@ class DcaDynamicAmountSnapshot {
   final List<String> backtests;
 }
 
+/// The current dynamic-amount adjustment: original vs. adjusted amount,
+/// multiplier, and the reason/action applied.
 class DcaDynamicAdjustment {
   const DcaDynamicAdjustment({
     required this.originalAmountVnd,
@@ -69,6 +76,7 @@ class DcaDynamicAdjustment {
   final DcaDynamicAdjustmentAction action;
 }
 
+/// One selectable [DcaDynamicStrategy] entry with title/subtitle/icon copy.
 class DcaDynamicStrategyOption {
   const DcaDynamicStrategyOption({
     required this.strategy,
@@ -87,6 +95,8 @@ class DcaDynamicStrategyOption {
   final DcaDynamicConfigAccent accent;
 }
 
+/// One dated volatility/multiplier/amount data point in the dynamic-amount
+/// volatility history chart.
 class DcaVolatilitySnapshot {
   const DcaVolatilitySnapshot({
     required this.date,
@@ -101,6 +111,8 @@ class DcaVolatilitySnapshot {
   final int amountVnd;
 }
 
+/// One historical buy's base-vs-adjusted amount record, with a derived
+/// [changePercent].
 class DcaAmountHistoryEntry {
   const DcaAmountHistoryEntry({
     required this.date,
@@ -122,6 +134,7 @@ class DcaAmountHistoryEntry {
   }
 }
 
+/// One label/value config summary row shown on the dynamic-amount screen.
 class DcaDynamicConfigItem {
   const DcaDynamicConfigItem({
     required this.label,

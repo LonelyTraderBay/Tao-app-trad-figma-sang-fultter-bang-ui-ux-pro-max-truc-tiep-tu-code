@@ -1,6 +1,9 @@
 import 'package:vit_trade_flutter/features/trade_core/domain/entities/trade_core_entities.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
 
+/// Data contract for the spot trade terminal, order lifecycle, advanced
+/// tools, and conversion/export screens. Financial submit paths are async
+/// per ADR-001.
 abstract interface class SpotTradeRepository {
   // Core spot
   TradeScreenSnapshot getTrade({String pairId = 'btcusdt'});

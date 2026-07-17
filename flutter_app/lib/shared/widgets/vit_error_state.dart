@@ -6,6 +6,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
+/// Centered error placeholder: icon, title, message, and optional
+/// retry/secondary action buttons.
 class VitErrorState extends StatelessWidget {
   const VitErrorState({
     super.key,

@@ -1,9 +1,13 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Strategy used to time smart-scheduled DCA buys.
 enum DcaScheduleStrategy { fixed, volatility, gasOptimized, volume, hybrid }
 
+/// Preferred time-of-day window for smart-scheduled DCA buys.
 enum DcaScheduleTimePreference { morning, afternoon, evening, night, any }
 
+/// Data for the DCA smart-schedule config screen: strategy/time-preference
+/// settings, delay bounds, and their selectable option lists.
 class DcaScheduleConfigSnapshot {
   const DcaScheduleConfigSnapshot({
     required this.endpoint,
@@ -34,6 +38,8 @@ class DcaScheduleConfigSnapshot {
   final List<DcaScheduleTimePreferenceOption> timePreferences;
 }
 
+/// Data for one smart-schedule config's analytics screen, resolved from
+/// [configId] (found/not-found + status message).
 class DcaScheduleAnalyticsSnapshot {
   const DcaScheduleAnalyticsSnapshot({
     required this.endpoint,
@@ -62,6 +68,8 @@ class DcaScheduleAnalyticsSnapshot {
   final List<String> backtests;
 }
 
+/// One selectable [DcaScheduleStrategy] entry with title/subtitle/icon/
+/// accent copy.
 class DcaScheduleStrategyOption {
   const DcaScheduleStrategyOption({
     required this.strategy,
@@ -78,6 +86,8 @@ class DcaScheduleStrategyOption {
   final DcaRebalanceAccent accent;
 }
 
+/// One selectable [DcaScheduleTimePreference] entry with title/subtitle
+/// copy.
 class DcaScheduleTimePreferenceOption {
   const DcaScheduleTimePreferenceOption({
     required this.preference,

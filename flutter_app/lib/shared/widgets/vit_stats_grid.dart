@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
+/// One label/value cell rendered by [VitStatsGrid].
 class VitStatCell {
   const VitStatCell({
     required this.label,

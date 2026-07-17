@@ -6,8 +6,10 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Price/metric movement direction used to color trend indicators.
 enum VitTrendDirection { positive, negative, neutral }
 
+/// Foreground/background colors for a [VitTrendDirection].
 extension VitTrendDirectionColors on VitTrendDirection {
   Color get foreground {
     return switch (this) {
@@ -26,6 +28,8 @@ extension VitTrendDirectionColors on VitTrendDirection {
   }
 }
 
+/// A market list row: leading icon, title/subtitle, optional sparkline, and
+/// trailing price + trend-colored change label.
 class VitMarketPairRow extends StatelessWidget {
   const VitMarketPairRow({
     super.key,

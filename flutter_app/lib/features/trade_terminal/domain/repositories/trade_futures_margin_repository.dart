@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
 
+/// Data contract for the futures leverage and margin trading screens.
+/// Financial submit paths are async per ADR-001 (see [SpotTradeRepository]).
 abstract interface class TradeFuturesMarginRepository {
   TradeFuturesSnapshot getFutures({String pairId = 'btcusdt'});
   TradeFuturesLeverageSnapshot getFuturesLeverage({String pairId = 'btcusdt'});

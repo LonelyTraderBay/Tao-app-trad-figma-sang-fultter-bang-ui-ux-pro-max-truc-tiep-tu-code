@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 
+/// Device chrome frame (dynamic island + home indicator) that wraps [child]
+/// for screenshot-friendly visual QA rendering ([ShellRenderMode.visualQa]).
 class VitPhoneFrame extends StatelessWidget {
   const VitPhoneFrame({
     super.key,

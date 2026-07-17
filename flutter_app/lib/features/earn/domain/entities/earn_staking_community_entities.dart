@@ -1,5 +1,6 @@
 part of 'earn_entities.dart';
 
+/// Data contract for the staking social feed screen.
 final class StakingSocialFeedSnapshot {
   const StakingSocialFeedSnapshot({
     required this.endpoint,
@@ -34,6 +35,7 @@ final class StakingSocialFeedSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry in the social feed screen's tab bar.
 final class StakingSocialFeedTabDraft {
   const StakingSocialFeedTabDraft({
     required this.id,
@@ -46,6 +48,7 @@ final class StakingSocialFeedTabDraft {
   final String sectionTitle;
 }
 
+/// A single post in the staking social feed.
 final class StakingSocialFeedPostDraft {
   const StakingSocialFeedPostDraft({
     required this.id,
@@ -74,6 +77,7 @@ final class StakingSocialFeedPostDraft {
   final String? apy;
 }
 
+/// A single summary stat card on the social feed screen.
 final class StakingSocialFeedStatDraft {
   const StakingSocialFeedStatDraft({
     required this.value,
@@ -86,6 +90,7 @@ final class StakingSocialFeedStatDraft {
   final String tone;
 }
 
+/// Data contract for the staking community governance screen.
 final class StakingCommunityGovernanceSnapshot {
   const StakingCommunityGovernanceSnapshot({
     required this.endpoint,
@@ -126,6 +131,7 @@ final class StakingCommunityGovernanceSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single summary stat card on the governance screen.
 final class StakingGovernanceStatDraft {
   const StakingGovernanceStatDraft({
     required this.label,
@@ -138,6 +144,8 @@ final class StakingGovernanceStatDraft {
   final String tone;
 }
 
+/// The currently active governance proposal highlighted on the governance
+/// screen.
 final class StakingGovernanceActiveProposalDraft {
   const StakingGovernanceActiveProposalDraft({
     required this.title,
@@ -150,6 +158,7 @@ final class StakingGovernanceActiveProposalDraft {
   final String badge;
 }
 
+/// A single past governance decision row.
 final class StakingGovernanceDecisionDraft {
   const StakingGovernanceDecisionDraft({
     required this.proposal,
@@ -164,6 +173,7 @@ final class StakingGovernanceDecisionDraft {
   final String dateLabel;
 }
 
+/// A single step in the governance process explainer.
 final class StakingGovernanceStepDraft {
   const StakingGovernanceStepDraft({
     required this.step,
@@ -176,6 +186,7 @@ final class StakingGovernanceStepDraft {
   final String description;
 }
 
+/// The current user's voting power summary.
 final class StakingGovernanceVotingPowerDraft {
   const StakingGovernanceVotingPowerDraft({
     required this.title,
@@ -190,6 +201,7 @@ final class StakingGovernanceVotingPowerDraft {
   final String share;
 }
 
+/// Data contract for the governance proposals list screen.
 final class StakingProposalsSnapshot {
   const StakingProposalsSnapshot({
     required this.endpoint,
@@ -212,6 +224,7 @@ final class StakingProposalsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single governance proposal listing with live vote tallies.
 final class StakingProposalDraft {
   const StakingProposalDraft({
     required this.id,
@@ -242,6 +255,7 @@ final class StakingProposalDraft {
   double get noPercent => 100 - yesPercent;
 }
 
+/// Data contract for the governance proposal voting screen.
 final class StakingVotingSnapshot {
   const StakingVotingSnapshot({
     required this.endpoint,
@@ -286,6 +300,7 @@ final class StakingVotingSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single option's tallied result on the voting screen.
 final class StakingVotingResultDraft {
   const StakingVotingResultDraft({
     required this.id,
@@ -302,6 +317,7 @@ final class StakingVotingResultDraft {
   final String tone;
 }
 
+/// A single selectable vote option on the voting screen.
 final class StakingVotingOptionDraft {
   const StakingVotingOptionDraft({
     required this.id,
@@ -314,6 +330,7 @@ final class StakingVotingOptionDraft {
   final String tone;
 }
 
+/// Data contract for the staking community forum screen.
 final class StakingForumSnapshot {
   const StakingForumSnapshot({
     required this.endpoint,
@@ -346,6 +363,7 @@ final class StakingForumSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single forum category summary row.
 final class StakingForumCategoryDraft {
   const StakingForumCategoryDraft({
     required this.name,
@@ -358,6 +376,7 @@ final class StakingForumCategoryDraft {
   final int posts;
 }
 
+/// A single forum discussion thread listing.
 final class StakingForumThreadDraft {
   const StakingForumThreadDraft({
     required this.title,

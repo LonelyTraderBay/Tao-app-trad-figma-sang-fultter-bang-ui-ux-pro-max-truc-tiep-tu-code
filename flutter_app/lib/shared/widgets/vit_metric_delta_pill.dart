@@ -6,10 +6,14 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Color family for a [VitMetricDeltaPill], also picking its default icon.
 enum VitMetricDeltaTone { positive, negative, neutral, warning }
 
+/// Padding/icon size preset of a [VitMetricDeltaPill].
 enum VitMetricDeltaPillSize { sm, md }
 
+/// Small tone-colored pill showing a metric delta (e.g. % change) with an
+/// optional leading icon.
 class VitMetricDeltaPill extends StatelessWidget {
   const VitMetricDeltaPill({
     super.key,

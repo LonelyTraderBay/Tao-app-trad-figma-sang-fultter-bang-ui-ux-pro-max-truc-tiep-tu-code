@@ -1,5 +1,6 @@
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 
+/// Abstract data-access contract every Launchpad screen depends on; implemented by mock and remote repositories.
 abstract interface class LaunchpadRepository {
   LaunchpadHomeSnapshot getHome();
 

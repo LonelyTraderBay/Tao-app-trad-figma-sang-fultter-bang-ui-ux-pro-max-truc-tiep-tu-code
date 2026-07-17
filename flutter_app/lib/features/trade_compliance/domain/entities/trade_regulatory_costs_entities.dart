@@ -1,5 +1,7 @@
 part of 'trade_compliance_entities.dart';
 
+/// Read-model for the Client Money Protection screen (segregated balance,
+/// trust account, protection items, insolvency policy).
 final class TradeClientMoneyProtectionSnapshot {
   const TradeClientMoneyProtectionSnapshot({
     required this.balance,
@@ -24,6 +26,7 @@ final class TradeClientMoneyProtectionSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single client-money protection guarantee item (title + description).
 final class TradeClientMoneyProtectionItem {
   const TradeClientMoneyProtectionItem({
     required this.title,
@@ -34,6 +37,8 @@ final class TradeClientMoneyProtectionItem {
   final String description;
 }
 
+/// Read-model for the CASS (Client Assets Sourcebook) Reconciliation
+/// screen (reconciled/resolved/outstanding counts, records).
 final class TradeCassReconciliationSnapshot {
   const TradeCassReconciliationSnapshot({
     required this.reconciledCount,
@@ -54,6 +59,8 @@ final class TradeCassReconciliationSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single CASS reconciliation record (client ledger vs. bank balance
+/// with any discrepancy).
 final class TradeCassReconciliationRecord {
   const TradeCassReconciliationRecord({
     required this.id,
@@ -74,8 +81,12 @@ final class TradeCassReconciliationRecord {
   final String? notes;
 }
 
+/// Status of a CASS reconciliation record: matched, discrepancy resolved,
+/// or open discrepancy.
 enum TradeCassReconciliationStatus { matched, discrepancyResolved, discrepancy }
 
+/// Read-model for the Investor Compensation Scheme screen (coverage
+/// limit, eligibility, claim steps).
 final class TradeInvestorCompensationSnapshot {
   const TradeInvestorCompensationSnapshot({
     required this.coverageLimit,
@@ -110,6 +121,8 @@ final class TradeInvestorCompensationSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single overview info item (title + description) on the investor
+/// compensation screen.
 final class TradeInvestorCompensationInfo {
   const TradeInvestorCompensationInfo({
     required this.title,
@@ -120,6 +133,8 @@ final class TradeInvestorCompensationInfo {
   final String description;
 }
 
+/// A single coverage-limit row (label, amount, caption) on the investor
+/// compensation screen.
 final class TradeInvestorCompensationCoverage {
   const TradeInvestorCompensationCoverage({
     required this.label,
@@ -134,6 +149,7 @@ final class TradeInvestorCompensationCoverage {
   final bool emphasized;
 }
 
+/// A single numbered step in the investor-compensation claim process.
 final class TradeInvestorCompensationClaimStep {
   const TradeInvestorCompensationClaimStep({
     required this.step,
@@ -146,6 +162,8 @@ final class TradeInvestorCompensationClaimStep {
   final String description;
 }
 
+/// Read-model for the Ex-Ante Costs & Charges calculator screen (inputs
+/// plus itemized cost list).
 final class TradeExAnteCostsSnapshot {
   const TradeExAnteCostsSnapshot({
     required this.investmentAmount,
@@ -179,6 +197,8 @@ final class TradeExAnteCostsSnapshot {
   }
 }
 
+/// A single itemized ex-ante cost (category, description, amount, % of
+/// investment) — financial disclosure, see ADR-001.
 final class TradeExAnteCostItem {
   const TradeExAnteCostItem({
     required this.category,
@@ -195,8 +215,10 @@ final class TradeExAnteCostItem {
   final double percentOfInvestment;
 }
 
+/// Category of an ex-ante cost: one-off, recurring, or incidental.
 enum TradeExAnteCostCategory { oneOff, recurring, incidental }
 
+/// Read-model for the Reduction in Yield (RIY) calculator screen.
 final class TradeRiyCalculatorSnapshot {
   const TradeRiyCalculatorSnapshot({
     required this.investmentAmount,
@@ -217,6 +239,7 @@ final class TradeRiyCalculatorSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// One projected year's value with and without costs applied.
 final class TradeRiyProjection {
   const TradeRiyProjection({
     required this.year,
@@ -229,6 +252,8 @@ final class TradeRiyProjection {
   final double withCosts;
 }
 
+/// Read-model for the Ex-Post Costs Report screen (per-year actual vs.
+/// estimated cost reports).
 final class TradeExPostCostsReportSnapshot {
   const TradeExPostCostsReportSnapshot({
     required this.reports,
@@ -250,6 +275,8 @@ final class TradeExPostCostsReportSnapshot {
   }
 }
 
+/// A single year's actual vs. estimated ex-post cost breakdown, with
+/// derived variance — financial disclosure, see ADR-001.
 final class TradeExPostCostReport {
   const TradeExPostCostReport({
     required this.year,
@@ -275,6 +302,7 @@ final class TradeExPostCostReport {
   double get variance => totalActual - totalEstimated;
 }
 
+/// Result of exporting an ex-post costs report.
 final class TradeExPostCostsReportExportResult {
   const TradeExPostCostsReportExportResult({
     required this.status,
@@ -287,6 +315,7 @@ final class TradeExPostCostsReportExportResult {
   final String downloadUrl;
 }
 
+/// Read-model for the KID (Key Information Document) Generator screen.
 final class TradeKidGeneratorSnapshot {
   const TradeKidGeneratorSnapshot({
     required this.document,
@@ -303,6 +332,7 @@ final class TradeKidGeneratorSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Metadata for a generated KID document (title, version, page count).
 final class TradeKidDocument {
   const TradeKidDocument({
     required this.title,
@@ -321,6 +351,8 @@ final class TradeKidDocument {
   final int maxPages;
 }
 
+/// A single section (title, icon, completion status) of a generated KID
+/// document.
 final class TradeKidSection {
   const TradeKidSection({
     required this.title,
@@ -333,8 +365,11 @@ final class TradeKidSection {
   final String status;
 }
 
+/// Icon key for a KID document section.
 enum TradeKidSectionIcon { info, target, warning, chart, costs, clock, help }
 
+/// Read-model for the Performance Scenarios screen (projected outcomes
+/// across stress/unfavorable/moderate/favorable scenarios).
 final class TradePerformanceScenariosSnapshot {
   const TradePerformanceScenariosSnapshot({
     required this.investment,
@@ -355,6 +390,8 @@ final class TradePerformanceScenariosSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single performance scenario (type, annual return assumption) with
+/// derived outcome/profit calculators.
 final class TradePerformanceScenario {
   const TradePerformanceScenario({
     required this.type,
@@ -375,8 +412,12 @@ final class TradePerformanceScenario {
   }
 }
 
+/// Type of performance scenario: stress, unfavorable, moderate, or
+/// favorable.
 enum TradePerformanceScenarioType { stress, unfavorable, moderate, favorable }
 
+/// Read-model for the Summary Risk Indicator (SRI) screen (product SRI,
+/// risk level ladder, additional risk warnings).
 final class TradeRiskIndicatorSnapshot {
   const TradeRiskIndicatorSnapshot({
     required this.productName,
@@ -399,6 +440,8 @@ final class TradeRiskIndicatorSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single rung of the Summary Risk Indicator scale (level, tier,
+/// description, examples).
 final class TradeRiskIndicatorLevel {
   const TradeRiskIndicatorLevel({
     required this.level,
@@ -415,6 +458,8 @@ final class TradeRiskIndicatorLevel {
   final List<String> examples;
 }
 
+/// A single additional risk warning (title + description) not captured
+/// by the SRI scale.
 final class TradeRiskIndicatorAdditionalRisk {
   const TradeRiskIndicatorAdditionalRisk({
     required this.title,
@@ -425,4 +470,6 @@ final class TradeRiskIndicatorAdditionalRisk {
   final String description;
 }
 
+/// Risk tier band for a Summary Risk Indicator level: low, medium,
+/// elevated, or high.
 enum TradeRiskIndicatorTier { low, medium, elevated, high }

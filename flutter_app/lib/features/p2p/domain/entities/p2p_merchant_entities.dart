@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// A merchant's public profile: stats, active ads, and reviews.
 final class P2PMerchantProfileSnapshot {
   const P2PMerchantProfileSnapshot({
     required this.endpoint,
@@ -33,6 +34,7 @@ final class P2PMerchantProfileSnapshot {
       (merchant.totalTrades * merchant.positiveRate / 100).round();
 }
 
+/// A merchant's trading stats and status shown on their public profile.
 final class P2PMerchantProfileDraft {
   const P2PMerchantProfileDraft({
     required this.id,
@@ -75,6 +77,7 @@ final class P2PMerchantProfileDraft {
   final bool isFollowed;
 }
 
+/// A single active ad listed on a merchant's public profile.
 final class P2PMerchantProfileAdDraft {
   const P2PMerchantProfileAdDraft({
     required this.id,
@@ -99,6 +102,7 @@ final class P2PMerchantProfileAdDraft {
   final List<String> paymentMethods;
 }
 
+/// A single review left on a merchant's public profile.
 final class P2PMerchantProfileReviewDraft {
   const P2PMerchantProfileReviewDraft({
     required this.id,
@@ -119,6 +123,7 @@ final class P2PMerchantProfileReviewDraft {
   final bool positive;
 }
 
+/// Form data for reporting a merchant, including selectable reasons.
 final class P2PReportMerchantSnapshot {
   const P2PReportMerchantSnapshot({
     required this.endpoint,
@@ -149,8 +154,10 @@ final class P2PReportMerchantSnapshot {
   final String contractNotes;
 }
 
+/// Visual tone/severity used to style a report reason.
 enum P2PReportReasonTone { danger, purple, warning, info, neutral }
 
+/// A single selectable reason for reporting a merchant.
 final class P2PReportReasonDraft {
   const P2PReportReasonDraft({
     required this.id,
@@ -167,6 +174,7 @@ final class P2PReportReasonDraft {
   final P2PReportReasonTone tone;
 }
 
+/// A user's trading level, limits, and the full level ladder.
 final class P2PTradingLevelSnapshot {
   const P2PTradingLevelSnapshot({
     required this.endpoint,
@@ -194,6 +202,7 @@ final class P2PTradingLevelSnapshot {
       (userLevel.dailyUsed / userLevel.dailyLimit * 100).round();
 }
 
+/// Reviews a user has received and given across P2P trades.
 final class P2PReviewsSnapshot {
   const P2PReviewsSnapshot({
     required this.endpoint,
@@ -214,6 +223,7 @@ final class P2PReviewsSnapshot {
   final String contractNotes;
 }
 
+/// A single trade review, given or received.
 final class P2PReviewDraft {
   const P2PReviewDraft({
     required this.id,
@@ -242,6 +252,7 @@ final class P2PReviewDraft {
   final String? reply;
 }
 
+/// A user's current trading level, usage, and progress toward the next level.
 final class P2PUserTradingLevelDraft {
   const P2PUserTradingLevelDraft({
     required this.currentLevel,
@@ -262,6 +273,7 @@ final class P2PUserTradingLevelDraft {
   final double nextLevelProgress;
 }
 
+/// A single trading level tier and its fee/limit requirements.
 final class P2PTradingLevelDraft {
   const P2PTradingLevelDraft({
     required this.id,
@@ -282,6 +294,7 @@ final class P2PTradingLevelDraft {
   final List<String> requirements;
 }
 
+/// Form data and requirements for applying to become a P2P merchant.
 final class P2PMerchantApplySnapshot {
   const P2PMerchantApplySnapshot({
     required this.endpoint,
@@ -318,6 +331,7 @@ final class P2PMerchantApplySnapshot {
   bool get allRequirementsMet => requirements.every((item) => item.met);
 }
 
+/// An applicant's trading stats considered for merchant approval.
 final class P2PMerchantStatsDraft {
   const P2PMerchantStatsDraft({
     required this.totalTrades,
@@ -338,6 +352,7 @@ final class P2PMerchantStatsDraft {
   final int kycLevel;
 }
 
+/// A single benefit of becoming a merchant, shown on the apply screen.
 final class P2PMerchantBenefitDraft {
   const P2PMerchantBenefitDraft({
     required this.id,
@@ -354,6 +369,7 @@ final class P2PMerchantBenefitDraft {
   final String toneKey;
 }
 
+/// A single eligibility requirement for merchant applications.
 final class P2PMerchantRequirementDraft {
   const P2PMerchantRequirementDraft({
     required this.id,
@@ -370,6 +386,7 @@ final class P2PMerchantRequirementDraft {
   final String iconKey;
 }
 
+/// A single required document for a merchant application.
 final class P2PMerchantDocumentDraft {
   const P2PMerchantDocumentDraft({
     required this.id,

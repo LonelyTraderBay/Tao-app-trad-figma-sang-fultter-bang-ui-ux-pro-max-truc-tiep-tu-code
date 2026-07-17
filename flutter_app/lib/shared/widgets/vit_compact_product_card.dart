@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Compact fixed-height tile pairing an accent icon, title, subtitle, and
+/// optional badge — used for recent/quick-access product entries.
 class VitCompactProductCard extends StatelessWidget {
   const VitCompactProductCard({
     super.key,

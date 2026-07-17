@@ -1,8 +1,11 @@
 part 'profile_api_vip_entities.dart';
 part 'profile_home_menu_entities.dart';
 
+/// UI state a Profile screen snapshot supports rendering.
 enum ProfileScreenState { loading, empty, error, offline, submitting, success }
 
+/// Data for the profile home screen: [user] summary, VIP progress,
+/// Prediction/Arena summary blocks, product shortcuts, and menu sections.
 final class ProfileSnapshot {
   const ProfileSnapshot({
     required this.user,
@@ -29,6 +32,8 @@ final class ProfileSnapshot {
   final ProfileScreenState screenState;
 }
 
+/// Account identity fields (name, contact, VIP/KYC level, join date) for
+/// the signed-in user.
 final class ProfileUser {
   const ProfileUser({
     required this.id,
@@ -53,6 +58,7 @@ final class ProfileUser {
   final String joinDate;
 }
 
+/// Data for the edit-profile screen: the editable [user] fields.
 final class ProfileEditSnapshot {
   const ProfileEditSnapshot({
     required this.user,
@@ -67,6 +73,8 @@ final class ProfileEditSnapshot {
   final List<ProfileScreenState> supportedStates;
 }
 
+/// Data for the security screen: overall security [score], checklist
+/// [items], and logged-in [devices].
 final class ProfileSecuritySnapshot {
   const ProfileSecuritySnapshot({
     required this.score,
@@ -93,6 +101,8 @@ final class ProfileSecuritySnapshot {
   final String? highRiskContractId;
 }
 
+/// Data for the KYC verification screen: current level, status copy, and
+/// all available [levels].
 final class ProfileKycSnapshot {
   const ProfileKycSnapshot({
     required this.currentLevel,
@@ -113,6 +123,7 @@ final class ProfileKycSnapshot {
   final List<ProfileScreenState> supportedStates;
 }
 
+/// One KYC verification level's limits/features on the KYC screen.
 final class ProfileKycLevel {
   const ProfileKycLevel({
     required this.level,
@@ -129,6 +140,8 @@ final class ProfileKycLevel {
   final int colorHex;
 }
 
+/// Data for the app settings screen: currency/language options plus
+/// trade-security, notification, and app-info setting rows.
 final class ProfileSettingsSnapshot {
   const ProfileSettingsSnapshot({
     required this.currencyOptions,
@@ -155,6 +168,7 @@ final class ProfileSettingsSnapshot {
   final List<ProfileScreenState> supportedStates;
 }
 
+/// One selectable app-language option on the settings screen.
 final class ProfileLanguageOption {
   const ProfileLanguageOption({required this.id, required this.label});
 
@@ -162,6 +176,7 @@ final class ProfileLanguageOption {
   final String label;
 }
 
+/// One toggleable/navigable setting row on the settings screen.
 final class ProfileSettingsItem {
   const ProfileSettingsItem({
     required this.id,
@@ -180,6 +195,7 @@ final class ProfileSettingsItem {
   final bool canToggle;
 }
 
+/// One label/value info row (e.g. app version) on the settings screen.
 final class ProfileInfoRow {
   const ProfileInfoRow({required this.label, required this.value});
 
@@ -187,6 +203,8 @@ final class ProfileInfoRow {
   final String value;
 }
 
+/// Data for the account activity log screen: available [filters] and
+/// activity [logs].
 final class ProfileActivitySnapshot {
   const ProfileActivitySnapshot({
     required this.filters,
@@ -203,6 +221,7 @@ final class ProfileActivitySnapshot {
   final List<ProfileScreenState> supportedStates;
 }
 
+/// One selectable activity-type filter on the activity log screen.
 final class ProfileActivityFilter {
   const ProfileActivityFilter({required this.id, required this.label});
 
@@ -210,6 +229,8 @@ final class ProfileActivityFilter {
   final String label;
 }
 
+/// One account activity entry (IP, device, location, status) on the
+/// activity log screen.
 final class ProfileActivityLog {
   const ProfileActivityLog({
     required this.id,

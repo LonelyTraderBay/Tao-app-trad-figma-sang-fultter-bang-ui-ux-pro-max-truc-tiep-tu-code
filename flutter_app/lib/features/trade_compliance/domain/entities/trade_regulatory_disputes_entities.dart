@@ -1,5 +1,7 @@
 part of 'trade_compliance_entities.dart';
 
+/// Read-model for the Complaints Handling screen (active/resolved counts,
+/// categories, process timeline, ombudsman info).
 final class TradeComplaintsHandlingSnapshot {
   const TradeComplaintsHandlingSnapshot({
     required this.activeCount,
@@ -28,6 +30,8 @@ final class TradeComplaintsHandlingSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Read-model for the Complaint Submission form screen (categories,
+/// field-length limits, terms).
 final class TradeComplaintSubmissionSnapshot {
   const TradeComplaintSubmissionSnapshot({
     required this.processTitle,
@@ -60,6 +64,8 @@ final class TradeComplaintSubmissionSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Read-model for the Complaint Tracking screen (status, deadline,
+/// timeline, available actions for one complaint).
 final class TradeComplaintTrackingSnapshot {
   const TradeComplaintTrackingSnapshot({
     required this.complaintId,
@@ -88,6 +94,7 @@ final class TradeComplaintTrackingSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single step in a complaint's tracking timeline.
 final class TradeComplaintTrackingStep {
   const TradeComplaintTrackingStep({
     required this.title,
@@ -102,6 +109,8 @@ final class TradeComplaintTrackingStep {
   final TradeComplaintTrackingStepState state;
 }
 
+/// A single available action (e.g. message, view document) on the
+/// complaint tracking screen.
 final class TradeComplaintTrackingAction {
   const TradeComplaintTrackingAction({
     required this.id,
@@ -116,10 +125,16 @@ final class TradeComplaintTrackingAction {
   final String? routePath;
 }
 
+/// State of a complaint tracking timeline step: completed, current, or
+/// pending.
 enum TradeComplaintTrackingStepState { completed, current, pending }
 
+/// Icon key for a complaint tracking action: message, document, or
+/// warning.
 enum TradeComplaintTrackingActionIcon { message, document, warning }
 
+/// Read-model for the Financial Ombudsman Referral screen (eligibility,
+/// contacts, referral process).
 final class TradeOmbudsmanReferralSnapshot {
   const TradeOmbudsmanReferralSnapshot({
     required this.infoTitle,
@@ -146,6 +161,8 @@ final class TradeOmbudsmanReferralSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single ombudsman-referral eligibility criterion (title +
+/// description).
 final class TradeOmbudsmanEligibility {
   const TradeOmbudsmanEligibility({
     required this.title,
@@ -156,6 +173,7 @@ final class TradeOmbudsmanEligibility {
   final String description;
 }
 
+/// A single ombudsman contact method (phone/website/address).
 final class TradeOmbudsmanContact {
   const TradeOmbudsmanContact({
     required this.label,
@@ -170,6 +188,7 @@ final class TradeOmbudsmanContact {
   final String? detail;
 }
 
+/// A single numbered step in the ombudsman referral process.
 final class TradeOmbudsmanProcessStep {
   const TradeOmbudsmanProcessStep({
     required this.step,
@@ -182,8 +201,10 @@ final class TradeOmbudsmanProcessStep {
   final String description;
 }
 
+/// Icon key for an ombudsman contact method: phone, website, or address.
 enum TradeOmbudsmanContactIcon { phone, website, address }
 
+/// A single selectable complaint category (id, label, icon).
 final class TradeComplaintCategory {
   const TradeComplaintCategory({
     required this.id,
@@ -196,6 +217,7 @@ final class TradeComplaintCategory {
   final TradeComplaintCategoryIcon icon;
 }
 
+/// A single step in the complaints-handling process timeline.
 final class TradeComplaintTimelineStep {
   const TradeComplaintTimelineStep({
     required this.step,
@@ -208,6 +230,8 @@ final class TradeComplaintTimelineStep {
   final String time;
 }
 
+/// A single filed complaint (category, status, submitted date, response
+/// deadline).
 final class TradeComplaint {
   const TradeComplaint({
     required this.id,
@@ -226,6 +250,8 @@ final class TradeComplaint {
   final String subject;
 }
 
+/// A single step (title + description) of the complaints-handling
+/// process explainer.
 final class TradeComplaintProcessStep {
   const TradeComplaintProcessStep({
     required this.title,
@@ -236,6 +262,7 @@ final class TradeComplaintProcessStep {
   final String description;
 }
 
+/// Contact and referral info for the Financial Ombudsman Service.
 final class TradeOmbudsmanInfo {
   const TradeOmbudsmanInfo({
     required this.description,
@@ -248,6 +275,8 @@ final class TradeOmbudsmanInfo {
   final String website;
 }
 
+/// Icon key for a complaint category: trade, account, payment, service,
+/// fees, or other.
 enum TradeComplaintCategoryIcon {
   trade,
   account,
@@ -257,4 +286,6 @@ enum TradeComplaintCategoryIcon {
   other,
 }
 
+/// Lifecycle status of a filed complaint: submitted, under review,
+/// resolved, or escalated.
 enum TradeComplaintStatus { submitted, underReview, resolved, escalated }

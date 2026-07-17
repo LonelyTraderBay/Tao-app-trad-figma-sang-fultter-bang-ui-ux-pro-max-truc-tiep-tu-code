@@ -1,3 +1,4 @@
+/// Thrown when Open Arena needs a real repository but only mock data is configured.
 final class ArenaBackendContractMissingException implements Exception {
   const ArenaBackendContractMissingException();
 

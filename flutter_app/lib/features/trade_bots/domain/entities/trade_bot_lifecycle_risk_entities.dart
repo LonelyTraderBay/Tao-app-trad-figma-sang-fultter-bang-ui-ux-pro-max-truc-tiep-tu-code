@@ -1,9 +1,13 @@
 part of 'trade_bots_entities.dart';
 
+/// Risk tier of a bot strategy: low, medium, or high.
 enum TradeBotRisk { low, medium, high }
 
+/// Lifecycle status of a running bot: running, paused, or stopped.
 enum TradeBotStatus { running, paused, stopped }
 
+/// Read-model for the Trading Bots hub screen (available strategies, the
+/// user's active bots).
 final class TradeBotsSnapshot {
   const TradeBotsSnapshot({
     required this.trade,
@@ -42,6 +46,8 @@ final class TradeBotsSnapshot {
   }
 }
 
+/// A bot strategy template (risk tier, average return, tunable params)
+/// offered on the Trading Bots hub.
 final class TradeBotStrategy {
   const TradeBotStrategy({
     required this.id,
@@ -68,6 +74,8 @@ final class TradeBotStrategy {
   final List<TradeBotParam> params;
 }
 
+/// A single configurable parameter (key, type, default, options) of a bot
+/// strategy.
 final class TradeBotParam {
   const TradeBotParam({
     required this.key,
@@ -86,6 +94,8 @@ final class TradeBotParam {
   final String? unit;
 }
 
+/// A user's active bot instance (strategy, pair, status, profit,
+/// runtime).
 final class TradeBot {
   const TradeBot({
     required this.id,
@@ -136,6 +146,7 @@ final class TradeBot {
   }
 }
 
+/// Request to run a lifecycle action (start/pause/stop) on a bot.
 final class TradeBotActionRequest {
   const TradeBotActionRequest({required this.botId, required this.action});
 
@@ -143,6 +154,7 @@ final class TradeBotActionRequest {
   final String action;
 }
 
+/// Result of a bot lifecycle action.
 final class TradeBotActionResult {
   const TradeBotActionResult({
     required this.botId,
@@ -155,6 +167,7 @@ final class TradeBotActionResult {
   final String status;
 }
 
+/// Request to create a new bot instance from a strategy and its params.
 final class TradeBotCreateRequest {
   const TradeBotCreateRequest({required this.strategyId, required this.params});
 
@@ -162,6 +175,7 @@ final class TradeBotCreateRequest {
   final Map<String, String> params;
 }
 
+/// Result of creating a new bot instance.
 final class TradeBotCreateResult {
   const TradeBotCreateResult({
     required this.botId,
@@ -174,6 +188,8 @@ final class TradeBotCreateResult {
   final String status;
 }
 
+/// Read-model for the Bot Terms & Agreement screen (sections, scroll
+/// requirement, acceptance CTA copy).
 final class TradeBotTermsSnapshot {
   const TradeBotTermsSnapshot({
     required this.infoTitle,
@@ -212,6 +228,8 @@ final class TradeBotTermsSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single titled section (with optional warning callout) of the bot
+/// terms document.
 final class TradeBotTermsSection {
   const TradeBotTermsSection({
     required this.title,
@@ -228,6 +246,8 @@ final class TradeBotTermsSection {
   final List<String> bullets;
 }
 
+/// Read-model for the Bot Risk Disclosure screen (risk categories,
+/// warnings, regulatory notice, acknowledgment CTA).
 final class TradeBotRiskDisclosureSnapshot {
   const TradeBotRiskDisclosureSnapshot({
     required this.highRiskTitle,
@@ -282,6 +302,8 @@ final class TradeBotRiskDisclosureSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single risk category (kind, description, examples, mitigation) on
+/// the risk disclosure screen.
 final class TradeBotRiskCategory {
   const TradeBotRiskCategory({
     required this.id,
@@ -300,6 +322,8 @@ final class TradeBotRiskCategory {
   final String mitigation;
 }
 
+/// Category of bot risk: market, leverage, liquidity, technical, timing,
+/// or regulatory.
 enum TradeBotRiskKind {
   market,
   leverage,
@@ -309,6 +333,8 @@ enum TradeBotRiskKind {
   regulatory,
 }
 
+/// A single additional risk warning (title + body) on the disclosure
+/// screen.
 final class TradeBotRiskWarning {
   const TradeBotRiskWarning({required this.title, required this.text});
 
@@ -316,6 +342,8 @@ final class TradeBotRiskWarning {
   final String text;
 }
 
+/// Read-model for the Bot Suitability Assessment screen (questionnaire,
+/// outcome copy for pass/warning/fail).
 final class TradeBotSuitabilityAssessmentSnapshot {
   const TradeBotSuitabilityAssessmentSnapshot({
     required this.questions,
@@ -348,6 +376,7 @@ final class TradeBotSuitabilityAssessmentSnapshot {
   int get maxScore => questions.length * 3;
 }
 
+/// A single suitability-questionnaire question with its scored options.
 final class TradeBotSuitabilityQuestion {
   const TradeBotSuitabilityQuestion({
     required this.id,
@@ -362,6 +391,7 @@ final class TradeBotSuitabilityQuestion {
   final List<TradeBotSuitabilityOption> options;
 }
 
+/// A single selectable, scored answer option for a suitability question.
 final class TradeBotSuitabilityOption {
   const TradeBotSuitabilityOption({
     required this.id,
@@ -374,10 +404,15 @@ final class TradeBotSuitabilityOption {
   final int score;
 }
 
+/// Category of a suitability question: experience, knowledge, risk, or
+/// financial.
 enum TradeBotSuitabilityCategory { experience, knowledge, risk, financial }
 
+/// Overall outcome of the suitability assessment: pass, warning, or fail.
 enum TradeBotSuitabilityOutcome { pass, warning, fail }
 
+/// Copy shown for a given suitability outcome (title, message,
+/// recommendations, CTA).
 final class TradeBotSuitabilityOutcomeCopy {
   const TradeBotSuitabilityOutcomeCopy({
     required this.outcome,
@@ -394,6 +429,8 @@ final class TradeBotSuitabilityOutcomeCopy {
   final String ctaLabel;
 }
 
+/// Read-model for the Bot Risk Dashboard screen (risk score, drawdown/
+/// exposure/VaR history, safety controls).
 final class TradeBotRiskDashboardSnapshot {
   const TradeBotRiskDashboardSnapshot({
     required this.riskScore,
@@ -438,6 +475,7 @@ final class TradeBotRiskDashboardSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// One point (label + value) on the risk dashboard's drawdown chart.
 final class TradeBotDrawdownPoint {
   const TradeBotDrawdownPoint({required this.label, required this.value});
 
@@ -445,6 +483,7 @@ final class TradeBotDrawdownPoint {
   final double value;
 }
 
+/// A single asset's exposure amount/percentage on the risk dashboard.
 final class TradeBotExposure {
   const TradeBotExposure({
     required this.asset,
@@ -459,6 +498,8 @@ final class TradeBotExposure {
   final int colorHex;
 }
 
+/// One point (label + value) on the risk dashboard's Value-at-Risk
+/// history chart.
 final class TradeBotVarPoint {
   const TradeBotVarPoint({required this.label, required this.value});
 
@@ -466,6 +507,8 @@ final class TradeBotVarPoint {
   final double value;
 }
 
+/// A single active risk-safety control (label + current value) on the
+/// risk dashboard.
 final class TradeBotSafetyControl {
   const TradeBotSafetyControl({required this.label, required this.value});
 
@@ -473,6 +516,8 @@ final class TradeBotSafetyControl {
   final String value;
 }
 
+/// Read-model for the Emergency Stop screen (bots to stop, stop reasons,
+/// confirmation copy).
 final class TradeBotEmergencyStopSnapshot {
   const TradeBotEmergencyStopSnapshot({
     required this.warningTitle,
@@ -507,6 +552,7 @@ final class TradeBotEmergencyStopSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single bot listed as a candidate for emergency stop.
 final class TradeBotEmergencyBot {
   const TradeBotEmergencyBot({
     required this.id,
@@ -523,6 +569,7 @@ final class TradeBotEmergencyBot {
   final String statusLabel;
 }
 
+/// A selectable reason for triggering an emergency stop.
 final class TradeBotEmergencyReason {
   const TradeBotEmergencyReason({
     required this.id,
@@ -535,6 +582,7 @@ final class TradeBotEmergencyReason {
   final String iconName;
 }
 
+/// Draft form state for an emergency-stop request before confirmation.
 final class TradeBotEmergencyStopDraft {
   const TradeBotEmergencyStopDraft({
     required this.reasonId,
@@ -547,6 +595,7 @@ final class TradeBotEmergencyStopDraft {
   final bool confirmed;
 }
 
+/// Result of submitting an emergency-stop request.
 final class TradeBotEmergencyStopResult {
   const TradeBotEmergencyStopResult({
     required this.status,
@@ -559,6 +608,8 @@ final class TradeBotEmergencyStopResult {
   final String redirectPath;
 }
 
+/// Read-model for the Bot Security Settings screen (2FA, API keys, IP
+/// whitelist, recent activity).
 final class TradeBotSecuritySettingsSnapshot {
   const TradeBotSecuritySettingsSnapshot({
     required this.twoFaEnabled,
@@ -583,6 +634,7 @@ final class TradeBotSecuritySettingsSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single issued bot API key (permissions, last used, created date).
 final class TradeBotApiKey {
   const TradeBotApiKey({
     required this.id,
@@ -599,6 +651,7 @@ final class TradeBotApiKey {
   final String created;
 }
 
+/// A single whitelisted IP address entry for bot API access.
 final class TradeBotIpWhitelistEntry {
   const TradeBotIpWhitelistEntry({
     required this.id,
@@ -613,8 +666,10 @@ final class TradeBotIpWhitelistEntry {
   final String added;
 }
 
+/// Outcome status of a security activity log entry: success or warning.
 enum TradeBotSecurityActivityStatus { success, warning }
 
+/// A single recent security-relevant activity log entry.
 final class TradeBotSecurityActivity {
   const TradeBotSecurityActivity({
     required this.id,
@@ -629,12 +684,14 @@ final class TradeBotSecurityActivity {
   final TradeBotSecurityActivityStatus status;
 }
 
+/// Draft form state for updating bot security settings.
 final class TradeBotSecuritySettingsDraft {
   const TradeBotSecuritySettingsDraft({required this.twoFaEnabled});
 
   final bool twoFaEnabled;
 }
 
+/// Result of saving bot security settings.
 final class TradeBotSecuritySettingsResult {
   const TradeBotSecuritySettingsResult({
     required this.status,
@@ -645,6 +702,7 @@ final class TradeBotSecuritySettingsResult {
   final bool twoFaEnabled;
 }
 
+/// Read-model for the Bot Trade History screen.
 final class TradeBotHistorySnapshot {
   const TradeBotHistorySnapshot({
     required this.trades,
@@ -659,8 +717,10 @@ final class TradeBotHistorySnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Side of a historical bot trade: buy or sell.
 enum TradeBotHistorySide { buy, sell }
 
+/// A single completed trade executed by a bot.
 final class TradeBotHistoryTrade {
   const TradeBotHistoryTrade({
     required this.id,
@@ -689,12 +749,14 @@ final class TradeBotHistoryTrade {
   final String status;
 }
 
+/// Request to export bot trade history in a given format.
 final class TradeBotHistoryExportRequest {
   const TradeBotHistoryExportRequest({required this.format});
 
   final String format;
 }
 
+/// Result of exporting bot trade history.
 final class TradeBotHistoryExportResult {
   const TradeBotHistoryExportResult({
     required this.status,
@@ -705,6 +767,8 @@ final class TradeBotHistoryExportResult {
   final String downloadUrl;
 }
 
+/// Read-model for the Bot Performance Analytics screen (aggregate
+/// metrics, PnL/win-loss series, per-strategy breakdown).
 final class TradeBotPerformanceAnalyticsSnapshot {
   const TradeBotPerformanceAnalyticsSnapshot({
     required this.metrics,
@@ -727,6 +791,8 @@ final class TradeBotPerformanceAnalyticsSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Aggregate bot performance metrics (PnL, win rate, Sharpe, best/worst
+/// trade).
 final class TradeBotPerformanceMetrics {
   const TradeBotPerformanceMetrics({
     required this.totalPnl,
@@ -751,6 +817,7 @@ final class TradeBotPerformanceMetrics {
   final double worstTrade;
 }
 
+/// One date's aggregate bot PnL value.
 final class TradeBotPnlPoint {
   const TradeBotPnlPoint({required this.date, required this.pnl});
 
@@ -758,6 +825,7 @@ final class TradeBotPnlPoint {
   final double pnl;
 }
 
+/// One week's win/loss trade counts.
 final class TradeBotWinLossPoint {
   const TradeBotWinLossPoint({
     required this.week,
@@ -770,6 +838,8 @@ final class TradeBotWinLossPoint {
   final int losses;
 }
 
+/// A single strategy's aggregate PnL contribution on the performance
+/// analytics screen.
 final class TradeBotStrategyPerformance {
   const TradeBotStrategyPerformance({
     required this.strategy,

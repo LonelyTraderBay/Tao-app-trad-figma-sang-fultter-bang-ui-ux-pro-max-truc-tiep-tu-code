@@ -1,9 +1,14 @@
+/// UI state the unified portfolio screen supports rendering.
 enum UnifiedPortfolioScreenState { loading, empty, error, offline }
 
+/// The active tab on the unified portfolio screen.
 enum UnifiedPortfolioTab { overview, analysis, history }
 
+/// A product module contributing to the unified portfolio view.
 enum UnifiedPortfolioModuleId { wallet, trading, p2p, predictions, arena, dca }
 
+/// Data for the unified portfolio screen: per-module [modules] summaries
+/// and value history, with financial totals excluding points-only modules.
 final class UnifiedPortfolioSnapshot {
   const UnifiedPortfolioSnapshot({
     required this.endpoint,
@@ -48,6 +53,7 @@ final class UnifiedPortfolioSnapshot {
       modules.where((module) => module.activePositions > 0).length;
 }
 
+/// One selectable [UnifiedPortfolioTab] entry with its display label.
 final class UnifiedPortfolioTabDraft {
   const UnifiedPortfolioTabDraft({required this.tab, required this.label});
 
@@ -55,6 +61,9 @@ final class UnifiedPortfolioTabDraft {
   final String label;
 }
 
+/// One module's portfolio summary (value, 24h change, P&L, active
+/// positions). [pointsOnly] marks non-financial modules (e.g. Arena) that
+/// are excluded from monetary totals.
 final class UnifiedPortfolioModuleDraft {
   const UnifiedPortfolioModuleDraft({
     required this.id,
@@ -77,6 +86,8 @@ final class UnifiedPortfolioModuleDraft {
   final bool pointsOnly;
 }
 
+/// One labeled data point with per-module values in the unified
+/// portfolio's history chart.
 final class UnifiedPortfolioHistoryPoint {
   const UnifiedPortfolioHistoryPoint({
     required this.label,

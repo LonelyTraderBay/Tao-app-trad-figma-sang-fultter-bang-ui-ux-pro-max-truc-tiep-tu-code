@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_market_rows.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Data for one card in a [VitMarketTickerStrip]/[VitMarketTickerCard].
 class VitMarketTickerData {
   const VitMarketTickerData({
     required this.title,
@@ -26,6 +27,7 @@ class VitMarketTickerData {
   final VoidCallback? onTap;
 }
 
+/// Horizontally scrolling strip of [VitMarketTickerCard]s built from [items].
 class VitMarketTickerStrip extends StatelessWidget {
   const VitMarketTickerStrip({super.key, required this.items});
 
@@ -51,6 +53,8 @@ class VitMarketTickerStrip extends StatelessWidget {
   }
 }
 
+/// Single fixed-width ticker card: title, price, and a trend-tinted change
+/// pill for one [VitMarketTickerData] entry.
 class VitMarketTickerCard extends StatelessWidget {
   const VitMarketTickerCard({super.key, required this.data});
 

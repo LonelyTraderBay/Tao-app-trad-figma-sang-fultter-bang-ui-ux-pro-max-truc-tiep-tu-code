@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// Read-model for the Social Sentiment screen (global sentiment, per-token
+/// sentiment, trending, timeline history).
 final class MarketSocialSentimentSnapshot {
   const MarketSocialSentimentSnapshot({
     required this.global,
@@ -30,6 +32,8 @@ final class MarketSocialSentimentSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Trading Signals screen (community signals,
+/// provider leaderboard, aggregate win-rate stats, active filters).
 final class MarketSocialSignalsSnapshot {
   const MarketSocialSignalsSnapshot({
     required this.signals,
@@ -72,6 +76,8 @@ final class MarketSocialSignalsSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Asset Correlations screen (correlation matrix,
+/// diversification score).
 final class MarketCorrelationsSnapshot {
   const MarketCorrelationsSnapshot({
     required this.assets,
@@ -104,6 +110,8 @@ final class MarketCorrelationsSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Aggregate social-sentiment stats across the whole market (overall
+/// score, mention volume, BTC/ETH/other social dominance).
 final class SocialSentimentGlobal {
   const SocialSentimentGlobal({
     required this.overallScore,
@@ -126,6 +134,8 @@ final class SocialSentimentGlobal {
   final double socialDominanceOther;
 }
 
+/// A single token's social-sentiment stats (score, mentions, platform
+/// reach, bullish/bearish/neutral split).
 final class SocialSentimentToken {
   const SocialSentimentToken({
     required this.id,
@@ -166,6 +176,7 @@ final class SocialSentimentToken {
   final int? trendingRank;
 }
 
+/// One time bucket's social sentiment score and mention volume.
 final class SocialSentimentTimelinePoint {
   const SocialSentimentTimelinePoint({
     required this.time,
@@ -178,8 +189,12 @@ final class SocialSentimentTimelinePoint {
   final double mentions;
 }
 
+/// Sort key for the social sentiment token list: sentiment, mentions, or
+/// trending.
 enum MarketSentimentSort { sentiment, mentions, trending }
 
+/// A community trading signal draft (entry/targets/stop, provider,
+/// status, PnL) shown on the Trading Signals screen.
 final class TradingSignalDraft {
   const TradingSignalDraft({
     required this.id,
@@ -230,6 +245,8 @@ final class TradingSignalDraft {
   final TradingSignalCategory category;
 }
 
+/// A signal provider's leaderboard summary (tier, win rate, follower
+/// count, aggregate PnL).
 final class SignalProviderSummary {
   const SignalProviderSummary({
     required this.name,
@@ -252,6 +269,7 @@ final class SignalProviderSummary {
   final double avgPnl;
 }
 
+/// Display label/colors for a signal provider tier badge.
 final class SignalTierConfig {
   const SignalTierConfig({
     required this.label,
@@ -264,6 +282,7 @@ final class SignalTierConfig {
   final AccentTone background;
 }
 
+/// Display label/color for a signal status badge.
 final class SignalStatusConfig {
   const SignalStatusConfig({required this.label, required this.color});
 
@@ -271,22 +290,31 @@ final class SignalStatusConfig {
   final AccentTone color;
 }
 
+/// Reputation tier of a signal provider: gold, silver, or bronze.
 enum TradingSignalProviderTier { gold, silver, bronze }
 
+/// Directional bias of a trading signal: long or short.
 enum TradingSignalDirection { long, short }
 
+/// Lifecycle status of a trading signal: active, target hit, stopped, or
+/// expired.
 enum TradingSignalStatus { active, targetHit, stopped, expired }
 
+/// Confidence tier assigned to a trading signal: high, medium, or low.
 enum TradingSignalConfidence { high, medium, low }
 
+/// Trading style category of a signal: scalp, swing, or position.
 enum TradingSignalCategory { scalp, swing, position }
 
+/// A single asset symbol participating in the correlation matrix.
 final class CorrelationAsset {
   const CorrelationAsset({required this.symbol});
 
   final String symbol;
 }
 
+/// A single asset pair's correlation coefficient across 7d/30d/90d
+/// windows.
 final class CorrelationPairDraft {
   const CorrelationPairDraft({
     required this.assetA,
@@ -303,6 +331,8 @@ final class CorrelationPairDraft {
   final double correlation90d;
 }
 
+/// Computed portfolio diversification score derived from the correlation
+/// matrix, with lowest/highest-correlation callouts.
 final class DiversificationScoreDraft {
   const DiversificationScoreDraft({
     required this.score,
@@ -321,6 +351,7 @@ final class DiversificationScoreDraft {
   final String recommendation;
 }
 
+/// A single lowest/highest correlation callout (pair + value).
 final class CorrelationExtremum {
   const CorrelationExtremum({required this.pair, required this.value});
 
@@ -328,6 +359,8 @@ final class CorrelationExtremum {
   final double value;
 }
 
+/// Lookback window for the correlation matrix: 7, 30, or 90 days.
 enum MarketCorrelationTimeframe { d7, d30, d90 }
 
+/// Sort order for correlation pairs: highest first or lowest first.
 enum CorrelationSortOrder { high, low }

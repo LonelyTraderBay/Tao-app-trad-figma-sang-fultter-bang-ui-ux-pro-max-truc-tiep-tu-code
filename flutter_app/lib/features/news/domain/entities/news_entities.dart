@@ -1,3 +1,4 @@
+/// Category of a news article, driving its label/emoji and filter grouping.
 enum NewsArticleType {
   maintenance,
   newFeature,
@@ -7,6 +8,7 @@ enum NewsArticleType {
   general,
 }
 
+/// Display helpers (label, emoji) for [NewsArticleType].
 extension NewsArticleTypeConfig on NewsArticleType {
   String get label => switch (this) {
     NewsArticleType.maintenance => 'Bảo trì',
@@ -27,8 +29,11 @@ extension NewsArticleTypeConfig on NewsArticleType {
   };
 }
 
+/// UI states the news screen can render.
 enum NewsScreenState { loading, empty, error, offline, ready }
 
+/// Reference data (available filters, endpoint, freshness label) for the
+/// news screen.
 final class NewsReferenceData {
   const NewsReferenceData({
     required this.endpoint,
@@ -41,6 +46,8 @@ final class NewsReferenceData {
   final String lastUpdatedLabel;
 }
 
+/// Data contract for the news screen: articles split into pinned/normal
+/// plus reference data and current state.
 final class NewsScreenSnapshot {
   const NewsScreenSnapshot({
     required this.articles,
@@ -59,6 +66,7 @@ final class NewsScreenSnapshot {
   final List<NewsScreenState> supportedStates;
 }
 
+/// A single news article shown in the news feed.
 final class NewsArticle {
   const NewsArticle({
     required this.id,

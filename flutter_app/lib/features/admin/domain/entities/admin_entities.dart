@@ -1,13 +1,20 @@
+/// UI state an Admin screen snapshot supports rendering.
 enum AdminScreenState { loading, empty, error, offline }
 
+/// Accent color choice for an admin metric tile/dashboard link.
 enum AdminMetricAccent { accent, primary, success }
 
+/// Leading icon choice for an admin dashboard tile/link.
 enum AdminDashboardIcon { analytics, experiment, funnel }
 
+/// Time window filter for the admin analytics screen.
 enum AdminAnalyticsRange { sevenDays, thirtyDays, ninetyDays }
 
+/// Lifecycle status of an [AdminAbTestSummary].
 enum AdminAbTestStatus { active, completed }
 
+/// Data for the admin home screen: top-level [adminMetrics], quick/live
+/// stat tiles, and dashboard shortcut links.
 class AdminHomeSnapshot {
   const AdminHomeSnapshot({
     required this.endpoint,
@@ -34,6 +41,8 @@ class AdminHomeSnapshot {
   final List<AdminExperimentDraft> experiments;
 }
 
+/// Top-level admin platform metrics (events, tests, funnels, active
+/// users, health) shared across admin screens.
 class AdminMetrics {
   const AdminMetrics({
     required this.totalEvents,
@@ -58,6 +67,7 @@ class AdminMetrics {
   final String footerUpdatedLabel;
 }
 
+/// One labeled metric tile (value, delta, timeframe) on an admin screen.
 class AdminMetricTile {
   const AdminMetricTile({
     required this.label,
@@ -76,6 +86,8 @@ class AdminMetricTile {
   final String timeframeLabel;
 }
 
+/// One navigation shortcut card (title/description/route/stat) on the
+/// admin home screen.
 class AdminDashboardLink {
   const AdminDashboardLink({
     required this.id,
@@ -96,18 +108,26 @@ class AdminDashboardLink {
   final AdminDashboardIcon icon;
 }
 
+/// Placeholder marker type for a raw analytics event reference shared
+/// across admin snapshots.
 class AdminAnalyticsEvent {
   const AdminAnalyticsEvent();
 }
 
+/// Placeholder marker type for a funnel reference shared across admin
+/// snapshots.
 class AdminFunnelDraft {
   const AdminFunnelDraft();
 }
 
+/// Placeholder marker type for an A/B test experiment reference shared
+/// across admin snapshots.
 class AdminExperimentDraft {
   const AdminExperimentDraft();
 }
 
+/// Data for the admin analytics screen: range-filtered daily stats, top/
+/// recent events, and shared [adminMetrics].
 class AdminAnalyticsSnapshot {
   const AdminAnalyticsSnapshot({
     required this.endpoint,
@@ -148,6 +168,7 @@ class AdminAnalyticsSnapshot {
   final AdminMetrics adminMetrics;
 }
 
+/// One selectable [AdminAnalyticsRange] entry with its display label.
 class AdminAnalyticsRangeOption {
   const AdminAnalyticsRangeOption({required this.range, required this.label});
 
@@ -155,6 +176,7 @@ class AdminAnalyticsRangeOption {
   final String label;
 }
 
+/// One dated events/users data point in the admin analytics chart.
 class AdminDailyStat {
   const AdminDailyStat({
     required this.label,
@@ -167,6 +189,8 @@ class AdminDailyStat {
   final int users;
 }
 
+/// One aggregated event's count/share on the admin analytics "top events"
+/// list.
 class AdminEventSummary {
   const AdminEventSummary({
     required this.eventName,
@@ -179,6 +203,8 @@ class AdminEventSummary {
   final double percentage;
 }
 
+/// One raw recent analytics event (name, properties, timestamp) on the
+/// admin analytics screen.
 class AdminRecentEvent {
   const AdminRecentEvent({
     required this.eventName,
@@ -193,6 +219,8 @@ class AdminRecentEvent {
   final String date;
 }
 
+/// Data for the admin A/B tests screen: active/completed counts and all
+/// [tests].
 class AdminAbTestsSnapshot {
   const AdminAbTestsSnapshot({
     required this.endpoint,
@@ -219,6 +247,8 @@ class AdminAbTestsSnapshot {
   final AdminMetrics adminMetrics;
 }
 
+/// One A/B test's statistical summary (sample size, confidence, lift,
+/// p-value) and its [variants].
 class AdminAbTestSummary {
   const AdminAbTestSummary({
     required this.id,
@@ -245,6 +275,7 @@ class AdminAbTestSummary {
   final List<AdminAbTestVariant> variants;
 }
 
+/// One variant's exposure/conversion stats within an [AdminAbTestSummary].
 class AdminAbTestVariant {
   const AdminAbTestVariant({
     required this.id,
@@ -265,6 +296,8 @@ class AdminAbTestVariant {
   final bool isWinner;
 }
 
+/// Data for the admin funnels screen: session/completion totals for the
+/// [selectedFunnelId] plus all [funnels].
 class AdminFunnelsSnapshot {
   const AdminFunnelsSnapshot({
     required this.endpoint,
@@ -295,6 +328,7 @@ class AdminFunnelsSnapshot {
   final AdminMetrics adminMetrics;
 }
 
+/// One named conversion funnel and its ordered [steps].
 class AdminConversionFunnel {
   const AdminConversionFunnel({
     required this.id,
@@ -309,6 +343,8 @@ class AdminConversionFunnel {
   final List<AdminFunnelStep> steps;
 }
 
+/// One step in an [AdminConversionFunnel], with reached/completed/dropout
+/// stats.
 class AdminFunnelStep {
   const AdminFunnelStep({required this.label});
 

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+/// One segment (value/label/accent) rendered inside a [VitSegmentedChoice].
 class VitSegmentedChoiceOption<T> {
   const VitSegmentedChoiceOption({
     required this.value,

@@ -1,5 +1,7 @@
 part of 'profile_entities.dart';
 
+/// Data for the API key creation screen: selectable [permissions],
+/// [expiryOptions], and security tips.
 final class ProfileApiKeyCreateSnapshot {
   const ProfileApiKeyCreateSnapshot({
     required this.permissions,
@@ -18,6 +20,7 @@ final class ProfileApiKeyCreateSnapshot {
   final List<ProfileScreenState> supportedStates;
 }
 
+/// Data for the API key management screen: all issued [keys].
 final class ProfileApiManagementSnapshot {
   const ProfileApiManagementSnapshot({
     required this.keys,
@@ -32,6 +35,8 @@ final class ProfileApiManagementSnapshot {
   final List<ProfileScreenState> supportedStates;
 }
 
+/// Data for the VIP tier screen: current level, volume/asset thresholds,
+/// available [tiers], and upgrade [history].
 final class ProfileVipSnapshot {
   const ProfileVipSnapshot({
     required this.currentLevel,
@@ -68,6 +73,8 @@ final class ProfileVipSnapshot {
   }
 }
 
+/// Data for the device management screen: logged-in [devices] with derived
+/// current/trusted/active counts.
 final class ProfileDeviceManagementSnapshot {
   const ProfileDeviceManagementSnapshot({
     required this.devices,
@@ -97,6 +104,8 @@ final class ProfileDeviceManagementSnapshot {
       devices.where((device) => device.lastActive == 'Dang hoat dong').length;
 }
 
+/// One logged-in device (location, last active, trust/current state) on
+/// the device management screen.
 final class ProfileManagedDevice {
   const ProfileManagedDevice({
     required this.id,
@@ -141,6 +150,8 @@ final class ProfileManagedDevice {
   }
 }
 
+/// Data for the sub-accounts screen: managed [accounts] with derived
+/// aggregate balance/P&L/active-count totals.
 final class ProfileSubAccountsSnapshot {
   const ProfileSubAccountsSnapshot({
     required this.accounts,
@@ -166,6 +177,8 @@ final class ProfileSubAccountsSnapshot {
       accounts.fold(0, (sum, account) => sum + account.apiKeyCount);
 }
 
+/// One sub-account (balance, permissions, activity, API key count) on the
+/// sub-accounts screen.
 final class ProfileSubAccount {
   const ProfileSubAccount({
     required this.id,
@@ -196,6 +209,8 @@ final class ProfileSubAccount {
   final double tradingVolume30d;
 }
 
+/// One VIP tier's requirements and unlocked benefits (fees, withdraw
+/// limit, features) on the VIP screen.
 final class ProfileVipTier {
   const ProfileVipTier({
     required this.level,
@@ -222,6 +237,7 @@ final class ProfileVipTier {
   final List<String> features;
 }
 
+/// One dated volume/fee/savings row in the VIP tier history table.
 final class ProfileVipHistoryRow {
   const ProfileVipHistoryRow({
     required this.date,

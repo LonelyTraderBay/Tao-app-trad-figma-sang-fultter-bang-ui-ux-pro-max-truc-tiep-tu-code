@@ -1,5 +1,6 @@
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 
+/// Abstract data-access contract every Open Arena screen depends on; implemented by mock and remote repositories.
 abstract interface class ArenaRepository {
   ArenaHomeSnapshot getArenaHome();
 

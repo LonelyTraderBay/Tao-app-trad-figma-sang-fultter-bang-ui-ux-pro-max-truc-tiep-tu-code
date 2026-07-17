@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// A merchant's trading analytics dashboard: stats, charts, comparisons, and top merchants.
 final class P2PDashboardSnapshot {
   const P2PDashboardSnapshot({
     required this.endpoint,
@@ -56,6 +57,7 @@ final class P2PDashboardSnapshot {
   }
 }
 
+/// A single selectable time-range filter (e.g. 7d/30d/all) on the dashboard.
 final class P2PDashboardFilterDraft {
   const P2PDashboardFilterDraft({required this.id, required this.label});
 
@@ -63,6 +65,7 @@ final class P2PDashboardFilterDraft {
   final String label;
 }
 
+/// Aggregated order, volume, and reputation stats for the dashboard.
 final class P2PDashboardStatsDraft {
   const P2PDashboardStatsDraft({
     required this.totalOrders,
@@ -109,6 +112,7 @@ final class P2PDashboardStatsDraft {
   final String platformAvgResponseTime;
 }
 
+/// A single labeled point in a dashboard time-series chart.
 final class P2PDashboardSeriesPointDraft {
   const P2PDashboardSeriesPointDraft({
     required this.label,
@@ -119,6 +123,7 @@ final class P2PDashboardSeriesPointDraft {
   final double value;
 }
 
+/// Buy/sell order counts for a single month in the dashboard chart.
 final class P2PDashboardMonthlyOrdersDraft {
   const P2PDashboardMonthlyOrdersDraft({
     required this.month,
@@ -131,6 +136,7 @@ final class P2PDashboardMonthlyOrdersDraft {
   final int sell;
 }
 
+/// Share and volume of a single asset in the dashboard's asset distribution.
 final class P2PDashboardAssetDraft {
   const P2PDashboardAssetDraft({
     required this.asset,
@@ -143,6 +149,7 @@ final class P2PDashboardAssetDraft {
   final double volume;
 }
 
+/// A trading level and progress used on the dashboard (current or next).
 final class P2PDashboardLevelDraft {
   const P2PDashboardLevelDraft({
     required this.id,
@@ -161,6 +168,7 @@ final class P2PDashboardLevelDraft {
   final List<String> requirements;
 }
 
+/// A single metric comparing the user against the platform average.
 final class P2PDashboardComparisonDraft {
   const P2PDashboardComparisonDraft({
     required this.label,
@@ -177,6 +185,7 @@ final class P2PDashboardComparisonDraft {
   final bool lowerBetter;
 }
 
+/// A single top-merchant row on the dashboard leaderboard.
 final class P2PDashboardMerchantDraft {
   const P2PDashboardMerchantDraft({
     required this.id,
@@ -193,6 +202,7 @@ final class P2PDashboardMerchantDraft {
   final double rating;
 }
 
+/// A single recent trade row on the dashboard's activity feed.
 final class P2PDashboardActivityDraft {
   const P2PDashboardActivityDraft({
     required this.date,
@@ -213,6 +223,7 @@ final class P2PDashboardActivityDraft {
   final String status;
 }
 
+/// A single quick-action shortcut on the dashboard.
 final class P2PDashboardQuickActionDraft {
   const P2PDashboardQuickActionDraft({
     required this.id,
@@ -227,6 +238,7 @@ final class P2PDashboardQuickActionDraft {
   final String iconKey;
 }
 
+/// A user's unlocked/locked achievements and categories for the achievements screen.
 final class P2PAchievementsSnapshot {
   const P2PAchievementsSnapshot({
     required this.endpoint,
@@ -282,6 +294,7 @@ final class P2PAchievementsSnapshot {
   }
 }
 
+/// A single selectable achievement category filter.
 final class P2PAchievementCategoryDraft {
   const P2PAchievementCategoryDraft({required this.id, required this.label});
 
@@ -289,6 +302,7 @@ final class P2PAchievementCategoryDraft {
   final String label;
 }
 
+/// A single achievement with its progress and unlock reward.
 final class P2PAchievementDraft {
   const P2PAchievementDraft({
     required this.id,
@@ -323,6 +337,7 @@ final class P2PAchievementDraft {
   final String categoryId;
 }
 
+/// Form data for adding a user to the personal blacklist.
 final class P2PBlacklistAddSnapshot {
   const P2PBlacklistAddSnapshot({
     required this.endpoint,
@@ -365,6 +380,7 @@ final class P2PBlacklistAddSnapshot {
   final String contractNotes;
 }
 
+/// A single selectable reason for blacklisting a user.
 final class P2PBlacklistReasonDraft {
   const P2PBlacklistReasonDraft({
     required this.id,
@@ -379,6 +395,7 @@ final class P2PBlacklistReasonDraft {
   final String toneKey;
 }
 
+/// A user's personal blacklist entries for the blacklist screen.
 final class P2PBlacklistSnapshot {
   const P2PBlacklistSnapshot({
     required this.endpoint,
@@ -425,6 +442,7 @@ final class P2PBlacklistSnapshot {
   }
 }
 
+/// A single blacklisted user entry.
 final class P2PBlacklistEntryDraft {
   const P2PBlacklistEntryDraft({
     required this.id,
@@ -455,6 +473,7 @@ final class P2PBlacklistEntryDraft {
   final String? badge;
 }
 
+/// Notification preferences for the notification settings screen.
 final class P2PNotificationSettingsSnapshot {
   const P2PNotificationSettingsSnapshot({
     required this.endpoint,
@@ -483,6 +502,7 @@ final class P2PNotificationSettingsSnapshot {
   final String contractNotes;
 }
 
+/// A single notification category and its enabled channels.
 final class P2PNotificationSettingDraft {
   const P2PNotificationSettingDraft({
     required this.id,
@@ -497,6 +517,7 @@ final class P2PNotificationSettingDraft {
   final Map<String, bool> channels;
 }
 
+/// Trading defaults, toggles, and auto-reply configuration for the P2P settings screen.
 final class P2PSettingsSnapshot {
   const P2PSettingsSnapshot({
     required this.endpoint,
@@ -545,6 +566,7 @@ final class P2PSettingsSnapshot {
   final String contractNotes;
 }
 
+/// A single on/off toggle on the P2P settings screen.
 final class P2PSettingsToggleDraft {
   const P2PSettingsToggleDraft({
     required this.id,
@@ -563,6 +585,7 @@ final class P2PSettingsToggleDraft {
   final bool enabled;
 }
 
+/// Auto-reply configuration used when a user is away.
 final class P2PSettingsAutoReplyDraft {
   const P2PSettingsAutoReplyDraft({
     required this.enabled,
@@ -573,6 +596,7 @@ final class P2PSettingsAutoReplyDraft {
   final String buyTemplate;
 }
 
+/// FAQ, step-by-step guides, and safety tips for the P2P help/guide screen.
 final class P2PGuideSnapshot {
   const P2PGuideSnapshot({
     required this.endpoint,
@@ -613,6 +637,7 @@ final class P2PGuideSnapshot {
   final String contractNotes;
 }
 
+/// A single selectable tab on the P2P guide screen.
 final class P2PGuideTabDraft {
   const P2PGuideTabDraft({required this.id, required this.label});
 
@@ -620,6 +645,7 @@ final class P2PGuideTabDraft {
   final String label;
 }
 
+/// A single FAQ question/answer pair on the guide screen.
 final class P2PGuideFaqDraft {
   const P2PGuideFaqDraft({
     required this.id,
@@ -632,6 +658,7 @@ final class P2PGuideFaqDraft {
   final String answer;
 }
 
+/// A single numbered step in a buy/sell how-to guide.
 final class P2PGuideStepDraft {
   const P2PGuideStepDraft({
     required this.id,
@@ -650,6 +677,7 @@ final class P2PGuideStepDraft {
   final String toneKey;
 }
 
+/// A single safety tip on the P2P guide screen.
 final class P2PGuideTipDraft {
   const P2PGuideTipDraft({
     required this.id,
@@ -666,6 +694,7 @@ final class P2PGuideTipDraft {
   final String toneKey;
 }
 
+/// A single tutorial video listed on the guide screen.
 final class P2PGuideVideoDraft {
   const P2PGuideVideoDraft({
     required this.id,
@@ -686,6 +715,7 @@ final class P2PGuideVideoDraft {
   final String toneKey;
 }
 
+/// A single quick-link shortcut shown across P2P screens.
 final class P2PQuickLinkDraft {
   const P2PQuickLinkDraft({
     required this.id,

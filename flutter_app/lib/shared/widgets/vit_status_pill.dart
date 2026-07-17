@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 
+/// Semantic status/color family for a [VitStatusPill] or [VitAccentPill].
 enum VitStatusPillStatus {
   success,
   warning,
@@ -15,8 +16,11 @@ enum VitStatusPillStatus {
   orange,
 }
 
+/// Size preset of a [VitStatusPill].
 enum VitStatusPillSize { sm, md, lg }
 
+/// Tone-colored status pill with optional icon, pulse dot, count badge, and
+/// tap handling.
 class VitStatusPill extends StatelessWidget {
   const VitStatusPill({
     super.key,

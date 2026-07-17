@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Analytics for a single P2P ad: impressions, conversion, ranking, and daily/hourly performance breakdowns.
 final class P2PAdAnalyticsSnapshot {
   const P2PAdAnalyticsSnapshot({
     required this.endpoint,
@@ -74,6 +75,7 @@ final class P2PAdAnalyticsSnapshot {
   final String contractNotes;
 }
 
+/// One day of impressions/orders/volume in an ad's daily performance chart.
 final class P2PAdDailyPerformanceDraft {
   const P2PAdDailyPerformanceDraft({
     required this.date,
@@ -88,6 +90,7 @@ final class P2PAdDailyPerformanceDraft {
   final int volume;
 }
 
+/// One hour's order count in an ad's hourly activity heatmap.
 final class P2PAdHourlyHeatmapDraft {
   const P2PAdHourlyHeatmapDraft({required this.hour, required this.orders});
 
@@ -95,6 +98,7 @@ final class P2PAdHourlyHeatmapDraft {
   final int orders;
 }
 
+/// Order count and volume for a single payment method in an ad's analytics breakdown.
 final class P2PAdPaymentBreakdownDraft {
   const P2PAdPaymentBreakdownDraft({
     required this.method,
@@ -107,6 +111,7 @@ final class P2PAdPaymentBreakdownDraft {
   final int volume;
 }
 
+/// One metric comparing this ad against the average and top competitor.
 final class P2PAdCompetitorComparisonDraft {
   const P2PAdCompetitorComparisonDraft({
     required this.metric,
@@ -121,6 +126,7 @@ final class P2PAdCompetitorComparisonDraft {
   final double top;
 }
 
+/// A single actionable tip for improving an ad's performance.
 final class P2PAdOptimizationTipDraft {
   const P2PAdOptimizationTipDraft({
     required this.tone,
@@ -133,6 +139,7 @@ final class P2PAdOptimizationTipDraft {
   final String text;
 }
 
+/// Full detail view of a single P2P ad, including trust score, limits, and trading hours.
 final class P2PAdDetailSnapshot {
   const P2PAdDetailSnapshot({
     required this.endpoint,
@@ -183,6 +190,7 @@ final class P2PAdDetailSnapshot {
   final String contractNotes;
 }
 
+/// A merchant's own ad as listed on the 'My Ads' screen.
 final class P2PMyAdDraft {
   const P2PMyAdDraft({
     required this.id,
@@ -239,6 +247,7 @@ final class P2PMyAdDraft {
   }
 }
 
+/// Form defaults and options for the create-ad screen.
 final class P2PCreateAdSnapshot {
   const P2PCreateAdSnapshot({
     required this.endpoint,
@@ -277,6 +286,7 @@ final class P2PCreateAdSnapshot {
   final String contractNotes;
 }
 
+/// A merchant's own ads plus derived counts for the 'My Ads' screen.
 final class P2PMyAdsSnapshot {
   const P2PMyAdsSnapshot({
     required this.endpoint,
@@ -308,6 +318,7 @@ final class P2PMyAdsSnapshot {
       ads.fold<int>(0, (sum, ad) => sum + ad.totalVolume30dUsd);
 }
 
+/// A P2P buy/sell ad as shown in listings (home, express, order flows).
 final class P2PAdDraft {
   const P2PAdDraft({
     required this.id,
@@ -360,4 +371,5 @@ final class P2PAdDraft {
   final double? merchantRating;
 }
 
+/// Lifecycle status of a merchant's own ad.
 enum P2PMyAdStatus { active, paused, expired }

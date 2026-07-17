@@ -1,5 +1,8 @@
 part of 'predictions_entities.dart';
 
+/// Aggregated data for the Prediction Markets home/hub screen: visible
+/// events, categories, the user's positions/orders/receipts/rewards, and
+/// the active filter/search state.
 final class PredictionHomeSnapshot {
   const PredictionHomeSnapshot({
     required this.events,
@@ -41,6 +44,8 @@ final class PredictionHomeSnapshot {
   final String? highRiskContractId;
 }
 
+/// Data for the Prediction Markets search screen: filtered/sorted results
+/// plus the user's orders/receipts/rewards context.
 final class PredictionSearchSnapshot {
   const PredictionSearchSnapshot({
     required this.results,
@@ -69,6 +74,8 @@ final class PredictionSearchSnapshot {
   final Set<PredictionScreenState> supportedStates;
 }
 
+/// Data for the "breaking movers" screen: the biggest up/down movers plus
+/// the user's orders/receipts/rewards context.
 final class PredictionBreakingSnapshot {
   const PredictionBreakingSnapshot({
     required this.movers,
@@ -95,6 +102,9 @@ final class PredictionBreakingSnapshot {
   final Set<PredictionScreenState> supportedStates;
 }
 
+/// Data for one prediction event's detail screen: the event itself, the
+/// user's position, related events, price/volume history, order book,
+/// rules, holders, activity, and Arena rooms tied to the event.
 final class PredictionEventDetailSnapshot {
   const PredictionEventDetailSnapshot({
     required this.event,
@@ -133,6 +143,8 @@ final class PredictionEventDetailSnapshot {
   final String? highRiskContractId;
 }
 
+/// Data for the Prediction Markets portfolio screen: positions, open
+/// orders, receipts, rewards, and aggregate P&L totals.
 final class PredictionPortfolioSnapshot {
   const PredictionPortfolioSnapshot({
     required this.endpoint,
@@ -198,6 +210,8 @@ final class PredictionPortfolioSnapshot {
   }
 }
 
+/// Data for the Prediction Markets rewards screen: reward opportunities,
+/// related Arena rooms, and the total daily reward pool.
 final class PredictionRewardsSnapshot {
   const PredictionRewardsSnapshot({
     required this.events,
@@ -225,6 +239,8 @@ final class PredictionRewardsSnapshot {
   }
 }
 
+/// Data for the Prediction Markets leaderboard screen: ranked traders,
+/// biggest wins, and the active time-filter/metric selection.
 final class PredictionLeaderboardSnapshot {
   const PredictionLeaderboardSnapshot({
     required this.events,
@@ -260,6 +276,8 @@ final class PredictionLeaderboardSnapshot {
   }
 }
 
+/// One ranked trader entry (P&L, volume, win rate, biggest win) shown on
+/// the Prediction Markets leaderboard.
 final class PredictionLeaderboardTraderDraft {
   const PredictionLeaderboardTraderDraft({
     required this.rank,
@@ -301,6 +319,8 @@ final class PredictionLeaderboardTraderDraft {
   }
 }
 
+/// Data for the global activity feed screen: recent buy/sell activity
+/// across all events plus aggregate volume/count stats.
 final class PredictionGlobalActivitySnapshot {
   const PredictionGlobalActivitySnapshot({
     required this.events,
@@ -330,6 +350,7 @@ final class PredictionGlobalActivitySnapshot {
   }
 }
 
+/// One buy/sell activity entry shown in the global activity feed.
 final class PredictionGlobalActivityDraft {
   const PredictionGlobalActivityDraft({
     required this.id,
@@ -356,8 +377,11 @@ final class PredictionGlobalActivityDraft {
   final String timestamp;
 }
 
+/// Whether a [PredictionGlobalActivityDraft] entry was a buy or a sell.
 enum PredictionGlobalActivityAction { bought, sold }
 
+/// Data for one order-receipt detail screen: the resolved receipt (if
+/// found) plus the events/orders/receipts/rewards context around it.
 final class PredictionOrderReceiptSnapshot {
   const PredictionOrderReceiptSnapshot({
     required this.receiptId,
@@ -393,6 +417,8 @@ final class PredictionOrderReceiptSnapshot {
   }
 }
 
+/// Data for the Prediction Markets risk calculator tool: default input
+/// values plus the events/orders/receipts/rewards context.
 final class PredictionRiskCalculatorSnapshot {
   const PredictionRiskCalculatorSnapshot({
     required this.defaultEventName,
@@ -423,6 +449,8 @@ final class PredictionRiskCalculatorSnapshot {
   final Set<PredictionScreenState> supportedStates;
 }
 
+/// Data for the Prediction Markets market-maker (liquidity provider) tool:
+/// default input values, liquidity positions, and earnings history.
 final class PredictionMarketMakerSnapshot {
   const PredictionMarketMakerSnapshot({
     required this.defaultEventName,
@@ -474,6 +502,8 @@ final class PredictionMarketMakerSnapshot {
             positions.length;
 }
 
+/// One liquidity-provider position (fees earned, impermanent loss, APR)
+/// held by a market maker.
 final class PredictionLiquidityPositionDraft {
   const PredictionLiquidityPositionDraft({
     required this.id,
@@ -504,6 +534,8 @@ final class PredictionLiquidityPositionDraft {
       liquidityProvided == 0 ? 0 : (netPnl / liquidityProvided) * 100;
 }
 
+/// One dated fees/volume data point in a market maker's earnings history
+/// chart.
 final class PredictionEarningsPointDraft {
   const PredictionEarningsPointDraft({
     required this.date,

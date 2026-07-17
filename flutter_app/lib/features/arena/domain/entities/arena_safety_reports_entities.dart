@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// Community rules, reporting guidance, and disclaimers for the Arena safety center screen.
 final class ArenaSafetyCenterSnapshot {
   const ArenaSafetyCenterSnapshot({
     required this.endpoint,
@@ -38,6 +39,7 @@ final class ArenaSafetyCenterSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single community rule or reportable action listed on the safety center screen.
 final class ArenaSafetyRuleDraft {
   const ArenaSafetyRuleDraft({
     required this.title,
@@ -50,6 +52,7 @@ final class ArenaSafetyRuleDraft {
   final ArenaSafetyKind kind;
 }
 
+/// A single step in the report/violation review process explainer.
 final class ArenaSafetyProcessDraft {
   const ArenaSafetyProcessDraft({
     required this.step,
@@ -62,6 +65,7 @@ final class ArenaSafetyProcessDraft {
   final String description;
 }
 
+/// A single informational block (with checklist items) on the safety center screen.
 final class ArenaSafetyInfoDraft {
   const ArenaSafetyInfoDraft({
     required this.title,
@@ -76,6 +80,7 @@ final class ArenaSafetyInfoDraft {
   final List<ArenaSafetyCheckDraft> items;
 }
 
+/// A single allowed/not-allowed statement in a safety info checklist.
 final class ArenaSafetyCheckDraft {
   const ArenaSafetyCheckDraft({required this.text, required this.allowed});
 
@@ -83,6 +88,7 @@ final class ArenaSafetyCheckDraft {
   final bool allowed;
 }
 
+/// A single quick-link shortcut on the safety center screen.
 final class ArenaSafetyQuickLinkDraft {
   const ArenaSafetyQuickLinkDraft({
     required this.title,
@@ -95,6 +101,7 @@ final class ArenaSafetyQuickLinkDraft {
   final ArenaSafetyKind kind;
 }
 
+/// Category used to group and style safety center content.
 enum ArenaSafetyKind {
   respect,
   offPlatform,
@@ -107,6 +114,7 @@ enum ArenaSafetyKind {
   points,
 }
 
+/// Full detail of a single moderation report case.
 final class ArenaReportCaseSnapshot {
   const ArenaReportCaseSnapshot({
     required this.endpoint,
@@ -131,6 +139,7 @@ final class ArenaReportCaseSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A user's submitted moderation reports for the 'My Reports' screen.
 final class MyArenaReportsSnapshot {
   const MyArenaReportsSnapshot({
     required this.endpoint,
@@ -159,6 +168,7 @@ final class MyArenaReportsSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// Totals by status for a user's submitted reports.
 final class MyArenaReportsSummaryDraft {
   const MyArenaReportsSummaryDraft({
     required this.total,
@@ -171,6 +181,7 @@ final class MyArenaReportsSummaryDraft {
   final int resolved;
 }
 
+/// A single selectable status filter on the 'My Reports' screen.
 final class MyArenaReportsFilterDraft {
   const MyArenaReportsFilterDraft({
     required this.id,
@@ -185,6 +196,7 @@ final class MyArenaReportsFilterDraft {
   final ArenaReportCaseStatus? status;
 }
 
+/// A single moderation report case with its target, reason, and timeline.
 final class ArenaReportCaseDraft {
   const ArenaReportCaseDraft({
     required this.id,
@@ -215,6 +227,7 @@ final class ArenaReportCaseDraft {
   final String? relatedChallengeId;
 }
 
+/// A single step in a moderation report's review timeline.
 final class ArenaReportTimelineStepDraft {
   const ArenaReportTimelineStepDraft({
     required this.label,
@@ -227,6 +240,7 @@ final class ArenaReportTimelineStepDraft {
   final bool done;
 }
 
+/// Review status of a moderation report case.
 enum ArenaReportCaseStatus {
   submitted,
   underReview,
@@ -235,4 +249,5 @@ enum ArenaReportCaseStatus {
   appealOpen,
 }
 
+/// Type of entity a moderation report targets.
 enum ArenaReportTargetType { user, challenge, mode }

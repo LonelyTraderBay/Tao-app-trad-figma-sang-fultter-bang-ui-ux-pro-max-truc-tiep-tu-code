@@ -6,6 +6,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+/// Standard text field surface: label, prefix/suffix slots, error text, and
+/// accessible semantics label/hint driven by [label]/[errorText].
 class VitInput extends StatelessWidget {
   const VitInput({
     super.key,

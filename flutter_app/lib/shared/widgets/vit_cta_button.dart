@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 
+/// Color/emphasis treatment of a [VitCtaButton].
 enum VitCtaButtonVariant {
   primary,
   secondary,
@@ -18,6 +19,8 @@ enum VitCtaButtonVariant {
   auth,
 }
 
+/// Primary call-to-action button: variant-driven fill/gradient, loading
+/// spinner state, and optional leading/trailing icons.
 class VitCtaButton extends StatelessWidget {
   const VitCtaButton({
     super.key,

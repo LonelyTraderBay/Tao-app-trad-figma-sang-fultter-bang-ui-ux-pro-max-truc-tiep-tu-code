@@ -1,3 +1,5 @@
+/// Thrown when [AdminRepository] mock data is disabled but no production
+/// remote implementation has been configured yet (ADR-001).
 final class AdminBackendContractMissingException implements Exception {
   const AdminBackendContractMissingException();
 

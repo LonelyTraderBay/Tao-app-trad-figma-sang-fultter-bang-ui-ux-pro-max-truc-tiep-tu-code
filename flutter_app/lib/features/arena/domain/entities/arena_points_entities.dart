@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// A user's Arena points overview: summary, categories, check-ins, and tasks for the points hub screen.
 final class ArenaPointsSnapshot {
   const ArenaPointsSnapshot({
     required this.endpoint,
@@ -28,6 +29,7 @@ final class ArenaPointsSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A user's aggregate points balance, rank, and claim status for the points hub.
 final class ArenaPointsSummaryDraft {
   const ArenaPointsSummaryDraft({
     required this.bonusPointsClaimed,
@@ -58,6 +60,7 @@ final class ArenaPointsSummaryDraft {
   final String tierLabel;
 }
 
+/// A single points-earning category and its completion progress.
 final class ArenaPointsCategoryDraft {
   const ArenaPointsCategoryDraft({
     required this.id,
@@ -76,6 +79,7 @@ final class ArenaPointsCategoryDraft {
   final ArenaRewardAccentKind kind;
 }
 
+/// A single day's reward in the daily check-in streak.
 final class ArenaDailyCheckInDraft {
   const ArenaDailyCheckInDraft({
     required this.day,
@@ -92,6 +96,7 @@ final class ArenaDailyCheckInDraft {
   final bool today;
 }
 
+/// A single completable task that earns Arena points.
 final class ArenaRewardTaskDraft {
   const ArenaRewardTaskDraft({
     required this.id,
@@ -114,6 +119,7 @@ final class ArenaRewardTaskDraft {
   final ArenaRewardAccentKind kind;
 }
 
+/// A single bonus points offer row on the points hub screen.
 final class ArenaBonusRowDraft {
   const ArenaBonusRowDraft({
     required this.title,
@@ -128,6 +134,7 @@ final class ArenaBonusRowDraft {
   final ArenaRewardAccentKind kind;
 }
 
+/// A single ranked entry on the points hub's mini leaderboard.
 final class ArenaPointsLeaderboardDraft {
   const ArenaPointsLeaderboardDraft({
     required this.rank,
@@ -140,8 +147,10 @@ final class ArenaPointsLeaderboardDraft {
   final String pointsLabel;
 }
 
+/// Completion status of a points-earning task.
 enum ArenaRewardTaskStatus { active, completed, claimed }
 
+/// Visual accent/category used to style a points task or bonus row.
 enum ArenaRewardAccentKind {
   daily,
   weekly,
@@ -154,6 +163,7 @@ enum ArenaRewardAccentKind {
   neutral,
 }
 
+/// Full detail of a single points ledger entry.
 final class ArenaPointsEntryDetailSnapshot {
   const ArenaPointsEntryDetailSnapshot({
     required this.endpoint,
@@ -176,6 +186,7 @@ final class ArenaPointsEntryDetailSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A user's full points ledger history for the points ledger screen.
 final class ArenaPointsLedgerSnapshot {
   const ArenaPointsLedgerSnapshot({
     required this.endpoint,
@@ -200,6 +211,7 @@ final class ArenaPointsLedgerSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A user's current points balance and totals earned/spent for the ledger summary.
 final class ArenaPointsLedgerSummaryDraft {
   const ArenaPointsLedgerSummaryDraft({
     required this.currentBalance,
@@ -212,6 +224,7 @@ final class ArenaPointsLedgerSummaryDraft {
   final int pointsSpent;
 }
 
+/// A single selectable filter on the points ledger screen.
 final class ArenaPointsLedgerFilterDraft {
   const ArenaPointsLedgerFilterDraft({required this.id, required this.label});
 
@@ -219,6 +232,7 @@ final class ArenaPointsLedgerFilterDraft {
   final String label;
 }
 
+/// A single row in the points ledger list.
 final class ArenaPointsLedgerEntryDraft {
   const ArenaPointsLedgerEntryDraft({
     required this.id,
@@ -257,6 +271,7 @@ final class ArenaPointsLedgerEntryDraft {
   final String? linkedModeName;
 }
 
+/// Full detail of a single points ledger entry.
 final class ArenaPointsEntryDraft {
   const ArenaPointsEntryDraft({
     required this.id,
@@ -295,6 +310,8 @@ final class ArenaPointsEntryDraft {
   final String? linkedModeName;
 }
 
+/// Category of a points ledger entry (earned, spent, refunded, or adjusted).
 enum ArenaPointsEntryKind { reward, spend, refund, adjustment }
 
+/// Processing status of a points ledger entry.
 enum ArenaPointsEntryStatus { completed, pending, reversed }

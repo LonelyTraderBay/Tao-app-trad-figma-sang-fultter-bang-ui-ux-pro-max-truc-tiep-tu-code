@@ -1,3 +1,5 @@
+/// Thrown when mock data is disabled but no production earn repository has
+/// been configured.
 final class EarnBackendContractMissingException implements Exception {
   const EarnBackendContractMissingException();
 

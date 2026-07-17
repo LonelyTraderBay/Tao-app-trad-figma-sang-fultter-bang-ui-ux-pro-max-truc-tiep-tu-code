@@ -1,3 +1,5 @@
+/// Thrown when mock data is disabled but no production notifications
+/// repository has been configured.
 final class NotificationsBackendContractMissingException implements Exception {
   const NotificationsBackendContractMissingException();
 

@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Square tinted avatar rendering an asset's leading initial(s) (e.g. coin
+/// symbol) inside a rounded accent-colored tile.
 class VitAssetAvatar extends StatelessWidget {
   const VitAssetAvatar({
     super.key,

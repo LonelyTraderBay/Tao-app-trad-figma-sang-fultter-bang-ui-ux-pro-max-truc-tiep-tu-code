@@ -6,6 +6,8 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Small tinted label pill (accent-colored fill + border) used for coin
+/// symbols, tags, and other compact accent badges.
 class VitAccentPill extends StatelessWidget {
   const VitAccentPill({
     super.key,

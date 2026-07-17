@@ -1,7 +1,10 @@
 part of 'earn_entities.dart';
 
+/// Subscription model of a savings product: freely redeemable or locked for
+/// a fixed term.
 enum SavingsProductType { flexible, locked }
 
+/// Kind of ledger event in a savings history entry.
 enum SavingsHistoryTransactionType {
   subscribe,
   redeem,
@@ -10,10 +13,14 @@ enum SavingsHistoryTransactionType {
   earlyRedeem,
 }
 
+/// Settlement status of a savings history transaction.
 enum SavingsHistoryTransactionStatus { completed, pending, failed }
 
+/// Lifecycle status of a savings goal.
 enum SavingsGoalStatus { active, completed, paused }
 
+/// Data contract for the savings home screen: totals, insights, products,
+/// and positions.
 final class SavingsSnapshot {
   const SavingsSnapshot({
     required this.endpoint,
@@ -52,6 +59,7 @@ final class SavingsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single insight/tip card shown on the savings home screen.
 final class SavingsInsightDraft {
   const SavingsInsightDraft({
     required this.title,
@@ -66,6 +74,8 @@ final class SavingsInsightDraft {
   final String? route;
 }
 
+/// A single savings product listing (flexible or locked) shown for
+/// subscription.
 final class SavingsProductDraft {
   const SavingsProductDraft({
     required this.id,
@@ -100,6 +110,7 @@ final class SavingsProductDraft {
   final bool isNew;
 }
 
+/// A single user savings position (an active subscription to a product).
 final class SavingsPositionDraft {
   const SavingsPositionDraft({
     required this.id,
@@ -126,6 +137,7 @@ final class SavingsPositionDraft {
   final EarnRiskLevel riskLevel;
 }
 
+/// Data contract for a single savings product's detail screen.
 final class SavingsProductDetailSnapshot {
   const SavingsProductDetailSnapshot({
     required this.endpoint,
@@ -150,6 +162,7 @@ final class SavingsProductDetailSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Data contract for the savings redeem (withdraw a position) screen.
 final class SavingsRedeemSnapshot {
   const SavingsRedeemSnapshot({
     required this.endpoint,
@@ -176,6 +189,7 @@ final class SavingsRedeemSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Data contract for the savings redeem receipt (confirmation) screen.
 final class SavingsReceiptSnapshot {
   const SavingsReceiptSnapshot({
     required this.endpoint,
@@ -200,6 +214,7 @@ final class SavingsReceiptSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A completed savings redemption receipt.
 final class SavingsReceiptDraft {
   const SavingsReceiptDraft({
     required this.referenceId,
@@ -218,6 +233,8 @@ final class SavingsReceiptDraft {
   final String timestamp;
 }
 
+/// Data contract for the savings portfolio overview screen: totals, active
+/// positions, income projections, and upcoming maturities.
 final class SavingsPortfolioSnapshot {
   const SavingsPortfolioSnapshot({
     required this.endpoint,
@@ -260,6 +277,7 @@ final class SavingsPortfolioSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single position row in the savings portfolio overview.
 final class SavingsPortfolioPositionDraft {
   const SavingsPortfolioPositionDraft({
     required this.id,
@@ -296,6 +314,7 @@ final class SavingsPortfolioPositionDraft {
   final int? daysLeft;
 }
 
+/// A single projected-income line item in the savings portfolio overview.
 final class SavingsIncomeProjectionDraft {
   const SavingsIncomeProjectionDraft({
     required this.label,
@@ -308,6 +327,7 @@ final class SavingsIncomeProjectionDraft {
   final String icon;
 }
 
+/// A single upcoming maturity event for a locked savings position.
 final class SavingsMaturityEventDraft {
   const SavingsMaturityEventDraft({
     required this.id,
@@ -336,6 +356,7 @@ final class SavingsMaturityEventDraft {
   final EarnRiskLevel tone;
 }
 
+/// Data contract for the savings transaction history screen.
 final class SavingsHistorySnapshot {
   const SavingsHistorySnapshot({
     required this.endpoint,
@@ -366,6 +387,7 @@ final class SavingsHistorySnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single row in the savings transaction history list.
 final class SavingsHistoryTransactionDraft {
   const SavingsHistoryTransactionDraft({
     required this.id,
@@ -394,6 +416,8 @@ final class SavingsHistoryTransactionDraft {
   final String? note;
 }
 
+/// Data contract for the savings goals screen: the user's goals, available
+/// templates, and tips.
 final class SavingsGoalsSnapshot {
   const SavingsGoalsSnapshot({
     required this.endpoint,
@@ -420,6 +444,7 @@ final class SavingsGoalsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single user-defined savings goal with its progress and linked product.
 final class SavingsGoalDraft {
   const SavingsGoalDraft({
     required this.id,
@@ -456,6 +481,7 @@ final class SavingsGoalDraft {
   final List<SavingsGoalContributionDraft> contributions;
 }
 
+/// A single progress milestone within a savings goal, unlocking a reward.
 final class SavingsGoalMilestoneDraft {
   const SavingsGoalMilestoneDraft({
     required this.id,
@@ -478,6 +504,7 @@ final class SavingsGoalMilestoneDraft {
   final String? claimedAt;
 }
 
+/// A single contribution event toward a savings goal.
 final class SavingsGoalContributionDraft {
   const SavingsGoalContributionDraft({
     required this.date,
@@ -490,6 +517,7 @@ final class SavingsGoalContributionDraft {
   final String source;
 }
 
+/// A pre-built goal template offered when creating a new savings goal.
 final class SavingsGoalTemplateDraft {
   const SavingsGoalTemplateDraft({
     required this.id,
@@ -508,6 +536,7 @@ final class SavingsGoalTemplateDraft {
   final String description;
 }
 
+/// A single savings tip card shown on the goals screen.
 final class SavingsGoalTipDraft {
   const SavingsGoalTipDraft({
     required this.title,

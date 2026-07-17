@@ -1,9 +1,13 @@
 part of 'trade_core_entities.dart';
 
+/// Direction of a spot/futures order: buy (long) or sell (short).
 enum TradeOrderSide { buy, sell }
 
+/// Execution style for an order: market, limit, or stop.
 enum TradeOrderType { market, limit, stop }
 
+/// Read-model for the main Trade terminal screen: current pair, order book,
+/// trade tape, open orders/positions, and demo balances.
 final class TradeScreenSnapshot {
   const TradeScreenSnapshot({
     required this.pair,
@@ -35,6 +39,8 @@ final class TradeScreenSnapshot {
 }
 
 // Also referenced by trade_futures_leverage (futures/margin pair selection).
+/// A tradable market pair (symbol, base/quote asset, price) — kernel entity
+/// shared across spot, futures, and margin screens.
 final class TradePair {
   const TradePair({
     required this.id,
@@ -55,6 +61,7 @@ final class TradePair {
   final int logoColorHex;
 }
 
+/// Aggregated bid/ask levels for the order book widget.
 final class TradeOrderBook {
   const TradeOrderBook({required this.bids, required this.asks});
 
@@ -62,6 +69,7 @@ final class TradeOrderBook {
   final List<TradeBookLevel> asks;
 }
 
+/// A single price/amount/total row of an order book side.
 final class TradeBookLevel {
   const TradeBookLevel({
     required this.price,
@@ -74,6 +82,7 @@ final class TradeBookLevel {
   final double total;
 }
 
+/// One recent trade print (price, amount, time, buy/sell) shown on the tape.
 final class TradeTapePrint {
   const TradeTapePrint({
     required this.price,
@@ -88,6 +97,7 @@ final class TradeTapePrint {
   final bool isBuy;
 }
 
+/// An order still resting on the book, as shown in the open-orders list.
 final class TradeOpenOrder {
   const TradeOpenOrder({
     required this.id,
@@ -110,8 +120,12 @@ final class TradeOpenOrder {
   final String createdAt;
 }
 
+/// Lifecycle status of a historical order: open, partial, filled, or
+/// cancelled.
 enum TradeOrderStatus { open, partial, filled, cancelled }
 
+/// Read-model for the Orders & History screen: open orders plus historical
+/// orders.
 final class TradeOrdersHistorySnapshot {
   const TradeOrdersHistorySnapshot({
     required this.trade,
@@ -128,8 +142,12 @@ final class TradeOrdersHistorySnapshot {
   final String lastUpdatedLabel;
 }
 
+/// Post-submit status of an order receipt: submitted, pending, or partially
+/// filled.
 enum TradeReceiptStatus { submitted, pending, partiallyFilled }
 
+/// Read-model for the order-receipt confirmation screen shown after an
+/// order is placed.
 final class TradeOrderReceiptSnapshot {
   const TradeOrderReceiptSnapshot({
     required this.trade,
@@ -148,6 +166,8 @@ final class TradeOrderReceiptSnapshot {
   final String? highRiskContractId;
 }
 
+/// Full detail of a submitted order receipt (fill price, fee, TP/SL,
+/// slippage) shown to the user on the confirmation screen.
 final class TradeOrderReceiptDetails {
   const TradeOrderReceiptDetails({
     required this.orderId,
@@ -186,6 +206,8 @@ final class TradeOrderReceiptDetails {
   final double? slippage;
 }
 
+/// Read-model for the Trade Settings screen: current settings plus
+/// supported UI states.
 final class TradeSettingsSnapshot {
   const TradeSettingsSnapshot({
     required this.trade,
@@ -200,6 +222,8 @@ final class TradeSettingsSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// User-configurable trade terminal preferences (default order
+/// type/slippage, confirmations, chart timeframe).
 final class TradeSettings {
   const TradeSettings({
     required this.defaultOrderType,
@@ -268,10 +292,13 @@ final class TradeSettings {
   }
 }
 
+/// Market type of a position: spot, futures, or margin.
 enum TradePositionType { spot, futures, margin }
 
+/// Directional side of a position: long or short.
 enum TradePositionSide { long, short }
 
+/// Read-model for the Positions dashboard screen.
 final class TradePositionsSnapshot {
   const TradePositionsSnapshot({
     required this.trade,
@@ -286,6 +313,8 @@ final class TradePositionsSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A single open position row shown on the Positions dashboard, including
+/// PnL and liquidation price.
 final class TradeDashboardPosition {
   const TradeDashboardPosition({
     required this.id,
@@ -322,6 +351,7 @@ final class TradeDashboardPosition {
   double get notional => size * currentPrice;
 }
 
+/// A completed or cancelled order row shown in order history.
 final class TradeHistoryOrder {
   const TradeHistoryOrder({
     required this.id,
@@ -348,6 +378,8 @@ final class TradeHistoryOrder {
   final String createdAt;
 }
 
+/// Minimal position summary (symbol, side, notional, PnL) — kernel entity
+/// used outside the full dashboard context (e.g. copy-trading, bots).
 final class TradePosition {
   const TradePosition({
     required this.symbol,
@@ -362,6 +394,7 @@ final class TradePosition {
   final double pnl;
 }
 
+/// Available quote/base asset balances used for order sizing and preview.
 final class TradeBalances {
   const TradeBalances({
     required this.usdtAvailable,
@@ -372,6 +405,11 @@ final class TradeBalances {
   final double baseAvailable;
 }
 
+/// In-progress order form contract with value equality: a `TradeOrderDraft`
+/// rebuilt from the same on-screen values (e.g. every keystroke re-reading
+/// the same amount) resolves to the same Provider.family cache entry
+/// instead of a new one each time. See PERF-HN1,
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
 final class TradeOrderDraft {
   const TradeOrderDraft({
     required this.pairId,
@@ -405,6 +443,8 @@ final class TradeOrderDraft {
   int get hashCode => Object.hash(pairId, side, type, price, amount);
 }
 
+/// Computed cost preview (total, fee, estimated receive) for an order draft
+/// before submission — financial write path, see ADR-001.
 final class TradeOrderPreview {
   const TradeOrderPreview({
     required this.total,
@@ -419,6 +459,8 @@ final class TradeOrderPreview {
   final double estimatedReceive;
 }
 
+/// Minimal receipt returned after submitting an order (id, preview,
+/// status) — financial write path, see ADR-001.
 final class TradeOrderReceipt {
   const TradeOrderReceipt({
     required this.orderId,
@@ -431,6 +473,8 @@ final class TradeOrderReceipt {
   final String status;
 }
 
+/// Result of a post-order action (e.g. cancel, edit) performed on an
+/// existing order.
 final class TradeOrderActionResult {
   const TradeOrderActionResult({
     required this.orderId,
@@ -443,6 +487,8 @@ final class TradeOrderActionResult {
   final String status;
 }
 
+/// Read-model for the Advanced Trading demo screen (position, order types,
+/// PnL/performance metrics).
 final class TradeAdvancedTradingDemoSnapshot {
   const TradeAdvancedTradingDemoSnapshot({
     required this.position,
@@ -471,6 +517,7 @@ final class TradeAdvancedTradingDemoSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Sample position used by the Advanced Trading demo screen.
 final class TradeAdvancedDemoPosition {
   const TradeAdvancedDemoPosition({
     required this.id,
@@ -497,6 +544,8 @@ final class TradeAdvancedDemoPosition {
   final double liquidationPrice;
 }
 
+/// A labelled demo action (e.g. position action, order type) shown as a
+/// selectable option on the Advanced Trading demo screen.
 final class TradeAdvancedDemoAction {
   const TradeAdvancedDemoAction({
     required this.id,
@@ -509,8 +558,11 @@ final class TradeAdvancedDemoAction {
   final String description;
 }
 
+/// Visual tone for a demo metric value: neutral, positive, negative,
+/// warning, or accent.
 enum TradeAdvancedMetricTone { neutral, positive, negative, warning, accent }
 
+/// A labelled metric value with a visual tone, used on demo summary rows.
 final class TradeAdvancedDemoMetric {
   const TradeAdvancedDemoMetric({
     required this.label,
@@ -523,6 +575,8 @@ final class TradeAdvancedDemoMetric {
   final TradeAdvancedMetricTone tone;
 }
 
+/// Read-model for the Advanced Analytics screen (stats, AI signals, risk,
+/// journal, position sizing).
 final class TradeAdvancedAnalyticsSnapshot {
   const TradeAdvancedAnalyticsSnapshot({
     required this.stats,
@@ -547,6 +601,7 @@ final class TradeAdvancedAnalyticsSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single labelled analytics stat with a display color.
 final class TradeAdvancedAnalyticsStat {
   const TradeAdvancedAnalyticsStat({
     required this.label,
@@ -559,6 +614,8 @@ final class TradeAdvancedAnalyticsStat {
   final int colorHex;
 }
 
+/// An AI-generated trade signal (direction, confidence, entry/target/stop,
+/// reasoning) shown on the Advanced Analytics screen.
 final class TradeAiSignal {
   const TradeAiSignal({
     required this.id,
@@ -587,6 +644,8 @@ final class TradeAiSignal {
   final List<String> reasoning;
 }
 
+/// Aggregated risk metrics (VaR, Sharpe ratio, max drawdown, risk score)
+/// for the Advanced Analytics screen.
 final class TradeAdvancedRiskSummary {
   const TradeAdvancedRiskSummary({
     required this.var95,
@@ -603,6 +662,8 @@ final class TradeAdvancedRiskSummary {
   final String riskLevel;
 }
 
+/// Aggregated trade-journal metrics (win rate, total trades, PnL, average
+/// win/loss).
 final class TradeJournalSummary {
   const TradeJournalSummary({
     required this.winRate,
@@ -619,6 +680,7 @@ final class TradeJournalSummary {
   final double avgLoss;
 }
 
+/// Inputs and computed output of the position-sizing calculator.
 final class TradePositionSizingSummary {
   const TradePositionSizingSummary({
     required this.accountBalance,

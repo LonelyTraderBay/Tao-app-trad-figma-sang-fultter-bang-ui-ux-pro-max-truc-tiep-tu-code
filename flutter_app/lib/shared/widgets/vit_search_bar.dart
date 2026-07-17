@@ -6,8 +6,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 
+/// Layout/height preset for [VitSearchBar]: default field, in-header field
+/// with a back button, or a compact field.
 enum VitSearchBarVariant { defaultSearch, header, compact }
 
+/// Search input field with a leading search icon, clear button, and
+/// optional back button / inline or trailing filter toggle.
 class VitSearchBar extends StatefulWidget {
   const VitSearchBar({
     super.key,

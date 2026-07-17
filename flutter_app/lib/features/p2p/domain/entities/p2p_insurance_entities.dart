@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Insurance fund overview: balance, claims, coverage tier, and fund health for the insurance screen.
 final class P2PInsuranceFundSnapshot {
   const P2PInsuranceFundSnapshot({
     required this.endpoint,
@@ -64,6 +65,7 @@ final class P2PInsuranceFundSnapshot {
   final String contractNotes;
 }
 
+/// A single eligibility requirement row shown on the insurance fund screen.
 final class P2PInsuranceEligibilityItemDraft {
   const P2PInsuranceEligibilityItemDraft({
     required this.label,
@@ -76,6 +78,7 @@ final class P2PInsuranceEligibilityItemDraft {
   final bool highlight;
 }
 
+/// A single coverage tier and its benefits on the insurance fund screen.
 final class P2PInsuranceCoverageTierDraft {
   const P2PInsuranceCoverageTierDraft({
     required this.name,
@@ -90,6 +93,7 @@ final class P2PInsuranceCoverageTierDraft {
   final bool highlight;
 }
 
+/// A single notification preference toggle for insurance fund updates.
 final class P2PInsuranceNotificationPrefDraft {
   const P2PInsuranceNotificationPrefDraft({
     required this.key,
@@ -104,8 +108,10 @@ final class P2PInsuranceNotificationPrefDraft {
   final bool enabled;
 }
 
+/// Lifecycle status of an insurance claim.
 enum P2PInsuranceClaimStatus { pending, reviewing, approved, rejected, paid }
 
+/// A single insurance claim as listed on the insurance fund screen.
 final class P2PInsuranceClaimDraft {
   const P2PInsuranceClaimDraft({
     required this.id,
@@ -128,6 +134,7 @@ final class P2PInsuranceClaimDraft {
   final String submittedAt;
 }
 
+/// One day's balance/inflow/outflow point in the insurance fund chart.
 final class P2PInsuranceChartPointDraft {
   const P2PInsuranceChartPointDraft({
     required this.day,
@@ -142,6 +149,7 @@ final class P2PInsuranceChartPointDraft {
   final int outflow;
 }
 
+/// Insurance certificate details for a user, including coverage limits and SLA terms.
 final class P2PInsuranceCertificateSnapshot {
   const P2PInsuranceCertificateSnapshot({
     required this.endpoint,
@@ -237,6 +245,7 @@ ${exclusions.map((item) => '- $item').join('\n')}
 ''';
 }
 
+/// A user's insurance score, contributing factors, and tier requirements.
 final class P2PInsuranceScoreSnapshot {
   const P2PInsuranceScoreSnapshot({
     required this.endpoint,
@@ -278,6 +287,7 @@ final class P2PInsuranceScoreSnapshot {
       factors.fold(0, (sum, factor) => sum + (factor.maxScore - factor.score));
 }
 
+/// A single factor contributing to a user's insurance score.
 final class P2PInsuranceScoreFactorDraft {
   const P2PInsuranceScoreFactorDraft({
     required this.id,
@@ -302,6 +312,7 @@ final class P2PInsuranceScoreFactorDraft {
   final String? recommendation;
 }
 
+/// A quick action suggesting how to raise the insurance score.
 final class P2PInsuranceScoreQuickActionDraft {
   const P2PInsuranceScoreQuickActionDraft({
     required this.label,
@@ -316,6 +327,7 @@ final class P2PInsuranceScoreQuickActionDraft {
   final String? route;
 }
 
+/// A single insurance score tier and its requirements.
 final class P2PInsuranceScoreTierDraft {
   const P2PInsuranceScoreTierDraft({
     required this.name,
@@ -334,6 +346,7 @@ final class P2PInsuranceScoreTierDraft {
   final bool isUnlocked;
 }
 
+/// Insurance policy document content for the policy screen.
 final class P2PInsurancePolicySnapshot {
   const P2PInsurancePolicySnapshot({
     required this.endpoint,
@@ -366,6 +379,7 @@ final class P2PInsurancePolicySnapshot {
   final String contractNotes;
 }
 
+/// A single section of the insurance policy document.
 final class P2PInsurancePolicySectionDraft {
   const P2PInsurancePolicySectionDraft({
     required this.id,
@@ -378,6 +392,7 @@ final class P2PInsurancePolicySectionDraft {
   final List<String> content;
 }
 
+/// A user's insurance fund contribution history.
 final class P2PContributionHistorySnapshot {
   const P2PContributionHistorySnapshot({
     required this.endpoint,
@@ -435,6 +450,7 @@ final class P2PContributionHistorySnapshot {
   }
 }
 
+/// A single insurance fund contribution tied to one order.
 final class P2PContributionDraft {
   const P2PContributionDraft({
     required this.id,
@@ -463,6 +479,7 @@ final class P2PContributionDraft {
   }
 }
 
+/// Contributions grouped into a single month for the contribution history screen.
 final class P2PContributionMonthDraft {
   const P2PContributionMonthDraft({
     required this.month,
@@ -479,6 +496,7 @@ final class P2PContributionMonthDraft {
   final List<P2PContributionDraft> contributions;
 }
 
+/// Full detail of a single insurance claim, including benchmarks and reason breakdown.
 final class P2PClaimDetailSnapshot {
   const P2PClaimDetailSnapshot({
     required this.endpoint,
@@ -509,6 +527,7 @@ final class P2PClaimDetailSnapshot {
   final String? highRiskContractId;
 }
 
+/// A single insurance claim with its timeline, evidence, and reviewer notes.
 final class P2PClaimDetailDraft {
   const P2PClaimDetailDraft({
     required this.id,
@@ -559,6 +578,7 @@ final class P2PClaimDetailDraft {
   };
 }
 
+/// A single event in an insurance claim's review timeline.
 final class P2PClaimTimelineEventDraft {
   const P2PClaimTimelineEventDraft({
     required this.id,
@@ -577,6 +597,7 @@ final class P2PClaimTimelineEventDraft {
   final String? actor;
 }
 
+/// A single evidence file attached to an insurance claim.
 final class P2PClaimEvidenceDraft {
   const P2PClaimEvidenceDraft({
     required this.id,
@@ -593,6 +614,7 @@ final class P2PClaimEvidenceDraft {
   final String uploadedAt;
 }
 
+/// A single reviewer note left on an insurance claim.
 final class P2PClaimReviewerNoteDraft {
   const P2PClaimReviewerNoteDraft({
     required this.id,
@@ -609,6 +631,7 @@ final class P2PClaimReviewerNoteDraft {
   final String timestamp;
 }
 
+/// A single benchmark metric comparing a claim against platform norms.
 final class P2PClaimBenchmarkDraft {
   const P2PClaimBenchmarkDraft({
     required this.id,
@@ -629,6 +652,7 @@ final class P2PClaimBenchmarkDraft {
   final String toneKey;
 }
 
+/// Share of claims attributed to a single reason, used in claim analytics.
 final class P2PClaimReasonShareDraft {
   const P2PClaimReasonShareDraft({
     required this.label,

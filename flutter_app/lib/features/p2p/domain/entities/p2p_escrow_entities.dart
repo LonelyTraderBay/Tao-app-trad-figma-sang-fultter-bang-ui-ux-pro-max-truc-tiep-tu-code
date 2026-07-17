@@ -1,9 +1,12 @@
 part of 'p2p_entities.dart';
 
+/// Buy/sell direction of an order held in escrow.
 enum P2PEscrowOrderType { buy, sell }
 
+/// Lifecycle status of funds held in escrow for an order.
 enum P2PEscrowOrderStatus { pendingPayment, paid, pendingRelease, dispute }
 
+/// Escrow balances by asset and the orders holding each balance.
 final class P2PEscrowBalanceSnapshot {
   const P2PEscrowBalanceSnapshot({
     required this.endpoint,
@@ -52,6 +55,7 @@ final class P2PEscrowBalanceSnapshot {
   }
 }
 
+/// Total amount and order count held in escrow for a single asset.
 final class P2PEscrowAssetBalanceDraft {
   const P2PEscrowAssetBalanceDraft({
     required this.asset,
@@ -64,6 +68,7 @@ final class P2PEscrowAssetBalanceDraft {
   final int orderCount;
 }
 
+/// A single order with funds currently held in escrow.
 final class P2PEscrowOrderDraft {
   const P2PEscrowOrderDraft({
     required this.id,
@@ -108,6 +113,7 @@ final class P2PEscrowOrderDraft {
   };
 }
 
+/// Detail of a single escrow, including signers and release timeline.
 final class P2PEscrowDetailSnapshot {
   const P2PEscrowDetailSnapshot({
     required this.endpoint,
@@ -152,6 +158,7 @@ final class P2PEscrowDetailSnapshot {
   String get maskedAddress => _maskAddress(escrowAddress);
 }
 
+/// A single signer required to release funds from escrow.
 final class P2PEscrowSignerDraft {
   const P2PEscrowSignerDraft({
     required this.id,
@@ -172,6 +179,7 @@ final class P2PEscrowSignerDraft {
   String get maskedAddress => _maskAddress(address);
 }
 
+/// A single event in an escrow's release timeline.
 final class P2PEscrowTimelineEventDraft {
   const P2PEscrowTimelineEventDraft({
     required this.id,

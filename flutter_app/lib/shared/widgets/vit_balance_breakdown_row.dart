@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
+/// One tappable balance summary entry (label/value/icon/route) rendered by
+/// [VitBalanceBreakdownRow].
 class VitBalanceBreakdownItem {
   const VitBalanceBreakdownItem({
     required this.label,

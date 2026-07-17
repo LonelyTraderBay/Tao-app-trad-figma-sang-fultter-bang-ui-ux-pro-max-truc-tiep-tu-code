@@ -1,7 +1,9 @@
 part of 'p2p_entities.dart';
 
+/// Status of a single event in an order's timeline.
 enum P2POrderTimelineStatus { completed, pending, failed }
 
+/// An order and its full event timeline.
 final class P2POrderTimelineSnapshot {
   const P2POrderTimelineSnapshot({
     required this.endpoint,
@@ -26,6 +28,7 @@ final class P2POrderTimelineSnapshot {
   final String? highRiskContractId;
 }
 
+/// Order summary and quick tags for the post-trade rating screen.
 final class P2POrderRateSnapshot {
   const P2POrderRateSnapshot({
     required this.endpoint,
@@ -52,6 +55,7 @@ final class P2POrderRateSnapshot {
   final String contractNotes;
 }
 
+/// Order summary and reasons for the order-cancellation screen.
 final class P2POrderCancelSnapshot {
   const P2POrderCancelSnapshot({
     required this.endpoint,
@@ -78,6 +82,7 @@ final class P2POrderCancelSnapshot {
   final String contractNotes;
 }
 
+/// Order summary and upload guidance for submitting payment proof.
 final class P2POrderProofSnapshot {
   const P2POrderProofSnapshot({
     required this.endpoint,
@@ -108,6 +113,7 @@ final class P2POrderProofSnapshot {
   final String contractNotes;
 }
 
+/// Full detail of an active order: payment fields, timeline, and safety guidance.
 final class P2POrderSnapshot {
   const P2POrderSnapshot({
     required this.endpoint,
@@ -146,6 +152,7 @@ final class P2POrderSnapshot {
   final String? highRiskContractId;
 }
 
+/// Chat thread data for an order, including messages and quick replies.
 final class P2PChatSnapshot {
   const P2PChatSnapshot({
     required this.endpoint,
@@ -182,8 +189,10 @@ final class P2PChatSnapshot {
   final String contractNotes;
 }
 
+/// Who sent a message in an order's chat thread.
 enum P2PChatSender { system, me, other }
 
+/// A single message in an order's chat thread.
 final class P2PChatMessageDraft {
   const P2PChatMessageDraft({
     required this.id,
@@ -200,6 +209,7 @@ final class P2PChatMessageDraft {
   final bool isRead;
 }
 
+/// A user's orders grouped by tab for the 'My Orders' screen.
 final class P2PMyOrdersSnapshot {
   const P2PMyOrdersSnapshot({
     required this.endpoint,
@@ -242,6 +252,7 @@ final class P2PMyOrdersSnapshot {
       .fold<double>(0, (sum, order) => sum + order.total);
 }
 
+/// A single filter tab on the 'My Orders' screen.
 final class P2PMyOrdersTabDraft {
   const P2PMyOrdersTabDraft({required this.id, required this.label});
 
@@ -249,6 +260,7 @@ final class P2PMyOrdersTabDraft {
   final String label;
 }
 
+/// A single order row on the 'My Orders' list.
 final class P2PMyOrderDraft {
   const P2PMyOrderDraft({
     required this.id,
@@ -279,6 +291,7 @@ final class P2PMyOrderDraft {
   final String createdAt;
 }
 
+/// Full transfer and payment detail for a single order.
 final class P2POrderDetailDraft {
   const P2POrderDetailDraft({
     required this.id,
@@ -325,6 +338,7 @@ final class P2POrderDetailDraft {
   final String createdTime;
 }
 
+/// A single labeled payment detail field on the order screen.
 final class P2POrderPaymentFieldDraft {
   const P2POrderPaymentFieldDraft({
     required this.id,
@@ -341,8 +355,10 @@ final class P2POrderPaymentFieldDraft {
   final bool emphasis;
 }
 
+/// Status of a single step in an order's timeline.
 enum P2POrderStepStatus { completed, active, pending }
 
+/// A single step in an order's payment/release timeline.
 final class P2POrderTimelineStepDraft {
   const P2POrderTimelineStepDraft({
     required this.id,
@@ -361,6 +377,7 @@ final class P2POrderTimelineStepDraft {
   final String iconKey;
 }
 
+/// A single quick-action shortcut on the order screen.
 final class P2POrderQuickActionDraft {
   const P2POrderQuickActionDraft({
     required this.id,
@@ -375,6 +392,7 @@ final class P2POrderQuickActionDraft {
   final String route;
 }
 
+/// Order summary shown while uploading payment proof.
 final class P2POrderProofDraft {
   const P2POrderProofDraft({
     required this.id,
@@ -389,6 +407,7 @@ final class P2POrderProofDraft {
   final String currency;
 }
 
+/// Order summary shown on the cancellation confirmation screen.
 final class P2POrderCancelDraft {
   const P2POrderCancelDraft({
     required this.id,
@@ -413,6 +432,7 @@ final class P2POrderCancelDraft {
   final double escrowAmount;
 }
 
+/// Order summary shown on the post-trade rating screen.
 final class P2POrderRateDraft {
   const P2POrderRateDraft({
     required this.id,
@@ -431,6 +451,7 @@ final class P2POrderRateDraft {
   final int totalVnd;
 }
 
+/// A single quick-select tag used when rating an order.
 final class P2POrderRateTagDraft {
   const P2POrderRateTagDraft({required this.label, required this.iconKey});
 
@@ -438,6 +459,7 @@ final class P2POrderRateTagDraft {
   final String iconKey;
 }
 
+/// A single event in an order's activity timeline.
 final class P2POrderTimelineEventDraft {
   const P2POrderTimelineEventDraft({
     required this.id,
@@ -458,6 +480,7 @@ final class P2POrderTimelineEventDraft {
   String get statusLabel => status.name;
 }
 
+/// A lightweight order reference used across order-related screens.
 final class P2POrderDraft {
   const P2POrderDraft({
     required this.id,

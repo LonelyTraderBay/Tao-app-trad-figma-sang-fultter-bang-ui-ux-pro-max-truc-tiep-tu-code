@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// KYC tier requirements and benefits for the KYC requirements screen.
 final class P2PKycRequirementsSnapshot {
   const P2PKycRequirementsSnapshot({
     required this.endpoint,
@@ -42,6 +43,7 @@ final class P2PKycRequirementsSnapshot {
   String verifyRouteFor(int tierId) => '$verifyRouteBase?tier=$tierId';
 }
 
+/// A single KYC tier with its requirements, limits, and benefits.
 final class P2PKycTierDraft {
   const P2PKycTierDraft({
     required this.id,
@@ -68,6 +70,7 @@ final class P2PKycTierDraft {
   final P2PKycTierStatus status;
 }
 
+/// A single requirement item for a KYC tier.
 final class P2PKycRequirementDraft {
   const P2PKycRequirementDraft({required this.label, required this.iconKey});
 
@@ -75,6 +78,7 @@ final class P2PKycRequirementDraft {
   final String iconKey;
 }
 
+/// Trading limits granted by a KYC tier.
 final class P2PKycLimitsDraft {
   const P2PKycLimitsDraft({
     required this.dailyBuy,
@@ -87,6 +91,7 @@ final class P2PKycLimitsDraft {
   final int monthlyVolume;
 }
 
+/// A user's current KYC verification progress and step statuses.
 final class P2PKycStatusSnapshot {
   const P2PKycStatusSnapshot({
     required this.endpoint,
@@ -139,6 +144,7 @@ final class P2PKycStatusSnapshot {
   };
 }
 
+/// A single step in the KYC verification process.
 final class P2PKycStatusStepDraft {
   const P2PKycStatusStepDraft({
     required this.id,
@@ -177,6 +183,7 @@ final class P2PKycStatusStepDraft {
   };
 }
 
+/// Instructions and document options for the identity-document verification step.
 final class P2PIdentityVerificationSnapshot {
   const P2PIdentityVerificationSnapshot({
     required this.endpoint,
@@ -207,6 +214,7 @@ final class P2PIdentityVerificationSnapshot {
   final String contractNotes;
 }
 
+/// A single selectable identity document type.
 final class P2PIdentityDocumentTypeDraft {
   const P2PIdentityDocumentTypeDraft({
     required this.id,
@@ -221,6 +229,7 @@ final class P2PIdentityDocumentTypeDraft {
   final String iconKey;
 }
 
+/// Instructions and extracted data for the proof-of-address verification step.
 final class P2PAddressProofSnapshot {
   const P2PAddressProofSnapshot({
     required this.endpoint,
@@ -257,6 +266,7 @@ final class P2PAddressProofSnapshot {
   final String contractNotes;
 }
 
+/// A single selectable proof-of-address document type.
 final class P2PAddressDocumentTypeDraft {
   const P2PAddressDocumentTypeDraft({
     required this.id,
@@ -273,6 +283,7 @@ final class P2PAddressDocumentTypeDraft {
   final List<String> examples;
 }
 
+/// Instructions and results for the selfie/liveness verification step.
 final class P2PSelfieVerificationSnapshot {
   const P2PSelfieVerificationSnapshot({
     required this.endpoint,
@@ -313,6 +324,7 @@ final class P2PSelfieVerificationSnapshot {
   final String contractNotes;
 }
 
+/// A single liveness action the user must perform during selfie verification.
 final class P2PSelfieLivenessActionDraft {
   const P2PSelfieLivenessActionDraft({
     required this.id,
@@ -325,6 +337,7 @@ final class P2PSelfieLivenessActionDraft {
   final String iconKey;
 }
 
+/// Preparation checklist and time slots for the video-call verification step.
 final class P2PVideoVerificationSnapshot {
   const P2PVideoVerificationSnapshot({
     required this.endpoint,
@@ -353,6 +366,7 @@ final class P2PVideoVerificationSnapshot {
   final String contractNotes;
 }
 
+/// A single bookable time slot for video verification.
 final class P2PVideoTimeSlotDraft {
   const P2PVideoTimeSlotDraft({
     required this.id,
@@ -367,8 +381,11 @@ final class P2PVideoTimeSlotDraft {
   final bool available;
 }
 
+/// Unlock status of a KYC tier relative to the user's current tier.
 enum P2PKycTierStatus { locked, available, current, pending }
 
+/// Overall status of a user's KYC verification.
 enum P2PKycVerificationStatus { approved, pending, rejected, incomplete }
 
+/// Status of an individual step within KYC verification.
 enum P2PKycStepStatus { completed, pending, rejected, waiting, processing }

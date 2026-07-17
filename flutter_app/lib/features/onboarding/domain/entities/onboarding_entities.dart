@@ -1,3 +1,4 @@
+/// UI state the onboarding flow supports rendering.
 enum OnboardingScreenState {
   loading,
   empty,
@@ -8,6 +9,7 @@ enum OnboardingScreenState {
   success,
 }
 
+/// One step in the multi-step onboarding flow.
 enum OnboardingStepDraft {
   welcome,
   modules,
@@ -17,6 +19,8 @@ enum OnboardingStepDraft {
   complete,
 }
 
+/// A selectable user goal on the onboarding goals step, driving the final
+/// recommendation.
 enum OnboardingUserGoalDraft {
   tradeCrypto,
   saveRegularly,
@@ -26,6 +30,8 @@ enum OnboardingUserGoalDraft {
   earnRewards,
 }
 
+/// Data for the full onboarding flow: welcome copy, module/boundary/trust
+/// explainers, selectable [goals], and goal-based recommendations.
 final class OnboardingSnapshot {
   const OnboardingSnapshot({
     required this.endpoint,
@@ -65,6 +71,7 @@ final class OnboardingSnapshot {
   recommendations;
 }
 
+/// Copy and highlighted [features] for the onboarding welcome step.
 final class OnboardingWelcomeDraft {
   const OnboardingWelcomeDraft({
     required this.skipLabel,
@@ -83,6 +90,7 @@ final class OnboardingWelcomeDraft {
   final String helperText;
 }
 
+/// One highlighted feature callout on the onboarding welcome step.
 final class OnboardingFeatureDraft {
   const OnboardingFeatureDraft({
     required this.id,
@@ -95,6 +103,7 @@ final class OnboardingFeatureDraft {
   final String description;
 }
 
+/// One product module explainer card on the onboarding modules step.
 final class OnboardingModuleDraft {
   const OnboardingModuleDraft({
     required this.id,
@@ -109,6 +118,8 @@ final class OnboardingModuleDraft {
   final List<String> features;
 }
 
+/// One product-boundary explainer card (e.g. Prediction Markets vs. Arena
+/// points) on the onboarding boundaries step.
 final class OnboardingBoundaryDraft {
   const OnboardingBoundaryDraft({
     required this.id,
@@ -125,6 +136,7 @@ final class OnboardingBoundaryDraft {
   final List<String> examples;
 }
 
+/// One trust/safety pillar explainer card on the onboarding trust step.
 final class OnboardingTrustDraft {
   const OnboardingTrustDraft({
     required this.id,
@@ -137,6 +149,7 @@ final class OnboardingTrustDraft {
   final String description;
 }
 
+/// One selectable goal option on the onboarding goals step.
 final class OnboardingGoalDraft {
   const OnboardingGoalDraft({
     required this.id,
@@ -151,6 +164,8 @@ final class OnboardingGoalDraft {
   final String? disclosure;
 }
 
+/// A suggested next step (title/description/route) shown for one selected
+/// [OnboardingUserGoalDraft] at the end of onboarding.
 final class OnboardingRecommendationDraft {
   const OnboardingRecommendationDraft({
     required this.title,

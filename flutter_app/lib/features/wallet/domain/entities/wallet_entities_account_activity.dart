@@ -1,5 +1,6 @@
 part of 'wallet_entities.dart';
 
+/// UI state a Wallet screen snapshot supports rendering.
 enum WalletScreenState {
   loading,
   empty,
@@ -10,6 +11,8 @@ enum WalletScreenState {
   success,
 }
 
+/// Data for the Wallet home screen: total balances, quick [actions], the
+/// DCA summary card, tool shortcuts, and held [assets].
 final class WalletSnapshot {
   const WalletSnapshot({
     required this.totalUsd,
@@ -40,6 +43,8 @@ final class WalletSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One quick-action shortcut (label/route/icon/color) on the Wallet home
+/// screen.
 final class WalletAction {
   const WalletAction({
     required this.id,
@@ -56,6 +61,8 @@ final class WalletAction {
   final String iconKey;
 }
 
+/// DCA summary card data (return, active plans, next trade) shown on the
+/// Wallet home screen.
 final class WalletDcaSnapshot {
   const WalletDcaSnapshot({
     required this.title,
@@ -74,6 +81,7 @@ final class WalletDcaSnapshot {
   final String nextTrade;
 }
 
+/// One tool shortcut (label/route/icon/color) on the Wallet home screen.
 final class WalletTool {
   const WalletTool({
     required this.id,
@@ -90,6 +98,8 @@ final class WalletTool {
   final String iconKey;
 }
 
+/// One held asset (balance, USD value, 24h change) shown on the Wallet
+/// home screen.
 final class WalletAsset {
   const WalletAsset({
     required this.id,
@@ -110,6 +120,8 @@ final class WalletAsset {
   final int colorHex;
 }
 
+/// Data for the Wallet transaction history screen: filtered
+/// [transactions] plus available filters.
 final class WalletTransactionHistorySnapshot {
   const WalletTransactionHistorySnapshot({
     required this.transactions,
@@ -126,6 +138,8 @@ final class WalletTransactionHistorySnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// Data for one transaction's detail screen (`null` [transaction] when not
+/// found).
 final class WalletTransactionDetailSnapshot {
   const WalletTransactionDetailSnapshot({
     required this.transaction,
@@ -140,6 +154,8 @@ final class WalletTransactionDetailSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// Data for the Wallet portfolio analytics screen: totals, best/worst
+/// performers, value history, and derived metrics.
 final class WalletPortfolioAnalyticsSnapshot {
   const WalletPortfolioAnalyticsSnapshot({
     required this.totalUsd,
@@ -176,6 +192,7 @@ final class WalletPortfolioAnalyticsSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One labeled value data point in the portfolio analytics history chart.
 final class WalletPortfolioPoint {
   const WalletPortfolioPoint({required this.label, required this.value});
 
@@ -183,6 +200,7 @@ final class WalletPortfolioPoint {
   final double value;
 }
 
+/// One labeled/colored metric row shown on the portfolio analytics screen.
 final class WalletPortfolioMetric {
   const WalletPortfolioMetric({
     required this.label,
@@ -195,6 +213,8 @@ final class WalletPortfolioMetric {
   final int colorHex;
 }
 
+/// Data for the "add withdrawal address" screen: selectable networks/assets
+/// and the audit-trail disclosure note.
 final class WalletAddressAddSnapshot {
   const WalletAddressAddSnapshot({
     required this.networks,
@@ -215,6 +235,7 @@ final class WalletAddressAddSnapshot {
   final String? highRiskContractId;
 }
 
+/// One selectable network option on the "add withdrawal address" screen.
 final class WalletAddressNetwork {
   const WalletAddressNetwork({
     required this.id,
@@ -229,6 +250,8 @@ final class WalletAddressNetwork {
   final String addressHint;
 }
 
+/// Data for the address book screen: saved [addresses] plus available
+/// network filters.
 final class WalletAddressBookSnapshot {
   const WalletAddressBookSnapshot({
     required this.addresses,
@@ -245,6 +268,7 @@ final class WalletAddressBookSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One saved withdrawal address (network, whitelist/favorite state).
 final class WalletSavedAddress {
   const WalletSavedAddress({
     required this.id,
@@ -283,6 +307,8 @@ final class WalletSavedAddress {
   }
 }
 
+/// Data for the buy-crypto screen: purchasable [cryptoOptions], available
+/// [paymentMethods], and preset amounts.
 final class WalletBuyCryptoSnapshot {
   const WalletBuyCryptoSnapshot({
     required this.cryptoOptions,
@@ -301,6 +327,7 @@ final class WalletBuyCryptoSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One purchasable crypto asset option on the buy-crypto screen.
 final class WalletBuyCryptoOption {
   const WalletBuyCryptoOption({
     required this.symbol,
@@ -317,8 +344,11 @@ final class WalletBuyCryptoOption {
   final int priceVnd;
 }
 
+/// Category of a [WalletPaymentMethod].
 enum WalletPaymentMethodType { bank, ewallet, qr }
 
+/// One selectable payment method (fee, processing time, daily limit) on
+/// the buy-crypto screen.
 final class WalletPaymentMethod {
   const WalletPaymentMethod({
     required this.id,
@@ -343,6 +373,8 @@ final class WalletPaymentMethod {
   final bool isPopular;
 }
 
+/// Data for the internal transfer screen: source/destination [wallets],
+/// transferable [assets], and recent transfer history.
 final class WalletTransferSnapshot {
   const WalletTransferSnapshot({
     required this.wallets,
@@ -361,6 +393,8 @@ final class WalletTransferSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One selectable source/destination wallet on the internal transfer
+/// screen.
 final class WalletTransferWallet {
   const WalletTransferWallet({
     required this.id,
@@ -377,6 +411,8 @@ final class WalletTransferWallet {
   final String iconKey;
 }
 
+/// One transferable asset (available balance, USD rate) on the internal
+/// transfer screen.
 final class WalletTransferAsset {
   const WalletTransferAsset({
     required this.id,
@@ -395,6 +431,7 @@ final class WalletTransferAsset {
   final int colorHex;
 }
 
+/// One recent internal transfer entry (from/to wallet, asset, amount).
 final class WalletRecentTransfer {
   const WalletRecentTransfer({
     required this.fromWallet,
@@ -411,6 +448,8 @@ final class WalletRecentTransfer {
   final String time;
 }
 
+/// Data for one asset's detail screen: balances, current price, available
+/// [actions], price [chart], and recent [transactions].
 final class WalletAssetDetailSnapshot {
   const WalletAssetDetailSnapshot({
     required this.assetId,
@@ -451,6 +490,8 @@ final class WalletAssetDetailSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One quick-action shortcut (label/route/icon/color) on an asset's
+/// detail screen.
 final class WalletAssetDetailAction {
   const WalletAssetDetailAction({
     required this.id,
@@ -467,6 +508,7 @@ final class WalletAssetDetailAction {
   final String iconKey;
 }
 
+/// One indexed price data point in an asset detail screen's price chart.
 final class WalletAssetChartPoint {
   const WalletAssetChartPoint({required this.index, required this.price});
 

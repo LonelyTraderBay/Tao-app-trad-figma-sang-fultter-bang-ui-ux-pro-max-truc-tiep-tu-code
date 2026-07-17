@@ -1,5 +1,6 @@
 part of 'earn_entities.dart';
 
+/// Data contract for the savings guide (education/tutorials) screen.
 final class SavingsGuideSnapshot {
   const SavingsGuideSnapshot({
     required this.endpoint,
@@ -36,6 +37,7 @@ final class SavingsGuideSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry in the savings guide screen's tab bar.
 final class SavingsGuideTabDraft {
   const SavingsGuideTabDraft({required this.id, required this.label});
 
@@ -43,6 +45,7 @@ final class SavingsGuideTabDraft {
   final String label;
 }
 
+/// A single tutorial entry in the savings guide.
 final class SavingsGuideTutorialDraft {
   const SavingsGuideTutorialDraft({
     required this.id,
@@ -61,6 +64,7 @@ final class SavingsGuideTutorialDraft {
   final List<SavingsGuideStepDraft> steps;
 }
 
+/// A single step within a savings guide tutorial.
 final class SavingsGuideStepDraft {
   const SavingsGuideStepDraft({
     required this.id,
@@ -77,6 +81,7 @@ final class SavingsGuideStepDraft {
   final List<String> tips;
 }
 
+/// A quick tip card shown in the savings guide.
 final class SavingsGuideQuickTipDraft {
   const SavingsGuideQuickTipDraft({
     required this.id,
@@ -93,6 +98,7 @@ final class SavingsGuideQuickTipDraft {
   final EarnRiskLevel tone;
 }
 
+/// A glossary term/definition pair shown in the savings guide.
 final class SavingsGuideTermDraft {
   const SavingsGuideTermDraft({required this.term, required this.definition});
 
@@ -100,8 +106,10 @@ final class SavingsGuideTermDraft {
   final String definition;
 }
 
+/// Difficulty level of a savings guide tutorial.
 enum SavingsGuideDifficulty { beginner, intermediate, advanced }
 
+/// Data contract for the savings FAQ screen.
 final class SavingsFAQSnapshot {
   const SavingsFAQSnapshot({
     required this.endpoint,
@@ -138,6 +146,7 @@ final class SavingsFAQSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A filterable category chip on the savings FAQ screen.
 final class SavingsFAQCategoryDraft {
   const SavingsFAQCategoryDraft({
     required this.id,
@@ -150,6 +159,7 @@ final class SavingsFAQCategoryDraft {
   final SavingsFAQCategory? category;
 }
 
+/// A single question/answer entry on the savings FAQ screen.
 final class SavingsFAQItemDraft {
   const SavingsFAQItemDraft({
     required this.id,
@@ -164,8 +174,10 @@ final class SavingsFAQItemDraft {
   final String answer;
 }
 
+/// Topic category of a savings FAQ item.
 enum SavingsFAQCategory { general, products, operations, fees, risks }
 
+/// Data contract for the savings notifications (history + settings) screen.
 final class SavingsNotificationsSnapshot {
   const SavingsNotificationsSnapshot({
     required this.endpoint,
@@ -202,6 +214,7 @@ final class SavingsNotificationsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry in the savings notifications screen's tab bar.
 final class SavingsNotificationTabDraft {
   const SavingsNotificationTabDraft({required this.id, required this.label});
 
@@ -209,6 +222,7 @@ final class SavingsNotificationTabDraft {
   final String label;
 }
 
+/// A single notification entry in the savings notifications history.
 final class SavingsNotificationDraft {
   const SavingsNotificationDraft({
     required this.id,
@@ -238,6 +252,7 @@ final class SavingsNotificationDraft {
   }
 }
 
+/// A single toggleable notification setting on the savings notifications screen.
 final class SavingsNotificationSettingDraft {
   const SavingsNotificationSettingDraft({
     required this.id,
@@ -267,6 +282,7 @@ final class SavingsNotificationSettingDraft {
   }
 }
 
+/// Category of a savings notification event.
 enum SavingsNotificationType {
   maturity,
   apy,
@@ -276,8 +292,11 @@ enum SavingsNotificationType {
   system,
 }
 
+/// Urgency level of a savings notification.
 enum SavingsNotificationPriority { high, medium, low }
 
+/// Data contract for the savings recommendations screen: user risk
+/// profile, matched strategies, and insights.
 final class SavingsRecommendationsSnapshot {
   const SavingsRecommendationsSnapshot({
     required this.endpoint,
@@ -312,6 +331,7 @@ final class SavingsRecommendationsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// The user's risk profile used to drive savings recommendations.
 final class SavingsUserProfileDraft {
   const SavingsUserProfileDraft({
     required this.riskTolerance,
@@ -332,6 +352,7 @@ final class SavingsUserProfileDraft {
   final String assessmentDate;
 }
 
+/// A single recommended savings allocation strategy.
 final class SavingsStrategyDraft {
   const SavingsStrategyDraft({
     required this.id,
@@ -364,6 +385,7 @@ final class SavingsStrategyDraft {
   final bool recommended;
 }
 
+/// A single product allocation slice within a [SavingsStrategyDraft].
 final class SavingsStrategyAllocationDraft {
   const SavingsStrategyAllocationDraft({
     required this.product,
@@ -382,6 +404,7 @@ final class SavingsStrategyAllocationDraft {
   final int? lockDays;
 }
 
+/// An insight/tip card shown on the savings recommendations screen.
 final class SavingsRecommendationInsightDraft {
   const SavingsRecommendationInsightDraft({
     required this.id,
@@ -398,16 +421,22 @@ final class SavingsRecommendationInsightDraft {
   final EarnRiskLevel tone;
 }
 
+/// The user's self-reported risk tolerance.
 enum SavingsProfileRiskTolerance { conservative, moderate, aggressive }
 
+/// The user's preferred investment time horizon.
 enum SavingsInvestmentHorizon { short, medium, long }
 
+/// The user's liquidity requirement for savings funds.
 enum SavingsLiquidityNeed { high, medium, low }
 
+/// Risk tier of a recommended savings strategy.
 enum SavingsStrategyRiskLevel { low, medium, high }
 
+/// Subscription model of a product allocated within a strategy.
 enum SavingsStrategyAllocationType { flexible, locked }
 
+/// Data contract for the savings risk assessment questionnaire screen.
 final class SavingsRiskAssessmentSnapshot {
   const SavingsRiskAssessmentSnapshot({
     required this.endpoint,
@@ -440,6 +469,7 @@ final class SavingsRiskAssessmentSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single question in the savings risk assessment questionnaire.
 final class SavingsRiskQuestionDraft {
   const SavingsRiskQuestionDraft({
     required this.id,
@@ -454,6 +484,7 @@ final class SavingsRiskQuestionDraft {
   final List<SavingsRiskOptionDraft> options;
 }
 
+/// A single answer option for a [SavingsRiskQuestionDraft].
 final class SavingsRiskOptionDraft {
   const SavingsRiskOptionDraft({
     required this.label,
@@ -466,6 +497,8 @@ final class SavingsRiskOptionDraft {
   final String? description;
 }
 
+/// A scored risk profile result band shown after completing the
+/// assessment.
 final class SavingsRiskProfileResultDraft {
   const SavingsRiskProfileResultDraft({
     required this.level,
@@ -490,6 +523,7 @@ final class SavingsRiskProfileResultDraft {
   final List<String> warnings;
 }
 
+/// A recommended product shown within a [SavingsRiskProfileResultDraft].
 final class SavingsRiskProductDraft {
   const SavingsRiskProductDraft({
     required this.name,
@@ -506,8 +540,10 @@ final class SavingsRiskProductDraft {
   final String asset;
 }
 
+/// Risk tier assigned by the risk assessment questionnaire.
 enum SavingsRiskProfileLevel { conservative, moderate, aggressive }
 
+/// Data contract for the savings product comparison screen.
 final class SavingsComparisonSnapshot {
   const SavingsComparisonSnapshot({
     required this.endpoint,
@@ -536,6 +572,8 @@ final class SavingsComparisonSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Detailed comparison attributes for a single product in the comparison
+/// table.
 final class SavingsComparisonDetailDraft {
   const SavingsComparisonDetailDraft({
     required this.risk,
@@ -564,6 +602,7 @@ final class SavingsComparisonDetailDraft {
   final List<String> features;
 }
 
+/// Data contract for the auto-compound settings screen.
 final class AutoCompoundSettingsSnapshot {
   const AutoCompoundSettingsSnapshot({
     required this.endpoint,
@@ -590,6 +629,7 @@ final class AutoCompoundSettingsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single position row on the auto-compound settings screen.
 final class AutoCompoundPositionDraft {
   const AutoCompoundPositionDraft({
     required this.id,
@@ -624,6 +664,7 @@ final class AutoCompoundPositionDraft {
   final int estimatedBoost;
 }
 
+/// A selectable compounding frequency option.
 final class AutoCompoundFrequencyDraft {
   const AutoCompoundFrequencyDraft({
     required this.id,
@@ -638,6 +679,7 @@ final class AutoCompoundFrequencyDraft {
   final String boostLabel;
 }
 
+/// An informational card on the auto-compound settings screen.
 final class AutoCompoundInfoDraft {
   const AutoCompoundInfoDraft({
     required this.title,
@@ -650,6 +692,7 @@ final class AutoCompoundInfoDraft {
   final EarnRiskLevel tone;
 }
 
+/// Data contract for the savings analytics screen.
 final class SavingsAnalyticsSnapshot {
   const SavingsAnalyticsSnapshot({
     required this.endpoint,
@@ -684,6 +727,7 @@ final class SavingsAnalyticsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Summary metrics card on the savings analytics screen.
 final class SavingsAnalyticsSummaryDraft {
   const SavingsAnalyticsSummaryDraft({
     required this.totalInvested,
@@ -704,6 +748,7 @@ final class SavingsAnalyticsSummaryDraft {
   final double yieldChange;
 }
 
+/// A single data point in the savings analytics yield history chart.
 final class SavingsYieldPointDraft {
   const SavingsYieldPointDraft({
     required this.date,
@@ -722,6 +767,7 @@ final class SavingsYieldPointDraft {
   final double total;
 }
 
+/// A single month's earnings entry in the savings analytics chart.
 final class SavingsMonthlyEarningsPointDraft {
   const SavingsMonthlyEarningsPointDraft({
     required this.month,
@@ -736,6 +782,7 @@ final class SavingsMonthlyEarningsPointDraft {
   final double withdrawn;
 }
 
+/// Data contract for the auto-rebalance screen.
 final class SavingsAutoRebalanceSnapshot {
   const SavingsAutoRebalanceSnapshot({
     required this.endpoint,
@@ -774,6 +821,7 @@ final class SavingsAutoRebalanceSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single portfolio position shown on the auto-rebalance screen.
 final class SavingsRebalancePositionDraft {
   const SavingsRebalancePositionDraft({
     required this.id,
@@ -804,6 +852,7 @@ final class SavingsRebalancePositionDraft {
   final int? daysRemaining;
 }
 
+/// A selectable target-allocation strategy for auto-rebalance.
 final class SavingsRebalanceStrategyDraft {
   const SavingsRebalanceStrategyDraft({
     required this.id,
@@ -822,6 +871,7 @@ final class SavingsRebalanceStrategyDraft {
   final Map<String, double> allocations;
 }
 
+/// A single data point in the auto-rebalance drift history chart.
 final class SavingsRebalanceDriftPointDraft {
   const SavingsRebalanceDriftPointDraft({
     required this.date,
@@ -832,6 +882,7 @@ final class SavingsRebalanceDriftPointDraft {
   final double drift;
 }
 
+/// A single past rebalance event.
 final class SavingsRebalanceHistoryDraft {
   const SavingsRebalanceHistoryDraft({
     required this.id,
@@ -854,6 +905,7 @@ final class SavingsRebalanceHistoryDraft {
   final double driftAfter;
 }
 
+/// User-configured auto-rebalance settings.
 final class SavingsRebalanceSettingsDraft {
   const SavingsRebalanceSettingsDraft({
     required this.autoEnabled,
@@ -870,10 +922,13 @@ final class SavingsRebalanceSettingsDraft {
   final double minTradeSize;
 }
 
+/// Risk tier of a [SavingsRebalanceStrategyDraft].
 enum SavingsRebalanceRiskLevel { low, medium, high }
 
+/// Outcome status of a past rebalance event.
 enum SavingsRebalanceHistoryStatus { completed, partial, failed }
 
+/// Data contract for the savings notification preferences screen.
 final class SavingsNotificationPreferencesSnapshot {
   const SavingsNotificationPreferencesSnapshot({
     required this.endpoint,
@@ -908,6 +963,7 @@ final class SavingsNotificationPreferencesSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry shared across several savings tool screens' tab bars.
 final class SavingsPreferenceTabDraft {
   const SavingsPreferenceTabDraft({required this.id, required this.label});
 
@@ -915,6 +971,8 @@ final class SavingsPreferenceTabDraft {
   final String label;
 }
 
+/// A single toggleable alert type on the notification preferences
+/// screen.
 final class SavingsNotificationAlertDraft {
   const SavingsNotificationAlertDraft({
     required this.id,
@@ -935,6 +993,7 @@ final class SavingsNotificationAlertDraft {
   final SavingsNotificationPreferenceSeverity severity;
 }
 
+/// Per-product notification settings summary row.
 final class SavingsProductNotificationDraft {
   const SavingsProductNotificationDraft({
     required this.id,
@@ -955,6 +1014,7 @@ final class SavingsProductNotificationDraft {
   final List<String> alertLabels;
 }
 
+/// A selectable notification delivery channel (push, email, etc.).
 final class SavingsDeliveryChannelDraft {
   const SavingsDeliveryChannelDraft({
     required this.id,
@@ -973,6 +1033,7 @@ final class SavingsDeliveryChannelDraft {
   final bool locked;
 }
 
+/// User-configured quiet-hours window for notifications.
 final class SavingsQuietHoursDraft {
   const SavingsQuietHoursDraft({
     required this.enabled,
@@ -987,12 +1048,16 @@ final class SavingsQuietHoursDraft {
   final bool allowCritical;
 }
 
+/// Category grouping for notification preference toggles.
 enum SavingsNotificationPreferenceCategory { product, transaction, system }
 
+/// Severity tier of a notification preference alert.
 enum SavingsNotificationPreferenceSeverity { critical, important, info }
 
+/// Digest frequency for batched notification delivery.
 enum SavingsDeliveryFrequency { instant, hourly, daily, weekly }
 
+/// Data contract for the savings DCA (dollar-cost averaging) screen.
 final class SavingsDcaSnapshot {
   const SavingsDcaSnapshot({
     required this.endpoint,
@@ -1037,6 +1102,7 @@ final class SavingsDcaSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single active or paused DCA plan.
 final class SavingsDcaPlanDraft {
   const SavingsDcaPlanDraft({
     required this.id,
@@ -1071,6 +1137,7 @@ final class SavingsDcaPlanDraft {
   final String currentApyLabel;
 }
 
+/// A single past execution of a DCA plan.
 final class SavingsDcaExecutionDraft {
   const SavingsDcaExecutionDraft({
     required this.id,
@@ -1091,6 +1158,7 @@ final class SavingsDcaExecutionDraft {
   final String apyLabel;
 }
 
+/// A product available for DCA subscription.
 final class SavingsDcaProductDraft {
   const SavingsDcaProductDraft({
     required this.id,
@@ -1107,10 +1175,13 @@ final class SavingsDcaProductDraft {
   final String balanceLabel;
 }
 
+/// Lifecycle status of a DCA plan.
 enum SavingsDcaPlanStatus { active, paused, completed, cancelled }
 
+/// Outcome status of a single DCA execution.
 enum SavingsDcaExecutionStatus { success, failed, pending }
 
+/// Data contract for the smart suggestions screen.
 final class SavingsSmartSuggestionsSnapshot {
   const SavingsSmartSuggestionsSnapshot({
     required this.endpoint,
@@ -1155,6 +1226,7 @@ final class SavingsSmartSuggestionsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single actionable savings suggestion.
 final class SavingsSuggestionDraft {
   const SavingsSuggestionDraft({
     required this.id,
@@ -1195,6 +1267,8 @@ final class SavingsSuggestionDraft {
   final List<String> tags;
 }
 
+/// APY trend data for a single product shown on the smart suggestions
+/// screen.
 final class SavingsApyTrendDraft {
   const SavingsApyTrendDraft({
     required this.product,
@@ -1215,6 +1289,7 @@ final class SavingsApyTrendDraft {
   final List<SavingsApyTrendPointDraft> points;
 }
 
+/// A single data point in a [SavingsApyTrendDraft]'s history.
 final class SavingsApyTrendPointDraft {
   const SavingsApyTrendPointDraft({required this.date, required this.apy});
 
@@ -1222,6 +1297,7 @@ final class SavingsApyTrendPointDraft {
   final double apy;
 }
 
+/// A market signal card shown on the smart suggestions screen.
 final class SavingsMarketSignalDraft {
   const SavingsMarketSignalDraft({
     required this.id,
@@ -1240,6 +1316,7 @@ final class SavingsMarketSignalDraft {
   final String timestamp;
 }
 
+/// Kind of action a [SavingsSuggestionDraft] recommends.
 enum SavingsSuggestionType {
   dcaTiming,
   productSwitch,
@@ -1249,14 +1326,19 @@ enum SavingsSuggestionType {
   compoundBoost,
 }
 
+/// Urgency tier of a [SavingsSuggestionDraft].
 enum SavingsSuggestionPriority { high, medium, low }
 
+/// Lifecycle status of a [SavingsSuggestionDraft].
 enum SavingsSuggestionStatus { newItem, viewed, applied, dismissed }
 
+/// Direction of an APY trend.
 enum SavingsApyTrendDirection { up, down, stable }
 
+/// Sentiment of a [SavingsMarketSignalDraft].
 enum SavingsMarketSignalType { bullish, bearish, neutral }
 
+/// Data contract for the savings data export screen.
 final class SavingsExportSnapshot {
   const SavingsExportSnapshot({
     required this.endpoint,
@@ -1319,6 +1401,7 @@ final class SavingsExportSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable export report type option.
 final class SavingsExportReportDraft {
   const SavingsExportReportDraft({
     required this.id,
@@ -1335,6 +1418,7 @@ final class SavingsExportReportDraft {
   final String rowsLabel;
 }
 
+/// A selectable export file format option.
 final class SavingsExportFormatDraft {
   const SavingsExportFormatDraft({
     required this.id,
@@ -1347,6 +1431,7 @@ final class SavingsExportFormatDraft {
   final String description;
 }
 
+/// A selectable export date range option.
 final class SavingsExportPeriodDraft {
   const SavingsExportPeriodDraft({required this.id, required this.label});
 
@@ -1354,6 +1439,7 @@ final class SavingsExportPeriodDraft {
   final String label;
 }
 
+/// A selectable export transaction scope option.
 final class SavingsExportScopeDraft {
   const SavingsExportScopeDraft({
     required this.id,
@@ -1366,6 +1452,7 @@ final class SavingsExportScopeDraft {
   final String iconKey;
 }
 
+/// A toggleable export content option.
 final class SavingsExportOptionDraft {
   const SavingsExportOptionDraft({
     required this.id,
@@ -1380,6 +1467,7 @@ final class SavingsExportOptionDraft {
   final String iconKey;
 }
 
+/// A single previously generated export entry.
 final class SavingsExportHistoryDraft {
   const SavingsExportHistoryDraft({
     required this.id,
@@ -1406,10 +1494,13 @@ final class SavingsExportHistoryDraft {
   final String expiresAt;
 }
 
+/// File format for a savings data export.
 enum SavingsExportFormat { csv, pdf, xlsx }
 
+/// Transaction scope included in a savings data export.
 enum SavingsExportScope { all, subscribe, redeem, interest, compound }
 
+/// Date range covered by a savings data export.
 enum SavingsExportPeriod {
   sevenDays,
   thirtyDays,
@@ -1419,10 +1510,13 @@ enum SavingsExportPeriod {
   all,
 }
 
+/// Kind of report generated by a savings data export.
 enum SavingsExportReportType { transaction, tax, portfolio, performance }
 
+/// Generation status of a savings data export.
 enum SavingsExportStatus { ready, generating, completed, failed }
 
+/// Data contract for the savings strategy backtest screen.
 final class SavingsBacktestSnapshot {
   const SavingsBacktestSnapshot({
     required this.endpoint,
@@ -1465,6 +1559,7 @@ final class SavingsBacktestSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable backtest lookback period option.
 final class SavingsBacktestPeriodDraft {
   const SavingsBacktestPeriodDraft({
     required this.id,
@@ -1477,6 +1572,7 @@ final class SavingsBacktestPeriodDraft {
   final int months;
 }
 
+/// A selectable preset allocation used to run a backtest.
 final class SavingsBacktestPresetDraft {
   const SavingsBacktestPresetDraft({
     required this.id,
@@ -1495,6 +1591,8 @@ final class SavingsBacktestPresetDraft {
   final List<SavingsBacktestSlotDraft> slots;
 }
 
+/// A single product allocation slot within a
+/// [SavingsBacktestPresetDraft].
 final class SavingsBacktestSlotDraft {
   const SavingsBacktestSlotDraft({
     required this.id,
@@ -1517,6 +1615,7 @@ final class SavingsBacktestSlotDraft {
   final int? lockDays;
 }
 
+/// Computed result summary of a savings strategy backtest.
 final class SavingsBacktestResultDraft {
   const SavingsBacktestResultDraft({
     required this.totalReturnUsd,
@@ -1545,6 +1644,7 @@ final class SavingsBacktestResultDraft {
   final List<SavingsBacktestPointDraft> points;
 }
 
+/// A single month's data point in a backtest result's history.
 final class SavingsBacktestPointDraft {
   const SavingsBacktestPointDraft({
     required this.month,
@@ -1557,10 +1657,13 @@ final class SavingsBacktestPointDraft {
   final double interestUsd;
 }
 
+/// Lookback period option for a savings strategy backtest.
 enum SavingsBacktestPeriod { threeMonths, sixMonths, oneYear, twoYears }
 
+/// Preset allocation option for a savings strategy backtest.
 enum SavingsBacktestPreset { conservative, balanced, aggressive, custom }
 
+/// Data contract for the savings auto-pilot screen.
 final class SavingsAutoPilotSnapshot {
   const SavingsAutoPilotSnapshot({
     required this.endpoint,
@@ -1597,6 +1700,7 @@ final class SavingsAutoPilotSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// User-configured auto-pilot settings.
 final class SavingsAutoPilotConfigDraft {
   const SavingsAutoPilotConfigDraft({
     required this.mode,
@@ -1631,6 +1735,7 @@ final class SavingsAutoPilotConfigDraft {
   final bool approvalRequired;
 }
 
+/// A selectable auto-pilot risk mode option.
 final class SavingsAutoPilotModeDraft {
   const SavingsAutoPilotModeDraft({
     required this.id,
@@ -1655,6 +1760,7 @@ final class SavingsAutoPilotModeDraft {
   final String maxConcentration;
 }
 
+/// A single metric card on the auto-pilot screen.
 final class SavingsAutoPilotMetricDraft {
   const SavingsAutoPilotMetricDraft({
     required this.id,
@@ -1673,6 +1779,7 @@ final class SavingsAutoPilotMetricDraft {
   final EarnRiskLevel tone;
 }
 
+/// A single toggleable auto-pilot module (DCA, rebalance, etc.).
 final class SavingsAutoPilotModuleDraft {
   const SavingsAutoPilotModuleDraft({
     required this.id,
@@ -1693,6 +1800,7 @@ final class SavingsAutoPilotModuleDraft {
   final String route;
 }
 
+/// A single logged auto-pilot action.
 final class SavingsAutoPilotActionDraft {
   const SavingsAutoPilotActionDraft({
     required this.id,
@@ -1717,10 +1825,13 @@ final class SavingsAutoPilotActionDraft {
   final Map<String, String> details;
 }
 
+/// Whether auto-pilot is currently running.
 enum SavingsAutoPilotStatus { inactive, active, paused }
 
+/// Risk mode governing auto-pilot's automated decisions.
 enum SavingsAutoPilotMode { conservative, balanced, growth }
 
+/// Kind of automated action auto-pilot performed.
 enum SavingsAutoPilotActionType {
   dcaExecuted,
   rebalanced,
@@ -1730,8 +1841,10 @@ enum SavingsAutoPilotActionType {
   riskAdjusted,
 }
 
+/// Outcome status of a logged auto-pilot action.
 enum SavingsAutoPilotActionStatus { executed, pending, skipped, needsApproval }
 
+/// Data contract for the savings ladder (staggered lock terms) screen.
 final class SavingsLadderSnapshot {
   const SavingsLadderSnapshot({
     required this.endpoint,
@@ -1768,6 +1881,7 @@ final class SavingsLadderSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable preset ladder template.
 final class SavingsLadderTemplateDraft {
   const SavingsLadderTemplateDraft({
     required this.id,
@@ -1786,6 +1900,7 @@ final class SavingsLadderTemplateDraft {
   final List<SavingsLadderIntervalDraft> intervals;
 }
 
+/// A single lock-term interval within a [SavingsLadderTemplateDraft].
 final class SavingsLadderIntervalDraft {
   const SavingsLadderIntervalDraft({
     required this.lockDays,
@@ -1804,6 +1919,7 @@ final class SavingsLadderIntervalDraft {
   final String colorKey;
 }
 
+/// A single active rung (position) in the user's savings ladder.
 final class SavingsLadderRungDraft {
   const SavingsLadderRungDraft({
     required this.id,
@@ -1830,6 +1946,7 @@ final class SavingsLadderRungDraft {
   final bool autoRenew;
 }
 
+/// A product available for adding a ladder rung.
 final class SavingsLadderProductDraft {
   const SavingsLadderProductDraft({
     required this.id,
@@ -1848,8 +1965,10 @@ final class SavingsLadderProductDraft {
   final double apyPct;
 }
 
+/// Preset cadence option for a savings ladder.
 enum SavingsLadderPreset { monthly, quarterly, biannual, custom }
 
+/// Data contract for the savings what-if (scenario simulation) screen.
 final class SavingsWhatIfSnapshot {
   const SavingsWhatIfSnapshot({
     required this.endpoint,
@@ -1888,6 +2007,7 @@ final class SavingsWhatIfSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable market scenario for the what-if simulator.
 final class SavingsWhatIfScenarioDraft {
   const SavingsWhatIfScenarioDraft({
     required this.id,
@@ -1910,6 +2030,7 @@ final class SavingsWhatIfScenarioDraft {
   final SavingsWhatIfRiskLevel riskLevel;
 }
 
+/// A single portfolio position simulated by the what-if tool.
 final class SavingsWhatIfPortfolioPositionDraft {
   const SavingsWhatIfPortfolioPositionDraft({
     required this.asset,
@@ -1930,6 +2051,7 @@ final class SavingsWhatIfPortfolioPositionDraft {
   final int? lockDays;
 }
 
+/// Identifier for a preset what-if market scenario.
 enum SavingsWhatIfScenarioId {
   apyCrash,
   apySpike,
@@ -1939,4 +2061,5 @@ enum SavingsWhatIfScenarioId {
   custom,
 }
 
+/// Risk tier of a what-if scenario.
 enum SavingsWhatIfRiskLevel { low, medium, high, extreme }

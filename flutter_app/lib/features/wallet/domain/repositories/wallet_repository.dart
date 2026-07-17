@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 
+/// Data source contract for the Wallet feature: read snapshots for every
+/// wallet screen (balances, transfers, gas, approvals, health, etc.).
 abstract interface class WalletRepository {
   WalletSnapshot getWallet();
   WalletTransactionHistorySnapshot getTransactionHistory();

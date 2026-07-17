@@ -8,8 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 
+/// The five top-level destinations reachable from [VitBottomNav].
 enum VitBottomNavDestination { home, markets, trade, wallet, profile }
 
+/// Maps a [VitBottomNavDestination] to its top-level route path.
 extension VitBottomNavDestinationRoute on VitBottomNavDestination {
   String get routePath {
     switch (this) {
@@ -27,6 +29,8 @@ extension VitBottomNavDestinationRoute on VitBottomNavDestination {
   }
 }
 
+/// The app's bottom navigation capsule: five tappable destinations with a
+/// raised center Trade button, active-state dot, and unread badge.
 class VitBottomNav extends StatelessWidget {
   const VitBottomNav({
     super.key,

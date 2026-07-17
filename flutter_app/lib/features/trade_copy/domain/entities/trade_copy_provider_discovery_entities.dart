@@ -1,5 +1,7 @@
 part of 'trade_copy_entities.dart';
 
+/// Step of the become-a-provider application wizard: intro, requirements,
+/// disclosure, fees, or review.
 enum TradeProviderApplicationStep {
   intro,
   requirements,
@@ -8,6 +10,8 @@ enum TradeProviderApplicationStep {
   review,
 }
 
+/// Read-model for the Become a Provider application screen (steps,
+/// benefits, requirements, responsibilities, default draft).
 final class TradeProviderApplicationSnapshot {
   const TradeProviderApplicationSnapshot({
     required this.trade,
@@ -32,6 +36,8 @@ final class TradeProviderApplicationSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A single benefit callout (icon, title, description) shown to
+/// prospective providers.
 final class TradeProviderBenefit {
   const TradeProviderBenefit({
     required this.iconName,
@@ -44,6 +50,8 @@ final class TradeProviderBenefit {
   final String description;
 }
 
+/// A single eligibility requirement (label + whether it is currently
+/// met) on the provider application screen.
 final class TradeProviderRequirement {
   const TradeProviderRequirement({required this.label, required this.met});
 
@@ -51,6 +59,8 @@ final class TradeProviderRequirement {
   final bool met;
 }
 
+/// Mutable draft form state for a provider application before
+/// submission.
 final class TradeProviderApplicationDraft {
   const TradeProviderApplicationDraft({
     required this.hasKyc,
@@ -95,6 +105,7 @@ final class TradeProviderApplicationDraft {
   }
 }
 
+/// Result of submitting a provider application.
 final class TradeProviderApplicationResult {
   const TradeProviderApplicationResult({
     required this.applicationId,
@@ -107,6 +118,7 @@ final class TradeProviderApplicationResult {
   final String reviewWindow;
 }
 
+/// Read-model for a single provider's detail screen.
 final class TradeCopyProviderDetailSnapshot {
   const TradeCopyProviderDetailSnapshot({
     required this.providerId,
@@ -125,6 +137,8 @@ final class TradeCopyProviderDetailSnapshot {
   bool get isNotFound => provider == null;
 }
 
+/// Read-model for the Pre-Copy Suitability Assessment screen (provider,
+/// questionnaire, education docs) shown before copying a provider.
 final class TradePreCopyAssessmentSnapshot {
   const TradePreCopyAssessmentSnapshot({
     required this.providerId,
@@ -145,6 +159,7 @@ final class TradePreCopyAssessmentSnapshot {
   bool get isNotFound => provider == null;
 }
 
+/// A single pre-copy suitability question with scored answer options.
 final class TradePreCopyQuestion {
   const TradePreCopyQuestion({
     required this.id,
@@ -159,6 +174,8 @@ final class TradePreCopyQuestion {
   final List<TradePreCopyOption> options;
 }
 
+/// A single selectable, scored answer option for a pre-copy assessment
+/// question.
 final class TradePreCopyOption {
   const TradePreCopyOption({
     required this.value,
@@ -171,6 +188,8 @@ final class TradePreCopyOption {
   final int score;
 }
 
+/// A single linked educational document shown on the pre-copy assessment
+/// screen.
 final class TradePreCopyEducationDoc {
   const TradePreCopyEducationDoc({
     required this.id,
@@ -183,6 +202,8 @@ final class TradePreCopyEducationDoc {
   final String duration;
 }
 
+/// Read-model for the Provider Comparison screen (selected providers,
+/// side-by-side metrics).
 final class TradeProviderComparisonSnapshot {
   const TradeProviderComparisonSnapshot({
     required this.selectedCount,
@@ -205,6 +226,7 @@ final class TradeProviderComparisonSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single provider entry (id, name, avatar) selected for comparison.
 final class TradeProviderComparisonProvider {
   const TradeProviderComparisonProvider({
     required this.id,
@@ -217,6 +239,7 @@ final class TradeProviderComparisonProvider {
   final String avatar;
 }
 
+/// A single comparison metric row with per-provider values.
 final class TradeProviderComparisonMetric {
   const TradeProviderComparisonMetric({
     required this.label,
@@ -231,8 +254,12 @@ final class TradeProviderComparisonMetric {
   final Map<String, String> values;
 }
 
+/// Category of a provider comparison metric: performance, risk,
+/// execution, or cost.
 enum TradeProviderComparisonCategory { performance, risk, execution, cost }
 
+/// Read-model for the Provider Leaderboard screen (ranked providers,
+/// sort/risk filters, risk warning copy).
 final class TradeProviderLeaderboardSnapshot {
   const TradeProviderLeaderboardSnapshot({
     required this.trade,
@@ -265,6 +292,7 @@ final class TradeProviderLeaderboardSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A selectable sort option on the provider leaderboard.
 final class TradeProviderLeaderboardSort {
   const TradeProviderLeaderboardSort({required this.id, required this.label});
 
@@ -272,6 +300,7 @@ final class TradeProviderLeaderboardSort {
   final String label;
 }
 
+/// A selectable risk-level filter on the provider leaderboard.
 final class TradeProviderLeaderboardRiskFilter {
   const TradeProviderLeaderboardRiskFilter({
     required this.id,
@@ -284,6 +313,8 @@ final class TradeProviderLeaderboardRiskFilter {
   final TradeCopyRiskLevel? riskLevel;
 }
 
+/// Read-model for the Provider Governance screen (a provider's own
+/// dashboard: stats, strategy changes, follower messages, compliance).
 final class TradeProviderGovernanceSnapshot {
   const TradeProviderGovernanceSnapshot({
     required this.trade,
@@ -312,6 +343,7 @@ final class TradeProviderGovernanceSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A selectable tab on the Provider Governance screen.
 final class TradeProviderGovernanceTab {
   const TradeProviderGovernanceTab({required this.id, required this.label});
 
@@ -319,6 +351,8 @@ final class TradeProviderGovernanceTab {
   final String label;
 }
 
+/// Aggregate provider-facing governance stats (followers, AUM, fees
+/// earned, compliance score).
 final class TradeProviderGovernanceStats {
   const TradeProviderGovernanceStats({
     required this.followers,
@@ -335,6 +369,8 @@ final class TradeProviderGovernanceStats {
   final int complianceScore;
 }
 
+/// A single logged change to a provider's strategy parameters, with
+/// follower-notification status.
 final class TradeStrategyModification {
   const TradeStrategyModification({
     required this.id,
@@ -355,6 +391,7 @@ final class TradeStrategyModification {
   final int followerImpact;
 }
 
+/// A single message a provider sent to their followers.
 final class TradeFollowerMessage {
   const TradeFollowerMessage({
     required this.id,
@@ -373,6 +410,8 @@ final class TradeFollowerMessage {
   final int openRate;
 }
 
+/// A single follower's contribution to a provider's performance-fee
+/// earnings.
 final class TradeFeeContributor {
   const TradeFeeContributor({
     required this.name,
@@ -385,6 +424,7 @@ final class TradeFeeContributor {
   final double fee;
 }
 
+/// A single compliance checklist item on the provider governance screen.
 final class TradeComplianceItem {
   const TradeComplianceItem({
     required this.item,
@@ -397,6 +437,8 @@ final class TradeComplianceItem {
   final String lastCheck;
 }
 
+/// Read-model for a trader's public profile screen (PnL history, recent
+/// trades).
 final class TradeTraderProfileSnapshot {
   const TradeTraderProfileSnapshot({
     required this.traderId,
@@ -417,6 +459,7 @@ final class TradeTraderProfileSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// One day's daily and cumulative PnL for a trader's public profile.
 final class TradeTraderPnlPoint {
   const TradeTraderPnlPoint({
     required this.day,
@@ -429,6 +472,7 @@ final class TradeTraderPnlPoint {
   final double cumPnl;
 }
 
+/// A single recent trade shown on a trader's public profile.
 final class TradeTraderRecentTrade {
   const TradeTraderRecentTrade({
     required this.id,
@@ -453,6 +497,9 @@ final class TradeTraderRecentTrade {
   final String status;
 }
 
+/// A copy-trading provider profile — kernel entity shared across
+/// discovery, leaderboard, comparison, and detail screens (performance,
+/// AUM, follower count, risk level).
 final class TradeCopyTrader {
   const TradeCopyTrader({
     required this.id,

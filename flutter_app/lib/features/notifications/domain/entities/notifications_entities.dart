@@ -1,5 +1,7 @@
+/// UI states the notifications screen can render.
 enum NotificationsScreenState { loading, empty, error, offline, ready }
 
+/// Category of an app notification, driving its icon and routing.
 enum AppNotificationType {
   trade,
   deposit,
@@ -12,6 +14,8 @@ enum AppNotificationType {
   arena,
 }
 
+/// Data contract for the notifications screen: the notification list plus
+/// current screen state.
 final class NotificationsSnapshot {
   const NotificationsSnapshot({
     required this.endpoint,
@@ -36,6 +40,7 @@ final class NotificationsSnapshot {
   final Set<NotificationsScreenState> supportedStates;
 }
 
+/// A single notification entry in the notifications list.
 final class AppNotificationDraft {
   const AppNotificationDraft({
     required this.id,

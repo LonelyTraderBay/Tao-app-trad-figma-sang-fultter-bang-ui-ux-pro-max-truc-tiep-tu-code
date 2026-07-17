@@ -1,9 +1,13 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Buy-frequency option for the DCA backtester tool.
 enum DcaBacktestFrequency { weekly, biweekly, monthly, daily }
 
+/// Buy-strategy option for the DCA backtester tool.
 enum DcaBacktestStrategy { fixed, valueAverage, buyDips }
 
+/// Data for the DCA backtester screen: input config, computed [result],
+/// and the historical/drawdown chart series.
 class DcaBacktesterSnapshot {
   const DcaBacktesterSnapshot({
     required this.endpoint,
@@ -48,6 +52,7 @@ class DcaBacktesterSnapshot {
   final List<String> backtests;
 }
 
+/// One selectable [DcaBacktestFrequency] entry with its display label.
 class DcaBacktestFrequencyOption {
   const DcaBacktestFrequencyOption({
     required this.frequency,
@@ -58,6 +63,7 @@ class DcaBacktestFrequencyOption {
   final String label;
 }
 
+/// One selectable [DcaBacktestStrategy] entry with title/subtitle copy.
 class DcaBacktestStrategyOption {
   const DcaBacktestStrategyOption({
     required this.strategy,
@@ -70,6 +76,8 @@ class DcaBacktestStrategyOption {
   final String subtitle;
 }
 
+/// Computed backtest outcome: invested/final value, returns, drawdown,
+/// Sharpe ratio, and win-rate stats.
 class DcaBacktestResult {
   const DcaBacktestResult({
     required this.totalInvestedUsd,
@@ -98,6 +106,8 @@ class DcaBacktestResult {
   final int numberOfBuys;
 }
 
+/// One dated price/value data point comparing DCA vs. lump-sum performance
+/// in the backtester's chart.
 class DcaBacktestPoint {
   const DcaBacktestPoint({
     required this.date,
@@ -112,6 +122,8 @@ class DcaBacktestPoint {
   final int lumpValueUsd;
 }
 
+/// One dated drawdown-percent data point in the backtester's drawdown
+/// chart.
 class DcaDrawdownPoint {
   const DcaDrawdownPoint({required this.date, required this.drawdownPercent});
 

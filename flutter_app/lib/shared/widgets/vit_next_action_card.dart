@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Suggested-next-step card: accent icon, title with optional status pill,
+/// subtitle, and a trailing dismiss/CTA-chevron area.
 class VitNextActionCard extends StatelessWidget {
   const VitNextActionCard({
     super.key,

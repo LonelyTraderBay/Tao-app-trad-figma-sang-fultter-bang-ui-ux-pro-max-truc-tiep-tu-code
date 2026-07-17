@@ -1,5 +1,7 @@
 part of 'referral_entities.dart';
 
+/// Data for one referred friend's detail screen, resolved from [friendId]
+/// ([found] false shows the empty-title/message copy instead).
 final class ReferralFriendDetailSnapshot {
   const ReferralFriendDetailSnapshot({
     required this.endpoint,

@@ -26,6 +26,7 @@ final class VitTradeOrderRecord {
   final VoidCallback? onTap;
 }
 
+/// One row rendering a [VitTradeOrderRecord] (symbol/detail + side label).
 class VitTradeOrderRow extends StatelessWidget {
   const VitTradeOrderRow({super.key, required this.record});
 
@@ -71,6 +72,8 @@ class VitTradeOrderRow extends StatelessWidget {
   }
 }
 
+/// Card-wrapped, divider-separated list of [VitTradeOrderRow]s, or an
+/// [emptyLabel] message when [records] is empty.
 class VitTradeOrderList extends StatelessWidget {
   const VitTradeOrderList({
     super.key,

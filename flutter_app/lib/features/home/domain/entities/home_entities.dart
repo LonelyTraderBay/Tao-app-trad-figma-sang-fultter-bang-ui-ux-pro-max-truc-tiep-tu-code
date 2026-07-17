@@ -1,5 +1,8 @@
+/// Category of a home announcement banner, driving whether it surfaces on
+/// the home screen carousel.
 enum HomeAnnouncementType { info, campaign, security, risk }
 
+/// Helpers on [HomeAnnouncementType].
 extension HomeAnnouncementTypeX on HomeAnnouncementType {
   bool get surfacesOnHome {
     return switch (this) {
@@ -11,6 +14,7 @@ extension HomeAnnouncementTypeX on HomeAnnouncementType {
   }
 }
 
+/// A single announcement banner shown in the home screen carousel.
 final class HomeAnnouncement {
   const HomeAnnouncement({
     required this.id,
@@ -30,6 +34,8 @@ final class HomeAnnouncement {
   final String? routePath;
 }
 
+/// A shortcut tile in the home screen's quick-actions grid (e.g. Deposit,
+/// Trade).
 final class HomeQuickAction {
   const HomeQuickAction({
     required this.icon,
@@ -53,6 +59,8 @@ final class HomeQuickAction {
   final String? riskBadge;
 }
 
+/// The single "continue where you left off" suggestion card on the home
+/// screen.
 final class HomeNextAction {
   const HomeNextAction({
     required this.icon,
@@ -73,6 +81,7 @@ final class HomeNextAction {
   final String stateLabel;
 }
 
+/// A recently-used product entry in the home screen's recent products row.
 final class HomeRecentProduct {
   const HomeRecentProduct({
     required this.id,
@@ -93,6 +102,8 @@ final class HomeRecentProduct {
   final String stateLabel;
 }
 
+/// A market pair row (symbol, price, 24h change) shown in the home screen's
+/// market watchlist.
 final class HomeCryptoPair {
   const HomeCryptoPair({
     required this.id,
@@ -115,6 +126,8 @@ final class HomeCryptoPair {
   final bool isFavorite;
 }
 
+/// Data contract for the home screen: balances, announcements, quick
+/// actions, and watchlist.
 final class HomeSnapshot {
   const HomeSnapshot({
     required this.totalBalance,

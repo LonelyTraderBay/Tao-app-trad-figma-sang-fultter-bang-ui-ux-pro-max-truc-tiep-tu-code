@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+/// One numbered step (title + optional description) rendered by
+/// [VitStepList].
 class VitStepItem {
   const VitStepItem({required this.title, this.description, this.stepNumber});
 

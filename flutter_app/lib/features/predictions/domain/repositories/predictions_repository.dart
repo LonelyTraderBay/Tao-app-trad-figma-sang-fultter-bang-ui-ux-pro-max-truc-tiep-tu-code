@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 
+/// Data source contract for the Prediction Markets feature: read snapshots
+/// for every prediction screen and submit orders.
 abstract interface class PredictionsRepository {
   PredictionHomeSnapshot getHome({
     PredictionFilterTab filter = PredictionFilterTab.trending,

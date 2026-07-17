@@ -1,5 +1,7 @@
 part of 'trade_terminal_entities.dart';
 
+/// Read-model for the Advanced Charting screen (candles, indicators,
+/// available timeframes/chart types).
 final class TradeAdvancedChartSnapshot {
   const TradeAdvancedChartSnapshot({
     required this.trade,
@@ -24,6 +26,7 @@ final class TradeAdvancedChartSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A single OHLCV candlestick bar.
 final class TradeCandle {
   const TradeCandle({
     required this.time,
@@ -42,6 +45,8 @@ final class TradeCandle {
   final double volume;
 }
 
+/// A toggleable technical chart indicator (e.g. moving average) with its
+/// display color and optional period.
 final class TradeChartIndicator {
   const TradeChartIndicator({
     required this.id,
@@ -68,6 +73,8 @@ final class TradeChartIndicator {
   }
 }
 
+/// Open/high/low/close/volume summary for the currently selected chart
+/// range.
 final class TradeOhlcv {
   const TradeOhlcv({
     required this.open,
@@ -84,8 +91,11 @@ final class TradeOhlcv {
   final String volumeLabel;
 }
 
+/// Directional side of a risk-management position: long or short.
 enum TradeRiskPositionSide { long, short }
 
+/// Read-model for the Risk Management screen (position risk features,
+/// open positions, and account balance context).
 final class TradeRiskManagementSnapshot {
   const TradeRiskManagementSnapshot({
     required this.trade,
@@ -110,6 +120,7 @@ final class TradeRiskManagementSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A single risk-management feature card (title, description, icon).
 final class TradeRiskFeature {
   const TradeRiskFeature({
     required this.id,
@@ -126,6 +137,7 @@ final class TradeRiskFeature {
   final String iconName;
 }
 
+/// An open position shown on the Risk Management screen, with derived PnL.
 final class TradeRiskPosition {
   const TradeRiskPosition({
     required this.id,
@@ -165,6 +177,7 @@ final class TradeRiskPosition {
   }
 }
 
+/// A completed/pending risk-checklist item (label plus completion flag).
 final class TradeRiskStatusItem {
   const TradeRiskStatusItem({required this.label, required this.complete});
 
@@ -172,6 +185,8 @@ final class TradeRiskStatusItem {
   final bool complete;
 }
 
+/// Draft form state for a One-Cancels-the-Other (OCO) order before
+/// submission.
 final class TradeOcoOrderDraft {
   const TradeOcoOrderDraft({
     required this.symbol,
@@ -190,6 +205,7 @@ final class TradeOcoOrderDraft {
   final double stopPrice;
 }
 
+/// Result of submitting an OCO order — financial write path, see ADR-001.
 final class TradeOcoOrderResult {
   const TradeOcoOrderResult({
     required this.orderId,
@@ -202,6 +218,8 @@ final class TradeOcoOrderResult {
   final String status;
 }
 
+/// Inputs to the position-size risk calculator (account balance, risk %,
+/// entry/stop prices).
 final class TradePositionSizeRequest {
   const TradePositionSizeRequest({
     required this.accountBalance,
@@ -216,6 +234,7 @@ final class TradePositionSizeRequest {
   final double stopPrice;
 }
 
+/// Computed output of the position-size risk calculator.
 final class TradePositionSizeResult {
   const TradePositionSizeResult({
     required this.riskAmount,
@@ -230,6 +249,8 @@ final class TradePositionSizeResult {
   final double notional;
 }
 
+/// Read-model for the Execution Quality screen (best-execution report,
+/// open order, and slippage settings).
 final class TradeExecutionQualitySnapshot {
   const TradeExecutionQualitySnapshot({
     required this.trade,
@@ -252,6 +273,7 @@ final class TradeExecutionQualitySnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A single execution-quality feature card (title, description, icon).
 final class TradeExecutionFeature {
   const TradeExecutionFeature({
     required this.id,
@@ -268,6 +290,8 @@ final class TradeExecutionFeature {
   final String iconName;
 }
 
+/// Best-execution report for a filled order: requested vs. filled amount,
+/// slippage, savings, and per-venue fills.
 final class TradeExecutionReport {
   const TradeExecutionReport({
     required this.orderId,
@@ -300,6 +324,7 @@ final class TradeExecutionReport {
   final List<TradeExecutionFill> fills;
 }
 
+/// A single per-venue fill within a best-execution report.
 final class TradeExecutionFill {
   const TradeExecutionFill({
     required this.venue,
@@ -316,6 +341,8 @@ final class TradeExecutionFill {
   final String timestampLabel;
 }
 
+/// An open order shown with its position in the matching-engine queue on
+/// the Execution Quality screen.
 final class TradeExecutionOpenOrder {
   const TradeExecutionOpenOrder({
     required this.id,
@@ -344,6 +371,7 @@ final class TradeExecutionOpenOrder {
   final bool supportsAmend;
 }
 
+/// User-configurable slippage tolerance and fill-behavior settings.
 final class TradeSlippageSettings {
   const TradeSlippageSettings({
     required this.tolerancePct,
@@ -356,6 +384,7 @@ final class TradeSlippageSettings {
   final bool partialFillAllowed;
 }
 
+/// Request to amend the price/amount of an existing open order.
 final class TradeOrderAmendmentRequest {
   const TradeOrderAmendmentRequest({
     required this.orderId,
@@ -368,6 +397,7 @@ final class TradeOrderAmendmentRequest {
   final double newAmount;
 }
 
+/// Result of amending an existing open order.
 final class TradeOrderAmendmentResult {
   const TradeOrderAmendmentResult({
     required this.orderId,
@@ -380,6 +410,8 @@ final class TradeOrderAmendmentResult {
   final bool queuePositionPreserved;
 }
 
+/// Read-model for the Advanced Tools screen (ladder orders, bulk orders,
+/// keyboard shortcuts).
 final class TradeAdvancedToolsSnapshot {
   const TradeAdvancedToolsSnapshot({
     required this.trade,
@@ -402,6 +434,7 @@ final class TradeAdvancedToolsSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A single advanced-tools feature card (title, description, icon).
 final class TradeAdvancedToolFeature {
   const TradeAdvancedToolFeature({
     required this.id,
@@ -418,6 +451,7 @@ final class TradeAdvancedToolFeature {
   final String iconName;
 }
 
+/// A single rung of a ladder (grid) order.
 final class TradeLadderOrder {
   const TradeLadderOrder({
     required this.id,
@@ -434,6 +468,7 @@ final class TradeLadderOrder {
   final double filled;
 }
 
+/// A single order within a bulk (multi-order) submission batch.
 final class TradeBulkOrder {
   const TradeBulkOrder({
     required this.id,
@@ -458,6 +493,7 @@ final class TradeBulkOrder {
   final double totalValue;
 }
 
+/// A documented keyboard shortcut shown on the Advanced Tools screen.
 final class TradeShortcut {
   const TradeShortcut({
     required this.id,
@@ -472,6 +508,8 @@ final class TradeShortcut {
   final String description;
 }
 
+/// Request to run an advanced-tools action (e.g. cancel-all) against a set
+/// of orders.
 final class TradeAdvancedToolActionRequest {
   const TradeAdvancedToolActionRequest({
     required this.toolId,
@@ -484,6 +522,8 @@ final class TradeAdvancedToolActionRequest {
   final List<String> orderIds;
 }
 
+/// Result of an advanced-tools action, including how many orders it
+/// affected.
 final class TradeAdvancedToolActionResult {
   const TradeAdvancedToolActionResult({
     required this.toolId,

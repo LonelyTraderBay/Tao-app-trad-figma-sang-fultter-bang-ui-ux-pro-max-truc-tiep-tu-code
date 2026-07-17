@@ -1,9 +1,12 @@
 part of 'arena_entities.dart';
 
+/// UI loading/data state shared by Arena screen snapshots.
 enum ArenaScreenState { loading, empty, error, offline }
 
+/// Lifecycle state of an Arena challenge room.
 enum ArenaChallengeState { open, full, live, pendingResult, resolved, canceled }
 
+/// Game-format category of an Arena challenge template.
 enum ArenaTemplateKind {
   prediction,
   closestGuess,
@@ -13,6 +16,7 @@ enum ArenaTemplateKind {
   proof,
 }
 
+/// Data for the Open Arena home screen: templates, featured modes, and live rooms.
 final class ArenaHomeSnapshot {
   const ArenaHomeSnapshot({
     required this.endpoint,
@@ -37,6 +41,7 @@ final class ArenaHomeSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single selectable challenge template on the Arena home screen.
 final class ArenaTemplateDraft {
   const ArenaTemplateDraft({
     required this.id,
@@ -53,6 +58,7 @@ final class ArenaTemplateDraft {
   final List<String> tags;
 }
 
+/// Steps and templates for creating a new challenge in the Arena studio.
 final class ArenaStudioSnapshot {
   const ArenaStudioSnapshot({
     required this.endpoint,
@@ -75,6 +81,7 @@ final class ArenaStudioSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single step in the Arena creation studio wizard.
 final class ArenaStudioStepDraft {
   const ArenaStudioStepDraft({required this.index, required this.label});
 
@@ -82,6 +89,7 @@ final class ArenaStudioStepDraft {
   final String label;
 }
 
+/// A single challenge template selectable in the Arena studio.
 final class ArenaStudioTemplateDraft {
   const ArenaStudioTemplateDraft({
     required this.id,
@@ -102,6 +110,7 @@ final class ArenaStudioTemplateDraft {
   final bool verifiedOnly;
 }
 
+/// A single Arena challenge room as listed across home, studio, and profile screens.
 final class ArenaChallengeDraft {
   const ArenaChallengeDraft({
     required this.id,
@@ -124,6 +133,7 @@ final class ArenaChallengeDraft {
   final ArenaChallengeState state;
 }
 
+/// A single reusable challenge mode created by a creator.
 final class ArenaModeDraft {
   const ArenaModeDraft({
     required this.id,
@@ -150,6 +160,7 @@ final class ArenaModeDraft {
   final String templateId;
 }
 
+/// A single creator summary shown in Arena home listings.
 final class ArenaCreatorDraft {
   const ArenaCreatorDraft({
     required this.id,
@@ -168,6 +179,7 @@ final class ArenaCreatorDraft {
   final bool fairPlay;
 }
 
+/// A single trust signal metric shown on Arena home/studio screens.
 final class ArenaTrustSignalDraft {
   const ArenaTrustSignalDraft({required this.label, required this.value});
 

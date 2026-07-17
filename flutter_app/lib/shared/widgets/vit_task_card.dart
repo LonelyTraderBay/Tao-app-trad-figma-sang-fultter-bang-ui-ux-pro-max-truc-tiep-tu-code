@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_accent_icon_box.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
+/// Progress state of a [VitTaskCard] (Rewards/Arena mission).
 enum VitTaskCardStatus { active, completed, claimed }
 
 /// Tier E intrinsic-height task row for Rewards / Arena mission lists.

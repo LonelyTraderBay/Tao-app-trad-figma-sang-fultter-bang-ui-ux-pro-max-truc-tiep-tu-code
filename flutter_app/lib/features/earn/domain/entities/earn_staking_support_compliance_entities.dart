@@ -1,31 +1,45 @@
 part of 'earn_entities.dart';
 
+/// Difficulty level of a staking guide tutorial.
 enum StakingGuideDifficulty { beginner, intermediate, advanced }
 
+/// Topic category of a staking FAQ item.
 enum StakingFAQCategory { general, technical, fees, risks, advanced }
 
+/// Urgency level of a staking notification.
 enum StakingNotificationPriority { high, medium, low }
 
+/// Category of a staking notification event.
 enum StakingNotificationType { maturity, apyChange, reward, risk, system }
 
+/// The user's self-reported risk tolerance for staking recommendations.
 enum StakingRecommendationProfileRisk { conservative, moderate, aggressive }
 
+/// The user's preferred investment time horizon for staking recommendations.
 enum StakingRecommendationHorizon { short, medium, long }
 
+/// The user's liquidity requirement for staking recommendations.
 enum StakingRecommendationLiquidity { high, medium, low }
 
+/// Risk tier of a recommended staking strategy.
 enum StakingRecommendationRiskLevel { low, medium, high }
 
+/// Regulatory status of a staking license.
 enum StakingLicenseStatus { active, pending, expired }
 
+/// Kind of staking audit report (smart contract, financial, security).
 enum StakingAuditReportType { smartContract, financial, security }
 
+/// Publication status of a staking audit report.
 enum StakingAuditReportStatus { published, inProgress, scheduled }
 
+/// Input widget kind for a staking suitability questionnaire question.
 enum StakingSuitabilityQuestionType { single, slider, quiz }
 
+/// Risk tier assigned by the staking suitability assessment.
 enum StakingSuitabilityProfileLevel { conservative, moderate, aggressive }
 
+/// Data contract for the staking beginner's guide screen.
 final class StakingGuideSnapshot {
   const StakingGuideSnapshot({
     required this.endpoint,
@@ -62,6 +76,7 @@ final class StakingGuideSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single tutorial entry in the staking guide.
 final class StakingGuideTutorialDraft {
   const StakingGuideTutorialDraft({
     required this.id,
@@ -78,6 +93,7 @@ final class StakingGuideTutorialDraft {
   final List<StakingGuideStepDraft> steps;
 }
 
+/// A single step within a staking guide tutorial.
 final class StakingGuideStepDraft {
   const StakingGuideStepDraft({
     required this.id,
@@ -94,6 +110,7 @@ final class StakingGuideStepDraft {
   final List<String> tips;
 }
 
+/// A quick tip card shown in the staking guide.
 final class StakingGuideQuickTipDraft {
   const StakingGuideQuickTipDraft({
     required this.title,
@@ -108,6 +125,7 @@ final class StakingGuideQuickTipDraft {
   final String tone;
 }
 
+/// A common-mistake-and-correction card shown in the staking guide.
 final class StakingGuideMistakeDraft {
   const StakingGuideMistakeDraft({
     required this.title,
@@ -120,6 +138,7 @@ final class StakingGuideMistakeDraft {
   final String tone;
 }
 
+/// Data contract for the staking FAQ screen.
 final class StakingFAQSnapshot {
   const StakingFAQSnapshot({
     required this.endpoint,
@@ -148,6 +167,7 @@ final class StakingFAQSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single question/answer entry on the staking FAQ screen.
 final class StakingFAQItemDraft {
   const StakingFAQItemDraft({
     required this.id,
@@ -162,6 +182,7 @@ final class StakingFAQItemDraft {
   final String answer;
 }
 
+/// Data contract for the staking notifications (settings + history) screen.
 final class StakingNotificationsSnapshot {
   const StakingNotificationsSnapshot({
     required this.endpoint,
@@ -194,6 +215,8 @@ final class StakingNotificationsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single toggleable notification setting on the staking notifications
+/// screen.
 final class StakingNotificationSettingDraft {
   const StakingNotificationSettingDraft({
     required this.id,
@@ -223,6 +246,7 @@ final class StakingNotificationSettingDraft {
   }
 }
 
+/// A selectable notification delivery channel.
 final class StakingNotificationChannelDraft {
   const StakingNotificationChannelDraft({
     required this.id,
@@ -243,6 +267,7 @@ final class StakingNotificationChannelDraft {
   }
 }
 
+/// A single notification entry in the staking notifications history.
 final class StakingNotificationHistoryDraft {
   const StakingNotificationHistoryDraft({
     required this.id,
@@ -272,6 +297,7 @@ final class StakingNotificationHistoryDraft {
   }
 }
 
+/// Data contract for the staking recommendations screen.
 final class StakingRecommendationsSnapshot {
   const StakingRecommendationsSnapshot({
     required this.endpoint,
@@ -306,6 +332,7 @@ final class StakingRecommendationsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// The user's risk profile used to drive staking recommendations.
 final class StakingRecommendationProfileDraft {
   const StakingRecommendationProfileDraft({
     required this.riskTolerance,
@@ -320,6 +347,7 @@ final class StakingRecommendationProfileDraft {
   final double totalPortfolio;
 }
 
+/// A single recommended staking allocation strategy.
 final class StakingStrategyDraft {
   const StakingStrategyDraft({
     required this.id,
@@ -346,6 +374,7 @@ final class StakingStrategyDraft {
   final bool recommended;
 }
 
+/// A single product allocation slice within a [StakingStrategyDraft].
 final class StakingRecommendationAllocationDraft {
   const StakingRecommendationAllocationDraft({
     required this.product,
@@ -360,6 +389,7 @@ final class StakingRecommendationAllocationDraft {
   final double apy;
 }
 
+/// A personalized tip card shown on the staking recommendations screen.
 final class StakingPersonalizedTipDraft {
   const StakingPersonalizedTipDraft({
     required this.id,
@@ -376,6 +406,7 @@ final class StakingPersonalizedTipDraft {
   final EarnRiskLevel tone;
 }
 
+/// Data contract for the staking regulatory framework screen.
 final class StakingRegulatoryFrameworkSnapshot {
   const StakingRegulatoryFrameworkSnapshot({
     required this.endpoint,
@@ -416,6 +447,7 @@ final class StakingRegulatoryFrameworkSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry in the regulatory framework screen's tab bar.
 final class StakingRegulatoryTabDraft {
   const StakingRegulatoryTabDraft({required this.id, required this.label});
 
@@ -423,6 +455,7 @@ final class StakingRegulatoryTabDraft {
   final String label;
 }
 
+/// A single jurisdiction's staking license entry.
 final class StakingLicenseDraft {
   const StakingLicenseDraft({
     required this.jurisdiction,
@@ -445,6 +478,7 @@ final class StakingLicenseDraft {
   final String website;
 }
 
+/// A single investor-protection scheme entry.
 final class StakingProtectionSchemeDraft {
   const StakingProtectionSchemeDraft({
     required this.jurisdiction,
@@ -461,6 +495,7 @@ final class StakingProtectionSchemeDraft {
   final String eligibility;
 }
 
+/// A single step in the regulatory complaint process explainer.
 final class StakingComplaintStepDraft {
   const StakingComplaintStepDraft({
     required this.step,
@@ -475,6 +510,7 @@ final class StakingComplaintStepDraft {
   final String action;
 }
 
+/// A regulatory authority contact entry.
 final class StakingAuthorityContactDraft {
   const StakingAuthorityContactDraft({
     required this.name,
@@ -487,6 +523,7 @@ final class StakingAuthorityContactDraft {
   final String phone;
 }
 
+/// Data contract for the staking audit reports screen.
 final class StakingAuditReportsSnapshot {
   const StakingAuditReportsSnapshot({
     required this.endpoint,
@@ -521,6 +558,7 @@ final class StakingAuditReportsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A tab entry in the audit reports screen's tab bar.
 final class StakingAuditTabDraft {
   const StakingAuditTabDraft({required this.id, required this.label});
 
@@ -528,6 +566,7 @@ final class StakingAuditTabDraft {
   final String label;
 }
 
+/// A single summary stat card on the audit reports screen.
 final class StakingAuditStatDraft {
   const StakingAuditStatDraft({
     required this.label,
@@ -542,6 +581,7 @@ final class StakingAuditStatDraft {
   final String? caption;
 }
 
+/// A single third-party audit report entry.
 final class StakingAuditReportDraft {
   const StakingAuditReportDraft({
     required this.id,
@@ -568,6 +608,7 @@ final class StakingAuditReportDraft {
   final String? pdfUrl;
 }
 
+/// Severity breakdown of findings within a [StakingAuditReportDraft].
 final class StakingAuditFindingsDraft {
   const StakingAuditFindingsDraft({
     required this.critical,
@@ -586,6 +627,7 @@ final class StakingAuditFindingsDraft {
   int get resolvedFindings => critical + high + medium + low;
 }
 
+/// Bug bounty program details shown on the audit reports screen.
 final class StakingBugBountyDraft {
   const StakingBugBountyDraft({
     required this.title,
@@ -602,6 +644,7 @@ final class StakingBugBountyDraft {
   final List<StakingBugBountyPayoutDraft> payouts;
 }
 
+/// A single payout tier row within a [StakingBugBountyDraft].
 final class StakingBugBountyPayoutDraft {
   const StakingBugBountyPayoutDraft({
     required this.severity,
@@ -614,6 +657,7 @@ final class StakingBugBountyPayoutDraft {
   final EarnRiskLevel tone;
 }
 
+/// Data contract for the staking custody & fund safety screen.
 final class StakingCustodySnapshot {
   const StakingCustodySnapshot({
     required this.endpoint,
@@ -658,6 +702,7 @@ final class StakingCustodySnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// The third-party custodian holding staked assets.
 final class StakingCustodianDraft {
   const StakingCustodianDraft({
     required this.name,
@@ -680,6 +725,7 @@ final class StakingCustodianDraft {
   final String aum;
 }
 
+/// A single allocation slice in a custody breakdown chart.
 final class StakingCustodyAllocationDraft {
   const StakingCustodyAllocationDraft({
     required this.name,
@@ -692,6 +738,7 @@ final class StakingCustodyAllocationDraft {
   final EarnRiskLevel tone;
 }
 
+/// A legend entry for a custody breakdown chart.
 final class StakingCustodyLegendDraft {
   const StakingCustodyLegendDraft({
     required this.iconKey,
@@ -706,6 +753,7 @@ final class StakingCustodyLegendDraft {
   final EarnRiskLevel tone;
 }
 
+/// A single on-chain vs custody reconciliation log entry.
 final class StakingReconciliationLogDraft {
   const StakingReconciliationLogDraft({
     required this.dateLabel,
@@ -720,6 +768,7 @@ final class StakingReconciliationLogDraft {
   final double discrepancyUsd;
 }
 
+/// A single publicly verifiable custody wallet address entry.
 final class StakingTransparencyAddressDraft {
   const StakingTransparencyAddressDraft({
     required this.label,
@@ -732,6 +781,7 @@ final class StakingTransparencyAddressDraft {
   final String explorer;
 }
 
+/// Data contract for the staking suitability assessment screen.
 final class StakingSuitabilityAssessmentSnapshot {
   const StakingSuitabilityAssessmentSnapshot({
     required this.endpoint,
@@ -764,6 +814,7 @@ final class StakingSuitabilityAssessmentSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single question in the staking suitability questionnaire.
 final class StakingSuitabilityQuestionDraft {
   const StakingSuitabilityQuestionDraft({
     required this.id,
@@ -786,6 +837,7 @@ final class StakingSuitabilityQuestionDraft {
   final List<StakingSuitabilityQuizDraft> quizQuestions;
 }
 
+/// A single weighted answer option for a [StakingSuitabilityQuestionDraft].
 final class StakingSuitabilityOptionDraft {
   const StakingSuitabilityOptionDraft({
     required this.label,
@@ -796,6 +848,8 @@ final class StakingSuitabilityOptionDraft {
   final int weight;
 }
 
+/// A single knowledge-check quiz question within the suitability
+/// assessment.
 final class StakingSuitabilityQuizDraft {
   const StakingSuitabilityQuizDraft({
     required this.question,
@@ -808,6 +862,7 @@ final class StakingSuitabilityQuizDraft {
   final int correctIndex;
 }
 
+/// A scored suitability profile result band.
 final class StakingSuitabilityProfileDraft {
   const StakingSuitabilityProfileDraft({
     required this.level,

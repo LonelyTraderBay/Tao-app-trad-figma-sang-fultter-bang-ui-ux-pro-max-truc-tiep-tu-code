@@ -1,7 +1,11 @@
+/// UI state a Dev-tools screen snapshot supports rendering.
 enum DevScreenState { loading, empty, error, offline }
 
+/// Color-coded quality tone for a performance metric/tip.
 enum PerformanceScoreTone { good, warning, poor }
 
+/// Data for the dev route-checker tool: all known [routes] grouped by
+/// migration phase.
 final class RouteCheckerSnapshot {
   const RouteCheckerSnapshot({
     required this.endpoint,
@@ -34,6 +38,8 @@ final class RouteCheckerSnapshot {
       routes.where((route) => route.phase == phase).length;
 }
 
+/// One known app route (path, name, migration phase) on the route-checker
+/// tool.
 final class DevRouteDraft {
   const DevRouteDraft({
     required this.path,
@@ -48,6 +54,8 @@ final class DevRouteDraft {
   final bool featured;
 }
 
+/// Data for the dev performance monitor tool: summary/vital metrics,
+/// memory usage, resource timings, and optimization tips.
 final class PerformanceMonitorSnapshot {
   const PerformanceMonitorSnapshot({
     required this.endpoint,
@@ -82,6 +90,8 @@ final class PerformanceMonitorSnapshot {
   final Set<DevScreenState> supportedStates;
 }
 
+/// One labeled summary metric (with quality tone) on the performance
+/// monitor tool.
 final class PerformanceSummaryMetric {
   const PerformanceSummaryMetric({
     required this.label,
@@ -94,6 +104,8 @@ final class PerformanceSummaryMetric {
   final PerformanceScoreTone tone;
 }
 
+/// One web-vital-style metric (value, progress, tone) on the performance
+/// monitor tool.
 final class PerformanceVitalMetric {
   const PerformanceVitalMetric({
     required this.label,
@@ -108,6 +120,8 @@ final class PerformanceVitalMetric {
   final PerformanceScoreTone tone;
 }
 
+/// Current memory usage snapshot (used/limit/percent) on the performance
+/// monitor tool.
 final class PerformanceMemoryUsage {
   const PerformanceMemoryUsage({
     required this.usedLabel,
@@ -122,6 +136,8 @@ final class PerformanceMemoryUsage {
   final double progress;
 }
 
+/// One loaded resource's size/duration timing on the performance monitor
+/// tool.
 final class PerformanceResourceTiming {
   const PerformanceResourceTiming({
     required this.name,
@@ -136,6 +152,7 @@ final class PerformanceResourceTiming {
   final String duration;
 }
 
+/// One suggested optimization tip on the performance monitor tool.
 final class PerformanceOptimizationTip {
   const PerformanceOptimizationTip({
     required this.title,
@@ -148,6 +165,8 @@ final class PerformanceOptimizationTip {
   final PerformanceScoreTone tone;
 }
 
+/// Data for the dev "missing screens" showcase tool: new-screen and
+/// v2-page listings plus their flow connections.
 final class MissingScreensShowcaseSnapshot {
   const MissingScreensShowcaseSnapshot({
     required this.endpoint,
@@ -180,6 +199,7 @@ final class MissingScreensShowcaseSnapshot {
   final Set<DevScreenState> supportedStates;
 }
 
+/// One selectable tab entry on the missing-screens showcase tool.
 final class DevShowcaseTabDraft {
   const DevShowcaseTabDraft({required this.id, required this.label});
 
@@ -187,6 +207,8 @@ final class DevShowcaseTabDraft {
   final String label;
 }
 
+/// One newly built screen entry (route, description, supported states)
+/// on the missing-screens showcase tool.
 final class DevShowcaseScreenDraft {
   const DevShowcaseScreenDraft({
     required this.id,
@@ -203,6 +225,8 @@ final class DevShowcaseScreenDraft {
   final List<String> states;
 }
 
+/// One v2-redesigned page entry (route, changelog) on the missing-screens
+/// showcase tool.
 final class DevShowcaseV2PageDraft {
   const DevShowcaseV2PageDraft({
     required this.id,
@@ -217,6 +241,8 @@ final class DevShowcaseV2PageDraft {
   final List<String> changes;
 }
 
+/// One from-to screen navigation flow entry on the missing-screens
+/// showcase tool.
 final class DevShowcaseFlowDraft {
   const DevShowcaseFlowDraft({
     required this.id,
@@ -235,6 +261,8 @@ final class DevShowcaseFlowDraft {
   final String trigger;
 }
 
+/// Data for the dev design-system showcase tool: theme tokens/swatches and
+/// live CTA/input/section component demos.
 final class DesignSystemSnapshot {
   const DesignSystemSnapshot({
     required this.endpoint,
@@ -277,6 +305,7 @@ final class DesignSystemSnapshot {
   final Set<DevScreenState> supportedStates;
 }
 
+/// One label/value theme token entry on the design-system showcase tool.
 final class DesignTokenDraft {
   const DesignTokenDraft({required this.label, required this.value});
 
@@ -284,6 +313,7 @@ final class DesignTokenDraft {
   final String value;
 }
 
+/// One named color swatch entry on the design-system showcase tool.
 final class DesignSwatchDraft {
   const DesignSwatchDraft({
     required this.id,
@@ -296,6 +326,8 @@ final class DesignSwatchDraft {
   final String value;
 }
 
+/// One live [VitCtaButton]-style demo config on the design-system showcase
+/// tool.
 final class DesignCtaDemoDraft {
   const DesignCtaDemoDraft({
     required this.id,
@@ -312,6 +344,8 @@ final class DesignCtaDemoDraft {
   final bool disabled;
 }
 
+/// One live [VitInput]-style demo config on the design-system showcase
+/// tool.
 final class DesignInputDemoDraft {
   const DesignInputDemoDraft({
     required this.id,
@@ -336,6 +370,8 @@ final class DesignInputDemoDraft {
   final bool obscure;
 }
 
+/// One section-header demo config (title/subtitle/badge) on the
+/// design-system showcase tool.
 final class DesignSectionDemoDraft {
   const DesignSectionDemoDraft({
     required this.title,

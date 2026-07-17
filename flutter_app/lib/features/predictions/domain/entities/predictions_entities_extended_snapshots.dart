@@ -1,5 +1,8 @@
 part of 'predictions_entities.dart';
 
+/// Data for the Prediction Markets portfolio analyzer tool: positions, P&L
+/// history, and derived aggregate stats (win rate, realized/unrealized
+/// P&L, per-category breakdown).
 final class PredictionPortfolioAnalyzerSnapshot {
   const PredictionPortfolioAnalyzerSnapshot({
     required this.positions,
@@ -92,6 +95,8 @@ final class PredictionPortfolioAnalyzerSnapshot {
   }
 }
 
+/// One position analyzed by the portfolio analyzer tool, including its
+/// invested/current value and open-or-closed P&L.
 final class PredictionAnalyzerPositionDraft {
   const PredictionAnalyzerPositionDraft({
     required this.id,
@@ -126,8 +131,10 @@ final class PredictionAnalyzerPositionDraft {
       : currentValue - investedAmount;
 }
 
+/// Whether a [PredictionAnalyzerPositionDraft] is still open or closed.
 enum PredictionAnalyzerPositionStatus { open, closed }
 
+/// One dated P&L value point in the portfolio analyzer's P&L history chart.
 final class PredictionAnalyzerPnlPointDraft {
   const PredictionAnalyzerPnlPointDraft({
     required this.date,
@@ -138,6 +145,8 @@ final class PredictionAnalyzerPnlPointDraft {
   final double value;
 }
 
+/// Aggregated invested/P&L totals for one category, derived by
+/// [PredictionPortfolioAnalyzerSnapshot.categories].
 final class PredictionAnalyzerCategoryDraft {
   const PredictionAnalyzerCategoryDraft({
     required this.name,
@@ -150,6 +159,8 @@ final class PredictionAnalyzerCategoryDraft {
   final double pnl;
 }
 
+/// Data for the Prediction Markets event calendar screen: calendar events
+/// grouped by month, plus watching/upcoming derived views.
 final class PredictionEventCalendarSnapshot {
   const PredictionEventCalendarSnapshot({
     required this.events,
@@ -219,6 +230,8 @@ final class PredictionEventCalendarSnapshot {
   }
 }
 
+/// One event entry (resolution date, probability, watch state) shown on
+/// the Prediction Markets event calendar.
 final class PredictionCalendarEventDraft {
   const PredictionCalendarEventDraft({
     required this.id,
@@ -243,8 +256,11 @@ final class PredictionCalendarEventDraft {
   final String? notifyBefore;
 }
 
+/// Resolution lifecycle state of a [PredictionCalendarEventDraft].
 enum PredictionCalendarEventStatus { active, upcoming, resolving, resolved }
 
+/// A group of [PredictionCalendarEventDraft]s falling in the same labeled
+/// month, derived by [PredictionEventCalendarSnapshot.months].
 final class PredictionCalendarMonthDraft {
   const PredictionCalendarMonthDraft({
     required this.label,
@@ -255,6 +271,8 @@ final class PredictionCalendarMonthDraft {
   final List<PredictionCalendarEventDraft> events;
 }
 
+/// Data for one event's social/discussion screen: comments, sentiment
+/// split, top contributors, and the share URL.
 final class PredictionSocialSnapshot {
   const PredictionSocialSnapshot({
     required this.eventTitle,
@@ -297,6 +315,8 @@ final class PredictionSocialSnapshot {
       .value;
 }
 
+/// One comment (with optional nested replies) shown on an event's social
+/// discussion screen.
 final class PredictionSocialCommentDraft {
   const PredictionSocialCommentDraft({
     required this.id,
@@ -323,10 +343,14 @@ final class PredictionSocialCommentDraft {
   final bool isPinned;
 }
 
+/// Reputation tier of a commenter/contributor on an event's social screen.
 enum PredictionSocialTier { bronze, silver, gold, platinum }
 
+/// A commenter's stance on an event's outcome.
 enum PredictionSocialStance { bullish, bearish, neutral }
 
+/// One named sentiment share (e.g. "Bullish") shown on an event's social
+/// sentiment breakdown.
 final class PredictionSentimentDraft {
   const PredictionSentimentDraft({
     required this.name,
@@ -339,6 +363,8 @@ final class PredictionSentimentDraft {
   final AccentTone tone;
 }
 
+/// One top contributor entry (comment/upvote counts) on an event's social
+/// screen.
 final class PredictionContributorDraft {
   const PredictionContributorDraft({
     required this.name,
@@ -353,6 +379,8 @@ final class PredictionContributorDraft {
   final int upvotes;
 }
 
+/// Data for one event's advanced chart screen: price history, order flow,
+/// technical indicators, and detected patterns.
 final class PredictionAdvancedChartSnapshot {
   const PredictionAdvancedChartSnapshot({
     required this.eventId,
@@ -395,6 +423,8 @@ final class PredictionAdvancedChartSnapshot {
   double get resistanceLevel => .72;
 }
 
+/// One OHLC-style chart point (price, volume, moving averages, RSI,
+/// Bollinger bands) in a [PredictionAdvancedChartSnapshot]'s price history.
 final class PredictionChartPointDraft {
   const PredictionChartPointDraft({
     required this.time,
@@ -417,6 +447,7 @@ final class PredictionChartPointDraft {
   final double bbLower;
 }
 
+/// One price level's buy/sell order flow volume in the advanced chart.
 final class PredictionOrderFlowDraft {
   const PredictionOrderFlowDraft({
     required this.price,
@@ -429,6 +460,8 @@ final class PredictionOrderFlowDraft {
   final int sellVolume;
 }
 
+/// One technical indicator's current signal/strength shown on the advanced
+/// chart.
 final class PredictionIndicatorSignalDraft {
   const PredictionIndicatorSignalDraft({
     required this.name,
@@ -445,6 +478,8 @@ final class PredictionIndicatorSignalDraft {
   final String description;
 }
 
+/// One detected chart pattern (with confidence and bullish/bearish bias)
+/// shown on the advanced chart.
 final class PredictionPatternDraft {
   const PredictionPatternDraft({
     required this.name,
@@ -457,6 +492,8 @@ final class PredictionPatternDraft {
   final bool bullish;
 }
 
+/// Data for the Prediction Markets tournaments screen: all tournaments plus
+/// the leaderboard, with derived active/upcoming/joined/past groupings.
 final class PredictionTournamentsSnapshot {
   const PredictionTournamentsSnapshot({
     required this.tournaments,

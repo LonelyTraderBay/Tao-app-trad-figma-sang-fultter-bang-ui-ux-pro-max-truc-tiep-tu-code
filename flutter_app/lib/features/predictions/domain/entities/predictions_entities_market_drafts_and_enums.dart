@@ -1,5 +1,7 @@
 part of 'predictions_entities.dart';
 
+/// One prediction tournament (prize pool, participants, the user's rank if
+/// joined) shown on the tournaments screen.
 final class PredictionTournamentDraft {
   const PredictionTournamentDraft({
     required this.id,
@@ -36,8 +38,10 @@ final class PredictionTournamentDraft {
   final bool featured;
 }
 
+/// Lifecycle state of a [PredictionTournamentDraft].
 enum TournamentStatus { upcoming, active, ended }
 
+/// One ranked entry (rank/name/score/prize) on a tournament's leaderboard.
 final class PredictionTournamentLeaderboardEntry {
   const PredictionTournamentLeaderboardEntry({
     required this.rank,
@@ -52,6 +56,8 @@ final class PredictionTournamentLeaderboardEntry {
   final int prize;
 }
 
+/// Data for the Prediction Markets data-integration (admin/tooling) screen:
+/// data sources, API keys, and webhooks with derived reliability stats.
 final class PredictionDataIntegrationSnapshot {
   const PredictionDataIntegrationSnapshot({
     required this.sources,
@@ -88,6 +94,8 @@ final class PredictionDataIntegrationSnapshot {
       sources.fold<int>(0, (sum, source) => sum + source.eventsResolved);
 }
 
+/// One external data source (provider, sync status, reliability) feeding
+/// prediction event resolution.
 final class PredictionDataSourceDraft {
   const PredictionDataSourceDraft({
     required this.id,
@@ -112,8 +120,10 @@ final class PredictionDataSourceDraft {
   final String? apiUrl;
 }
 
+/// Connection state of a [PredictionDataSourceDraft].
 enum PredictionDataSourceStatus { active, inactive, error }
 
+/// One API key (permissions, usage) shown on the data-integration screen.
 final class PredictionApiKeyDraft {
   const PredictionApiKeyDraft({
     required this.id,
@@ -134,8 +144,11 @@ final class PredictionApiKeyDraft {
   final String? lastUsedLabel;
 }
 
+/// Whether a [PredictionApiKeyDraft] is still usable.
 enum PredictionApiKeyStatus { active, revoked }
 
+/// One webhook subscription (target URL, subscribed events, success rate)
+/// shown on the data-integration screen.
 final class PredictionWebhookDraft {
   const PredictionWebhookDraft({
     required this.id,
@@ -154,8 +167,11 @@ final class PredictionWebhookDraft {
   final String? lastTriggeredLabel;
 }
 
+/// Whether a [PredictionWebhookDraft] is currently firing.
 enum PredictionWebhookStatus { active, inactive }
 
+/// One reward opportunity (spread/share requirements, daily reward, 24h
+/// price change) shown on the rewards screen.
 final class PredictionRewardOpportunityDraft {
   const PredictionRewardOpportunityDraft({
     required this.id,
@@ -180,6 +196,8 @@ final class PredictionRewardOpportunityDraft {
   final bool isFavorite;
 }
 
+/// One held position (shares, prices, P&L, purchase date) shown on the
+/// portfolio screen.
 final class PredictionPortfolioPositionDraft {
   const PredictionPortfolioPositionDraft({
     required this.id,
@@ -210,6 +228,8 @@ final class PredictionPortfolioPositionDraft {
   final DateTime purchasedAt;
 }
 
+/// One open order (side, price, fill progress) shown on the portfolio
+/// screen.
 final class PredictionPortfolioOrderDraft {
   const PredictionPortfolioOrderDraft({
     required this.id,
@@ -238,6 +258,8 @@ final class PredictionPortfolioOrderDraft {
   String get receiptId => id.replaceFirst('oo-', 'po-');
 }
 
+/// A settled order's full receipt (fill details, fee, status timeline)
+/// shown on the order-receipt screen.
 final class PredictionPortfolioReceiptDraft {
   const PredictionPortfolioReceiptDraft({
     required this.id,
@@ -276,6 +298,8 @@ final class PredictionPortfolioReceiptDraft {
   final List<PredictionReceiptTimelineDraft> timeline;
 }
 
+/// One dated step (label + done flag) in a [PredictionPortfolioReceiptDraft]'s
+/// status timeline.
 final class PredictionReceiptTimelineDraft {
   const PredictionReceiptTimelineDraft({
     required this.label,
@@ -288,6 +312,8 @@ final class PredictionReceiptTimelineDraft {
   final bool done;
 }
 
+/// The user's position summary (shares, avg price, P&L) shown on an
+/// event's detail screen.
 final class PredictionDetailPositionDraft {
   const PredictionDetailPositionDraft({
     required this.outcome,
@@ -304,6 +330,7 @@ final class PredictionDetailPositionDraft {
   final double pnlPct;
 }
 
+/// An event's order book: bid and ask [PredictionOrderBookEntryDraft] lists.
 final class PredictionOrderBookDraft {
   const PredictionOrderBookDraft({required this.bids, required this.asks});
 
@@ -311,6 +338,7 @@ final class PredictionOrderBookDraft {
   final List<PredictionOrderBookEntryDraft> asks;
 }
 
+/// One price/shares level in a [PredictionOrderBookDraft].
 final class PredictionOrderBookEntryDraft {
   const PredictionOrderBookEntryDraft({
     required this.price,
@@ -321,6 +349,8 @@ final class PredictionOrderBookEntryDraft {
   final int shares;
 }
 
+/// One top holder entry (name, outcome held, shares) shown on an event's
+/// detail screen.
 final class PredictionHolderDraft {
   const PredictionHolderDraft({
     required this.name,
@@ -333,6 +363,7 @@ final class PredictionHolderDraft {
   final int shares;
 }
 
+/// One recent trade-activity entry shown in an event's activity feed.
 final class PredictionActivityDraft {
   const PredictionActivityDraft({
     required this.actor,
@@ -347,6 +378,8 @@ final class PredictionActivityDraft {
   final String time;
 }
 
+/// A points-only Arena room reference (title, slots, points, badge) linked
+/// to a prediction event's detail screen.
 final class PredictionArenaRoomDraft {
   const PredictionArenaRoomDraft({
     required this.title,
@@ -361,6 +394,8 @@ final class PredictionArenaRoomDraft {
   final String badge;
 }
 
+/// A prediction market event: title, category, outcomes, volume/liquidity
+/// stats, and lifecycle status.
 final class PredictionEventDraft {
   const PredictionEventDraft({
     required this.id,
@@ -399,6 +434,8 @@ final class PredictionEventDraft {
   final DateTime createdAt;
 }
 
+/// One possible outcome (label, implied chance, tone) of a
+/// [PredictionEventDraft].
 final class PredictionOutcomeDraft {
   const PredictionOutcomeDraft({
     required this.label,
@@ -411,6 +448,8 @@ final class PredictionOutcomeDraft {
   final AccentTone tone;
 }
 
+/// A lightweight held position reference (event/outcome/shares/status) used
+/// on the home screen.
 final class PredictionPositionDraft {
   const PredictionPositionDraft({
     required this.id,
@@ -429,6 +468,8 @@ final class PredictionPositionDraft {
   final PredictionPositionStatus status;
 }
 
+/// A lightweight open-order reference (event/outcome/side/price) used on
+/// the home screen.
 final class PredictionOrderDraft {
   const PredictionOrderDraft({
     required this.id,
@@ -449,6 +490,8 @@ final class PredictionOrderDraft {
   final String status;
 }
 
+/// A lightweight settled-receipt reference (event/outcome/total/fee) used
+/// on the home screen.
 final class PredictionReceiptDraft {
   const PredictionReceiptDraft({
     required this.id,
@@ -467,6 +510,8 @@ final class PredictionReceiptDraft {
   final String status;
 }
 
+/// A lightweight reward-opportunity reference (event/category/daily
+/// reward) used on the home screen.
 final class PredictionRewardDraft {
   const PredictionRewardDraft({
     required this.id,
@@ -483,6 +528,7 @@ final class PredictionRewardDraft {
   final double earningsPct;
 }
 
+/// The active event-filter tab on the Prediction Markets home screen.
 enum PredictionFilterTab {
   trending,
   newEvents,
@@ -492,6 +538,8 @@ enum PredictionFilterTab {
   competitive,
 }
 
+/// Sort order applied to search results on the Prediction Markets search
+/// screen.
 enum PredictionSearchSort {
   trending,
   liquidity,
@@ -501,14 +549,21 @@ enum PredictionSearchSort {
   competitive,
 }
 
+/// Status filter applied to search results on the Prediction Markets
+/// search screen.
 enum PredictionStatusFilter { active, resolved, all }
 
+/// Resolution status of a [PredictionEventDraft].
 enum PredictionEventStatus { active, resolved }
 
+/// Whether a [PredictionPositionDraft] is still open or closed.
 enum PredictionPositionStatus { open, closed }
 
+/// Outcome status of a [PredictionPortfolioPositionDraft].
 enum PredictionPortfolioPositionStatus { open, won, lost }
 
+/// UI state a Prediction Markets screen snapshot supports rendering.
 enum PredictionScreenState { loading, empty, error, offline, realtimeRefresh }
 
+/// Time window filter applied to the Prediction Markets leaderboard.
 enum PredictionLeaderboardTimeFilter { today, weekly, monthly, allTime }

@@ -1,5 +1,7 @@
 part of 'wallet_entities.dart';
 
+/// One recent transaction entry (amount, direction, status) shown on an
+/// asset's detail screen.
 final class WalletAssetDetailTransaction {
   const WalletAssetDetailTransaction({
     required this.id,
@@ -22,6 +24,8 @@ final class WalletAssetDetailTransaction {
   final String route;
 }
 
+/// Data for the multi-wallet manager screen: all [wallets] and their
+/// [groups], with derived aggregate balance/change totals.
 final class WalletMultiManagerSnapshot {
   const WalletMultiManagerSnapshot({
     required this.wallets,
@@ -49,6 +53,8 @@ final class WalletMultiManagerSnapshot {
       totalBalance == 0 ? 0 : (totalChangeUsd / totalBalance) * 100;
 }
 
+/// One managed wallet (address, balance, held [assets], group) on the
+/// multi-wallet manager screen.
 final class WalletManagerItem {
   const WalletManagerItem({
     required this.id,
@@ -85,6 +91,7 @@ final class WalletManagerItem {
   String get maskedAddress => maskAddress(address);
 }
 
+/// One held asset (symbol, balance, USD value) within a [WalletManagerItem].
 final class WalletManagerAsset {
   const WalletManagerAsset({
     required this.symbol,
@@ -97,6 +104,7 @@ final class WalletManagerAsset {
   final double valueUsd;
 }
 
+/// A user-defined group of wallets on the multi-wallet manager screen.
 final class WalletManagerGroup {
   const WalletManagerGroup({
     required this.id,
@@ -113,6 +121,8 @@ final class WalletManagerGroup {
   final double totalValueUsd;
 }
 
+/// Data for the gas optimizer screen: fee [levels], gas/network history,
+/// cross-chain comparisons, and saving tips.
 final class WalletGasOptimizerSnapshot {
   const WalletGasOptimizerSnapshot({
     required this.levels,
@@ -145,6 +155,8 @@ final class WalletGasOptimizerSnapshot {
       100;
 }
 
+/// One selectable gas-fee speed tier (gwei, cost, ETA) on the gas
+/// optimizer screen.
 final class WalletGasLevel {
   const WalletGasLevel({
     required this.speed,
@@ -165,6 +177,7 @@ final class WalletGasLevel {
   final int colorHex;
 }
 
+/// One cross-network/type gas-cost comparison row.
 final class WalletGasComparison {
   const WalletGasComparison({
     required this.type,
@@ -177,6 +190,8 @@ final class WalletGasComparison {
   final double usd;
 }
 
+/// One timed slow/standard/fast gas-price data point in the gas optimizer's
+/// history chart.
 final class WalletGasHistoryPoint {
   const WalletGasHistoryPoint({
     required this.time,
@@ -191,6 +206,8 @@ final class WalletGasHistoryPoint {
   final int fast;
 }
 
+/// One hourly transaction-count data point in the gas optimizer's network
+/// activity chart.
 final class WalletNetworkActivityPoint {
   const WalletNetworkActivityPoint({required this.hour, required this.txCount});
 
@@ -198,6 +215,8 @@ final class WalletNetworkActivityPoint {
   final int txCount;
 }
 
+/// One gas-saving tip (potential saving, difficulty, category) shown on
+/// the gas optimizer screen.
 final class WalletGasTip {
   const WalletGasTip({
     required this.id,
@@ -216,6 +235,8 @@ final class WalletGasTip {
   final String category;
 }
 
+/// Data for the token approval manager screen: active [approvals] and
+/// [revokedApprovals], with derived risk-count summaries.
 final class WalletTokenApprovalSnapshot {
   const WalletTokenApprovalSnapshot({
     required this.approvals,
@@ -254,6 +275,8 @@ final class WalletTokenApprovalSnapshot {
   }
 }
 
+/// One active token spending approval (spender, amount, usage, risk
+/// level) on the token approval manager screen.
 final class WalletTokenApproval {
   const WalletTokenApproval({
     required this.id,
@@ -288,6 +311,8 @@ final class WalletTokenApproval {
   String get maskedSpender => maskAddress(spender);
 }
 
+/// One previously revoked token approval entry (with reason) on the token
+/// approval manager screen.
 final class WalletRevokedApproval {
   const WalletRevokedApproval({
     required this.id,
@@ -304,6 +329,8 @@ final class WalletRevokedApproval {
   final String reason;
 }
 
+/// Data for the wallet health score screen: category [metrics],
+/// diversification breakdown, score history, and recommendations.
 final class WalletHealthScoreSnapshot {
   const WalletHealthScoreSnapshot({
     required this.metrics,
@@ -353,6 +380,8 @@ final class WalletHealthScoreSnapshot {
       metrics.firstWhere((metric) => metric.category == category);
 }
 
+/// One category's health score (out of [maxScore]) on the wallet health
+/// screen.
 final class WalletHealthMetric {
   const WalletHealthMetric({
     required this.category,
@@ -367,6 +396,7 @@ final class WalletHealthMetric {
   final String status;
 }
 
+/// One named/colored slice of the wallet health diversification chart.
 final class WalletDiversificationSlice {
   const WalletDiversificationSlice({
     required this.name,
@@ -379,6 +409,7 @@ final class WalletDiversificationSlice {
   final int colorHex;
 }
 
+/// One monthly score data point in the wallet health history chart.
 final class WalletHealthHistoryPoint {
   const WalletHealthHistoryPoint({required this.month, required this.score});
 
@@ -386,6 +417,7 @@ final class WalletHealthHistoryPoint {
   final int score;
 }
 
+/// One actionable recommendation to improve the wallet health score.
 final class WalletHealthRecommendation {
   const WalletHealthRecommendation({
     required this.id,
@@ -404,6 +436,8 @@ final class WalletHealthRecommendation {
   final String actionLabel;
 }
 
+/// One security checklist item (label, enabled state, description) on the
+/// wallet health screen.
 final class WalletSecurityChecklistItem {
   const WalletSecurityChecklistItem({
     required this.item,
@@ -416,6 +450,8 @@ final class WalletSecurityChecklistItem {
   final String description;
 }
 
+/// Data for the pending deposits screen: unconfirmed/processing
+/// [deposits] with a derived pending count.
 final class WalletPendingDepositsSnapshot {
   const WalletPendingDepositsSnapshot({
     required this.deposits,
@@ -437,6 +473,8 @@ final class WalletPendingDepositsSnapshot {
       .length;
 }
 
+/// One in-flight deposit (confirmations, ETA, source address) with a
+/// derived confirmation [progress].
 final class WalletPendingDeposit {
   const WalletPendingDeposit({
     required this.id,

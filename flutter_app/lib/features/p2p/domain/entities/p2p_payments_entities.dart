@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Form options and confirmation copy for adding a new payment method.
 final class P2PPaymentMethodAddSnapshot {
   const P2PPaymentMethodAddSnapshot({
     required this.endpoint,
@@ -36,6 +37,7 @@ final class P2PPaymentMethodAddSnapshot {
   final String? highRiskContractId;
 }
 
+/// Verification method options for confirming a newly added payment method.
 final class P2PPaymentMethodVerificationSnapshot {
   const P2PPaymentMethodVerificationSnapshot({
     required this.endpoint,
@@ -66,6 +68,7 @@ final class P2PPaymentMethodVerificationSnapshot {
   final String contractNotes;
 }
 
+/// A single selectable method for verifying a payment method.
 final class P2PPaymentVerificationMethodDraft {
   const P2PPaymentVerificationMethodDraft({
     required this.id,
@@ -84,6 +87,7 @@ final class P2PPaymentVerificationMethodDraft {
   final bool recommended;
 }
 
+/// Document requirements for proving ownership of a payment method.
 final class P2PPaymentMethodOwnershipSnapshot {
   const P2PPaymentMethodOwnershipSnapshot({
     required this.endpoint,
@@ -112,6 +116,7 @@ final class P2PPaymentMethodOwnershipSnapshot {
   final String? highRiskContractId;
 }
 
+/// A single required document for proving payment-method ownership.
 final class P2POwnershipDocumentDraft {
   const P2POwnershipDocumentDraft({
     required this.id,
@@ -124,6 +129,7 @@ final class P2POwnershipDocumentDraft {
   final bool optional;
 }
 
+/// Cooling-period countdown and reasons shown after adding a payment method.
 final class P2PPaymentMethodCoolingPeriodSnapshot {
   const P2PPaymentMethodCoolingPeriodSnapshot({
     required this.endpoint,
@@ -156,6 +162,7 @@ final class P2PPaymentMethodCoolingPeriodSnapshot {
   final String? highRiskContractId;
 }
 
+/// Transaction history and totals for a payment method.
 final class P2PPaymentMethodHistorySnapshot {
   const P2PPaymentMethodHistorySnapshot({
     required this.endpoint,
@@ -180,6 +187,7 @@ final class P2PPaymentMethodHistorySnapshot {
   final String contractNotes;
 }
 
+/// A single transaction row in a payment method's history.
 final class P2PPaymentHistoryTransactionDraft {
   const P2PPaymentHistoryTransactionDraft({
     required this.id,
@@ -198,6 +206,7 @@ final class P2PPaymentHistoryTransactionDraft {
   final String timestamp;
 }
 
+/// A user's saved payment methods for the payment methods list screen.
 final class P2PPaymentMethodsSnapshot {
   const P2PPaymentMethodsSnapshot({
     required this.endpoint,
@@ -226,8 +235,10 @@ final class P2PPaymentMethodsSnapshot {
   final String contractNotes;
 }
 
+/// Category of a saved payment method (bank account or e-wallet).
 enum P2PPaymentListMethodType { bank, ewallet }
 
+/// A single saved payment method listed on the payment methods screen.
 final class P2PPaymentListMethodDraft {
   const P2PPaymentListMethodDraft({
     required this.id,

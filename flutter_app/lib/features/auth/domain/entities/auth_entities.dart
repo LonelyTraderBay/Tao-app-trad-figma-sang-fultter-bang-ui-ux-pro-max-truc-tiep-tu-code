@@ -1,7 +1,10 @@
+/// The channel a contact identifier (email or phone) belongs to.
 enum AuthContactType { email, phone }
 
+/// What an OTP code is being requested/verified for.
 enum AuthOtpPurpose { register, twoFactor, passwordReset, verify }
 
+/// A signed-in session (identifier, demo flag, issue time).
 final class AuthSession {
   const AuthSession({
     required this.identifier,
@@ -14,6 +17,8 @@ final class AuthSession {
   final DateTime issuedAt;
 }
 
+/// Result of a registration attempt: the new [authSession] plus the
+/// credentials, OTP challenge, and device-trust state that produced it.
 final class AuthRegistrationDraft {
   const AuthRegistrationDraft({
     required this.authSession,
@@ -28,6 +33,8 @@ final class AuthRegistrationDraft {
   final AuthDeviceTrustDraft deviceTrust;
 }
 
+/// Submitted registration credentials (name, contact, optional referral
+/// code).
 final class AuthUserCredentialsDraft {
   const AuthUserCredentialsDraft({
     required this.name,
@@ -42,6 +49,7 @@ final class AuthUserCredentialsDraft {
   final String? referralCode;
 }
 
+/// A pending OTP challenge (contact, delivery channel, purpose).
 final class AuthOtpChallengeDraft {
   const AuthOtpChallengeDraft({
     required this.contact,
@@ -54,6 +62,7 @@ final class AuthOtpChallengeDraft {
   final String purpose;
 }
 
+/// The current device's label and whether it is trusted.
 final class AuthDeviceTrustDraft {
   const AuthDeviceTrustDraft({
     required this.deviceLabel,
@@ -64,6 +73,8 @@ final class AuthDeviceTrustDraft {
   final bool trusted;
 }
 
+/// Result of verifying an OTP code, including success/error state and the
+/// resulting session/credentials/challenge/device context.
 final class AuthOtpVerificationDraft {
   const AuthOtpVerificationDraft({
     required this.success,
@@ -82,6 +93,8 @@ final class AuthOtpVerificationDraft {
   final String? errorMessage;
 }
 
+/// Result of setting up two-factor authentication, including success/error
+/// state and whether an audit trail entry is required.
 final class AuthTwoFaSetupDraft {
   const AuthTwoFaSetupDraft({
     required this.success,
@@ -102,6 +115,8 @@ final class AuthTwoFaSetupDraft {
   final String? errorMessage;
 }
 
+/// Result of a password-reset request/submission, including success/error
+/// state and whether an audit trail entry is required.
 final class AuthPasswordResetDraft {
   const AuthPasswordResetDraft({
     required this.success,

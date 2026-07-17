@@ -1,5 +1,9 @@
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 
+/// Data contract for all Markets feature read-models: lists, overview,
+/// movers, sectors, watchlist, screener, calendar, derivatives, depth,
+/// sentiment, portfolio, news, charts, unlocks, signals, correlations,
+/// and per-pair detail/token-info screens.
 abstract interface class MarketRepository {
   MarketListSnapshot getMarketList();
 

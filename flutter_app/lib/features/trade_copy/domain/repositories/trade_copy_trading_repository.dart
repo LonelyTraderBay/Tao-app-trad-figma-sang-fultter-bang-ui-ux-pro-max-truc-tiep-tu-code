@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
 
+/// Data contract for the Copy Trading feature: provider discovery,
+/// configuration & performance, and lifecycle & safety screens.
 abstract interface class TradeCopyTradingRepository {
   // Provider discovery
   TradeProviderComparisonSnapshot getProviderComparison();

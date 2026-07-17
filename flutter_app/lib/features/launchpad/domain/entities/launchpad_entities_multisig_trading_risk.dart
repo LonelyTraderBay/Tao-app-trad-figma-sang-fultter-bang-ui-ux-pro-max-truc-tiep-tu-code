@@ -1,5 +1,6 @@
 part of 'launchpad_entities.dart';
 
+/// Multisig safes and pending transactions for the multisig screen.
 final class LaunchpadMultisigSnapshot {
   const LaunchpadMultisigSnapshot({
     required this.endpoint,
@@ -26,6 +27,7 @@ final class LaunchpadMultisigSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Lifecycle status of a multisig transaction.
 enum LaunchpadMultisigTxStatus {
   draft,
   pendingSignatures,
@@ -36,8 +38,10 @@ enum LaunchpadMultisigTxStatus {
   cancelled,
 }
 
+/// A signer's role/permission level on a multisig safe.
 enum LaunchpadMultisigSignerRole { owner, signer, observer }
 
+/// A single signer on a multisig safe and their signing status.
 final class LaunchpadMultisigSignerDraft {
   const LaunchpadMultisigSignerDraft({
     required this.address,
@@ -64,6 +68,7 @@ final class LaunchpadMultisigSignerDraft {
   }
 }
 
+/// A single multisig safe and its signer/threshold configuration.
 final class LaunchpadMultisigSafeDraft {
   const LaunchpadMultisigSafeDraft({
     required this.address,
@@ -88,6 +93,7 @@ final class LaunchpadMultisigSafeDraft {
   final int pendingCount;
 }
 
+/// A single pending or executed multisig transaction awaiting signatures.
 final class LaunchpadMultisigTxDraft {
   const LaunchpadMultisigTxDraft({
     required this.id,
@@ -165,6 +171,7 @@ final class LaunchpadMultisigTxDraft {
   }
 }
 
+/// Quotes and history for the swap aggregator screen.
 final class LaunchpadSwapAggregatorSnapshot {
   const LaunchpadSwapAggregatorSnapshot({
     required this.endpoint,
@@ -199,10 +206,13 @@ final class LaunchpadSwapAggregatorSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Relative security rating of a swap route.
 enum LaunchpadSwapSecurity { high, medium, low }
 
+/// Outcome of a submitted swap.
 enum LaunchpadSwapStatus { success, pending, failed }
 
+/// A single DEX quote compared on the swap aggregator screen.
 final class LaunchpadSwapDexQuoteDraft {
   const LaunchpadSwapDexQuoteDraft({
     required this.id,
@@ -233,6 +243,7 @@ final class LaunchpadSwapDexQuoteDraft {
   final bool recommended;
 }
 
+/// A single past swap transaction record.
 final class LaunchpadSwapHistoryDraft {
   const LaunchpadSwapHistoryDraft({
     required this.id,
@@ -257,6 +268,7 @@ final class LaunchpadSwapHistoryDraft {
   final LaunchpadSwapStatus status;
 }
 
+/// A user's limit orders for the limit orders screen.
 final class LaunchpadLimitOrdersSnapshot {
   const LaunchpadLimitOrdersSnapshot({
     required this.endpoint,
@@ -291,10 +303,13 @@ final class LaunchpadLimitOrdersSnapshot {
       .toList();
 }
 
+/// Buy or sell direction of a limit order.
 enum LaunchpadLimitOrderSide { buy, sell }
 
+/// Lifecycle status of a limit order.
 enum LaunchpadLimitOrderStatus { active, filled, cancelled, expired }
 
+/// A single limit order and its fill progress toward the target price.
 final class LaunchpadLimitOrderDraft {
   const LaunchpadLimitOrderDraft({
     required this.id,
@@ -341,6 +356,7 @@ final class LaunchpadLimitOrderDraft {
   String get sideLabel => side == LaunchpadLimitOrderSide.buy ? 'Buy' : 'Sell';
 }
 
+/// A user's dollar-cost-averaging strategies for the DCA builder screen.
 final class LaunchpadDcaBuilderSnapshot {
   const LaunchpadDcaBuilderSnapshot({
     required this.endpoint,
@@ -378,10 +394,13 @@ final class LaunchpadDcaBuilderSnapshot {
       strategies.fold(0, (sum, strategy) => sum + strategy.executedOrders);
 }
 
+/// How often a DCA strategy executes a buy.
 enum LaunchpadDcaFrequency { daily, weekly, biweekly, monthly }
 
+/// Lifecycle status of a DCA strategy.
 enum LaunchpadDcaStrategyStatus { active, paused, completed }
 
+/// A single recurring DCA strategy and its accumulated position.
 final class LaunchpadDcaStrategyDraft {
   const LaunchpadDcaStrategyDraft({
     required this.id,
@@ -422,6 +441,7 @@ final class LaunchpadDcaStrategyDraft {
   double get pnlPercent => pnl / totalInvested * 100;
 }
 
+/// A single executed buy within a DCA strategy.
 final class LaunchpadDcaExecutionDraft {
   const LaunchpadDcaExecutionDraft({
     required this.id,
@@ -440,6 +460,7 @@ final class LaunchpadDcaExecutionDraft {
   final double fee;
 }
 
+/// Risk scoring and audit data for the risk analytics screen.
 final class LaunchpadRiskAnalyticsSnapshot {
   const LaunchpadRiskAnalyticsSnapshot({
     required this.endpoint,
@@ -492,10 +513,13 @@ final class LaunchpadRiskAnalyticsSnapshot {
   ];
 }
 
+/// Overall risk severity assigned to a project.
 enum LaunchpadRiskLevel { low, medium, high, critical }
 
+/// Verification status of a project's audit.
 enum LaunchpadRiskAuditStatus { verified, pending, failed, none }
 
+/// A project's risk sub-scores across team, audit, tokenomics, and security.
 final class LaunchpadRiskScoreDraft {
   const LaunchpadRiskScoreDraft({
     required this.overall,
@@ -516,6 +540,7 @@ final class LaunchpadRiskScoreDraft {
   final int liquidityRisk;
 }
 
+/// A single project compared on the risk analytics screen.
 final class LaunchpadRiskProjectDraft {
   const LaunchpadRiskProjectDraft({
     required this.id,
@@ -544,6 +569,7 @@ final class LaunchpadRiskProjectDraft {
   final List<String> strengths;
 }
 
+/// A single labeled risk metric row for display.
 final class LaunchpadRiskMetricDraft {
   const LaunchpadRiskMetricDraft({required this.label, required this.value});
 

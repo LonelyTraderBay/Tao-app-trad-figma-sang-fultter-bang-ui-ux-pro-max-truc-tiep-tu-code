@@ -1,5 +1,6 @@
 part of 'earn_entities.dart';
 
+/// Data contract for the staking insurance screen.
 final class StakingInsuranceSnapshot {
   const StakingInsuranceSnapshot({
     required this.endpoint,
@@ -38,6 +39,7 @@ final class StakingInsuranceSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable staking insurance plan.
 final class StakingInsurancePlanDraft {
   const StakingInsurancePlanDraft({
     required this.id,
@@ -58,6 +60,7 @@ final class StakingInsurancePlanDraft {
   final List<String> features;
 }
 
+/// A single staking position with its insurance coverage status.
 final class StakingInsurancePositionDraft {
   const StakingInsurancePositionDraft({
     required this.id,
@@ -78,6 +81,7 @@ final class StakingInsurancePositionDraft {
   final String? insurancePlanId;
 }
 
+/// A single insurance claim filed against a staking position.
 final class StakingInsuranceClaimDraft {
   const StakingInsuranceClaimDraft({
     required this.id,
@@ -100,6 +104,7 @@ final class StakingInsuranceClaimDraft {
   final String status;
 }
 
+/// A single benefit card shown on the staking insurance screen.
 final class StakingInsuranceBenefitDraft {
   const StakingInsuranceBenefitDraft({
     required this.icon,
@@ -112,6 +117,7 @@ final class StakingInsuranceBenefitDraft {
   final String description;
 }
 
+/// Data contract for the insurance fund transparency screen.
 final class StakingInsuranceFundTransparencySnapshot {
   const StakingInsuranceFundTransparencySnapshot({
     required this.endpoint,
@@ -162,6 +168,7 @@ final class StakingInsuranceFundTransparencySnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single asset slice in the insurance fund's holdings breakdown.
 final class StakingInsuranceFundAssetDraft {
   const StakingInsuranceFundAssetDraft({
     required this.asset,
@@ -176,6 +183,7 @@ final class StakingInsuranceFundAssetDraft {
   final String colorKey;
 }
 
+/// A single claim entry in the insurance fund's claim ledger.
 final class StakingInsuranceFundClaimDraft {
   const StakingInsuranceFundClaimDraft({
     required this.id,
@@ -200,6 +208,7 @@ final class StakingInsuranceFundClaimDraft {
   final int processingDays;
 }
 
+/// A single month's data point in the insurance fund's balance history.
 final class StakingInsuranceFundHistoryDraft {
   const StakingInsuranceFundHistoryDraft({
     required this.month,
@@ -212,6 +221,7 @@ final class StakingInsuranceFundHistoryDraft {
   final int ratio;
 }
 
+/// Data contract for the staking transaction tax reporting screen.
 final class StakingTransactionReportingSnapshot {
   const StakingTransactionReportingSnapshot({
     required this.endpoint,
@@ -258,6 +268,7 @@ final class StakingTransactionReportingSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Tax summary totals for the selected reporting period.
 final class StakingTaxSummaryDraft {
   const StakingTaxSummaryDraft({
     required this.totalStakingIncome,
@@ -278,6 +289,7 @@ final class StakingTaxSummaryDraft {
   final List<StakingTaxRewardAssetDraft> rewardsByAsset;
 }
 
+/// Per-asset staking reward total within a [StakingTaxSummaryDraft].
 final class StakingTaxRewardAssetDraft {
   const StakingTaxRewardAssetDraft({
     required this.asset,
@@ -290,6 +302,7 @@ final class StakingTaxRewardAssetDraft {
   final double usdValue;
 }
 
+/// A single taxable transaction row in the tax reporting list.
 final class StakingTaxTransactionDraft {
   const StakingTaxTransactionDraft({
     required this.date,
@@ -310,6 +323,7 @@ final class StakingTaxTransactionDraft {
   final double? costBasis;
 }
 
+/// A selectable cost-basis calculation method option.
 final class StakingCostBasisMethodDraft {
   const StakingCostBasisMethodDraft({
     required this.value,
@@ -322,6 +336,7 @@ final class StakingCostBasisMethodDraft {
   final String description;
 }
 
+/// A selectable tax form/integration/raw-data export option.
 final class StakingTaxExportOptionDraft {
   const StakingTaxExportOptionDraft({
     required this.name,
@@ -332,6 +347,7 @@ final class StakingTaxExportOptionDraft {
   final String description;
 }
 
+/// Data contract for the staking API documentation screen.
 final class StakingApiDocumentationSnapshot {
   const StakingApiDocumentationSnapshot({
     required this.endpoint,
@@ -374,6 +390,7 @@ final class StakingApiDocumentationSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single usage stat card on the API documentation screen.
 final class StakingApiStatDraft {
   const StakingApiStatDraft({
     required this.label,
@@ -386,6 +403,7 @@ final class StakingApiStatDraft {
   final String tone;
 }
 
+/// A single documented API endpoint.
 final class StakingApiEndpointDraft {
   const StakingApiEndpointDraft({
     required this.method,
@@ -404,6 +422,7 @@ final class StakingApiEndpointDraft {
   final String responseJson;
 }
 
+/// A single request parameter within a [StakingApiEndpointDraft].
 final class StakingApiParameterDraft {
   const StakingApiParameterDraft({
     required this.name,
@@ -418,6 +437,7 @@ final class StakingApiParameterDraft {
   final String description;
 }
 
+/// A single language code sample on the API documentation screen.
 final class StakingApiCodeExampleDraft {
   const StakingApiCodeExampleDraft({
     required this.language,
@@ -430,6 +450,7 @@ final class StakingApiCodeExampleDraft {
   final String source;
 }
 
+/// A single API rate-limit tier row.
 final class StakingApiRateLimitDraft {
   const StakingApiRateLimitDraft({
     required this.tier,
@@ -446,6 +467,7 @@ final class StakingApiRateLimitDraft {
   final bool recommended;
 }
 
+/// A single documented API error code.
 final class StakingApiErrorCodeDraft {
   const StakingApiErrorCodeDraft({required this.code, required this.message});
 
@@ -453,6 +475,7 @@ final class StakingApiErrorCodeDraft {
   final String message;
 }
 
+/// A Merkle proof entry used to verify a user's staked balance.
 final class StakingMerkleProofDraft {
   const StakingMerkleProofDraft({
     required this.userId,
@@ -471,6 +494,7 @@ final class StakingMerkleProofDraft {
   final bool verified;
 }
 
+/// Data contract for the proof-of-reserves screen.
 final class StakingProofOfReservesSnapshot {
   const StakingProofOfReservesSnapshot({
     required this.endpoint,
@@ -509,6 +533,7 @@ final class StakingProofOfReservesSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Aggregate reserve totals shown on the proof-of-reserves screen.
 final class StakingReserveOverallDraft {
   const StakingReserveOverallDraft({
     required this.totalAssetsUsd,
@@ -525,6 +550,7 @@ final class StakingReserveOverallDraft {
   final String lastUpdated;
 }
 
+/// Per-asset on-chain reserve vs liability row.
 final class StakingAssetReserveDraft {
   const StakingAssetReserveDraft({
     required this.asset,
@@ -545,6 +571,7 @@ final class StakingAssetReserveDraft {
   final String explorer;
 }
 
+/// A single third-party audit report entry.
 final class StakingReserveAuditReportDraft {
   const StakingReserveAuditReportDraft({
     required this.id,
@@ -563,6 +590,7 @@ final class StakingReserveAuditReportDraft {
   final String findings;
 }
 
+/// A single month's data point in the reserve ratio history chart.
 final class StakingReserveHistoryPointDraft {
   const StakingReserveHistoryPointDraft({
     required this.month,
@@ -573,6 +601,7 @@ final class StakingReserveHistoryPointDraft {
   final double ratio;
 }
 
+/// A single step in the proof-of-reserves self-verification guide.
 final class StakingReserveVerifyStepDraft {
   const StakingReserveVerifyStepDraft({
     required this.step,
@@ -585,6 +614,7 @@ final class StakingReserveVerifyStepDraft {
   final String description;
 }
 
+/// Data contract for the staking risk dashboard screen.
 final class StakingRiskDashboardSnapshot {
   const StakingRiskDashboardSnapshot({
     required this.endpoint,
@@ -621,6 +651,7 @@ final class StakingRiskDashboardSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single scored risk category row on the risk dashboard.
 final class StakingRiskMetricDraft {
   const StakingRiskMetricDraft({
     required this.category,
@@ -637,6 +668,7 @@ final class StakingRiskMetricDraft {
   final String? actionRoute;
 }
 
+/// A single asset's exposure row on the risk dashboard.
 final class StakingRiskExposureDraft {
   const StakingRiskExposureDraft({
     required this.asset,
@@ -651,6 +683,7 @@ final class StakingRiskExposureDraft {
   final String risk;
 }
 
+/// A single risk event entry on the risk dashboard.
 final class StakingRiskEventDraft {
   const StakingRiskEventDraft({
     required this.id,
@@ -669,6 +702,7 @@ final class StakingRiskEventDraft {
   final String severity;
 }
 
+/// A single suggested risk-mitigation action on the risk dashboard.
 final class StakingRiskActionDraft {
   const StakingRiskActionDraft({
     required this.title,
@@ -683,6 +717,7 @@ final class StakingRiskActionDraft {
   final String tone;
 }
 
+/// Data contract for the validator slashing history screen.
 final class StakingSlashingHistorySnapshot {
   const StakingSlashingHistorySnapshot({
     required this.endpoint,
@@ -721,6 +756,7 @@ final class StakingSlashingHistorySnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// Aggregate slashing stats shown on the slashing history screen.
 final class StakingSlashingStatsDraft {
   const StakingSlashingStatsDraft({
     required this.totalEvents,
@@ -739,6 +775,7 @@ final class StakingSlashingStatsDraft {
   final String lastEvent;
 }
 
+/// A single slashing incident entry.
 final class StakingSlashingEventDraft {
   const StakingSlashingEventDraft({
     required this.id,
@@ -763,6 +800,7 @@ final class StakingSlashingEventDraft {
   final String status;
 }
 
+/// A single month's data point in the slashing trend chart.
 final class StakingSlashingTrendPointDraft {
   const StakingSlashingTrendPointDraft({
     required this.month,
@@ -775,6 +813,7 @@ final class StakingSlashingTrendPointDraft {
   final double amountEth;
 }
 
+/// Per-network slashing incident breakdown row.
 final class StakingSlashingNetworkDraft {
   const StakingSlashingNetworkDraft({
     required this.network,
@@ -791,6 +830,7 @@ final class StakingSlashingNetworkDraft {
   final int coverage;
 }
 
+/// Per-reason slashing incident breakdown row.
 final class StakingSlashingReasonDraft {
   const StakingSlashingReasonDraft({
     required this.reason,
@@ -803,6 +843,7 @@ final class StakingSlashingReasonDraft {
   final String severity;
 }
 
+/// A single slashing-prevention measure row.
 final class StakingSlashingPreventionDraft {
   const StakingSlashingPreventionDraft({
     required this.measure,
@@ -815,6 +856,7 @@ final class StakingSlashingPreventionDraft {
   final String description;
 }
 
+/// Data contract for the validator health monitor screen.
 final class StakingValidatorHealthMonitorSnapshot {
   const StakingValidatorHealthMonitorSnapshot({
     required this.endpoint,
@@ -855,6 +897,7 @@ final class StakingValidatorHealthMonitorSnapshot {
       validators.length;
 }
 
+/// A single validator's live health row.
 final class StakingValidatorHealthDraft {
   const StakingValidatorHealthDraft({
     required this.id,
@@ -881,6 +924,7 @@ final class StakingValidatorHealthDraft {
   final int missedBlocks;
 }
 
+/// A single data point in the validator uptime history chart.
 final class StakingUptimeHistoryPointDraft {
   const StakingUptimeHistoryPointDraft({
     required this.dateLabel,
@@ -895,6 +939,7 @@ final class StakingUptimeHistoryPointDraft {
   final double validatorThree;
 }
 
+/// Data contract for the staking risk score calculator screen.
 final class StakingRiskScoreCalculatorSnapshot {
   const StakingRiskScoreCalculatorSnapshot({
     required this.endpoint,
@@ -929,6 +974,7 @@ final class StakingRiskScoreCalculatorSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A selectable option (asset/duration) for the risk score calculator.
 final class StakingRiskScoreOptionDraft {
   const StakingRiskScoreOptionDraft({required this.value, required this.label});
 
@@ -936,6 +982,7 @@ final class StakingRiskScoreOptionDraft {
   final String label;
 }
 
+/// A conditional recommendation shown by the risk score calculator.
 final class StakingRiskScoreRecommendationDraft {
   const StakingRiskScoreRecommendationDraft({
     required this.trigger,
@@ -950,6 +997,7 @@ final class StakingRiskScoreRecommendationDraft {
   final String tone;
 }
 
+/// Data contract for the staking emergency actions screen.
 final class StakingEmergencyActionsSnapshot {
   const StakingEmergencyActionsSnapshot({
     required this.endpoint,
@@ -984,6 +1032,7 @@ final class StakingEmergencyActionsSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single emergency action (pause/withdraw) card.
 final class StakingEmergencyActionDraft {
   const StakingEmergencyActionDraft({
     required this.id,
@@ -1000,6 +1049,7 @@ final class StakingEmergencyActionDraft {
   final String tone;
 }
 
+/// A single example use case for an emergency action.
 final class StakingEmergencyUseCaseDraft {
   const StakingEmergencyUseCaseDraft({
     required this.title,
@@ -1012,6 +1062,7 @@ final class StakingEmergencyUseCaseDraft {
   final String description;
 }
 
+/// A single status card on the emergency actions screen.
 final class StakingEmergencyStatusDraft {
   const StakingEmergencyStatusDraft({
     required this.title,
@@ -1026,6 +1077,7 @@ final class StakingEmergencyStatusDraft {
   final String tone;
 }
 
+/// Confirmation sheet content for a [StakingEmergencyActionDraft].
 final class StakingEmergencySheetDraft {
   const StakingEmergencySheetDraft({
     required this.title,
@@ -1042,6 +1094,7 @@ final class StakingEmergencySheetDraft {
   final String tone;
 }
 
+/// Data contract for the staking contingency plan screen.
 final class StakingContingencyPlanSnapshot {
   const StakingContingencyPlanSnapshot({
     required this.endpoint,
@@ -1076,6 +1129,7 @@ final class StakingContingencyPlanSnapshot {
   final Set<EarnScreenState> supportedStates;
 }
 
+/// A single readiness metric card on the contingency plan screen.
 final class StakingContingencyMetricDraft {
   const StakingContingencyMetricDraft({
     required this.label,
@@ -1088,6 +1142,7 @@ final class StakingContingencyMetricDraft {
   final String tone;
 }
 
+/// A single contingency scenario (likelihood/impact/response) row.
 final class StakingContingencyScenarioDraft {
   const StakingContingencyScenarioDraft({
     required this.scenario,
@@ -1104,6 +1159,7 @@ final class StakingContingencyScenarioDraft {
   final List<String> preventative;
 }
 
+/// A single validation checklist item on the contingency plan screen.
 final class StakingContingencyValidationDraft {
   const StakingContingencyValidationDraft({
     required this.title,
@@ -1116,6 +1172,7 @@ final class StakingContingencyValidationDraft {
   final String tone;
 }
 
+/// A single downloadable contingency plan document.
 final class StakingContingencyDocumentDraft {
   const StakingContingencyDocumentDraft({
     required this.name,

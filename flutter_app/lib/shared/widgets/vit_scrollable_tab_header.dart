@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 ///   hairline divider.
 enum VitScrollableTabHeaderStyle { pillRow, surfaceDivider }
 
+/// Page top tab/section switcher chrome, built via the named constructors
+/// [VitScrollableTabHeader.pillRow] or [VitScrollableTabHeader.surfaceDivider].
 class VitScrollableTabHeader extends StatelessWidget {
   const VitScrollableTabHeader.pillRow({
     super.key,

@@ -6,8 +6,12 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+/// Accent color family for a [VitChoicePill] when [VitChoicePill.accentColor]
+/// is not explicitly set.
 enum VitChoicePillTone { neutral, primary, success, danger, warning }
 
+/// Tappable selectable pill (single filter/option toggle) with a
+/// tone-driven accent, optional leading icon, and selected-state styling.
 class VitChoicePill extends StatelessWidget {
   const VitChoicePill({
     super.key,

@@ -1,5 +1,6 @@
 part of 'earn_entities.dart';
 
+/// UI states shared across the earn feature's screens.
 enum EarnScreenState {
   loading,
   empty,
@@ -10,4 +11,5 @@ enum EarnScreenState {
   realtimeRefresh,
 }
 
+/// Relative risk tier used to badge earn products, positions, and tips.
 enum EarnRiskLevel { low, medium, high }

@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// Route map and QA checklist documenting how Arena screens connect to the rest of the app.
 final class ArenaFlowMapSnapshot {
   const ArenaFlowMapSnapshot({
     required this.endpoint,
@@ -26,6 +27,7 @@ final class ArenaFlowMapSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single summary statistic on the Arena flow map screen.
 final class ArenaFlowStatDraft {
   const ArenaFlowStatDraft({
     required this.value,
@@ -38,6 +40,7 @@ final class ArenaFlowStatDraft {
   final ArenaFlowKind kind;
 }
 
+/// A single route entry documented on the Arena flow map.
 final class ArenaFlowRouteDraft {
   const ArenaFlowRouteDraft({
     required this.path,
@@ -50,6 +53,7 @@ final class ArenaFlowRouteDraft {
   final String status;
 }
 
+/// A group of related flow nodes on the Arena flow map.
 final class ArenaFlowGroupDraft {
   const ArenaFlowGroupDraft({
     required this.id,
@@ -68,6 +72,7 @@ final class ArenaFlowGroupDraft {
   final String connectionNote;
 }
 
+/// A single node (screen or state) on the Arena flow map.
 final class ArenaFlowNodeDraft {
   const ArenaFlowNodeDraft({
     required this.label,
@@ -84,6 +89,7 @@ final class ArenaFlowNodeDraft {
   final String? stateLabel;
 }
 
+/// A single shared component documented on the Arena flow map.
 final class ArenaFlowComponentDraft {
   const ArenaFlowComponentDraft({
     required this.file,
@@ -96,6 +102,7 @@ final class ArenaFlowComponentDraft {
   final List<String> exports;
 }
 
+/// A single handoff note on the Arena flow map.
 final class ArenaFlowNoteDraft {
   const ArenaFlowNoteDraft({
     required this.title,
@@ -108,6 +115,7 @@ final class ArenaFlowNoteDraft {
   final ArenaFlowKind kind;
 }
 
+/// A single QA checklist item on the Arena flow map.
 final class ArenaFlowQaDraft {
   const ArenaFlowQaDraft({
     required this.id,
@@ -120,6 +128,7 @@ final class ArenaFlowQaDraft {
   final String label;
 }
 
+/// Category used to color-code nodes and stats on the Arena flow map.
 enum ArenaFlowKind {
   core,
   discovery,
