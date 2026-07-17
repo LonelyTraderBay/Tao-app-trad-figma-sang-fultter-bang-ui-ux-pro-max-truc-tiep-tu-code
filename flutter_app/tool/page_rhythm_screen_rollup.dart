@@ -203,8 +203,25 @@ void main(List<String> args) {
   final md = _renderReport(rows, generated: DateTime.now());
 
   if (checkOnly) {
-    if (!outCsv.existsSync() || outCsv.readAsStringSync() != csv) {
+    final committed = outCsv.existsSync()
+        ? outCsv.readAsStringSync().replaceAll('\r\n', '\n')
+        : null;
+    if (committed != csv) {
       stderr.writeln('Screen compliance CSV is stale.');
+      if (committed != null) {
+        final oldLines = committed.split('\n');
+        final newLines = csv.split('\n');
+        for (var i = 0; i < oldLines.length || i < newLines.length; i++) {
+          final oldLine = i < oldLines.length ? oldLines[i] : '<missing>';
+          final newLine = i < newLines.length ? newLines[i] : '<missing>';
+          if (oldLine != newLine) {
+            stderr.writeln('First diff at line ${i + 1}:');
+            stderr.writeln('  committed: $oldLine');
+            stderr.writeln('  generated: $newLine');
+            break;
+          }
+        }
+      }
       stderr.writeln(
         'Run `dart run tool/page_rhythm_screen_rollup.dart` from flutter_app/.',
       );
@@ -392,18 +409,28 @@ List<_RouteRow> _parseRealPageRoutes(String markdown) {
 Map<String, String> _buildWidgetToPageMap(Directory appRoot) {
   final map = <String, String>{};
   final features = Directory('${appRoot.path}/lib/features');
-  for (final entity in features.listSync(recursive: true)) {
-    if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    if (!entity.path.contains(
-      '${Platform.pathSeparator}presentation${Platform.pathSeparator}',
-    )) {
-      continue;
-    }
-    if (entity.path.contains('_part_')) continue;
-    final source = entity.readAsStringSync();
+  // listSync order is platform-dependent (alphabetical on NTFS, inode order
+  // on Linux); duplicate class names resolve last-writer-wins, so iterate in
+  // sorted path order to get the same winner on every OS.
+  final candidates =
+      features
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'))
+          .where(
+            (f) => f.path.contains(
+              '${Platform.pathSeparator}presentation${Platform.pathSeparator}',
+            ),
+          )
+          .where((f) => !f.path.contains('_part_'))
+          .map((f) => f.path.replaceAll('\\', '/'))
+          .toList()
+        ..sort();
+  for (final path in candidates) {
+    final source = File(path).readAsStringSync();
     final match = RegExp(r'class\s+(\w+)\s+extends').firstMatch(source);
     if (match == null) continue;
-    map[match.group(1)!] = entity.path.replaceAll('\\', '/');
+    map[match.group(1)!] = path;
   }
 
   for (final entry in widgetClassPageOverrides.entries) {

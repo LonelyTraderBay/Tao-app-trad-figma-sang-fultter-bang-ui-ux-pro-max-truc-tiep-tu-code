@@ -8,6 +8,9 @@ flutter_app/.dart_tool/
 flutter_app/build/
 flutter_app/run-artifacts/*
 !flutter_app/run-artifacts/README.md
+# page-rhythm-l3 là INPUT của artifact committed (screen-compliance CSV đọc
+# evidence.csv khi rollup) — phải track để CI regen ra đúng nội dung.
+!flutter_app/run-artifacts/page-rhythm-l3/
 flutter_app/tmp/
 flutter_app/*.log
 
