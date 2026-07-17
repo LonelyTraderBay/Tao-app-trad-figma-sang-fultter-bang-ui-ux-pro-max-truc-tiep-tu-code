@@ -140,9 +140,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Tháng 3, 2026'), findsOneWidget);
-    expect(find.byKey(MarketCalendarPage.dayKey(12)), findsOneWidget);
 
-    await tester.tap(find.byKey(MarketCalendarPage.dayKey(12)));
+    // Ô ngày của WLD (ev7, dateIso 2026-03-11T18:00:00Z) phụ thuộc múi giờ
+    // máy chạy test vì trang group theo .toLocal() (UTC+7 → ngày 12, UTC trên
+    // CI → ngày 11) — tính lại bằng đúng phép biến đổi của trang.
+    final wldDay = DateTime.parse('2026-03-11T18:00:00Z').toLocal().day;
+    expect(find.byKey(MarketCalendarPage.dayKey(wldDay)), findsOneWidget);
+
+    await tester.tap(find.byKey(MarketCalendarPage.dayKey(wldDay)));
     await tester.pumpAndSettle();
 
     expect(find.text('Danh sách'), findsOneWidget);
