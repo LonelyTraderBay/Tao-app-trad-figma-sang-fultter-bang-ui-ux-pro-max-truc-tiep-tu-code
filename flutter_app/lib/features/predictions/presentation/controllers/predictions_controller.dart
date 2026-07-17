@@ -1,3 +1,7 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:vit_trade_flutter/core/data/offline_failure.dart';
+import 'package:vit_trade_flutter/features/predictions/data/providers/predictions_repository_provider.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/repositories/predictions_repository.dart';
 
@@ -48,17 +52,104 @@ final class PredictionEventDetailViewState {
     required this.snapshot,
     this.status = PredictionHighRiskFlowStatus.ready,
     this.errorMessage,
+    this.lastReceiptId,
   });
 
   final PredictionEventDetailSnapshot snapshot;
   final PredictionHighRiskFlowStatus status;
   final String? errorMessage;
+  final String? lastReceiptId;
+
+  /// `errorMessage` cố ý không giữ giá trị cũ khi không truyền (retry sạch —
+  /// cùng quy ước với TradeOrderViewState của ADR-001).
+  PredictionEventDetailViewState copyWith({
+    PredictionHighRiskFlowStatus? status,
+    String? errorMessage,
+    String? lastReceiptId,
+  }) {
+    return PredictionEventDetailViewState(
+      snapshot: snapshot,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+      lastReceiptId: lastReceiptId ?? this.lastReceiptId,
+    );
+  }
 }
 
-final class PredictionEventDetailController {
-  const PredictionEventDetailController({required this.state});
+/// Máy trạng thái đặt lệnh dự đoán (ERR-36) — nhân idiom ADR-001 từ
+/// TradeOrderController; family key = eventId.
+final class PredictionEventDetailController
+    extends Notifier<PredictionEventDetailViewState> {
+  PredictionEventDetailController(this.eventId);
 
-  final PredictionEventDetailViewState state;
+  final String eventId;
+
+  PredictionsRepository get _repository =>
+      ref.read(predictionsRepositoryProvider);
+
+  @override
+  PredictionEventDetailViewState build() {
+    return PredictionEventDetailViewState(
+      snapshot: ref
+          .watch(predictionsRepositoryProvider)
+          .getEventDetail(eventId),
+    );
+  }
+
+  /// Người dùng bấm CTA Buy/Sell sau preview. Trả về `receiptId` khi thành
+  /// công (view điều hướng trang biên lai), `null` khi lỗi/validation —
+  /// trạng thái + errorMessage đã ghi vào state, không bao giờ ném ra UI.
+  Future<String?> submitOrder({
+    required String outcome,
+    required bool isBuy,
+    required bool isMarket,
+    required String amountText,
+  }) async {
+    if (state.status.isBusy) return null;
+    final validation = orderValidationMessage(
+      outcome: outcome,
+      amountText: amountText,
+    );
+    if (validation != null) {
+      state = state.copyWith(
+        status: PredictionHighRiskFlowStatus.validationError,
+        errorMessage: validation,
+      );
+      return null;
+    }
+    final amount = double.tryParse(amountText.trim().replaceAll(',', '')) ?? 0;
+    state = state.copyWith(status: PredictionHighRiskFlowStatus.confirming);
+    state = state.copyWith(status: PredictionHighRiskFlowStatus.submitting);
+    try {
+      final receiptId = await _repository.submitOrder(
+        eventId: eventId,
+        outcome: outcome,
+        isBuy: isBuy,
+        isMarket: isMarket,
+        amount: amount,
+      );
+      if (!ref.mounted) return null;
+      state = state.copyWith(
+        status: PredictionHighRiskFlowStatus.submitted,
+        lastReceiptId: receiptId,
+      );
+      return receiptId;
+    } on OfflineFailure catch (failure) {
+      if (!ref.mounted) return null;
+      state = state.copyWith(
+        status: PredictionHighRiskFlowStatus.offline,
+        errorMessage: failure.message,
+      );
+      return null;
+    } on Object {
+      if (!ref.mounted) return null;
+      state = state.copyWith(
+        status: PredictionHighRiskFlowStatus.error,
+        errorMessage: 'Gửi lệnh dự đoán thất bại. Vui lòng thử lại.',
+      );
+      return null;
+    }
+  }
 
   String? orderValidationMessage({
     required String outcome,

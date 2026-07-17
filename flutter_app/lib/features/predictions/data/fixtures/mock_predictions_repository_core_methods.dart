@@ -499,6 +499,22 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
+  Future<String> submitOrder({
+    required String eventId,
+    required String outcome,
+    required bool isBuy,
+    required bool isMarket,
+    required double amount,
+  }) async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('prediction_submit_failed');
+    }
+    // Mock trả về biên lai fixture có thật để trang receipt resolve đầy đủ.
+    return 'po-1';
+  }
+
+  @override
   PredictionRiskCalculatorSnapshot getRiskCalculator() {
     return PredictionRiskCalculatorSnapshot(
       defaultEventName: 'BTC > \$100K by Dec 2026?',

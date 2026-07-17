@@ -8,6 +8,9 @@ class _TradeSection extends StatelessWidget {
     required this.isBuy,
     required this.isMarket,
     required this.amount,
+    required this.submitting,
+    required this.errorMessage,
+    required this.onSubmit,
     required this.onSideChanged,
     required this.onOrderTypeChanged,
     required this.onAmountChanged,
@@ -20,6 +23,13 @@ class _TradeSection extends StatelessWidget {
   final bool isBuy;
   final bool isMarket;
   final String amount;
+
+  /// Máy trạng thái ERR-36 đang confirming/submitting — CTA khóa + spinner.
+  final bool submitting;
+
+  /// Lỗi từ lượt submit trước (error/offline/validation) — banner dưới CTA.
+  final String? errorMessage;
+  final VoidCallback onSubmit;
   final ValueChanged<bool> onSideChanged;
   final ValueChanged<bool> onOrderTypeChanged;
   final ValueChanged<String> onAmountChanged;
@@ -146,15 +156,26 @@ class _TradeSection extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+              if (errorMessage != null) ...[
+                VitBanner(
+                  variant: VitBannerVariant.error,
+                  title: 'Gửi lệnh thất bại',
+                  message: errorMessage!,
+                ),
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+              ],
               VitCtaButton(
                 density: VitDensity.compact,
                 variant: isBuy
                     ? VitCtaButtonVariant.success
                     : VitCtaButtonVariant.danger,
-                onPressed: preview.canSubmit ? () {} : null,
+                onPressed: preview.canSubmit && !submitting ? onSubmit : null,
+                loading: submitting,
                 child: Text(
-                  '${isBuy ? 'Buy' : 'Sell'} $selectedOutcome @ '
-                  '${_formatPrice(price)}',
+                  submitting
+                      ? 'Đang gửi lệnh…'
+                      : '${isBuy ? 'Buy' : 'Sell'} $selectedOutcome @ '
+                            '${_formatPrice(price)}',
                 ),
               ),
             ],

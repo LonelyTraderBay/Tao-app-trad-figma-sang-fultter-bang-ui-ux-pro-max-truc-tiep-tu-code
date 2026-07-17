@@ -131,7 +131,15 @@ class _NewCommentCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             density: VitDensity.compact,
-            onPressed: hasComment ? () {} : null,
+            // ERR-36: handler thật thay no-op — đăng bình luận cần backend,
+            // thông báo minh bạch theo pattern coming-soon sẵn có.
+            onPressed: hasComment
+                ? () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Bình luận sẽ sớm ra mắt')),
+                    );
+                  }
+                : null,
             leading: const Icon(Icons.send_outlined),
             child: const Text('Dang binh luan'),
           ),

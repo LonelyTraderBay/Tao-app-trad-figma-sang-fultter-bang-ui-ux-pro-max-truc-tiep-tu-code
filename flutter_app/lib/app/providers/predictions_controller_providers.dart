@@ -8,16 +8,14 @@ final predictionsReadModelControllerProvider =
       return ref.watch(predictionsRepositoryProvider);
     });
 
-final predictionEventDetailControllerProvider =
-    Provider.family<PredictionEventDetailController, String>((ref, eventId) {
-      return PredictionEventDetailController(
-        state: PredictionEventDetailViewState(
-          snapshot: ref
-              .watch(predictionsRepositoryProvider)
-              .getEventDetail(eventId),
-        ),
-      );
-    });
+/// ERR-36: Notifier theo ADR-001 — máy trạng thái submit dự đoán, family key
+/// = eventId.
+final predictionEventDetailControllerProvider = NotifierProvider.autoDispose
+    .family<
+      PredictionEventDetailController,
+      PredictionEventDetailViewState,
+      String
+    >(PredictionEventDetailController.new);
 
 final predictionsPortfolioControllerProvider =
     Provider<PredictionsPortfolioController>((ref) {

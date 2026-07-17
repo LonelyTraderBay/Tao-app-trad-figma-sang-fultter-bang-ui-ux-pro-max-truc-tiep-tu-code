@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_event_detail_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -192,6 +193,34 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Arena Studio'), findsOneWidget);
   });
+
+  testWidgets(
+    'SC-030 submit Buy chạy máy trạng thái ERR-36 và điều hướng biên lai',
+    (tester) async {
+      await pumpDetail(tester);
+
+      await tester.scrollUntilVisible(
+        find.text(r'$25'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.text(r'$25'));
+      await tester.pumpAndSettle();
+
+      final cta = find.textContaining('Buy Yes @');
+      await tester.scrollUntilVisible(
+        cta,
+        120,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(cta);
+      // Mock loadDelay 300ms — pumpAndSettle flush timer + điều hướng.
+      await tester.pumpAndSettle();
+
+      expect(find.byType(PredictionOrderReceiptPage), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('SC-030 risk link shows a placeholder snackbar', (tester) async {
     await pumpDetail(tester);
