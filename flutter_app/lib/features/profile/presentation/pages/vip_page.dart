@@ -71,7 +71,8 @@ class _VIPPageState extends ConsumerState<VIPPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-164 VIPPage',
+      semanticLabel: 'Chương trình hội viên VIP',
+      semanticIdentifier: 'SC-164',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

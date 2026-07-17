@@ -92,7 +92,8 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-028 PredictionsSearchPage',
+      semanticLabel: 'Tìm sự kiện dự đoán: lọc theo chủ đề và xác suất',
+      semanticIdentifier: 'SC-028',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

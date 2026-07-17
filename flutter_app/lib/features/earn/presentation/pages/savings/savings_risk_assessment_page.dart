@@ -68,7 +68,8 @@ class _SavingsRiskAssessmentPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-339 SavingsRiskAssessmentPage',
+      semanticLabel: 'Đánh giá Rủi ro',
+      semanticIdentifier: 'SC-339',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

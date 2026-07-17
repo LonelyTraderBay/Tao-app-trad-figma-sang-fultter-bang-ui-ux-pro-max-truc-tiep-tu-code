@@ -80,7 +80,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-322 CrossModuleAnalytics',
-      semanticLabel: 'SC-322 CrossModuleAnalytics',
+      semanticLabel: 'Phân tích liên module',
     );
     expectActionableInFirstViewport(
       tester,

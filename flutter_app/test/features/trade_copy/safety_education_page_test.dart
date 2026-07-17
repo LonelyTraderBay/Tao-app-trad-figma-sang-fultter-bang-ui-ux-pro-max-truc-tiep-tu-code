@@ -92,7 +92,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SafetyEducationPage',
-      semanticLabel: 'SC-080 SafetyEducationPage',
+      semanticLabel: 'An toàn & Bảo mật',
     );
     expectFirstViewportVisible(
       tester,

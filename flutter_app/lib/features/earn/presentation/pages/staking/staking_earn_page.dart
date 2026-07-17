@@ -66,9 +66,11 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: widget.route == StakingEarnRoute.earn
-          ? 'SC-327 StakingEarnPage'
-          : 'SC-328 StakingEarnPage',
+      semanticLabel:
+          'Trang chủ Earn & Stake — sản phẩm tiết kiệm lãi cố định, linh hoạt và các vị thế đang sinh lời',
+      semanticIdentifier: widget.route == StakingEarnRoute.earn
+          ? 'SC-327'
+          : 'SC-328',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

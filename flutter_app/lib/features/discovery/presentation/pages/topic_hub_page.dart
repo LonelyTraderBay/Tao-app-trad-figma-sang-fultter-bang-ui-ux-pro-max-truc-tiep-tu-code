@@ -88,7 +88,8 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-284 TopicHubPage',
+      semanticLabel: 'Trung tâm chủ đề',
+      semanticIdentifier: 'SC-284',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

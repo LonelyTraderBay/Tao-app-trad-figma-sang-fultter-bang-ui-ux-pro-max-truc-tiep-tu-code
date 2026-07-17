@@ -90,7 +90,8 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-352 SavingsWhatIfPage',
+      semanticLabel: 'Phân tích kịch bản giả định',
+      semanticIdentifier: 'SC-352',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

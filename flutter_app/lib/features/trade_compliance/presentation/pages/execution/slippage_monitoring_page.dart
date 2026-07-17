@@ -66,7 +66,8 @@ class _SlippageMonitoringPageState
           VitTradeHubScaffold(
             title: 'Slippage Monitoring',
             subtitle: 'Real-time Tracking · Alerts',
-            semanticLabel: 'SC-098 SlippageMonitoringPage',
+            semanticLabel: 'Theo dõi trượt giá theo thời gian thực và cảnh báo',
+            semanticIdentifier: 'SC-098',
             contentKey: SlippageMonitoringPage.contentKey,
             shellRenderMode: widget.shellRenderMode,
             onBack: () => goBackOrFallback(

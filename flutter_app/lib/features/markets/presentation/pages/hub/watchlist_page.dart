@@ -170,7 +170,8 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-012 WatchlistPage',
+      semanticLabel: 'Danh sách theo dõi',
+      semanticIdentifier: 'SC-012',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

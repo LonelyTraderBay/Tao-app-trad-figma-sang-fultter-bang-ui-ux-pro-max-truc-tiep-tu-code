@@ -58,7 +58,8 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-214 P2POrderCancelPage',
+      semanticLabel: 'Hủy đơn hàng P2P',
+      semanticIdentifier: 'SC-214',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

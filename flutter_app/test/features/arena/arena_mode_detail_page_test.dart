@@ -82,7 +82,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-189 ArenaModeDetailPage',
-      semanticLabel: 'SC-189 ArenaModeDetailPage',
+      semanticLabel:
+          'Chi tiết chế độ chơi trong Open Arena - luật, người tạo và chỉ số chất lượng',
     );
     expectActionableInFirstViewport(
       tester,

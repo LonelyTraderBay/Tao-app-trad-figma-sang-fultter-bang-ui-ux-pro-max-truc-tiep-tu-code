@@ -54,7 +54,8 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-199 ArenaTrustBreakdownPage',
+      semanticLabel: 'Chi tiết độ tin cậy (Trust Score) trong Open Arena',
+      semanticIdentifier: 'SC-199',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

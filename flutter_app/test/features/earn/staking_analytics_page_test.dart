@@ -93,7 +93,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-359 StakingAnalyticsPage',
-      semanticLabel: 'SC-359 StakingAnalyticsPage',
+      semanticLabel:
+          'Phân tích hiệu suất staking — lợi nhuận, APY và ROI theo thời gian',
     );
     expectActionableInFirstViewport(
       tester,

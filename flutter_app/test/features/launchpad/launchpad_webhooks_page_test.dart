@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-310 LaunchpadWebhooksPage',
-      semanticLabel: 'SC-310 LaunchpadWebhooksPage',
+      semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
     );
     expectActionableInFirstViewport(
       tester,

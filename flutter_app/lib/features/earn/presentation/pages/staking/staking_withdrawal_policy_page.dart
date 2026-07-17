@@ -101,7 +101,8 @@ class _StakingWithdrawalPolicyPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-355 StakingWithdrawalPolicyPage',
+      semanticLabel: 'Chính sách rút tiền staking',
+      semanticIdentifier: 'SC-355',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

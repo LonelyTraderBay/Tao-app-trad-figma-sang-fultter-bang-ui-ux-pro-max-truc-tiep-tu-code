@@ -71,7 +71,8 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-022 MarketNewsPage',
+      semanticLabel: 'Tin thị trường',
+      semanticIdentifier: 'SC-022',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

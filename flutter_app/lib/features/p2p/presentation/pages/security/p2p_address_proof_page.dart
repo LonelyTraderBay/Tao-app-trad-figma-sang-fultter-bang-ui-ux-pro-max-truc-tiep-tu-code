@@ -76,7 +76,8 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-250 P2PAddressProofPage',
+      semanticLabel: 'Xác minh địa chỉ cư trú P2P',
+      semanticIdentifier: 'SC-250',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

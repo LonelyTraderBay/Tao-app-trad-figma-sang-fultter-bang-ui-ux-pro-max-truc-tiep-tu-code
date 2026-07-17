@@ -69,7 +69,8 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-273 P2POrderBookPage',
+      semanticLabel: 'Sổ lệnh P2P',
+      semanticIdentifier: 'SC-273',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

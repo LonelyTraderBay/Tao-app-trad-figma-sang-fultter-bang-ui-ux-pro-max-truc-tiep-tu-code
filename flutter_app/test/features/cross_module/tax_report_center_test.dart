@@ -82,7 +82,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-324 TaxReportCenter',
-      semanticLabel: 'SC-324 TaxReportCenter',
+      semanticLabel: 'Trung tâm báo cáo thuế',
     );
     expectActionableInFirstViewport(
       tester,

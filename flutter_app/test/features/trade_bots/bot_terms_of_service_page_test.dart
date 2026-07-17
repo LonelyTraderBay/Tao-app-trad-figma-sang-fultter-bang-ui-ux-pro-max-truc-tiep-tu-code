@@ -78,7 +78,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'BotTermsOfServicePage',
-      semanticLabel: 'SC-117 BotTermsOfServicePage',
+      semanticLabel: 'Điều khoản dịch vụ bot giao dịch',
     );
     expectFirstViewportVisible(
       tester,

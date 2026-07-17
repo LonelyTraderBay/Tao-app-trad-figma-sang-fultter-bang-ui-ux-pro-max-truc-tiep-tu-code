@@ -69,7 +69,8 @@ class _StakingThirdPartyIntegrationsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-395 StakingThirdPartyIntegrationsPage',
+      semanticLabel: 'Tích hợp bên thứ ba cho dữ liệu staking',
+      semanticIdentifier: 'SC-395',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

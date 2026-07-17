@@ -81,7 +81,8 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
     final others = filtered.where((address) => !address.isFavorite).toList();
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-144 AddressBookPage',
+      semanticLabel: 'Sổ địa chỉ - quản lý địa chỉ ví đã lưu',
+      semanticIdentifier: 'SC-144',
       header: VitHeader(
         title: 'Sổ địa chỉ',
         subtitle: 'Quản lý · Wallet',

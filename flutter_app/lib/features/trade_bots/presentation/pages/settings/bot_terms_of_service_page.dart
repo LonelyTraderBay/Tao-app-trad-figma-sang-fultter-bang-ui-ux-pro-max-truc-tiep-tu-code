@@ -87,7 +87,8 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
     return VitTradeHubScaffold(
       title: 'Trading Bots Terms',
       subtitle: 'Điều khoản sử dụng bot giao dịch',
-      semanticLabel: 'SC-117 BotTermsOfServicePage',
+      semanticLabel: 'Điều khoản dịch vụ bot giao dịch',
+      semanticIdentifier: 'SC-117',
       contentKey: BotTermsOfServicePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

@@ -76,7 +76,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-203 ArenaBlockedUsersPage',
-      semanticLabel: 'SC-203 ArenaBlockedUsersPage',
+      semanticLabel: 'Danh sách người dùng đã chặn trong Open Arena',
     );
     expectActionableInFirstViewport(
       tester,

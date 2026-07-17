@@ -114,7 +114,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'BuyCryptoPage',
-      semanticLabel: 'SC-145 BuyCryptoPage',
+      semanticLabel: 'Mua tiền mã hoá',
     );
     expectActionableInFirstViewport(
       tester,

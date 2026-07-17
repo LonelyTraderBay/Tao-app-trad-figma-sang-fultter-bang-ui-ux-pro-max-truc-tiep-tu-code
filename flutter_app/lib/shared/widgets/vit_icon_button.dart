@@ -194,7 +194,11 @@ class VitIconButton extends StatelessWidget {
                       // widthFactor, this would expand to fill whatever
                       // bounded width the ancestor chain allows instead of
                       // hugging the Row's content width when hasLabel.
-                      child: Center(widthFactor: 1, heightFactor: 1, child: child),
+                      child: Center(
+                        widthFactor: 1,
+                        heightFactor: 1,
+                        child: child,
+                      ),
                     ),
                   ),
                 ),

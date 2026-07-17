@@ -54,7 +54,8 @@ class _StakingCustodyPageState extends ConsumerState<StakingCustodyPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-375 StakingCustodyPage',
+      semanticLabel: 'Lưu ký tách bạch và minh bạch tài sản',
+      semanticIdentifier: 'SC-375',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

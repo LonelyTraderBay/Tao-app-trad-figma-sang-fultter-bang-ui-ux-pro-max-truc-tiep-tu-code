@@ -76,7 +76,8 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-286 ReferralHistoryPage',
+      semanticLabel: 'Lịch sử giới thiệu',
+      semanticIdentifier: 'SC-286',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -55,7 +55,8 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
         MediaQuery.paddingOf(context).bottom;
 
     return AdminDashboardPageShell(
-      semanticLabel: 'SC-180 AdminHome',
+      semanticLabel: 'Trang tổng quan quản trị',
+      semanticIdentifier: 'SC-180',
       scrollKey: AdminHome.contentKey,
       scrollBottom: scrollBottom,
       header: VitHeader(
@@ -97,6 +98,7 @@ class AdminDashboardPageShell extends StatelessWidget {
   const AdminDashboardPageShell({
     super.key,
     required this.semanticLabel,
+    this.semanticIdentifier,
     required this.scrollKey,
     required this.scrollBottom,
     required this.header,
@@ -104,6 +106,10 @@ class AdminDashboardPageShell extends StatelessWidget {
   });
 
   final String semanticLabel;
+
+  /// Internal screen code (e.g. `SC-007`) for tooling/debugging — see A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  final String? semanticIdentifier;
   final Key scrollKey;
   final double scrollBottom;
   final VitHeader header;
@@ -113,6 +119,7 @@ class AdminDashboardPageShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageLayout(
       semanticLabel: semanticLabel,
+      semanticIdentifier: semanticIdentifier,
       child: VitAutoHideHeaderScaffold(
         header: header,
         child: Column(

@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'WatchlistPage',
-      semanticLabel: 'SC-012 WatchlistPage',
+      semanticLabel: 'Danh sách theo dõi',
     );
     expectFirstViewportVisible(
       tester,

@@ -108,14 +108,16 @@ class _LaunchpadRebalancePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-312 LaunchpadRebalancePage',
+      semanticLabel: 'Cân bằng lại danh mục đầu tư',
+      semanticIdentifier: 'SC-312',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-312 LaunchpadRebalancePage scroll surface',
+              semanticLabel: 'Cân bằng lại danh mục đầu tư',
+              semanticIdentifier: 'SC-312',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Cân bằng danh mục · Xem trước trước khi thực hiện',

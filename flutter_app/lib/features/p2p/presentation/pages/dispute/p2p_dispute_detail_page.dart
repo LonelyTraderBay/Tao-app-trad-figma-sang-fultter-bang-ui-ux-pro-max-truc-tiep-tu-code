@@ -87,7 +87,8 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-218 P2PDisputeDetailPage',
+      semanticLabel: 'Chi tiết khiếu nại P2P',
+      semanticIdentifier: 'SC-218',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

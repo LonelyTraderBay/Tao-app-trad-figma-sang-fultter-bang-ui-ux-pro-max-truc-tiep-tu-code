@@ -98,7 +98,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-400 DCAOverviewDemo',
-      semanticLabel: 'SC-400 DCAOverviewDemo',
+      semanticLabel: 'Demo thẻ tổng quan DCA với các kịch bản lãi, lỗ và lỗi',
     );
     expectActionableInFirstViewport(
       tester,

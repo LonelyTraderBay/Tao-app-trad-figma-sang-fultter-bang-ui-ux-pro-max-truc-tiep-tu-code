@@ -137,7 +137,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-115 AuditTrailPage',
-      semanticLabel: 'SC-115 AuditTrailPage',
+      semanticLabel: 'Nhật ký kiểm toán lưu trữ hồ sơ theo MiFID II',
     );
     expectActionableInFirstViewport(
       tester,

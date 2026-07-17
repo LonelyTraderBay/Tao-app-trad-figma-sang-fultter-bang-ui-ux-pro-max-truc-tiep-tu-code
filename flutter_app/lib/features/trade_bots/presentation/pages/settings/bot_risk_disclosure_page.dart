@@ -54,7 +54,8 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
     return VitTradeHubScaffold(
       title: 'Risk Disclosure',
       subtitle: 'Công bố rủi ro trước khi dùng bot',
-      semanticLabel: 'SC-118 BotRiskDisclosurePage',
+      semanticLabel: 'Công bố rủi ro khi sử dụng bot giao dịch',
+      semanticIdentifier: 'SC-118',
       contentKey: BotRiskDisclosurePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

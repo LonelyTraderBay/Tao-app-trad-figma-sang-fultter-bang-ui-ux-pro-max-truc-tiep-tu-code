@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-052 TradeSettingsPage',
-      semanticLabel: 'SC-052 TradeSettingsPage',
+      semanticLabel: 'Cài đặt giao dịch',
     );
     expectFirstViewportVisible(
       tester,

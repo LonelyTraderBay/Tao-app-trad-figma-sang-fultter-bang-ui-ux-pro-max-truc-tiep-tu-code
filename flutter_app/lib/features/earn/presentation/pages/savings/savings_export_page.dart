@@ -87,7 +87,8 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-348 SavingsExportPage',
+      semanticLabel: 'Xuất báo cáo',
+      semanticIdentifier: 'SC-348',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

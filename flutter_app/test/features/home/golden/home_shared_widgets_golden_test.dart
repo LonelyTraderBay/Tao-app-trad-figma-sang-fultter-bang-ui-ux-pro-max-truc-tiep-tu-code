@@ -1,13 +1,19 @@
 // Pixel baselines for the shared widgets extracted from Home in Phase 1 of
 // the "home is the mandatory UI standard" migration (VitServiceTile.fromAction,
 // VitBalanceBreakdownRow, VitRiskDisclaimerNote) — other modules adopting
-// these should render identically to these baselines. Regenerate with the
-// same Flutter version used in CI:
+// these should render identically to these baselines. Regenerate on Windows:
 // `flutter test --update-goldens test/features/home/golden/`.
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+
+// The PNGs are generated on Windows (the team's reference platform). Linux
+// and macOS rasterize text with different anti-aliasing, so the pixel
+// comparison only holds on Windows — elsewhere (incl. ubuntu CI) skip.
+final _notOnGoldenPlatform = !Platform.isWindows;
 
 Widget _wrap(
   Widget child, {
@@ -49,7 +55,7 @@ void main() {
       find.byType(VitServiceTile),
       matchesGoldenFile('goldens/vit_service_tile_from_action.png'),
     );
-  });
+  }, skip: _notOnGoldenPlatform);
 
   testWidgets('golden: VitBalanceBreakdownRow', (tester) async {
     await tester.pumpWidget(
@@ -90,7 +96,7 @@ void main() {
       find.byType(VitBalanceBreakdownRow),
       matchesGoldenFile('goldens/vit_balance_breakdown_row.png'),
     );
-  });
+  }, skip: _notOnGoldenPlatform);
 
   testWidgets('golden: VitRiskDisclaimerNote', (tester) async {
     await tester.pumpWidget(
@@ -108,5 +114,5 @@ void main() {
       find.byType(VitRiskDisclaimerNote),
       matchesGoldenFile('goldens/vit_risk_disclaimer_note.png'),
     );
-  });
+  }, skip: _notOnGoldenPlatform);
 }

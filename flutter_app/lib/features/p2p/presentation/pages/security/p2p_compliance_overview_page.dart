@@ -51,7 +51,8 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-267 P2PComplianceOverviewPage',
+      semanticLabel: 'Tổng quan tuân thủ P2P',
+      semanticIdentifier: 'SC-267',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

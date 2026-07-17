@@ -134,7 +134,8 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
 
     return VitPageLayout(
       variant: nativeShell ? VitPageVariant.flush : VitPageVariant.defaultPage,
-      semanticLabel: 'SC-008 MarketListPage',
+      semanticLabel: 'Thị trường',
+      semanticIdentifier: 'SC-008',
       child: Material(
         type: MaterialType.transparency,
         child: ScrollConfiguration(

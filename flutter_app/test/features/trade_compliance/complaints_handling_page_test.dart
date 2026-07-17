@@ -97,7 +97,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ComplaintsHandlingPage',
-      semanticLabel: 'SC-111 ComplaintsHandlingPage',
+      semanticLabel: 'Xử lý khiếu nại theo quy trình được FCA quản lý',
     );
     expectFirstViewportVisible(
       tester,

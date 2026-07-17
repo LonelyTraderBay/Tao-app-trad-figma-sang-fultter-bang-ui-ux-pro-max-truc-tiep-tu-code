@@ -131,9 +131,8 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
 
       subtitle: 'Rút tiền · Wallet',
 
-      semanticLabel: widget.assetScoped
-          ? 'SC-140 WithdrawPage Asset'
-          : 'SC-139 WithdrawPage',
+      semanticLabel: widget.assetScoped ? 'Rút tiền theo tài sản' : 'Rút tiền',
+      semanticIdentifier: widget.assetScoped ? 'SC-140' : 'SC-139',
 
       contentKey: WithdrawPage.contentKey,
       shellRenderMode: mode,

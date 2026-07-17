@@ -50,7 +50,8 @@ class BotRiskDashboardPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Risk Dashboard',
       subtitle: 'Giám sát rủi ro bot theo thời gian thực',
-      semanticLabel: 'SC-120 BotRiskDashboardPage',
+      semanticLabel: 'Bảng giám sát rủi ro bot theo thời gian thực',
+      semanticIdentifier: 'SC-120',
       contentKey: BotRiskDashboardPage.contentKey,
       shellRenderMode: shellRenderMode,
       activeProductId: 'bots',

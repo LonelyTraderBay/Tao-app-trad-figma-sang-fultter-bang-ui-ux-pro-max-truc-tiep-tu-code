@@ -97,7 +97,8 @@ class _ProviderApplicationPageState
           Expanded(
             child: VitTradeDetailScaffold(
               title: 'Đăng ký Provider',
-              semanticLabel: 'SC-069 ProviderApplicationPage',
+              semanticLabel: 'Đăng ký Provider',
+              semanticIdentifier: 'SC-069',
               contentKey: ProviderApplicationPage.contentKey,
               shellRenderMode: mode,
               activeProductId: 'copy',

@@ -47,7 +47,8 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
     return VitP2PFlowScaffold(
       title: snapshot.title,
       subtitle: snapshot.subtitle,
-      semanticLabel: 'SC-265 P2PLimitTrackerPage',
+      semanticLabel: 'Theo dõi hạn mức P2P',
+      semanticIdentifier: 'SC-265',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       children: [

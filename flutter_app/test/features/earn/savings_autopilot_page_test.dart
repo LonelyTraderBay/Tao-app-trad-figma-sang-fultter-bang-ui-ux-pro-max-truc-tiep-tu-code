@@ -83,7 +83,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-350 SavingsAutoPilotPage',
-      semanticLabel: 'SC-350 SavingsAutoPilotPage',
+      semanticLabel: 'Chế độ tiết kiệm tự động',
     );
     expectActionableInFirstViewport(
       tester,

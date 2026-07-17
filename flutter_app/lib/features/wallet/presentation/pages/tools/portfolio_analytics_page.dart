@@ -65,7 +65,8 @@ class _PortfolioAnalyticsPageState
         MediaQuery.paddingOf(context).bottom;
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-142 PortfolioAnalyticsPage',
+      semanticLabel: 'Phân tích danh mục - tổng quan tài sản',
+      semanticIdentifier: 'SC-142',
       background: _analyticsBackground,
       header: VitTopChrome(
         type: VitTopChromeType.detail,

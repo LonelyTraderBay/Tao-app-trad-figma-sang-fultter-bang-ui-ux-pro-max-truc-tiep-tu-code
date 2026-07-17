@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-128 BotPortfolioDashboardPage',
-      semanticLabel: 'SC-128 BotPortfolioDashboardPage',
+      semanticLabel: 'Bảng điều khiển danh mục bot',
     );
     expectFirstViewportVisible(
       tester,

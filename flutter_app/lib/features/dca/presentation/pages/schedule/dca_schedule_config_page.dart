@@ -80,7 +80,8 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
         navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-172 DCAScheduleConfig',
+      semanticLabel: 'Cấu hình lịch mua DCA thông minh',
+      semanticIdentifier: 'SC-172',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Smart Scheduling',

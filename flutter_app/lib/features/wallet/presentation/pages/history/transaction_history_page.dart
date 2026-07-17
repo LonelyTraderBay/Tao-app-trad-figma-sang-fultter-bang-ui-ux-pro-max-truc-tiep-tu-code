@@ -64,7 +64,8 @@ class _TransactionHistoryPageState
     final bottomInset = _historyScrollBottomInset(context, mode);
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-136 TxHistoryPage',
+      semanticLabel: 'Lịch sử giao dịch - theo dõi nạp, rút an toàn',
+      semanticIdentifier: 'SC-136',
       background: _historyBackground,
       header: VitTopChrome(
         type: VitTopChromeType.detail,

@@ -62,7 +62,8 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
 
     return VitTradeDetailScaffold(
       title: 'Cài đặt Copy Trading',
-      semanticLabel: 'SC-067 CopySettingsPage',
+      semanticLabel: 'Cài đặt Copy Trading',
+      semanticIdentifier: 'SC-067',
       contentKey: CopySettingsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

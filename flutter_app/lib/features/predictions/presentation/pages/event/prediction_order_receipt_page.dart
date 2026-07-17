@@ -60,7 +60,8 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-035 PredictionOrderReceiptPage',
+      semanticLabel: 'Chi tiết lệnh dự đoán: biên lai, phí và tiến trình',
+      semanticIdentifier: 'SC-035',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

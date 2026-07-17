@@ -69,9 +69,8 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
     return VitTradeSimpleShell(
       title: pair.symbol,
       subtitle: 'Giao dịch ký quỹ',
-      semanticLabel: widget.pairRouteVariant
-          ? 'SC-086 MarginTradingPage'
-          : 'SC-085 MarginTradingPage',
+      semanticLabel: 'Giao dịch ký quỹ',
+      semanticIdentifier: widget.pairRouteVariant ? 'SC-086' : 'SC-085',
       contentKey: MarginTradingPage.contentKey,
       shellRenderMode: mode,
       showBack: true,

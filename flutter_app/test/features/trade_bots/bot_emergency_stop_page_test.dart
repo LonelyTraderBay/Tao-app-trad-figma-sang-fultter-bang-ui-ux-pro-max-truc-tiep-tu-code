@@ -138,7 +138,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-121 BotEmergencyStopPage',
-      semanticLabel: 'SC-121 BotEmergencyStopPage',
+      semanticLabel: 'Dừng khẩn cấp toàn bộ bot giao dịch',
     );
     expectActionableInFirstViewport(
       tester,

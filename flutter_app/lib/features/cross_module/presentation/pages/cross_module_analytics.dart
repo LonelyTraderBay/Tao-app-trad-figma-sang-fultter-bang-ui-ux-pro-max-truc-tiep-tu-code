@@ -50,7 +50,8 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
         MediaQuery.paddingOf(context).bottom;
 
     return CrossModuleTabbedPageShell(
-      semanticLabel: 'SC-322 CrossModuleAnalytics',
+      semanticLabel: 'Phân tích liên module',
+      semanticIdentifier: 'SC-322',
       contentKey: CrossModuleAnalytics.contentKey,
       title: snapshot.title,
       onBack: () => context.go(snapshot.backRoute),

@@ -77,7 +77,8 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     return VitWalletDetailScaffold(
       title: 'Chuy\u1ec3n n\u1ed9i b\u1ed9',
       subtitle: 'Chuy\u1ec3n ti\u1ec1n \u00b7 Wallet',
-      semanticLabel: 'SC-146 TransferPage',
+      semanticLabel: 'Chuyển nội bộ',
+      semanticIdentifier: 'SC-146',
       contentKey: TransferPage.contentKey,
       bottomInset: bottomInset,
       onBack: () => context.go(AppRoutePaths.wallet),

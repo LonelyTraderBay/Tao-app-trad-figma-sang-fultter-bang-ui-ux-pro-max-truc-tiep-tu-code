@@ -62,7 +62,8 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-266 P2PTransactionLimitsPage',
+      semanticLabel: 'Hạn mức giao dịch P2P',
+      semanticIdentifier: 'SC-266',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

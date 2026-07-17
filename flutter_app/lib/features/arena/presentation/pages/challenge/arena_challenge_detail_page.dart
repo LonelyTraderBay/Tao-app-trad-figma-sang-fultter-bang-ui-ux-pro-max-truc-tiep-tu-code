@@ -108,7 +108,8 @@ class _ArenaChallengeDetailPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-190 ArenaChallengeDetailPage',
+      semanticLabel: 'Chi tiết thử thách trong Open Arena',
+      semanticIdentifier: 'SC-190',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

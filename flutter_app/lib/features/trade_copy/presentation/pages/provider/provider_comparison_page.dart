@@ -39,7 +39,8 @@ class ProviderComparisonPage extends ConsumerWidget {
 
     return VitTradeHubScaffold(
       title: 'So sánh Providers',
-      semanticLabel: 'SC-076 ProviderComparisonPage',
+      semanticLabel: 'So sánh Providers',
+      semanticIdentifier: 'SC-076',
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       useCopyTradingInset: true,

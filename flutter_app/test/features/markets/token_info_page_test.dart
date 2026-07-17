@@ -82,7 +82,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'TokenInfoPage',
-      semanticLabel: 'SC-045 TokenInfoPage',
+      semanticLabel: 'Thông tin token',
     );
     expectFirstViewportVisible(
       tester,

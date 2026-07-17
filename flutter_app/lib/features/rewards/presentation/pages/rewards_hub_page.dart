@@ -83,7 +83,8 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-319 RewardsHubPage',
+      semanticLabel: 'Trung tâm Phần thưởng',
+      semanticIdentifier: 'SC-319',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

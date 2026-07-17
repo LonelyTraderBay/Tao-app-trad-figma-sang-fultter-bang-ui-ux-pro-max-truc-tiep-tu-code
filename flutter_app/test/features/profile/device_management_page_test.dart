@@ -82,7 +82,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'DeviceManagementPage',
-      semanticLabel: 'SC-165 DeviceManagementPage',
+      semanticLabel: 'Quản lý thiết bị',
     );
     expectFirstViewportVisible(
       tester,

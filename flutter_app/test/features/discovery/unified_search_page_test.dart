@@ -108,7 +108,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-283 UnifiedSearchPage',
-      semanticLabel: 'SC-283 UnifiedSearchPage',
+      semanticLabel: 'Tìm kiếm',
     );
     expectActionableInFirstViewport(
       tester,

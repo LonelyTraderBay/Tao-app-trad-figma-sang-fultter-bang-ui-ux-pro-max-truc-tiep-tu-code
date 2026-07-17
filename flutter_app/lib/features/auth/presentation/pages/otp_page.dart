@@ -221,7 +221,8 @@ class _OTPPageState extends ConsumerState<OTPPage> {
     final filled = _filledCount;
 
     return VitPageLayout(
-      semanticLabel: 'SC-003 OTPPage',
+      semanticLabel: 'Xác minh OTP',
+      semanticIdentifier: 'SC-003',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Xác minh OTP',

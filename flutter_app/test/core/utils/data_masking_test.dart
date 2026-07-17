@@ -48,10 +48,7 @@ void main() {
 
   group('maskAddress', () {
     test('masks a typical wallet address with the default 6/4 split', () {
-      expect(
-        maskAddress('TQnKxxx4d8eRh9Kf2Lz5mNp7Yz123'),
-        'TQnKxx...z123',
-      );
+      expect(maskAddress('TQnKxxx4d8eRh9Kf2Lz5mNp7Yz123'), 'TQnKxx...z123');
     });
 
     test('returns the input unchanged when too short to mask safely', () {
@@ -78,10 +75,7 @@ void main() {
     });
 
     test('trims surrounding whitespace before measuring/masking', () {
-      expect(
-        maskAddress('  TQnKxxx4d8eRh9Kf2Lz5mNp7Yz123  '),
-        'TQnKxx...z123',
-      );
+      expect(maskAddress('  TQnKxxx4d8eRh9Kf2Lz5mNp7Yz123  '), 'TQnKxx...z123');
     });
   });
 }

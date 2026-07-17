@@ -81,7 +81,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'BotEquityCurvePage',
-      semanticLabel: 'SC-130 BotEquityCurvePage',
+      semanticLabel: 'Đường cong vốn bot và so sánh với thị trường',
     );
     expectFirstViewportVisible(
       tester,

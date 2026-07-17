@@ -22,7 +22,8 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-216 P2POrderPage',
+      semanticLabel: 'Chi tiết đơn hàng P2P',
+      semanticIdentifier: 'SC-216',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -55,7 +55,8 @@ class P2PKycStatusPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-248 P2PKycStatusPage',
+      semanticLabel: 'Trạng thái KYC P2P',
+      semanticIdentifier: 'SC-248',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -57,7 +57,8 @@ class _TransactionReportingPageState
           VitTradeHubScaffold(
             title: 'Transaction Reporting',
             subtitle: 'MiFID II - EMIR Compliance',
-            semanticLabel: 'SC-093 TransactionReportingPage',
+            semanticLabel: 'Báo cáo giao dịch tuân thủ quy định',
+            semanticIdentifier: 'SC-093',
             contentKey: TransactionReportingPage.contentKey,
             shellRenderMode: widget.shellRenderMode,
             useCopyTradingInset: true,

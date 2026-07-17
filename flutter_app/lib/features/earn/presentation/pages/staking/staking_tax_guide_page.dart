@@ -65,7 +65,8 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-356 StakingTaxGuidePage',
+      semanticLabel: 'Hướng dẫn thuế cho thu nhập staking',
+      semanticIdentifier: 'SC-356',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

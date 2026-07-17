@@ -75,7 +75,8 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-165 DeviceManagementPage',
+      semanticLabel: 'Quản lý thiết bị',
+      semanticIdentifier: 'SC-165',
       child: Material(
         color: _devicesBackground,
         child: VitAutoHideHeaderScaffold(

@@ -40,7 +40,8 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Portfolio Dashboard',
       subtitle: 'Tổng quan danh mục bot đang chạy',
-      semanticLabel: 'SC-128 BotPortfolioDashboardPage',
+      semanticLabel: 'Bảng điều khiển danh mục bot',
+      semanticIdentifier: 'SC-128',
       contentKey: BotPortfolioDashboardPage.contentKey,
       shellRenderMode: shellRenderMode,
       activeProductId: 'bots',

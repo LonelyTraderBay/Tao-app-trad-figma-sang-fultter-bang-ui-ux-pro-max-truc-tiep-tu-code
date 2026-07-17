@@ -91,7 +91,8 @@ class _StakingSuitabilityAssessmentPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-376 StakingSuitabilityAssessmentPage',
+      semanticLabel: 'Đánh giá mức độ phù hợp trước khi staking',
+      semanticIdentifier: 'SC-376',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

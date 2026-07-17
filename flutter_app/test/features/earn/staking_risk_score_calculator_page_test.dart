@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-384 StakingRiskScoreCalculatorPage',
-      semanticLabel: 'SC-384 StakingRiskScoreCalculatorPage',
+      semanticLabel: 'Máy tính điểm rủi ro staking theo kịch bản',
     );
     expectActionableInFirstViewport(
       tester,

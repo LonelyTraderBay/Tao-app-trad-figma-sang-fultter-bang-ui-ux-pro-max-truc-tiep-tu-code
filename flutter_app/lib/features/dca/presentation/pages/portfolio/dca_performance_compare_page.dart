@@ -59,7 +59,8 @@ class _DCAPerformanceComparePageState
         navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-178 DCAPerformanceComparePage',
+      semanticLabel: 'So sánh hiệu suất giữa đầu tư DCA và đầu tư một lần',
+      semanticIdentifier: 'SC-178',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'DCA vs Lump Sum',

@@ -35,7 +35,9 @@ class _LiveMarketDataAnalyticsPageState
     return VitTradeHubScaffold(
       title: 'Phân tích trực tiếp',
       subtitle: 'Dữ liệu realtime',
-      semanticLabel: 'SC-091 LiveMarketDataAnalyticsPage',
+      semanticLabel:
+          'Phân tích trực tiếp dữ liệu thị trường theo thời gian thực',
+      semanticIdentifier: 'SC-091',
       contentKey: LiveMarketDataAnalyticsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

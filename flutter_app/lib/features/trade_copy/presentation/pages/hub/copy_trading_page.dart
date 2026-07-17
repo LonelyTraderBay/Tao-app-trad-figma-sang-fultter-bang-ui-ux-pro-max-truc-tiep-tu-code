@@ -52,7 +52,8 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
     return VitTradeHubScaffold(
       title: 'Copy Trading',
       subtitle: 'Sao chép chiến lược có kiểm soát',
-      semanticLabel: 'SC-063 CopyTradingPage',
+      semanticLabel: 'Copy Trading – sao chép chiến lược có kiểm soát',
+      semanticIdentifier: 'SC-063',
       contentKey: CopyTradingPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

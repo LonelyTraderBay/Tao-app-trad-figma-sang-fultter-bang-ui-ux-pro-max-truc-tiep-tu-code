@@ -41,7 +41,8 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-227 P2PMerchantApplyPage',
+      semanticLabel: 'Đăng ký Merchant P2P',
+      semanticIdentifier: 'SC-227',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

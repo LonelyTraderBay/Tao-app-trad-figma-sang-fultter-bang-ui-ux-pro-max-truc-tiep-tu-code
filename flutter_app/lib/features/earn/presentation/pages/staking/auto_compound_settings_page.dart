@@ -75,7 +75,8 @@ class _AutoCompoundSettingsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-341 AutoCompoundSettingsPage',
+      semanticLabel: 'Lãi kép tự động',
+      semanticIdentifier: 'SC-341',
       child: Material(
         color: AppColors.bg,
         child: Stack(

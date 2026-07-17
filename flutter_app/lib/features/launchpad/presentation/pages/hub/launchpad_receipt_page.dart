@@ -54,11 +54,13 @@ class LaunchpadReceiptPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-301 LaunchpadReceiptPage',
+      semanticLabel: 'Biên lai đăng ký tham gia IDO',
+      semanticIdentifier: 'SC-301',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'SC-301 LaunchpadReceiptPage scroll surface',
+          semanticLabel: 'Biên lai đăng ký – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-301',
           header: VitHeader(
             title: hasSubscription ? 'Biên lai đăng ký' : snapshot.title,
             subtitle: hasSubscription ? 'Xác nhận tham gia IDO' : null,

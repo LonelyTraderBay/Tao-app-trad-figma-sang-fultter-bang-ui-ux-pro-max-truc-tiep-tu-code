@@ -65,7 +65,8 @@ class _P2PDisputeResolutionPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-220 P2PDisputeResolutionPage',
+      semanticLabel: 'Kết quả giải quyết tranh chấp P2P',
+      semanticIdentifier: 'SC-220',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

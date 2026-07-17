@@ -64,7 +64,8 @@ class _P2PMerchantProfilePageState
     return VitP2PFlowScaffold(
       title: 'Hồ sơ Merchant',
       subtitle: 'Merchant · P2P',
-      semanticLabel: 'SC-228 P2PMerchantProfilePage',
+      semanticLabel: 'Hồ sơ Merchant',
+      semanticIdentifier: 'SC-228',
       contentKey: P2PMerchantProfilePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(AppRoutePaths.p2p),

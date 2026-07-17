@@ -72,7 +72,8 @@ class _RegulatoryReportsDashboardPageState
           VitTradeHubScaffold(
             title: 'Regulatory Reports',
             subtitle: 'Dashboard - MiFID II - EMIR',
-            semanticLabel: 'SC-094 RegulatoryReportsDashboardPage',
+            semanticLabel: 'Bảng báo cáo tuân thủ quy định',
+            semanticIdentifier: 'SC-094',
             contentKey: RegulatoryReportsDashboardPage.contentKey,
             shellRenderMode: widget.shellRenderMode,
             onBack: () => goBackOrFallback(

@@ -103,7 +103,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ActivityLogPage',
-      semanticLabel: 'SC-161 ActivityLogPage',
+      semanticLabel: 'Nhật ký hoạt động tài khoản',
     );
     expectFirstViewportVisible(
       tester,

@@ -61,7 +61,8 @@ class _StakingSlashingHistoryPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-382 StakingSlashingHistoryPage',
+      semanticLabel: 'Lịch sử slashing và thống kê rủi ro validator',
+      semanticIdentifier: 'SC-382',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

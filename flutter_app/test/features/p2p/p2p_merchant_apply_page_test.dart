@@ -103,7 +103,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-227 P2PMerchantApplyPage',
-      semanticLabel: 'SC-227 P2PMerchantApplyPage',
+      semanticLabel: 'Đăng ký Merchant P2P',
     );
     expectFirstViewportVisible(
       tester,

@@ -73,7 +73,8 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-217 P2PChatPage',
+      semanticLabel: 'Trò chuyện đơn hàng P2P',
+      semanticIdentifier: 'SC-217',
       child: Material(
         type: MaterialType.transparency,
         child: Column(

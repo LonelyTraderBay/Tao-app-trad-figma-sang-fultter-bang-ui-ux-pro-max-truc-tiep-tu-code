@@ -65,12 +65,14 @@ class _LaunchpadRiskAnalyticsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-317 LaunchpadRiskAnalyticsPage',
+      semanticLabel: 'Phân tích rủi ro dự án Launchpad',
+      semanticIdentifier: 'SC-317',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           bottomInset: scrollTailReserve,
-          semanticLabel: 'SC-317 LaunchpadRiskAnalyticsPage scroll surface',
+          semanticLabel: 'Phân tích rủi ro dự án Launchpad',
+          semanticIdentifier: 'SC-317',
           header: VitHeader(
             title: snapshot.title,
             subtitle: 'Phân tích rủi ro · Tham khảo, không phải lời khuyên',

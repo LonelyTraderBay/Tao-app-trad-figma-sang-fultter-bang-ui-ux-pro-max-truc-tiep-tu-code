@@ -100,7 +100,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-127 BotOptimizationPage',
-      semanticLabel: 'SC-127 BotOptimizationPage',
+      semanticLabel: 'Tối ưu hóa tham số chiến lược bot',
     );
     expectActionableInFirstViewport(
       tester,

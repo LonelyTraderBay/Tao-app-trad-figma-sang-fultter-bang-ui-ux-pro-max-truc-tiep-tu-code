@@ -46,12 +46,14 @@ class LaunchpadContractPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-300 LaunchpadContractPage',
+      semanticLabel: 'Xem trước hợp đồng dự án Launchpad',
+      semanticIdentifier: 'SC-300',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           bottomInset: bottomInset,
-          semanticLabel: 'SC-300 LaunchpadContractPage scroll surface',
+          semanticLabel: 'Xem trước hợp đồng – vùng cuộn nội dung',
+          semanticIdentifier: 'SC-300',
           header: VitHeader(
             title: snapshot.title,
             subtitle: snapshot.project == null

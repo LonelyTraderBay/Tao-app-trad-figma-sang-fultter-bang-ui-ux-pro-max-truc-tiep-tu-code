@@ -39,7 +39,8 @@ class AdminSettingsPage extends ConsumerWidget {
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-410 AdminSettingsPage',
+      semanticLabel: 'Cài đặt quản trị',
+      semanticIdentifier: 'SC-410',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Admin Settings',

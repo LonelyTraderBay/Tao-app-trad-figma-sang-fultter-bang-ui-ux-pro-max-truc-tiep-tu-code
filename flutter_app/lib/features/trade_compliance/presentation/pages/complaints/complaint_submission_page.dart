@@ -90,7 +90,8 @@ class _ComplaintSubmissionPageState
     return VitTradeHubScaffold(
       title: 'Submit Complaint',
       subtitle: 'FCA Regulated Process',
-      semanticLabel: 'SC-112 ComplaintSubmissionPage',
+      semanticLabel: 'Gửi khiếu nại mới theo quy trình được FCA quản lý',
+      semanticIdentifier: 'SC-112',
       contentKey: ComplaintSubmissionPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

@@ -44,7 +44,8 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Drawdown Analyzer',
       subtitle: 'Phân tích độ sụt giảm vốn bot',
-      semanticLabel: 'SC-129 BotDrawdownAnalyzerPage',
+      semanticLabel: 'Phân tích mức sụt giảm vốn của bot',
+      semanticIdentifier: 'SC-129',
       contentKey: BotDrawdownAnalyzerPage.contentKey,
       shellRenderMode: shellRenderMode,
       activeProductId: 'bots',

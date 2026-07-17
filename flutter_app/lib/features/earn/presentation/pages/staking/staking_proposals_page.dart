@@ -43,7 +43,8 @@ class StakingProposalsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-389 StakingProposalsPage',
+      semanticLabel: 'Danh sách đề xuất cộng đồng staking',
+      semanticIdentifier: 'SC-389',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
@@ -241,4 +242,3 @@ class _VoteRatioBar extends StatelessWidget {
     );
   }
 }
-

@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'KYCPage',
-      semanticLabel: 'SC-159 KYCPage',
+      semanticLabel: 'Xác minh danh tính',
     );
     expectFirstViewportVisible(
       tester,

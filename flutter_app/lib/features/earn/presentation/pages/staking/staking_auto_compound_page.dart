@@ -106,7 +106,9 @@ class _StakingAutoCompoundPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-363 StakingAutoCompoundPage',
+      semanticLabel:
+          'Tự động Tái đầu tư staking — cài đặt lãi kép và mô phỏng lợi nhuận',
+      semanticIdentifier: 'SC-363',
       child: Material(
         color: AppColors.bg,
         child: Stack(

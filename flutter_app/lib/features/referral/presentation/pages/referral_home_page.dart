@@ -75,7 +75,8 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-290 ReferralHomePage',
+      semanticLabel: 'Giới thiệu bạn bè',
+      semanticIdentifier: 'SC-290',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

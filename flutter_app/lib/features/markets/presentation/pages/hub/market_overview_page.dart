@@ -66,7 +66,8 @@ class MarketOverviewPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-009 MarketOverviewPage',
+      semanticLabel: 'Tổng quan thị trường',
+      semanticIdentifier: 'SC-009',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

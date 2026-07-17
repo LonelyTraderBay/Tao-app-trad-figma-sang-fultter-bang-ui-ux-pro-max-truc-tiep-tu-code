@@ -55,7 +55,8 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
     return VitTradeHubScaffold(
       title: 'Trade History',
       subtitle: 'Lịch sử giao dịch và lãi/lỗ bot',
-      semanticLabel: 'SC-123 BotHistoryPage',
+      semanticLabel: 'Lịch sử giao dịch của bot',
+      semanticIdentifier: 'SC-123',
       contentKey: BotHistoryPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

@@ -80,7 +80,9 @@ class _PredictionsBreakingPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-029 PredictionsBreakingPage',
+      semanticLabel:
+          'Biến động thị trường dự đoán: xác suất thay đổi trong 24 giờ',
+      semanticIdentifier: 'SC-029',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

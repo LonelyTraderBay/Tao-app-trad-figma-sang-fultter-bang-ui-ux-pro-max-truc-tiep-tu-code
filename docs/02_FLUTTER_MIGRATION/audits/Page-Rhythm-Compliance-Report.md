@@ -19,10 +19,10 @@ Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10
 | --- | --- | --- | --- | --- |
 | AppRouteNames.sc049TradePair | `'/trade/:pairId'` | pass | pass | pass |
 | AppRouteNames.sc007Home | `AppRoutePaths.home` | pass | pass | pass |
-| SC-027 | `AppRoutePaths.marketsPredictions` | pass | pass | pass |
-| SC-156 | `AppRoutePaths.profile` | pass | pass | pass |
+| AppRouteNames.sc027PredictionsHome | `AppRoutePaths.marketsPredictions` | pass | pass | pass |
+| AppRouteNames.sc156Profile | `AppRoutePaths.profile` | pass | pass | pass |
 | AppRouteNames.sc048Trade | `AppRoutePaths.trade` | pass | pass | pass |
-| SC-135 | `AppRoutePaths.wallet` | pass | pass | pass |
+| AppRouteNames.sc135Wallet | `AppRoutePaths.wallet` | pass | pass | pass |
 
 ## L2 warn routes
 
@@ -35,13 +35,13 @@ Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10
 | --- | --- | --- |
 | AppRouteNames.sc140WithdrawUsdt | `WithdrawPage` | shared_shell |
 | AppRouteNames.sc401CopyTradingCardDemo | `InternalSurfaceGate` | direct_vpc |
-| SC-399 | `InternalSurfaceGate` | direct_vpc |
-| SC-398 | `InternalSurfaceGate` | direct_vpc |
-| SC-326 | `InternalSurfaceGate` | direct_vpc |
-| SC-325 | `InternalSurfaceGate` | direct_vpc |
+| AppRouteNames.sc399DesignSystem | `InternalSurfaceGate` | direct_vpc |
+| AppRouteNames.sc398MissingScreensShowcase | `InternalSurfaceGate` | direct_vpc |
+| AppRouteNames.sc326PerformanceMonitor | `InternalSurfaceGate` | direct_vpc |
+| AppRouteNames.sc325RouteChecker | `InternalSurfaceGate` | direct_vpc |
 | AppRouteNames.sc411ClientOptUpRequest | `ClientOptUpRequestPage` | direct_vpc |
-| SC-145 | `BuyCryptoPage` | shared_shell |
-| SC-146 | `TransferPage` | shared_shell |
+| AppRouteNames.sc145BuyCrypto | `BuyCryptoPage` | shared_shell |
+| AppRouteNames.sc146Transfer | `TransferPage` | shared_shell |
 | AppRouteNames.sc139Withdraw | `WithdrawPage` | shared_shell |
 
 ## By module

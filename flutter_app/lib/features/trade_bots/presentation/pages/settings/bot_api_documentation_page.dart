@@ -66,7 +66,8 @@ class _BotApiDocumentationPageState
     return VitTradeHubScaffold(
       title: 'API Documentation',
       subtitle: 'Tài liệu API bot cho nhà phát triển',
-      semanticLabel: 'SC-134 BotAPIDocumentationPage',
+      semanticLabel: 'Tài liệu API bot dành cho nhà phát triển',
+      semanticIdentifier: 'SC-134',
       contentKey: BotApiDocumentationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

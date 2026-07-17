@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-250 P2PAddressProofPage',
-      semanticLabel: 'SC-250 P2PAddressProofPage',
+      semanticLabel: 'Xác minh địa chỉ cư trú P2P',
     );
     expectActionableInFirstViewport(
       tester,

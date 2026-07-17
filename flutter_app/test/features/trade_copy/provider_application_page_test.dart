@@ -78,7 +78,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-069 ProviderApplicationPage',
-      semanticLabel: 'SC-069 ProviderApplicationPage',
+      semanticLabel: 'Đăng ký Provider',
     );
     expectActionableInFirstViewport(
       tester,

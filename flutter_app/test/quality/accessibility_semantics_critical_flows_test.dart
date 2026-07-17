@@ -41,17 +41,12 @@ void main() {
   ) async {
     await pumpRoute(tester, AppRoutePaths.walletWithdraw);
 
-    expect(
-      semanticsLabel(RegExp(r'Địa chỉ nhận rút')),
-      findsOneWidget,
-    );
+    expect(semanticsLabel(RegExp(r'Địa chỉ nhận rút')), findsOneWidget);
     expect(semanticsLabel(RegExp(r'Số tiền rút')), findsOneWidget);
     expect(semanticsLabel('Dùng toàn bộ số dư có thể rút'), findsOneWidget);
     expect(semanticsLabel('Xem trước lệnh rút'), findsOneWidget);
     expect(
-      semanticsLabel(
-        RegExp(r'Chọn mạng rút .+, phí .+, tối thiểu .+'),
-      ),
+      semanticsLabel(RegExp(r'Chọn mạng rút .+, phí .+, tối thiểu .+')),
       findsOneWidget,
     );
 
@@ -123,10 +118,7 @@ void main() {
     await pumpRoute(tester, AppRoutePaths.walletTokenApproval);
 
     expect(semanticsLabel('Tab ủy quyền Đang hoạt động'), findsOneWidget);
-    expect(
-      semanticsLabel(RegExp(r'Thu hồi ủy quyền .+ cho .+')),
-      findsWidgets,
-    );
+    expect(semanticsLabel(RegExp(r'Thu hồi ủy quyền .+ cho .+')), findsWidgets);
     expect(
       semanticsLabel('Thu hồi tất cả ủy quyền token rủi ro cao'),
       findsOneWidget,

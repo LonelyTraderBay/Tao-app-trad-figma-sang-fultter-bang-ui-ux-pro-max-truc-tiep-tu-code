@@ -102,7 +102,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-083 CopySafetyCenterPage',
-      semanticLabel: 'SC-083 CopySafetyCenterPage',
+      semanticLabel: 'Trung tâm an toàn Copy Trading',
     );
     expectFirstViewportVisible(
       tester,

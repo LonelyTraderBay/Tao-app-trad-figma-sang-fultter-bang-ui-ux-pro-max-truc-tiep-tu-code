@@ -105,7 +105,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'PortfolioTrackerPage',
-      semanticLabel: 'SC-021 PortfolioTrackerPage',
+      semanticLabel: 'Theo dõi danh mục',
     );
     expectFirstViewportVisible(
       tester,

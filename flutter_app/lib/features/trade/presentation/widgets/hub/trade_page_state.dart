@@ -96,7 +96,8 @@ class _TradePageState extends ConsumerState<TradePage> {
     return VitTradeSimpleShell(
       title: pair.symbol,
       subtitle: 'Giao dịch Spot',
-      semanticLabel: 'SC-048 TradePage',
+      semanticLabel: 'Giao dịch Spot',
+      semanticIdentifier: 'SC-048',
       contentKey: TradePage.contentKey,
       shellRenderMode: mode,
       showBack: showBack,

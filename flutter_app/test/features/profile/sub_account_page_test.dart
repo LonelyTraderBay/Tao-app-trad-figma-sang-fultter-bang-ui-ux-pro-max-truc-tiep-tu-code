@@ -76,7 +76,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SubAccountPage',
-      semanticLabel: 'SC-166 SubAccountPage',
+      semanticLabel: 'Quản lý tài khoản phụ',
     );
     expectFirstViewportVisible(
       tester,

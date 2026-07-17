@@ -79,7 +79,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-004 TwoFASetupPage',
-      semanticLabel: 'SC-004 TwoFASetupPage',
+      semanticLabel: 'Thiết lập 2FA',
     );
     expectActionableInFirstViewport(
       tester,

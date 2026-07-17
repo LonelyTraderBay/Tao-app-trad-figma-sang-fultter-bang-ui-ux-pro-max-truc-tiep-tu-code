@@ -88,7 +88,9 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-197 ArenaFlowMapPage',
+      semanticLabel:
+          'Sơ đồ luồng điều hướng Open Arena - route, node và checklist QA nội bộ',
+      semanticIdentifier: 'SC-197',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

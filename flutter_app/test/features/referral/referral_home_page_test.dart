@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-290 ReferralHomePage',
-      semanticLabel: 'SC-290 ReferralHomePage',
+      semanticLabel: 'Giới thiệu bạn bè',
     );
     expectFirstViewportVisible(
       tester,

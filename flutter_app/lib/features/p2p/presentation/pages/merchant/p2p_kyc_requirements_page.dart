@@ -57,7 +57,8 @@ class P2PKycRequirementsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-247 P2PKycRequirementsPage',
+      semanticLabel: 'Yêu cầu KYC P2P',
+      semanticIdentifier: 'SC-247',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -143,7 +143,8 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-010 MarketMoversPage',
+      semanticLabel: 'Biến động thị trường',
+      semanticIdentifier: 'SC-010',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

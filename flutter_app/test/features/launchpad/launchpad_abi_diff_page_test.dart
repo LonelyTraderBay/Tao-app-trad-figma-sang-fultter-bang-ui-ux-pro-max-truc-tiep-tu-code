@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-308 LaunchpadABIDiffPage',
-      semanticLabel: 'SC-308 LaunchpadABIDiffPage',
+      semanticLabel: 'So sánh thay đổi ABI hợp đồng thông minh',
     );
     expectActionableInFirstViewport(
       tester,

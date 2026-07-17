@@ -55,7 +55,8 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-231 P2PReviewsPage',
+      semanticLabel: 'Đánh giá P2P',
+      semanticIdentifier: 'SC-231',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

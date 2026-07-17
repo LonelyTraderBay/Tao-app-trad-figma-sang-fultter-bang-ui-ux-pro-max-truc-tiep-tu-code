@@ -77,7 +77,8 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
     return VitTradeHubScaffold(
       title: 'Điều chỉnh đòn bẩy',
       subtitle: 'Hiện tại: ${snapshot.currentLeverage}x',
-      semanticLabel: 'SC-058 LeveragePage',
+      semanticLabel: 'Điều chỉnh đòn bẩy giao dịch Futures',
+      semanticIdentifier: 'SC-058',
       contentKey: LeveragePage.contentKey,
       backKey: LeveragePage.backKey,
       onBack: _returnToFutures,

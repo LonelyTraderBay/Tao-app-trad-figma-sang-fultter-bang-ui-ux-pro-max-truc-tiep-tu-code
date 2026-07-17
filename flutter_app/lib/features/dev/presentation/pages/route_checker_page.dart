@@ -59,7 +59,8 @@ class _RouteCheckerState extends ConsumerState<RouteChecker> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-325 RouteChecker',
+      semanticLabel: 'Công cụ kiểm tra tuyến đường Staking (nội bộ)',
+      semanticIdentifier: 'SC-325',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

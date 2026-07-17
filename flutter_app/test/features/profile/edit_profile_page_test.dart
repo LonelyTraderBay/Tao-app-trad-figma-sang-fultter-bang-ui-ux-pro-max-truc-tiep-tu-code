@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'EditProfilePage',
-      semanticLabel: 'SC-157 EditProfilePage',
+      semanticLabel: 'Chỉnh sửa hồ sơ cá nhân',
     );
     expectFirstViewportVisible(
       tester,

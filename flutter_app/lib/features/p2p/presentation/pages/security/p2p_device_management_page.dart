@@ -73,7 +73,8 @@ class _P2PDeviceManagementPageState
     return VitP2PFlowScaffold(
       title: 'Quản lý thiết bị',
       subtitle: 'Bảo mật · P2P',
-      semanticLabel: 'SC-255 P2PDeviceManagementPage',
+      semanticLabel: 'Quản lý thiết bị',
+      semanticIdentifier: 'SC-255',
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       onRefresh: () async {

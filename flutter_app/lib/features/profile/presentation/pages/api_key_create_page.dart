@@ -95,7 +95,8 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
   ) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-162 ApiKeyCreatePage',
+      semanticLabel: 'Tạo API Key mới',
+      semanticIdentifier: 'SC-162',
       child: Material(
         color: _apiBackground,
         child: VitAutoHideHeaderScaffold(

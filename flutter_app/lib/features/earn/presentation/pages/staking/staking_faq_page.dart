@@ -54,7 +54,8 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-370 StakingFAQPage',
+      semanticLabel: 'Giải đáp yield và rủi ro staking',
+      semanticIdentifier: 'SC-370',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

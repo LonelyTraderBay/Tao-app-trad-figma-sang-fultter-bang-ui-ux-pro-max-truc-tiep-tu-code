@@ -56,7 +56,8 @@ class P2PAchievementsPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-275 P2PAchievementsPage',
+      semanticLabel: 'Thành tích P2P',
+      semanticIdentifier: 'SC-275',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

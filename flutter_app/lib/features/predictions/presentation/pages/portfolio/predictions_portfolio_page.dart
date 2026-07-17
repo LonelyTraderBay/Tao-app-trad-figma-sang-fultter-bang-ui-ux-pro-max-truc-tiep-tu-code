@@ -28,7 +28,8 @@ class PredictionsPortfolioPage extends ConsumerStatefulWidget {
     super.key,
     this.shellRenderMode,
     this.backPath = AppRoutePaths.marketsPredictions,
-    this.semanticLabel = 'SC-031 PredictionsPortfolioPage',
+    this.semanticLabel = 'Danh mục dự đoán',
+    this.semanticIdentifier = 'SC-031',
   });
 
   static const contentKey = predictionPortfolioContentKey;
@@ -46,6 +47,10 @@ class PredictionsPortfolioPage extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
   final String backPath;
   final String semanticLabel;
+
+  /// Internal screen code (e.g. `SC-031`) for tooling/debugging — see A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  final String semanticIdentifier;
 
   @override
   ConsumerState<PredictionsPortfolioPage> createState() =>
@@ -78,6 +83,7 @@ class _PredictionsPortfolioPageState
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: widget.semanticLabel,
+      semanticIdentifier: widget.semanticIdentifier,
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -37,6 +37,10 @@ void main(List<String> args) {
   final auditRelativePaths = auditByFile.keys
       .map((k) => k.replaceFirst('flutter_app/lib/', ''))
       .toSet();
+  // page_file is written repo-relative (flutter_app/lib/...) like the other
+  // audit CSVs — an absolute path would differ per machine/OS and make the
+  // committed artifact permanently stale on CI.
+  final appRootPrefix = '${appRoot.path.replaceAll(r'\', '/')}/';
   final widgetToPage = _buildWidgetToPageMap(appRoot);
   final tabRootScreens = _tabRootScreenIds();
   final routes = _parseRealPageRoutes(routeMd.readAsStringSync());
@@ -179,7 +183,7 @@ void main(List<String> args) {
         routePath: route.path,
         routeName: route.name,
         pageWidget: route.widgetClass,
-        pageFile: pageFile ?? '',
+        pageFile: (pageFile ?? '').replaceFirst(appRootPrefix, 'flutter_app/'),
         layoutPattern: pattern.label,
         vpcFiles: vpcFiles.join(';'),
         vpcOwnerFile: vpcOwner,
@@ -199,8 +203,25 @@ void main(List<String> args) {
   final md = _renderReport(rows, generated: DateTime.now());
 
   if (checkOnly) {
-    if (!outCsv.existsSync() || outCsv.readAsStringSync() != csv) {
+    final committed = outCsv.existsSync()
+        ? outCsv.readAsStringSync().replaceAll('\r\n', '\n')
+        : null;
+    if (committed != csv) {
       stderr.writeln('Screen compliance CSV is stale.');
+      if (committed != null) {
+        final oldLines = committed.split('\n');
+        final newLines = csv.split('\n');
+        for (var i = 0; i < oldLines.length || i < newLines.length; i++) {
+          final oldLine = i < oldLines.length ? oldLines[i] : '<missing>';
+          final newLine = i < newLines.length ? newLines[i] : '<missing>';
+          if (oldLine != newLine) {
+            stderr.writeln('First diff at line ${i + 1}:');
+            stderr.writeln('  committed: $oldLine');
+            stderr.writeln('  generated: $newLine');
+            break;
+          }
+        }
+      }
       stderr.writeln(
         'Run `dart run tool/page_rhythm_screen_rollup.dart` from flutter_app/.',
       );
@@ -215,16 +236,24 @@ void main(List<String> args) {
       return;
     }
     if (strictLayout) {
+      // flush_chart is a registered LayoutPattern archetype (full-bleed chart
+      // screens; today only SC-041 PredictionAdvancedChartPage) and is already
+      // recorded as `exception:flush_chart` in l3_status/notes by this rollup,
+      // so strict mode sanctions it alongside direct_vpc/shared_shell. Every
+      // other pattern (gate_shell, bottom_sheet, custom_scroll, unmapped)
+      // still fails strict.
+      final strictLayoutAllowed = {
+        LayoutPattern.directVpc.label,
+        LayoutPattern.sharedShell.label,
+        LayoutPattern.flushChart.label,
+      };
       final badLayout = rows
-          .where(
-            (r) =>
-                r.layoutPattern != LayoutPattern.directVpc.label &&
-                r.layoutPattern != LayoutPattern.sharedShell.label,
-          )
+          .where((r) => !strictLayoutAllowed.contains(r.layoutPattern))
           .length;
       if (badLayout > 0) {
         stderr.writeln(
-          'Layout strict check failed: $badLayout routes not direct_vpc/shared_shell.',
+          'Layout strict check failed: $badLayout routes not '
+          'direct_vpc/shared_shell/flush_chart.',
         );
         exitCode = 1;
         return;
@@ -380,18 +409,28 @@ List<_RouteRow> _parseRealPageRoutes(String markdown) {
 Map<String, String> _buildWidgetToPageMap(Directory appRoot) {
   final map = <String, String>{};
   final features = Directory('${appRoot.path}/lib/features');
-  for (final entity in features.listSync(recursive: true)) {
-    if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    if (!entity.path.contains(
-      '${Platform.pathSeparator}presentation${Platform.pathSeparator}',
-    )) {
-      continue;
-    }
-    if (entity.path.contains('_part_')) continue;
-    final source = entity.readAsStringSync();
+  // listSync order is platform-dependent (alphabetical on NTFS, inode order
+  // on Linux); duplicate class names resolve last-writer-wins, so iterate in
+  // sorted path order to get the same winner on every OS.
+  final candidates =
+      features
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'))
+          .where(
+            (f) => f.path.contains(
+              '${Platform.pathSeparator}presentation${Platform.pathSeparator}',
+            ),
+          )
+          .where((f) => !f.path.contains('_part_'))
+          .map((f) => f.path.replaceAll('\\', '/'))
+          .toList()
+        ..sort();
+  for (final path in candidates) {
+    final source = File(path).readAsStringSync();
     final match = RegExp(r'class\s+(\w+)\s+extends').firstMatch(source);
     if (match == null) continue;
-    map[match.group(1)!] = entity.path.replaceAll('\\', '/');
+    map[match.group(1)!] = path;
   }
 
   for (final entry in widgetClassPageOverrides.entries) {

@@ -129,7 +129,8 @@ String _stripInterpolation(String value) {
         i = end == -1 ? value.length : end + 1;
       } else {
         var j = i + 1;
-        while (j < value.length && RegExp(r'[A-Za-z0-9_.]').hasMatch(value[j])) {
+        while (j < value.length &&
+            RegExp(r'[A-Za-z0-9_.]').hasMatch(value[j])) {
           j++;
         }
         i = j;

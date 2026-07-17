@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-230 P2PTradingLevelPage',
-      semanticLabel: 'SC-230 P2PTradingLevelPage',
+      semanticLabel: 'Cấp độ giao dịch P2P',
     );
     expectActionableInFirstViewport(
       tester,

@@ -75,7 +75,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     final showBack = context.canPop();
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-135 WalletPage',
+      semanticLabel: 'Ví - số dư minh bạch, bảo mật đa lớp',
+      semanticIdentifier: 'SC-135',
       header: VitTopChrome(
         type: VitTopChromeType.rootModule,
         title: 'V\u00ED',

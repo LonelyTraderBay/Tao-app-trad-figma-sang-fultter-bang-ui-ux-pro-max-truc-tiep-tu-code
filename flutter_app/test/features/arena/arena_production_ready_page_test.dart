@@ -87,7 +87,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-206 ArenaProductionReadyPage',
-      semanticLabel: 'SC-206 ArenaProductionReadyPage',
+      semanticLabel:
+          'Tổng hợp mức độ sẵn sàng phát hành Open Arena - màn hình, trạng thái và tài liệu bàn giao nội bộ',
     );
     expectFirstViewportVisible(
       tester,

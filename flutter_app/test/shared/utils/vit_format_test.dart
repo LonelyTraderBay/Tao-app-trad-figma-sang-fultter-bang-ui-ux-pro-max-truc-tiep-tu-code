@@ -34,14 +34,8 @@ void main() {
   });
 
   test('VitFormat.compactSuffix stripTrailingZero drops a trailing .0', () {
-    expect(
-      VitFormat.compactSuffix(2000000, stripTrailingZero: true),
-      '2M',
-    );
-    expect(
-      VitFormat.compactSuffix(2500000, stripTrailingZero: true),
-      '2.5M',
-    );
+    expect(VitFormat.compactSuffix(2000000, stripTrailingZero: true), '2M');
+    expect(VitFormat.compactSuffix(2500000, stripTrailingZero: true), '2.5M');
     expect(VitFormat.compactSuffix(2000000), '2.0M');
   });
 
@@ -64,15 +58,12 @@ void main() {
     expect(VitFormat.email('not-an-email'), 'not-an-email');
   });
 
-  test(
-    'VitFormat.account keeps a short prefix and the last 4 characters',
-    () {
-      expect(VitFormat.account(''), '');
-      expect(VitFormat.account('1234'), '***');
-      expect(VitFormat.account('123456'), '1...3456');
-      expect(VitFormat.account('0901234567'), '090...4567');
-    },
-  );
+  test('VitFormat.account keeps a short prefix and the last 4 characters', () {
+    expect(VitFormat.account(''), '');
+    expect(VitFormat.account('1234'), '***');
+    expect(VitFormat.account('123456'), '1...3456');
+    expect(VitFormat.account('0901234567'), '090...4567');
+  });
 
   test('VitFormat.percent uses the requested fraction digits', () {
     expect(VitFormat.percent(12.345), '12.35%');

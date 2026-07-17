@@ -116,7 +116,8 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitP2PFlowScaffold(
-      semanticLabel: 'SC-226 P2PCreateAdPage',
+      semanticLabel: 'Đăng quảng cáo P2P',
+      semanticIdentifier: 'SC-226',
       title: 'Đăng quảng cáo P2P',
       subtitle: 'Tạo mới · P2P',
       onBack: () => context.go(AppRoutePaths.p2pMyAds),

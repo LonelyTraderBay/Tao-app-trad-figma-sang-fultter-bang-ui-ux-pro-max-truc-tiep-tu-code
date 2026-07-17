@@ -139,7 +139,9 @@ class _ArenaSmartRuleBuilderPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-186 ArenaSmartRuleBuilderPage',
+      semanticLabel:
+          'Đặt luật thử thách - bước xây dựng luật trong Arena Studio',
+      semanticIdentifier: 'SC-186',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

@@ -60,7 +60,9 @@ class _MissingScreensShowcasePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-398 MissingScreensShowcasePage',
+      semanticLabel:
+          'Danh sách màn hình bổ sung và điểm vào v2 (công cụ nội bộ)',
+      semanticIdentifier: 'SC-398',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

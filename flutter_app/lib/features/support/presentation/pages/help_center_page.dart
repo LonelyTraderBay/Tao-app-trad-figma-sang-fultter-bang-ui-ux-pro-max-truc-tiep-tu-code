@@ -80,7 +80,8 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-292 HelpCenterPage',
+      semanticLabel: 'Trung tâm trợ giúp',
+      semanticIdentifier: 'SC-292',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -21,7 +21,8 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
         MediaQuery.paddingOf(context).bottom;
 
     return CrossModuleTabbedPageShell(
-      semanticLabel: 'SC-324 TaxReportCenter',
+      semanticLabel: 'Trung tâm báo cáo thuế',
+      semanticIdentifier: 'SC-324',
       contentKey: TaxReportCenter.contentKey,
       title: snapshot.title,
       onBack: () => context.go(snapshot.backRoute),

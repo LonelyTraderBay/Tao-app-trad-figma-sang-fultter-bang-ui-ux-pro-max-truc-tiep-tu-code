@@ -90,31 +90,28 @@ void main() {
       },
     );
 
-    test(
-      'averageUptime on an empty validator list is NaN, not a thrown error '
-      '(documents an existing edge case — 0/0 division, not exercised by '
-      'production data today)',
-      () {
-        final snapshot = StakingValidatorHealthMonitorSnapshot(
-          endpoint: '/api/staking/validators',
-          actionDraft: 'draft',
-          title: 'Validator health',
-          backRoute: '/earn/staking',
-          validators: const [],
-          uptimeHistory: const [],
-          actionTitle: 'title',
-          actionBody: 'body',
-          actionLabel: 'label',
-          footerNote: 'note',
-          contractNotes: 'notes',
-          supportedStates: const {EarnScreenState.empty},
-        );
+    test('averageUptime on an empty validator list is NaN, not a thrown error '
+        '(documents an existing edge case — 0/0 division, not exercised by '
+        'production data today)', () {
+      final snapshot = StakingValidatorHealthMonitorSnapshot(
+        endpoint: '/api/staking/validators',
+        actionDraft: 'draft',
+        title: 'Validator health',
+        backRoute: '/earn/staking',
+        validators: const [],
+        uptimeHistory: const [],
+        actionTitle: 'title',
+        actionBody: 'body',
+        actionLabel: 'label',
+        footerNote: 'note',
+        contractNotes: 'notes',
+        supportedStates: const {EarnScreenState.empty},
+      );
 
-        expect(snapshot.healthyCount, 0);
-        expect(snapshot.warningCount, 0);
-        expect(snapshot.averageUptime.isNaN, isTrue);
-      },
-    );
+      expect(snapshot.healthyCount, 0);
+      expect(snapshot.warningCount, 0);
+      expect(snapshot.averageUptime.isNaN, isTrue);
+    });
   });
 
   group('StakingAuditFindingsDraft', () {

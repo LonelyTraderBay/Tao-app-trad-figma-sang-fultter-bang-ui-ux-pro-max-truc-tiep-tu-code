@@ -55,7 +55,8 @@ class _InvestorCompensationPageState
     return VitTradeHubScaffold(
       title: 'Investor Compensation',
       subtitle: 'FSCS Protection',
-      semanticLabel: 'SC-104 InvestorCompensationPage',
+      semanticLabel: 'Bồi thường nhà đầu tư theo chương trình bảo vệ FSCS',
+      semanticIdentifier: 'SC-104',
       contentKey: InvestorCompensationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

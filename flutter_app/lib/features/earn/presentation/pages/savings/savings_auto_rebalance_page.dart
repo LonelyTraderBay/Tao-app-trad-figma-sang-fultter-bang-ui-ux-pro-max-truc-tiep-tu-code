@@ -97,7 +97,8 @@ class _SavingsAutoRebalancePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-344 SavingsAutoRebalancePage',
+      semanticLabel: 'Tái cân bằng',
+      semanticIdentifier: 'SC-344',
       child: Material(
         color: AppColors.bg,
         child: Stack(

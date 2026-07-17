@@ -95,7 +95,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-240 P2PInsuranceScorePage',
-      semanticLabel: 'SC-240 P2PInsuranceScorePage',
+      semanticLabel: 'Điểm bảo vệ P2P',
     );
     expectFirstViewportVisible(
       tester,

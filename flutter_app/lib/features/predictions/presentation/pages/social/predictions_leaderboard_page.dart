@@ -81,7 +81,8 @@ class _PredictionsLeaderboardPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-033 PredictionsLeaderboardPage',
+      semanticLabel: 'Bảng xếp hạng nhà giao dịch dự đoán',
+      semanticIdentifier: 'SC-033',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

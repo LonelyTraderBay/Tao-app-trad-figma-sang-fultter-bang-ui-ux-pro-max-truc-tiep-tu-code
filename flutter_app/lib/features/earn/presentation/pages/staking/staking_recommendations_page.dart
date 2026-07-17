@@ -64,7 +64,8 @@ class _StakingRecommendationsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-372 StakingRecommendationsPage',
+      semanticLabel: 'Gợi ý chiến lược staking cá nhân hóa',
+      semanticIdentifier: 'SC-372',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

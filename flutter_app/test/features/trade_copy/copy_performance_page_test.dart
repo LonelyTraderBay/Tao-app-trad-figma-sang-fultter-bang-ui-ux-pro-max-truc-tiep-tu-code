@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-074 CopyPerformancePage',
-      semanticLabel: 'SC-074 CopyPerformancePage',
+      semanticLabel: 'Phân tích hiệu suất',
     );
     expectFirstViewportVisible(
       tester,

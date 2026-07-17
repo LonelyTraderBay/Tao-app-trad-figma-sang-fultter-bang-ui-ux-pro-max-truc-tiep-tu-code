@@ -75,7 +75,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-183 FunnelDashboard',
-      semanticLabel: 'SC-183 FunnelDashboard',
+      semanticLabel: 'Bảng phân tích phễu chuyển đổi',
     );
     expectActionableInFirstViewport(
       tester,

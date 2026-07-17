@@ -59,7 +59,8 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
     return VitTradeHubScaffold(
       title: 'Phân tích nâng cao',
       subtitle: 'AI · Rủi ro · Nhật ký',
-      semanticLabel: 'SC-092 AdvancedAnalyticsPage',
+      semanticLabel: 'Phân tích nâng cao',
+      semanticIdentifier: 'SC-092',
       contentKey: AdvancedAnalyticsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

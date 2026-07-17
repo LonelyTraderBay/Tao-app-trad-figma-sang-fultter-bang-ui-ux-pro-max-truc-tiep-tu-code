@@ -40,7 +40,8 @@ class CopyTradingCardDemo extends ConsumerWidget {
 
     return VitTradeHubScaffold(
       title: snapshot.title,
-      semanticLabel: 'SC-401 CopyTradingCardDemo',
+      semanticLabel: 'Phân tích thẻ Copy Trading (bản demo nội bộ)',
+      semanticIdentifier: 'SC-401',
       contentKey: CopyTradingCardDemo.contentKey,
       shellRenderMode: mode,
       showProductTabs: false,

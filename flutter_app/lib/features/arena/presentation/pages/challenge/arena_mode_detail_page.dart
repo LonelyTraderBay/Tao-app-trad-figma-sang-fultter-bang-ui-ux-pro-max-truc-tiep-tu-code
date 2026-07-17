@@ -68,7 +68,9 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-189 ArenaModeDetailPage',
+      semanticLabel:
+          'Chi tiết chế độ chơi trong Open Arena - luật, người tạo và chỉ số chất lượng',
+      semanticIdentifier: 'SC-189',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

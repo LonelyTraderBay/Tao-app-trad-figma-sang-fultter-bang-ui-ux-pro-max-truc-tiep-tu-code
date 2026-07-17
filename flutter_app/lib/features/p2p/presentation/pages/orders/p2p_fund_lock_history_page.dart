@@ -35,9 +35,8 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
     return VitP2PFlowScaffold(
       title: snapshot.title,
       subtitle: snapshot.subtitle,
-      semanticLabel: walletHistoryAlias
-          ? 'SC-263 P2PFundLockHistoryPage'
-          : 'SC-262 P2PFundLockHistoryPage',
+      semanticLabel: 'Lịch sử khóa quỹ P2P',
+      semanticIdentifier: walletHistoryAlias ? 'SC-263' : 'SC-262',
       shellRenderMode: shellRenderMode,
       onBack: () => context.go(snapshot.parentRoute),
       children: [

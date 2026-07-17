@@ -79,7 +79,8 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-017 MarketCalendarPage',
+      semanticLabel: 'Lịch sự kiện',
+      semanticIdentifier: 'SC-017',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

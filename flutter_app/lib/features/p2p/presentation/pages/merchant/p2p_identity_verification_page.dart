@@ -71,7 +71,8 @@ class _P2PIdentityVerificationPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: '$screenContract P2PIdentityVerificationPage',
+      semanticLabel: 'Xác minh danh tính P2P',
+      semanticIdentifier: screenContract,
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

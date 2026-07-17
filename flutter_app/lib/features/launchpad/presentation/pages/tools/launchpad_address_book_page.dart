@@ -97,14 +97,16 @@ class _LaunchpadAddressBookPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-309 LaunchpadAddressBookPage',
+      semanticLabel: 'Sổ địa chỉ ví đáng tin cậy trong Launchpad',
+      semanticIdentifier: 'SC-309',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-309 LaunchpadAddressBookPage scroll surface',
+              semanticLabel: 'Sổ địa chỉ ví đáng tin cậy trong Launchpad',
+              semanticIdentifier: 'SC-309',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'Sổ địa chỉ tin cậy · Xác minh trước khi gửi',

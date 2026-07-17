@@ -72,7 +72,8 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
     return VitTradeHubScaffold(
       title: 'Trading Bots FAQ',
       subtitle: 'Câu hỏi thường gặp về bot giao dịch',
-      semanticLabel: 'SC-132 BotFAQPage',
+      semanticLabel: 'Giải đáp câu hỏi thường gặp về bot giao dịch',
+      semanticIdentifier: 'SC-132',
       contentKey: BotFaqPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

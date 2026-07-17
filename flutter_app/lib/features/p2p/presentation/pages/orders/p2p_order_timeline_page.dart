@@ -44,7 +44,8 @@ class P2POrderTimelinePage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-212 P2POrderTimelinePage',
+      semanticLabel: 'Tiến trình đơn hàng P2P',
+      semanticIdentifier: 'SC-212',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

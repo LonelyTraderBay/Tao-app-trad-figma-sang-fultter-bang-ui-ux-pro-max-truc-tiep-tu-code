@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'TransactionHistoryPage',
-      semanticLabel: 'SC-136 TxHistoryPage',
+      semanticLabel: 'Lịch sử giao dịch - theo dõi nạp, rút an toàn',
     );
     expectActionableInFirstViewport(
       tester,

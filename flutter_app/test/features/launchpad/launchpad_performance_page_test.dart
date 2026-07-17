@@ -84,7 +84,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-297 LaunchpadPerformancePage',
-      semanticLabel: 'SC-297 LaunchpadPerformancePage',
+      semanticLabel: 'Hiệu suất lịch sử các dự án Launchpad',
     );
     expectActionableInFirstViewport(
       tester,

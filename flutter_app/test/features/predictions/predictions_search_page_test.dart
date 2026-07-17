@@ -102,7 +102,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'PredictionsSearchPage',
-      semanticLabel: 'SC-028 PredictionsSearchPage',
+      semanticLabel: 'Tìm sự kiện dự đoán: lọc theo chủ đề và xác suất',
     );
     expectFirstViewportVisible(
       tester,

@@ -85,7 +85,8 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
         navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-174 DCAPortfolioOptimizer',
+      semanticLabel: 'Tối ưu hóa phân bổ danh mục đầu tư DCA',
+      semanticIdentifier: 'SC-174',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Portfolio Optimizer',

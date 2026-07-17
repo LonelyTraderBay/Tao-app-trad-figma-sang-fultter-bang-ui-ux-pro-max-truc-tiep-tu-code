@@ -79,7 +79,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-070 CopyProviderDetailPage',
-      semanticLabel: 'SC-070 CopyProviderDetailPage',
+      semanticLabel: 'Chi tiết provider',
     );
     expectActionableInFirstViewport(
       tester,

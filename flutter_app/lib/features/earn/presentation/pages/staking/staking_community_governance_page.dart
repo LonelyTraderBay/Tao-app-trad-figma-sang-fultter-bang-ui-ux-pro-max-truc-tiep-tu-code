@@ -50,7 +50,8 @@ class StakingCommunityGovernancePage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-388 StakingCommunityGovernancePage',
+      semanticLabel: 'Quản trị cộng đồng stake',
+      semanticIdentifier: 'SC-388',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

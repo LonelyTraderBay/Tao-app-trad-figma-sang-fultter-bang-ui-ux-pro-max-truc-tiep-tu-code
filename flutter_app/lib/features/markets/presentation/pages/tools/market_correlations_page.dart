@@ -88,7 +88,8 @@ class _MarketCorrelationsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-026 MarketCorrelationsPage',
+      semanticLabel: 'Tương quan thị trường',
+      semanticIdentifier: 'SC-026',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

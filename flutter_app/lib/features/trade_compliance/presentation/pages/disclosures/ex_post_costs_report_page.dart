@@ -51,7 +51,8 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
     return VitTradeHubScaffold(
       title: 'Ex-Post Cost Report',
       subtitle: 'Annual Actual Costs',
-      semanticLabel: 'SC-107 ExPostCostsReportPage',
+      semanticLabel: 'Báo cáo chi phí thực tế hằng năm sau đầu tư',
+      semanticIdentifier: 'SC-107',
       contentKey: ExPostCostsReportPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

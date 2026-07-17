@@ -69,7 +69,8 @@ class _PredictionPortfolioAnalyzerPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-038 PredictionPortfolioAnalyzerPage',
+      semanticLabel: 'Phân tích danh mục dự đoán',
+      semanticIdentifier: 'SC-038',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -48,7 +48,8 @@ class P2PAmlScreeningPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-268 P2PAMLScreeningPage',
+      semanticLabel: 'Sàng lọc chống rửa tiền P2P',
+      semanticIdentifier: 'SC-268',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

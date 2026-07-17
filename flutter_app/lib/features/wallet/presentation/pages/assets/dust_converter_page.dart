@@ -68,7 +68,8 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
     return VitWalletDetailScaffold(
       title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
       subtitle: 'D\u1ECDn d\u1EB9p \u00b7 Wallet',
-      semanticLabel: 'SC-154 DustConverterPage',
+      semanticLabel: 'Chuyển đổi số dư nhỏ',
+      semanticIdentifier: 'SC-154',
       contentKey: DustConverterPage.contentKey,
       shellRenderMode: mode,
       onBack: () => context.go(AppRoutePaths.wallet),

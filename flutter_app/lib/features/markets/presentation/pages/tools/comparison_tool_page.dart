@@ -97,7 +97,8 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-016 ComparisonToolPage',
+      semanticLabel: 'So sánh token',
+      semanticIdentifier: 'SC-016',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

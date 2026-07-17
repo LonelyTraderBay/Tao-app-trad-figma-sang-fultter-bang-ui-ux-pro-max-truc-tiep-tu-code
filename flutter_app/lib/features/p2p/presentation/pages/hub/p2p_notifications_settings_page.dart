@@ -61,7 +61,8 @@ class _P2PNotificationsSettingsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-278 P2PNotificationsSettingsPage',
+      semanticLabel: 'Cài đặt thông báo P2P',
+      semanticIdentifier: 'SC-278',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

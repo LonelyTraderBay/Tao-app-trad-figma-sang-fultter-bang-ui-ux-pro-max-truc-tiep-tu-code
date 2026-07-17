@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-333 SavingsPortfolioPage',
-      semanticLabel: 'SC-333 SavingsPortfolioPage',
+      semanticLabel: 'Danh mục tiết kiệm',
     );
     expectActionableInFirstViewport(
       tester,

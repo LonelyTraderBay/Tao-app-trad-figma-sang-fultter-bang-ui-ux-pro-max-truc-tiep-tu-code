@@ -88,7 +88,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ExecutionVenueAnalysisPage',
-      semanticLabel: 'SC-097 ExecutionVenueAnalysisPage',
+      semanticLabel: 'Phân tích chi tiết các sàn thực thi lệnh giao dịch',
     );
     expectFirstViewportVisible(
       tester,

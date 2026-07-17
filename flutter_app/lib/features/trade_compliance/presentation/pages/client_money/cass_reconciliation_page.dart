@@ -58,7 +58,8 @@ class _CassReconciliationPageState
     return VitTradeHubScaffold(
       title: 'CASS Reconciliation',
       subtitle: 'Daily Client Money Matching',
-      semanticLabel: 'SC-103 CASSReconciliationPage',
+      semanticLabel: 'Đối soát CASS: khớp tiền của khách hàng theo từng ngày',
+      semanticIdentifier: 'SC-103',
       contentKey: CassReconciliationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

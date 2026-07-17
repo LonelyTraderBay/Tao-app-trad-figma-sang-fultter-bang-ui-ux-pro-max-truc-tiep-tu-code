@@ -85,7 +85,8 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-351 SavingsLadderPage',
+      semanticLabel: 'Thang đáo hạn tiết kiệm',
+      semanticIdentifier: 'SC-351',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

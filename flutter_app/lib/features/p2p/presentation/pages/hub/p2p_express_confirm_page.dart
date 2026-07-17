@@ -88,7 +88,8 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-210 P2PExpressConfirmPage',
+      semanticLabel: 'Xác nhận giao dịch nhanh P2P',
+      semanticIdentifier: 'SC-210',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

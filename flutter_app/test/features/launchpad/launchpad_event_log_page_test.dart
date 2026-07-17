@@ -83,7 +83,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-307 LaunchpadEventLogPage',
-      semanticLabel: 'SC-307 LaunchpadEventLogPage',
+      semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
     );
     expectActionableInFirstViewport(
       tester,

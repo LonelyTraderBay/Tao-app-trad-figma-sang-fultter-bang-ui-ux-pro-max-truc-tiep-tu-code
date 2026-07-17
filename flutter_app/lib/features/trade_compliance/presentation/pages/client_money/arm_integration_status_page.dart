@@ -68,7 +68,9 @@ class _ArmIntegrationStatusPageState
     return VitTradeHubScaffold(
       title: 'ARM Integration',
       subtitle: 'Connection Health · Monitoring',
-      semanticLabel: 'SC-095 ARMIntegrationStatusPage',
+      semanticLabel:
+          'Trạng thái tích hợp ARM: theo dõi sức khỏe kết nối và độ trễ báo cáo giao dịch',
+      semanticIdentifier: 'SC-095',
       contentKey: ArmIntegrationStatusPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

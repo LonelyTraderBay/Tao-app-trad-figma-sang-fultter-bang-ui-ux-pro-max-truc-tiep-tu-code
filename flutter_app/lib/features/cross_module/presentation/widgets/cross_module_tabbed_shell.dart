@@ -12,6 +12,7 @@ class CrossModuleTabbedPageShell extends StatelessWidget {
   const CrossModuleTabbedPageShell({
     super.key,
     required this.semanticLabel,
+    this.semanticIdentifier,
     required this.contentKey,
     required this.title,
     required this.onBack,
@@ -22,6 +23,10 @@ class CrossModuleTabbedPageShell extends StatelessWidget {
   });
 
   final String semanticLabel;
+
+  /// Internal screen code (e.g. `SC-007`) for tooling/debugging — see A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  final String? semanticIdentifier;
   final Key contentKey;
   final String title;
   final VoidCallback onBack;
@@ -35,6 +40,7 @@ class CrossModuleTabbedPageShell extends StatelessWidget {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: semanticLabel,
+      semanticIdentifier: semanticIdentifier,
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

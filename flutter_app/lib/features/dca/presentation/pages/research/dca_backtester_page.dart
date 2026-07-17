@@ -54,7 +54,8 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
         navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-176 DCABacktesterPage',
+      semanticLabel: 'Kiểm thử lịch sử chiến lược DCA (Backtester)',
+      semanticIdentifier: 'SC-176',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'DCA Backtester',

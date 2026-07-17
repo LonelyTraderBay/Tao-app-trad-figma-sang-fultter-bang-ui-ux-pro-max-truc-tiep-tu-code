@@ -85,7 +85,8 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-044 PairDetailPage',
+      semanticLabel: 'Chi tiết cặp giao dịch',
+      semanticIdentifier: 'SC-044',
       child: Material(
         type: MaterialType.transparency,
         child: Column(

@@ -88,7 +88,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-042 PredictionTournamentsPage',
-      semanticLabel: 'SC-042 PredictionTournamentsPage',
+      semanticLabel: 'Giải đấu dự đoán',
     );
     expectFirstViewportVisible(
       tester,
@@ -134,7 +134,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-042 PredictionTournamentDetailPage',
-      semanticLabel: 'SC-042 PredictionTournamentDetailPage',
+      semanticLabel: 'Chi tiết giải đấu dự đoán',
     );
     expectFirstViewportVisible(
       tester,

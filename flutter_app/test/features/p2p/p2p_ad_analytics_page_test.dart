@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-223 P2PAdAnalyticsPage',
-      semanticLabel: 'SC-223 P2PAdAnalyticsPage',
+      semanticLabel: 'Phân tích quảng cáo P2P',
     );
     expectFirstViewportVisible(
       tester,

@@ -85,7 +85,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-344 SavingsAutoRebalancePage',
-      semanticLabel: 'SC-344 SavingsAutoRebalancePage',
+      semanticLabel: 'Tái cân bằng',
     );
     expectActionableInFirstViewport(
       tester,

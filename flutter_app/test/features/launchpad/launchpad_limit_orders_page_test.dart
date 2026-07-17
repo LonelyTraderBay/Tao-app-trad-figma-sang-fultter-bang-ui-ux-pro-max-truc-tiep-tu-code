@@ -97,7 +97,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-315 LaunchpadLimitOrdersPage',
-      semanticLabel: 'SC-315 LaunchpadLimitOrdersPage',
+      semanticLabel: 'Quản lý lệnh giới hạn giao dịch token',
     );
     expectActionableInFirstViewport(
       tester,

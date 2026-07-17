@@ -88,7 +88,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-341 AutoCompoundSettingsPage',
-      semanticLabel: 'SC-341 AutoCompoundSettingsPage',
+      semanticLabel: 'Lãi kép tự động',
     );
     expectActionableInFirstViewport(
       tester,

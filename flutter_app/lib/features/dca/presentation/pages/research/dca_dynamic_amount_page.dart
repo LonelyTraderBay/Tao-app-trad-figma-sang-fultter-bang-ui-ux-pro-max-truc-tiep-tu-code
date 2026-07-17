@@ -67,7 +67,9 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
     final adjustment = _adjustmentFor(_activeStrategy, snapshot.adjustment);
 
     return VitPageLayout(
-      semanticLabel: 'SC-175 DCADynamicAmount',
+      semanticLabel:
+          'Điều chỉnh số tiền DCA linh hoạt theo biến động thị trường',
+      semanticIdentifier: 'SC-175',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Dynamic Amount',

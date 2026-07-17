@@ -8,6 +8,7 @@ class VitAutoHideHeaderScaffold extends StatefulWidget {
     required this.child,
     this.bottomInset,
     this.semanticLabel,
+    this.semanticIdentifier,
     this.headerKey,
     this.bodyKey,
     this.initiallyVisible = true,
@@ -23,6 +24,10 @@ class VitAutoHideHeaderScaffold extends StatefulWidget {
   final Widget child;
   final double? bottomInset;
   final String? semanticLabel;
+
+  /// Internal screen code (e.g. `SC-007`) for tooling/debugging — see A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  final String? semanticIdentifier;
   final Key? headerKey;
   final Key? bodyKey;
   final bool initiallyVisible;
@@ -111,6 +116,7 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
     return Semantics(
       container: true,
       label: widget.semanticLabel,
+      identifier: widget.semanticIdentifier,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

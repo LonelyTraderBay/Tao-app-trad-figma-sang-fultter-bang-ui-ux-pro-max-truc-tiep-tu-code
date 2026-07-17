@@ -86,7 +86,8 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-272 P2PTaxReportingPage',
+      semanticLabel: 'Báo cáo thuế P2P',
+      semanticIdentifier: 'SC-272',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

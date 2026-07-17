@@ -52,7 +52,8 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
         MediaQuery.paddingOf(context).bottom;
 
     return CrossModuleTabbedPageShell(
-      semanticLabel: 'SC-323 SmartAlertCenter',
+      semanticLabel: 'Trung tâm cảnh báo thông minh',
+      semanticIdentifier: 'SC-323',
       contentKey: SmartAlertCenter.contentKey,
       title: snapshot.title,
       onBack: () => context.go(snapshot.backRoute),

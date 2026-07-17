@@ -63,7 +63,8 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-204 MyArenaReportsPage',
+      semanticLabel: 'Báo cáo của tôi trong Open Arena',
+      semanticIdentifier: 'SC-204',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

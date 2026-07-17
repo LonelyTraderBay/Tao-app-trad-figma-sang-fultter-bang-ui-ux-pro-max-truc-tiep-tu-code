@@ -109,7 +109,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ClientCategorizationPage',
-      semanticLabel: 'SC-099 ClientCategorizationPage',
+      semanticLabel: 'Phân loại khách hàng theo quy định MiFID II',
     );
     expectFirstViewportVisible(
       tester,
@@ -130,7 +130,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ClientOptUpRequestPage',
-      semanticLabel: 'SC-099 ClientOptUpRequestPage',
+      semanticLabel:
+          'Yêu cầu nâng hạng lên khách hàng chuyên nghiệp (MiFID II)',
     );
     expectFirstViewportVisible(
       tester,

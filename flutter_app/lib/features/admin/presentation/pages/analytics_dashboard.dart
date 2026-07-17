@@ -57,7 +57,8 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
         MediaQuery.paddingOf(context).bottom;
 
     return AdminDashboardPageShell(
-      semanticLabel: 'SC-181 AnalyticsDashboard',
+      semanticLabel: 'Bảng phân tích dữ liệu',
+      semanticIdentifier: 'SC-181',
       scrollKey: AnalyticsDashboard.contentKey,
       scrollBottom: scrollBottom,
       header: VitHeader(

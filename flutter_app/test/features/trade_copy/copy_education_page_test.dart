@@ -88,7 +88,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-065 CopyEducationPage',
-      semanticLabel: 'SC-065 CopyEducationPage',
+      semanticLabel: 'Hướng dẫn Copy Trading',
     );
     expectActionableInFirstViewport(
       tester,

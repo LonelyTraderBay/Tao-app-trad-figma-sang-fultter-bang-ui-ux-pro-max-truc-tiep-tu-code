@@ -70,7 +70,8 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-152 PendingDepositsPage',
+      semanticLabel: 'Nạp tiền đang chờ xác nhận',
+      semanticIdentifier: 'SC-152',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

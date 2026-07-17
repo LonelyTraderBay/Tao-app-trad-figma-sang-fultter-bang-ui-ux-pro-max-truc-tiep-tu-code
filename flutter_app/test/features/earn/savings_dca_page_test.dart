@@ -72,7 +72,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-346 SavingsDCAPage',
-      semanticLabel: 'SC-346 SavingsDCAPage',
+      semanticLabel: 'DCA Tiết kiệm',
     );
     expectActionableInFirstViewport(
       tester,

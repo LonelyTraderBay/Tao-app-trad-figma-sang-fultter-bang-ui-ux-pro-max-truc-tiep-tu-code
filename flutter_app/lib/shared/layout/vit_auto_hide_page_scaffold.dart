@@ -21,6 +21,7 @@ class VitAutoHidePageScaffold extends StatelessWidget {
   const VitAutoHidePageScaffold({
     super.key,
     required this.semanticLabel,
+    this.semanticIdentifier,
     required this.header,
     required this.body,
     this.variant = VitPageVariant.flush,
@@ -29,6 +30,10 @@ class VitAutoHidePageScaffold extends StatelessWidget {
   });
 
   final String semanticLabel;
+
+  /// Internal screen code (e.g. `SC-007`) for tooling/debugging — see A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  final String? semanticIdentifier;
   final Widget header;
   final Widget body;
   final VitPageVariant variant;
@@ -40,6 +45,7 @@ class VitAutoHidePageScaffold extends StatelessWidget {
     return VitPageLayout(
       variant: variant,
       semanticLabel: semanticLabel,
+      semanticIdentifier: semanticIdentifier,
       child: Material(
         color: background,
         child: VitAutoHideHeaderScaffold(

@@ -59,7 +59,8 @@ class _PortfolioRiskAnalysisPageState
     final snapshot = ref.watch(tradePortfolioRiskAnalysisProvider);
     return VitTradeHubScaffold(
       title: 'Phân tích rủi ro',
-      semanticLabel: 'SC-078 PortfolioRiskAnalysisPage',
+      semanticLabel: 'Phân tích rủi ro',
+      semanticIdentifier: 'SC-078',
       contentKey: PortfolioRiskAnalysisPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

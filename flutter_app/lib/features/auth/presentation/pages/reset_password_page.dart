@@ -151,7 +151,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
     final challenge = ref.watch(passwordResetChallengeProvider);
 
     return VitPageLayout(
-      semanticLabel: 'SC-006 ResetPasswordPage',
+      semanticLabel: 'Đặt lại mật khẩu',
+      semanticIdentifier: 'SC-006',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Đặt lại mật khẩu',

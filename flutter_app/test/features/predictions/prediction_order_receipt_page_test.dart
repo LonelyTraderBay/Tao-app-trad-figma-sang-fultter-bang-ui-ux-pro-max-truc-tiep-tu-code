@@ -101,7 +101,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-035 PredictionOrderReceiptPage',
-      semanticLabel: 'SC-035 PredictionOrderReceiptPage',
+      semanticLabel: 'Chi tiết lệnh dự đoán: biên lai, phí và tiến trình',
     );
     expectFirstViewportVisible(
       tester,

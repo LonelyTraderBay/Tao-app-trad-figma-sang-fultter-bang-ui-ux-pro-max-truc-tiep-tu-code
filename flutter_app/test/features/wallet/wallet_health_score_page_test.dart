@@ -94,7 +94,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-151 WalletHealthScorePage',
-      semanticLabel: 'SC-151 WalletHealthScorePage',
+      semanticLabel: 'Điểm sức khỏe ví - tổng quan, bảo mật và đa dạng hóa',
     );
     expectFirstViewportVisible(
       tester,

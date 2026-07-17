@@ -188,7 +188,9 @@ class _QrAddressCard extends StatelessWidget {
             child: Semantics(
               button: true,
               liveRegion: copied,
-              label: copied ? 'Đã sao chép địa chỉ nạp' : 'Sao chép địa chỉ nạp',
+              label: copied
+                  ? 'Đã sao chép địa chỉ nạp'
+                  : 'Sao chép địa chỉ nạp',
               child: VitCtaButton(
                 key: DepositPage.copyAddressKey,
                 onPressed: onCopy,

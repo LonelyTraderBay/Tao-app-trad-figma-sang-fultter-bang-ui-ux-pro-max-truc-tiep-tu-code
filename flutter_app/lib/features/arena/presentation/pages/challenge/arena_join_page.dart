@@ -83,7 +83,8 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-191 ArenaJoinPage',
+      semanticLabel: 'Xác nhận tham gia thử thách trong Open Arena',
+      semanticIdentifier: 'SC-191',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -93,7 +93,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-039 PredictionEventCalendarPage',
-      semanticLabel: 'SC-039 PredictionEventCalendarPage',
+      semanticLabel:
+          'Lịch sự kiện dự đoán: theo dõi ngày đóng và các yếu tố tác động',
     );
     expectFirstViewportVisible(
       tester,

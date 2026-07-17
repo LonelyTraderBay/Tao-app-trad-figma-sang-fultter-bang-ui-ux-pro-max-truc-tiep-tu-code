@@ -51,14 +51,16 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
     if (snapshot.isNotFound) {
       return const VitPageLayout(
         variant: VitPageVariant.flush,
-        semanticLabel: 'SC-071 PreCopyAssessmentPage blank',
+        semanticLabel: 'Đánh giá rủi ro trước khi copy',
+        semanticIdentifier: 'SC-071',
         child: SizedBox.expand(),
       );
     }
 
     return VitTradeDetailScaffold(
       title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
-      semanticLabel: 'SC-071 PreCopyAssessmentPage',
+      semanticLabel: 'Đánh giá rủi ro trước khi copy',
+      semanticIdentifier: 'SC-071',
       contentKey: PreCopyAssessmentPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

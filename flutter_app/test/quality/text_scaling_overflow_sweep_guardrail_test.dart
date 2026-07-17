@@ -31,9 +31,7 @@ void main() {
       }
 
       if (failures.isNotEmpty) {
-        fail(
-          'Text-scaling (1.3x) overflow failures:\n${failures.join('\n')}',
-        );
+        fail('Text-scaling (1.3x) overflow failures:\n${failures.join('\n')}');
       }
     },
   );
@@ -75,7 +73,9 @@ Future<void> _scanRoute(
 
   if (errors.isNotEmpty) {
     failures.addAll(
-      errors.map((details) => '- ${route.name}: ${details.exceptionAsString()}'),
+      errors.map(
+        (details) => '- ${route.name}: ${details.exceptionAsString()}',
+      ),
     );
   }
 
@@ -98,10 +98,7 @@ final _priorityRoutes = [
   ),
   _PriorityRoute('Deposit', AppRoutePaths.walletDeposit),
   _PriorityRoute('Pending Deposits', AppRoutePaths.walletPendingDeposits),
-  _PriorityRoute(
-    'Portfolio Analytics',
-    AppRoutePaths.walletPortfolioAnalytics,
-  ),
+  _PriorityRoute('Portfolio Analytics', AppRoutePaths.walletPortfolioAnalytics),
   _PriorityRoute('Wallet Health', AppRoutePaths.walletHealthScore),
   _PriorityRoute('Dust Converter', AppRoutePaths.walletDustConverter),
   _PriorityRoute('Withdraw', AppRoutePaths.walletWithdraw),

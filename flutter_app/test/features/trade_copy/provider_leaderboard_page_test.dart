@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ProviderLeaderboardPage',
-      semanticLabel: 'SC-079 ProviderLeaderboardPage',
+      semanticLabel: 'Bảng xếp hạng provider',
     );
     expectFirstViewportVisible(
       tester,

@@ -94,7 +94,8 @@ class _StakingTransactionReportingPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-378 StakingTransactionReportingPage',
+      semanticLabel: 'Báo cáo giao dịch staking phục vụ khai thuế',
+      semanticIdentifier: 'SC-378',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

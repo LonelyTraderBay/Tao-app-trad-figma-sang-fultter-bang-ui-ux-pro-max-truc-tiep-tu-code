@@ -134,7 +134,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-185 ArenaStudioPage',
-      semanticLabel: 'SC-185 ArenaStudioPage',
+      semanticLabel: 'Tạo thử thách mới trong Arena Studio',
     );
     expectActionableInFirstViewport(
       tester,

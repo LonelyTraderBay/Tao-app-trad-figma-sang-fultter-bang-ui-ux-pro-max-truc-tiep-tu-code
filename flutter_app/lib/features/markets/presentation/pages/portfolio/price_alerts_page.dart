@@ -168,7 +168,8 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-014 PriceAlertsPage',
+      semanticLabel: 'Cảnh báo giá',
+      semanticIdentifier: 'SC-014',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

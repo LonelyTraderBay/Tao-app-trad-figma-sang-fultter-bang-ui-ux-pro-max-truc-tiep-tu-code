@@ -89,7 +89,8 @@ class _P2PPaymentMethodAddPageState
       title:
           'Thêm ${_type == P2PPaymentAddType.bank ? 'ngân hàng' : 'ví điện tử'}',
       subtitle: 'Thanh toán · P2P',
-      semanticLabel: 'SC-232 P2PPaymentMethodAddPage',
+      semanticLabel: 'Thêm phương thức thanh toán',
+      semanticIdentifier: 'SC-232',
       contentKey: P2PPaymentMethodAddPage.contentKey,
       shellRenderMode: mode,
       rhythm: VitPageRhythm.form,

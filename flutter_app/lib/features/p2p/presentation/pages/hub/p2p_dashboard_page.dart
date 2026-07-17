@@ -80,7 +80,8 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-274 P2PDashboardPage',
+      semanticLabel: 'Tổng quan P2P',
+      semanticIdentifier: 'SC-274',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

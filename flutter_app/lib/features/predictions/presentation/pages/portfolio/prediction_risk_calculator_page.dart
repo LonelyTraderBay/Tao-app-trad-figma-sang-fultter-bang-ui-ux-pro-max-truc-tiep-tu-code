@@ -131,7 +131,8 @@ class _PredictionRiskCalculatorPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-036 PredictionRiskCalculatorPage',
+      semanticLabel: 'Máy tính rủi ro dự đoán',
+      semanticIdentifier: 'SC-036',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

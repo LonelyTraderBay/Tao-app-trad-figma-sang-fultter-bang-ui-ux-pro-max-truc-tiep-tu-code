@@ -93,7 +93,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-294 SupportPage',
-      semanticLabel: 'SC-294 SupportPage',
+      semanticLabel: 'Hỗ trợ',
     );
     expectActionableInFirstViewport(
       tester,

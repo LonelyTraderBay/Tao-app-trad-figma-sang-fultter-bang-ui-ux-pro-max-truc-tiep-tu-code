@@ -51,7 +51,8 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
     return VitTradeHubScaffold(
       title: 'Trading Bots Guide',
       subtitle: 'Hướng dẫn chiến lược và thực hành bot',
-      semanticLabel: 'SC-131 BotGuidePage',
+      semanticLabel: 'Hướng dẫn sử dụng bot giao dịch',
+      semanticIdentifier: 'SC-131',
       contentKey: BotGuidePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

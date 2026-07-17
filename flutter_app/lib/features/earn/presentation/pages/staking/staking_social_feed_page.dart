@@ -59,7 +59,8 @@ class _StakingSocialFeedPageState extends ConsumerState<StakingSocialFeedPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-387 StakingSocialFeedPage',
+      semanticLabel: 'Bảng tin cộng đồng staking',
+      semanticIdentifier: 'SC-387',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

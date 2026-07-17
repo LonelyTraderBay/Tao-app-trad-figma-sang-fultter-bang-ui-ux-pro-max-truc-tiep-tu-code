@@ -67,7 +67,8 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
 
     return VitTradeDetailScaffold(
       title: 'Chi tiết lệnh',
-      semanticLabel: 'SC-051 OrderReceiptPage',
+      semanticLabel: 'Chi tiết lệnh giao dịch',
+      semanticIdentifier: 'SC-051',
       contentKey: OrderReceiptPage.contentKey,
       shellRenderMode: mode,
       bottomInset: scrollEndClearance,

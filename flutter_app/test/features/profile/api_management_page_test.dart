@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ApiManagementPage',
-      semanticLabel: 'SC-163 ApiManagementPage',
+      semanticLabel: 'Quản lý API',
     );
     expectFirstViewportVisible(
       tester,

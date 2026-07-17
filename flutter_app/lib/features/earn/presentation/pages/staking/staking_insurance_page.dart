@@ -75,7 +75,9 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-365 StakingInsurancePage',
+      semanticLabel:
+          'Bảo vệ Slashing — chọn gói bảo hiểm, quản lý vị thế và yêu cầu bồi thường',
+      semanticIdentifier: 'SC-365',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

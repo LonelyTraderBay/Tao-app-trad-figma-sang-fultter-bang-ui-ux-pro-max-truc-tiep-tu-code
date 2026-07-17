@@ -84,14 +84,16 @@ class _LaunchpadBridgeComparePageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-305 LaunchpadBridgeComparePage',
+      semanticLabel: 'So sánh route bridge trước khi chuyển',
+      semanticIdentifier: 'SC-305',
       child: Material(
         type: MaterialType.transparency,
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
               bottomInset: scrollTailReserve,
-              semanticLabel: 'SC-305 LaunchpadBridgeComparePage scroll surface',
+              semanticLabel: 'So sánh route bridge – vùng cuộn nội dung',
+              semanticIdentifier: 'SC-305',
               header: VitHeader(
                 title: snapshot.title,
                 subtitle: 'So sánh route bridge · Xác nhận trước khi chuyển',

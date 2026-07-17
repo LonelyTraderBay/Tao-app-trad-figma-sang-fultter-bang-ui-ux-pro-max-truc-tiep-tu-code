@@ -70,7 +70,8 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-224 P2PAdDetailPage',
+      semanticLabel: 'Chi tiết quảng cáo P2P',
+      semanticIdentifier: 'SC-224',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

@@ -56,7 +56,8 @@ class _DerivativesOverviewPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-018 DerivativesOverviewPage',
+      semanticLabel: 'Phái sinh',
+      semanticIdentifier: 'SC-018',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

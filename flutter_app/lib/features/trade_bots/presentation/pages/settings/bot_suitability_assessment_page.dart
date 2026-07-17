@@ -60,7 +60,8 @@ class _BotSuitabilityAssessmentPageState
     return VitTradeHubScaffold(
       title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
       subtitle: 'Đánh giá mức độ phù hợp với bot',
-      semanticLabel: 'SC-119 BotSuitabilityAssessmentPage',
+      semanticLabel: 'Đánh giá mức độ phù hợp trước khi dùng bot',
+      semanticIdentifier: 'SC-119',
       contentKey: _showResult
           ? BotSuitabilityAssessmentPage.resultContentKey
           : BotSuitabilityAssessmentPage.contentKey,

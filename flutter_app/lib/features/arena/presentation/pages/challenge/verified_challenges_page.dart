@@ -49,7 +49,9 @@ class VerifiedChallengesPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-195 VerifiedChallengesPage',
+      semanticLabel:
+          'Xem trước tính năng Thử thách đã xác minh - đang chờ duyệt tuân thủ và KYC',
+      semanticIdentifier: 'SC-195',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

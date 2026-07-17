@@ -150,7 +150,8 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-020 SocialSentimentPage',
+      semanticLabel: 'Tâm lý thị trường',
+      semanticIdentifier: 'SC-020',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

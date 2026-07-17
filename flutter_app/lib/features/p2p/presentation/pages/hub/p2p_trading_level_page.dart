@@ -46,7 +46,8 @@ class P2PTradingLevelPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-230 P2PTradingLevelPage',
+      semanticLabel: 'Cấp độ giao dịch P2P',
+      semanticIdentifier: 'SC-230',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

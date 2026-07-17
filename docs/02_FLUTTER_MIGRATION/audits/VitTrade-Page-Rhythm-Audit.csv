@@ -724,7 +724,7 @@ p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_dashboard_page.dart,
 p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_express_confirm_page.dart,standard,standard,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_guide_page.dart,standard,standard,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_notifications_settings_page.dart,standard,standard,0,,0,,0,0,pass
-p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_settings_page.dart,standard,standard,0,,1,section_header_missing_inner_gap:1,1,1,warn
+p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_settings_page.dart,standard,standard,0,,0,,1,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/pages/hub/p2p_trading_level_page.dart,standard,standard,0,,0,,1,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_identity_verification_page.dart,standard,form,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/pages/merchant/p2p_kyc_requirements_page.dart,form,form,0,,0,,0,0,pass
@@ -767,7 +767,7 @@ p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_ad_analytics_overv
 p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_ad_detail_amount_terms.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_ad_detail_merchant_info.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_create_ad_choice_chips.dart,standard,,0,,0,,0,0,pass
-p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_create_ad_page_sections.dart,standard,,0,,1,section_header_missing_inner_gap:1,2,1,warn
+p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_create_ad_page_sections.dart,standard,,0,,0,,2,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_create_ad_preview_badge.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_create_ad_preview_confirm.dart,standard,,0,,0,,0,0,pass
 p2p,flutter_app/lib/features/p2p/presentation/widgets/ads/p2p_create_ad_sections.dart,standard,,0,,0,,0,0,pass
@@ -1277,8 +1277,8 @@ trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/co
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/copy_performance_details.dart,standard,,0,,0,,0,0,pass
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/copy_performance_summary_tabs.dart,standard,,0,,0,,0,0,pass
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/performance_attribution_painters.dart,standard,,0,,0,,0,0,pass
-trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/performance_attribution_summary_tabs.dart,standard,standard,0,,1,section_header_missing_inner_gap:1,1,1,warn
-trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/performance_attribution_tabs.dart,standard,standard,0,,1,section_header_missing_inner_gap:3,3,3,warn
+trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/performance_attribution_summary_tabs.dart,standard,standard,0,,0,,1,0,pass
+trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/performance_attribution_tabs.dart,standard,standard,0,,0,,3,0,pass
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/portfolio_risk_analysis_page_common.dart,standard,,0,,0,,0,0,pass
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/analytics/portfolio_risk_analysis_page_sections.dart,standard,,0,,0,,1,0,pass
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/flow/copy_configuration_provider_capital_mode.dart,standard,,0,,0,,0,0,pass

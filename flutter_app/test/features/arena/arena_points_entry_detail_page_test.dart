@@ -81,7 +81,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-200 ArenaPointsEntryDetailPage',
-      semanticLabel: 'SC-200 ArenaPointsEntryDetailPage',
+      semanticLabel: 'Chi tiết giao dịch điểm Arena Points trong Open Arena',
     );
     expectActionableInFirstViewport(
       tester,

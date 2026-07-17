@@ -77,7 +77,8 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-257 P2PLoginHistoryPage',
+      semanticLabel: 'Lịch sử đăng nhập P2P',
+      semanticIdentifier: 'SC-257',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

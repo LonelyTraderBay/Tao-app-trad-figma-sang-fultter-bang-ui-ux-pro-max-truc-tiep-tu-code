@@ -28,7 +28,8 @@ class SavingsReceiptPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-332 SavingsReceiptPage',
+      semanticLabel: 'Biên nhận giao dịch tiết kiệm',
+      semanticIdentifier: 'SC-332',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

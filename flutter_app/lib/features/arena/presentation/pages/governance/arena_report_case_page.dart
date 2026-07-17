@@ -98,7 +98,8 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-202 ArenaReportCasePage',
+      semanticLabel: 'Chi tiết báo cáo an toàn trong Open Arena',
+      semanticIdentifier: 'SC-202',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

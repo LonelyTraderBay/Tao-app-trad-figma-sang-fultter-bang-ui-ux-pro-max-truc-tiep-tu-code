@@ -49,7 +49,8 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-235 P2PPaymentMethodCoolingPeriodPage',
+      semanticLabel: 'Thời gian chờ thanh toán P2P',
+      semanticIdentifier: 'SC-235',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

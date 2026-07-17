@@ -59,7 +59,8 @@ class _P2PPaymentMethodOwnershipPageState
     return VitP2PFlowScaffold(
       title: 'Xác minh sở hữu',
       subtitle: 'Thanh toán · P2P',
-      semanticLabel: 'SC-234 P2PPaymentMethodOwnershipPage',
+      semanticLabel: 'Xác minh sở hữu',
+      semanticIdentifier: 'SC-234',
       contentKey: P2PPaymentMethodOwnershipPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       rhythm: VitPageRhythm.form,

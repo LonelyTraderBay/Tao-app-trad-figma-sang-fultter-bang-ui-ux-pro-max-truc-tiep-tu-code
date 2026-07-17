@@ -67,7 +67,8 @@ class _ProviderLeaderboardPageState
 
     return VitTradeHubScaffold(
       title: 'Leaderboard',
-      semanticLabel: 'SC-079 ProviderLeaderboardPage',
+      semanticLabel: 'Bảng xếp hạng provider',
+      semanticIdentifier: 'SC-079',
       contentKey: ProviderLeaderboardPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

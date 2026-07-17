@@ -109,7 +109,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SettingsPage',
-      semanticLabel: 'SC-160 SettingsPage',
+      semanticLabel: 'Cài đặt tài khoản',
     );
     expectFirstViewportVisible(
       tester,

@@ -77,7 +77,9 @@ class _StakingProofOfReservesPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-380 StakingProofOfReservesPage',
+      semanticLabel:
+          'Bằng chứng dự trữ staking — minh bạch tài sản và kiểm toán độc lập',
+      semanticIdentifier: 'SC-380',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

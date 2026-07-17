@@ -82,7 +82,8 @@ class _StakingApiDocumentationPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-379 StakingAPIDocumentationPage',
+      semanticLabel: 'Tài liệu API stake — không lời khuyên đầu tư',
+      semanticIdentifier: 'SC-379',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

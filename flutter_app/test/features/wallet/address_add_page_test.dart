@@ -149,7 +149,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-143 AddressAddPage',
-      semanticLabel: 'SC-143 AddressAddPage',
+      semanticLabel: 'Thêm địa chỉ mới vào sổ địa chỉ ví',
     );
     expectActionableInFirstViewport(
       tester,

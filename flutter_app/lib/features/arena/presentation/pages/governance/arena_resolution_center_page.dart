@@ -45,7 +45,8 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-192 ArenaResolutionCenterPage',
+      semanticLabel: 'Trung tâm chốt kết quả thử thách trong Open Arena',
+      semanticIdentifier: 'SC-192',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

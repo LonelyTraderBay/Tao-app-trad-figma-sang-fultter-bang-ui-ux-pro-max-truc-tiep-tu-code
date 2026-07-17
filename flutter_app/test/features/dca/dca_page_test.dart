@@ -78,7 +78,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-169 DCAPage',
-      semanticLabel: 'SC-169 DCAPage',
+      semanticLabel: 'Mua tự động (DCA) – đầu tư định kỳ có kỷ luật',
     );
     expectFirstViewportVisible(
       tester,

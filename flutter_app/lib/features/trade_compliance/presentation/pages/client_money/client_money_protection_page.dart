@@ -55,7 +55,8 @@ class _ClientMoneyProtectionPageState
     return VitTradeHubScaffold(
       title: 'Client Money Protection',
       subtitle: 'CASS 7 Compliance',
-      semanticLabel: 'SC-102 ClientMoneyProtectionPage',
+      semanticLabel: 'Bảo vệ tiền của khách hàng theo quy định CASS 7',
+      semanticIdentifier: 'SC-102',
       contentKey: ClientMoneyProtectionPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,

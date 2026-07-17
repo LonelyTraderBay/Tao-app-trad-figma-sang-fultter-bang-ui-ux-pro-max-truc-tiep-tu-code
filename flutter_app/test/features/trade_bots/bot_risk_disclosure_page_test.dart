@@ -82,7 +82,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-118 BotRiskDisclosurePage',
-      semanticLabel: 'SC-118 BotRiskDisclosurePage',
+      semanticLabel: 'Công bố rủi ro khi sử dụng bot giao dịch',
     );
     expectFirstViewportVisible(
       tester,

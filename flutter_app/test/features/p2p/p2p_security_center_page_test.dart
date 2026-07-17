@@ -103,7 +103,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-253 P2PSecurityCenterPage',
-      semanticLabel: 'SC-253 P2PSecurityCenterPage',
+      semanticLabel: 'Trung tâm bảo mật P2P',
     );
     expectFirstViewportVisible(
       tester,
@@ -125,7 +125,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-404 P2PWhitelistModePage',
-      semanticLabel: 'SC-404 P2PWhitelistModePage',
+      semanticLabel: 'Chế độ danh sách trắng P2P',
     );
     expectFirstViewportVisible(
       tester,

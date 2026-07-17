@@ -90,7 +90,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-313 LaunchpadMultisigPage',
-      semanticLabel: 'SC-313 LaunchpadMultisigPage',
+      semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
     );
     expectActionableInFirstViewport(
       tester,

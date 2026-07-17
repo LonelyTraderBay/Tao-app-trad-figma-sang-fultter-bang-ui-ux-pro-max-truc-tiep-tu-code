@@ -105,7 +105,8 @@ class _PredictionMarketMakerPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-037 PredictionMarketMakerPage',
+      semanticLabel: 'Tạo lập thị trường dự đoán: cung cấp thanh khoản',
+      semanticIdentifier: 'SC-037',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

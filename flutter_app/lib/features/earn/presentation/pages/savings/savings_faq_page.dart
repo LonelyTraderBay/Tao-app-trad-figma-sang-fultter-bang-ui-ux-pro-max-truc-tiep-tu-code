@@ -64,7 +64,8 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-336 SavingsFAQPage',
+      semanticLabel: 'Câu hỏi thường gặp về Tiết kiệm',
+      semanticIdentifier: 'SC-336',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

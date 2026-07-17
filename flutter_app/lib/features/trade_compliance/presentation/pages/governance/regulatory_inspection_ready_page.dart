@@ -43,7 +43,8 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Regulatory Compliance',
       subtitle: 'Inspection Ready Dashboard',
-      semanticLabel: 'SC-116 RegulatoryInspectionReadyPage',
+      semanticLabel: 'Sẵn sàng thanh tra tuân thủ quy định',
+      semanticIdentifier: 'SC-116',
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       onBack: () => goBackOrFallback(

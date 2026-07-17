@@ -104,7 +104,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ArenaReportCasePage',
-      semanticLabel: 'SC-202 ArenaReportCasePage',
+      semanticLabel: 'Chi tiết báo cáo an toàn trong Open Arena',
     );
     expectFirstViewportVisible(
       tester,

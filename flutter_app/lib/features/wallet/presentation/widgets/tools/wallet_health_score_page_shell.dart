@@ -14,7 +14,8 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-151 WalletHealthScorePage',
+      semanticLabel: 'Điểm sức khỏe ví - tổng quan, bảo mật và đa dạng hóa',
+      semanticIdentifier: 'SC-151',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

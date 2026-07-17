@@ -77,11 +77,13 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-298 LaunchpadStakingPage',
+      semanticLabel: 'Stake token Launchpool và nhận phần thưởng',
+      semanticIdentifier: 'SC-298',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'SC-298 LaunchpadStakingPage scroll surface',
+          semanticLabel: 'Stake token Launchpool và nhận phần thưởng',
+          semanticIdentifier: 'SC-298',
           header: VitHeader(
             title: snapshot.title,
             subtitle: snapshot.subtitle,

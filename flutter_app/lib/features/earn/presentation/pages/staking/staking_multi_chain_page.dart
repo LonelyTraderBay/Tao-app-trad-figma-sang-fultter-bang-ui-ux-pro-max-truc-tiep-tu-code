@@ -57,7 +57,9 @@ class StakingMultiChainPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-367 StakingMultiChainPage',
+      semanticLabel:
+          'Danh mục stake đa chuỗi — theo dõi vị thế và lợi nhuận trên nhiều blockchain',
+      semanticIdentifier: 'SC-367',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

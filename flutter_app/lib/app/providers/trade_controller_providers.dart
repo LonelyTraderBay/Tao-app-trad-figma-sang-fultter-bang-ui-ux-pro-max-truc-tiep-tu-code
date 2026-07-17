@@ -44,11 +44,8 @@ final tradeOrdersHistoryControllerProvider =
       );
     });
 
-final tradeOrderControllerProvider =
-    Provider.autoDispose.family<
-      TradeOrderController,
-      TradeOrderControllerRequest
-    >((ref, request) {
+final tradeOrderControllerProvider = Provider.autoDispose
+    .family<TradeOrderController, TradeOrderControllerRequest>((ref, request) {
       final repository = ref.watch(tradeRepositoryProvider);
       return TradeOrderController(
         repository: repository,
@@ -99,11 +96,11 @@ final tradeMarginControllerProvider =
       );
     });
 
-final tradeFuturesOrderControllerProvider =
-    Provider.autoDispose.family<
-      TradeFuturesOrderController,
-      TradeFuturesOrderControllerRequest
-    >((ref, request) {
+final tradeFuturesOrderControllerProvider = Provider.autoDispose
+    .family<TradeFuturesOrderController, TradeFuturesOrderControllerRequest>((
+      ref,
+      request,
+    ) {
       final repository = ref.watch(tradeRepositoryProvider);
       return TradeFuturesOrderController(
         repository: repository,

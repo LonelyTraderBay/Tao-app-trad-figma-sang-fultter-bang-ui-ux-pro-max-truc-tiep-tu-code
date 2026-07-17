@@ -63,7 +63,8 @@ class _KYCPageState extends ConsumerState<KYCPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-159 KYCPage',
+      semanticLabel: 'Xác minh danh tính',
+      semanticIdentifier: 'SC-159',
       child: Material(
         color: _kycBackground,
         child: VitAutoHideHeaderScaffold(

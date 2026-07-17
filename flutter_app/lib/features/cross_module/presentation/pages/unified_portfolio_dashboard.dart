@@ -45,7 +45,8 @@ class _UnifiedPortfolioDashboardState
         MediaQuery.paddingOf(context).bottom;
 
     return CrossModuleTabbedPageShell(
-      semanticLabel: 'SC-321 UnifiedPortfolioDashboard',
+      semanticLabel: 'Danh mục đầu tư hợp nhất',
+      semanticIdentifier: 'SC-321',
       contentKey: UnifiedPortfolioDashboard.contentKey,
       title: snapshot.title,
       onBack: () => context.go(snapshot.backRoute),

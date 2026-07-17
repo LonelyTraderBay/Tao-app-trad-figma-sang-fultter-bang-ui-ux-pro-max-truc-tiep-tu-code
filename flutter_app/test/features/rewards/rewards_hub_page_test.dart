@@ -111,7 +111,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-319 RewardsHubPage',
-      semanticLabel: 'SC-319 RewardsHubPage',
+      semanticLabel: 'Trung tâm Phần thưởng',
     );
     expectActionableInFirstViewport(
       tester,

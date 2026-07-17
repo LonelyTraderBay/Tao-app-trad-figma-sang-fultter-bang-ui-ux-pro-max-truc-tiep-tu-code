@@ -40,7 +40,8 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
     return VitTradeHubScaffold(
       title: 'Target Market Definition',
       subtitle: snapshot.product.name,
-      semanticLabel: 'SC-101 TargetMarketDefinitionPage',
+      semanticLabel: 'Xác định thị trường mục tiêu sản phẩm',
+      semanticIdentifier: 'SC-101',
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       onBack: () => goBackOrFallback(

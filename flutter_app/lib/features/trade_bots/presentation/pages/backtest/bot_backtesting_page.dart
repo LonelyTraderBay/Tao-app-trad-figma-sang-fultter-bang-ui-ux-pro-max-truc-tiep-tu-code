@@ -74,7 +74,8 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
     return VitTradeDetailScaffold(
       title: 'Backtest Strategy',
       subtitle: 'Mô phỏng chiến lược trên dữ liệu lịch sử',
-      semanticLabel: 'SC-125 BotBacktestingPage',
+      semanticLabel: 'Kiểm thử chiến lược bot trên dữ liệu lịch sử',
+      semanticIdentifier: 'SC-125',
       contentKey: BotBacktestingPage.contentKey,
       shellRenderMode: mode,
       bottomInset: scrollEndClearance,

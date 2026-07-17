@@ -83,7 +83,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'BestExecutionReportsPage',
-      semanticLabel: 'SC-096 BestExecutionReportsPage',
+      semanticLabel: 'Báo cáo thực thi lệnh tốt nhất theo RTS 27/28',
     );
     expectFirstViewportVisible(
       tester,

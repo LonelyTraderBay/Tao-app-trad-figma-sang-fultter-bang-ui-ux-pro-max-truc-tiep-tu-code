@@ -67,7 +67,8 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-198 ArenaSafetyCenterPage',
+      semanticLabel: 'An toàn và quy tắc Arena - trung tâm an toàn Open Arena',
+      semanticIdentifier: 'SC-198',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

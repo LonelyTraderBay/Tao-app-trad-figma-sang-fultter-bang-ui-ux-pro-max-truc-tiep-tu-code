@@ -86,7 +86,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-256 P2PAntiPhishingCodePage',
-      semanticLabel: 'SC-256 P2PAntiPhishingCodePage',
+      semanticLabel: 'Mã chống lừa đảo P2P',
     );
     expectActionableInFirstViewport(
       tester,

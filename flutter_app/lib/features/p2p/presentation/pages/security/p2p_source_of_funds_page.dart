@@ -68,7 +68,8 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-269 P2PSourceOfFundsPage',
+      semanticLabel: 'Khai báo nguồn vốn P2P',
+      semanticIdentifier: 'SC-269',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

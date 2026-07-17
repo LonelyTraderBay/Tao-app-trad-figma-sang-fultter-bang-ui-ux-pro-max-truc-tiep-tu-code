@@ -31,12 +31,14 @@ String _dartExecutable() {
   final cacheIndex = normalized.indexOf(cacheMarker);
   if (cacheIndex >= 0) {
     final cacheRoot = normalized.substring(0, cacheIndex + cacheMarker.length);
-    return '${cacheRoot}dart-sdk/bin/dart.exe';
+    return '${cacheRoot}dart-sdk/bin/'
+        '${Platform.isWindows ? 'dart.exe' : 'dart'}';
   }
 
   final flutterRoot = Platform.environment['FLUTTER_ROOT'];
   if (flutterRoot != null && flutterRoot.isNotEmpty) {
-    return '$flutterRoot/bin/cache/dart-sdk/bin/dart.exe';
+    return '$flutterRoot/bin/cache/dart-sdk/bin/'
+        '${Platform.isWindows ? 'dart.exe' : 'dart'}';
   }
 
   return 'dart';

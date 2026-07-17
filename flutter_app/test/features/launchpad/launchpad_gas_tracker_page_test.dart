@@ -98,7 +98,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-311 LaunchpadGasTrackerPage',
-      semanticLabel: 'SC-311 LaunchpadGasTrackerPage',
+      semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
     );
     expectFirstViewportVisible(
       tester,

@@ -124,7 +124,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'TokenUnlocksPage',
-      semanticLabel: 'SC-024 TokenUnlocksPage',
+      semanticLabel: 'Mở khóa token',
     );
     expectFirstViewportVisible(
       tester,

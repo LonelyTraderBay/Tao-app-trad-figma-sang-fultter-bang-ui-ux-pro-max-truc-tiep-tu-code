@@ -100,7 +100,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'WalletMultiManagerPage',
-      semanticLabel: 'SC-148 WalletMultiManagerPage',
+      semanticLabel: 'Quản lý đa ví - kiểm soát địa chỉ và sao chép',
     );
     expectActionableInFirstViewport(
       tester,

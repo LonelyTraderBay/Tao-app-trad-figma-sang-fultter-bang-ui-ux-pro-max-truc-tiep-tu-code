@@ -59,7 +59,8 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-334 SavingsHistoryPage',
+      semanticLabel: 'Lịch sử Tiết kiệm',
+      semanticIdentifier: 'SC-334',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

@@ -69,7 +69,8 @@ class _BotPerformanceAnalyticsPageState
     return VitTradeHubScaffold(
       title: 'Performance Analytics',
       subtitle: 'Phân tích hiệu suất bot theo thời gian',
-      semanticLabel: 'SC-124 BotPerformanceAnalyticsPage',
+      semanticLabel: 'Phân tích hiệu suất bot theo khung thời gian',
+      semanticIdentifier: 'SC-124',
       contentKey: BotPerformanceAnalyticsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       activeProductId: 'bots',

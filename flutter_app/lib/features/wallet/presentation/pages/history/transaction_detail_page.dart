@@ -70,7 +70,8 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
     return VitWalletDetailScaffold(
       title: 'Chi tiết giao dịch',
       subtitle: 'Lịch sử · Wallet',
-      semanticLabel: 'SC-141 TransactionDetailPage',
+      semanticLabel: 'Chi tiết giao dịch',
+      semanticIdentifier: 'SC-141',
       contentKey: TransactionDetailPage.contentKey,
       contentGap: VitContentGap.tight,
       rhythm: VitPageRhythm.standard,

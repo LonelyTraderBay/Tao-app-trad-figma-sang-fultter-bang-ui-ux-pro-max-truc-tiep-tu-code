@@ -21,7 +21,8 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-021 PortfolioTrackerPage',
+      semanticLabel: 'Theo dõi danh mục',
+      semanticIdentifier: 'SC-021',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

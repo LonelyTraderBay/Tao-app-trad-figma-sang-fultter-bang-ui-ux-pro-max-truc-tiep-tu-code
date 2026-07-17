@@ -66,7 +66,8 @@ class _StakingAuditReportsPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-374 StakingAuditReportsPage',
+      semanticLabel: 'Báo cáo kiểm toán độc lập — tham khảo',
+      semanticIdentifier: 'SC-374',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

@@ -77,7 +77,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'RIYCalculatorPage',
-      semanticLabel: 'SC-106 RIYCalculatorPage',
+      semanticLabel: 'Máy tính mức giảm lợi suất do chi phí (RIY)',
     );
     expectFirstViewportVisible(
       tester,

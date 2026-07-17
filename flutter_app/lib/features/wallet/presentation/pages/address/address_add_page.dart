@@ -90,7 +90,8 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-143 AddressAddPage',
+      semanticLabel: 'Thêm địa chỉ mới vào sổ địa chỉ ví',
+      semanticIdentifier: 'SC-143',
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(

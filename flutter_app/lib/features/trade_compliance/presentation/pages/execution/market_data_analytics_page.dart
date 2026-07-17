@@ -61,7 +61,8 @@ class _MarketDataAnalyticsPageState
     return VitTradeHubScaffold(
       title: 'Phân tích thị trường',
       subtitle: 'Dữ liệu · Thanh khoản',
-      semanticLabel: 'SC-089 MarketDataAnalyticsPage',
+      semanticLabel: 'Phân tích thị trường: dữ liệu và thanh khoản',
+      semanticIdentifier: 'SC-089',
       contentKey: MarketDataAnalyticsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

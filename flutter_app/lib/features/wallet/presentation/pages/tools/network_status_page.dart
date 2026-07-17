@@ -132,7 +132,8 @@ class _NetworkStatusPageState extends ConsumerState<NetworkStatusPage> {
     final bottomInset = _networkScrollBottomInset(context, mode);
 
     return VitAutoHidePageScaffold(
-      semanticLabel: 'SC-155 NetworkStatusPage',
+      semanticLabel: 'Trạng thái mạng - phí, độ trễ và tắc nghẽn',
+      semanticIdentifier: 'SC-155',
       header: VitHeader(
         title: 'Tr\u1EA1ng th\u00E1i m\u1EA1ng',
         showBack: true,

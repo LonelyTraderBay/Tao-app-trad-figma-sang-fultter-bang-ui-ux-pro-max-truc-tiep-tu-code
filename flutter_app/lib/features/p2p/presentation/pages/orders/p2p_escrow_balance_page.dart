@@ -86,7 +86,8 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
     }
 
     return VitP2PFlowScaffold(
-      semanticLabel: 'SC-245 P2PEscrowBalancePage',
+      semanticLabel: 'Số dư ký quỹ Escrow',
+      semanticIdentifier: 'SC-245',
       title: snapshot.title,
       subtitle: snapshot.subtitle,
       onBack: () => context.go(snapshot.parentRoute),

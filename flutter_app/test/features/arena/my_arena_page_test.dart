@@ -131,7 +131,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'Profile MyArenaPage',
-      semanticLabel: 'SC-168 MyArenaPage',
+      semanticLabel:
+          'Sân chơi của tôi - quản lý phòng, thử thách đã tham gia và lịch sử trong Open Arena',
     );
     expectActionableInFirstViewport(
       tester,
@@ -149,7 +150,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'Arena MyArenaPage',
-      semanticLabel: 'SC-205 MyArenaPage',
+      semanticLabel:
+          'Sân chơi của tôi - quản lý phòng, thử thách đã tham gia và lịch sử trong Open Arena',
     );
     expectActionableInFirstViewport(
       tester,

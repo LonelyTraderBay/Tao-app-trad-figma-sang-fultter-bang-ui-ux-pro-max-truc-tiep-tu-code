@@ -64,7 +64,8 @@ class _PerformanceAttributionPageState
 
     return VitTradeDetailScaffold(
       title: 'Phân tích hiệu suất',
-      semanticLabel: 'SC-075 PerformanceAttributionPage',
+      semanticLabel: 'Phân bổ hiệu suất',
+      semanticIdentifier: 'SC-075',
       contentKey: PerformanceAttributionPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

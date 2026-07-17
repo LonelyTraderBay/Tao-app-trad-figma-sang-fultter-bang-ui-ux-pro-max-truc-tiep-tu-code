@@ -65,7 +65,8 @@ class _PredictionsGlobalActivityPageState
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-034 PredictionsGlobalActivityPage',
+      semanticLabel: 'Hoạt động giao dịch dự đoán toàn cầu',
+      semanticIdentifier: 'SC-034',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

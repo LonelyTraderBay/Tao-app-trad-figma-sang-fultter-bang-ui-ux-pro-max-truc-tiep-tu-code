@@ -103,7 +103,8 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
 
     return VitTradeSimpleShell(
       title: 'Convert / Swap',
-      semanticLabel: 'SC-056 ConvertPage',
+      semanticLabel: 'Chuyển đổi tài sản (Convert)',
+      semanticIdentifier: 'SC-056',
       contentKey: ConvertPage.contentKey,
       shellRenderMode: mode,
       showBack: true,

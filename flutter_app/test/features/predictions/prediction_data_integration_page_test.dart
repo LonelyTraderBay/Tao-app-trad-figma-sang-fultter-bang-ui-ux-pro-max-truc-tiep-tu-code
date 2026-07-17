@@ -63,7 +63,8 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-043 PredictionDataIntegrationPage',
-      semanticLabel: 'SC-043 PredictionDataIntegrationPage',
+      semanticLabel:
+          'Tích hợp dữ liệu dự đoán: nguồn dữ liệu, khóa API và webhook',
     );
     expectFirstViewportVisible(
       tester,

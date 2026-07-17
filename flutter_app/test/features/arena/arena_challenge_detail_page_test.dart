@@ -89,7 +89,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'ArenaChallengeDetailPage',
-      semanticLabel: 'SC-190 ArenaChallengeDetailPage',
+      semanticLabel: 'Chi tiết thử thách trong Open Arena',
     );
     expectFirstViewportVisible(
       tester,

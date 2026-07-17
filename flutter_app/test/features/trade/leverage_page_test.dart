@@ -108,7 +108,7 @@ void main() {
     expectRouteSemanticInFirstViewport(
       tester,
       routeName: 'SC-058 LeveragePage',
-      semanticLabel: 'SC-058 LeveragePage',
+      semanticLabel: 'Điều chỉnh đòn bẩy giao dịch Futures',
     );
     expectFirstViewportVisible(
       tester,

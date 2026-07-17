@@ -77,7 +77,8 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
         MediaQuery.paddingOf(context).bottom;
 
     return VitP2PFlowScaffold(
-      semanticLabel: 'SC-246 P2PEscrowDetailPage',
+      semanticLabel: 'Chi tiết Escrow',
+      semanticIdentifier: 'SC-246',
       title: 'Chi tiết Escrow',
       subtitle: 'Escrow · P2P',
       onBack: () => context.go(snapshot.parentRoute),

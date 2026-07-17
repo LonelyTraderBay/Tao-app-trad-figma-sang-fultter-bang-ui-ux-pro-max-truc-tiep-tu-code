@@ -27,7 +27,8 @@ class ReferralFriendDetailPage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-289 ReferralFriendDetailPage',
+      semanticLabel: 'Chi tiết bạn bè',
+      semanticIdentifier: 'SC-289',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
