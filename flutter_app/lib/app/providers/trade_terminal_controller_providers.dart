@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/data/providers/trade_repository_provider.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/domain/repositories/spot_trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/controllers/trade_controller_models.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
 
 /// Shared read-model used by advanced terminal demos (chart / quality / etc.).
 final tradeReadModelControllerProvider = Provider<SpotTradeRepository>((ref) {

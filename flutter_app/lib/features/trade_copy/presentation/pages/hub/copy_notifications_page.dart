@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
 
 part '../../widgets/hub/copy_notifications_page_sections.dart';
 part '../../widgets/hub/copy_notifications_page_common.dart';

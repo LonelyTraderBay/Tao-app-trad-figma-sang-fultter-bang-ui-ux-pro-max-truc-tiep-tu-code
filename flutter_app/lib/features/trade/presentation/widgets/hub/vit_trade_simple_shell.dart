@@ -4,7 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 

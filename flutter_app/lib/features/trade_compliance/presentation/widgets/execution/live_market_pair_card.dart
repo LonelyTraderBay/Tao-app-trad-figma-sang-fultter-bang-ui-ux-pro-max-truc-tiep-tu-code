@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/widgets/execution/live_market_common_widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/domain/entities/trade_compliance_entities.dart';
 
 class LiveMarketPairCard extends StatelessWidget {
   const LiveMarketPairCard({super.key, required this.snapshot});

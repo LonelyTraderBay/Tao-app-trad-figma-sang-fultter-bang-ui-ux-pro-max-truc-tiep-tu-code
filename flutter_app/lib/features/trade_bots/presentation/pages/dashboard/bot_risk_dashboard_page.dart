@@ -15,10 +15,10 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
 part '../../widgets/dashboard/bot_risk_dashboard_score.dart';
 part '../../widgets/dashboard/bot_risk_dashboard_metrics.dart';

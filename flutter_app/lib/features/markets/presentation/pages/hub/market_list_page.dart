@@ -31,21 +31,14 @@ class MarketListPage extends ConsumerStatefulWidget {
   ConsumerState<MarketListPage> createState() => _MarketListPageState();
 }
 
+/// PERF-HN4: query/category/sort/favoriteIds sống ở
+/// `marketListStateControllerProvider` (Notifier, một nguồn sự thật) —
+/// trang chỉ giữ `TextEditingController` (bắt buộc cho `VitSearchBar`) và
+/// `_showSort` (toggle hiển thị bảng sắp xếp — UI ephemeral thuần, không
+/// phải state nghiệp vụ nên không cần đưa vào Notifier).
 class _MarketListPageState extends ConsumerState<MarketListPage> {
   final _searchController = TextEditingController();
-
-  late Set<String> _favoriteIds;
-  String _category = 'Tất cả';
-  String _sort = 'default';
   bool _showSort = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _favoriteIds = {
-      ...ref.read(marketControllerProvider).getMarketList().watchlist,
-    };
-  }
 
   @override
   void dispose() {
@@ -53,69 +46,38 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
     super.dispose();
   }
 
-  void _setCategory(String value) {
-    setState(() => _category = value);
-  }
-
-  void _setSort(String value) {
-    setState(() {
-      _sort = value;
-      _showSort = false;
-    });
-  }
-
-  void _toggleFavorite(String id) {
-    setState(() {
-      if (_favoriteIds.contains(id)) {
-        _favoriteIds.remove(id);
-      } else {
-        _favoriteIds.add(id);
-      }
-    });
-  }
-
   void _go(String path) {
     context.go(path);
   }
 
-  List<MarketPair> _filteredPairs(List<MarketPair> pairs) {
-    final query = _searchController.text.trim().toLowerCase();
-    Iterable<MarketPair> list = pairs;
-
-    if (query.isNotEmpty) {
-      list = list.where((pair) {
-        return pair.symbol.toLowerCase().contains(query) ||
-            pair.baseAsset.toLowerCase().contains(query);
-      });
-    }
-
-    if (_category != 'Tất cả') {
-      list = list.where((pair) => pair.category == _category);
-    }
-
-    final sorted = list.toList();
-    switch (_sort) {
-      case 'price_desc':
-        sorted.sort((a, b) => b.price.compareTo(a.price));
-      case 'price_asc':
-        sorted.sort((a, b) => a.price.compareTo(b.price));
-      case 'change_desc':
-        sorted.sort((a, b) => b.change24h.compareTo(a.change24h));
-      case 'change_asc':
-        sorted.sort((a, b) => a.change24h.compareTo(b.change24h));
-      case 'volume_desc':
-        sorted.sort((a, b) => b.volume24h.compareTo(a.volume24h));
-      case 'default':
-      default:
-        break;
-    }
-
-    return sorted;
+  void _resetFilters() {
+    _searchController.clear();
+    ref.read(marketListStateControllerProvider.notifier).resetFilters();
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketControllerProvider).getMarketList();
+    // `snapshot` giữ nguyên tham chiếu suốt phiên (Notifier chỉ gọi
+    // getMarketList() một lần trong build()) nên select này không kích
+    // rebuild khi query/category/sort/favoriteIds đổi.
+    final snapshot = ref.watch(
+      marketListStateControllerProvider.select((state) => state.snapshot),
+    );
+    final category = ref.watch(
+      marketListStateControllerProvider.select((state) => state.category),
+    );
+    final sort = ref.watch(
+      marketListStateControllerProvider.select((state) => state.sort),
+    );
+    // Chỉ theo dõi phần "có/không có từ khóa" — tránh rebuild toàn trang ở
+    // MỖI ký tự gõ vào ô tìm kiếm (chỉ đổi khi qua ranh giới rỗng/không rỗng).
+    final searchActive = ref.watch(
+      marketListStateControllerProvider.select(
+        (state) => state.query.trim().isNotEmpty,
+      ),
+    );
+    final notifier = ref.read(marketListStateControllerProvider.notifier);
+
     final shellRenderMode = widget.shellRenderMode ?? defaultShellRenderMode();
     final nativeShell = !shellRenderMode.usesVisualQaFrame;
     final bottomChrome = shellRenderMode.usesVisualQaFrame
@@ -127,10 +89,8 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
         (nativeShell
             ? MarketsSpacingTokens.marketNativeBottomExtra
             : MarketsSpacingTokens.marketVisualBottomExtra);
-    final filtered = _filteredPairs(snapshot.marketPairs);
-    final visiblePairs = filtered.take(8).toList();
-    final searchActive = _searchController.text.trim().isNotEmpty;
-    final showMarketSummary = !searchActive && _category == 'Tất cả';
+    final showMarketSummary =
+        !searchActive && category == snapshot.screenFilters.defaultCategory;
 
     return VitPageLayout(
       variant: nativeShell ? VitPageVariant.flush : VitPageVariant.defaultPage,
@@ -159,22 +119,25 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
                   controller: _searchController,
                   placeholder: 'Tìm kiếm BTC, ETH...',
                   variant: VitSearchBarVariant.compact,
-                  filterActive: _showSort || _sort != 'default',
+                  filterActive: _showSort || sort != 'default',
                   filterInline: true,
-                  onChanged: (_) => setState(() {}),
-                  onClear: () => setState(() {}),
+                  onChanged: notifier.setQuery,
+                  onClear: () => notifier.setQuery(''),
                   onFilterTap: () => setState(() => _showSort = !_showSort),
                 ),
                 if (_showSort)
                   MarketListSortSheet(
                     sortOptions: snapshot.screenFilters.sortOptions,
-                    activeSort: _sort,
-                    onSelected: _setSort,
+                    activeSort: sort,
+                    onSelected: (value) {
+                      notifier.setSort(value);
+                      setState(() => _showSort = false);
+                    },
                   ),
                 MarketListCategoryTabs(
                   categories: snapshot.screenFilters.categories,
-                  activeCategory: _category,
-                  onSelected: _setCategory,
+                  activeCategory: category,
+                  onSelected: notifier.setCategory,
                 ),
                 if (showMarketSummary) ...[
                   MarketListTopMovers(pairs: snapshot.marketPairs),
@@ -183,35 +146,62 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
                 MarketListColumnHeader(
                   lastUpdatedLabel: snapshot.lastUpdatedLabel,
                 ),
-                if (filtered.isEmpty)
-                  VitEmptyState(
-                    icon: Icons.search_rounded,
-                    title: searchActive
-                        ? 'Không tìm thấy "${_searchController.text.trim()}"'
-                        : 'Không có kết quả',
-                    message: 'Thử thay đổi bộ lọc hoặc tìm kiếm từ khóa khác',
-                    actionLabel: 'Xóa bộ lọc',
-                    onAction: () {
-                      setState(() {
-                        _searchController.clear();
-                        _category = 'Tất cả';
-                        _sort = 'default';
-                      });
-                    },
-                  )
-                else
-                  MarketListPairList(
-                    pairs: visiblePairs,
-                    favoriteIds: _favoriteIds,
-                    onFavoriteToggle: _toggleFavorite,
-                    onNavigate: _go,
-                  ),
+                _MarketListPairsSection(
+                  onNavigate: _go,
+                  onResetFilters: _resetFilters,
+                ),
                 const MarketListDiscoverMoreSection(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// PERF-HN4 leaf: chỉ watch `visiblePairs`/`favoriteIds` (và `query` khi
+/// rỗng để dựng thông báo trống) — toggle yêu thích hay gõ tìm kiếm chỉ
+/// rebuild widget này, không rebuild cả `MarketListPage`.
+class _MarketListPairsSection extends ConsumerWidget {
+  const _MarketListPairsSection({
+    required this.onNavigate,
+    required this.onResetFilters,
+  });
+
+  final ValueChanged<String> onNavigate;
+  final VoidCallback onResetFilters;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final visiblePairs = ref.watch(
+      marketListStateControllerProvider.select((state) => state.visiblePairs),
+    );
+    final favoriteIds = ref.watch(
+      marketListStateControllerProvider.select((state) => state.favoriteIds),
+    );
+    final notifier = ref.read(marketListStateControllerProvider.notifier);
+
+    if (visiblePairs.isEmpty) {
+      final query = ref.watch(
+        marketListStateControllerProvider.select((state) => state.query.trim()),
+      );
+      return VitEmptyState(
+        icon: Icons.search_rounded,
+        title: query.isNotEmpty
+            ? 'Không tìm thấy "$query"'
+            : 'Không có kết quả',
+        message: 'Thử thay đổi bộ lọc hoặc tìm kiếm từ khóa khác',
+        actionLabel: 'Xóa bộ lọc',
+        onAction: onResetFilters,
+      );
+    }
+
+    return MarketListPairList(
+      pairs: visiblePairs,
+      favoriteIds: favoriteIds,
+      onFavoriteToggle: notifier.toggleFavorite,
+      onNavigate: onNavigate,
     );
   }
 }

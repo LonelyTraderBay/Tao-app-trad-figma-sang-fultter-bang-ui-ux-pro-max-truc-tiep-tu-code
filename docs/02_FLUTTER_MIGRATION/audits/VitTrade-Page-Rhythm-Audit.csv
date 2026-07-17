@@ -1050,7 +1050,6 @@ trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_expo
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,standard,,0,,0,,0,0,pass
-trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_product_navigation.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,standard,,0,,0,,0,0,pass
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,standard,,0,,0,,0,0,pass

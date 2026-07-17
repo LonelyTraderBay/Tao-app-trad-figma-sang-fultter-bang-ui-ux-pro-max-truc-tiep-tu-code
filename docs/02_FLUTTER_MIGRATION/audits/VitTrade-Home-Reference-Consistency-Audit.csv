@@ -1178,7 +1178,6 @@ trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_hi
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,0,0,0,0,0,0,0,0,no,-
-trade,feature_widget,flutter_app/lib/features/trade/presentation/widgets/hub/trade_product_navigation.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,0,0,0,0,0,0,0,0,no,-
 trade,root_page,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook
 trade,feature_widget,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,0,0,0,0,0,0,0,0,no,-

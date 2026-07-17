@@ -6,7 +6,6 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_common.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_overview.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart';
@@ -15,7 +14,8 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
 
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});

@@ -9,6 +9,26 @@ import 'package:flutter_test/flutter_test.dart';
 /// key (e.g. a mutable draft class) does.
 const _safeKeyTypes = {'String', 'int', 'double', 'num', 'bool'};
 
+/// PERF-HN2 (c): family-key autoDispose guardrail phải quét cả composition
+/// root (`lib/app/providers`, không đệ quy — layout hiện tại phẳng) LẪN
+/// từng feature's own `data/providers/*.dart` (STATE-S26 đã tách repository
+/// providers ra khỏi `app/providers` cho một số feature — xem AGENTS.md
+/// "Architecture"). Đo thực tế (2026-07-17): quét mở rộng không lộ vi phạm
+/// nào (`grep -rn '\.family[<(]' lib/features/**/data/providers/*.dart` =
+/// 0 kết quả) — không cần allowlist thêm, drift ghi nhận trong báo cáo
+/// PERF-HN2 là "đã phủ đủ, không cần sửa gì".
+Iterable<File> _providerFiles() sync* {
+  yield* Directory('lib/app/providers').listSync().whereType<File>();
+  for (final file in Directory(
+    'lib/features',
+  ).listSync(recursive: true).whereType<File>()) {
+    final path = file.path.replaceAll('\\', '/');
+    if (path.endsWith('.dart') && path.contains('/data/providers/')) {
+      yield file;
+    }
+  }
+}
+
 void main() {
   group('state management guardrails', () {
     test('Provider.family with a non-scalar key uses autoDispose', () {
@@ -37,9 +57,7 @@ void main() {
       };
 
       final violations = <String>[];
-      for (final file in Directory(
-        'lib/app/providers',
-      ).listSync().whereType<File>()) {
+      for (final file in _providerFiles()) {
         if (!file.path.endsWith('.dart')) continue;
         final source = file.readAsStringSync();
         final path = file.path.replaceAll('\\', '/');

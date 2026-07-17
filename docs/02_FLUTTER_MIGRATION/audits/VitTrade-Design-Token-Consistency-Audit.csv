@@ -1389,7 +1389,6 @@ feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_hi
 feature_widget,flutter_app/lib/features/trade/presentation/pages/hub/trade_history_export_page.dart,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/trade/presentation/pages/hub/trade_page.dart,flutter_app/lib/features/trade/presentation/widgets/hub/trade_page_state.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_product_navigation.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/trade/presentation/pages/hub/trade_settings_page.dart,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: orderbook

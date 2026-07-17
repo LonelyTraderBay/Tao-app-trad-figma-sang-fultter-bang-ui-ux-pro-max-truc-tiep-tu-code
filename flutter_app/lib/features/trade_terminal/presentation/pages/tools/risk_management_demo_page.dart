@@ -15,8 +15,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_compliance_hero.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
 
 part '../../widgets/tools/risk_management_overview.dart';
 part '../../widgets/tools/risk_management_tabs.dart';

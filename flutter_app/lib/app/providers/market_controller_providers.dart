@@ -221,3 +221,151 @@ final marketPriceAlertsStateControllerProvider =
       MarketPriceAlertsStateController,
       MarketPriceAlertsViewState
     >(MarketPriceAlertsStateController.new);
+
+/// PERF-HN4: view-state bất biến của Danh sách thị trường (SC-008) —
+/// query/category/sort/favoriteIds sống ở Notifier (một nguồn sự thật).
+/// `visiblePairs` được lọc + sắp xếp + memoize NGAY khi input đổi (trong
+/// `copyWithFilters`), KHÔNG tính lại mỗi lần widget build().
+final class MarketListViewState {
+  const MarketListViewState({
+    required this.snapshot,
+    required this.query,
+    required this.category,
+    required this.sort,
+    required this.favoriteIds,
+    required this.visiblePairs,
+  });
+
+  factory MarketListViewState.fromSnapshot(MarketListSnapshot snapshot) {
+    return MarketListViewState._recomputed(
+      snapshot: snapshot,
+      query: '',
+      category: snapshot.screenFilters.defaultCategory,
+      sort: snapshot.screenFilters.defaultSort,
+      favoriteIds: Set<String>.unmodifiable(snapshot.watchlist),
+    );
+  }
+
+  final MarketListSnapshot snapshot;
+  final String query;
+  final String category;
+  final String sort;
+  final Set<String> favoriteIds;
+  final List<MarketPair> visiblePairs;
+
+  static const _visibleLimit = 8;
+
+  static MarketListViewState _recomputed({
+    required MarketListSnapshot snapshot,
+    required String query,
+    required String category,
+    required String sort,
+    required Set<String> favoriteIds,
+  }) {
+    final normalizedQuery = query.trim().toLowerCase();
+    Iterable<MarketPair> list = snapshot.marketPairs;
+
+    if (normalizedQuery.isNotEmpty) {
+      list = list.where((pair) {
+        return pair.symbol.toLowerCase().contains(normalizedQuery) ||
+            pair.baseAsset.toLowerCase().contains(normalizedQuery);
+      });
+    }
+    if (category != snapshot.screenFilters.defaultCategory) {
+      list = list.where((pair) => pair.category == category);
+    }
+
+    final sorted = list.toList();
+    switch (sort) {
+      case 'price_desc':
+        sorted.sort((a, b) => b.price.compareTo(a.price));
+      case 'price_asc':
+        sorted.sort((a, b) => a.price.compareTo(b.price));
+      case 'change_desc':
+        sorted.sort((a, b) => b.change24h.compareTo(a.change24h));
+      case 'change_asc':
+        sorted.sort((a, b) => a.change24h.compareTo(b.change24h));
+      case 'volume_desc':
+        sorted.sort((a, b) => b.volume24h.compareTo(a.volume24h));
+      case 'default':
+      default:
+        break;
+    }
+
+    return MarketListViewState(
+      snapshot: snapshot,
+      query: query,
+      category: category,
+      sort: sort,
+      favoriteIds: favoriteIds,
+      visiblePairs: List.unmodifiable(sorted.take(_visibleLimit)),
+    );
+  }
+
+  MarketListViewState copyWithFilters({
+    String? query,
+    String? category,
+    String? sort,
+    Set<String>? favoriteIds,
+  }) {
+    return MarketListViewState._recomputed(
+      snapshot: snapshot,
+      query: query ?? this.query,
+      category: category ?? this.category,
+      sort: sort ?? this.sort,
+      favoriteIds: favoriteIds ?? this.favoriteIds,
+    );
+  }
+}
+
+/// PERF-HN4 (khuôn MarketWatchlistStateController): build() seed từ repo,
+/// method setQuery/setCategory/setSort/toggleFavorite mutate
+/// `state = state.copyWithFilters(...)` — lọc/sắp xếp tính TRONG notifier,
+/// không trong build() của widget. KHÔNG autoDispose — trạng thái tìm
+/// kiếm/lọc/yêu thích của Danh sách thị trường giữ nguyên khi điều hướng
+/// đi/về trong phiên.
+final class MarketListStateController extends Notifier<MarketListViewState> {
+  @override
+  MarketListViewState build() {
+    return MarketListViewState.fromSnapshot(
+      ref.watch(marketControllerProvider).getMarketList(),
+    );
+  }
+
+  void setQuery(String value) {
+    if (value == state.query) return;
+    state = state.copyWithFilters(query: value);
+  }
+
+  void setCategory(String value) {
+    if (value == state.category) return;
+    state = state.copyWithFilters(category: value);
+  }
+
+  void setSort(String value) {
+    if (value == state.sort) return;
+    state = state.copyWithFilters(sort: value);
+  }
+
+  void toggleFavorite(String id) {
+    final next = Set<String>.of(state.favoriteIds);
+    if (!next.remove(id)) next.add(id);
+    state = state.copyWithFilters(favoriteIds: Set.unmodifiable(next));
+  }
+
+  /// Xóa bộ lọc: đưa query/category/sort về mặc định. Giữ nguyên
+  /// favoriteIds — khớp hành vi trang cũ (nút "Xóa bộ lọc" không đụng tới
+  /// danh sách yêu thích).
+  void resetFilters() {
+    state = state.copyWithFilters(
+      query: '',
+      category: state.snapshot.screenFilters.defaultCategory,
+      sort: state.snapshot.screenFilters.defaultSort,
+    );
+  }
+}
+
+final marketListStateControllerProvider =
+    NotifierProvider<MarketListStateController, MarketListViewState>(
+      MarketListStateController.new,
+    );

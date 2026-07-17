@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_body_review_widgets.dart';

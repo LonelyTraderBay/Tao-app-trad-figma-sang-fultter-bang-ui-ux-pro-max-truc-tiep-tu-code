@@ -12,9 +12,9 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_copy_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
 
 part '../../widgets/hub/copy_settings_modes.dart';
 part '../../widgets/hub/copy_settings_controls.dart';

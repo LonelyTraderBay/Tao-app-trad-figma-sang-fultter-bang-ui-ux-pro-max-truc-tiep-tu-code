@@ -13,9 +13,9 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_compliance_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_compliance_section.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/domain/entities/trade_compliance_entities.dart';
 
 part '../../widgets/governance/regulatory_inspection_ready_page_sections.dart';
 part '../../widgets/governance/regulatory_inspection_ready_page_common.dart';

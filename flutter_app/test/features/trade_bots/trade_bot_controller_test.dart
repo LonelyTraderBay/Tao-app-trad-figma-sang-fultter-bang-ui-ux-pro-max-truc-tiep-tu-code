@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade_bots/presentation/controllers/trade_bots_controller_models.dart';
 
 void main() {
   test(

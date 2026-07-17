@@ -16,12 +16,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_terminal_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_terminal_header.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
 
 part '../../widgets/tools/advanced_chart_header_toolbar.dart';
 part '../../widgets/tools/advanced_chart_area_actions.dart';

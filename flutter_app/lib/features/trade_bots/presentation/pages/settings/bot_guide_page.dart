@@ -13,8 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
 part '../../widgets/settings/bot_guide_intro_tabs.dart';
 part '../../widgets/settings/bot_guide_strategies.dart';

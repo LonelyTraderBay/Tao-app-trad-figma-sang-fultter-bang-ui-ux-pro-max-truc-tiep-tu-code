@@ -7,6 +7,7 @@
 // controllers actually call methods on).
 import 'package:vit_trade_flutter/features/trade_copy/domain/repositories/trade_copy_trading_repository.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_read_model.dart';
+import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
 
 final class TradeCopyConfirmationViewState {
   const TradeCopyConfirmationViewState({

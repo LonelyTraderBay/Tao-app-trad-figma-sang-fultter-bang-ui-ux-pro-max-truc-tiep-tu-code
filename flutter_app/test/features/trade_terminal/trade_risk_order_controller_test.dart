@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/data/trade_terminal_repository.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/presentation/controllers/trade_controller_models.dart';
 
 void main() {
   test('Trade risk management controller owns oco/position-size intents', () {
