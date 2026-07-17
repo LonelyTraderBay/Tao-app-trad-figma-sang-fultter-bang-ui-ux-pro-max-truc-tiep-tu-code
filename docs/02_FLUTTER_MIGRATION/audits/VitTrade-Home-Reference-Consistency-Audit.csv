@@ -1461,6 +1461,7 @@ trade_copy,feature_widget,flutter_app/lib/features/trade_copy/presentation/widge
 trade_copy,feature_widget,flutter_app/lib/features/trade_copy/presentation/widgets/trade_copy_header_body_card.dart,0,0,0,0,0,0,0,0,no,-
 trade_core,feature_widget,flutter_app/lib/features/trade_core/presentation/widgets/trade_body_review_widgets.dart,0,0,0,0,0,0,0,0,no,-
 trade_core,feature_widget,flutter_app/lib/features/trade_core/presentation/widgets/trade_formatters.dart,0,0,0,0,0,0,0,0,no,-
+trade_core,feature_widget,flutter_app/lib/features/trade_core/presentation/widgets/trade_high_risk_status_ui.dart,0,0,0,0,0,0,0,0,no,-
 trade_core,feature_widget,flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart,0,0,0,0,0,0,0,0,no,-
 trade_core,feature_widget,flutter_app/lib/features/trade_core/presentation/widgets/trade_product_navigation.dart,0,0,0,0,0,0,0,0,no,-
 trade_core,feature_widget,flutter_app/lib/features/trade_core/presentation/widgets/vit_trade_analytics_hero.dart,0,0,0,0,0,0,0,0,no,-

@@ -1333,6 +1333,7 @@ trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/trade_copy_c
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/trade_copy_header_body_card.dart,standard,,0,,0,,0,0,pass
 trade_core,flutter_app/lib/features/trade_core/presentation/widgets/trade_body_review_widgets.dart,standard,,0,,0,,0,0,pass
 trade_core,flutter_app/lib/features/trade_core/presentation/widgets/trade_formatters.dart,standard,,0,,0,,0,0,pass
+trade_core,flutter_app/lib/features/trade_core/presentation/widgets/trade_high_risk_status_ui.dart,standard,,0,,0,,0,0,pass
 trade_core,flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart,compact,standard,0,,0,,0,0,pass
 trade_core,flutter_app/lib/features/trade_core/presentation/widgets/trade_product_navigation.dart,standard,,0,,0,,0,0,pass
 trade_core,flutter_app/lib/features/trade_core/presentation/widgets/vit_trade_analytics_hero.dart,standard,,0,,0,,0,0,pass
