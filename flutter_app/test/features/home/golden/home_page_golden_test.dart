@@ -4,8 +4,10 @@
 // 360x800 (minimum supported phone size, matches the convention used by
 // test/quality/page_rhythm_phone_visual_qa_test.dart) and Flutter 3.41.9
 // stable (matches .github/workflows/flutter-ci.yml) — goldens are sensitive
-// to Skia/renderer version, so regenerate with the same Flutter version used
-// in CI: `flutter test --update-goldens test/features/home/golden/`.
+// to Skia/renderer version, so regenerate with that Flutter version on
+// Windows: `flutter test --update-goldens test/features/home/golden/`.
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,6 +16,11 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/home/data/providers/home_repository_provider.dart';
 import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repository.dart';
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
+
+// The PNGs are generated on Windows (the team's reference platform). Linux
+// and macOS rasterize text with different anti-aliasing, so the pixel
+// comparison only holds on Windows — elsewhere (incl. ubuntu CI) skip.
+final _notOnGoldenPlatform = !Platform.isWindows;
 
 void main() {
   Future<void> setViewport(WidgetTester tester) async {
@@ -43,7 +50,7 @@ void main() {
       find.byType(VitTradeApp),
       matchesGoldenFile('goldens/home_page_data.png'),
     );
-  });
+  }, skip: _notOnGoldenPlatform);
 
   testWidgets('golden: Home loading state', (tester) async {
     await setViewport(tester);
@@ -58,7 +65,7 @@ void main() {
     );
 
     await tester.pumpAndSettle();
-  });
+  }, skip: _notOnGoldenPlatform);
 
   testWidgets('golden: Home error state', (tester) async {
     await setViewport(tester);
@@ -73,5 +80,5 @@ void main() {
       find.byType(VitTradeApp),
       matchesGoldenFile('goldens/home_page_error.png'),
     );
-  });
+  }, skip: _notOnGoldenPlatform);
 }
