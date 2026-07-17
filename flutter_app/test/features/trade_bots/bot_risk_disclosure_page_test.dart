@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/settings/bot_risk_disclosure_page.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/settings/bot_suitability_assessment_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -32,7 +32,7 @@ void main() {
   }
 
   test('SC-118 mock repository exposes bot risk BE draft', () {
-    final snapshot = const MockTradeRepository().getBotRiskDisclosure();
+    final snapshot = const MockTradeBotsRepository().getBotRiskDisclosure();
 
     expect(snapshot.highRiskTitle, 'HIGH RISK WARNING');
     expect(snapshot.categories, hasLength(6));

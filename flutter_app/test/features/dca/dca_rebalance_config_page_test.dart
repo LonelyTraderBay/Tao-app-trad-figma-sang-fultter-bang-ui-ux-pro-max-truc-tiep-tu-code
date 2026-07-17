@@ -61,15 +61,15 @@ void main() {
 
   test('SC-170 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/dca/presentation/pages/dca_rebalance_config_page.dart',
+      'lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart',
     ).readAsStringSync();
     final source = [
       pageSource,
       File(
-        'lib/features/dca/presentation/pages/dca_rebalance_config_page_part_01.dart',
+        'lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_allocation_strategy.dart',
       ).readAsStringSync(),
       File(
-        'lib/features/dca/presentation/pages/dca_rebalance_config_page_part_02.dart',
+        'lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_settings_and_preview.dart',
       ).readAsStringSync(),
     ].join('\n');
 

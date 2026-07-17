@@ -128,7 +128,14 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _SectionLabel('Loại quảng cáo'),
+            Padding(
+              padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
+              child: VitSectionHeader(
+                title: 'Loại quảng cáo',
+                titleColor: AppColors.text2,
+                titleFontWeight: AppTextStyles.normal,
+              ),
+            ),
             _TradeTypePicker(
               value: _adType,
               onChanged: (type) => setState(() => _adType = type),
@@ -168,7 +175,14 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _SectionLabel('Loại giá'),
+            Padding(
+              padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
+              child: VitSectionHeader(
+                title: 'Loại giá',
+                titleColor: AppColors.text2,
+                titleFontWeight: AppTextStyles.normal,
+              ),
+            ),
             _PriceTypePicker(
               value: _priceType,
               onChanged: (value) {
@@ -338,7 +352,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
   }) {
     return Semantics(
       container: true,
-      label: 'P2P create ad publish actions',
+      label: 'Thao tác đăng quảng cáo P2P',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

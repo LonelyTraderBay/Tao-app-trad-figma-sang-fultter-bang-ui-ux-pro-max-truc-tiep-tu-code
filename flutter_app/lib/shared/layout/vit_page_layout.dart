@@ -11,11 +11,22 @@ class VitPageLayout extends StatelessWidget {
     required this.child,
     this.variant = VitPageVariant.defaultPage,
     this.semanticLabel,
+    this.semanticIdentifier,
   });
 
   final Widget child;
   final VitPageVariant variant;
+
+  /// Screen-reader-announced page title. Should be a real description (e.g.
+  /// "Đăng nhập"), not an internal screen code — a screen reader speaks
+  /// this text aloud. See A11Y-1,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
   final String? semanticLabel;
+
+  /// Internal screen code (e.g. `SC-007`) for tooling/debugging — mapped to
+  /// [Semantics.identifier], which assistive tech does NOT announce. Use
+  /// this instead of stuffing the code into [semanticLabel].
+  final String? semanticIdentifier;
 
   Color get _background {
     switch (variant) {
@@ -42,6 +53,7 @@ class VitPageLayout extends StatelessWidget {
       body: Semantics(
         container: true,
         label: semanticLabel,
+        identifier: semanticIdentifier,
         child: ColoredBox(
           color: _background,
           child: SizedBox.expand(

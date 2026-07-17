@@ -21,10 +21,10 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
-part '../../widgets/hub/p2p_dashboard_page_part_01.dart';
-part '../../widgets/hub/p2p_dashboard_page_part_02.dart';
-part '../../widgets/hub/p2p_dashboard_page_part_03.dart';
-part '../../widgets/hub/p2p_dashboard_page_part_04.dart';
+part '../../widgets/hub/p2p_dashboard_overview_cards.dart';
+part '../../widgets/hub/p2p_dashboard_activity_cards.dart';
+part '../../widgets/hub/p2p_dashboard_row_widgets.dart';
+part '../../widgets/hub/p2p_dashboard_page_common.dart';
 
 const double _p2pDashboardVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;

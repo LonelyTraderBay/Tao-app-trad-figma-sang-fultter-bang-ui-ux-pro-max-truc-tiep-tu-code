@@ -201,7 +201,11 @@ class _RouteRegistry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const _SectionLabel(title: 'Route Registry', color: AppColors.primary),
+        const VitSectionHeader(
+          title: 'Route Registry',
+          variant: VitSectionHeaderVariant.markerTitle,
+          accentColor: AppColors.primary,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           clip: true,

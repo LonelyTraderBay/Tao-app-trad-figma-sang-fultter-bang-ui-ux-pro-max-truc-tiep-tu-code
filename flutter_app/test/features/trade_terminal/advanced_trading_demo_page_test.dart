@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/data/trade_terminal_repository.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/tools/advanced_trading_demo_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-088 mock repository exposes advanced demo BE draft', () {
-    final snapshot = const MockTradeRepository().getAdvancedTradingDemo();
+    final snapshot = const MockTradeTerminalRepository()
+        .getAdvancedTradingDemo();
 
     expect(snapshot.position.pair, 'BTC/USDT');
     expect(snapshot.position.currentPnl, 1250);

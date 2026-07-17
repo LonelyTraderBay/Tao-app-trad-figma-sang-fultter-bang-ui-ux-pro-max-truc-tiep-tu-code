@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/best_execution_reports_page.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/execution_venue_analysis_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -32,7 +32,8 @@ void main() {
   }
 
   test('SC-096 mock repository exposes best execution BE draft', () {
-    final snapshot = const MockTradeRepository().getBestExecutionReports();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getBestExecutionReports();
 
     expect(snapshot.defaultTab, 'current');
     expect(snapshot.summary.totalOrders, 36630);

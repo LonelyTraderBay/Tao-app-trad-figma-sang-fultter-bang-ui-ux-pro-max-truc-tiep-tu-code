@@ -66,7 +66,7 @@ class _OtpDigitField extends StatelessWidget {
           fieldKey: OTPPage.digitFieldKey(index),
           controller: controller,
           focusNode: focusNode,
-          semanticLabel: 'OTP digit ${index + 1}',
+          semanticLabel: 'Mã OTP số ${index + 1}',
           textAlign: TextAlign.center,
           keyboardType: TextInputType.number,
           textInputAction: index == 5

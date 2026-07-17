@@ -67,7 +67,7 @@ class WalletTokenRevokeSheet extends StatelessWidget {
                 Expanded(
                   child: _TokenSheetButton(
                     key: walletTokenApprovalRevokeSheetCancelKey,
-                    label: 'Cancel',
+                    label: 'Hủy',
                     onTap: () => Navigator.of(context).pop(),
                   ),
                 ),
@@ -123,7 +123,7 @@ class _TokenSheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: label == 'Cancel' ? 'Cancel token revoke preview' : label,
+      label: label == 'Hủy' ? 'Hủy xem trước thu hồi token' : label,
       child: VitCtaButton(
         onPressed: onTap,
         variant: danger

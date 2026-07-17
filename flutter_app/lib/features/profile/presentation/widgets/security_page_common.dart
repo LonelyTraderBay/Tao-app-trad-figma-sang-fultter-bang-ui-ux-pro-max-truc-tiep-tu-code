@@ -47,7 +47,7 @@ class _AntiPhishingCard extends StatelessWidget {
           VitInput(
             fieldKey: SecurityPage.antiPhishingFieldKey,
             controller: controller,
-            semanticLabel: 'Anti phishing code',
+            semanticLabel: 'Mã chống lừa đảo',
             hintText: 'Nh\u1EADp m\u00E3 4\u20138 k\u00FD t\u1EF1',
             inputFormatters: [LengthLimitingTextInputFormatter(8)],
             suffix: SizedBox(

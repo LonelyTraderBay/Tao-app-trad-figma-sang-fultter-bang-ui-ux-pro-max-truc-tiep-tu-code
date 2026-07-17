@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/safety/copy_safety_center_page.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/hub/copy_trading_page.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/safety/safety_education_page.dart';
@@ -33,7 +33,8 @@ void main() {
   }
 
   test('SC-083 mock repository exposes copy safety center BE draft', () {
-    final snapshot = const MockTradeRepository().getCopySafetyCenter();
+    final snapshot = const MockTradeCopyTradingRepository()
+        .getCopySafetyCenter();
 
     expect(snapshot.defaultTabId, 'verification');
     expect(snapshot.tabs.map((tab) => tab.id), [

@@ -8,7 +8,11 @@
 // `TradeRiskManagementViewState`/`Controller` stayed behind since OCO orders
 // and position sizing belong to `trade`'s core risk-management flows, not
 // trading bots.
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_read_model.dart';
+import 'package:vit_trade_flutter/features/trade_core/domain/entities/trade_core_entities.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_read_model.dart'
+    show TradeHighRiskFlowStatus, TradeHighRiskFlowStatusX;
+import 'package:vit_trade_flutter/features/trade_terminal/domain/entities/trade_terminal_entities.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/domain/repositories/spot_trade_repository.dart';
 
 final class TradeRiskManagementViewState {
   const TradeRiskManagementViewState({
@@ -25,11 +29,11 @@ final class TradeRiskManagementViewState {
 final class TradeRiskManagementController {
   const TradeRiskManagementController({
     required this.state,
-    required TradeRepository repository,
+    required SpotTradeRepository repository,
   }) : _repository = repository;
 
   final TradeRiskManagementViewState state;
-  final TradeRepository _repository;
+  final SpotTradeRepository _repository;
 
   TradeOcoOrderResult submitOcoOrder(TradeOcoOrderDraft draft) {
     return _repository.submitOcoOrder(draft);

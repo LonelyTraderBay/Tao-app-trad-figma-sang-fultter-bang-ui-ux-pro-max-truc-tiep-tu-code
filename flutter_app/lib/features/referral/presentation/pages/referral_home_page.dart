@@ -21,10 +21,10 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/referral_spacing_tokens.dart';
 
-part 'referral_home_page_part_01.dart';
-part 'referral_home_page_part_02.dart';
-part 'referral_home_page_part_03.dart';
-part 'referral_home_page_part_04.dart';
+part 'referral_home_page_hero_sections.dart';
+part 'referral_home_page_reward_sections.dart';
+part 'referral_home_page_section_cards.dart';
+part 'referral_home_page_common.dart';
 
 const _ctaExtent = 44.0;
 const _dividerExtent = 38.0;

@@ -209,9 +209,7 @@ double _usdValue(String asset, double amount) {
   };
 }
 
-String _formatUsd(double value) {
-  return '\$${value.toStringAsFixed(2)}';
-}
+String _formatUsd(double value) => EarnFormatters.usd(value);
 
 String _formatAmount(double value) {
   if (value == value.roundToDouble()) return value.toStringAsFixed(0);

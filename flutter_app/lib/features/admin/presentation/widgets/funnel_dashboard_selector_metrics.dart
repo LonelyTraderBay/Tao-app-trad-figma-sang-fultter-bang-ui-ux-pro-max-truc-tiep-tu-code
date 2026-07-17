@@ -37,7 +37,7 @@ class _FunnelSelector extends StatelessWidget {
             return Semantics(
               button: true,
               selected: selected,
-              label: '${funnel.name} funnel selector',
+              label: 'Chọn funnel ${funnel.name}',
               child: VitCard(
                 key: FunnelDashboard.selectorKey(funnel.id),
                 onTap: () => onChanged(funnel.id),
@@ -104,8 +104,8 @@ class _MetricsGrid extends StatelessWidget {
             tint: AppColors.accent15,
             accent: AppColors.accent,
             semanticsLabel:
-                'Admin funnel metric Phiên: ${snapshot.totalSessions}. '
-                '${snapshot.completedSessions} hoàn thành. 0.0% Selected funnel',
+                'Chỉ số funnel quản trị Phiên: ${snapshot.totalSessions}. '
+                '${snapshot.completedSessions} hoàn thành. 0,0% funnel đã chọn',
             valueStyle: AppTextStyles.amountXs.copyWith(
               color: AppColors.accent,
             ),
@@ -123,8 +123,8 @@ class _MetricsGrid extends StatelessWidget {
             tint: AppColors.buy15,
             accent: AppColors.buy,
             semanticsLabel:
-                'Admin funnel metric Tỷ lệ hoàn thành: ${snapshot.completionRateLabel}. '
-                'Trung bình ${snapshot.avgCompletionTimeLabel}. 0.0% Selected funnel',
+                'Chỉ số funnel quản trị Tỷ lệ hoàn thành: ${snapshot.completionRateLabel}. '
+                'Trung bình ${snapshot.avgCompletionTimeLabel}. 0,0% funnel đã chọn',
             valueStyle: AppTextStyles.amountXs.copyWith(color: AppColors.buy),
           ),
         ),

@@ -23,9 +23,9 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/security/p2p
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/security/p2p_formatters.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
-part '../../widgets/orders/p2p_order_page_part_01.dart';
-part '../../widgets/orders/p2p_order_page_part_02.dart';
-part '../../widgets/orders/p2p_order_page_part_03.dart';
+part '../../widgets/orders/p2p_order_page_state.dart';
+part '../../widgets/orders/p2p_order_content_cards.dart';
+part '../../widgets/orders/p2p_order_page_common.dart';
 
 const double _p2pOrderVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;

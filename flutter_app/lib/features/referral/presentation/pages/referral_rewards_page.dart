@@ -23,9 +23,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/referral_spacing_tokens.dart';
 
-part 'referral_rewards_page_part_01.dart';
-part 'referral_rewards_page_part_02.dart';
-part 'referral_rewards_page_part_03.dart';
+part 'referral_rewards_page_state.dart';
+part 'referral_rewards_page_ledger_sections.dart';
+part 'referral_rewards_page_dispute_widgets.dart';
 
 class ReferralRewardsPage extends ConsumerStatefulWidget {
   const ReferralRewardsPage({super.key, this.shellRenderMode});

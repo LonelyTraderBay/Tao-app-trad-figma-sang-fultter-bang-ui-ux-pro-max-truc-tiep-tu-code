@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,7 @@ void main() {
   }
 
   test('SC-123 mock repository exposes bot history BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeBotsRepository();
     final snapshot = repo.getBotHistory();
     final export = repo.createBotHistoryExport(
       const TradeBotHistoryExportRequest(format: 'csv'),

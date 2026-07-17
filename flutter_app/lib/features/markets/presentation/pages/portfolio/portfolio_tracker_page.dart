@@ -21,9 +21,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
-part 'portfolio_tracker_page_part_01.dart';
-part 'portfolio_tracker_page_part_02.dart';
-part 'portfolio_tracker_page_part_03.dart';
+part 'portfolio_tracker_page_overview_widgets.dart';
+part 'portfolio_tracker_page_holdings_widgets.dart';
+part 'portfolio_tracker_page_performance_widgets.dart';
 
 const _marketPrimary = AppColors.primary;
 const double _portfolioVisualScrollClearance = 108;

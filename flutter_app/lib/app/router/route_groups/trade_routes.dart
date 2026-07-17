@@ -1,6 +1,23 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade_core/domain/entities/trade_core_entities.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/orders_history_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/order_receipt_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_settings_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/position_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_history_export_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/convert/convert_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/futures/futures_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/futures/leverage_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/margin/margin_trading_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/margin/margin_trading_hub_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/placeholder_routes.dart';
+
+List<RouteBase> tradeRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.trade,
@@ -39,8 +56,8 @@ List<RouteBase> _tradeRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc090MarginTradingHub,
       builder: (_, _) => MarginTradingHubPage(shellRenderMode: shellRenderMode),
     ),
-    ..._tradeMarginOutgoingPlaceholders,
-    ..._tradeBotsOutgoingPlaceholders,
+    ...tradeMarginOutgoingPlaceholders,
+    ...tradeBotsOutgoingPlaceholders,
     GoRoute(
       path: AppRoutePaths.tradeOrderReceipt,
       name: AppRouteNames.sc051OrderReceipt,

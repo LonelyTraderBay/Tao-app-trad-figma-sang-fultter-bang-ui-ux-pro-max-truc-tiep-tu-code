@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -29,7 +29,7 @@ void main() {
   }
 
   test('SC-076 mock repository exposes provider comparison BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeCopyTradingRepository();
     final snapshot = repo.getProviderComparison();
 
     expect(snapshot.selectedCount, 3);

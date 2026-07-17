@@ -67,7 +67,7 @@ const widgetClassPageOverrides = <String, String>{
       'features/predictions/presentation/pages/prediction_advanced_chart_page.dart',
 };
 
-/// Auth routes list `_AuthRouteShell`; child pages own [VitPageContent].
+/// Auth routes list `AuthRouteShell`; child pages own [VitPageContent].
 const authRouteNameToPage = <String, String>{
   'AppRouteNames.sc001Login':
       'features/auth/presentation/pages/login_page.dart',
@@ -286,7 +286,7 @@ String? resolvePageFilePath({
       return '${appRoot.path}/lib/$gated'.replaceAll('\\', '/');
     }
   }
-  if (pageWidget == '_AuthRouteShell') {
+  if (pageWidget == 'AuthRouteShell') {
     final rel = authRouteNameToPage[routeName];
     if (rel != null) {
       return '${appRoot.path}/lib/$rel'.replaceAll('\\', '/');

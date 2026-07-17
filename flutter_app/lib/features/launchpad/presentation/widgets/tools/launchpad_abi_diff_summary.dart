@@ -419,7 +419,7 @@ class _FilterRow extends StatelessWidget {
             Icons.code_rounded,
             size: LaunchpadSpacingTokens.launchpadIconMd,
           ),
-          semanticLabel: 'Filter ABI diff to functions only',
+          semanticLabel: 'Lọc ABI diff chỉ hiện function',
         ),
         const SizedBox(width: AppSpacing.x3),
         Text(

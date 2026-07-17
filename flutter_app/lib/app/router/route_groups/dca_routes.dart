@@ -1,6 +1,21 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _dcaRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/dca/presentation/pages/hub/dca_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/research/dca_backtester_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/research/dca_dynamic_amount_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/portfolio/dca_multi_asset_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/portfolio/dca_performance_compare_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/portfolio/dca_portfolio_optimizer_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/schedule/dca_schedule_analytics_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/schedule/dca_schedule_config_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/schedule/dca_smart_rules_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> dcaRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.dca,

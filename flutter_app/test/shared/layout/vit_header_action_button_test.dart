@@ -33,8 +33,22 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('99+'), findsOneWidget);
+    // A11Y-2: the tappable footprint is expanded to the 44dp minimum tap
+    // target while the visible button box (Ink) keeps its original size.
     expect(
       tester.getSize(find.byType(VitHeaderActionButton)),
+      const Size(
+        AppTopHeaderTokens.minTapTarget,
+        AppTopHeaderTokens.minTapTarget,
+      ),
+    );
+    expect(
+      tester.getSize(
+        find.descendant(
+          of: find.byType(VitHeaderActionButton),
+          matching: find.byType(Ink),
+        ),
+      ),
       const Size(AppTopHeaderTokens.buttonSize, AppTopHeaderTokens.buttonSize),
     );
 
@@ -66,8 +80,18 @@ void main() {
     expect(find.byKey(actionKey), findsOneWidget);
     expect(find.byIcon(Icons.download_rounded), findsOneWidget);
     expect(find.byTooltip('Xuất CSV'), findsOneWidget);
+    // A11Y-2: same tap-target-vs-visual-size split as the default size case.
     expect(
       tester.getSize(find.byKey(actionKey)),
+      const Size(
+        AppTopHeaderTokens.minTapTarget,
+        AppTopHeaderTokens.minTapTarget,
+      ),
+    );
+    expect(
+      tester.getSize(
+        find.descendant(of: find.byKey(actionKey), matching: find.byType(Ink)),
+      ),
       const Size(
         AppTopHeaderTokens.compactButtonSize,
         AppTopHeaderTokens.compactButtonSize,

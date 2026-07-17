@@ -35,7 +35,7 @@ void main() {
 
   test('SC-211 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/p2p/presentation/widgets/hub/p2p_express_page_part_01.dart',
+      'lib/features/p2p/presentation/widgets/hub/p2p_express_page_state.dart',
     ).readAsStringSync();
 
     expect(pageSource, contains('VitInsetScrollView'));

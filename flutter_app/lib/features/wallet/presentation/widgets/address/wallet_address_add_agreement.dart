@@ -26,8 +26,8 @@ class AddressWhitelistCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: enabled,
-      label: 'Add address to withdrawal whitelist',
-      value: enabled ? 'Enabled' : 'Disabled',
+      label: 'Thêm địa chỉ vào danh sách trắng rút tiền',
+      value: enabled ? 'Đang bật' : 'Đang tắt',
       child: VitCard(
         key: const Key('sc143_address_whitelist'),
         onTap: onTap,
@@ -126,8 +126,8 @@ class AddressAgreementRow extends StatelessWidget {
     return Semantics(
       button: true,
       selected: agreed,
-      label: 'Confirm wallet address and network are correct',
-      value: agreed ? 'Agreed' : 'Not agreed',
+      label: 'Xác nhận địa chỉ ví và mạng là chính xác',
+      value: agreed ? 'Đã đồng ý' : 'Chưa đồng ý',
       child: VitCard(
         key: const Key('sc143_address_agreement'),
         onTap: onTap,

@@ -206,7 +206,7 @@ void main() {
         (widget) =>
             widget is Semantics &&
             (widget.properties.label ?? '').contains(
-              'Efficient frontier chart',
+              'Biểu đồ đường biên hiệu quả',
             ),
       ),
       findsOneWidget,

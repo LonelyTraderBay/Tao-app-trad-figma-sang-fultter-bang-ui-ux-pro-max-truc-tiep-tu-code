@@ -208,7 +208,7 @@ class _TradeAmountInputState extends State<_TradeAmountInput> {
       controller: _controller,
       keyboardType: TextInputType.number,
       onChanged: widget.onChanged,
-      semanticLabel: 'Prediction order amount',
+      semanticLabel: 'Số tiền đặt lệnh dự đoán',
       hintText: '0.00',
       textStyle: AppTextStyles.body.copyWith(
         fontFeatures: AppTextStyles.tabularFigures,

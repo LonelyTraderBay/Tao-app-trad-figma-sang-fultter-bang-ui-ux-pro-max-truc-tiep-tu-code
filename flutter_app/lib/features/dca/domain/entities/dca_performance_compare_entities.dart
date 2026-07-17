@@ -1,4 +1,4 @@
-import 'dca_common_entities.dart';
+import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
 enum DcaPerformanceWinner { dca, lumpSum }
 

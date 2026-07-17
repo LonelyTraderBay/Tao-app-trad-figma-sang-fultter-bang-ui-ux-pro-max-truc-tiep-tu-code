@@ -102,10 +102,11 @@ class _P2PPaymentMethodAddPageState
       onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
       children: [
         _TypeSelector(value: _type, onChanged: _changeType),
-        _SectionLabel(
-          _type == P2PPaymentAddType.bank
+        VitSectionHeader(
+          title: _type == P2PPaymentAddType.bank
               ? 'Chọn ngân hàng'
               : 'Chọn ví điện tử',
+          titleColor: AppColors.text2,
         ),
         _PaymentOptionWrap(
           options: options,
@@ -118,7 +119,7 @@ class _P2PPaymentMethodAddPageState
         VitInput(
           controller: _accountController,
           fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
-          semanticLabel: 'P2P payment account',
+          semanticLabel: 'Số tài khoản thanh toán P2P',
           label: _type == P2PPaymentAddType.bank
               ? 'Số tài khoản'
               : 'Số điện thoại / tài khoản ví',
@@ -133,7 +134,7 @@ class _P2PPaymentMethodAddPageState
         VitInput(
           controller: _ownerController,
           fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
-          semanticLabel: 'P2P payment account owner',
+          semanticLabel: 'Tên chủ tài khoản thanh toán P2P',
           label: 'Tên chủ tài khoản',
           hintText: snapshot.ownerNameHint,
           prefix: const Icon(Icons.person_outline_rounded),
@@ -161,7 +162,7 @@ class _P2PPaymentMethodAddPageState
             contractId: snapshot.highRiskContractId,
           ),
         Semantics(
-          label: 'Preview and add P2P payment method',
+          label: 'Xem trước và thêm phương thức thanh toán P2P',
           button: true,
           enabled: _isValidFor(controller) && !_submitting,
           child: VitCtaButton(

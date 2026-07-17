@@ -77,10 +77,7 @@ Color _riskScoreColor(int score) {
   return AppColors.buy;
 }
 
-String _truncateAddress(String value) {
-  if (value.length <= 14) return value;
-  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
-}
+String _truncateAddress(String value) => maskAddress(value);
 
 String _formatInt(int value) {
   final text = value.toString();

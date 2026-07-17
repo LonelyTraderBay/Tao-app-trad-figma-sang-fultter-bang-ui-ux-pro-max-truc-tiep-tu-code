@@ -139,8 +139,8 @@ class _DropoutChartCard extends StatelessWidget {
             height: AdminSpacingTokens.adminFunnelWaterfallHeight,
             child: Semantics(
               label: hasDropout
-                  ? '${funnel.name} dropout chart'
-                  : '${funnel.name} dropout chart has no sessions',
+                  ? 'Biểu đồ rời bỏ ${funnel.name}'
+                  : 'Biểu đồ rời bỏ ${funnel.name} không có phiên',
               child: CustomPaint(
                 painter: _DropoutChartPainter(steps: funnel.steps),
                 child: const SizedBox.expand(),

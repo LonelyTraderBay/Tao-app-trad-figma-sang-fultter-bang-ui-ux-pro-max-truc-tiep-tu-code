@@ -1,6 +1,6 @@
 part of 'app_router.dart';
 
-OTPPage _buildOtpPage(GoRouterState state) {
+OTPPage buildOtpPage(GoRouterState state) {
   final extra = state.extra;
   final query = state.uri.queryParameters;
   OtpPageRouteArgs? args;
@@ -28,8 +28,12 @@ OTPPage _buildOtpPage(GoRouterState state) {
   );
 }
 
-class _AuthRouteShell extends StatelessWidget {
-  const _AuthRouteShell({required this.child, required this.renderMode});
+class AuthRouteShell extends StatelessWidget {
+  const AuthRouteShell({
+    super.key,
+    required this.child,
+    required this.renderMode,
+  });
 
   final Widget child;
   final ShellRenderMode renderMode;

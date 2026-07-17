@@ -182,11 +182,13 @@ class _QrAddressCard extends StatelessWidget {
           ),
           const SizedBox(height: _depositGap),
           Tooltip(
-            message: copied ? 'Deposit address copied' : 'Copy deposit address',
+            message: copied
+                ? 'Đã sao chép địa chỉ nạp'
+                : 'Sao chép địa chỉ nạp',
             child: Semantics(
               button: true,
               liveRegion: copied,
-              label: copied ? 'Deposit address copied' : 'Copy deposit address',
+              label: copied ? 'Đã sao chép địa chỉ nạp' : 'Sao chép địa chỉ nạp',
               child: VitCtaButton(
                 key: DepositPage.copyAddressKey,
                 onPressed: onCopy,

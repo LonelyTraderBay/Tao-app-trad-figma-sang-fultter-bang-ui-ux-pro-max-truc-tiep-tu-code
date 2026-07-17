@@ -18,7 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
-import '../../widgets/hub/market_body_review_widgets.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_body_review_widgets.dart';
 
 part '../../widgets/hub/watchlist_toolbar.dart';
 part '../../widgets/hub/watchlist_cards.dart';
@@ -109,7 +109,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
           content: VitInput(
             controller: controller,
             autofocus: true,
-            semanticLabel: 'Watchlist note',
+            semanticLabel: 'Ghi chú danh mục theo dõi',
             hintText: 'Nhap ghi chu',
           ),
           actions: [

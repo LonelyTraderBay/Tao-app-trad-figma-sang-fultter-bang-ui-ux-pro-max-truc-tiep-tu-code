@@ -54,8 +54,8 @@ void main() {
               'lib/features/trade/presentation/pages/futures/futures_page.dart',
           paths: [
             'lib/features/trade/presentation/pages/futures/futures_page.dart',
-            'lib/features/trade/presentation/widgets/futures/futures_page_part_01.dart',
-            'lib/features/trade/presentation/widgets/futures/futures_page_part_02.dart',
+            'lib/features/trade/presentation/widgets/futures/futures_page_state.dart',
+            'lib/features/trade/presentation/widgets/futures/futures_page_form_controls.dart',
           ],
           roles: {
             'risk': [RegExp(r'\brisk\b|rui ro', caseSensitive: false)],
@@ -78,10 +78,10 @@ void main() {
               'lib/features/trade/presentation/pages/margin/margin_trading_page.dart',
           paths: [
             'lib/features/trade/presentation/pages/margin/margin_trading_page.dart',
-            'lib/features/trade/presentation/widgets/margin/margin_trading_page_part_01.dart',
-            'lib/features/trade/presentation/widgets/margin/margin_trading_page_part_02.dart',
-            'lib/features/trade/presentation/widgets/margin/margin_trading_page_part_03.dart',
-            'lib/features/trade/presentation/widgets/margin/margin_trading_page_part_04.dart',
+            'lib/features/trade/presentation/widgets/margin/margin_trading_simple_form.dart',
+            'lib/features/trade/presentation/widgets/margin/margin_trading_common.dart',
+            'lib/features/trade/presentation/widgets/margin/margin_trading_reserved.dart',
+            'lib/features/trade/presentation/widgets/margin/margin_trading_shared_helpers.dart',
             'lib/features/trade/presentation/pages/margin/margin_trading_hub_page.dart',
             'lib/features/trade/presentation/widgets/margin/margin_trading_hub_widgets.dart',
             'lib/features/trade/presentation/widgets/margin/margin_trading_hub_hero_nav.dart',

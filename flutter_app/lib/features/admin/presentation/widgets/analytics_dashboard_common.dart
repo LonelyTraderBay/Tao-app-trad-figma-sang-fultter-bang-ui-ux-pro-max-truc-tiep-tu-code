@@ -28,7 +28,7 @@ class _DistributionCard extends StatelessWidget {
                     ),
                   )
                 : Semantics(
-                    label: 'Event distribution summary',
+                    label: 'Tóm tắt phân bổ sự kiện',
                     child: ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: events.length,

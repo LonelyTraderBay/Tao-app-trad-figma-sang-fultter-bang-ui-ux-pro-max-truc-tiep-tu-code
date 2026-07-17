@@ -38,9 +38,14 @@ String _copyModeLabel(TradeActiveCopy copy) {
   };
 }
 
-String _formatUsd(double value) => VitFormat.usdWhole(value);
+String _formatUsd(double value) {
+  return '\$${value.toStringAsFixed(0)}';
+}
 
-String _formatSignedUsd(double value) => VitFormat.usdWholeSigned(value);
+String _formatSignedUsd(double value) {
+  final sign = value >= 0 ? '+' : '-';
+  return '$sign${_formatUsd(value.abs())}';
+}
 
 String _formatPercent(double value) {
   final sign = value >= 0 ? '+' : '-';

@@ -14,7 +14,6 @@ import 'package:vit_trade_flutter/features/trade_copy/presentation/widgets/hub/c
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_detail_hero.dart';
-import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 
 part '../../widgets/hub/copy_trading_hero.dart';
 part '../../widgets/hub/copy_trading_metrics_common.dart';
@@ -81,7 +80,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
           title: 'Đánh giá trước khi copy',
           message:
               'So sánh drawdown tối đa, mức tập trung copier, phí và quy tắc dừng lỗ trước khi sao chép bất kỳ chiến lược nào.',
-          contractId: 'Có ${traders.length} nhà cung cấp',
+          contractId: snapshot.highRiskContractId,
           density: VitDensity.compact,
         ),
         VitCtaButton(

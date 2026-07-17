@@ -84,6 +84,12 @@ flutter test --reporter=compact
 Add task-specific audits/tests from the active plan. Run focused tests for touched
 modules before marking a batch complete.
 
+## Two-phase Cursor (large tasks)
+
+For work spanning ~10+ files or unclear scope, use Plan then Execute chats —
+see `docs/01_AI_RULES/Two-Phase-Cursor-Workflow.md` (copy-paste prompts). Keep
+Auto; do not switch models between phases.
+
 ## Batch discipline
 
 - 5–10 files per turn for migration work.

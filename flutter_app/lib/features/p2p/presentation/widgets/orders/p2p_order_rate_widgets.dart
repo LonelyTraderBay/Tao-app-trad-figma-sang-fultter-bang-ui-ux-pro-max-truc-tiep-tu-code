@@ -120,7 +120,7 @@ class _StarButton extends StatelessWidget {
       padding: P2PSpacingTokens.p2pOrderRateStarChipPadding,
       accentColor: AppColors.warn,
       leading: Icon(selected ? Icons.star_rounded : Icons.star_border_rounded),
-      semanticLabel: '$rating stars',
+      semanticLabel: '$rating ngôi sao',
     );
   }
 }
@@ -217,7 +217,7 @@ class _ReviewBox extends StatelessWidget {
         VitInput(
           fieldKey: P2POrderRatePage.reviewKey,
           controller: controller,
-          semanticLabel: 'P2P order review',
+          semanticLabel: 'Nhận xét đơn hàng P2P',
           hintText: 'Chia sẻ trải nghiệm giao dịch...',
           textStyle: AppTextStyles.caption.copyWith(color: AppColors.text1),
         ),

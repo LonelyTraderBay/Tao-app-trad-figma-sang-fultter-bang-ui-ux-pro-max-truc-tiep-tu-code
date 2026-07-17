@@ -1,6 +1,27 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _predictionRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/social/prediction_data_integration_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_breaking_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/social/prediction_event_calendar_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_event_detail_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/prediction_market_maker_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_order_receipt_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/prediction_portfolio_analyzer_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/prediction_risk_calculator_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/social/prediction_social_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/social/prediction_tournaments_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/social/predictions_global_activity_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/social/predictions_leaderboard_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_rewards_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_search_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> predictionRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.marketsPredictions,

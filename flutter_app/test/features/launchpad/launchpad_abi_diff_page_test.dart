@@ -116,6 +116,14 @@ void main() {
   testWidgets('SC-308 expands ABI entry details', (tester) async {
     await pumpAbiDiff(tester);
 
+    // A11Y-2 grew two VitIconButton copy affordances in the metadata card
+    // above this list, pushing 'unstake' just past the unscrolled viewport
+    // edge — scroll it into view instead of relying on its prior offset.
+    await tester.ensureVisible(
+      find.byKey(LaunchpadAbiDiffPage.expandKey('unstake')),
+    );
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byKey(LaunchpadAbiDiffPage.expandKey('unstake')));
     await tester.pumpAndSettle();
 

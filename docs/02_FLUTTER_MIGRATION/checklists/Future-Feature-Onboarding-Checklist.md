@@ -23,7 +23,12 @@ flutter_app/lib/features/<feature>/
 
 ## Implementation Order
 
-- [ ] Define `AppRoutePaths` and `AppRouteNames` entries.
+- [ ] Define `AppRoutePaths` and `AppRouteNames` entries. `AppRouteNames`
+      constants follow `sc<NNN><ScreenNameCamelCase>` (e.g. `sc169Dca`) with
+      `NNN` assigned sequentially — take the highest existing number in
+      `flutter_app/lib/app/router/app_route_names.dart` and add 1. There is no
+      automated number allocator yet; if two branches claim the same number,
+      resolve the conflict at merge time by renumbering the later PR.
 - [ ] Add or update route group wiring under `flutter_app/lib/app/router/`.
 - [ ] Add domain entities or value objects under `domain/entities/`.
 - [ ] Add repository contracts under `domain/repositories/`.

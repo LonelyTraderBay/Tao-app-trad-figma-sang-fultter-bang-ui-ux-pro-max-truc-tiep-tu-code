@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 
 void main() {
   test(
     'Trade bot safety controllers own emergency, security, and suitability',
     () {
-      final repository = const MockTradeRepository();
+      final repository = const MockTradeBotsRepository();
       final emergencyController = TradeBotEmergencyStopController(
         repository: repository,
         state: TradeBotEmergencyStopViewState(

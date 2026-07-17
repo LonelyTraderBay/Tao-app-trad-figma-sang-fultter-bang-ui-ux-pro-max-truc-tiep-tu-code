@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/hub/active_copies_page.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/flow/copy_confirmation_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -38,7 +38,7 @@ void main() {
   }
 
   test('SC-073 mock repository exposes copy confirmation BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeCopyTradingRepository();
     final notFound = repo.getCopyConfirmation(providerId: 'provider001');
     final found = repo.getCopyConfirmation(providerId: 'ct001');
     final blocked = repo.submitCopyConfirmation(

@@ -14,6 +14,12 @@ final class AppSpacing {
   static const double zero = 0;
   static const EdgeInsets zeroInsets = EdgeInsets.zero;
 
+  /// Minimum tap target (WCAG 2.5.5 / Material minimum) for any interactive
+  /// control whose visible box is smaller than this — expand the hit-test
+  /// region to this size while keeping the visible box unchanged. See
+  /// A11Y-2, docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  static const double minTapTarget = 44;
+
   static const double contentPad = 20;
   static const double sectionGap = 20;
   static const double rowPy = 14;

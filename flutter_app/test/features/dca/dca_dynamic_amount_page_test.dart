@@ -63,15 +63,15 @@ void main() {
 
   test('SC-175 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/dca/presentation/pages/dca_dynamic_amount_page.dart',
+      'lib/features/dca/presentation/pages/research/dca_dynamic_amount_page.dart',
     ).readAsStringSync();
     final source = [
       pageSource,
       File(
-        'lib/features/dca/presentation/pages/dca_dynamic_amount_page_part_01.dart',
+        'lib/features/dca/presentation/pages/research/dca_dynamic_amount_page_hero_and_strategy.dart',
       ).readAsStringSync(),
       File(
-        'lib/features/dca/presentation/pages/dca_dynamic_amount_page_part_02.dart',
+        'lib/features/dca/presentation/pages/research/dca_dynamic_amount_page_history_and_config.dart',
       ).readAsStringSync(),
     ].join('\n');
 

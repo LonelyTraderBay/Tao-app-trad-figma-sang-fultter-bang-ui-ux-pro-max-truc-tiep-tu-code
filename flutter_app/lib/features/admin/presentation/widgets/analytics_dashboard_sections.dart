@@ -26,7 +26,7 @@ class _Controls extends StatelessWidget {
                   value: option.range,
                   label: option.label,
                   accentColor: AppModuleAccents.admin,
-                  semanticLabel: '${option.label} range',
+                  semanticLabel: 'Khoảng thời gian ${option.label}',
                 ),
             ],
           ),
@@ -81,8 +81,8 @@ class _KeyMetrics extends StatelessWidget {
             tint: AppColors.accent15,
             accent: AppColors.accent,
             semanticsLabel:
-                'Admin analytics metric Tổng sự kiện: ${snapshot.totalEvents}. '
-                '${snapshot.eventsPerDayLabel}. 0.0% Selected range',
+                'Chỉ số phân tích quản trị Tổng sự kiện: ${snapshot.totalEvents}. '
+                '${snapshot.eventsPerDayLabel}. 0,0% khoảng thời gian đã chọn',
             valueStyle: AppTextStyles.sectionTitle.copyWith(
               fontFeatures: AppTextStyles.tabularFigures,
             ),
@@ -100,8 +100,8 @@ class _KeyMetrics extends StatelessWidget {
             tint: AppColors.primary15,
             accent: AppColors.primary,
             semanticsLabel:
-                'Admin analytics metric Người dùng: ${snapshot.uniqueUsers}. '
-                'Unique users. 0.0% Selected range',
+                'Chỉ số phân tích quản trị Người dùng: ${snapshot.uniqueUsers}. '
+                'Người dùng duy nhất. 0,0% khoảng thời gian đã chọn',
             valueStyle: AppTextStyles.sectionTitle.copyWith(
               fontFeatures: AppTextStyles.tabularFigures,
             ),
@@ -134,8 +134,8 @@ class _EventVolumeCard extends StatelessWidget {
             height: AdminSpacingTokens.adminAnalyticsSparklineHeight,
             child: Semantics(
               label: hasEvents
-                  ? 'Event volume chart for ${stats.length} days'
-                  : 'Event volume chart has no events in this range',
+                  ? 'Biểu đồ khối lượng sự kiện ${stats.length} ngày'
+                  : 'Biểu đồ khối lượng sự kiện không có dữ liệu trong khoảng này',
               child: CustomPaint(
                 painter: _EventVolumePainter(stats: stats),
                 child: const SizedBox.expand(),

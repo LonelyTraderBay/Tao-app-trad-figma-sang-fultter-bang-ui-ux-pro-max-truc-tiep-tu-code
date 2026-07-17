@@ -97,7 +97,7 @@ void main() {
     expect(find.text('\u0110\u00E3 m\u1EDF'), findsWidgets);
     expect(find.text('X\u00E1c minh KYC'), findsOneWidget);
     expect(find.text('FAQ t\u0129nh'), findsOneWidget);
-    expect(semanticsLabel(RegExp(r'C\u1EA7n KYC KYC Level 3')), findsOneWidget);
+    expect(semanticsLabel(RegExp(r'C\u1EA7n KYC C\u1EA5p KYC 3')), findsOneWidget);
   });
 
   testWidgets('SC-153 first viewport reaches current tier usage', (

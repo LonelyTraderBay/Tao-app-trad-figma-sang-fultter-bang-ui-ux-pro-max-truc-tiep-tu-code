@@ -11,10 +11,11 @@ class _FlowGroupCard extends StatelessWidget {
     final color = _flowColor(group.kind);
     return Column(
       children: [
-        _SectionLabel(
+        VitSectionHeader(
           title: group.title,
           subtitle: group.subtitle,
-          color: color,
+          variant: VitSectionHeaderVariant.markerTitle,
+          accentColor: color,
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
@@ -141,9 +142,10 @@ class _SharedComponents extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const _SectionLabel(
+        const VitSectionHeader(
           title: 'Shared Components',
-          color: AppColors.accent,
+          variant: VitSectionHeaderVariant.markerTitle,
+          accentColor: AppColors.accent,
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         for (final component in components) ...[

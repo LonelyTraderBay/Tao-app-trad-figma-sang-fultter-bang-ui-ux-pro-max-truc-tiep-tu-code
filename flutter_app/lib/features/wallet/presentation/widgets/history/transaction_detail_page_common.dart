@@ -183,10 +183,7 @@ List<_DetailRowData> _detailsFor(WalletTransaction tx, bool isDebit) {
   return rows;
 }
 
-String _maskSensitiveValue(String value) {
-  if (value.length <= 12) return value;
-  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
-}
+String _maskSensitiveValue(String value) => maskAddress(value);
 
 String _formatAmount(WalletTransaction tx) {
   if (tx.asset == 'BTC') return tx.amount.toStringAsFixed(6);

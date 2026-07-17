@@ -21,10 +21,10 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'dca_dynamic_amount_page_part_01.dart';
-part 'dca_dynamic_amount_page_part_02.dart';
-part 'dca_dynamic_amount_page_part_03.dart';
-part 'dca_dynamic_amount_page_part_04.dart';
+part 'dca_dynamic_amount_page_hero_and_strategy.dart';
+part 'dca_dynamic_amount_page_history_and_config.dart';
+part 'dca_dynamic_amount_page_volatility_chart.dart';
+part 'dca_dynamic_amount_page_common.dart';
 
 const double _dcaDynamicChartHeight = 144;
 const EdgeInsetsDirectional _dcaDynamicHeroPadding = EdgeInsetsDirectional.all(

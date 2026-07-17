@@ -19,9 +19,9 @@ class WalletTokenApprovalCard extends StatelessWidget {
     return Semantics(
       container: true,
       label:
-          '${walletTokenApprovalRiskLabel(approval.riskLevel)} risk token approval for ${approval.token}. '
-          '${approval.unlimited ? 'Unlimited allowance. ' : ''}'
-          'Spender ${approval.spenderName}, ${approval.maskedSpender}.',
+          'Ủy quyền token rủi ro ${walletTokenApprovalRiskLabel(approval.riskLevel)} cho ${approval.token}. '
+          '${approval.unlimited ? 'Hạn mức không giới hạn. ' : ''}'
+          'Bên chi tiêu ${approval.spenderName}, ${approval.maskedSpender}.',
       child: VitCard(
         key: walletTokenApprovalApprovalKey(approval.id),
         density: VitDensity.compact,
@@ -46,7 +46,7 @@ class WalletTokenApprovalCard extends StatelessWidget {
                   key: walletTokenApprovalRevokeKey(approval.id),
                   icon: Icons.delete_outline_rounded,
                   tooltip:
-                      'Revoke approval for ${approval.token} to ${approval.spenderName}',
+                      'Thu hồi ủy quyền ${approval.token} cho ${approval.spenderName}',
                   onPressed: () => onRevoke(approval),
                   variant: VitIconButtonVariant.danger,
                   size: VitIconButtonSize.sm,

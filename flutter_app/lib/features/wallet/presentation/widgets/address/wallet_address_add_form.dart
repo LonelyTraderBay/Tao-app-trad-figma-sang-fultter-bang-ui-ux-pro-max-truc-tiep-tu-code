@@ -87,7 +87,7 @@ class AddressAddForm {
                 required: true,
                 child: AddressTextInput(
                   fieldKey: const Key('sc143_address_label_field'),
-                  semanticLabel: 'Address label',
+                  semanticLabel: 'Tên địa chỉ',
                   controller: labelController,
                   hintText: 'VD: Ví lạnh cá nhân, Sàn Binance...',
                   maxLength: 30,
@@ -145,7 +145,7 @@ class AddressAddForm {
             optionalText: '(tùy chọn)',
             child: AddressTextInput(
               fieldKey: const Key('sc143_address_memo_field'),
-              semanticLabel: 'Address memo optional',
+              semanticLabel: 'Memo địa chỉ, không bắt buộc',
               controller: memoController,
               hintText: 'Nhập memo nếu cần...',
               onChanged: onInputChanged,

@@ -83,8 +83,8 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
     return Semantics(
       button: true,
       selected: enabled,
-      label: '$title setting',
-      value: enabled ? 'Enabled' : 'Disabled',
+      label: 'Cài đặt $title',
+      value: enabled ? 'Đang bật' : 'Đang tắt',
       child: VitCard(
         density: VitDensity.compact,
         borderColor: walletTokenApprovalBorder,

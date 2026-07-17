@@ -1,16 +1,18 @@
 // Spot / Futures / Margin / Convert product controller providers.
 // Advanced terminal demos stay in trade_terminal_controller_providers.dart.
+//
+// Composition root for the `trade` feature's own domain/data/controllers
+// layers (features/trade/domain, features/trade/data,
+// features/trade/presentation/controllers) — no longer wired through
+// `trade_core`'s 6-way TradeRepository union.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:vit_trade_flutter/features/trade_core/data/providers/trade_repository_provider.dart';
-import 'package:vit_trade_flutter/features/trade_terminal/presentation/controllers/trade_controller_models.dart';
+import 'package:vit_trade_flutter/features/trade/data/providers/trade_repository_provider.dart';
+import 'package:vit_trade_flutter/features/trade/domain/repositories/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
-export 'package:vit_trade_flutter/features/trade_terminal/data/providers/trade_repository_provider.dart';
-
-final tradeReadModelControllerProvider = Provider<TradeReadModelController>((
-  ref,
-) {
+final tradeReadModelControllerProvider = Provider<TradeRepository>((ref) {
   return ref.watch(tradeRepositoryProvider);
 });
 
@@ -43,10 +45,10 @@ final tradeOrdersHistoryControllerProvider =
     });
 
 final tradeOrderControllerProvider =
-    Provider.family<TradeOrderController, TradeOrderControllerRequest>((
-      ref,
-      request,
-    ) {
+    Provider.autoDispose.family<
+      TradeOrderController,
+      TradeOrderControllerRequest
+    >((ref, request) {
       final repository = ref.watch(tradeRepositoryProvider);
       return TradeOrderController(
         repository: repository,
@@ -98,7 +100,7 @@ final tradeMarginControllerProvider =
     });
 
 final tradeFuturesOrderControllerProvider =
-    Provider.family<
+    Provider.autoDispose.family<
       TradeFuturesOrderController,
       TradeFuturesOrderControllerRequest
     >((ref, request) {

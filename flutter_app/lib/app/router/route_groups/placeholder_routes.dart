@@ -1,17 +1,17 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-final List<GoRoute> _homeOutgoingPlaceholders = [];
+final List<GoRoute> homeOutgoingPlaceholders = [];
 
-final List<GoRoute> _launchpadOutgoingPlaceholders = [];
+final List<GoRoute> launchpadOutgoingPlaceholders = [];
 
-final List<GoRoute> _marketOutgoingPlaceholders = [];
+final List<GoRoute> marketOutgoingPlaceholders = [];
 
-final List<GoRoute> _walletOutgoingPlaceholders = [];
+final List<GoRoute> walletOutgoingPlaceholders = [];
 
-final List<GoRoute> _profileOutgoingPlaceholders = [];
+final List<GoRoute> profileOutgoingPlaceholders = [];
 
-final List<GoRoute> _tradeMarginOutgoingPlaceholders = [];
+final List<GoRoute> tradeMarginOutgoingPlaceholders = [];
 
-final List<GoRoute> _tradeBotsOutgoingPlaceholders = [];
+final List<GoRoute> tradeBotsOutgoingPlaceholders = [];
 
-final List<GoRoute> _earnRiskOutgoingPlaceholders = [];
+final List<GoRoute> earnRiskOutgoingPlaceholders = [];

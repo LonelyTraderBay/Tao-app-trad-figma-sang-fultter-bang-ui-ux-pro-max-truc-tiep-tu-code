@@ -23,9 +23,9 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'arena_guide_page_part_01.dart';
-part 'arena_guide_page_part_02.dart';
-part 'arena_guide_page_part_03.dart';
+part 'arena_guide_page_guide_tab.dart';
+part 'arena_guide_page_tips_safety_content.dart';
+part 'arena_guide_page_faq_shared_widgets.dart';
 
 enum _GuideTab { guide, tips, safety, faq }
 

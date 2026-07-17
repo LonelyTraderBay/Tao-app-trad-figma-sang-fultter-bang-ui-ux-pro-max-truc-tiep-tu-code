@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/dashboard/bot_performance_analytics_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-124 mock repository exposes performance analytics BE draft', () {
-    final snapshot = const MockTradeRepository().getBotPerformanceAnalytics();
+    final snapshot = const MockTradeBotsRepository()
+        .getBotPerformanceAnalytics();
 
     expect(snapshot.pnlPoints, hasLength(8));
     expect(snapshot.winLossPoints, hasLength(4));

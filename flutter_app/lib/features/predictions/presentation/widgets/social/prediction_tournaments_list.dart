@@ -207,7 +207,7 @@ class _TournamentCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
-                _CategoryChip(label: tournament.category),
+                _CategoryTag(label: tournament.category),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(

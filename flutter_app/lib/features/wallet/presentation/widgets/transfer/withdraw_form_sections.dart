@@ -75,7 +75,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
         Semantics(
           button: true,
           label:
-              'Withdraw network selector ${network.name}, fee ${formatWithdrawNetworkFee(network.fee)} $asset, minimum ${formatWithdrawCompact(network.minWithdraw)}',
+              'Chọn mạng rút ${network.name}, phí ${formatWithdrawNetworkFee(network.fee)} $asset, tối thiểu ${formatWithdrawCompact(network.minWithdraw)}',
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           child: VitCard(
             key: withdrawNetworkSelectorKey,
@@ -166,7 +166,7 @@ class WithdrawAddressInput extends StatelessWidget {
       fieldKey: withdrawAddressFieldKey,
       controller: controller,
       hintText: 'Nhập địa chỉ $asset (${network.name.split(' ').first})',
-      semanticLabel: 'Withdrawal destination address',
+      semanticLabel: 'Địa chỉ nhận rút',
       textStyle: AppTextStyles.control,
       onChanged: onChanged,
       suffix: Padding(

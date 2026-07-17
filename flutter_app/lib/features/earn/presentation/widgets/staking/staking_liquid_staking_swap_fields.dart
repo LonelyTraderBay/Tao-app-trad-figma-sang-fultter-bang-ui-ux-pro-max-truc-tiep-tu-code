@@ -181,7 +181,7 @@ class _AmountInput extends StatelessWidget {
       textAlign: TextAlign.right,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       hintText: '0.0',
-      semanticLabel: 'Liquid staking swap amount',
+      semanticLabel: 'Số tiền hoán đổi Liquid Staking',
       onChanged: onChanged,
       textStyle: AppTextStyles.baseMedium.copyWith(
         fontFeatures: AppTextStyles.tabularFigures,

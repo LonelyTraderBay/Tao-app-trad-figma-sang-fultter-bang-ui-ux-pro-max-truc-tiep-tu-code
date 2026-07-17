@@ -1,3 +1,9 @@
+// Sanctioned exception to "core/ = non-UI" (see AGENTS.md > Architecture):
+// goBackOrFallback needs a BuildContext to call context.go/context.pop, so
+// this file imports Flutter + go_router. The path-validation helpers below
+// (resolveSafeBackPath, _normalizeInternalPath, ...) are pure Dart and do not
+// depend on either import — do not use this file as precedent for adding
+// Flutter/UI imports elsewhere in core/.
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 

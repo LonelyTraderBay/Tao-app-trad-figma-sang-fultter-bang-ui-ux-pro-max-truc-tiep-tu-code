@@ -19,44 +19,23 @@ class _SortSelector extends StatelessWidget {
       child: Row(
         children: [
           for (final option in options) ...[
-            _SortChip(
-              option: option,
+            VitFilterChip(
+              key: LaunchpadBridgeComparePage.sortKey(option.value),
+              label: option.label,
               active: option.value == activeValue,
               onTap: () => onChanged(option.value),
+              color: AppColors.primary,
+              padding: LaunchpadSpacingTokens.launchpadPillPadding,
+              leading: Icon(
+                _sortIcon(option.iconKey),
+                size: LaunchpadSpacingTokens.launchpadIconSm,
+              ),
+              semanticLabel: 'Sắp xếp tuyến bridge theo ${option.label}',
             ),
             const SizedBox(width: AppSpacing.x2),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _SortChip extends StatelessWidget {
-  const _SortChip({
-    required this.option,
-    required this.active,
-    required this.onTap,
-  });
-
-  final LaunchpadBridgeSortOptionDraft option;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: LaunchpadBridgeComparePage.sortKey(option.value),
-      label: option.label,
-      selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primary,
-      padding: LaunchpadSpacingTokens.launchpadPillPadding,
-      leading: Icon(
-        _sortIcon(option.iconKey),
-        size: LaunchpadSpacingTokens.launchpadIconSm,
-      ),
-      semanticLabel: 'Sort bridge routes by ${option.label}',
     );
   }
 }

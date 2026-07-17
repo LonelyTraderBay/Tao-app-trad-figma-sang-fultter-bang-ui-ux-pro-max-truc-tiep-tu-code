@@ -58,7 +58,7 @@ class _NetworkChip extends StatelessWidget {
         fullWidth: true,
         padding: WalletSpacingTokens.walletAddressAddNetworkChipPadding,
         accentColor: addressAddPrimary,
-        semanticLabel: '${network.label} address network',
+        semanticLabel: 'Mạng địa chỉ ${network.label}',
         leading: Icon(
           Icons.circle_rounded,
           color: Color(network.colorHex),
@@ -99,7 +99,7 @@ class AddressAssetSelector extends StatelessWidget {
               onTap: () => onChanged(asset),
               fullWidth: true,
               accentColor: addressAddPrimary,
-              semanticLabel: '$asset address asset',
+              semanticLabel: 'Tài sản địa chỉ $asset',
             ),
           ),
       ],

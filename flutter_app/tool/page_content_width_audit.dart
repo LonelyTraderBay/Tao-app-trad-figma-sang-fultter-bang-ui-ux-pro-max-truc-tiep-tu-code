@@ -488,7 +488,7 @@ String _csvEscape(String value) {
 }
 
 Directory _findAppRoot() {
-  var current = Directory.current;
+  final current = Directory.current;
   if (File('${current.path}/pubspec.yaml').existsSync()) return current;
   final nested = Directory('${current.path}/flutter_app');
   if (File('${nested.path}/pubspec.yaml').existsSync()) return nested;

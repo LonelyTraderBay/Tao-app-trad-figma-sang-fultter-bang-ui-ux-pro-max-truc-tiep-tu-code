@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/settings/bot_guide_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,7 @@ void main() {
   }
 
   test('SC-131 mock repository exposes bot guide BE draft', () {
-    final snapshot = const MockTradeRepository().getBotGuide();
+    final snapshot = const MockTradeBotsRepository().getBotGuide();
 
     expect(snapshot.strategies, hasLength(4));
     expect(snapshot.bestPractices, hasLength(6));

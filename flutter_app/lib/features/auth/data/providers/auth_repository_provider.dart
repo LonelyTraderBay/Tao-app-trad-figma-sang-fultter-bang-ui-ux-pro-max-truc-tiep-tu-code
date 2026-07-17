@@ -4,7 +4,7 @@ import 'package:vit_trade_flutter/core/data/repository_guard.dart';
 import 'package:vit_trade_flutter/features/auth/data/repositories/mock_auth_repository.dart';
 import 'package:vit_trade_flutter/features/auth/domain/repositories/auth_repository.dart';
 
-import '../repositories/fail_closed_auth_repository.dart';
+import 'package:vit_trade_flutter/features/auth/data/repositories/fail_closed_auth_repository.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return guardedRepository(

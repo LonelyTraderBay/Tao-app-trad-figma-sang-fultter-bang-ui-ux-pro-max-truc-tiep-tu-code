@@ -180,7 +180,11 @@ class _EntrySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _SectionLabel(title: title, accentColor: accentColor),
+        VitSectionHeader(
+          title: title,
+          variant: VitSectionHeaderVariant.markerTitle,
+          accentColor: accentColor,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           clip: true,
@@ -203,41 +207,6 @@ class _EntrySection extends StatelessWidget {
                   ),
               ],
             ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.title, required this.accentColor});
-
-  final String title;
-  final Color accentColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: _leaderboardSectionMarkerWidth,
-          height: _leaderboardSectionMarkerHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: accentColor,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.xsRadius,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Text(
-          title,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: AppColors.text1,
-            fontWeight: AppTextStyles.bold,
           ),
         ),
       ],

@@ -17,9 +17,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
-part 'p2p_claim_detail_page_part_01.dart';
-part 'p2p_claim_detail_page_part_02.dart';
-part 'p2p_claim_detail_page_part_03.dart';
+part 'p2p_claim_detail_page_state.dart';
+part 'p2p_claim_detail_page_sections.dart';
+part 'p2p_claim_detail_page_common.dart';
 
 enum _ClaimDetailSection { timeline, evidence, notes }
 

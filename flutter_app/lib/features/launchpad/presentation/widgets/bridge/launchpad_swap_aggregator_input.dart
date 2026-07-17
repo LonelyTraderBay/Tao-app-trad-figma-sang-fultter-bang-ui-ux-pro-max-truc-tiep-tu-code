@@ -72,7 +72,7 @@ class _SwapInputCard extends StatelessWidget {
                   onChanged: onAmountChanged,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.end,
-                  semanticLabel: 'Launchpad swap amount',
+                  semanticLabel: 'Số tiền hoán đổi Launchpad',
                   hintText: '0.00',
                   textStyle: AppTextStyles.amountSm.copyWith(
                     color: AppColors.onAccent,

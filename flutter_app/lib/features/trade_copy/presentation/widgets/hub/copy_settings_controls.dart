@@ -235,7 +235,7 @@ class _ChannelButton extends StatelessWidget {
       fullWidth: true,
       density: VitDensity.compact,
       leading: Icon(icon),
-      semanticLabel: '$label notification channel',
+      semanticLabel: 'Kênh thông báo $label',
     );
   }
 }

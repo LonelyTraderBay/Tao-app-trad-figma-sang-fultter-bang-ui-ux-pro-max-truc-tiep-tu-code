@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -15,10 +16,10 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
-part '../../widgets/hub/trading_bots_page_part_01.dart';
-part '../../widgets/hub/trading_bots_page_part_02.dart';
-part '../../widgets/hub/trading_bots_page_part_03.dart';
-part '../../widgets/hub/trading_bots_page_part_04.dart';
+part '../../widgets/hub/trading_bots_page_my_bots_tab.dart';
+part '../../widgets/hub/trading_bots_page_bot_card.dart';
+part '../../widgets/hub/trading_bots_page_create_bot_sheet.dart';
+part '../../widgets/hub/trading_bots_page_formatters.dart';
 
 enum _TradingBotsTab { myBots, strategies }
 
@@ -107,7 +108,14 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
                 strategies: snapshot.strategies,
                 onCreate: _openCreateSheet,
               ),
-            const _RiskDisclaimer(),
+            VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Rủi ro giao dịch tự động',
+              message:
+                  'Bot không đảm bảo lợi nhuận. Hiệu suất quá khứ không đại diện kết quả tương lai.',
+              contractId: snapshot.highRiskContractId,
+            ),
           ],
         ),
         if (_showSuccess)

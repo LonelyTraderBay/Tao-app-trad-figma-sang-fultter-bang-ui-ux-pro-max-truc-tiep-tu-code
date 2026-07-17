@@ -115,42 +115,58 @@ class VitHeaderActionButton extends StatelessWidget {
         button: true,
         label: effectiveTooltip,
         enabled: _enabled,
-        child: SizedBox(
-          width: metrics.size,
-          height: metrics.size,
-          child: Material(
-            color: AppColors.transparent,
+        child: Material(
+          color: AppColors.transparent,
+          borderRadius: AppRadii.inputRadius,
+          child: InkWell(
+            onTap: _enabled ? onPressed : null,
             borderRadius: AppRadii.inputRadius,
-            child: Ink(
-              decoration: ShapeDecoration(
-                color: style.background,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                  side: style.border == null
-                      ? BorderSide.none
-                      : BorderSide(color: style.border!),
-                ),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minWidth: AppTopHeaderTokens.minTapTarget,
+                minHeight: AppTopHeaderTokens.minTapTarget,
               ),
-              child: InkWell(
-                onTap: _enabled ? onPressed : null,
-                borderRadius: AppRadii.inputRadius,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Center(
-                      child: Icon(
-                        type.icon,
-                        color: style.foreground,
-                        size: metrics.iconSize,
+              child: Center(
+                // widthFactor/heightFactor: 1 makes Center shrink-wrap to
+                // its child's size instead of its Flutter default of
+                // expanding to fill any *bounded* incoming constraint —
+                // without this, the tap target would grow to whatever the
+                // surrounding layout happens to allow instead of stopping
+                // at the ConstrainedBox minimum above.
+                widthFactor: 1,
+                heightFactor: 1,
+                child: SizedBox(
+                  width: metrics.size,
+                  height: metrics.size,
+                  child: Ink(
+                    decoration: ShapeDecoration(
+                      color: style.background,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.inputRadius,
+                        side: style.border == null
+                            ? BorderSide.none
+                            : BorderSide(color: style.border!),
                       ),
                     ),
-                    if (badgeCount > 0)
-                      Positioned(
-                        top: AppTopHeaderTokens.badgeOffset,
-                        right: AppTopHeaderTokens.badgeOffset,
-                        child: _HeaderActionBadge(count: badgeCount),
-                      ),
-                  ],
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Center(
+                          child: Icon(
+                            type.icon,
+                            color: style.foreground,
+                            size: metrics.iconSize,
+                          ),
+                        ),
+                        if (badgeCount > 0)
+                          Positioned(
+                            top: AppTopHeaderTokens.badgeOffset,
+                            right: AppTopHeaderTokens.badgeOffset,
+                            child: _HeaderActionBadge(count: badgeCount),
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

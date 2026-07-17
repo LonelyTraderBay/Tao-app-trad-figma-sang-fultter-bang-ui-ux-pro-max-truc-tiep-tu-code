@@ -48,7 +48,7 @@ class _RefreshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Refresh deposit address',
+      message: 'Làm mới địa chỉ nạp',
       child: VitChoicePill(
         key: DepositPage.refreshKey,
         onTap: onTap,
@@ -57,7 +57,7 @@ class _RefreshButton extends StatelessWidget {
         fullWidth: true,
         accentColor: _depositPrimary,
         leading: const Icon(Icons.refresh_rounded),
-        semanticLabel: 'Refresh deposit address',
+        semanticLabel: 'Làm mới địa chỉ nạp',
       ),
     );
   }
@@ -124,7 +124,4 @@ String _formatDeposit(double value) {
   return value.toString();
 }
 
-String _maskDepositAddress(String address) {
-  if (address.length <= 12) return address;
-  return '${address.substring(0, 6)}...${address.substring(address.length - 4)}';
-}
+String _maskDepositAddress(String address) => maskAddress(address);

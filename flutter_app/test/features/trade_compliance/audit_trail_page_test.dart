@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/audit_trail_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,7 @@ void main() {
   }
 
   test('SC-115 mock repository exposes audit trail BE draft', () {
-    final snapshot = const MockTradeRepository().getAuditTrail();
+    final snapshot = const MockTradeRegulatoryRepository().getAuditTrail();
 
     expect(snapshot.noticeTitle, 'Complete Record-Keeping');
     expect(snapshot.stats.map((stat) => stat.value), ['3', '12', '7yr']);

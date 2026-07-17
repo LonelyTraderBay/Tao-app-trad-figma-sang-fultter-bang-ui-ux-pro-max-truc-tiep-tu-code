@@ -130,7 +130,7 @@ class CopyTradingSortChips extends StatelessWidget {
             value: option,
             label: option,
             key: keys.sortKey(option),
-            semanticLabel: 'Sap xep copy trading theo $option',
+            semanticLabel: 'Sắp xếp copy trading theo $option',
           ),
       ],
       selectedValue: selected,

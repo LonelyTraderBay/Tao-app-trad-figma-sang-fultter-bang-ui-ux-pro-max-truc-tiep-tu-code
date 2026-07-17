@@ -57,7 +57,7 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
             key: confirmButtonKey,
             enabled: true,
             label: 'Xác nhận lưu',
-            semanticLabel: 'Confirm save wallet address',
+            semanticLabel: 'Xác nhận lưu địa chỉ ví',
             onTap: onConfirm,
           ),
         ],

@@ -11,7 +11,7 @@ class _WhitelistModeCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: enabled,
-      label: 'Toggle address whitelist mode',
+      label: 'Bật/tắt chế độ danh sách trắng địa chỉ',
       child: VitCard(
         key: AddressBookPage.whitelistModeKey,
         onTap: onTap,

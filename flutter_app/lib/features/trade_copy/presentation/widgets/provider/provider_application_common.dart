@@ -1,22 +1,5 @@
 part of '../../pages/provider/provider_application_page.dart';
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: color,
-    );
-  }
-}
-
 class _StepTitle extends StatelessWidget {
   const _StepTitle({required this.title});
 

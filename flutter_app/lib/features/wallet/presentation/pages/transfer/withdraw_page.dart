@@ -246,7 +246,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
 
           actionShowChevron: false,
 
-          actionSemanticLabel: 'Use full withdrawable balance',
+          actionSemanticLabel: 'Dùng toàn bộ số dư có thể rút',
 
           onAction: () {
             _amountController.text = formatWithdrawBalance(snapshot.available);

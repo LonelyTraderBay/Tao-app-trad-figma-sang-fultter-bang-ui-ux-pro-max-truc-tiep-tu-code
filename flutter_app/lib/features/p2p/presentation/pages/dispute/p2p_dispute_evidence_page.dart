@@ -286,7 +286,7 @@ class _UploadButton extends StatelessWidget {
       onTap: onPressed,
       padding: P2PSpacingTokens.p2pDisputeEvidenceButtonPadding,
       accentColor: AppModuleAccents.p2p,
-      semanticLabel: 'Upload dispute evidence',
+      semanticLabel: 'Tải lên bằng chứng khiếu nại',
     );
   }
 }

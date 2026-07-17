@@ -12,49 +12,25 @@ class _SortChips extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          _SortChip(
+          VitFilterChip(
             key: MarketCorrelationsPage.sortHighKey,
             label: 'Tương quan cao',
             active: sortOrder == CorrelationSortOrder.high,
             color: AppColors.sell,
             onTap: () => onSelected(CorrelationSortOrder.high),
+            padding: MarketsSpacingTokens.marketCorrelationsSortChipPadding,
           ),
           const SizedBox(width: _corrChipGap),
-          _SortChip(
+          VitFilterChip(
             key: MarketCorrelationsPage.sortLowKey,
             label: 'Tương quan thấp',
             active: sortOrder == CorrelationSortOrder.low,
             color: AppColors.buy,
             onTap: () => onSelected(CorrelationSortOrder.low),
+            padding: MarketsSpacingTokens.marketCorrelationsSortChipPadding,
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SortChip extends StatelessWidget {
-  const _SortChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      padding: MarketsSpacingTokens.marketCorrelationsSortChipPadding,
     );
   }
 }

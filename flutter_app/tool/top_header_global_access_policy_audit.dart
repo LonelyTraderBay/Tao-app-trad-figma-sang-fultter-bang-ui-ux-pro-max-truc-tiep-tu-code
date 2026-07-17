@@ -67,7 +67,7 @@ const _globalNotificationAllowlist = <String>{
 const _contextNotificationAllowlist = <String>{
   'lib/features/trade/presentation/widgets/convert_page_header_widgets.dart',
   'lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart',
-  'lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_part_01.dart',
+  'lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_state.dart',
 };
 
 void main(List<String> args) {
@@ -329,7 +329,7 @@ List<String> _collectSourceIssues(Directory appRoot) {
   }
 
   final homePart = File(
-    '${appRoot.path}/lib/features/home/presentation/pages/home_page_part_01.dart',
+    '${appRoot.path}/lib/features/home/presentation/pages/home_page_state.dart',
   );
   final homeSource = homePart.readAsStringSync();
   if (homeSource.contains('notifications: snapshot.notifications')) {

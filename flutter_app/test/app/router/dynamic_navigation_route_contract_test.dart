@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
-import 'package:vit_trade_flutter/core/navigation/navigation_intent_contract.dart';
+import '../../fixtures/navigation_intent_contract.dart';
 
 void main() {
   group('data-driven navigation route contracts', () {

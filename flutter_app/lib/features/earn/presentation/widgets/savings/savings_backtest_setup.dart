@@ -93,7 +93,7 @@ class AmountField extends StatelessWidget {
           fieldKey: SavingsBacktestPage.amountFieldKey,
           controller: controller,
           keyboardType: TextInputType.number,
-          semanticLabel: 'Savings backtest amount',
+          semanticLabel: 'Số tiền backtest tiết kiệm',
           prefix: const Icon(Icons.attach_money_rounded),
           suffix: Text(
             'USD',

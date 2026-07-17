@@ -3,21 +3,18 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:vit_trade_flutter/features/trade_core/data/providers/trade_repository_provider.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/data/providers/trade_repository_provider.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/domain/repositories/spot_trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/controllers/trade_controller_models.dart';
 
-export 'package:vit_trade_flutter/features/trade_terminal/data/providers/trade_repository_provider.dart';
-
 /// Shared read-model used by advanced terminal demos (chart / quality / etc.).
-final tradeReadModelControllerProvider = Provider<TradeReadModelController>((
-  ref,
-) {
-  return ref.watch(tradeRepositoryProvider);
+final tradeReadModelControllerProvider = Provider<SpotTradeRepository>((ref) {
+  return ref.watch(spotTradeRepositoryProvider);
 });
 
 final tradeRiskManagementControllerProvider =
     Provider<TradeRiskManagementController>((ref) {
-      final repository = ref.watch(tradeRepositoryProvider);
+      final repository = ref.watch(spotTradeRepositoryProvider);
       return TradeRiskManagementController(
         repository: repository,
         state: TradeRiskManagementViewState(
@@ -28,7 +25,7 @@ final tradeRiskManagementControllerProvider =
 
 final tradeAdvancedToolsControllerProvider =
     Provider<TradeAdvancedToolsController>((ref) {
-      final repository = ref.watch(tradeRepositoryProvider);
+      final repository = ref.watch(spotTradeRepositoryProvider);
       return TradeAdvancedToolsController(
         repository: repository,
         state: TradeAdvancedToolsViewState(

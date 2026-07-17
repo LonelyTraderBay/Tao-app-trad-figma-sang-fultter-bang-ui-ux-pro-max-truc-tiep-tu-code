@@ -138,7 +138,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                       AddressPrimaryActionButton(
                         key: AddressAddPage.saveKey,
                         enabled: _canSave(controller),
-                        semanticLabel: 'Save wallet address',
+                        semanticLabel: 'Lưu địa chỉ ví',
                         label: 'Lưu địa chỉ',
                         onTap: () => _showConfirmPreview(controller),
                       ),

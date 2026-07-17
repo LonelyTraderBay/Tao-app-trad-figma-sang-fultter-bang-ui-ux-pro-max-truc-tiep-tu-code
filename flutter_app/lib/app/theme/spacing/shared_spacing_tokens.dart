@@ -39,7 +39,10 @@ final class SharedSpacingTokens {
   // constant is still consumed internally by other Arena-only tokens.
   static const double arenaCommunityRulesLinkLineHeight = 1.35;
 
-  static const double homeRecentProductHeight = 86;
+  // A11Y-3: was 86 — raised so the fixed-height card still fits its title +
+  // subtitle at the app-wide 1.3x text-scaling clamp (VitTradeApp's
+  // MediaQuery.withClampedTextScaling) without overflowing.
+  static const double homeRecentProductHeight = 94;
   static const double homeRecentProductIcon = 28;
   static const double homeRecentProductIconText = 15;
   static const double homeDiscoveryIconContainer = 44;

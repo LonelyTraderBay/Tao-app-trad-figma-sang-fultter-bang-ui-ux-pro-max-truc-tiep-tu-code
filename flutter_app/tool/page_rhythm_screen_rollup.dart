@@ -406,7 +406,7 @@ Map<String, String> _buildWidgetToPageMap(Directory appRoot) {
   map['TradePage'] =
       '${appRoot.path}/lib/features/trade/presentation/pages/hub/trade_page.dart'
           .replaceAll('\\', '/');
-  map['_AuthRouteShell'] = '${appRoot.path}/lib/app/router/router_helpers.dart'
+  map['AuthRouteShell'] = '${appRoot.path}/lib/app/router/router_helpers.dart'
       .replaceAll('\\', '/');
   return map;
 }

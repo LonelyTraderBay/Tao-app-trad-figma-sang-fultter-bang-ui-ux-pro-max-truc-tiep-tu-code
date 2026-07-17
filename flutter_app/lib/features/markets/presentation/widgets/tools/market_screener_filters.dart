@@ -165,13 +165,18 @@ class _AdvancedFiltersCard extends StatelessWidget {
             runSpacing: AppSpacing.x1,
             children: [
               for (final category in categories)
-                _CategoryChip(
+                VitFilterChip(
                   key: MarketScreenerPage.categoryKey(category),
                   label: category,
                   active: category == 'Tất cả'
                       ? query.categories.isEmpty
                       : query.categories.contains(category),
                   onTap: () => onCategorySelected(category),
+                  color: _marketPrimary,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x2,
+                  ),
+                  semanticLabel: category,
                 ),
             ],
           ),
@@ -225,31 +230,6 @@ class _AdvancedFiltersCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _marketPrimary,
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
-      semanticLabel: label,
     );
   }
 }
@@ -335,7 +315,7 @@ class _SortScroller extends StatelessWidget {
                 MarketScreenerSort.change24h => 28,
                 MarketScreenerSort.price => 13,
               },
-              child: _SortChip(
+              child: _SortHeaderChip(
                 sort: options[index].$1,
                 label: options[index].$2,
                 active: query.sortBy == options[index].$1,
@@ -366,8 +346,8 @@ class _SortScroller extends StatelessWidget {
   }
 }
 
-class _SortChip extends StatelessWidget {
-  const _SortChip({
+class _SortHeaderChip extends StatelessWidget {
+  const _SortHeaderChip({
     required this.sort,
     required this.label,
     required this.active,

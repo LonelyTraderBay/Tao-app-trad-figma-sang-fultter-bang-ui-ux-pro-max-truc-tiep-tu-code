@@ -64,15 +64,15 @@ void main() {
 
   test('SC-172 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/dca/presentation/pages/dca_schedule_config_page.dart',
+      'lib/features/dca/presentation/pages/schedule/dca_schedule_config_page.dart',
     ).readAsStringSync();
     final source = [
       pageSource,
       File(
-        'lib/features/dca/presentation/widgets/dca_schedule_strategy_time.dart',
+        'lib/features/dca/presentation/widgets/schedule/dca_schedule_strategy_time.dart',
       ).readAsStringSync(),
       File(
-        'lib/features/dca/presentation/widgets/dca_schedule_limits_enable.dart',
+        'lib/features/dca/presentation/widgets/schedule/dca_schedule_limits_enable.dart',
       ).readAsStringSync(),
     ].join('\n');
 

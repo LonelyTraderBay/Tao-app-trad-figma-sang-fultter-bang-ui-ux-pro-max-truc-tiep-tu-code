@@ -123,8 +123,8 @@ class _StatusPill extends StatelessWidget {
   }
 }
 
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({required this.label});
+class _CategoryTag extends StatelessWidget {
+  const _CategoryTag({required this.label});
 
   final String label;
 

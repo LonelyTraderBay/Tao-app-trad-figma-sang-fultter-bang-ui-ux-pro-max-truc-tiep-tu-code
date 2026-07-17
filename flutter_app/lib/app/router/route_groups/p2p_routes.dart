@@ -1,6 +1,83 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_express_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_home_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_escrow_balance_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_escrow_detail_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_address_proof_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_identity_verification_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_kyc_requirements_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_kyc_status_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_video_verification_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_security_center_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_2fa_settings_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_device_management_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_anti_phishing_code_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_login_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_e2e_info_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_fraud_prevention_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_aml_screening_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_limit_tracker_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_large_transaction_justification_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_risk_assessment_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_order_book_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_achievements_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_blacklist_add_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_blacklist_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_guide_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_notifications_settings_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_settings_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_source_of_funds_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_tax_reporting_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_transaction_limits_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/wallet/p2p_wallet_transfer_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_fund_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_certificate_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_contribution_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_claim_detail_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_policy_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_insurance_score_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_express_confirm_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_order_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_chat_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_detail_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_evidence_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_dispute_resolution_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/dispute/p2p_disputes_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_my_ads_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_merchant_apply_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/merchant/p2p_merchant_profile_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/orders/p2p_my_orders_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_methods_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_ownership_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/payment/p2p_payment_method_verification_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_report_merchant_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_reviews_page.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_trading_level_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/security_page.dart';
+
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.p2pExpress,
@@ -148,7 +225,7 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.p2pEscrowBalance,
       name: AppRouteNames.sc245P2PEscrowBalance,
       builder: (_, state) => P2PEscrowBalancePage(
-        initialAsset: _p2pAssetFromQuery(state.uri.queryParameters['asset']),
+        initialAsset: p2pAssetFromQuery(state.uri.queryParameters['asset']),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -407,8 +484,8 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, state) {
         final query = state.uri.queryParameters;
         return P2PWalletTransferPage(
-          initialAsset: _p2pAssetFromQuery(query['asset']),
-          initialType: _p2pWalletTransferTypeFromQuery(query),
+          initialAsset: p2pAssetFromQuery(query['asset']),
+          initialType: p2pWalletTransferTypeFromQuery(query),
           shellRenderMode: shellRenderMode,
         );
       },
@@ -514,7 +591,7 @@ List<RouteBase> _p2pRoutes(ShellRenderMode shellRenderMode) {
   ];
 }
 
-String _p2pAssetFromQuery(String? value) {
+String p2pAssetFromQuery(String? value) {
   final asset = value?.toUpperCase();
   return switch (asset) {
     'BTC' || 'VND' || 'USDT' => asset!,
@@ -522,7 +599,7 @@ String _p2pAssetFromQuery(String? value) {
   };
 }
 
-String _p2pWalletTransferTypeFromQuery(Map<String, String> query) {
+String p2pWalletTransferTypeFromQuery(Map<String, String> query) {
   return switch (query['direction']) {
     'to-main' => 'withdraw',
     'from-main' => 'deposit',

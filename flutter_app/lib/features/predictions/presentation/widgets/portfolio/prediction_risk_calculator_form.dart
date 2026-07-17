@@ -12,7 +12,7 @@ class _RiskTabBar extends StatelessWidget {
       activeTab: activeTab,
       onChanged: onChanged,
       showBottomBorder: true,
-      semanticsLabel: 'Prediction risk calculator tab',
+      semanticsLabel: 'Tab máy tính rủi ro dự đoán',
       items: [
         (
           PredictionRiskCalculatorPage.calculatorTabKey,
@@ -218,7 +218,7 @@ class _OutcomeButton extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: '$label risk scenario',
+      label: 'Kịch bản rủi ro $label',
       child: VitChoicePill(
         label: label,
         selected: selected,

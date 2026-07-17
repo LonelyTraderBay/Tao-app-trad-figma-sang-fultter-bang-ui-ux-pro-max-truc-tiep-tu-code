@@ -235,10 +235,4 @@ String _formatP2PFiat(num value) {
   return buffer.toString();
 }
 
-String _maskPaymentAccount(String value) {
-  final trimmed = value.trim();
-  if (trimmed.isEmpty) return '';
-  if (trimmed.length <= 4) return '***';
-  final prefix = trimmed.substring(0, trimmed.length < 7 ? 1 : 3);
-  return '$prefix...${trimmed.substring(trimmed.length - 4)}';
-}
+String _maskPaymentAccount(String value) => maskAccountNumber(value);

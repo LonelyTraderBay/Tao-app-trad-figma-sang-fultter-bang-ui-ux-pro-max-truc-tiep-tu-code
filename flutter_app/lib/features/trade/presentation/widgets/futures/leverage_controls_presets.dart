@@ -59,7 +59,7 @@ class _LeverageSlider extends StatelessWidget {
                 key: LeveragePage.stopKey(stop),
                 value: stop,
                 label: '${stop}x',
-                semanticLabel: 'Chon muc don bay ${stop}x',
+                semanticLabel: 'Chọn mức đòn bẩy ${stop}x',
               ),
           ],
         ),
@@ -135,7 +135,7 @@ class _PresetButton extends StatelessWidget {
       fullWidth: true,
       height: TradeSpacingTokens.tradeBotQuestionIconBox,
       padding: AppSpacing.zeroInsets,
-      semanticLabel: 'Chon nhanh don bay ${leverage}x',
+      semanticLabel: 'Chọn nhanh đòn bẩy ${leverage}x',
     );
   }
 }

@@ -164,7 +164,7 @@ class _CapitalSection extends StatelessWidget {
               VitPresetChipItem(
                 value: percent,
                 label: '${percent.toStringAsFixed(0)}%',
-                semanticLabel: 'Dat von copy ${percent.toStringAsFixed(0)}%',
+                semanticLabel: 'Đặt vốn copy ${percent.toStringAsFixed(0)}%',
               ),
           ],
         ),

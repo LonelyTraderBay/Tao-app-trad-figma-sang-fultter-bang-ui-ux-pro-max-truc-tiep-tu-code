@@ -6,19 +6,16 @@ class _PrimaryButton extends StatelessWidget {
     required this.label,
     required this.enabled,
     required this.onTap,
-    this.variant = VitCtaButtonVariant.primary,
   });
 
   final String label;
   final bool enabled;
   final VoidCallback onTap;
-  final VitCtaButtonVariant variant;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: enabled ? onTap : null,
-      variant: variant,
       height: AppSpacing.inputHeight,
       child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );

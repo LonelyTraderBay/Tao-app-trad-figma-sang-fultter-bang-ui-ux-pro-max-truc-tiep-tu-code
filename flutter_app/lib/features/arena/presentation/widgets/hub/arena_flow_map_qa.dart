@@ -107,10 +107,13 @@ class _QaCategory extends StatelessWidget {
     final checked = items.where((item) => checkedIds.contains(item.id)).length;
     return Column(
       children: [
-        _SectionLabel(
+        VitSectionHeader(
           title: category,
           subtitle: '$checked/${items.length}',
-          color: checked == items.length ? AppColors.buy : AppColors.text3,
+          variant: VitSectionHeaderVariant.markerTitle,
+          accentColor: checked == items.length
+              ? AppColors.buy
+              : AppColors.text3,
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
@@ -214,58 +217,6 @@ class _FlowDisclaimer extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({
-    required this.title,
-    required this.color,
-    this.subtitle,
-  });
-
-  final String title;
-  final Color color;
-  final String? subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: _flowMapMarkerWidth,
-          height: _flowMapMarkerHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: color,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.xsRadius,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              if (subtitle != null)
-                Text(
-                  subtitle!,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

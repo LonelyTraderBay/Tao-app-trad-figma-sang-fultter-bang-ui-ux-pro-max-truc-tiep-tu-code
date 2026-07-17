@@ -274,7 +274,4 @@ class _SheetTitle extends StatelessWidget {
   }
 }
 
-String _shortHash(String value) {
-  if (value.length <= 24) return value;
-  return '${value.substring(0, 20)}...${value.substring(value.length - 10)}';
-}
+String _shortHash(String value) => maskAddress(value, head: 20, tail: 10);

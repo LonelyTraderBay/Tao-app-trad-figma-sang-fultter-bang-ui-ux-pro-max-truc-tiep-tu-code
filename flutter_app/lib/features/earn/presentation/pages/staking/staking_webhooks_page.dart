@@ -303,7 +303,7 @@ class _EventChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       padding: EarnSpacingTokens.earnSmallPillPadding,
-      semanticLabel: 'Webhook event $label',
+      semanticLabel: 'Loại sự kiện webhook $label',
     );
   }
 }

@@ -43,7 +43,10 @@ final class AdminSpacingTokens {
   static const double adminAnalyticsSparklineHeight = 180;
   static const double adminFunnelWaterfallHeight = 200;
   static const int adminGridColumns = 2;
-  static const double adminMetricTileExtent = 82;
+  // A11Y-3: was 82 — raised so a 2-line funnel name + step-count label fit
+  // at the app-wide 1.3x text-scaling clamp without overflowing this
+  // GridView cell's fixed mainAxisExtent.
+  static const double adminMetricTileExtent = 90;
   static const double adminPainterLabelMaxWidth = 42;
   static const double adminPainterWideLabelMaxWidth = 70;
   static const double adminStateRadius =

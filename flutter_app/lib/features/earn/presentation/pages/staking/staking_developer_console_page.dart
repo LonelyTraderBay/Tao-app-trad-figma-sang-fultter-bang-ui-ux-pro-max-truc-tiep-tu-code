@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
@@ -303,7 +304,7 @@ class _ApiKeyCard extends StatelessWidget {
               Expanded(
                 child: _ApiKeyMeta(
                   label: 'Requests',
-                  value: _formatInt(apiKey.requests),
+                  value: VitFormat.count(apiKey.requests),
                 ),
               ),
             ],
@@ -481,12 +482,3 @@ Color _toneColor(String tone) {
   };
 }
 
-String _formatInt(int value) {
-  final raw = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < raw.length; i++) {
-    if (i > 0 && (raw.length - i) % 3 == 0) buffer.write(',');
-    buffer.write(raw[i]);
-  }
-  return buffer.toString();
-}

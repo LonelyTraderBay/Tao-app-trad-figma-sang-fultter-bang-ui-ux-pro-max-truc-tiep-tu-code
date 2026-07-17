@@ -24,9 +24,9 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part '../../widgets/ads/p2p_ad_analytics_page_part_01.dart';
-part '../../widgets/ads/p2p_ad_analytics_page_part_02.dart';
-part '../../widgets/ads/p2p_ad_analytics_page_part_03.dart';
+part '../../widgets/ads/p2p_ad_analytics_overview_cards.dart';
+part '../../widgets/ads/p2p_ad_analytics_breakdown_cards.dart';
+part '../../widgets/ads/p2p_ad_analytics_charts_common.dart';
 
 const double _p2pAdAnalyticsIdentityExtent =
     P2PSpacingTokens.p2pMarketplaceAnalyticsIdentityHeight;

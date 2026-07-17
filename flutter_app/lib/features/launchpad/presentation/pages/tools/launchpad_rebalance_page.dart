@@ -21,9 +21,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
-import '../../widgets/tools/launchpad_rebalance_allocation.dart';
-import '../../widgets/tools/launchpad_rebalance_deviation.dart';
-import '../../widgets/tools/launchpad_rebalance_strategy.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_rebalance_allocation.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_rebalance_deviation.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_rebalance_strategy.dart';
 
 part '../../widgets/tools/launchpad_rebalance_calculations.dart';
 part '../../widgets/tools/launchpad_rebalance_confirm_sheet.dart';

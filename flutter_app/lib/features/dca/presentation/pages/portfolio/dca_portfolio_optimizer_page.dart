@@ -21,7 +21,7 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'dca_portfolio_optimizer_page_part_04.dart';
+part 'dca_portfolio_optimizer_page_common.dart';
 part '../../widgets/portfolio/dca_portfolio_optimizer_header_drift.dart';
 part '../../widgets/portfolio/dca_portfolio_optimizer_comparison_hero.dart';
 part '../../widgets/portfolio/dca_portfolio_optimizer_tabs.dart';

@@ -1,13 +1,37 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _utilityRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
+import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/enterprise_states_page.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/cross_module_analytics.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/smart_alert_center.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center.dart';
+import 'package:vit_trade_flutter/features/dev/presentation/pages/route_checker_page.dart';
+import 'package:vit_trade_flutter/features/dev/presentation/pages/performance_monitor.dart';
+import 'package:vit_trade_flutter/features/dev/presentation/pages/missing_screens_showcase_page.dart';
+import 'package:vit_trade_flutter/features/dev/presentation/pages/design_system_page.dart';
+import 'package:vit_trade_flutter/features/dca/presentation/pages/hub/dca_overview_demo.dart';
+import 'package:vit_trade_flutter/features/discovery/presentation/pages/unified_search_page.dart';
+import 'package:vit_trade_flutter/features/notifications/presentation/pages/notifications_page.dart';
+import 'package:vit_trade_flutter/features/discovery/presentation/pages/topic_hub_page.dart';
+import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
+import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_history_page.dart';
+import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_rewards_page.dart';
+import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_rules_page.dart';
+import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_friend_detail_page.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/placeholder_routes.dart';
+
+List<RouteBase> utilityRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.rewards,
       name: AppRouteNames.sc319RewardsHub,
       builder: (_, state) => RewardsHubPage(
         shellRenderMode: shellRenderMode,
-        initialFilter: _rewardsFilterFromTab(state.uri.queryParameters['tab']),
+        initialFilter: rewardsFilterFromTab(state.uri.queryParameters['tab']),
       ),
     ),
     GoRoute(
@@ -84,11 +108,11 @@ List<RouteBase> _utilityRoutes(ShellRenderMode shellRenderMode) {
   ];
 }
 
-String? _rewardsFilterFromTab(String? tab) {
+String? rewardsFilterFromTab(String? tab) {
   return tab == 'arena' ? 'Arena' : null;
 }
 
-List<RouteBase> _discoveryAndReferralRoutes(ShellRenderMode shellRenderMode) {
+List<RouteBase> discoveryAndReferralRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.search,
@@ -144,6 +168,6 @@ List<RouteBase> _discoveryAndReferralRoutes(ShellRenderMode shellRenderMode) {
   ];
 }
 
-List<RouteBase> get _navigationPlaceholderRoutes {
-  return [..._homeOutgoingPlaceholders, ..._marketOutgoingPlaceholders];
+List<RouteBase> get navigationPlaceholderRoutes {
+  return [...homeOutgoingPlaceholders, ...marketOutgoingPlaceholders];
 }

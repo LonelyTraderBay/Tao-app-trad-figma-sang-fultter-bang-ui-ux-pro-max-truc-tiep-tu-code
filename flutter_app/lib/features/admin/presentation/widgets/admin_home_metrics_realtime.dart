@@ -28,7 +28,7 @@ class _MetricCard extends StatelessWidget {
     final accent = _accentColor(metric.accent);
     return Semantics(
       label:
-          'Admin home metric ${metric.label}: ${metric.value}. ${metric.deltaLabel} ${metric.timeframeLabel}',
+          'Chỉ số trang chủ quản trị ${metric.label}: ${metric.value}. ${metric.deltaLabel} ${metric.timeframeLabel}',
       child: VitCard(
         padding: AdminSpacingTokens.adminCompactPadding,
         child: Column(
@@ -218,7 +218,9 @@ class _PauseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: isLive ? 'Pause live admin updates' : 'Resume live admin updates',
+      label: isLive
+          ? 'Tạm dừng cập nhật trực tiếp quản trị'
+          : 'Tiếp tục cập nhật trực tiếp quản trị',
       child: Material(
         key: AdminHome.pauseKey,
         color: AppColors.surface3,

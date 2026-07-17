@@ -22,9 +22,9 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'connected_ecosystem_production_page_part_01.dart';
-part 'connected_ecosystem_production_page_part_02.dart';
-part 'connected_ecosystem_production_page_part_03.dart';
+part 'connected_ecosystem_production_page_canonical_states_section.dart';
+part 'connected_ecosystem_production_page_flows_registry_handoff.dart';
+part 'connected_ecosystem_production_page_handoff_and_shared_widgets.dart';
 
 enum _EcosystemSection { canonical, states, flows, registry, handoff }
 

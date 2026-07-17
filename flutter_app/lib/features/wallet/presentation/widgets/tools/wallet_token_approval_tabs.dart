@@ -27,7 +27,7 @@ class WalletTokenApprovalTabs extends StatelessWidget {
             child: Semantics(
               container: true,
               label:
-                  '${walletTokenApprovalTabSemanticLabel(activeTab)} approvals tab',
+                  'Tab ủy quyền ${walletTokenApprovalTabSemanticLabel(activeTab)}',
               child: VitTabBar(
                 variant: VitTabBarVariant.underline,
                 activeKey: activeTab,

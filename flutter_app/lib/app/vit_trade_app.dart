@@ -49,6 +49,15 @@ class _VitTradeMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: const _VitTradeScrollBehavior(),
       routerConfig: routerConfig,
+      // A11Y-2/3: caps OS-level font-scaling boosts at 1.3x so large system
+      // text sizes cannot overflow the fixed-height chrome/card layouts
+      // throughout the app, while still letting low-vision users scale text
+      // up from the 1.0 baseline.
+      builder: (context, child) => MediaQuery.withClampedTextScaling(
+        minScaleFactor: 1.0,
+        maxScaleFactor: 1.3,
+        child: child!,
+      ),
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,

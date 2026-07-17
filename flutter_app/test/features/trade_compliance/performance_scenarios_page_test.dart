@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/performance_scenarios_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-109 mock repository exposes performance scenarios BE draft', () {
-    final snapshot = const MockTradeRepository().getPerformanceScenarios();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getPerformanceScenarios();
 
     expect(snapshot.investment, 10000);
     expect(snapshot.holdingPeriods, [1, 3, 5]);

@@ -1,6 +1,14 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _adminRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/ab_test_dashboard.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/analytics_dashboard.dart';
+import 'package:vit_trade_flutter/features/admin/presentation/pages/funnel_dashboard.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> adminRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.admin,

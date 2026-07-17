@@ -19,8 +19,8 @@ policy_violations=0
 | search_action | module_search | `lib/features/discovery/presentation/pages/topic_hub_page.dart` | 102 | yes | - | Module/discovery search action is allowlisted. |
 | search_action | global_search | `lib/features/home/presentation/widgets/home_header.dart` | 23 | yes | - | Home global command search. |
 | notification_action | global_notification | `lib/features/home/presentation/widgets/home_header.dart` | 28 | yes | - | Home global notification inbox action. |
-| notification_action | context_notification | `lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart` | 100 | yes | - | Context notification action must not masquerade as global inbox. |
-| notification_action | context_notification | `lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_part_01.dart` | 28 | yes | - | Context notification action must not masquerade as global inbox. |
+| notification_action | context_notification | `lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart` | 101 | yes | - | Context notification action must not masquerade as global inbox. |
+| notification_action | context_notification | `lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | 28 | yes | - | Context notification action must not masquerade as global inbox. |
 | search_action | module_search | `lib/features/predictions/presentation/pages/hub/predictions_home_page.dart` | 122 | yes | - | Module/discovery search action is allowlisted. |
 
 ## Source Issues

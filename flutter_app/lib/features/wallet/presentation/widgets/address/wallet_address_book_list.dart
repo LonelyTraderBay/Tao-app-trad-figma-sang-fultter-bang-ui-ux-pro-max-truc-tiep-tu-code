@@ -211,7 +211,7 @@ class _CopyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: copied ? 'Address copied' : 'Copy masked wallet address',
+      label: copied ? 'Đã sao chép địa chỉ' : 'Sao chép địa chỉ ví đã ẩn',
       child: VitChoicePill(
         key: AddressBookPage.copyKey(addressId),
         label: copied ? '\u0110\u00E3 copy' : 'Sao ch\u00E9p',

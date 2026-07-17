@@ -140,7 +140,7 @@ class _FilterRow extends StatelessWidget {
             value: filter,
             label: _filterLabel(filter),
             key: StakingEarnPage.filterKey(filter.name),
-            semanticLabel: 'Loc san pham ${_filterLabel(filter)}',
+            semanticLabel: 'Lọc sản phẩm ${_filterLabel(filter)}',
           ),
       ],
     );

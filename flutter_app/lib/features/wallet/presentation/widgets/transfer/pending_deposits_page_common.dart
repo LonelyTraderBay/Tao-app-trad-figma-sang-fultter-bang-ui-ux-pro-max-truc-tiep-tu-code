@@ -91,8 +91,8 @@ class _DepositDetails extends StatelessWidget {
             trailing: Semantics(
               button: true,
               label: copied
-                  ? 'Transaction hash copied for ${deposit.asset}'
-                  : 'Copy transaction hash for ${deposit.asset}',
+                  ? 'Đã sao chép mã giao dịch của ${deposit.asset}'
+                  : 'Sao chép mã giao dịch của ${deposit.asset}',
               child: VitStatusPill(
                 key: PendingDepositsPage.copyKey(deposit.id),
                 label: copied ? '\u0110\u00E3 ch\u00E9p' : 'Copy',
@@ -186,7 +186,4 @@ _DepositStatusConfig _statusConfig(String status) {
   };
 }
 
-String _maskPendingAddress(String value) {
-  if (value.length <= 12) return value;
-  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
-}
+String _maskPendingAddress(String value) => maskAddress(value);

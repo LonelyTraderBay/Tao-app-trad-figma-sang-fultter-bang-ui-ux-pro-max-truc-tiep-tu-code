@@ -14,11 +14,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-import '../../widgets/tools/launchpad_dca_builder_common.dart';
-import '../../widgets/tools/launchpad_dca_builder_create_form.dart';
-import '../../widgets/tools/launchpad_dca_builder_history.dart';
-import '../../widgets/tools/launchpad_dca_builder_strategies.dart';
-import '../../widgets/tools/launchpad_dca_builder_summary.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_common.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_create_form.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_history.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_strategies.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_summary.dart';
 
 class LaunchpadDcaBuilderPage extends ConsumerStatefulWidget {
   const LaunchpadDcaBuilderPage({super.key, this.shellRenderMode});

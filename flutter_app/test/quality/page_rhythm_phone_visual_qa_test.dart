@@ -81,7 +81,7 @@ void main() {
           reason: errors.map((e) => e.exceptionAsString()).join('\n'),
         );
 
-        Object? exception = tester.takeException();
+        final Object? exception = tester.takeException();
         expect(exception, isNull, reason: '$exception');
       } finally {
         FlutterError.onError = previousOnError;

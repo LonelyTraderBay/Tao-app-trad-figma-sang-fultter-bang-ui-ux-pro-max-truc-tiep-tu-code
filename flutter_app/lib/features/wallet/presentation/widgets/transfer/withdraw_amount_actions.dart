@@ -33,7 +33,7 @@ class WithdrawRecentAddresses extends StatelessWidget {
         for (var i = 0; i < addresses.length; i++) ...[
           Semantics(
             button: true,
-            label: 'Use recent withdrawal address ${addresses[i].label}',
+            label: 'Dùng địa chỉ rút gần đây ${addresses[i].label}',
             hint: addresses[i].address,
             child: VitCard(
               key: withdrawRecentAddressKey(addresses[i].label),
@@ -103,7 +103,7 @@ class WithdrawAmountInput extends StatelessWidget {
     return VitInput(
       fieldKey: withdrawAmountFieldKey,
       controller: controller,
-      semanticLabel: 'Withdrawal amount',
+      semanticLabel: 'Số tiền rút',
       hintText: '0.00',
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
@@ -227,7 +227,7 @@ class WithdrawSupportLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Open contextual withdrawal support',
+      label: 'Mở hỗ trợ rút tiền theo ngữ cảnh',
       child: VitCtaButton(
         key: withdrawSupportKey,
         onPressed: onTap,
@@ -256,10 +256,10 @@ class WithdrawNextButton extends StatelessWidget {
     return Semantics(
       button: true,
       enabled: onTap != null,
-      label: 'Preview withdrawal',
+      label: 'Xem trước lệnh rút',
       hint: disabledReason,
       child: Tooltip(
-        message: disabledReason ?? 'Preview withdrawal',
+        message: disabledReason ?? 'Xem trước lệnh rút',
         child: VitCtaButton(
           key: withdrawNextKey,
           onPressed: onTap,

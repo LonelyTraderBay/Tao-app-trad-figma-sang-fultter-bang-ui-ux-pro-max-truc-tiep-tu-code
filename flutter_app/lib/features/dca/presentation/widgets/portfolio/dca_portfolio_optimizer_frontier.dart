@@ -61,7 +61,7 @@ class _FrontierContent extends StatelessWidget {
                 child: Semantics(
                   container: true,
                   label:
-                      'Efficient frontier chart. Optimal portfolio return ${snapshot.optimalReturnPercent.toStringAsFixed(0)} percent, risk ${snapshot.optimalRiskPercent.toStringAsFixed(0)} percent, Sharpe ${snapshot.optimalSharpe.toStringAsFixed(2)}.',
+                      'Biểu đồ đường biên hiệu quả. Lợi nhuận danh mục tối ưu ${snapshot.optimalReturnPercent.toStringAsFixed(0)} phần trăm, rủi ro ${snapshot.optimalRiskPercent.toStringAsFixed(0)} phần trăm, Sharpe ${snapshot.optimalSharpe.toStringAsFixed(2)}.',
                   child: CustomPaint(
                     painter: _FrontierChartPainter(snapshot.frontier),
                   ),

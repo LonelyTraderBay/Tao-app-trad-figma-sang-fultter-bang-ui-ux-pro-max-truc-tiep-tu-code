@@ -310,7 +310,7 @@ void main() {
     if (!file.existsSync()) {
       continue;
     }
-    var content = file.readAsStringSync();
+    final content = file.readAsStringSync();
     if (!content.contains(layoutImport)) {
       file.writeAsStringSync(_insertImport(content, layoutImport));
       stdout.writeln('Added import to $libraryPath');

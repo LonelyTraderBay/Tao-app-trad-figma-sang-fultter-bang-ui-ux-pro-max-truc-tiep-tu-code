@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
@@ -191,7 +192,7 @@ class _ProposalCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${_formatInt(proposal.totalVotes)} votes - ${proposal.quorum}% quorum',
+                  '${VitFormat.count(proposal.totalVotes)} votes - ${proposal.quorum}% quorum',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -241,15 +242,3 @@ class _VoteRatioBar extends StatelessWidget {
   }
 }
 
-String _formatInt(int value) {
-  final source = value.toString();
-  final buffer = StringBuffer();
-  for (var i = 0; i < source.length; i++) {
-    final remaining = source.length - i;
-    buffer.write(source[i]);
-    if (remaining > 1 && remaining % 3 == 1) {
-      buffer.write(',');
-    }
-  }
-  return buffer.toString();
-}

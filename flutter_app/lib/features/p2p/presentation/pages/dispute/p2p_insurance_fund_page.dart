@@ -24,9 +24,9 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'p2p_insurance_fund_page_part_01.dart';
-part 'p2p_insurance_fund_page_part_02.dart';
-part 'p2p_insurance_fund_page_part_03.dart';
+part 'p2p_insurance_fund_overview_cards.dart';
+part 'p2p_insurance_fund_claims_tour.dart';
+part 'p2p_insurance_fund_page_common.dart';
 
 enum _InsuranceTab { overview, claims }
 

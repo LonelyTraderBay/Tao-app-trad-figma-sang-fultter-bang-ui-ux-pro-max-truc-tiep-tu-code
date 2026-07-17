@@ -154,7 +154,13 @@ class _ToggleSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SectionLabel(icon: icon, label: label, color: color),
+        VitSectionHeader(
+          title: label,
+          icon: icon,
+          iconColor: color,
+          iconSize: AppSpacing.iconSm,
+          titleColor: AppColors.text2,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
@@ -192,10 +198,12 @@ class _SecuritySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel(
+        const VitSectionHeader(
+          title: 'Bảo mật giao dịch',
           icon: Icons.shield_outlined,
-          label: 'Bảo mật giao dịch',
-          color: AppColors.sell,
+          iconColor: AppColors.sell,
+          iconSize: AppSpacing.iconSm,
+          titleColor: AppColors.text2,
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(

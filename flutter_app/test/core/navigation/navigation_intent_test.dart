@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vit_trade_flutter/core/navigation/navigation_intent_contract.dart';
+import '../../fixtures/navigation_intent_contract.dart';
 import 'package:vit_trade_flutter/core/navigation/navigation_intent.dart';
 
 void main() {

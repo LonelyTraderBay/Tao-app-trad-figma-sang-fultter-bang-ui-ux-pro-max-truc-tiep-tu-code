@@ -386,6 +386,23 @@ final class TradeOrderDraft {
   final TradeOrderType type;
   final double price;
   final double amount;
+
+  // Value equality so a `TradeOrderDraft` rebuilt from the same on-screen
+  // values (e.g. every keystroke re-reading the same amount) resolves to
+  // the same Provider.family cache entry instead of a new one each time.
+  // See PERF-HN1, docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TradeOrderDraft &&
+          other.pairId == pairId &&
+          other.side == side &&
+          other.type == type &&
+          other.price == price &&
+          other.amount == amount);
+
+  @override
+  int get hashCode => Object.hash(pairId, side, type, price, amount);
 }
 
 final class TradeOrderPreview {

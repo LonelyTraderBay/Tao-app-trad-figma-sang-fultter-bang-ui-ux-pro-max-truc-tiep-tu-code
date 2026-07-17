@@ -84,6 +84,35 @@ final class TradeFuturesOrderDraft {
   final double? limitPrice;
   final double? takeProfit;
   final double? stopLoss;
+
+  // Value equality so a `TradeFuturesOrderDraft` rebuilt from the same
+  // on-screen values resolves to the same Provider.family cache entry
+  // instead of a new one each time. See PERF-HN1,
+  // docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TradeFuturesOrderDraft &&
+          other.pairId == pairId &&
+          other.side == side &&
+          other.type == type &&
+          other.margin == margin &&
+          other.leverage == leverage &&
+          other.limitPrice == limitPrice &&
+          other.takeProfit == takeProfit &&
+          other.stopLoss == stopLoss);
+
+  @override
+  int get hashCode => Object.hash(
+    pairId,
+    side,
+    type,
+    margin,
+    leverage,
+    limitPrice,
+    takeProfit,
+    stopLoss,
+  );
 }
 
 final class TradeFuturesPreview {

@@ -26,7 +26,7 @@ class _TotalStats extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    _formatUsd(snapshot.totalValue, decimals: 0),
+                    VitFormat.usdWhole(snapshot.totalValue),
                     style: AppTextStyles.numericDisplayXl,
                   ),
                 ),

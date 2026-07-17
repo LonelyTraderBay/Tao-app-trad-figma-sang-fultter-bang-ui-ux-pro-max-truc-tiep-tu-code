@@ -114,49 +114,27 @@ class _CategoryFilters extends StatelessWidget {
       child: Row(
         children: [
           for (final category in categories) ...[
-            _CategoryChip(
+            VitFilterChip(
               key: category.id == 'all'
                   ? MarketNewsPage.categoryAllKey
                   : category.id == 'breaking'
                   ? MarketNewsPage.categoryBreakingKey
                   : null,
-              category: category,
+              label: category.label,
               active: activeCategory == category.id,
               onTap: () => onSelected(category.id),
+              color: category.color.resolve(),
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                AppSpacing.x2,
+                AppSpacing.x1,
+                AppSpacing.x2,
+                AppSpacing.x1,
+              ),
             ),
             if (category != categories.last)
               const SizedBox(width: _marketTinySpace),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({
-    super.key,
-    required this.category,
-    required this.active,
-    required this.onTap,
-  });
-
-  final MarketNewsCategory category;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: category.label,
-      selected: active,
-      onTap: onTap,
-      accentColor: category.color.resolve(),
-      padding: const EdgeInsetsDirectional.fromSTEB(
-        AppSpacing.x2,
-        AppSpacing.x1,
-        AppSpacing.x2,
-        AppSpacing.x1,
       ),
     );
   }

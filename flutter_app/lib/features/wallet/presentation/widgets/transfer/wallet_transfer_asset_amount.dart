@@ -81,7 +81,7 @@ class TransferAmountCard extends StatelessWidget {
           VitInput(
             fieldKey: const Key('sc146_transfer_amount'),
             controller: controller,
-            semanticLabel: 'Internal transfer amount',
+            semanticLabel: 'Số tiền chuyển nội bộ',
             hintText: '0.00',
             errorText: errorText,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -202,10 +202,10 @@ class TransferButton extends StatelessWidget {
       button: true,
       enabled: enabled,
       label: enabled
-          ? 'Preview internal transfer'
-          : 'Internal transfer disabled. $disabledReason',
+          ? 'Xem trước chuyển khoản nội bộ'
+          : 'Chuyển khoản nội bộ đã tắt. $disabledReason',
       child: Tooltip(
-        message: disabledReason ?? 'Preview internal transfer',
+        message: disabledReason ?? 'Xem trước chuyển khoản nội bộ',
         child: VitCtaButton(
           onPressed: enabled ? onTap : null,
           height: AppSpacing.inputHeight,

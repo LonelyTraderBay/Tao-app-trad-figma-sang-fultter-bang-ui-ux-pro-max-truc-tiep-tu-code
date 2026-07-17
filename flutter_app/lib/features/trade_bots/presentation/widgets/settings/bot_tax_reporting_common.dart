@@ -57,7 +57,7 @@ class _Card extends StatelessWidget {
 
 String _formatInt(int value) => formatTradeInt(value);
 
-String _formatUsd(double value) => VitFormat.usd(value.abs());
+String _formatUsd(double value) => '\$${value.abs().toStringAsFixed(2)}';
 
 String _formatSignedUsd(double value) {
   final sign = value < 0 ? '\$-' : '\$';

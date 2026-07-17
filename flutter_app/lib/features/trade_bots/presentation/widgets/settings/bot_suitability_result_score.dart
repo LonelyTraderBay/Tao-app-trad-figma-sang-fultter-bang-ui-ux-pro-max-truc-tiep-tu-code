@@ -52,9 +52,17 @@ class _ResultView extends StatelessWidget {
           percent: percent,
           color: color,
         ),
-        _SectionLabel('Category Breakdown'),
+        VitSectionHeader(
+          title: 'Category Breakdown',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          variant: VitSectionHeaderVariant.plain,
+        ),
         _CategoryBreakdown(snapshot: snapshot, answers: answers),
-        _SectionLabel('Recommendations'),
+        VitSectionHeader(
+          title: 'Recommendations',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          variant: VitSectionHeaderVariant.plain,
+        ),
         _RecommendationsCard(result: result, color: color),
         _RegulatoryCard(snapshot: snapshot),
         VitCtaButton(

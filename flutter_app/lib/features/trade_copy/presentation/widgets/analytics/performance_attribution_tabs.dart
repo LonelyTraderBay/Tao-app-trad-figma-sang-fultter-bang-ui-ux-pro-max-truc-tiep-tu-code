@@ -12,7 +12,12 @@ class _DrawdownTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        _SectionLabel(label: 'Underwater Chart'),
+        VitSectionHeader(
+          title: 'Underwater Chart',
+          titleColor: AppColors.text2,
+          titleFontWeight: AppTextStyles.extraBold,
+          titleLetterSpacing: .2,
+        ),
         SizedBox(
           height: _attributionChartHeight,
           child: CustomPaint(
@@ -64,7 +69,12 @@ class _ProjectionTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        _SectionLabel(label: 'Monte Carlo Simulation (30 ngày)'),
+        VitSectionHeader(
+          title: 'Monte Carlo Simulation (30 ngày)',
+          titleColor: AppColors.text2,
+          titleFontWeight: AppTextStyles.extraBold,
+          titleLetterSpacing: .2,
+        ),
         const VitBanner(
           variant: VitBannerVariant.info,
           icon: Icons.info_outline_rounded,
@@ -122,7 +132,12 @@ class _CorrelationTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        _SectionLabel(label: 'Daily Returns Correlation'),
+        VitSectionHeader(
+          title: 'Daily Returns Correlation',
+          titleColor: AppColors.text2,
+          titleFontWeight: AppTextStyles.extraBold,
+          titleLetterSpacing: .2,
+        ),
         SizedBox(
           height: _attributionChartHeight,
           child: CustomPaint(

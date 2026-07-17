@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
-import 'savings_autopilot_formatters.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings/savings_autopilot_formatters.dart';
 
 class IconBadge extends StatelessWidget {
   const IconBadge({super.key, required this.icon, required this.color});

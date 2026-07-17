@@ -97,7 +97,7 @@ class _ChatComposer extends StatelessWidget {
                               fieldKey: P2PChatPage.inputKey,
                               controller: controller,
                               onChanged: (_) => onChanged(),
-                              semanticLabel: 'P2P encrypted chat message',
+                              semanticLabel: 'Tin nhắn mã hóa đầu cuối P2P',
                               hintText: 'Nhập tin nhắn...',
                               textStyle: AppTextStyles.body.copyWith(
                                 color: AppColors.text1,

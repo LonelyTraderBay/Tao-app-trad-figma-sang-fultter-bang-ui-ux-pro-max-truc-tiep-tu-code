@@ -46,9 +46,9 @@ Key walletTokenApprovalRevokeKey(String id) {
 
 String walletTokenApprovalTabSemanticLabel(String tab) {
   return switch (tab) {
-    walletTokenApprovalTabActive => 'Active',
-    walletTokenApprovalTabHistory => 'History',
-    walletTokenApprovalTabSettings => 'Settings',
+    walletTokenApprovalTabActive => 'Đang hoạt động',
+    walletTokenApprovalTabHistory => 'Lịch sử',
+    walletTokenApprovalTabSettings => 'Cài đặt',
     _ => tab,
   };
 }
@@ -102,7 +102,7 @@ class WalletTokenApprovalRevokeAllButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Revoke all high-risk token approvals',
+      label: 'Thu hồi tất cả ủy quyền token rủi ro cao',
       child: VitCtaButton(
         key: walletTokenApprovalRevokeAllKey,
         onPressed: onTap,

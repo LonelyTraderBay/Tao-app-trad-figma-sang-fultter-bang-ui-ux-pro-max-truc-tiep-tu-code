@@ -141,7 +141,7 @@ class _SearchFilterSection extends StatelessWidget {
           child: Row(
             children: [
               for (var index = 0; index < categories.length; index += 1) ...[
-                _CategoryChip(
+                VitFilterChip(
                   key: categories[index] == 'Live Crypto'
                       ? PredictionsSearchPage.categoryLiveCryptoKey
                       : Key('sc028_category_${categories[index]}'),
@@ -152,6 +152,9 @@ class _SearchFilterSection extends StatelessWidget {
                         ? null
                         : categories[index],
                   ),
+                  color: _predictionPrimary,
+                  padding:
+                      PredictionsSpacingTokens.predictionHomeCategoryPadding,
                 ),
                 if (index != categories.length - 1)
                   const SizedBox(width: AppSpacing.x2),

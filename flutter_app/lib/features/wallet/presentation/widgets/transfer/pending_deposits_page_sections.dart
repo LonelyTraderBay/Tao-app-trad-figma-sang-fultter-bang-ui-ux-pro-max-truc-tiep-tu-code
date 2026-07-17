@@ -109,11 +109,11 @@ class _SummaryBanner extends StatelessWidget {
           const SizedBox(width: _pendingInlineGap),
           Semantics(
             button: true,
-            label: 'Refresh pending deposit statuses',
+            label: 'Làm mới trạng thái nạp tiền đang chờ',
             child: VitIconButton(
               key: PendingDepositsPage.refreshKey,
               icon: Icons.refresh_rounded,
-              tooltip: 'Refresh pending deposits',
+              tooltip: 'Làm mới nạp tiền đang chờ',
               size: VitIconButtonSize.sm,
               onPressed: onRefresh,
             ),
@@ -150,7 +150,7 @@ class _PendingDepositFilters extends StatelessWidget {
           Semantics(
             button: true,
             selected: active == item.$1,
-            label: '${item.$2} pending deposit filter',
+            label: 'Bộ lọc nạp tiền đang chờ ${item.$2}',
             child: VitStatusPill(
               key: PendingDepositsPage.filterKey(item.$1.name),
               label: item.$2,
@@ -324,7 +324,7 @@ class _ConfirmationProgress extends StatelessWidget {
     return Semantics(
       container: true,
       label:
-          'Blockchain confirmations ${deposit.confirmations} of ${deposit.requiredConfirmations}',
+          'Xác nhận blockchain ${deposit.confirmations} trên ${deposit.requiredConfirmations}',
       child: Column(
         children: [
           Row(

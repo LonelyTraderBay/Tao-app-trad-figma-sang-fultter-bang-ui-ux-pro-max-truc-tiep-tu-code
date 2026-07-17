@@ -407,7 +407,7 @@ class _ActionButton extends StatelessWidget {
       padding: P2PSpacingTokens.p2pSecurityDetailsDeviceActionPadding(compact),
       accentColor: color,
       leading: Icon(icon),
-      semanticLabel: 'P2P device action $label',
+      semanticLabel: 'Thao tác thiết bị P2P $label',
     );
   }
 }

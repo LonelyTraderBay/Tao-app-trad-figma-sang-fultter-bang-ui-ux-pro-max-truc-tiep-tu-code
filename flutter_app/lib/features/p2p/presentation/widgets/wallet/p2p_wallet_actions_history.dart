@@ -23,7 +23,7 @@ class _InlineActionButton extends StatelessWidget {
       fullWidth: true,
       accentColor: color,
       leading: Icon(icon),
-      semanticLabel: 'P2P wallet action $label',
+      semanticLabel: 'Thao tác ví P2P $label',
     );
   }
 }

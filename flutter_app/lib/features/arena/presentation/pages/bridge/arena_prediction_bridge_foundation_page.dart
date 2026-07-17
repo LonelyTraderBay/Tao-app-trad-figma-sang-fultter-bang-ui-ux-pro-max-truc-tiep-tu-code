@@ -22,9 +22,9 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'arena_prediction_bridge_foundation_page_part_01.dart';
-part 'arena_prediction_bridge_foundation_page_part_02.dart';
-part 'arena_prediction_bridge_foundation_page_part_03.dart';
+part 'arena_prediction_bridge_foundation_page_principles_section.dart';
+part 'arena_prediction_bridge_foundation_page_topics_boundary_bridge_sections.dart';
+part 'arena_prediction_bridge_foundation_page_examples_and_shared_widgets.dart';
 
 enum _BridgeSection { principles, topics, boundary, bridge, examples }
 

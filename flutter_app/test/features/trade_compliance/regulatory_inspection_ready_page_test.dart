@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/regulatory_inspection_ready_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-116 mock repository exposes inspection readiness BE draft', () {
-    final snapshot = const MockTradeRepository().getRegulatoryInspectionReady();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getRegulatoryInspectionReady();
 
     expect(snapshot.complianceScore, 97);
     expect(snapshot.stats.map((stat) => stat.value), [

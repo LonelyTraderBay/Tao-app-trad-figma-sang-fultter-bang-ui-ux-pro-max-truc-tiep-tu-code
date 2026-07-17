@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/client_money/arm_integration_status_page.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/hub/regulatory_reports_dashboard_page.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/transaction_reporting_page.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-093 mock repository exposes transaction reporting BE draft', () {
-    final snapshot = const MockTradeRepository().getTransactionReporting();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getTransactionReporting();
 
     expect(snapshot.defaultTab, 'queue');
     expect(snapshot.stats.total, 5);

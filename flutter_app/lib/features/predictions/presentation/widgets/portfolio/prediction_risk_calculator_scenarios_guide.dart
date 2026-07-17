@@ -263,6 +263,6 @@ String _formatInput(double value) {
   return value.toString();
 }
 
-String _formatMoney(double value) => VitFormat.usd(value);
+String _formatMoney(double value) => '\$${value.toStringAsFixed(2)}';
 
 String _formatPrice(double value) => '\$${value.toStringAsFixed(2)}';

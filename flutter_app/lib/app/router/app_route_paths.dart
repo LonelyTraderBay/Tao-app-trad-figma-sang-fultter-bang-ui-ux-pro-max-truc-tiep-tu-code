@@ -3,6 +3,7 @@ part of 'app_router.dart';
 final class AppRoutePaths {
   const AppRoutePaths._();
 
+  // ==== AUTH ====
   static const String root = '/';
   static const String authLogin = '/auth/login';
   static const String authRegister = '/auth/register';
@@ -10,26 +11,38 @@ final class AppRoutePaths {
   static const String auth2faSetup = '/auth/2fa-setup';
   static const String authForgotPassword = '/auth/forgot-password';
   static const String authResetPassword = '/auth/reset-password';
+
+  // ==== HOME ====
   static const String home = '/home';
+
+  // ==== DISCOVERY ====
   static const String search = '/search';
   static const String topics = '/topics';
   static const String topicCrypto = '/topic/crypto';
+
+  // ==== REFERRAL ====
   static const String referral = '/referral';
   static const String referralHistory = '/referral/history';
   static const String referralRewards = '/referral/rewards';
   static const String referralRules = '/referral/rules';
   static String referralFriend(String friendId) => '/referral/friend/$friendId';
+
+  // ==== CROSS_MODULE ====
   static const String enterpriseStates = '/enterprise-states';
   static const String unifiedPortfolio = '/unified-portfolio';
   static const String crossModuleAnalytics = '/cross-module-analytics';
   static const String smartAlerts = '/smart-alerts';
   static const String taxReports = '/tax-reports';
+
+  // ==== DEV ====
   static const String routeChecker = '/dev/route-checker';
   static const String performanceMonitor = '/dev/performance-monitor';
   static const String devShowcase = '/dev/showcase';
   static const String devDesignSystem = '/dev/design-system';
   static const String devDcaOverview = '/dev/dca-overview';
   static const String demoCopyCard = '/demo/copy-card';
+
+  // ==== EARN (staking + savings) ====
   static const String earn = '/earn';
   static const String earnStaking = '/earn/staking';
   static const String earnStakingTerms = '/earn/staking/terms';
@@ -113,9 +126,15 @@ final class AppRoutePaths {
   static const String earnSavingsProductSample = '/earn/savings/product/sample';
   static const String earnSavingsRedeemPos001 = '/earn/savings/redeem/pos001';
   static const String earnSavingsReceipt = '/earn/savings/receipt';
+
+  // ==== NOTIFICATIONS ====
   static const String notifications = '/notifications';
+
+  // ==== SUPPORT ====
   static const String support = '/support';
   static const String supportAnnouncements = '/support/announcements';
+
+  // ==== LAUNCHPAD ====
   static const String launchpad = '/launchpad';
   static const String launchpadPortfolio = '/launchpad/portfolio';
   static const String launchpadPerformance = '/launchpad/performance';
@@ -142,7 +161,11 @@ final class AppRoutePaths {
   static const String launchpadLimitOrders = '/launchpad/limit-orders';
   static const String launchpadDcaBuilder = '/launchpad/dca-builder';
   static const String launchpadRiskAnalytics = '/launchpad/risk-analytics';
+
+  // ==== NEWS ====
   static const String news = '/news';
+
+  // ==== MARKETS ====
   static const String markets = '/markets';
   static const String marketsOverview = '/markets/overview';
   static const String marketsMovers = '/markets/movers';
@@ -162,6 +185,8 @@ final class AppRoutePaths {
   static const String marketsUnlocks = '/markets/unlocks';
   static const String marketsSignals = '/markets/signals';
   static const String marketsCorrelations = '/markets/correlations';
+
+  // ==== PREDICTIONS (nested under /markets/predictions) ====
   static const String marketsPredictions = '/markets/predictions';
   static const String marketsPredictionsSearch = '/markets/predictions/search';
   static const String marketsPredictionsBreaking =
@@ -195,9 +220,13 @@ final class AppRoutePaths {
       '/markets/predictions/tournament/$tournamentId';
   static const String marketsPredictionsDataIntegration =
       '/markets/predictions/data-integration';
+
+  // ==== MARKETS (pair/token detail) ====
   static String pairDetail(String pairId) => '/pair/$pairId';
   static String pairInfo(String pairId) => '/pair/$pairId/info';
   static String pairDepth(String pairId) => '/pair/$pairId/depth';
+
+  // ==== TRADE FAMILY (trade, trade_bots, trade_compliance, trade_copy, trade_terminal — heavily interleaved by historical rollout order, not split further) ====
   static String tradeAdvancedChart(String pairId) =>
       '/trade/advanced-chart/$pairId';
   static String tradePair(String pairId) => '/trade/$pairId';
@@ -355,6 +384,7 @@ final class AppRoutePaths {
       '/trade/margin/advanced-analytics';
   static String tradeTrader(String traderId) => '/trade/trader/$traderId';
 
+  // ==== DCA ====
   static const String dca = '/dca';
   static const String dcaPortfolioOptimizer = '/dca/portfolio-optimizer';
   static const String dcaDynamicAmount = '/dca/dynamic-amount';
@@ -370,13 +400,19 @@ final class AppRoutePaths {
   static const String dcaMultiAsset = '/dca/multi-asset';
   static const String dcaPerformanceCompare = '/dca/performance-compare';
   static const String dcaSmartRules = '/dca/smart-rules';
+
+  // ==== ADMIN ====
   static const String admin = '/admin';
   static const String adminAnalytics = '/admin/analytics';
   static const String adminAbtests = '/admin/abtests';
   static const String adminFunnels = '/admin/funnels';
   static const String adminSettings = '/admin/settings';
+
+  // ==== LATE ADDITIONS — mixed features, added as single-route afterthoughts; check the path for the owning feature ====
   static const String profilePredictions = '/profile/predictions';
   static const String rewards = '/rewards';
+
+  // ==== P2P ====
   static const String p2p = '/p2p';
   static const String p2pExpress = '/p2p/express';
   static const String p2pExpressConfirm = '/p2p/express/confirm';
@@ -473,7 +509,11 @@ final class AppRoutePaths {
   static const String p2pDashboard = '/p2p/dashboard';
   static const String p2pAchievements = '/p2p/achievements';
   static const String p2pMyOrders = '/p2p/my-orders';
+
+  // ==== LATE ADDITIONS — mixed features, added as single-route afterthoughts; check the path for the owning feature ====
   static const String supportHelp = '/support/help';
+
+  // ==== ARENA ====
   static const String arena = '/arena';
   static const String arenaGuide = '/arena/guide';
   static const String arenaStudio = '/arena/studio';
@@ -502,7 +542,11 @@ final class AppRoutePaths {
   static String arenaMode(String modeId) => '/arena/mode/$modeId';
   static String arenaCreator(String creatorId) => '/arena/creator/$creatorId';
   static String arenaTrust(String userId) => '/arena/trust/$userId';
+
+  // ==== LATE ADDITIONS — mixed features, added as single-route afterthoughts; check the path for the owning feature ====
   static const String trade = '/trade';
+
+  // ==== WALLET ====
   static const String wallet = '/wallet';
   static const String walletHistory = '/wallet/history';
   static const String walletDeposit = '/wallet/deposit';
@@ -525,6 +569,8 @@ final class AppRoutePaths {
   static const String walletLimits = '/wallet/limits';
   static const String walletDustConverter = '/wallet/dust-converter';
   static const String walletNetworkStatus = '/wallet/network-status';
+
+  // ==== PROFILE ====
   static const String profile = '/profile';
   static const String profileEdit = '/profile/edit';
   static const String profileKyc = '/profile/kyc';
@@ -537,6 +583,8 @@ final class AppRoutePaths {
   static const String profileSettings = '/profile/settings';
   static const String profileActivity = '/profile/activity';
   static const String profileArena = '/profile/arena';
+
+  // ==== ONBOARDING ====
   static const String onboarding = '/onboarding';
 }
 

@@ -28,11 +28,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
-part 'tax_report_center_part_01.dart';
+part 'tax_report_center_generate_tab.dart';
 
-part 'tax_report_center_part_02.dart';
+part 'tax_report_center_generate_and_reports_tabs.dart';
 
-part 'tax_report_center_part_03.dart';
+part 'tax_report_center_settings_tab.dart';
 
 class TaxReportCenter extends ConsumerStatefulWidget {
   const TaxReportCenter({super.key, this.shellRenderMode});

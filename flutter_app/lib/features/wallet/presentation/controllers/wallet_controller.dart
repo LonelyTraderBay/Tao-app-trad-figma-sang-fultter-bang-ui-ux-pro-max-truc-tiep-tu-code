@@ -1,6 +1,7 @@
 export 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 export 'package:vit_trade_flutter/features/wallet/domain/repositories/wallet_repository.dart';
 
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 
 enum WalletHighRiskFlowStatus {
@@ -320,7 +321,7 @@ final class TokenApprovalController {
           ? 'Revoke all high-risk approvals'
           : 'Revoke ${approval.token} approval',
       body: body,
-      confirmLabel: 'Confirm',
+      confirmLabel: 'Xác nhận',
       bulk: bulk,
     );
   }
@@ -331,7 +332,4 @@ String _formatAmount(double value) {
   return fixed.replaceFirst(RegExp(r'\.?0+$'), '');
 }
 
-String _maskAddress(String value) {
-  if (value.length <= 12) return value;
-  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
-}
+String _maskAddress(String value) => maskAddress(value);

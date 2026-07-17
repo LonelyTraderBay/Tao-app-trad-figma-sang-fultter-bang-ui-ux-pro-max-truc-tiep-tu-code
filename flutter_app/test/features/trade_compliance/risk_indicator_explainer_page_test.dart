@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-110 mock repository exposes risk indicator BE draft', () {
-    final snapshot = const MockTradeRepository().getRiskIndicatorExplainer();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getRiskIndicatorExplainer();
 
     expect(snapshot.productName, 'Mirror Copy Trading');
     expect(snapshot.productSri, 6);

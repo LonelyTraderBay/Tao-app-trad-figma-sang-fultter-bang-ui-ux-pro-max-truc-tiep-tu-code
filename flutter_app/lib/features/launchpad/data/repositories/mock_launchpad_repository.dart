@@ -4,15 +4,15 @@ import 'package:vit_trade_flutter/core/utils/accent_tone.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/repositories/launchpad_repository.dart';
 
-part '../fixtures/mock_launchpad_repository_methods_part_01.dart';
-part '../fixtures/mock_launchpad_repository_methods_part_02.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_01.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_02.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_03.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_04.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_05.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_06.dart';
-part '../fixtures/mock_launchpad_repository_fixtures_part_07.dart';
+part '../fixtures/mock_launchpad_repository_screen_methods.dart';
+part '../fixtures/mock_launchpad_repository_bridge_contract_methods.dart';
+part '../fixtures/mock_launchpad_repository_directory_fixtures.dart';
+part '../fixtures/mock_launchpad_repository_staking_bridge_fixtures.dart';
+part '../fixtures/mock_launchpad_repository_bridge_compare_notif_log_fixtures.dart';
+part '../fixtures/mock_launchpad_repository_abi_webhook_wallet_gas_fixtures.dart';
+part '../fixtures/mock_launchpad_repository_gas_rebalance_multisig_fixtures.dart';
+part '../fixtures/mock_launchpad_repository_risk_tools_fixtures.dart';
+part '../fixtures/mock_launchpad_repository_tx_simulation_fixtures.dart';
 
 abstract class _MockLaunchpadRepositoryBase implements LaunchpadRepository {
   const _MockLaunchpadRepositoryBase();

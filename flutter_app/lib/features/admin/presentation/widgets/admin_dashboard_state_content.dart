@@ -27,7 +27,7 @@ class AdminDashboardStateContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (status) {
       AdminDashboardLoadStatus.loading => Semantics(
-        label: '$title loading state',
+        label: 'Đang tải $title',
         child: const VitSkeletonList(rows: 4),
       ),
       AdminDashboardLoadStatus.empty => VitCard(

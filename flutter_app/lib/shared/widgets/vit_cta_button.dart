@@ -108,9 +108,15 @@ class VitCtaButton extends StatelessWidget {
         ? density.controlHeight
         : height;
 
-    final button = SizedBox(
-      width: fullWidth ? double.infinity : null,
-      height: resolvedHeight,
+    final button = ConstrainedBox(
+      // A11Y-3: minHeight (not a tight height) lets the button grow taller
+      // when clamped OS text-scaling needs more room, instead of a fixed
+      // SizedBox height forcing FittedBox to shrink the text back down and
+      // silently defeating the user's larger font-size setting.
+      constraints: BoxConstraints(
+        minHeight: resolvedHeight,
+        minWidth: fullWidth ? double.infinity : 0,
+      ),
       child: Material(
         color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
@@ -166,14 +172,13 @@ class VitCtaButton extends StatelessWidget {
                     const SizedBox(width: AppSpacing.x3),
                   ],
                   Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: DefaultTextStyle.merge(
-                        style: AppTextStyles.control.copyWith(
-                          color: style.foreground,
-                        ),
-                        child: child,
+                    // A11Y-3: no FittedBox — let the label wrap (Row/height
+                    // above now grows to fit) instead of shrinking the text.
+                    child: DefaultTextStyle.merge(
+                      style: AppTextStyles.control.copyWith(
+                        color: style.foreground,
                       ),
+                      child: child,
                     ),
                   ),
                   if (trailing != null) ...[

@@ -20,9 +20,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
-part 'advanced_charts_page_part_01.dart';
-part 'advanced_charts_page_part_02.dart';
-part 'advanced_charts_page_part_03.dart';
+part 'advanced_charts_page_tabs_filters_widgets.dart';
+part 'advanced_charts_page_indicator_drawing_widgets.dart';
+part 'advanced_charts_page_signal_widgets.dart';
 
 const _marketPrimary = AppColors.primary;
 const double _advancedVisualScrollClearance = 108;

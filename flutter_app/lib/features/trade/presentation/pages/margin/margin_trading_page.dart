@@ -14,12 +14,12 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_simple_shell.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_simple_hero.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
-part '../../widgets/margin/margin_trading_page_part_01.dart';
-part '../../widgets/margin/margin_trading_page_part_02.dart';
-part '../../widgets/margin/margin_trading_page_part_03.dart';
-part '../../widgets/margin/margin_trading_page_part_04.dart';
+part '../../widgets/margin/margin_trading_simple_form.dart';
+part '../../widgets/margin/margin_trading_common.dart';
+part '../../widgets/margin/margin_trading_reserved.dart';
+part '../../widgets/margin/margin_trading_shared_helpers.dart';
 part '../../widgets/margin/margin_trading_order_summary.dart';
 part '../../widgets/margin/margin_trading_positions_orders.dart';
 

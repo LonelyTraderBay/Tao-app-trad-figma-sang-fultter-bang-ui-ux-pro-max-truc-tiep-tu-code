@@ -24,9 +24,9 @@ import 'package:vit_trade_flutter/features/arena/presentation/widgets/hub/arena_
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/hub/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'arena_challenge_detail_page_part_01.dart';
-part 'arena_challenge_detail_page_part_02.dart';
-part 'arena_challenge_detail_page_part_03.dart';
+part 'arena_challenge_detail_page_overview_section.dart';
+part 'arena_challenge_detail_page_tabs_and_panels.dart';
+part 'arena_challenge_detail_page_actions_and_shared_widgets.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 const _challengeGap = AppSpacing.x2;

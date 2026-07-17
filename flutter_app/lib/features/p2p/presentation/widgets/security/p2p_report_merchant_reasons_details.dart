@@ -121,7 +121,7 @@ class _DetailField extends StatelessWidget {
         VitInput(
           fieldKey: P2PReportMerchantPage.detailFieldKey,
           controller: controller,
-          semanticLabel: 'P2P merchant report details',
+          semanticLabel: 'Chi tiết báo cáo merchant P2P',
           hintText: hintText,
           textStyle: AppTextStyles.body.copyWith(color: AppColors.text1),
           onChanged: (_) => onChanged(),

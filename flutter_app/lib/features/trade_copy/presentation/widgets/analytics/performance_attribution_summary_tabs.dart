@@ -134,7 +134,12 @@ class _AttributionTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        _SectionLabel(label: 'Returns Decomposition'),
+        VitSectionHeader(
+          title: 'Returns Decomposition',
+          titleColor: AppColors.text2,
+          titleFontWeight: AppTextStyles.extraBold,
+          titleLetterSpacing: .2,
+        ),
         SizedBox(
           height: _attributionLargeChartHeight,
           child: CustomPaint(

@@ -40,11 +40,12 @@ Generated from `flutter_app/tool/home_reference_consistency_audit.dart`. Measure
 ## Top Divergence Files (non-exception)
 | module | path | total | container | boxDecoration | borderRadius.circular | radius.circular | edgeInsets | fixedWidth | fixedHeight |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| rewards | `flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page_part_01.dart` | 2 | 1 | 0 | 0 | 0 | 1 | 0 | 0 |
-| dca | `flutter_app/lib/features/dca/presentation/pages/hub/dca_page_part_01.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| dca | `flutter_app/lib/features/dca/presentation/pages/hub/dca_page_state_overview.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | news | `flutter_app/lib/features/news/presentation/pages/news_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | notifications | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
-| p2p | `flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_part_01.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| p2p | `flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_claim_detail_page_state.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| rewards | `flutter_app/lib/features/rewards/presentation/pages/rewards_hub_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| rewards | `flutter_app/lib/features/rewards/presentation/widgets/rewards_hub_hero_section.dart` | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | support | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | support | `flutter_app/lib/features/support/presentation/pages/help_center_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 | support | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |

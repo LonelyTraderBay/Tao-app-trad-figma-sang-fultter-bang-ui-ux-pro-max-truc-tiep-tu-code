@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/live_market_data_analytics_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -29,7 +29,8 @@ void main() {
   }
 
   test('SC-091 mock repository exposes live market analytics BE draft', () {
-    final snapshot = const MockTradeRepository().getLiveMarketDataAnalytics();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getLiveMarketDataAnalytics();
 
     expect(snapshot.selectedPair, 'BTC/USDT');
     expect(snapshot.openInterest.current, 25433440000);

@@ -244,7 +244,7 @@ String _renderCsv(List<_ManifestRow> rows) {
 }
 
 Directory findAppRoot() {
-  var dir = Directory.current;
+  final dir = Directory.current;
   if (File('${dir.path}/pubspec.yaml').existsSync()) return dir;
   final nested = Directory('${dir.path}/flutter_app');
   if (File('${nested.path}/pubspec.yaml').existsSync()) return nested;

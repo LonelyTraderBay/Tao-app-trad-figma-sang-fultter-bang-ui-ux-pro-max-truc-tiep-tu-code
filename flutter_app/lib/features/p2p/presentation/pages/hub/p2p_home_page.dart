@@ -22,9 +22,9 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/security/p2p
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
-part '../../widgets/hub/p2p_home_page_part_01.dart';
-part '../../widgets/hub/p2p_home_page_part_02.dart';
-part '../../widgets/hub/p2p_home_page_part_03.dart';
+part '../../widgets/hub/p2p_home_page_state.dart';
+part '../../widgets/hub/p2p_home_offer_list.dart';
+part '../../widgets/hub/p2p_home_page_common.dart';
 
 const double _p2pHomeVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;

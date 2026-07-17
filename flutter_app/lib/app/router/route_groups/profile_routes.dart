@@ -1,6 +1,24 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _profileRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/my_arena_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/edit_profile_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/activity_log_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/api_management_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/api_key_create_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/device_management_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/kyc_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/security_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/settings_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/sub_account_page.dart';
+import 'package:vit_trade_flutter/features/profile/presentation/pages/vip_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/placeholder_routes.dart';
+
+List<RouteBase> profileRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.profile,
@@ -76,6 +94,6 @@ List<RouteBase> _profileRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc413SettingsSecurity,
       builder: (_, _) => SecurityPage(shellRenderMode: shellRenderMode),
     ),
-    ..._profileOutgoingPlaceholders,
+    ...profileOutgoingPlaceholders,
   ];
 }

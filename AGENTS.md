@@ -43,6 +43,13 @@ Rules:
 
 - Keep app bootstrap, theme, router facade, and shell composition in `app/`.
 - Keep non-UI cross-cutting boundaries in `core/`.
+  - **Documented exception:** `core/navigation/back_navigation.dart` imports
+    `flutter/widgets.dart` + `go_router` because `goBackOrFallback` needs a
+    `BuildContext` to call `context.go`/`context.pop`. This is the one
+    sanctioned "UI-adjacent" file in `core/` — do not use it as precedent for
+    importing Flutter/UI packages elsewhere in `core/`. The path-validation
+    helpers in the same file (`resolveSafeBackPath`, `_normalizeInternalPath`)
+    are pure Dart and stay non-UI.
 - Keep reusable UI primitives in `shared/`.
 - Keep screen widgets under `features/<feature>/presentation/pages/`.
 - Put repository contracts and value objects under `domain/`.

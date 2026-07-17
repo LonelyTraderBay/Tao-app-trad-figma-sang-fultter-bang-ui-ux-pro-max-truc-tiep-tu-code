@@ -22,9 +22,9 @@ import 'package:vit_trade_flutter/features/arena/presentation/widgets/challenge/
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'arena_home_page_part_01.dart';
-part 'arena_home_page_part_02.dart';
-part 'arena_home_page_part_03.dart';
+part 'arena_home_page_hero_and_templates.dart';
+part 'arena_home_page_modes_and_rooms_section.dart';
+part 'arena_home_page_search_and_shared_widgets.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 const _arenaHomeHeroTitleLineHeight = 1.06;

@@ -20,10 +20,10 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
-part 'token_unlocks_page_part_01.dart';
-part 'token_unlocks_page_part_02.dart';
-part 'token_unlocks_page_part_03.dart';
-part 'token_unlocks_page_part_04.dart';
+part 'token_unlocks_page_upcoming_widgets.dart';
+part 'token_unlocks_page_card_analysis_widgets.dart';
+part 'token_unlocks_page_schedule_widgets.dart';
+part 'token_unlocks_page_formatters.dart';
 
 const _marketPrimary = AppColors.primary;
 const double _unlockVisualScrollClearance = 108;

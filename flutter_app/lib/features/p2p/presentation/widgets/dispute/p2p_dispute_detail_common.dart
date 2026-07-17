@@ -39,7 +39,7 @@ class P2PDisputeSmallButton extends StatelessWidget {
       padding: P2PSpacingTokens.p2pDisputeEvidenceButtonPadding,
       accentColor: color,
       leading: Icon(icon),
-      semanticLabel: 'P2P dispute action $label',
+      semanticLabel: 'Thao tác khiếu nại P2P $label',
     );
   }
 }

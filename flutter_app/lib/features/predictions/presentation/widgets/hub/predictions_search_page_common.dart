@@ -1,29 +1,5 @@
 part of '../../pages/hub/predictions_search_page.dart';
 
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _predictionPrimary,
-      padding: PredictionsSpacingTokens.predictionHomeCategoryPadding,
-    );
-  }
-}
-
 class _SearchResultCard extends StatelessWidget {
   const _SearchResultCard({
     super.key,

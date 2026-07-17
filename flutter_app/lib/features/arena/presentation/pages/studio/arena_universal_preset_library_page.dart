@@ -21,9 +21,9 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'arena_universal_preset_library_page_part_01.dart';
-part 'arena_universal_preset_library_page_part_02.dart';
-part 'arena_universal_preset_library_page_part_03.dart';
+part 'arena_universal_preset_library_page_domains_suggestions_dropdowns.dart';
+part 'arena_universal_preset_library_page_titles_and_shared_widgets.dart';
+part 'arena_universal_preset_library_page_demo_and_title_widgets.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 const _presetBodyLineRatio = ArenaSpacingTokens.arenaPresetBodyLineHeight;

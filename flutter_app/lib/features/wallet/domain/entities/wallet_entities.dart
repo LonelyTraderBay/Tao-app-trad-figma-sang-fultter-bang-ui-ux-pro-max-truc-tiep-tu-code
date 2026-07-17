@@ -1,3 +1,5 @@
-part 'wallet_entities_part_01.dart';
-part 'wallet_entities_part_02.dart';
-part 'wallet_entities_part_03.dart';
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
+
+part 'wallet_entities_account_activity.dart';
+part 'wallet_entities_management_tools.dart';
+part 'wallet_entities_money_movement.dart';

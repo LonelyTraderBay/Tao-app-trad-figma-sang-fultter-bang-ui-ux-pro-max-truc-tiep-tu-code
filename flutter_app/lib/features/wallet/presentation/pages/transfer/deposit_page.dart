@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,7 +27,9 @@ const _depositRed = AppColors.sell;
 const _depositGap = 8.0;
 const _depositTinyGap = 4.0;
 const _depositInlineGap = 8.0;
-const _depositSelectorHeight = 60.0;
+// A11Y-3: was 60 — raised so the network name + fee/min line fit at the
+// app-wide 1.3x text-scaling clamp without overflowing.
+const _depositSelectorHeight = 64.0;
 const _depositQrSize = 132.0;
 const _depositStatusDotSize = AppSpacing.x2 - AppSpacing.dividerHairline * 2;
 const _depositCopyButtonHeight = 44.0;

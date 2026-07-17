@@ -14,8 +14,8 @@ class _NetworkCard extends StatelessWidget {
     return Semantics(
       label:
           '${network.name}: ${_healthLabel(network.health)}, '
-          'congestion ${network.congestionPct}%, fee ${network.gasFee}, '
-          'confirmation ${network.avgConfirmTime}',
+          'tắc nghẽn ${network.congestionPct}%, phí ${network.gasFee}, '
+          'xác nhận ${network.avgConfirmTime}',
       child: VitCard(
         key: NetworkStatusPage.networkKey(network.id),
         padding: VitDensity.compact.cardPadding,
@@ -241,7 +241,7 @@ class _CongestionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Network congestion $percent%, $label',
+      label: 'Tắc nghẽn mạng $percent%, $label',
       child: ClipRRect(
         borderRadius: AppRadii.pillRadius,
         child: LinearProgressIndicator(

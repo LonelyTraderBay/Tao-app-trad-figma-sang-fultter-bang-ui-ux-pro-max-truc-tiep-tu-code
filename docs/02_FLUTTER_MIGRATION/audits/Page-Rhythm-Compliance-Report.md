@@ -1,12 +1,12 @@
 # Page Rhythm Compliance Report
 
-Generated: 2026-07-13
+Generated: 2026-07-17
 
 Source: `VitTrade-Page-Rhythm-Screen-Compliance.csv`
 
 ## Summary
 
-Screen rollup: 413 real_page routes, L1 pass 409, L2 pass 409 warn 0, unknown 4, documented exceptions 0.
+Screen rollup: 413 real_page routes, L1 pass 403, L2 pass 403 warn 0, unknown 10, documented exceptions 1.
 | Level | Meaning |
 | --- | --- |
 | L1 | Wiring: rhythm, orphan gaps, nested VPC |
@@ -33,10 +33,16 @@ Screen rollup: 413 real_page routes, L1 pass 409, L2 pass 409 warn 0, unknown 4,
 
 | Screen | Page | Pattern |
 | --- | --- | --- |
+| AppRouteNames.sc140WithdrawUsdt | `WithdrawPage` | shared_shell |
+| AppRouteNames.sc401CopyTradingCardDemo | `InternalSurfaceGate` | direct_vpc |
 | SC-399 | `InternalSurfaceGate` | direct_vpc |
 | SC-398 | `InternalSurfaceGate` | direct_vpc |
 | SC-326 | `InternalSurfaceGate` | direct_vpc |
 | SC-325 | `InternalSurfaceGate` | direct_vpc |
+| AppRouteNames.sc411ClientOptUpRequest | `ClientOptUpRequestPage` | direct_vpc |
+| SC-145 | `BuyCryptoPage` | shared_shell |
+| SC-146 | `TransferPage` | shared_shell |
+| AppRouteNames.sc139Withdraw | `WithdrawPage` | shared_shell |
 
 ## By module
 
@@ -82,7 +88,15 @@ Screen rollup: 413 real_page routes, L1 pass 409, L2 pass 409 warn 0, unknown 4,
 
 ### support (3 routes, L2 warn 0, unknown 0)
 
-### trade (90 routes, L2 warn 0, unknown 0)
+### trade (15 routes, L2 warn 0, unknown 2)
 
-### wallet (21 routes, L2 warn 0, unknown 0)
+### trade_bots (19 routes, L2 warn 0, unknown 0)
+
+### trade_compliance (29 routes, L2 warn 0, unknown 0)
+
+### trade_copy (21 routes, L2 warn 0, unknown 0)
+
+### trade_terminal (6 routes, L2 warn 0, unknown 0)
+
+### wallet (21 routes, L2 warn 0, unknown 4)
 

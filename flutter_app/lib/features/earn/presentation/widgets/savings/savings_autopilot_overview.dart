@@ -9,9 +9,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_autopilot_page.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
-import 'savings_autopilot_actions.dart';
-import 'savings_autopilot_common.dart';
-import 'savings_autopilot_formatters.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings/savings_autopilot_actions.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings/savings_autopilot_common.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings/savings_autopilot_formatters.dart';
 
 class AutoPilotTabs extends StatelessWidget {
   const AutoPilotTabs({

@@ -1,6 +1,30 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _walletRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/address/address_add_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/address/address_book_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/assets/asset_detail_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/assets/buy_crypto_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/deposit_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/assets/dust_converter_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/network_status_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/pending_deposits_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/history/transaction_detail_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/history/transaction_history_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/transfer_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_health_score_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_multi_manager_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/hub/wallet_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/withdraw_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/transfer/withdraw_limits_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/placeholder_routes.dart';
+
+List<RouteBase> walletRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.wallet,
@@ -127,6 +151,6 @@ List<RouteBase> _walletRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc155NetworkStatus,
       builder: (_, _) => NetworkStatusPage(shellRenderMode: shellRenderMode),
     ),
-    ..._walletOutgoingPlaceholders,
+    ...walletOutgoingPlaceholders,
   ];
 }

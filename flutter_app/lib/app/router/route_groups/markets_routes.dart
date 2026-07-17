@@ -1,6 +1,31 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _marketsRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/markets/presentation/pages/portfolio/advanced_charts_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/derivatives_overview_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/comparison_tool_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_calendar_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_correlations_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/market_depth_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/market_heatmap_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_movers_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/research/market_news_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_overview_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/pair/pair_detail_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/portfolio/portfolio_tracker_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_screener_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/tools/market_sectors_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/portfolio/price_alerts_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/research/social_signals_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/research/social_sentiment_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/research/token_info_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/research/token_unlocks_page.dart';
+import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/watchlist_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> marketsRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.markets,
@@ -105,7 +130,7 @@ List<RouteBase> _marketsRoutes(ShellRenderMode shellRenderMode) {
   ];
 }
 
-List<RouteBase> _marketPairRoutes(ShellRenderMode shellRenderMode) {
+List<RouteBase> marketPairRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: '/pair/:pairId',

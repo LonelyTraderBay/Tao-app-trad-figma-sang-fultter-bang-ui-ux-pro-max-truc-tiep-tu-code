@@ -114,41 +114,19 @@ class _SentimentSortChips extends StatelessWidget {
       child: Row(
         children: [
           for (final entry in chips.entries) ...[
-            _SortChip(
+            VitFilterChip(
               key: SocialSentimentPage.sortKey(entry.key),
               label: entry.value,
               active: active == entry.key,
               onTap: () => onSelected(entry.key),
+              color: AppColors.primarySoft,
+              padding: _sentimentSortChipPadding,
             ),
             if (entry.key != chips.keys.last)
               const SizedBox(width: _sentimentSortGap),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _SortChip extends StatelessWidget {
-  const _SortChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primarySoft,
-      padding: _sentimentSortChipPadding,
     );
   }
 }

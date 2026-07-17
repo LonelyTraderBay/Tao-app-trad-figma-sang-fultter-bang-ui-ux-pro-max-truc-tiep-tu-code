@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
 
 const withdrawBackground = AppColors.bg;
 const withdrawPanel = AppColors.surface;
@@ -25,10 +26,7 @@ Key withdrawRecentAddressKey(String label) {
   return Key('sc139_withdraw_recent_$label');
 }
 
-String maskWithdrawAddress(String address) {
-  if (address.length <= 12) return address;
-  return '${address.substring(0, 6)}...${address.substring(address.length - 4)}';
-}
+String maskWithdrawAddress(String address) => maskAddress(address);
 
 String formatWithdrawBalance(double value) {
   return formatWithdrawNumber(value, fractionDigits: 2);

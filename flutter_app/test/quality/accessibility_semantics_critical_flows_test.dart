@@ -42,15 +42,15 @@ void main() {
     await pumpRoute(tester, AppRoutePaths.walletWithdraw);
 
     expect(
-      semanticsLabel(RegExp(r'Withdrawal destination address')),
+      semanticsLabel(RegExp(r'Địa chỉ nhận rút')),
       findsOneWidget,
     );
-    expect(semanticsLabel(RegExp(r'Withdrawal amount')), findsOneWidget);
-    expect(semanticsLabel('Use full withdrawable balance'), findsOneWidget);
-    expect(semanticsLabel('Preview withdrawal'), findsOneWidget);
+    expect(semanticsLabel(RegExp(r'Số tiền rút')), findsOneWidget);
+    expect(semanticsLabel('Dùng toàn bộ số dư có thể rút'), findsOneWidget);
+    expect(semanticsLabel('Xem trước lệnh rút'), findsOneWidget);
     expect(
       semanticsLabel(
-        RegExp(r'Withdraw network selector .+, fee .+, minimum .+'),
+        RegExp(r'Chọn mạng rút .+, phí .+, tối thiểu .+'),
       ),
       findsOneWidget,
     );
@@ -69,8 +69,8 @@ void main() {
     await tester.tap(find.byKey(WithdrawPage.nextKey));
     await tester.pumpAndSettle();
 
-    expect(semanticsLabel('Cancel withdrawal preview'), findsOneWidget);
-    expect(semanticsLabel('Confirm withdrawal'), findsOneWidget);
+    expect(semanticsLabel('Hủy xem trước lệnh rút'), findsOneWidget);
+    expect(semanticsLabel('Xác nhận rút'), findsOneWidget);
   });
 
   testWidgets(
@@ -78,21 +78,21 @@ void main() {
     (tester) async {
       await pumpRoute(tester, AppRoutePaths.walletAddressBookAdd);
 
-      expect(semanticsLabel(RegExp(r'Address label')), findsOneWidget);
-      expect(semanticsLabel(RegExp(r'Wallet address')), findsOneWidget);
-      expect(semanticsLabel('TRC20 address network'), findsOneWidget);
-      expect(semanticsLabel('USDT address asset'), findsOneWidget);
-      expect(semanticsLabel('Paste wallet address'), findsOneWidget);
-      expect(semanticsLabel('Scan wallet address QR code'), findsOneWidget);
+      expect(semanticsLabel(RegExp(r'Tên địa chỉ')), findsOneWidget);
+      expect(semanticsLabel(RegExp(r'Địa chỉ ví')), findsOneWidget);
+      expect(semanticsLabel('Mạng địa chỉ TRC20'), findsOneWidget);
+      expect(semanticsLabel('Tài sản địa chỉ USDT'), findsOneWidget);
+      expect(semanticsLabel('Dán địa chỉ ví'), findsOneWidget);
+      expect(semanticsLabel('Quét mã QR địa chỉ ví'), findsOneWidget);
       expect(
-        semanticsLabel('Add address to withdrawal whitelist'),
+        semanticsLabel('Thêm địa chỉ vào danh sách trắng rút tiền'),
         findsOneWidget,
       );
       expect(
-        semanticsLabel('Confirm wallet address and network are correct'),
+        semanticsLabel('Xác nhận địa chỉ ví và mạng là chính xác'),
         findsOneWidget,
       );
-      expect(semanticsLabel('Save wallet address'), findsOneWidget);
+      expect(semanticsLabel('Lưu địa chỉ ví'), findsOneWidget);
     },
   );
 
@@ -103,11 +103,17 @@ void main() {
 
       expect(semanticsLabel('Chọn ngân hàng'), findsOneWidget);
       expect(semanticsLabel('Chọn ví điện tử'), findsOneWidget);
-      expect(semanticsLabel('Vietcombank payment option'), findsOneWidget);
-      expect(semanticsLabel('P2P payment account'), findsOneWidget);
-      expect(semanticsLabel('P2P payment account owner'), findsOneWidget);
       expect(
-        semanticsLabel('Preview and add P2P payment method'),
+        semanticsLabel('Vietcombank phương thức thanh toán'),
+        findsOneWidget,
+      );
+      expect(semanticsLabel('Số tài khoản thanh toán P2P'), findsOneWidget);
+      expect(
+        semanticsLabel('Tên chủ tài khoản thanh toán P2P'),
+        findsOneWidget,
+      );
+      expect(
+        semanticsLabel('Xem trước và thêm phương thức thanh toán P2P'),
         findsOneWidget,
       );
     },
@@ -116,21 +122,21 @@ void main() {
   testWidgets('SC-150 Token approval exposes revoke semantics', (tester) async {
     await pumpRoute(tester, AppRoutePaths.walletTokenApproval);
 
-    expect(semanticsLabel('Active approvals tab'), findsOneWidget);
+    expect(semanticsLabel('Tab ủy quyền Đang hoạt động'), findsOneWidget);
     expect(
-      semanticsLabel(RegExp(r'Revoke approval for .+ to .+')),
+      semanticsLabel(RegExp(r'Thu hồi ủy quyền .+ cho .+')),
       findsWidgets,
     );
     expect(
-      semanticsLabel('Revoke all high-risk token approvals'),
+      semanticsLabel('Thu hồi tất cả ủy quyền token rủi ro cao'),
       findsOneWidget,
     );
 
     await tester.tap(WalletTokenApprovalPage.revokeKey('a3').finder);
     await tester.pumpAndSettle();
 
-    expect(semanticsLabel('Cancel token revoke preview'), findsOneWidget);
-    expect(semanticsLabel('Confirm'), findsOneWidget);
+    expect(semanticsLabel('Hủy xem trước thu hồi token'), findsOneWidget);
+    expect(semanticsLabel('Xác nhận'), findsOneWidget);
   });
 
   testWidgets('SC-036 Prediction risk calculator exposes tabs and scenarios', (
@@ -138,8 +144,8 @@ void main() {
   ) async {
     await pumpRoute(tester, AppRoutePaths.marketsPredictionsRiskCalculator);
 
-    expect(semanticsLabel(RegExp(r'.+ risk calculator tab')), findsWidgets);
-    expect(semanticsLabel(RegExp(r'.+ risk scenario')), findsWidgets);
+    expect(semanticsLabel(RegExp(r'.+ máy tính rủi ro.*')), findsWidgets);
+    expect(semanticsLabel(RegExp(r'Kịch bản rủi ro .+')), findsWidgets);
   });
 
   testWidgets('Admin dashboards expose KPI and chart summaries', (
@@ -147,17 +153,26 @@ void main() {
   ) async {
     await pumpRoute(tester, AppRoutePaths.adminAnalytics);
 
-    expect(semanticsLabel(RegExp(r'Admin analytics metric .+')), findsWidgets);
-    expect(semanticsLabel(RegExp(r'Event volume chart .+')), findsOneWidget);
+    expect(
+      semanticsLabel(RegExp(r'Chỉ số phân tích quản trị .+')),
+      findsWidgets,
+    );
+    expect(
+      semanticsLabel(RegExp(r'Biểu đồ khối lượng sự kiện .+')),
+      findsOneWidget,
+    );
 
     await pumpRoute(tester, AppRoutePaths.adminFunnels);
-    expect(semanticsLabel(RegExp(r'Admin funnel metric .+')), findsWidgets);
-    expect(semanticsLabel(RegExp(r'.+ dropout chart')), findsOneWidget);
+    expect(semanticsLabel(RegExp(r'Chỉ số funnel quản trị .+')), findsWidgets);
+    expect(semanticsLabel(RegExp(r'Biểu đồ rời bỏ .+')), findsOneWidget);
 
     await pumpRoute(tester, AppRoutePaths.adminAbtests);
-    expect(semanticsLabel(RegExp(r'Admin A/B test metric .+')), findsWidgets);
     expect(
-      semanticsLabel(RegExp(r'.+ variant conversion rate .+')),
+      semanticsLabel(RegExp(r'Chỉ số A/B test quản trị .+')),
+      findsWidgets,
+    );
+    expect(
+      semanticsLabel(RegExp(r'Tỷ lệ chuyển đổi biến thể .+')),
       findsWidgets,
     );
   });

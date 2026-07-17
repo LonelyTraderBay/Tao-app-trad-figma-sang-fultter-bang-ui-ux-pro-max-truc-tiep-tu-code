@@ -13,6 +13,9 @@ alwaysApply: true
 
 ## Session discipline
 
+- Tasks spanning **>~10 files** or unclear scope: follow
+  [Two-Phase-Cursor-Workflow.md](../../docs/01_AI_RULES/Two-Phase-Cursor-Workflow.md)
+  (Plan chat → approve → one Execute chat per batch). Do not escalate model.
 - Batch at most **5–10 files** per turn for migration work.
 - Start a **new chat** after each completed batch to limit context growth.
 - Load docs **on demand** only — see [docs/INDEX.md](../../docs/INDEX.md). Never load backlog + plan + prompt in one turn.

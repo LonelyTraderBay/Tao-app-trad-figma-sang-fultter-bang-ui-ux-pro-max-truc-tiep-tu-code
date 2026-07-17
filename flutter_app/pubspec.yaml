@@ -20,6 +20,9 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  custom_lint: ^0.8.1
+  vittrade_lints:
+    path: tool/vittrade_lints
 
 flutter:
   uses-material-design: true

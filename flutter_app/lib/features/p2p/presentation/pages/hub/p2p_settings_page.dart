@@ -107,10 +107,12 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                       fullBleed: true,
                       gap: VitContentGap.tight,
                       children: [
-                        const _SectionLabel(
+                        const VitSectionHeader(
+                          title: 'Tùy chọn giao dịch',
                           icon: Icons.tune_rounded,
-                          label: 'Tùy chọn giao dịch',
-                          color: AppColors.primary,
+                          iconColor: AppColors.primary,
+                          iconSize: AppSpacing.iconSm,
+                          titleColor: AppColors.text2,
                         ),
                         _TradeOptionsCard(
                           snapshot: snapshot,

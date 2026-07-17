@@ -104,19 +104,8 @@ String _formatAmount(double value) {
   return value.toString();
 }
 
-String _formatCurrency(double value, {bool compact = false}) {
-  final fractionDigits = compact ? 0 : 2;
-  final rounded = value.toStringAsFixed(fractionDigits);
-  final parts = rounded.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    if (i > 0 && (whole.length - i) % 3 == 0) buffer.write(',');
-    buffer.write(whole[i]);
-  }
-  if (parts.length > 1) buffer.write('.${parts.last}');
-  return '\$${buffer.toString()}';
-}
+String _formatCurrency(double value, {bool compact = false}) =>
+    compact ? VitFormat.usdWhole(value) : VitFormat.usd(value);
 
 double _parseDouble(String value, double fallback) {
   return double.tryParse(value.replaceAll(',', '').trim()) ?? fallback;

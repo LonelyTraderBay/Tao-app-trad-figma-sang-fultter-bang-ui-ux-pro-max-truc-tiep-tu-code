@@ -9,7 +9,7 @@ void main() {
     '${appRoot.path}/lib',
   ).listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    var source = entity.readAsStringSync();
+    final source = entity.readAsStringSync();
     if (!source.contains('rhythm: VitPageRhythm')) continue;
 
     var deduped = source.replaceAllMapped(

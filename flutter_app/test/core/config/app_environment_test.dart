@@ -5,11 +5,15 @@ import 'package:vit_trade_flutter/core/network/api_client.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/auth/data/auth_repository.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
+import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/notifications/data/notifications_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/data/trade_terminal_repository.dart';
 import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
 
 void main() {
@@ -96,6 +100,55 @@ void main() {
     expect(snapshot.actionDraft, contains('Wallet service is unavailable'));
   });
 
+  test('p2p repository fails closed without wiring mock or fake remote', () {
+    final container = ProviderContainer(
+      overrides: [
+        appConfigProvider.overrideWithValue(
+          AppConfig(
+            environment: AppEnvironment.production,
+            apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+            enableMockData: false,
+          ),
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final repository = container.read(p2pRepositoryProvider);
+
+    expect(repository, isA<FailClosedP2PRepository>());
+    expect(
+      () => repository.getHome(),
+      throwsA(isA<P2PBackendContractMissingException>()),
+    );
+  });
+
+  test(
+    'launchpad repository fails closed without wiring mock or fake remote',
+    () {
+      final container = ProviderContainer(
+        overrides: [
+          appConfigProvider.overrideWithValue(
+            AppConfig(
+              environment: AppEnvironment.production,
+              apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+              enableMockData: false,
+            ),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final repository = container.read(launchpadRepositoryProvider);
+
+      expect(repository, isA<FailClosedLaunchpadRepository>());
+      expect(
+        () => repository.getHome(),
+        throwsA(isA<LaunchpadBackendContractMissingException>()),
+      );
+    },
+  );
+
   test('trade repository fails closed without wiring mock or fake remote', () {
     final container = ProviderContainer(
       overrides: [
@@ -119,28 +172,83 @@ void main() {
     );
   });
 
-  test('p2p repository fails closed without wiring mock or fake remote', () {
-    final container = ProviderContainer(
-      overrides: [
-        appConfigProvider.overrideWithValue(
-          AppConfig(
-            environment: AppEnvironment.production,
-            apiBaseUrl: Uri.parse('https://api.vittrade.example'),
-            enableMockData: false,
+  test(
+    'trade_bots repository fails closed without wiring mock or fake remote',
+    () {
+      final container = ProviderContainer(
+        overrides: [
+          appConfigProvider.overrideWithValue(
+            AppConfig(
+              environment: AppEnvironment.production,
+              apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+              enableMockData: false,
+            ),
           ),
-        ),
-      ],
-    );
-    addTearDown(container.dispose);
+        ],
+      );
+      addTearDown(container.dispose);
 
-    final repository = container.read(p2pRepositoryProvider);
+      final repository = container.read(tradingBotsRepositoryProvider);
 
-    expect(repository, isA<FailClosedP2PRepository>());
-    expect(
-      () => repository.getHome(),
-      throwsA(isA<P2PBackendContractMissingException>()),
-    );
-  });
+      expect(repository, isA<FailClosedTradeBotsRepository>());
+      expect(
+        () => repository.getTradingBots(),
+        throwsA(isA<TradeBackendContractMissingException>()),
+      );
+    },
+  );
+
+  test(
+    'trade_copy repository fails closed without wiring mock or fake remote',
+    () {
+      final container = ProviderContainer(
+        overrides: [
+          appConfigProvider.overrideWithValue(
+            AppConfig(
+              environment: AppEnvironment.production,
+              apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+              enableMockData: false,
+            ),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final repository = container.read(tradeCopyTradingRepositoryProvider);
+
+      expect(repository, isA<FailClosedTradeCopyTradingRepository>());
+      expect(
+        () => repository.getCopyTrading(),
+        throwsA(isA<TradeBackendContractMissingException>()),
+      );
+    },
+  );
+
+  test(
+    'trade_terminal repository fails closed without wiring mock or fake remote',
+    () {
+      final container = ProviderContainer(
+        overrides: [
+          appConfigProvider.overrideWithValue(
+            AppConfig(
+              environment: AppEnvironment.production,
+              apiBaseUrl: Uri.parse('https://api.vittrade.example'),
+              enableMockData: false,
+            ),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final repository = container.read(spotTradeRepositoryProvider);
+
+      expect(repository, isA<FailClosedTradeTerminalRepository>());
+      expect(
+        () => repository.getTrade(),
+        throwsA(isA<TradeBackendContractMissingException>()),
+      );
+    },
+  );
 
   test(
     'predictions repository fails closed without wiring mock or fake remote',

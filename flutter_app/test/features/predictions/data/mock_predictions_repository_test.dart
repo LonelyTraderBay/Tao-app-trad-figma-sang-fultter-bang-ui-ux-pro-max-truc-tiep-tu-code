@@ -4,7 +4,7 @@
 // business logic worth testing directly: `getHome` and `getSearch` each
 // sort their event list by one of 6 different criteria via a switch
 // statement (see `_applyFilter` / `_sortSearchEvents` in
-// mock_predictions_repository_fixtures_part_01.dart), and several methods
+// mock_predictions_repository_fixtures_events_and_positions.dart), and several methods
 // filter/aggregate over the fixture data (category & status filters, up/down
 // counts, portfolio totals, leaderboard re-ranking, activity feed counts).
 // This file exercises every method on the PredictionsRepository interface,

@@ -1,3 +1,5 @@
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
+
 part 'p2p_shared_entities.dart';
 part 'p2p_escrow_entities.dart';
 part 'p2p_home_entities.dart';

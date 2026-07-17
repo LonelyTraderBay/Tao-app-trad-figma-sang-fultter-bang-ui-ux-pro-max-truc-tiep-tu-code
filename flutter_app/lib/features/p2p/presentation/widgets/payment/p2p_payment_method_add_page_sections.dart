@@ -85,7 +85,7 @@ class _PaymentOptionChip extends StatelessWidget {
       accentColor: AppModuleAccents.p2p,
       showSelectedIcon: true,
       selectedIcon: Icons.check_circle_outline_rounded,
-      semanticLabel: '$label payment option',
+      semanticLabel: '$label phương thức thanh toán',
     );
   }
 }
@@ -208,23 +208,6 @@ class _IconBadge extends StatelessWidget {
         width: _p2pPaymentAddIconBox,
         height: _p2pPaymentAddIconBox,
         child: Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),
-      ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.caption.copyWith(
-        color: AppColors.text2,
-        fontWeight: AppTextStyles.bold,
       ),
     );
   }

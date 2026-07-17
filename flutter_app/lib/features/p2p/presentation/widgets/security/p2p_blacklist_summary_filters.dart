@@ -153,7 +153,7 @@ class _BlacklistReasonFilters extends StatelessWidget {
                   ? AppModuleAccents.p2p
                   : _reasonColor(filter),
               padding: P2PSpacingTokens.p2pBlacklistListFilterChipPadding,
-              semanticLabel: 'Blacklist filter ${filter.label}',
+              semanticLabel: 'Bộ lọc danh sách đen ${filter.label}',
             ),
             const SizedBox(width: AppSpacing.x1),
           ],

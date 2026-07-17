@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
@@ -136,7 +137,7 @@ class AddressWalletInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitInput(
       fieldKey: const Key('sc143_address_address_field'),
-      semanticLabel: 'Wallet address',
+      semanticLabel: 'Địa chỉ ví',
       controller: controller,
       hintText: 'Nhập hoặc dán địa chỉ...',
       textInputAction: TextInputAction.next,
@@ -145,7 +146,7 @@ class AddressWalletInput extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AddressIconCircleButton(
-            semanticLabel: 'Paste wallet address',
+            semanticLabel: 'Dán địa chỉ ví',
             icon: Icons.content_paste_rounded,
             onTap: () async {
               final data = await Clipboard.getData(Clipboard.kTextPlain);
@@ -157,7 +158,7 @@ class AddressWalletInput extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x2),
           AddressIconCircleButton(
-            semanticLabel: 'Scan wallet address QR code',
+            semanticLabel: 'Quét mã QR địa chỉ ví',
             icon: Icons.qr_code_scanner_rounded,
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -227,7 +228,5 @@ class AddressPrimaryActionButton extends StatelessWidget {
   }
 }
 
-String maskWalletAddress(String address) {
-  if (address.length <= 24) return address;
-  return '${address.substring(0, 16)}...${address.substring(address.length - 8)}';
-}
+String maskWalletAddress(String address) =>
+    maskAddress(address, head: 16, tail: 8);

@@ -1,22 +1,5 @@
 part of '../../pages/ads/p2p_create_ad_page.dart';
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-      ),
-    );
-  }
-}
-
 class _TradeTypePicker extends StatelessWidget {
   const _TradeTypePicker({required this.value, required this.onChanged});
 
@@ -141,7 +124,14 @@ class _ChipGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionLabel(label),
+        Padding(
+          padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
+          child: VitSectionHeader(
+            title: label,
+            titleColor: AppColors.text2,
+            titleFontWeight: AppTextStyles.normal,
+          ),
+        ),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x2,
@@ -173,7 +163,14 @@ class _InputBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SectionLabel(label),
+        Padding(
+          padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
+          child: VitSectionHeader(
+            title: label,
+            titleColor: AppColors.text2,
+            titleFontWeight: AppTextStyles.normal,
+          ),
+        ),
         child,
         if (hint != null) ...[
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),

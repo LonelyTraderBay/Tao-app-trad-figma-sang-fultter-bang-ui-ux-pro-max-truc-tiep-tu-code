@@ -407,28 +407,28 @@ const _homeMatrixSourceRules = [
   HomeEntryBackRule(
     id: 'HEB-024',
     area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_02.dart',
+    file: 'lib/features/home/presentation/pages/home_page_sections.dart',
     requiredSnippets: ["onTap: () => onNavigate('/markets/predictions')"],
     notes: 'Discovery Prediction Markets source is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-025',
     area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_02.dart',
+    file: 'lib/features/home/presentation/pages/home_page_sections.dart',
     requiredSnippets: ["onTap: () => onNavigate('/arena')"],
     notes: 'Discovery Open Arena source is present.',
   ),
   HomeEntryBackRule(
     id: 'HEB-026',
     area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_02.dart',
+    file: 'lib/features/home/presentation/pages/home_page_sections.dart',
     requiredSnippets: ["onNavigate('/markets')"],
     notes: 'Markets root source is present; system back uses Home history.',
   ),
   HomeEntryBackRule(
     id: 'HEB-027',
     area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_02.dart',
+    file: 'lib/features/home/presentation/pages/home_page_sections.dart',
     requiredSnippets: [
       'class _MarketSection',
       "onNavigate('/pair/\${pairs[i].id}')",
@@ -441,7 +441,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C01',
     area: 'Home outbound',
-    file: 'lib/features/home/presentation/pages/home_page_part_01.dart',
+    file: 'lib/features/home/presentation/pages/home_page_state.dart',
     requiredSnippets: ['context.push(path);'],
     forbiddenSnippets: ['context.go(path);'],
     notes: 'Home feature/product entries preserve route history.',
@@ -449,7 +449,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02A',
     area: 'Trade pair entry',
-    file: 'lib/features/trade/presentation/widgets/hub/trade_page_part_01.dart',
+    file: 'lib/features/trade/presentation/widgets/hub/trade_page_state.dart',
     requiredSnippets: [
       'widget.chartVariant == TradeChartVariant.pairRoute || context.canPop()',
       'fallbackPath: AppRoutePaths.trade',
@@ -505,7 +505,8 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C02F',
     area: 'DCA entry',
-    file: 'lib/features/dca/presentation/pages/hub/dca_page_part_01.dart',
+    file:
+        'lib/features/dca/presentation/pages/hub/dca_page_state_overview.dart',
     requiredSnippets: [
       'fallbackPath: AppRoutePaths.trade',
       'mode: BackNavigationMode.historyThenFallback',
@@ -578,7 +579,7 @@ const _homeEntryContractRules = [
   HomeEntryBackRule(
     id: 'HEB-C03',
     area: 'Home source coverage',
-    file: 'lib/features/home/presentation/pages/home_page_part_03.dart',
+    file: 'lib/features/home/presentation/pages/home_page_common.dart',
     requiredSnippets: ["part of 'home_page.dart';"],
     forbiddenSnippets: ['onNavigate('],
     notes:

@@ -1,0 +1,14 @@
+name: vittrade_lints
+description: >
+  VitTrade-specific custom_lint rules. Proof-of-concept porting one
+  architecture guardrail from test/quality/architecture_baseline_guardrails_test.dart
+  into a real IDE-time DartLintRule.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  analyzer: ^8.0.0
+  custom_lint_builder: ^0.8.1

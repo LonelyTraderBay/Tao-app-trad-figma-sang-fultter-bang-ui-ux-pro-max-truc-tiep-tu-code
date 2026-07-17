@@ -234,7 +234,7 @@ class _LanguageButton extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       padding: EarnSpacingTokens.earnPillPaddingLarge,
-      semanticLabel: 'API example language ${example.label}',
+      semanticLabel: 'Ngôn ngữ ví dụ API ${example.label}',
     );
   }
 }

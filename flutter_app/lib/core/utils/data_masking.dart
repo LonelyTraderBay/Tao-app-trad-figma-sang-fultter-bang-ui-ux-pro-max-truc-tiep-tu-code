@@ -24,3 +24,14 @@ String maskAccountNumber(String value) {
   final prefix = trimmed.substring(0, trimmed.length < 7 ? 1 : 3);
   return '$prefix...${trimmed.substring(trimmed.length - 4)}';
 }
+
+/// Masks a wallet/contract address for display, keeping [head] leading and
+/// [tail] trailing characters, e.g. `maskAddress('TQnKxxx4d8eRh9Kf2Lz5mNp7')`
+/// -> `TQnKxx...mNp7`. If [value] is too short to show both [head] and
+/// [tail] without overlapping, returns [value] unchanged rather than
+/// exposing more than it hides.
+String maskAddress(String value, {int head = 6, int tail = 4}) {
+  final trimmed = value.trim();
+  if (trimmed.length <= head + tail) return trimmed;
+  return '${trimmed.substring(0, head)}...${trimmed.substring(trimmed.length - tail)}';
+}

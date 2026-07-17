@@ -208,7 +208,4 @@ String _formatNumber(double value, {required int fractionDigits}) {
   return '${buffer.toString()}.${parts[1]}';
 }
 
-String _maskTxHash(String value) {
-  if (value.length <= 12) return value;
-  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
-}
+String _maskTxHash(String value) => maskAddress(value);

@@ -56,7 +56,7 @@ class _AssetChip extends StatelessWidget {
         fullWidth: true,
         accentColor: AppModuleAccents.p2p,
         padding: P2PSpacingTokens.p2pOrderBookSelectorPadding,
-        semanticLabel: '${market.asset} VND ${_formatChange(market.changePct)}',
+        semanticLabel: 'Giá ${market.asset} VND, biến động ${_formatChange(market.changePct)}',
       ),
     );
   }

@@ -86,15 +86,21 @@ List<Widget> _profileReadySections({
       onCopyReferral: onCopyReferral,
     ),
     _VipCard(vip: snapshot.vip, onTap: onOpenVip),
-    const _SectionLabel(
-      label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
-      accent: _profilePurple,
+    const VitSectionHeader(
+      title: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
+      accentColor: _profilePurple,
+      variant: VitSectionHeaderVariant.accentBar,
+      density: VitDensity.compact,
+      bottomGap: AppSpacing.pageRhythmCompactInnerGap,
     ),
     _PredictionCard(prediction: snapshot.prediction, onTap: onOpenPredictions),
     _ArenaCard(arena: snapshot.arena, onTap: onOpenArena),
-    const _SectionLabel(
-      label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
-      accent: _profileAmber,
+    const VitSectionHeader(
+      title: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
+      accentColor: _profileAmber,
+      variant: VitSectionHeaderVariant.accentBar,
+      density: VitDensity.compact,
+      bottomGap: AppSpacing.pageRhythmCompactInnerGap,
     ),
     if (snapshot.productShortcuts.isEmpty)
       const VitEmptyState(
@@ -114,7 +120,13 @@ List<Widget> _profileReadySections({
       )
     else
       for (final section in snapshot.sections) ...[
-        _SectionLabel(label: section.label, accent: Color(section.accentHex)),
+        VitSectionHeader(
+          title: section.label,
+          accentColor: Color(section.accentHex),
+          variant: VitSectionHeaderVariant.accentBar,
+          density: VitDensity.compact,
+          bottomGap: AppSpacing.pageRhythmCompactInnerGap,
+        ),
         _MenuSection(section: section),
       ],
     _ActivityButton(onTap: onOpenActivity),
@@ -357,24 +369,6 @@ class _LogoutButton extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.label, required this.accent});
-
-  final String label;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      accentColor: accent,
-      variant: VitSectionHeaderVariant.accentBar,
-      density: VitDensity.compact,
-      bottomGap: AppSpacing.pageRhythmCompactInnerGap,
     );
   }
 }

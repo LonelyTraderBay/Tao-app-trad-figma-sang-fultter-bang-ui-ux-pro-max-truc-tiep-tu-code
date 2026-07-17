@@ -104,11 +104,25 @@ class _OverviewTab extends StatelessWidget {
       key: StakingRiskDisclosurePage.overviewKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SectionLabel(snapshot.summaryTitle),
+        VitSectionHeader(
+          title: snapshot.summaryTitle,
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppColors.primary,
+          density: VitDensity.compact,
+          titleColor: AppColors.text2,
+          titleHeight: _stakingRiskCompactLineHeight,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _RiskSummaryCard(snapshot: snapshot),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        _SectionLabel(snapshot.productSectionTitle),
+        VitSectionHeader(
+          title: snapshot.productSectionTitle,
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppColors.primary,
+          density: VitDensity.compact,
+          titleColor: AppColors.text2,
+          titleHeight: _stakingRiskCompactLineHeight,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final product in snapshot.products) ...[
           _RiskProductCard(product: product),

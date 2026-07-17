@@ -179,7 +179,7 @@ class _AmountCard extends StatelessWidget {
           VitInput(
             fieldKey: const Key('sc145_buy_crypto_amount'),
             controller: amountController,
-            semanticLabel: 'Buy crypto amount in VND',
+            semanticLabel: 'Số tiền mua tiền mã hóa bằng VND',
             hintText: '0',
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],

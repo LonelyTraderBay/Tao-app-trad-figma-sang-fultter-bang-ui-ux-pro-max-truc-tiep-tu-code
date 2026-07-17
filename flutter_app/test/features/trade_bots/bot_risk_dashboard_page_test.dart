@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/settings/bot_emergency_stop_page.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/dashboard/bot_risk_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -32,7 +32,7 @@ void main() {
   }
 
   test('SC-120 mock repository exposes bot risk dashboard BE draft', () {
-    final snapshot = const MockTradeRepository().getBotRiskDashboard();
+    final snapshot = const MockTradeBotsRepository().getBotRiskDashboard();
 
     expect(snapshot.riskScore, 68);
     expect(snapshot.riskLabel, 'Medium Risk');

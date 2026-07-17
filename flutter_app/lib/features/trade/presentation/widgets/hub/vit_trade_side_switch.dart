@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_segmented_choice.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
@@ -77,7 +77,7 @@ class VitTradeFuturesSideSwitch extends StatelessWidget {
           label: 'Long',
           accentColor: AppColors.buy,
           leading: const Icon(Icons.trending_up_rounded),
-          semanticLabel: 'Chon huong Long futures',
+          semanticLabel: 'Chọn hướng Long futures',
         ),
         VitSegmentedChoiceOption(
           key: shortKey,
@@ -85,7 +85,7 @@ class VitTradeFuturesSideSwitch extends StatelessWidget {
           label: 'Short',
           accentColor: AppColors.sell,
           leading: const Icon(Icons.trending_down_rounded),
-          semanticLabel: 'Chon huong Short futures',
+          semanticLabel: 'Chọn hướng Short futures',
         ),
       ],
     );

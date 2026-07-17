@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/safety/dispute_resolution_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -57,7 +57,8 @@ void main() {
   }
 
   test('SC-082 mock repository exposes dispute resolution BE draft', () {
-    final snapshot = const MockTradeRepository().getDisputeResolution();
+    final snapshot = const MockTradeCopyTradingRepository()
+        .getDisputeResolution();
 
     expect(snapshot.defaultTabId, 'file');
     expect(snapshot.noticeTitle, 'Fair Dispute Resolution');
@@ -80,14 +81,15 @@ void main() {
       ]),
     );
 
-    final result = const MockTradeRepository().submitDisputeComplaint(
-      const TradeDisputeComplaintDraft(
-        complaintType: 'execution_issue',
-        providerId: 'trader-2',
-        subject: 'Excessive slippage',
-        description: 'Provider executed at a materially different price.',
-      ),
-    );
+    final result = const MockTradeCopyTradingRepository()
+        .submitDisputeComplaint(
+          const TradeDisputeComplaintDraft(
+            complaintType: 'execution_issue',
+            providerId: 'trader-2',
+            subject: 'Excessive slippage',
+            description: 'Provider executed at a materially different price.',
+          ),
+        );
     expect(result.caseId, 'case-003');
     expect(result.status, 'submitted');
   });

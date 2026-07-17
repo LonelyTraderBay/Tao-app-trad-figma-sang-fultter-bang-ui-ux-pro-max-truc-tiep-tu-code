@@ -21,9 +21,9 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/security/p2p
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
-part '../../widgets/hub/p2p_express_page_part_01.dart';
-part '../../widgets/hub/p2p_express_page_part_02.dart';
-part '../../widgets/hub/p2p_express_page_part_03.dart';
+part '../../widgets/hub/p2p_express_page_state.dart';
+part '../../widgets/hub/p2p_express_form_cards.dart';
+part '../../widgets/hub/p2p_express_page_common.dart';
 
 const double _p2pExpressVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;

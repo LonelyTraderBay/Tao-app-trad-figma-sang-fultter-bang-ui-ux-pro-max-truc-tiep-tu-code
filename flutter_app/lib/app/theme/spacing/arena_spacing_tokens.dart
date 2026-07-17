@@ -90,7 +90,10 @@ final class ArenaSpacingTokens {
   static const double arenaHomeQuickChipLineHeight = 1.0;
   static const double arenaHomeHeroTitleLineHeight = 1.05;
   static const int arenaHomeTemplateColumns = 2;
-  static const double arenaHomeTemplateExtent = 90;
+  // A11Y-3: was 90 — raised so a 2-line title + description + tags fit at
+  // the app-wide 1.3x text-scaling clamp without overflowing this GridView
+  // cell's fixed mainAxisExtent.
+  static const double arenaHomeTemplateExtent = 98;
   static const double arenaHomeTemplateTitleLineHeight = 1.15;
   static const double arenaHomeTemplateDescriptionLineHeight = 1.3;
   static const double arenaHomeModeCardWidth = 220;

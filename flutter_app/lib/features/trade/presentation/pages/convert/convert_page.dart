@@ -13,7 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/vit_trade_simple_shell.dart';
@@ -21,8 +21,8 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert/co
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
-part '../../widgets/convert/convert_page_part_01.dart';
-part '../../widgets/convert/convert_page_part_02.dart';
+part '../../widgets/convert/convert_page_common.dart';
+part '../../widgets/convert/convert_page_sections.dart';
 part '../../widgets/convert/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;

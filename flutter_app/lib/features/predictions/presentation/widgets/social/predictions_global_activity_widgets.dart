@@ -222,5 +222,8 @@ Key _amountFilterKey(double value) {
   return Key('sc034_filter_${value.toInt()}');
 }
 
-String _formatVolume(double value) =>
-    VitFormat.compactSuffix(value, prefix: r'$');
+String _formatVolume(double value) {
+  if (value >= 1000000) return '\$${(value / 1000000).toStringAsFixed(1)}M';
+  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(0)}K';
+  return '\$${value.toStringAsFixed(0)}';
+}

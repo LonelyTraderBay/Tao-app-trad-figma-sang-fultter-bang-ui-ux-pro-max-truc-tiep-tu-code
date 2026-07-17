@@ -25,7 +25,7 @@ import 'package:vit_trade_flutter/features/arena/presentation/widgets/governance
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/hub/arena_state_cards.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'arena_governance_gate_page_part_04.dart';
+part 'arena_governance_gate_page_tier_style.dart';
 part '../../widgets/governance/arena_governance_gate_models.dart';
 part '../../widgets/governance/arena_governance_gate_privacy_clarity.dart';
 part '../../widgets/governance/arena_governance_gate_setup_fields.dart';

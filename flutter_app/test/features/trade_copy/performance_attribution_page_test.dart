@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/analytics/performance_attribution_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -33,7 +33,7 @@ void main() {
   }
 
   test('SC-075 mock repository exposes attribution BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeCopyTradingRepository();
     final snapshot = repo.getPerformanceAttribution(copyId: 'copy001');
 
     expect(snapshot.copyId, 'copy001');

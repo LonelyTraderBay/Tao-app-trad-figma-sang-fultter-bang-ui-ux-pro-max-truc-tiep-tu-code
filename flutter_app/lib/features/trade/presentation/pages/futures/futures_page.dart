@@ -16,11 +16,11 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_formatters.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
-part '../../widgets/futures/futures_page_part_01.dart';
-part '../../widgets/futures/futures_page_part_02.dart';
+part '../../widgets/futures/futures_page_state.dart';
+part '../../widgets/futures/futures_page_form_controls.dart';
 
 const _futuresRed = AppColors.sell;
 const _futuresGreen = AppColors.buy;

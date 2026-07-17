@@ -66,7 +66,8 @@ class _SummaryCard extends StatelessWidget {
       timeframe: timeframe,
       tint: tint,
       accent: accent,
-      semanticsLabel: 'Admin A/B test metric $label: $value. $delta $timeframe',
+      semanticsLabel:
+          'Chỉ số A/B test quản trị $label: $value. $delta $timeframe',
       valueStyle: AppTextStyles.sectionTitle.copyWith(
         fontFeatures: AppTextStyles.tabularFigures,
       ),
@@ -90,7 +91,7 @@ class _ABTestCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: '${test.name} A/B test',
+      label: 'Bài test A/B ${test.name}',
       child: VitCard(
         key: ABTestDashboard.testKey(test.id),
         onTap: onTap,
@@ -210,7 +211,7 @@ class _MiniStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Admin A/B test metric $label: $value',
+      label: 'Chỉ số A/B test quản trị $label: $value',
       child: DecoratedBox(
         decoration: const ShapeDecoration(
           color: AppColors.surface2,
@@ -254,7 +255,7 @@ class _VariantResult extends StatelessWidget {
         : (variant.conversions / variant.exposures).clamp(0.0, 1.0).toDouble();
     return Semantics(
       label:
-          '${variant.label} variant conversion rate ${variant.conversionRateLabel}, ${variant.conversions} of ${variant.exposures} conversions',
+          'Tỷ lệ chuyển đổi biến thể ${variant.label} là ${variant.conversionRateLabel}, ${variant.conversions} trên ${variant.exposures} lượt chuyển đổi',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

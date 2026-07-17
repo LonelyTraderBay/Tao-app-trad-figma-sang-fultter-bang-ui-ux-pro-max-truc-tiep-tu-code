@@ -106,7 +106,7 @@ class WithdrawConfirmActionButton extends StatelessWidget {
     return Semantics(
       button: true,
       enabled: true,
-      label: primary ? 'Confirm withdrawal' : 'Cancel withdrawal preview',
+      label: primary ? 'Xác nhận rút' : 'Hủy xem trước lệnh rút',
       child: VitCtaButton(
         height: AppSpacing.ctaHeight,
         variant: primary

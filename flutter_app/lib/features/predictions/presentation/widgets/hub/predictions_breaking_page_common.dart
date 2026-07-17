@@ -107,7 +107,7 @@ class _EmailCta extends StatelessWidget {
                   fieldKey: PredictionsBreakingPage.emailFieldKey,
                   controller: controller,
                   keyboardType: TextInputType.emailAddress,
-                  semanticLabel: 'Prediction breaking email',
+                  semanticLabel: 'Email đăng ký tin nóng dự đoán',
                   hintText: 'your@email.com',
                   textStyle: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
@@ -176,5 +176,8 @@ class _BreakingEmptyState extends StatelessWidget {
   }
 }
 
-String _formatVolume(double value) =>
-    VitFormat.compactSuffix(value, prefix: r'$');
+String _formatVolume(double value) {
+  if (value >= 1000000) return '\$${(value / 1000000).toStringAsFixed(1)}M';
+  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(0)}K';
+  return '\$${value.toStringAsFixed(0)}';
+}

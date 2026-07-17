@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/settings/bot_faq_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,7 @@ void main() {
   }
 
   test('SC-132 mock repository exposes bot FAQ BE draft', () {
-    final snapshot = const MockTradeRepository().getBotFaq();
+    final snapshot = const MockTradeBotsRepository().getBotFaq();
 
     expect(snapshot.categories, hasLength(5));
     expect(snapshot.totalFaqs, 25);

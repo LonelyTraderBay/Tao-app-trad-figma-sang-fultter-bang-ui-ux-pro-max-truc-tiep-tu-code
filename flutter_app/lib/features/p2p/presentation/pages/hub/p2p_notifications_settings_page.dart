@@ -276,7 +276,7 @@ class _ChannelButton extends StatelessWidget {
         size: AppSpacing.iconSm,
         color: selected ? AppColors.buy : AppColors.text3,
       ),
-      semanticLabel: '${channel.label} notifications',
+      semanticLabel: 'Thông báo ${channel.label}',
     );
   }
 }

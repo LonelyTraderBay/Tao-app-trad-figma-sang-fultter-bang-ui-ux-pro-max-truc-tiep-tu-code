@@ -49,7 +49,7 @@ class _AmountSimulator extends StatelessWidget {
             fieldKey: SavingsRecommendationsPage.amountFieldKey,
             controller: controller,
             keyboardType: TextInputType.number,
-            semanticLabel: 'Savings recommendations amount',
+            semanticLabel: 'Số tiền mô phỏng gợi ý tiết kiệm',
             onChanged: onAmountChanged,
             textStyle: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,

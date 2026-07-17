@@ -99,7 +99,10 @@ void main() {
       tester
           .getSize(find.byKey(ArenaHomePage.templateKey('prediction')).first)
           .height,
-      lessThanOrEqualTo(90),
+      // A11Y-3: ArenaSpacingTokens.arenaHomeTemplateExtent raised 90->98 so
+      // a 2-line title + description + tags fit at the 1.3x text-scaling
+      // clamp without overflowing.
+      lessThanOrEqualTo(98),
       reason: 'Arena template tiles should stay compact in the first viewport.',
     );
     final finalTemplateBottom = tester

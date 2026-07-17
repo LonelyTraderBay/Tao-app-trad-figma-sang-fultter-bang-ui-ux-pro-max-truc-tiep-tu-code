@@ -1,0 +1,33 @@
+# CODEOWNERS — flags high blast-radius files for review awareness.
+#
+# Generated from the 2026-07-15 folder-structure audit's "shared bottleneck
+# file" findings (see the audit Artifact / memory/project_structure_audit).
+# These are the files/directories every one of the 28 feature teams (or the
+# whole 6-module Trade family) can end up touching at once — a change here
+# has an outsized blast radius, so route it through someone who understands
+# the full surface before merging.
+#
+# Owner (2026-07-16, DEC-codeowners in
+# docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-DECISIONS.md):
+# @LonelyTraderBay — this repo has exactly one contributor (43/43 commits),
+# so there is no team to assign. Branch protection intentionally does NOT
+# require Code Owner review while the repo stays solo (GitHub does not let a
+# user approve their own PR, so that setting would self-lock every merge).
+# Re-open this decision when a second maintainer joins.
+
+# Router composition root — every feature that adds a route touches these.
+/flutter_app/lib/app/router/app_router.dart            @LonelyTraderBay
+/flutter_app/lib/app/router/app_route_names.dart        @LonelyTraderBay
+/flutter_app/lib/app/router/app_route_paths.dart        @LonelyTraderBay
+
+# Trade-family shared kernel — fan-in from all 6 trade_* modules.
+# (The 6-way union `trade_core/domain/repositories/trade_repository.dart`
+# this used to also list was deleted 2026-07-15/16, closing punch-list #1,
+# the trade family's circular dependency. trade_module_layout.dart below
+# remains the real shared-kernel bottleneck.)
+/flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart @LonelyTraderBay
+
+# Largest mock-repository fixture families in the repo — high merge-conflict
+# risk when multiple devs touch different sub-domains of the same feature.
+/flutter_app/lib/features/earn/data/ @LonelyTraderBay
+/flutter_app/lib/features/p2p/data/  @LonelyTraderBay

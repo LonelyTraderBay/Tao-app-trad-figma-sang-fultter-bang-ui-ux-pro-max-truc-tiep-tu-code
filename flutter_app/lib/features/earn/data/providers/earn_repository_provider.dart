@@ -3,7 +3,7 @@ import 'package:vit_trade_flutter/core/data/repository_guard.dart';
 import 'package:vit_trade_flutter/features/earn/domain/repositories/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/data/repositories/mock_earn_repository.dart';
 
-import '../repositories/fail_closed_earn_repository.dart';
+import 'package:vit_trade_flutter/features/earn/data/repositories/fail_closed_earn_repository.dart';
 
 T _guardedEarnRepository<T>(Ref ref, T Function() mock) {
   return guardedRepository(

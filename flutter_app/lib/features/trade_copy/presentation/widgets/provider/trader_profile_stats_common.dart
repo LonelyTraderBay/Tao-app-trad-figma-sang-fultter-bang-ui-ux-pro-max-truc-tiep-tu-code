@@ -237,8 +237,13 @@ String _signedUsd(double value) {
   return '$sign\$${_formatMoney(value.abs())}';
 }
 
-String _compactUsd(double value) =>
-    VitFormat.compactSuffix(value, prefix: r'$');
+String _compactUsd(double value) {
+  if (value >= 1000000) {
+    return '\$${(value / 1000000).toStringAsFixed(value >= 10000000 ? 1 : 2)}M';
+  }
+  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(1)}K';
+  return '\$${value.toStringAsFixed(0)}';
+}
 
 String _formatMoney(double value) => formatTradeMoney(value);
 

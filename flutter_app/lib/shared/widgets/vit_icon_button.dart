@@ -153,30 +153,50 @@ class VitIconButton extends StatelessWidget {
         button: true,
         label: tooltip,
         enabled: _enabled,
-        child: SizedBox(
-          width: hasLabel ? null : metrics.height,
-          height: metrics.height,
-          child: Material(
-            color: AppColors.transparent,
+        child: Material(
+          color: AppColors.transparent,
+          borderRadius: radius,
+          child: InkWell(
+            onTap: _enabled ? onPressed : null,
             borderRadius: radius,
-            child: Ink(
-              decoration: ShapeDecoration(
-                color: style.background,
-                shape: RoundedRectangleBorder(
-                  borderRadius: radius,
-                  side: style.border == null
-                      ? BorderSide.none
-                      : BorderSide(color: style.border!),
-                ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: hasLabel ? 0 : AppSpacing.minTapTarget,
+                minHeight: AppSpacing.minTapTarget,
               ),
-              child: InkWell(
-                onTap: _enabled ? onPressed : null,
-                borderRadius: radius,
-                child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: hasLabel ? metrics.paddingX : 0,
+              child: Center(
+                // widthFactor/heightFactor: 1 makes Center shrink-wrap to
+                // its child's size instead of its Flutter default of
+                // expanding to fill any *bounded* incoming constraint —
+                // without this, the tap target would grow to whatever the
+                // surrounding layout happens to allow instead of stopping
+                // at the ConstrainedBox minimum above.
+                widthFactor: 1,
+                heightFactor: 1,
+                child: SizedBox(
+                  width: hasLabel ? null : metrics.height,
+                  height: metrics.height,
+                  child: Ink(
+                    decoration: ShapeDecoration(
+                      color: style.background,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: radius,
+                        side: style.border == null
+                            ? BorderSide.none
+                            : BorderSide(color: style.border!),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: hasLabel ? metrics.paddingX : 0,
+                      ),
+                      // Same shrink-wrap fix as the outer Center: without
+                      // widthFactor, this would expand to fill whatever
+                      // bounded width the ancestor chain allows instead of
+                      // hugging the Row's content width when hasLabel.
+                      child: Center(widthFactor: 1, heightFactor: 1, child: child),
+                    ),
                   ),
-                  child: Center(child: child),
                 ),
               ),
             ),

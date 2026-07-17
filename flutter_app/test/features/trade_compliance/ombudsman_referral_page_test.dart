@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -31,7 +31,8 @@ void main() {
   }
 
   test('SC-114 mock repository exposes ombudsman BE draft', () {
-    final snapshot = const MockTradeRepository().getOmbudsmanReferral();
+    final snapshot = const MockTradeRegulatoryRepository()
+        .getOmbudsmanReferral();
 
     expect(snapshot.infoTitle, 'Free & Independent');
     expect(snapshot.eligibility.map((item) => item.title), [

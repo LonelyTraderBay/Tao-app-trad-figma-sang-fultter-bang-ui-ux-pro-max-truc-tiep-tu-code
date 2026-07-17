@@ -352,7 +352,7 @@ class _ReasonButton extends StatelessWidget {
       tone: VitChoicePillTone.danger,
       showSelectedIcon: true,
       selectedIcon: Icons.check_rounded,
-      semanticLabel: 'Cancel reason: $reason',
+      semanticLabel: 'Lý do hủy: $reason',
     );
   }
 }

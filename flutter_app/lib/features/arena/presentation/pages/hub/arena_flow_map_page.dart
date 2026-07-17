@@ -34,8 +34,6 @@ const double _flowMapConnectionLineHeight = 1.25;
 const double _flowMapHeroLineHeight = 1.28;
 const double _flowMapBodyLineHeight = 1.25;
 const double _flowMapQaLineHeight = 1.25;
-const double _flowMapMarkerWidth = AppSpacing.pageSectionAccentWidth;
-const double _flowMapMarkerHeight = AppSpacing.rowPy + AppSpacing.x1;
 const EdgeInsetsDirectional _flowMapCardPadding = EdgeInsetsDirectional.all(
   AppSpacing.x3,
 );

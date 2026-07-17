@@ -1,6 +1,6 @@
 # Card Tile Migration Checklist
 
-**Mandatory standard:** [Card-Tile-Standard.md](./Card-Tile-Standard.md)  
+**Mandatory standard:** [Card-Tile-Standard.md](./standards/Card-Tile-Standard.md)  
 **Reference:** [vit_compact_product_card.dart](../../flutter_app/lib/shared/widgets/vit_compact_product_card.dart)
 
 ## Pick a tier

@@ -12,10 +12,12 @@ class _HoursSection extends StatelessWidget {
       key: P2PSettingsPage.hoursKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel(
+        const VitSectionHeader(
+          title: 'Giờ giao dịch',
           icon: Icons.schedule_rounded,
-          label: 'Giờ giao dịch',
-          color: AppColors.buy,
+          iconColor: AppColors.buy,
+          iconSize: AppSpacing.iconSm,
+          titleColor: AppColors.text2,
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
@@ -64,10 +66,12 @@ class _AutoReplySection extends StatelessWidget {
       key: P2PSettingsPage.autoReplyKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel(
+        const VitSectionHeader(
+          title: 'Tin nhắn tự động',
           icon: Icons.chat_bubble_outline_rounded,
-          label: 'Tin nhắn tự động',
-          color: AppColors.primary,
+          iconColor: AppColors.primary,
+          iconSize: AppSpacing.iconSm,
+          titleColor: AppColors.text2,
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
@@ -126,32 +130,6 @@ class _AutoReplySection extends StatelessWidget {
               ],
             ],
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({
-    required this.icon,
-    required this.label,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: AppSpacing.iconSm),
-        const SizedBox(width: AppSpacing.x2),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
       ],
     );

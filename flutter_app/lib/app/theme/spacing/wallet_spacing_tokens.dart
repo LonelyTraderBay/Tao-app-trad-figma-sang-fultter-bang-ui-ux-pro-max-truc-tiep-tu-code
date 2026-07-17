@@ -24,7 +24,9 @@ final class WalletSpacingTokens {
     walletAssetPillBottomPad,
   );
   static const double walletAssetLogoSize = 52;
-  static const double walletAssetStatHeight = 52;
+  // A11Y-3: was 52 — raised so the label+value fit at the app-wide 1.3x
+  // text-scaling clamp without overflowing (see homeRecentProductHeight).
+  static const double walletAssetStatHeight = 60;
   static const double walletAssetActionHeight = 90;
   static const double walletAssetActionIcon = 40;
   static const double walletHistoryActionHeight = 30;

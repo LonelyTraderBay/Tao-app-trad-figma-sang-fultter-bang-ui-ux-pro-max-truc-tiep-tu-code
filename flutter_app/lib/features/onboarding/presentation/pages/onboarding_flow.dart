@@ -17,9 +17,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/onboarding_spacing_tokens.dart';
 
-part 'onboarding_flow_part_01.dart';
-part 'onboarding_flow_part_02.dart';
-part 'onboarding_flow_part_03.dart';
+part 'onboarding_flow_state.dart';
+part '../widgets/onboarding_step_screens.dart';
+part '../widgets/onboarding_shared_components.dart';
 
 class OnboardingFlow extends ConsumerStatefulWidget {
   const OnboardingFlow({super.key});

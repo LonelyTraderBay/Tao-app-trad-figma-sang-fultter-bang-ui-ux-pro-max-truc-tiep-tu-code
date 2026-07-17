@@ -18,8 +18,10 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel(
+        const VitSectionHeader(
           title: 'Khám phá thêm',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          variant: VitSectionHeaderVariant.accentBar,
           accentColor: marketListPredictionAccent,
         ),
         const SizedBox(height: MarketsSpacingTokens.marketDiscoverLabelGap),
@@ -53,23 +55,6 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.title, required this.accentColor});
-
-  final String title;
-  final Color accentColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: title,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: accentColor,
     );
   }
 }

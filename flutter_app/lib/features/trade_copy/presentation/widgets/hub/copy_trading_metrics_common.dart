@@ -14,7 +14,15 @@ class _Disclaimer extends StatelessWidget {
   }
 }
 
-String _formatCompact(double value, {String prefix = ''}) =>
-    VitFormat.compactSuffix(value, prefix: prefix);
+String _formatCompact(double value, {String prefix = ''}) {
+  final abs = value.abs();
+  if (abs >= 1000000) {
+    return '$prefix${(value / 1000000).toStringAsFixed(2)}M';
+  }
+  if (abs >= 1000) {
+    return '$prefix${(value / 1000).toStringAsFixed(1)}K';
+  }
+  return '$prefix${value.toStringAsFixed(0)}';
+}
 
 String _formatCompactNumber(int value) => formatTradeCompactNumber(value);

@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('representative high-risk pages use shared state primitives', () {
     const targets = {
-      'lib/features/trade/presentation/widgets/hub/trade_page_part_01.dart',
+      'lib/features/trade/presentation/widgets/hub/trade_page_state.dart',
       'lib/features/wallet/presentation/pages/transfer/withdraw_page.dart',
-      'lib/features/p2p/presentation/widgets/hub/p2p_home_page_part_01.dart',
+      'lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart',
       'lib/features/earn/presentation/pages/staking/staking_earn_page.dart',
       'lib/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart',
       'lib/features/predictions/presentation/pages/hub/predictions_home_page.dart',
@@ -18,6 +18,9 @@ void main() {
       'lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart',
       'lib/features/p2p/presentation/pages/payment/p2p_payment_method_ownership_page.dart',
       'lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart',
+      'lib/features/trade/presentation/widgets/futures/futures_page_state.dart',
+      'lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart',
+      'lib/features/trade_copy/presentation/pages/hub/copy_trading_page.dart',
     };
 
     final missing = <String>[];

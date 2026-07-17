@@ -22,9 +22,9 @@ import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/hub/market_formatters.dart';
 
-part 'social_signals_page_part_01.dart';
-part 'social_signals_page_part_02.dart';
-part 'social_signals_page_part_03.dart';
+part 'social_signals_page_tabs_widgets.dart';
+part 'social_signals_page_signal_provider_widgets.dart';
+part 'social_signals_page_performance_widgets.dart';
 
 const _marketPrimary = AppColors.primary;
 

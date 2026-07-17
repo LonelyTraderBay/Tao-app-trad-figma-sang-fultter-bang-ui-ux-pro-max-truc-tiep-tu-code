@@ -3,13 +3,18 @@ part of 'app_router.dart';
 final class AppRouteNames {
   const AppRouteNames._();
 
+  // ==== AUTH ====
   static const String sc001Login = 'sc001Login';
   static const String sc002Register = 'sc002Register';
   static const String sc003Otp = 'sc003Otp';
   static const String sc004TwoFaSetup = 'sc004TwoFaSetup';
   static const String sc005ForgotPassword = 'sc005ForgotPassword';
   static const String sc006ResetPassword = 'sc006ResetPassword';
+
+  // ==== HOME ====
   static const String sc007Home = 'sc007Home';
+
+  // ==== MARKETS ====
   static const String sc008MarketList = 'sc008MarketList';
   static const String sc009MarketOverview = 'sc009MarketOverview';
   static const String sc010MarketMovers = 'sc010MarketMovers';
@@ -29,6 +34,8 @@ final class AppRouteNames {
   static const String sc024TokenUnlocks = 'sc024TokenUnlocks';
   static const String sc025SocialSignals = 'sc025SocialSignals';
   static const String sc026MarketCorrelations = 'sc026MarketCorrelations';
+
+  // ==== PREDICTIONS ====
   static const String sc027PredictionsHome = 'sc027PredictionsHome';
   static const String sc028PredictionsSearch = 'sc028PredictionsSearch';
   static const String sc029PredictionsBreaking = 'sc029PredictionsBreaking';
@@ -54,10 +61,16 @@ final class AppRouteNames {
   static const String sc042PredictionTournaments = 'sc042PredictionTournaments';
   static const String sc043PredictionDataIntegration =
       'sc043PredictionDataIntegration';
+
+  // ==== MARKETS (pair/token detail) ====
   static const String sc044PairDetail = 'sc044PairDetail';
   static const String sc045TokenInfo = 'sc045TokenInfo';
   static const String sc046PairDepth = 'sc046PairDepth';
+
+  // ==== NEWS ====
   static const String sc047News = 'sc047News';
+
+  // ==== TRADE FAMILY (trade, trade_bots, trade_compliance, trade_copy, trade_terminal — heavily interleaved by historical rollout order, not split further) ====
   static const String sc048Trade = 'sc048Trade';
   static const String sc049TradePair = 'sc049TradePair';
   static const String sc050OrdersHistory = 'sc050OrdersHistory';
@@ -153,6 +166,8 @@ final class AppRouteNames {
   static const String sc132BotFaq = 'sc132BotFaq';
   static const String sc133BotTaxReporting = 'sc133BotTaxReporting';
   static const String sc134BotApiDocumentation = 'sc134BotApiDocumentation';
+
+  // ==== WALLET ====
   static const String sc135Wallet = 'sc135Wallet';
   static const String sc136TxHistory = 'sc136TxHistory';
   static const String sc137Deposit = 'sc137Deposit';
@@ -174,6 +189,8 @@ final class AppRouteNames {
   static const String sc153WithdrawLimits = 'sc153WithdrawLimits';
   static const String sc154DustConverter = 'sc154DustConverter';
   static const String sc155NetworkStatus = 'sc155NetworkStatus';
+
+  // ==== PROFILE ====
   static const String sc156Profile = 'sc156Profile';
   static const String sc157EditProfile = 'sc157EditProfile';
   static const String sc158Security = 'sc158Security';
@@ -187,6 +204,8 @@ final class AppRouteNames {
   static const String sc166SubAccount = 'sc166SubAccount';
   static const String sc167ProfilePredictions = 'sc167ProfilePredictions';
   static const String sc168MyArena = 'sc168MyArena';
+
+  // ==== DCA ====
   static const String sc169Dca = 'sc169Dca';
   static const String sc170DcaRebalanceConfig = 'sc170DcaRebalanceConfig';
   static const String sc171DcaRebalanceDashboard = 'sc171DcaRebalanceDashboard';
@@ -198,10 +217,14 @@ final class AppRouteNames {
   static const String sc177DcaMultiAsset = 'sc177DcaMultiAsset';
   static const String sc178DcaPerformanceCompare = 'sc178DcaPerformanceCompare';
   static const String sc179DcaSmartRules = 'sc179DcaSmartRules';
+
+  // ==== ADMIN ====
   static const String sc180AdminHome = 'sc180AdminHome';
   static const String sc181AnalyticsDashboard = 'sc181AnalyticsDashboard';
   static const String sc182AbTestDashboard = 'sc182AbTestDashboard';
   static const String sc183FunnelDashboard = 'sc183FunnelDashboard';
+
+  // ==== ARENA ====
   static const String sc184ArenaHome = 'sc184ArenaHome';
   static const String sc185ArenaStudio = 'sc185ArenaStudio';
   static const String sc186ArenaSmartRules = 'sc186ArenaSmartRules';
@@ -231,6 +254,8 @@ final class AppRouteNames {
   static const String sc208ConnectedEcosystemProduction =
       'sc208ConnectedEcosystemProduction';
   static const String sc209ArenaGuide = 'sc209ArenaGuide';
+
+  // ==== P2P ====
   static const String sc210P2PExpressConfirm = 'sc210P2PExpressConfirm';
   static const String sc211P2PExpress = 'sc211P2PExpress';
   static const String sc212P2POrderTimeline = 'sc212P2POrderTimeline';
@@ -312,18 +337,28 @@ final class AppRouteNames {
   static const String sc280P2PGuide = 'sc280P2PGuide';
   static const String sc281P2PMyOrders = 'sc281P2PMyOrders';
   static const String sc282P2PHome = 'sc282P2PHome';
+
+  // ==== DISCOVERY ====
   static const String sc283UnifiedSearch = 'sc283UnifiedSearch';
   static const String sc284TopicHub = 'sc284TopicHub';
   static const String sc285TopicCrypto = 'sc285TopicCrypto';
+
+  // ==== REFERRAL ====
   static const String sc286ReferralHistory = 'sc286ReferralHistory';
   static const String sc287ReferralRewards = 'sc287ReferralRewards';
   static const String sc288ReferralRules = 'sc288ReferralRules';
   static const String sc289ReferralFriendDetail = 'sc289ReferralFriendDetail';
   static const String sc290ReferralHome = 'sc290ReferralHome';
+
+  // ==== NOTIFICATIONS ====
   static const String sc291Notifications = 'sc291Notifications';
+
+  // ==== SUPPORT ====
   static const String sc292HelpCenter = 'sc292HelpCenter';
   static const String sc293Announcements = 'sc293Announcements';
   static const String sc294Support = 'sc294Support';
+
+  // ==== LAUNCHPAD ====
   static const String sc295Launchpad = 'sc295Launchpad';
   static const String sc296LaunchpadPortfolio = 'sc296LaunchpadPortfolio';
   static const String sc297LaunchpadPerformance = 'sc297LaunchpadPerformance';
@@ -351,12 +386,18 @@ final class AppRouteNames {
   static const String sc317LaunchpadRiskAnalytics =
       'sc317LaunchpadRiskAnalytics';
   static const String sc318LaunchpadDetail = 'sc318LaunchpadDetail';
+
+  // ==== REWARDS ====
   static const String sc319RewardsHub = 'sc319RewardsHub';
+
+  // ==== CROSS_MODULE ====
   static const String sc320EnterpriseStates = 'sc320EnterpriseStates';
   static const String sc321UnifiedPortfolio = 'sc321UnifiedPortfolio';
   static const String sc322CrossModuleAnalytics = 'sc322CrossModuleAnalytics';
   static const String sc323SmartAlertCenter = 'sc323SmartAlertCenter';
   static const String sc324TaxReportCenter = 'sc324TaxReportCenter';
+
+  // ==== DEV ====
   static const String sc325RouteChecker = 'sc325RouteChecker';
   static const String sc326PerformanceMonitor = 'sc326PerformanceMonitor';
   static const String sc398MissingScreensShowcase =
@@ -364,6 +405,8 @@ final class AppRouteNames {
   static const String sc399DesignSystem = 'sc399DesignSystem';
   static const String sc400DcaOverviewDemo = 'sc400DcaOverviewDemo';
   static const String sc401CopyTradingCardDemo = 'sc401CopyTradingCardDemo';
+
+  // ==== EARN (staking + savings) ====
   static const String sc327StakingEarn = 'sc327StakingEarn';
   static const String sc328StakingEarnStaking = 'sc328StakingEarnStaking';
   static const String sc329Savings = 'sc329Savings';
@@ -455,7 +498,11 @@ final class AppRouteNames {
       'sc395StakingThirdPartyIntegrations';
   static const String sc396StakingDeveloperConsole =
       'sc396StakingDeveloperConsole';
+
+  // ==== ONBOARDING ====
   static const String sc397Onboarding = 'sc397Onboarding';
+
+  // ==== LATE ADDITIONS — mixed features, added as detail-page afterthoughts; check the path for the owning feature ====
   static const String sc402P2PKycVerify = 'sc402P2PKycVerify';
   static const String sc403P2PKycFaceMatch = 'sc403P2PKycFaceMatch';
   static const String sc404P2PWhitelistMode = 'sc404P2PWhitelistMode';

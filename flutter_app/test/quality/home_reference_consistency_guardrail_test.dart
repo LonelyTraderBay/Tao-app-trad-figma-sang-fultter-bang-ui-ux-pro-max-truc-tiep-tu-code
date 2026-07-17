@@ -36,7 +36,7 @@ void main() {
           'VitServiceTile.fromAction(',
       'lib/features/home/presentation/widgets/home_portfolio_card.dart':
           'VitBalanceBreakdownRow(',
-      'lib/features/home/presentation/pages/home_page_part_02.dart':
+      'lib/features/home/presentation/pages/home_page_sections.dart':
           'VitRiskDisclaimerNote(',
     };
 
@@ -192,14 +192,12 @@ void main() {
         'row != snapshot.history.last',
         'SizedBox(height: AppSpacing.rowGap)',
       ],
-      'lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart': [
-        'width: AppSpacing.rowGap',
-      ],
+      'lib/features/rewards/presentation/widgets/rewards_hub_hero_section.dart':
+          ['width: AppSpacing.rowGap'],
     };
     const forbiddenNeedles = <String, List<String>>{
-      'lib/features/rewards/presentation/pages/rewards_hub_page_part_02.dart': [
-        'AppSpacing.cardTileInnerGap',
-      ],
+      'lib/features/rewards/presentation/widgets/rewards_hub_hero_section.dart':
+          ['AppSpacing.cardTileInnerGap'],
     };
 
     final violations = <String>[];

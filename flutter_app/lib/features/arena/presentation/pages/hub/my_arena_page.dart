@@ -22,10 +22,10 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/challenge/arena_navigation_actions.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'my_arena_page_part_01.dart';
-part 'my_arena_page_part_02.dart';
-part 'my_arena_page_part_03.dart';
-part 'my_arena_page_part_04.dart';
+part 'my_arena_page_hero_and_tabs.dart';
+part 'my_arena_page_tab_content.dart';
+part 'my_arena_page_rewards_and_safety.dart';
+part 'my_arena_page_shared_widgets.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 

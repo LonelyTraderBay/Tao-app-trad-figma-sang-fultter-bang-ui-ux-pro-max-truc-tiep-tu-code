@@ -204,10 +204,10 @@ class _ChartToolbar extends StatelessWidget {
                   ),
                   const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
                   Tooltip(
-                    message: 'Open chart indicators',
+                    message: 'Mở chỉ báo biểu đồ',
                     child: Semantics(
                       button: true,
-                      label: 'Open chart indicators',
+                      label: 'Mở chỉ báo biểu đồ',
                       child: VitCard(
                         key: AdvancedChartPage.indicatorButtonKey,
                         onTap: onIndicators,

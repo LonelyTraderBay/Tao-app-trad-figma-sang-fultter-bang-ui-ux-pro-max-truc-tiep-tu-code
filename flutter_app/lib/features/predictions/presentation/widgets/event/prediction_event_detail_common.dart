@@ -45,7 +45,7 @@ class _ChangeLabel extends StatelessWidget {
           size: PredictionsSpacingTokens.predictionHomeTrendIcon,
         ),
         Text(
-          VitFormat.signedPercent(value),
+          _formatPercent(value),
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
@@ -80,8 +80,11 @@ class _TinyBadge extends StatelessWidget {
   }
 }
 
-String _formatVolume(double value) =>
-    VitFormat.compactSuffix(value, prefix: r'$');
+String _formatVolume(double value) {
+  if (value >= 1000000) return '\$${(value / 1000000).toStringAsFixed(1)}M';
+  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(0)}K';
+  return '\$${value.toStringAsFixed(0)}';
+}
 
 String _formatMoney(double value) => VitFormat.usd(value.abs());
 
@@ -99,6 +102,11 @@ String _formatInt(int value) {
     buffer.write(text[index]);
   }
   return buffer.toString();
+}
+
+String _formatPercent(double value) {
+  final sign = value > 0 ? '+' : '';
+  return '$sign${value.toStringAsFixed(1)}%';
 }
 
 String _formatDate(DateTime value) {

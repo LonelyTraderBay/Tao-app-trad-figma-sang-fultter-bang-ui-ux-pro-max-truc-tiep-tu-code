@@ -1,8 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vit_trade_flutter/core/data/repository_guard.dart';
 
+import 'package:vit_trade_flutter/features/home/data/repositories/fail_closed_home_repository.dart';
 import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repository.dart';
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
 
 final homeRepositoryProvider = Provider<HomeRepository>(
-  (ref) => const MockHomeRepository(),
+  (ref) => guardedRepository(
+    ref,
+    featureName: 'Home',
+    mock: () => const MockHomeRepository(),
+    failClosed: () => const FailClosedHomeRepository(),
+  ),
 );

@@ -99,9 +99,12 @@ void main() {
     expect(find.text('+5,000.00'), findsOneWidget);
     expect(find.text('+0.050000'), findsOneWidget);
     expect(find.text('X\u00E1c nh\u1EADn blockchain'), findsWidgets);
-    expect(semanticsLabel('Refresh pending deposit statuses'), findsOneWidget);
     expect(
-      semanticsLabel(RegExp(r'Copy transaction hash for .+')),
+      semanticsLabel('Làm mới trạng thái nạp tiền đang chờ'),
+      findsOneWidget,
+    );
+    expect(
+      semanticsLabel(RegExp(r'Sao chép mã giao dịch của .+')),
       findsWidgets,
     );
   });
@@ -143,7 +146,10 @@ void main() {
     await tester.tap(find.byKey(PendingDepositsPage.copyKey('pd001')));
     await tester.pumpAndSettle();
     expect(find.text('\u0110\u00E3 ch\u00E9p'), findsOneWidget);
-    expect(semanticsLabel('Transaction hash copied for USDT'), findsOneWidget);
+    expect(
+      semanticsLabel('Đã sao chép mã giao dịch của USDT'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('SC-152 refresh shows visible status feedback', (tester) async {

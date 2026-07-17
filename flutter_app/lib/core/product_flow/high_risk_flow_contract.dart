@@ -198,7 +198,7 @@ final class HighRiskFlowContracts {
     HighRiskFlowContract(
       id: HighRiskFlowContractIds.tradeBots,
       productArea: 'Trading Automation',
-      module: 'trade',
+      module: 'trade_bots',
       capability: 'Trading bots',
       ownerSurface: 'Trade product hub',
       entryRoute: '/trade/bots',
@@ -249,7 +249,7 @@ final class HighRiskFlowContracts {
     HighRiskFlowContract(
       id: HighRiskFlowContractIds.tradeCopy,
       productArea: 'Copy Trading',
-      module: 'trade',
+      module: 'trade_copy',
       capability: 'Copy trading',
       ownerSurface: 'Trade product hub',
       entryRoute: '/trade/copy-trading',

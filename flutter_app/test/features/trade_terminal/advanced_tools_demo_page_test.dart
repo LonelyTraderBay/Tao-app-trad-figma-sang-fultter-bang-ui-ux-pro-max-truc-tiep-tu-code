@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/data/trade_terminal_repository.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -32,7 +32,7 @@ void main() {
   }
 
   test('SC-062 mock repository exposes advanced tools BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeTerminalRepository();
     final snapshot = repo.getAdvancedTools();
     final result = repo.submitAdvancedToolAction(
       const TradeAdvancedToolActionRequest(

@@ -24,9 +24,9 @@ import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/hub/dca_currency_formatters.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_delete_button.dart';
 
-part 'dca_multi_asset_page_part_01.dart';
-part 'dca_multi_asset_page_part_02.dart';
-part 'dca_multi_asset_page_part_03.dart';
+part 'dca_multi_asset_page_setup.dart';
+part 'dca_multi_asset_page_assets_and_performance.dart';
+part 'dca_multi_asset_page_common.dart';
 
 enum _MultiAssetTab { setup, assets, performance }
 

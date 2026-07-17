@@ -177,6 +177,14 @@ Directory _findAppRoot() {
   throw StateError('Run from repo root or flutter_app/.');
 }
 
+// Normalizes a `File.path` into a stable identity key. `_collectBundleFiles`
+// builds some paths via `Uri.resolve(...).toFilePath()` (backslash-only on
+// Windows) while `Directory.listSync()` elsewhere in this file returns
+// mixed-separator paths (forward slashes from the constructed root + a
+// native-separator-joined leaf segment) — comparing those raw strings, even
+// after `.toLowerCase()`, silently fails to dedupe the same on-disk file.
+String _pathKey(String rawPath) => rawPath.toLowerCase().replaceAll('\\', '/');
+
 List<DivergenceFileMetric> _collectMetrics(Directory appRoot, String repoRoot) {
   final rootPages = _collectRootPages(appRoot);
   final featureWidgets = _collectFeatureWidgets(appRoot);
@@ -186,13 +194,21 @@ List<DivergenceFileMetric> _collectMetrics(Directory appRoot, String repoRoot) {
 
   for (final pageFile in rootPages) {
     for (final file in _collectBundleFiles(pageFile)) {
-      final key = file.path.toLowerCase();
+      final key = _pathKey(file.path);
       if (!seenBundleFiles.add(key)) continue;
       final metric = _analyzeFile(file, repoRoot, 'root_page');
       if (metric != null) reports.add(metric);
     }
   }
   for (final file in featureWidgets) {
+    final key = _pathKey(file.path);
+    // A `presentation/widgets/` file that is also `part of` a root page's
+    // bundle (the pattern established by trade_compliance's
+    // `arm_integration_providers.dart` and since reused by onboarding/
+    // rewards) was already counted above via `_collectBundleFiles` — without
+    // this guard it doubles that file's Container/BoxDecoration signal
+    // counts, since both loops fed the same `reports` list.
+    if (seenBundleFiles.contains(key)) continue;
     final metric = _analyzeFile(file, repoRoot, 'feature_widget');
     if (metric != null) reports.add(metric);
   }
@@ -220,7 +236,7 @@ List<File> _collectRootPages(Directory appRoot) {
 
   final visited = <String>{};
   for (final file in candidates) {
-    final key = file.path.toLowerCase();
+    final key = _pathKey(file.path);
     if (!visited.add(key)) continue;
     pages.add(file);
   }
@@ -264,7 +280,7 @@ List<File> _collectBundleFiles(File rootPageFile) {
 
   while (queue.isNotEmpty) {
     final file = queue.removeAt(0);
-    final key = file.path.toLowerCase();
+    final key = _pathKey(file.path);
     if (!visited.add(key)) continue;
     if (!file.existsSync()) continue;
     files.add(file);

@@ -112,7 +112,7 @@ class _TournamentDetailHero extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: _CategoryChip(label: tournament.category),
+                  child: _CategoryTag(label: tournament.category),
                 ),
               ),
             ],

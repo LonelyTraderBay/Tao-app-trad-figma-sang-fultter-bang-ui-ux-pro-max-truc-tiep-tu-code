@@ -59,7 +59,7 @@ class WithdrawNetworkOption extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: '${network.name} withdraw network',
+      label: 'Mạng rút ${network.name}',
       child: VitCard(
         key: withdrawNetworkKey(network.id),
         onTap: onTap,

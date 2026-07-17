@@ -124,7 +124,7 @@ class _NewCommentCard extends StatelessWidget {
           VitInput(
             fieldKey: PredictionSocialPage.commentFieldKey,
             controller: controller,
-            semanticLabel: 'Prediction comment',
+            semanticLabel: 'Bình luận dự đoán',
             hintText: 'Chia se y kien cua ban...',
             textStyle: AppTextStyles.body,
           ),

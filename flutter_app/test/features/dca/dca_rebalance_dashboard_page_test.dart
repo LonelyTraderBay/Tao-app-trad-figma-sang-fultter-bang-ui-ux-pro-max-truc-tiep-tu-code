@@ -57,7 +57,7 @@ void main() {
 
   test('SC-171 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/dca/presentation/pages/dca_rebalance_dashboard_page.dart',
+      'lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart',
     ).readAsStringSync();
 
     expect(pageSource, contains('VitInsetScrollView'));

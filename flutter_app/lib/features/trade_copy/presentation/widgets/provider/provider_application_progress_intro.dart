@@ -63,7 +63,12 @@ class _IntroStep extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        _SectionLabel(label: 'Lợi ích', color: _providerGreen),
+        VitSectionHeader(
+          title: 'Lợi ích',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _providerGreen,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final benefit in snapshot.benefits) ...[
           _BenefitCard(benefit: benefit),
@@ -73,7 +78,12 @@ class _IntroStep extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ResponsibilitiesCard(items: snapshot.responsibilities),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        _SectionLabel(label: 'Yêu cầu cơ bản', color: AppColors.text3),
+        VitSectionHeader(
+          title: 'Yêu cầu cơ bản',
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppColors.text3,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final requirement in snapshot.requirements) ...[
           _RequirementPreview(requirement: requirement),

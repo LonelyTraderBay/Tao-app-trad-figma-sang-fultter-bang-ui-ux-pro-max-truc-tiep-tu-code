@@ -199,7 +199,7 @@ class _ModuleCard extends StatelessWidget {
     final accent = unifiedModuleAccent(module.id);
     return Semantics(
       button: true,
-      label: 'Open ${module.name} module',
+      label: 'Mở module ${module.name}',
       child: VitCard(
         key: cardKey,
         radius: VitCardRadius.large,

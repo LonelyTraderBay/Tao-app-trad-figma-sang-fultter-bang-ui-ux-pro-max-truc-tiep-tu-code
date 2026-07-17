@@ -205,7 +205,7 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         decimal: true,
                       ),
                       onChanged: (_) => setState(() {}),
-                      semanticLabel: 'Gas alert threshold',
+                      semanticLabel: 'Ngưỡng cảnh báo gas',
                       hintText: 'VD: 15',
                       textStyle: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,

@@ -28,7 +28,7 @@ void main() {
     const referralPaths = [
       'referral_history_page.dart',
       'referral_rules_page.dart',
-      'referral_rewards_page_part_01.dart',
+      'referral_rewards_page_state.dart',
     ];
 
     for (final path in referralPaths) {

@@ -19,7 +19,6 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_analytics_hero.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_detail_hero.dart';
-import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../../widgets/provider/trader_profile_overview.dart';

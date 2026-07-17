@@ -52,46 +52,29 @@ class _CategoryFilters extends StatelessWidget {
       spacing: AppSpacing.x2,
       runSpacing: AppSpacing.x2,
       children: [
-        _CategoryChip(
+        VitFilterChip(
           label: 'Tat ca',
-          selected: selectedCategory == null,
+          active: selectedCategory == null,
           onTap: () => onChanged(null),
+          color: _predictionPrimary,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x1,
+          ),
         ),
         for (final category in snapshot.categories)
-          _CategoryChip(
+          VitFilterChip(
             key: PredictionEventCalendarPage.categoryKey(category),
             label: category,
-            selected: selectedCategory == category,
+            active: selectedCategory == category,
             onTap: () => onChanged(category),
+            color: _predictionPrimary,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x1,
+            ),
           ),
       ],
-    );
-  }
-}
-
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      accentColor: _predictionPrimary,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
     );
   }
 }

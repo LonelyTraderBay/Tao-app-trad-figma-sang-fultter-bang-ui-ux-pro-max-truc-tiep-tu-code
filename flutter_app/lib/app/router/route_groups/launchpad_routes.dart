@@ -1,6 +1,35 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _launchpadRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/claim/launchpad_batch_claim_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_abi_diff_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_address_book_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/bridge/launchpad_bridge_compare_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/bridge/launchpad_bridge_order_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_contract_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_dca_builder_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_detail_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_event_log_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_gas_tracker_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_limit_orders_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_multisig_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_notif_sound_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_performance_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_portfolio_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/hub/launchpad_receipt_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_risk_analytics_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_staking_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/bridge/launchpad_swap_aggregator_page.dart';
+import 'package:vit_trade_flutter/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/placeholder_routes.dart';
+
+List<RouteBase> launchpadRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.launchpad,
@@ -141,6 +170,6 @@ List<RouteBase> _launchpadRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) =>
           LaunchpadBridgeOrderPage(shellRenderMode: shellRenderMode),
     ),
-    ..._launchpadOutgoingPlaceholders,
+    ...launchpadOutgoingPlaceholders,
   ];
 }

@@ -8,19 +8,20 @@ web screenshot baseline were removed on 2026-05-26.
 1. `AGENTS.md`
 2. `docs/00_START_HERE.md`
 3. `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`
-4. `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`
-5. `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md`
-6. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Native-Design-Standard.md`
-7. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Module-Identity-Standard.md`
-8. `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md`
-9. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
-10. `docs/03_DESIGN_SYSTEM/Guidelines.md`
-11. `DESIGN.md` (root — visual tokens and Vit* component ladder)
-12. `docs/02_FLUTTER_MIGRATION/ke-hoac-tong-the.md` (status dashboard)
-13. `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` (production gaps)
-14. `docs/02_FLUTTER_MIGRATION/checklists/Future-Feature-Onboarding-Checklist.md`
-15. `docs/02_FLUTTER_MIGRATION/checklists/Enterprise-PR-Review-Checklist.md`
-16. Screen- or module-specific references only when working on that area.
+4. `docs/01_AI_RULES/Two-Phase-Cursor-Workflow.md` (Plan → Execute for large tasks)
+5. `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`
+6. `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md`
+7. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Native-Design-Standard.md`
+8. `docs/02_FLUTTER_MIGRATION/standards/Flutter-Module-Identity-Standard.md`
+9. `docs/02_FLUTTER_MIGRATION/Flutter-Design-System-Reference.md`
+10. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
+11. `docs/03_DESIGN_SYSTEM/Guidelines.md`
+12. `DESIGN.md` (root — visual tokens and Vit* component ladder)
+13. `docs/02_FLUTTER_MIGRATION/ke-hoac-tong-the.md` (status dashboard)
+14. `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` (production gaps)
+15. `docs/02_FLUTTER_MIGRATION/checklists/Future-Feature-Onboarding-Checklist.md`
+16. `docs/02_FLUTTER_MIGRATION/checklists/Enterprise-PR-Review-Checklist.md`
+17. Screen- or module-specific references only when working on that area.
 
 ## Source Of Truth
 
@@ -36,7 +37,8 @@ web screenshot baseline were removed on 2026-05-26.
 ```text
 flutter_app/lib/
 ├── app/        # Bootstrap, router facade, theme
-├── core/       # Config, network boundaries, errors, utilities
+├── core/       # config, data (repository guards), navigation, network,
+│               # product_flow (high-risk flow contracts), utils
 ├── features/   # Feature modules with domain/data/presentation layers
 └── shared/     # Shared layout and design-system widgets
 ```

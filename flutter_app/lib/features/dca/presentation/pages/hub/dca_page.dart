@@ -23,10 +23,10 @@ import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/hub/dca_currency_formatters.dart';
 
-part 'dca_page_part_01.dart';
-part 'dca_page_part_02.dart';
-part 'dca_page_part_03.dart';
-part 'dca_page_part_04.dart';
+part 'dca_page_state_overview.dart';
+part 'dca_page_plans_and_tools.dart';
+part 'dca_page_history_and_create_sheet.dart';
+part 'dca_page_common.dart';
 
 enum _DcaTab { plans, history }
 

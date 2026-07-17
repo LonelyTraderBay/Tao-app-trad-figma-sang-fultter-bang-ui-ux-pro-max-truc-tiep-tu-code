@@ -47,7 +47,7 @@ class _AmountInput extends StatelessWidget {
         VitInput(
           controller: controller,
           fieldKey: P2PWalletTransferPage.amountFieldKey,
-          semanticLabel: 'P2P wallet transfer amount',
+          semanticLabel: 'Số tiền chuyển ví P2P',
           hintText: '0.00',
           errorText: insufficient ? 'Số dư không đủ' : null,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),

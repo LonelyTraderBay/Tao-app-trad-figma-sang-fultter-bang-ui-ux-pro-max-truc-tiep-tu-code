@@ -5,7 +5,6 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
-import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 
 class PredictionOrderPreviewCard extends StatelessWidget {
   const PredictionOrderPreviewCard({super.key, required this.preview});
@@ -131,4 +130,4 @@ class _PreviewBadge extends StatelessWidget {
   }
 }
 
-String _formatMoney(double value) => VitFormat.usd(value);
+String _formatMoney(double value) => '\$${value.toStringAsFixed(2)}';

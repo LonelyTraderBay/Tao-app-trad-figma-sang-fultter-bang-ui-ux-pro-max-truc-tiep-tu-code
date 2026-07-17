@@ -34,8 +34,6 @@ const double _stakingRiskCategoryIcon = AppSpacing.iconSm;
 const double _stakingRiskAssessmentIconBox = AppSpacing.inputHeight;
 const double _stakingRiskAssessmentIcon = AppSpacing.iconMd;
 const double _stakingRiskCtaHeight = AppSpacing.buttonCompact + AppSpacing.x1;
-const double _stakingRiskSectionMarkerWidth = AppSpacing.x1;
-const double _stakingRiskSectionMarkerHeight = AppSpacing.x4;
 const double _stakingRiskDetailBullet =
     AppSpacing.x1 + AppSpacing.hairlineStroke;
 const double _stakingRiskBodyLineHeight = 1.35;

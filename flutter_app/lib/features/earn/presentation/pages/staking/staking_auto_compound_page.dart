@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 
 part '../../widgets/staking/staking_auto_compound_overview.dart';
 part '../../widgets/staking/staking_auto_compound_settings.dart';

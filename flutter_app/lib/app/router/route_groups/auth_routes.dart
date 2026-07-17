@@ -1,20 +1,28 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _topLevelRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/auth/presentation/pages/forgot_password_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/pages/register_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/pages/reset_password_page.dart';
+import 'package:vit_trade_flutter/features/auth/presentation/pages/two_fa_setup_page.dart';
+import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> topLevelRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(path: AppRoutePaths.root, redirect: (_, _) => AppRoutePaths.home),
     GoRoute(
       path: AppRoutePaths.authLogin,
       name: AppRouteNames.sc001Login,
-      builder: (_, _) => _AuthRouteShell(
-        renderMode: shellRenderMode,
-        child: const LoginPage(),
-      ),
+      builder: (_, _) =>
+          AuthRouteShell(renderMode: shellRenderMode, child: const LoginPage()),
     ),
     GoRoute(
       path: AppRoutePaths.authRegister,
       name: AppRouteNames.sc002Register,
-      builder: (_, _) => _AuthRouteShell(
+      builder: (_, _) => AuthRouteShell(
         renderMode: shellRenderMode,
         child: const RegisterPage(),
       ),
@@ -22,15 +30,15 @@ List<RouteBase> _topLevelRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.authOtp,
       name: AppRouteNames.sc003Otp,
-      builder: (_, state) => _AuthRouteShell(
+      builder: (_, state) => AuthRouteShell(
         renderMode: shellRenderMode,
-        child: _buildOtpPage(state),
+        child: buildOtpPage(state),
       ),
     ),
     GoRoute(
       path: AppRoutePaths.auth2faSetup,
       name: AppRouteNames.sc004TwoFaSetup,
-      builder: (_, _) => _AuthRouteShell(
+      builder: (_, _) => AuthRouteShell(
         renderMode: shellRenderMode,
         child: const TwoFASetupPage(),
       ),
@@ -38,7 +46,7 @@ List<RouteBase> _topLevelRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.authForgotPassword,
       name: AppRouteNames.sc005ForgotPassword,
-      builder: (_, _) => _AuthRouteShell(
+      builder: (_, _) => AuthRouteShell(
         renderMode: shellRenderMode,
         child: const ForgotPasswordPage(),
       ),
@@ -46,7 +54,7 @@ List<RouteBase> _topLevelRoutes(ShellRenderMode shellRenderMode) {
     GoRoute(
       path: AppRoutePaths.authResetPassword,
       name: AppRouteNames.sc006ResetPassword,
-      builder: (_, _) => _AuthRouteShell(
+      builder: (_, _) => AuthRouteShell(
         renderMode: shellRenderMode,
         child: const ResetPasswordPage(),
       ),

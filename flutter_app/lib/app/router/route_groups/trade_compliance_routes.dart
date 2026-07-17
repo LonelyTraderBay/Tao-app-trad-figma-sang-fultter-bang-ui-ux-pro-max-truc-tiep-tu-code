@@ -1,6 +1,37 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _tradeComplianceRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/client_money/arm_integration_status_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/audit_trail_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/best_execution_reports_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/client_money/cass_reconciliation_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/client_categorization_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/client_money/client_money_protection_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/complaints/complaint_tracking_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/ex_post_costs_report_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/execution_venue_analysis_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/client_money/investor_compensation_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/kid_generator_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/live_market_data_analytics_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/market_data_analytics_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/performance_scenarios_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/product_governance_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/regulatory_disclosures_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/regulatory_inspection_ready_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/hub/regulatory_reports_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/riy_calculator_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/execution/slippage_monitoring_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/target_market_definition_page.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/governance/transaction_reporting_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> tradeComplianceRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.tradeCopyRegulatoryDisclosures,

@@ -1,6 +1,12 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _homeRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
+import 'package:vit_trade_flutter/features/news/presentation/pages/news_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> homeRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.home,

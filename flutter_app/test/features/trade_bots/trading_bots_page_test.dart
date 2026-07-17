@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/hub/trading_bots_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -32,7 +32,7 @@ void main() {
   }
 
   test('SC-059 mock repository exposes trading bot BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeBotsRepository();
     final snapshot = repo.getTradingBots();
     final action = repo.submitBotAction(
       const TradeBotActionRequest(botId: 'bot1', action: 'pause'),

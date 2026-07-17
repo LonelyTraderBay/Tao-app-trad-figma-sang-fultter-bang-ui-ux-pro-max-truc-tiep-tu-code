@@ -25,9 +25,9 @@ import 'package:vit_trade_flutter/features/arena/presentation/widgets/governance
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part '../../widgets/studio/arena_smart_rule_builder_page_part_01.dart';
-part '../../widgets/studio/arena_smart_rule_builder_page_part_02.dart';
-part 'arena_smart_rule_builder_page_part_03.dart';
+part '../../widgets/studio/arena_smart_rule_builder_page_basics_fields.dart';
+part '../../widgets/studio/arena_smart_rule_builder_page_condition_timing_fields.dart';
+part 'arena_smart_rule_builder_page_review_submit.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 final double _smartRuleActionExtent = VitDensity.compact.controlHeight;

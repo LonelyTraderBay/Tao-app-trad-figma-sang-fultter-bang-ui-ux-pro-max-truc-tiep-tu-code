@@ -155,10 +155,10 @@ List<HeaderRouteEntry> _collectHeaderRouteEntries(
 }
 
 String _extractPageClass(String block) {
-  if (block.contains('_AuthRouteShell')) {
+  if (block.contains('AuthRouteShell')) {
     if (block.contains('LoginPage')) return 'LoginPage';
     if (block.contains('RegisterPage')) return 'RegisterPage';
-    if (block.contains('_buildOtpPage')) return 'OTPPage';
+    if (block.contains('buildOtpPage')) return 'OTPPage';
     if (block.contains('TwoFASetupPage')) return 'TwoFASetupPage';
     if (block.contains('ForgotPasswordPage')) return 'ForgotPasswordPage';
     if (block.contains('ResetPasswordPage')) return 'ResetPasswordPage';
@@ -172,7 +172,7 @@ String _extractPageClass(String block) {
     final match = pattern.firstMatch(block);
     if (match == null) continue;
     final pageClass = match.group(1)!;
-    if (pageClass == 'InternalSurfaceGate' || pageClass == '_AuthRouteShell') {
+    if (pageClass == 'InternalSurfaceGate' || pageClass == 'AuthRouteShell') {
       continue;
     }
     return pageClass;

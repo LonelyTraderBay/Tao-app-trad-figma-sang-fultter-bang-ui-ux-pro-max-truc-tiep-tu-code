@@ -124,4 +124,6 @@ flutter test test/quality/card_tile_guardrail_test.dart --reporter=compact
 - Audit: [VitTrade-Card-Tile-Audit.csv](../audits/VitTrade-Card-Tile-Audit.csv)
 - Manifest: [VitTrade-Card-Tile-Migration-Manifest.csv](../audits/VitTrade-Card-Tile-Migration-Manifest.csv)
 - Report: [Card-Tile-Compliance-Report.md](../audits/Card-Tile-Compliance-Report.md)
+- Execution plan: [Card-Tile-Migration-Execution-Plan.md](../Card-Tile-Migration-Execution-Plan.md)
+- Checklist: [Card-Tile-Migration-Checklist.md](../Card-Tile-Migration-Checklist.md)
 - Page rhythm (section gaps): [Page-Rhythm-Standard.md](./Page-Rhythm-Standard.md)

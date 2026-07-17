@@ -31,7 +31,7 @@ class _KycTierCard extends StatelessWidget {
     return Semantics(
       button: isLocked,
       label:
-          '$stateLabel KYC Level ${tier.level}, ${tier.name}, daily limit ${_formatUsd(tier.dailyLimit)}',
+          '$stateLabel Cấp KYC ${tier.level}, ${tier.name}, hạn mức ngày ${_formatUsd(tier.dailyLimit)}',
       child: VitCard(
         key: WithdrawLimitsPage.tierKey(tier.level),
         onTap: isLocked ? () => context.go(AppRoutePaths.profileKyc) : null,

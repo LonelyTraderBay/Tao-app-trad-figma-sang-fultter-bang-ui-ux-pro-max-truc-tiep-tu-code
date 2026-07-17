@@ -1,6 +1,35 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _arenaCoreRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_home_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_governance_gate_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_guide_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_blocked_users_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/arena_challenge_detail_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/studio/arena_creator_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_flow_map_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/arena_leaderboard_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_safety_center_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/arena_join_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/studio/arena_smart_rule_builder_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/studio/arena_studio_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_trust_breakdown_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/studio/arena_universal_preset_library_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/arena_mode_detail_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/points/arena_points_entry_detail_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/points/arena_points_ledger_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/bridge/arena_prediction_bridge_foundation_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_production_ready_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_report_case_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_resolution_center_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/bridge/connected_ecosystem_production_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/my_arena_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/my_arena_reports_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/challenge/verified_challenges_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+
+List<RouteBase> arenaCoreRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.arena,
@@ -91,7 +120,7 @@ List<RouteBase> _arenaCoreRoutes(ShellRenderMode shellRenderMode) {
   ];
 }
 
-List<RouteBase> _arenaExtendedRoutes(ShellRenderMode shellRenderMode) {
+List<RouteBase> arenaExtendedRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.arenaFlowMap,

@@ -1326,7 +1326,10 @@ final class MarketsSpacingTokens {
       EdgeInsets.only(bottom: bottomInset);
   static const double pairDetailNativeBottomExtra = AppSpacing.contentPad;
   static const double pairDetailVisualBottomExtra = 54;
-  static const double pairHeaderLeadingWidth = 40;
+  // A11Y-2: matches VitHeaderActionButton's 44dp minimum tap target so the
+  // back/action buttons' hit-test region isn't clamped by a fixed-width
+  // ancestor sized for the older 40dp visual box.
+  static const double pairHeaderLeadingWidth = AppSpacing.minTapTarget;
   static const EdgeInsets pairHeaderSymbolPadding = EdgeInsets.symmetric(
     horizontal: 6,
     vertical: 8,
@@ -1335,8 +1338,12 @@ final class MarketsSpacingTokens {
   static const double pairHeaderSymbolGap = 9;
   static const double pairHeaderChevronGap = 5;
   static const double pairHeaderChevron = 17;
-  static const double pairHeaderTrailingWidth = 88;
   static const double pairHeaderTrailingGap = 8;
+  // A11Y-2: 2 md-size action buttons at their 44dp tap target width, plus
+  // the gap — was hardcoded to fit the old 40dp visual width (88), which
+  // overflowed by 8dp once the tap target grew.
+  static const double pairHeaderTrailingWidth =
+      AppSpacing.minTapTarget * 2 + pairHeaderTrailingGap;
   static const EdgeInsets pairPriceOverviewPadding = EdgeInsets.fromLTRB(
     AppSpacing.contentPad,
     16,

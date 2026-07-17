@@ -618,7 +618,7 @@ bool _lineInColumnChildrenContext(List<String> lines, int lineIndex) {
 }
 
 bool _orphanX1DirectChild(String item) {
-  var trimmed = item.trim();
+  final trimmed = item.trim();
   if (trimmed.contains('...') || trimmed.startsWith('if (')) return false;
   var work = trimmed;
   if (work.startsWith('const ')) work = work.substring(6).trimLeft();
@@ -949,7 +949,7 @@ int _countOrphanRhythmOwnerSizedBox(String source) {
 }
 
 bool _isOrphanSizedBoxDirectChild(String item) {
-  var trimmed = item.trim();
+  final trimmed = item.trim();
   if (trimmed.isEmpty) return false;
   if (trimmed.contains('...') || trimmed.startsWith('if (')) return false;
   if (trimmed.contains('Column(') ||

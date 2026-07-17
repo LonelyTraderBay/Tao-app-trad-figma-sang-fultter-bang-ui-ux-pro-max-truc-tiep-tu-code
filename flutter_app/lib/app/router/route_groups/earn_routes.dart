@@ -1,6 +1,80 @@
-part of '../app_router.dart';
+import 'package:go_router/go_router.dart';
 
-List<RouteBase> _earnRoutes(ShellRenderMode shellRenderMode) {
+import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/auto_compound_settings_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_analytics_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_auto_rebalance_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_autopilot_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_backtest_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_comparison_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_dca_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_export_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_history_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_faq_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_goal_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_ladder_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_notification_preferences_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_what_if_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_guide_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_notifications_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_portfolio_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_product_detail_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_recommendations_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_receipt_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_redeem_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_risk_assessment_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/savings/savings_smart_suggestions_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_community_governance_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_contingency_plan_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_emergency_actions_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_earn_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_forum_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_analytics_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_auto_compound_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_earnings_calendar_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_history_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_insurance_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_institutional_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_guide_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_faq_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_notifications_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_recommendations_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_regulatory_framework_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_audit_reports_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_custody_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_data_export_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_developer_console_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_api_documentation_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_insurance_fund_transparency_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_proof_of_reserves_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_proposals_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_risk_dashboard_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_risk_score_calculator_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_slashing_history_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_social_feed_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_suitability_assessment_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_transaction_reporting_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_third_party_integrations_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_voting_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_webhooks_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_liquid_staking_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_multi_chain_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_risk_disclosure_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_risk_assessment_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_tax_guide_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_terms_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_validator_health_monitor_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_validator_selection_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart';
+import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+
+import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/router/route_groups/placeholder_routes.dart';
+
+List<RouteBase> earnRoutes(ShellRenderMode shellRenderMode) {
   return [
     GoRoute(
       path: AppRoutePaths.earn,
@@ -269,7 +343,7 @@ List<RouteBase> _earnRoutes(ShellRenderMode shellRenderMode) {
       builder: (_, _) =>
           StakingDeveloperConsolePage(shellRenderMode: shellRenderMode),
     ),
-    ..._earnRiskOutgoingPlaceholders,
+    ...earnRiskOutgoingPlaceholders,
     GoRoute(
       path: AppRoutePaths.earnSavings,
       name: AppRouteNames.sc329Savings,

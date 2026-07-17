@@ -176,32 +176,24 @@ class _SortChips extends StatelessWidget {
       ('size', 'Kích thước'),
     ];
 
-    return Row(
-      children: [
-        Text(
-          'SẮP XẾP',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-            height: TradeSpacingTokens.positionDashboardTightLineHeight,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        for (final sort in sorts) ...[
-          VitChoicePill(
+    return VitSortRail<String>(
+      selected: active,
+      onChanged: onChanged,
+      accentColor: AppColors.primary,
+      optionHeight: AppSpacing.buttonCompact,
+      optionPadding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+      ),
+      optionGap: AppSpacing.x3,
+      iconSize: TradeSpacingTokens.tradeQuickChipIcon,
+      options: [
+        for (final sort in sorts)
+          VitSortRailOption(
             key: PositionDashboardPage.sortKey(sort.$1),
+            value: sort.$1,
             label: sort.$2,
-            selected: active == sort.$1,
-            onTap: () => onChanged(sort.$1),
-            accentColor: AppColors.primary,
-            height: AppSpacing.buttonCompact,
-            padding: AppSpacing.zeroInsets.copyWith(
-              left: AppSpacing.rowPy,
-              right: AppSpacing.rowPy,
-            ),
           ),
-          const SizedBox(width: AppSpacing.x3),
-        ],
       ],
     );
   }

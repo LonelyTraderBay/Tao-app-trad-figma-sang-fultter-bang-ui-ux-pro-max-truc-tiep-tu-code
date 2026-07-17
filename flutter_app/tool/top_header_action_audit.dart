@@ -129,16 +129,14 @@ const _selectorOrContentIcons = <String>{
 };
 
 const _customHeaderTargets = <String, List<String>>{
-  'lib/features/home/presentation/pages/home_page_part_01.dart': [
-    '_HomeHeader',
-  ],
+  'lib/features/home/presentation/pages/home_page_state.dart': ['_HomeHeader'],
   'lib/features/markets/presentation/widgets/market_list_header.dart': [
     'MarketListHeader',
   ],
   'lib/features/markets/presentation/widgets/pair_detail_header_widgets.dart': [
     '_PairHeader',
   ],
-  'lib/features/trade/presentation/widgets/hub/trade_page_part_01.dart': [
+  'lib/features/trade/presentation/widgets/hub/trade_page_state.dart': [
     '_TradeHeader',
   ],
   'lib/features/launchpad/presentation/widgets/launchpad_home_header_widgets.dart':

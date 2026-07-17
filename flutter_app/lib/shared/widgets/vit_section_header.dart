@@ -7,14 +7,16 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-enum VitSectionHeaderVariant { plain, accentBar }
+enum VitSectionHeaderVariant { plain, accentBar, markerTitle }
 
 class VitSectionHeader extends StatelessWidget {
   const VitSectionHeader({
     super.key,
     required this.title,
+    this.subtitle,
     this.icon,
     this.iconColor,
+    this.iconSize,
     this.actionLabel,
     this.onAction,
     this.actionKey,
@@ -24,11 +26,23 @@ class VitSectionHeader extends StatelessWidget {
     this.accentColor = AppColors.primary,
     this.density = VitDensity.standard,
     this.bottomGap,
+    this.titleColor,
+    this.titleFontWeight,
+    this.titleLetterSpacing,
+    this.titleHeight,
   });
 
   final String title;
+
+  /// Optional secondary line rendered below [title] (micro/text3). Used by
+  /// section headers that need a short explanatory line, e.g. Arena flow
+  /// map/leaderboard section markers.
+  final String? subtitle;
   final IconData? icon;
   final Color? iconColor;
+
+  /// Overrides the leading [icon]'s size. Defaults to [AppSpacing.iconMd].
+  final double? iconSize;
   final String? actionLabel;
   final VoidCallback? onAction;
   final Key? actionKey;
@@ -50,12 +64,41 @@ class VitSectionHeader extends StatelessWidget {
   /// [VitPageSection] supply padding externally.
   final double? bottomGap;
 
+  /// Overrides the title's text color. Defaults to [AppColors.text1].
+  final Color? titleColor;
+
+  /// Overrides the title's font weight. Defaults to [AppTextStyles.bold].
+  final FontWeight? titleFontWeight;
+
+  /// Overrides the title's letter spacing. Defaults to the base style's own.
+  final double? titleLetterSpacing;
+
+  /// Overrides the title's line height. Defaults to
+  /// [SharedSpacingTokens.homeSectionHeaderTitleLineHeight].
+  final double? titleHeight;
+
   bool get _isCompact =>
       density == VitDensity.compact || density == VitDensity.tool;
 
   @override
   Widget build(BuildContext context) {
     final showAccent = variant == VitSectionHeaderVariant.accentBar;
+    final showMarkerTitle = variant == VitSectionHeaderVariant.markerTitle;
+    final baseTitleStyle = showMarkerTitle
+        ? AppTextStyles.baseMedium
+        : (_isCompact ? AppTextStyles.caption : AppTextStyles.sectionTitle);
+    final titleWidget = Text(
+      title,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: baseTitleStyle.copyWith(
+        color: titleColor ?? AppColors.text1,
+        fontWeight: titleFontWeight ?? AppTextStyles.bold,
+        height:
+            titleHeight ?? SharedSpacingTokens.homeSectionHeaderTitleLineHeight,
+        letterSpacing: titleLetterSpacing,
+      ),
+    );
     final header = Row(
       children: [
         if (showAccent) ...[
@@ -73,28 +116,47 @@ class VitSectionHeader extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x3),
         ],
+        if (showMarkerTitle) ...[
+          SizedBox(
+            width: AppSpacing.pageSectionAccentWidth,
+            height: AppSpacing.rowPy + AppSpacing.x1,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: accentColor,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+        ],
         if (icon != null) ...[
-          Icon(icon, color: iconColor ?? accentColor, size: AppSpacing.iconMd),
+          Icon(
+            icon,
+            color: iconColor ?? accentColor,
+            size: iconSize ?? AppSpacing.iconMd,
+          ),
           const SizedBox(width: SharedSpacingTokens.homeSectionHeaderIconGap),
         ],
         Expanded(
           child: Semantics(
             header: true,
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style:
-                  (_isCompact
-                          ? AppTextStyles.caption
-                          : AppTextStyles.sectionTitle)
-                      .copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        height: SharedSpacingTokens
-                            .homeSectionHeaderTitleLineHeight,
+            child: subtitle == null
+                ? titleWidget
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      titleWidget,
+                      Text(
+                        subtitle!,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
                       ),
-            ),
+                    ],
+                  ),
           ),
         ),
         if (actionLabel != null && onAction != null)

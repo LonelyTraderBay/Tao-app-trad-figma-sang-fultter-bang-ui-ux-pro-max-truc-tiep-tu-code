@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/core/utils/data_masking.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -29,10 +30,7 @@ double _bookScrollBottomInset(BuildContext context, ShellRenderMode mode) {
       MediaQuery.paddingOf(context).bottom;
 }
 
-String _maskAddress(String address) {
-  if (address.length <= 12) return address;
-  return '${address.substring(0, 6)}...${address.substring(address.length - 4)}';
-}
+String _maskAddress(String address) => maskAddress(address);
 
 class AddressBookPage extends ConsumerStatefulWidget {
   const AddressBookPage({super.key, this.shellRenderMode});

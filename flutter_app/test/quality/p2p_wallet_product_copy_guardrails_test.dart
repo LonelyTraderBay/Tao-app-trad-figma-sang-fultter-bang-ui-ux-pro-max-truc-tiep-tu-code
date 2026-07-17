@@ -11,9 +11,9 @@ void main() {
               'lib/features/p2p/presentation/pages/orders/p2p_order_page.dart',
           paths: [
             'lib/features/p2p/presentation/pages/orders/p2p_order_page.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_part_01.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_part_02.dart',
-            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_part_03.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_order_content_cards.dart',
+            'lib/features/p2p/presentation/widgets/orders/p2p_order_page_common.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],

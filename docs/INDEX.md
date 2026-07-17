@@ -11,6 +11,7 @@ Load docs **on demand** — do not paste large audit output into chat. Shared ru
 | [DESIGN.md](../DESIGN.md) | UI work — tokens + component ladder |
 | [00_START_HERE.md](00_START_HERE.md) | First time / architecture |
 | [AI_EXECUTION_CONTRACT.md](01_AI_RULES/AI_EXECUTION_CONTRACT.md) | Execution gate |
+| [Two-Phase-Cursor-Workflow.md](01_AI_RULES/Two-Phase-Cursor-Workflow.md) | Plan chat → Execute chats (Auto + batch); copy-paste prompts |
 | [DOCUMENT_PRECEDENCE.md](01_AI_RULES/DOCUMENT_PRECEDENCE.md) | Doc conflicts |
 
 ## Status and remaining work
@@ -126,7 +127,9 @@ dart run tool/route_coverage_audit.dart --check
 dart run tool/navigation_edge_audit.dart --check
 ```
 
-Generated CSV artifacts live under `docs/02_FLUTTER_MIGRATION/` when tools emit them.
+Generated CSV/MD artifacts live under `docs/02_FLUTTER_MIGRATION/audits/` (not
+the `02_FLUTTER_MIGRATION/` top level — verified against the tools' own
+`docsDir.path` construction, e.g. `tool/design_token_consistency_audit.dart:154-159`).
 
 ## Cursor AI setup
 
@@ -146,12 +149,32 @@ removed. Summary preserved in
 [ke-hoac-tong-the.md](02_FLUTTER_MIGRATION/ke-hoac-tong-the.md) § Completed
 migrations. Full history: git log on `docs/`.
 
-## Removed docs (2026-07-10)
+## Removed docs (2026-07-10, corrected 2026-07-16)
 
-Orphaned/superseded artifacts with zero repo references removed: Card Tile
-execution-plan/checklist (993/993 closed), the VitTrade UI Redesign v2.5
-pending-batch trackers (66/66 closed), 4 stale/abandoned CSV dumps in
-`02_FLUTTER_MIGRATION/`, and `03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv`.
+This note previously claimed several files were removed on 2026-07-10 that
+were, in fact, still tracked (caught by the A-Plus roadmap audit, task
+DOC-D1). Corrected 2026-07-16:
+
+- **Actually removed 2026-07-16** (byte-identical top-level duplicate of the
+  canonical `redesign/` copy — see [DOC-D3](02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv)):
+  `02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv` and `.md`.
+  Canonical copies stay at
+  [redesign/VitTrade-Screen-Redesign-Checklist.csv](02_FLUTTER_MIGRATION/redesign/VitTrade-Screen-Redesign-Checklist.csv).
+- **Actually removed 2026-07-16** (zero repo references found):
+  `03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv`.
+- **NOT removed — this note was wrong.** Card Tile execution-plan/checklist
+  (migration itself is 993/993 closed, but the two files are still tracked
+  and actively linked as historical reference from
+  [Card-Tile-Standard.md](02_FLUTTER_MIGRATION/standards/Card-Tile-Standard.md)):
+  `02_FLUTTER_MIGRATION/Card-Tile-Migration-Checklist.md` and
+  `Card-Tile-Migration-Execution-Plan.md`.
+- **Unverified, deferred to the full DOC-D3 sweep:** the original note's
+  claim of "4 stale/abandoned CSV dumps in `02_FLUTTER_MIGRATION/`" — which
+  4 of the ~30 top-level CSVs in that directory (most of which duplicate an
+  `audits/` canonical copy) this referred to was not re-established during
+  this correction. Do not treat this note as evidence any specific CSV is
+  safe to delete; re-verify from scratch.
+
 Summary preserved in
 [ke-hoac-tong-the.md](02_FLUTTER_MIGRATION/ke-hoac-tong-the.md) § Completed
 migrations. Full history: git log on `docs/`.

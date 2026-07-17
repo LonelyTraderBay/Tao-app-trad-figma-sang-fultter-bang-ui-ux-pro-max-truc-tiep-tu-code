@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/disclosures/ex_post_costs_report_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -33,7 +33,7 @@ void main() {
   }
 
   test('SC-107 mock repository exposes ex-post costs BE draft', () {
-    final repo = const MockTradeRepository();
+    final repo = const MockTradeRegulatoryRepository();
     final snapshot = repo.getExPostCostsReport();
     final report = snapshot.reportForYear(2025);
     final export = repo.createExPostCostsReportExport(year: 2025);

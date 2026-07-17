@@ -96,7 +96,7 @@ class _YearSelector extends StatelessWidget {
                 key: P2PTaxReportingPage.yearKey(year),
                 value: year,
                 label: '$year',
-                semanticLabel: 'Tax year $year',
+                semanticLabel: 'Năm thuế $year',
               ),
           ],
           selectedValue: selectedYear,

@@ -84,7 +84,14 @@ class _AssessmentTab extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        _SectionLabel(snapshot.faqTitle),
+        VitSectionHeader(
+          title: snapshot.faqTitle,
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: AppColors.primary,
+          density: VitDensity.compact,
+          titleColor: AppColors.text2,
+          titleHeight: _stakingRiskCompactLineHeight,
+        ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final faq in snapshot.faqs) ...[
           VitCard(
@@ -114,37 +121,6 @@ class _AssessmentTab extends StatelessWidget {
           if (faq != snapshot.faqs.last)
             const SizedBox(height: AppSpacing.rowGap),
         ],
-      ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: _stakingRiskSectionMarkerWidth,
-          height: _stakingRiskSectionMarkerHeight,
-          child: Material(
-            color: AppColors.primary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: _stakingRiskCompactLineHeight,
-          ),
-        ),
       ],
     );
   }

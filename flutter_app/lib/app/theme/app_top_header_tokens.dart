@@ -27,6 +27,13 @@ final class AppTopHeaderTokens {
   static const double standardEmptyActionWidth = buttonSize;
   static const double standardEmptyBackWidth = compactButtonSize;
 
+  /// Minimum tap target (WCAG 2.5.5 / Material minimum), independent of the
+  /// smaller visual size above — the touch/InkWell region is expanded to
+  /// this size while [buttonSize]/[compactButtonSize] keep the visible
+  /// button box unchanged. See A11Y-2,
+  /// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
+  static const double minTapTarget = AppSpacing.minTapTarget;
+
   static const double badgeMinSize = 16;
   static const double badgeHeight = 16;
   static const double badgeHorizontalPadding = 4;

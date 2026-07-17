@@ -1,13 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_binding.dart';
+import '../../fixtures/high_risk_flow_binding.dart';
 import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart';
 import 'package:vit_trade_flutter/features/earn/data/repositories/mock_earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/launchpad/data/repositories/mock_launchpad_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/data/repositories/mock_p2p_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/data/repositories/mock_predictions_repository.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/repositories/mock_trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_bots/data/repositories/mock_trade_bots_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/repositories/mock_trade_copy_trading_repository.dart';
+import 'package:vit_trade_flutter/features/trade_terminal/data/repositories/mock_trade_terminal_repository.dart';
 import 'package:vit_trade_flutter/features/wallet/data/repositories/mock_wallet_repository.dart';
 
 void main() {
@@ -110,7 +112,7 @@ void main() {
   });
 
   test('mock repository snapshots expose high-risk contract metadata', () {
-    const trade = MockTradeRepository();
+    const trade = MockTradeTerminalRepository();
     expect(
       trade.getTrade().highRiskContractId,
       HighRiskFlowContractIds.tradeSpotOrder,
@@ -127,12 +129,16 @@ void main() {
       trade.getMarginTrading().highRiskContractId,
       HighRiskFlowContractIds.tradeMarginFutures,
     );
+
+    const bots = MockTradeBotsRepository();
     expect(
-      trade.getTradingBots().highRiskContractId,
+      bots.getTradingBots().highRiskContractId,
       HighRiskFlowContractIds.tradeBots,
     );
+
+    const copy = MockTradeCopyTradingRepository();
     expect(
-      trade.getCopyTrading().highRiskContractId,
+      copy.getCopyTrading().highRiskContractId,
       HighRiskFlowContractIds.tradeCopy,
     );
 

@@ -58,7 +58,7 @@ class _ChainPositionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    _formatUsd(position.value, decimals: 0),
+                    VitFormat.usdWhole(position.value),
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
@@ -345,20 +345,6 @@ IconData _infoIcon(String icon) {
     'cost' => Icons.local_gas_station_outlined,
     _ => Icons.public_rounded,
   };
-}
-
-String _formatUsd(double value, {int decimals = 2}) {
-  final parts = value.toStringAsFixed(decimals).split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    if (i > 0 && (whole.length - i) % 3 == 0) {
-      buffer.write(',');
-    }
-    buffer.write(whole[i]);
-  }
-  if (decimals == 0) return '\$${buffer.toString()}';
-  return '\$${buffer.toString()}.${parts.last}';
 }
 
 String _formatAmount(double value) {

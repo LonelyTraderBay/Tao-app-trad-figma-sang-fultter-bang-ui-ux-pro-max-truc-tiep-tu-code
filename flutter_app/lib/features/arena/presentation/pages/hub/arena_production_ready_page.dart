@@ -22,9 +22,9 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-part 'arena_production_ready_page_part_01.dart';
-part 'arena_production_ready_page_part_02.dart';
-part 'arena_production_ready_page_part_03.dart';
+part 'arena_production_ready_page_screens_states_section.dart';
+part 'arena_production_ready_page_flows_registry_handoff.dart';
+part 'arena_production_ready_page_handoff_and_shared_widgets.dart';
 
 enum _ProductionSection { screens, states, flows, registry, handoff }
 

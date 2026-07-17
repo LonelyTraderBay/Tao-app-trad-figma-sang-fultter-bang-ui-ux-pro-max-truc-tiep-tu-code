@@ -106,7 +106,7 @@ class _AmountInput extends StatelessWidget {
       fieldKey: StakingRiskScoreCalculatorPage.amountFieldKey,
       controller: controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      semanticLabel: 'Staking risk amount',
+      semanticLabel: 'Số tiền tính điểm rủi ro staking',
       hintText: '0',
       onChanged: onChanged,
       textStyle: AppTextStyles.baseMedium.copyWith(

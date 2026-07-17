@@ -7,7 +7,7 @@ GoRouter createAppRouter({
   return GoRouter(
     initialLocation: initialLocation ?? _defaultInitialLocation,
     routes: [
-      ..._topLevelRoutes(shellRenderMode),
+      ...topLevelRoutes(shellRenderMode),
       _appShellRoute(shellRenderMode),
     ],
   );
@@ -39,28 +39,33 @@ ShellRoute _appShellRoute(ShellRenderMode shellRenderMode) {
       );
     },
     routes: [
-      ..._homeRoutes(shellRenderMode),
-      ..._marketsRoutes(shellRenderMode),
-      ..._predictionRoutes(shellRenderMode),
-      ..._marketPairRoutes(shellRenderMode),
-      ..._tradeComplianceRoutes(shellRenderMode),
-      ..._tradeCopyRoutes(shellRenderMode),
-      ..._tradeBotsRoutes(shellRenderMode),
-      ..._tradeRoutes(shellRenderMode),
-      ..._tradeTerminalRoutes(shellRenderMode),
-      ..._adminRoutes(shellRenderMode),
-      ..._p2pRoutes(shellRenderMode),
-      ..._supportRoutes(shellRenderMode),
-      ..._launchpadRoutes(shellRenderMode),
-      ..._arenaCoreRoutes(shellRenderMode),
-      ..._utilityRoutes(shellRenderMode),
-      ..._earnRoutes(shellRenderMode),
-      ..._arenaExtendedRoutes(shellRenderMode),
-      ..._dcaRoutes(shellRenderMode),
-      ..._walletRoutes(shellRenderMode),
-      ..._profileRoutes(shellRenderMode),
-      ..._discoveryAndReferralRoutes(shellRenderMode),
-      ..._navigationPlaceholderRoutes,
+      ...homeRoutes(shellRenderMode),
+      ...marketsRoutes(shellRenderMode),
+      ...predictionRoutes(shellRenderMode),
+      ...marketPairRoutes(shellRenderMode),
+      ...tradeComplianceRoutes(shellRenderMode),
+      ...tradeCopyRoutes(shellRenderMode),
+      ...tradeBotsRoutes(shellRenderMode),
+      // NOTE: `tradeTerminalRoutes` must stay BEFORE `tradeRoutes`: the
+      // terminal group registers literal `/trade/...` paths (risk-management,
+      // execution-quality, advanced-tools, ...) that would otherwise be
+      // shadowed by the parameterized `/trade/:pairId` route at the end of
+      // `tradeRoutes` (go_router matches in declaration order).
+      ...tradeTerminalRoutes(shellRenderMode),
+      ...tradeRoutes(shellRenderMode),
+      ...adminRoutes(shellRenderMode),
+      ...p2pRoutes(shellRenderMode),
+      ...supportRoutes(shellRenderMode),
+      ...launchpadRoutes(shellRenderMode),
+      ...arenaCoreRoutes(shellRenderMode),
+      ...utilityRoutes(shellRenderMode),
+      ...earnRoutes(shellRenderMode),
+      ...arenaExtendedRoutes(shellRenderMode),
+      ...dcaRoutes(shellRenderMode),
+      ...walletRoutes(shellRenderMode),
+      ...profileRoutes(shellRenderMode),
+      ...discoveryAndReferralRoutes(shellRenderMode),
+      ...navigationPlaceholderRoutes,
     ],
   );
 }

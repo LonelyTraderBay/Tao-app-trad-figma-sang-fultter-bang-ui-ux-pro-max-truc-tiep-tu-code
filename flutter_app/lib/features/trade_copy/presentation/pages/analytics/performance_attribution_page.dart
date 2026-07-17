@@ -22,7 +22,6 @@ import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 part '../../widgets/analytics/performance_attribution_summary_tabs.dart';
 part '../../widgets/analytics/performance_attribution_tabs.dart';
 part '../../widgets/analytics/performance_attribution_painters.dart';
-part '../../widgets/analytics/performance_attribution_common.dart';
 
 const _attributionPrimary = AppColors.primary;
 const _attributionPurple = AppColors.accent;

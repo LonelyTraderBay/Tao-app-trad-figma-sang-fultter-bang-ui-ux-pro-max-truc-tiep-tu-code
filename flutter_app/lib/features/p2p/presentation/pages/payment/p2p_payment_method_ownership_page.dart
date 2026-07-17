@@ -327,7 +327,7 @@ class _UploadButton extends StatelessWidget {
       onTap: onTap,
       padding: P2PSpacingTokens.p2pPaymentOwnershipOptionPadding,
       accentColor: AppModuleAccents.p2p,
-      semanticLabel: 'Upload ownership document',
+      semanticLabel: 'Tải lên giấy tờ chứng minh sở hữu',
     );
   }
 }

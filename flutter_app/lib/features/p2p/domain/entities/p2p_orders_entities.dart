@@ -482,7 +482,5 @@ String _monthLabel(String monthKey) {
   return 'Tháng ${int.parse(parts[1])}/${parts[0]}';
 }
 
-String _maskAddress(String address) {
-  if (address.length < 14) return address;
-  return '${address.substring(0, 8)}...${address.substring(address.length - 6)}';
-}
+String _maskAddress(String address) =>
+    maskAddress(address, head: 8, tail: 6);

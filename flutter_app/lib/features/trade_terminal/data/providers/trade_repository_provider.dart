@@ -5,8 +5,6 @@ import 'package:vit_trade_flutter/features/trade_terminal/data/repositories/mock
 import 'package:vit_trade_flutter/features/trade_terminal/domain/repositories/spot_trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade_terminal/domain/repositories/trade_futures_margin_repository.dart';
 
-export 'package:vit_trade_flutter/features/trade_core/data/providers/trade_repository_provider.dart';
-
 // Terminal-domain repository providers (trade_terminal extraction, Batch 3
 // of Phase 4 of the trade module split — the final domain phase).
 // Previously narrow views of `trade_core`'s `tradeRepositoryProvider`
@@ -22,10 +20,14 @@ export 'package:vit_trade_flutter/features/trade_core/data/providers/trade_repos
 // the same `featureName` — once narrowed to each interface, exactly as
 // `trade_bots` does for its own combined pair. When this domain gets a
 // real backend, pass a `remote:` factory here — the other trade domains
-// are unaffected. [tradeRepositoryProvider] itself continues to live in
-// `trade_core` (Phase 0 of the trade module split) and is re-exported
-// above (without a matching `import` — Dart allows a bare `export`) for
-// the 62 read-only pages still wired through the full union.
+// are unaffected.
+//
+// Phase 5 (2026-07-15): `trade_terminal`'s own advanced-tools pages now
+// watch these two providers directly (via
+// `app/providers/trade_terminal_controller_providers.dart`) instead of
+// `trade_core`'s 6-way `TradeRepository` union — the last consumer of that
+// union outside `trade_core` itself and the 62-legacy-page read model. This
+// file no longer re-exports `trade_core`'s union provider.
 
 final spotTradeRepositoryProvider = Provider<SpotTradeRepository>(
   (ref) => guardedRepository(

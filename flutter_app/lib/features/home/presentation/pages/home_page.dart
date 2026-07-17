@@ -30,9 +30,9 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
-part 'home_page_part_01.dart';
-part 'home_page_part_02.dart';
-part 'home_page_part_03.dart';
+part 'home_page_state.dart';
+part 'home_page_sections.dart';
+part 'home_page_common.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key, this.shellRenderMode});

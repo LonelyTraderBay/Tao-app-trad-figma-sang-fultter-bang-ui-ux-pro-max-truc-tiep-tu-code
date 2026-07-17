@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
-import 'package:vit_trade_flutter/features/trade_core/data/trade_repository.dart';
+import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/pages/hub/copy_trading_card_demo.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -29,7 +29,7 @@ void main() {
   }
 
   test('SC-401 mock repository exposes copy card demo BE draft', () {
-    final snapshot = const MockTradeRepository().getCopyCardDemo();
+    final snapshot = const MockTradeCopyTradingRepository().getCopyCardDemo();
 
     expect(snapshot.endpoint, '/api/mobile/demo/demo-copy-card');
     expect(
