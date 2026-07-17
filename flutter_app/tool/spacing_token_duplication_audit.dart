@@ -180,8 +180,8 @@ List<DuplicationEntry> _collectEntries(Directory appRoot, String repoRoot) {
           .toList()
         ..sort(
           (a, b) => a.path
-              .replaceAll(r'', '/')
-              .compareTo(b.path.replaceAll(r'', '/')),
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
         );
 
   for (final file in files) {

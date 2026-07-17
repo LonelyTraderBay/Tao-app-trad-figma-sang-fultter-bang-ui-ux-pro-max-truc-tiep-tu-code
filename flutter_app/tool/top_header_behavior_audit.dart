@@ -108,8 +108,8 @@ List<HeaderRouteEntry> _collectHeaderRouteEntries(
           .toList()
         ..sort(
           (a, b) => a.path
-              .replaceAll(r'', '/')
-              .compareTo(b.path.replaceAll(r'', '/')),
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
         );
 
   for (final file in files) {
@@ -152,7 +152,7 @@ List<HeaderRouteEntry> _collectHeaderRouteEntries(
   entries.sort((a, b) {
     final featureCompare = a.feature.compareTo(b.feature);
     if (featureCompare != 0) return featureCompare;
-    return a.path.replaceAll(r'', '/').compareTo(b.path.replaceAll(r'', '/'));
+    return a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/'));
   });
 
   return entries;
@@ -216,8 +216,8 @@ final class _PageIndex {
             .toList()
           ..sort(
             (a, b) => a.path
-                .replaceAll(r'', '/')
-                .compareTo(b.path.replaceAll(r'', '/')),
+                .replaceAll(r'\', '/')
+                .compareTo(b.path.replaceAll(r'\', '/')),
           );
 
     for (final file in files) {

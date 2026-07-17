@@ -116,8 +116,9 @@ List<NavigationEdge> _collectNavigationEdges(Directory appRoot) {
           .where((file) => file.path.endsWith('.dart'))
           .toList()
         ..sort(
-          (a, b) =>
-              _relativePath(a, repoRoot).compareTo(_relativePath(b, repoRoot)),
+          (a, b) => _relativePath(a, repoRoot)
+              .replaceAll(r'\', '/')
+              .compareTo(_relativePath(b, repoRoot).replaceAll(r'\', '/')),
         );
 
   final edges = <NavigationEdge>[];
