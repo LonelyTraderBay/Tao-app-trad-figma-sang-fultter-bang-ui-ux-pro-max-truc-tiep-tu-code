@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -49,6 +50,17 @@ class _VitTradeMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: const _VitTradeScrollBehavior(),
       routerConfig: routerConfig,
+      // I18N-2 (DEC-i18n Nhánh A — vi-VN-only): copy sản phẩm là tiếng Việt
+      // inline; các widget hệ thống của Material/Cupertino (date picker,
+      // tooltip, paste menu...) cũng phải nói tiếng Việt qua delegates.
+      // Độc lập với I18N-1 — kể cả vi-VN-only vẫn cần khai báo này.
+      locale: const Locale('vi'),
+      supportedLocales: const [Locale('vi')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       // A11Y-2/3: caps OS-level font-scaling boosts at 1.3x so large system
       // text sizes cannot overflow the fixed-height chrome/card layouts
       // throughout the app, while still letting low-vision users scale text

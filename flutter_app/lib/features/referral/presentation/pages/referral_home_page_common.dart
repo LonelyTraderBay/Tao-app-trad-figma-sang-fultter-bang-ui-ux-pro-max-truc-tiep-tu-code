@@ -242,7 +242,7 @@ _DetailStyle _detailStyle(String id) {
   };
 }
 
-String _formatUsd(double value) => formatUsd(value);
+String _formatUsd(double value) => VitFormat.usd(value);
 
 String _formatCompactInt(int value) {
   if (value < 1000) return '$value';

@@ -210,4 +210,4 @@ class _ReferralRewardChartPainter extends CustomPainter {
   }
 }
 
-String _formatUsd(double value) => formatUsd(value);
+String _formatUsd(double value) => VitFormat.usd(value);

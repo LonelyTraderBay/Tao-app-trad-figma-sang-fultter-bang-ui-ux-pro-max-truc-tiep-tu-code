@@ -5,6 +5,19 @@ import 'package:vit_trade_flutter/shared/utils/currency_formatters.dart';
 /// Shared display-format facade. Prefer this import over ad-hoc local
 /// `*_format*` helpers when the value is generic (not Arena-points-only
 /// or module-specific product copy).
+///
+/// Quy ước ngôn ngữ hiển thị số (FMT-1, DEC-i18n phương án (a)):
+/// - **USD luôn theo quy ước en-US**: `$1,234.50` — dấu phẩy nhóm nghìn,
+///   dấu chấm thập phân ([usd], [usdSigned], [usdWhole], [usdWholeSigned]).
+/// - **Số đếm/VND theo vi-VN hiển thị trong copy tiếng Việt** nhưng dùng cùng
+///   dấu phẩy nhóm nghìn ([count], [compactInt], [thousands]) — sản phẩm giữ
+///   MỘT kiểu nhóm nghìn thống nhất trên toàn app cho tới khi có backend
+///   locale thật (nâng cấp gen-l10n ghi ở AGENTS.md "Chính sách ngôn ngữ").
+///
+/// Bài học drift 440dcb06: MỌI call site phải đi qua facade này — import
+/// thẳng `currency_formatters.dart`/`number_formatters.dart` bị chặn bởi
+/// `test/quality/vit_format_facade_guardrail_test.dart`; đổi format ở một
+/// nơi duy nhất để copy tiền tệ không lệch âm thầm giữa các module.
 abstract final class VitFormat {
   static String usd(double value) => formatUsd(value);
 

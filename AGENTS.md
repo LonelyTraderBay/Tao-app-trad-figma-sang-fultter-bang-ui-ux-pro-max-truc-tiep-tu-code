@@ -4,7 +4,7 @@
 **Tech Stack:** Flutter, Dart, Riverpod, GoRouter  
 **Package Manager:** Flutter/Dart pub  
 **Test Framework:** flutter_test  
-**Last Updated:** 2026-07-17
+**Last Updated:** 2026-07-17 (I18N-1: chính sách ngôn ngữ vi-VN-only)
 
 Read `docs/00_START_HERE.md` before using long-form design, architecture, or QA
 guidance.
@@ -95,6 +95,28 @@ Prediction Markets and Open Arena must stay separate.
 
 Allowed bridges: topic/category, event context, creator discovery,
 search/discovery, and profile surfaces with clearly separated sections.
+
+## Chính sách ngôn ngữ (vi-VN-only)
+
+Chuẩn chốt tại GĐ2 · I18N-1 (DEC-i18n Nhánh A, 2026-07-16):
+
+- Copy sản phẩm user-facing là **tiếng Việt có dấu đầy đủ, viết inline** —
+  hợp lệ, KHÔNG cần bọc qua ARB/gen-l10n ở giai đoạn mock-UI này. Lý do:
+  sản phẩm một ngôn ngữ, backend chưa chốt; bọc l10n sớm chỉ thêm một tầng
+  gián tiếp mà không có người dùng thứ hai ngôn ngữ nào hưởng lợi.
+- Đường nâng cấp đã định: khi có backend/đa ngôn ngữ thật, migrate sang
+  `flutter gen-l10n` (ARB) theo từng module — locale runtime đã sẵn
+  (`flutter_localizations` + `locale: vi` trong `vit_trade_app.dart`,
+  I18N-2).
+- **Cấm thêm chuỗi tiếng Anh user-facing MỚI** trong presentation layer.
+  Ratchet: `flutter_app/test/quality/i18n_vi_only_guardrail_test.dart` +
+  baseline `i18n_vi_only_baseline.txt` (nợ tiếng Anh hiện trạng ~443 chuỗi —
+  trả dần khi chạm file; SỬA một chuỗi baseline nghĩa là dịch nó luôn).
+  Lưu ý heuristic: tiếng Việt KHÔNG DẤU ("mua nhanh") từng false-positive
+  là tiếng Anh — guardrail chỉ bắt chuỗi có ≥2 từ marker tiếng Anh, không
+  language-detect; copy mới cứ viết đủ dấu là an toàn.
+- Nhãn kỹ thuật không phải copy (semanticIdentifier, route path, Key, tên
+  package/API) không thuộc phạm vi chính sách này.
 
 ## UI Rules
 

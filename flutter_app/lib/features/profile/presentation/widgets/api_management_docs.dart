@@ -74,4 +74,4 @@ Color _permissionColor(String id) {
   };
 }
 
-String _formatInt(int value) => insertThousandsSeparator(value.toString());
+String _formatInt(int value) => VitFormat.count(value);
