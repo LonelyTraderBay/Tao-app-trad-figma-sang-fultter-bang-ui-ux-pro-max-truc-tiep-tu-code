@@ -26,11 +26,16 @@ class _ChartArea extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-              child: CustomPaint(
-                painter: _AdvancedTradeChartPainter(
-                  candles: candles,
-                  indicators: indicators,
-                  chartType: chartType,
+              // PERF-HN5: isolate the heavy candle painter into its own
+              // compositor layer so sibling repaints (legend chips,
+              // indicator sheet) don't force it to redraw.
+              child: RepaintBoundary(
+                child: CustomPaint(
+                  painter: _AdvancedTradeChartPainter(
+                    candles: candles,
+                    indicators: indicators,
+                    chartType: chartType,
+                  ),
                 ),
               ),
             ),

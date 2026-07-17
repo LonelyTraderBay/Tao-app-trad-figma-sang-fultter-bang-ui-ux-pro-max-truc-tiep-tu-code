@@ -120,9 +120,13 @@ class _DurationCard extends StatelessWidget {
       density: VitDensity.compact,
       child: SizedBox(
         height: _analyticsDonutExtent,
-        child: CustomPaint(
-          painter: _DurationDonutPainter(distribution),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _DurationDonutPainter(distribution),
+            size: Size.infinite,
+          ),
         ),
       ),
     );

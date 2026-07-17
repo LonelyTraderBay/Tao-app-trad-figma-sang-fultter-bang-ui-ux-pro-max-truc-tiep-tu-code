@@ -13,9 +13,13 @@ class _EquityChartCard extends StatelessWidget {
         children: [
           SizedBox(
             height: _equityChartExtent,
-            child: CustomPaint(
-              painter: _EquityPainter(points),
-              size: Size.infinite,
+            // PERF-HN5: isolate the heavy chart painter into its own
+            // compositor layer.
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: _EquityPainter(points),
+                size: Size.infinite,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -59,9 +63,13 @@ class _SharpeCard extends StatelessWidget {
         children: [
           SizedBox(
             height: _equitySharpeExtent,
-            child: CustomPaint(
-              painter: _SharpePainter(rolling),
-              size: Size.infinite,
+            // PERF-HN5: isolate the heavy chart painter into its own
+            // compositor layer.
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: _SharpePainter(rolling),
+                size: Size.infinite,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),

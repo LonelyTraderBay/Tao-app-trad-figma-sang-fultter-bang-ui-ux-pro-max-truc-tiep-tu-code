@@ -140,9 +140,13 @@ class _PnlChartCard extends StatelessWidget {
       density: VitDensity.compact,
       child: SizedBox(
         height: _analyticsChartExtent,
-        child: CustomPaint(
-          painter: _PnlChartPainter(points),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _PnlChartPainter(points),
+            size: Size.infinite,
+          ),
         ),
       ),
     );
@@ -161,9 +165,13 @@ class _WinLossChartCard extends StatelessWidget {
       density: VitDensity.compact,
       child: SizedBox(
         height: _analyticsDistributionExtent,
-        child: CustomPaint(
-          painter: _WinLossChartPainter(points),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _WinLossChartPainter(points),
+            size: Size.infinite,
+          ),
         ),
       ),
     );

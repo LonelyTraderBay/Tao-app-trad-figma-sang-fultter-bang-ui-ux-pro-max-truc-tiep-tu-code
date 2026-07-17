@@ -3,6 +3,7 @@ part of 'predictions_entities.dart';
 final class PredictionHomeSnapshot {
   const PredictionHomeSnapshot({
     required this.events,
+    required this.visibleEvents,
     required this.categories,
     required this.positions,
     required this.orders,
@@ -19,6 +20,12 @@ final class PredictionHomeSnapshot {
   });
 
   final List<PredictionEventDraft> events;
+
+  /// PERF-HN3: lát cắt bounded của [events] cho trang hub — tính MỘT lần khi
+  /// dựng snapshot (khuôn memoize `MarketListViewState.visiblePairs`) để số
+  /// widget dựng độc lập với độ dài data khi có backend thật; phần còn lại
+  /// xem qua trang tìm kiếm ("Xem tất cả").
+  final List<PredictionEventDraft> visibleEvents;
   final List<String> categories;
   final List<PredictionPositionDraft> positions;
   final List<PredictionOrderDraft> orders;

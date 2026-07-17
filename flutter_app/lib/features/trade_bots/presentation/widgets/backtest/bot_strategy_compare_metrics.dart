@@ -11,9 +11,13 @@ class _EquityChartCard extends StatelessWidget {
     return _Card(
       child: AspectRatio(
         aspectRatio: 2.15,
-        child: CustomPaint(
-          painter: _EquityChartPainter(points, strategies),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _EquityChartPainter(points, strategies),
+            size: Size.infinite,
+          ),
         ),
       ),
     );
@@ -30,9 +34,13 @@ class _RadarCard extends StatelessWidget {
     return _Card(
       child: AspectRatio(
         aspectRatio: 1.85,
-        child: CustomPaint(
-          painter: _RadarPainter(strategies),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _RadarPainter(strategies),
+            size: Size.infinite,
+          ),
         ),
       ),
     );

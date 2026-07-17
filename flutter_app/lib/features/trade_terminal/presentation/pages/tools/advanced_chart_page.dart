@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -62,6 +63,23 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
 
   // STATE-S23: indicators sống ở AdvancedChartStateController (một nguồn
   // sự thật) — hết `late List` seed từ ref.read + setState.
+
+  // PERF-HN5: memoize the 3x-interpolated candle expansion so it's only
+  // recomputed when the underlying candles reference actually changes (not
+  // on every unrelated rebuild, e.g. toggling the indicator sheet or
+  // switching timeframe/chart type). `snapshot.candles` comes from a
+  // repository-level const list so its identity is stable across rebuilds
+  // in practice.
+  List<TradeCandle>? _expandedSource;
+  List<TradeCandle>? _expandedCache;
+
+  List<TradeCandle> _expandedCandlesFor(List<TradeCandle> candles) {
+    if (!identical(candles, _expandedSource)) {
+      _expandedSource = candles;
+      _expandedCache = expandAdvancedTradeCandles(candles);
+    }
+    return _expandedCache!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +144,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                             setState(() => _showIndicators = true),
                       ),
                       _ChartArea(
-                        candles: snapshot.candles,
+                        candles: _expandedCandlesFor(snapshot.candles),
                         indicators: indicators,
                         chartType: _chartType,
                       ),

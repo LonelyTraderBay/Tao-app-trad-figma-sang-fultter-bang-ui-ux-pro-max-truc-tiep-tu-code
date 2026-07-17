@@ -148,6 +148,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/tools/market_sector_comparison_table.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/tools/market_sector_detail_summary.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/markets/presentation/widgets/tools/market_sector_distribution.dart,D,-,done,0,-
+03_tab_roots,flutter_app/lib/features/predictions/presentation/pages/hub/predictions_home_page.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/predictions/presentation/pages/portfolio/predictions_portfolio_page.dart,E,-,done,0,-
 03_tab_roots,flutter_app/lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_analysis.dart,C,-,done,0,-
 03_tab_roots,flutter_app/lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_indicators.dart,C,-,done,0,-

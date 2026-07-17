@@ -117,12 +117,29 @@ void main() {
 
     final afterFling = _mountedCountOf(tester, '_PredictionEventCard');
 
-    // Đo thực tế (2026-07-17): mock repository trả 12 sự kiện ở filter
-    // mặc định (trending) -> 12 `_PredictionEventCard` mount trước VÀ sau
-    // fling. Ghim ngưỡng +2 đệm (<=14) để bắt hồi quy nếu danh sách sự
-    // kiện phình to bất thường hoặc bị nhân đôi khi scroll.
-    expect(beforeFling, lessThanOrEqualTo(14));
-    expect(afterFling, lessThanOrEqualTo(14));
+    // PERF-HN3 (2026-07-18): hub chỉ dựng lát cắt bounded
+    // `snapshot.visibleEvents` (cap 8, khuôn markets) — mock trả 12 sự kiện
+    // nên đúng 8 card mount trước VÀ sau fling. Ghim <=10 (+2 đệm, đồng
+    // nhất markets). Lưu ý: chỉ đếm trong trang predictions nên class
+    // trùng tên `_PredictionEventCard` bên discovery không gây nhiễu.
+    expect(beforeFling, lessThanOrEqualTo(10));
+    expect(afterFling, lessThanOrEqualTo(10));
     expect(afterFling, beforeFling);
+
+    // Chống gỡ cap lặng lẽ: mock 12 > cap 8 nên card "Xem tất cả" PHẢI
+    // hiện diện — ai nâng/bỏ cap mà quên đường thoát sẽ đỏ tại đây.
+    await tester.fling(
+      find.byKey(PredictionsHomePage.contentKey),
+      const Offset(0, -800),
+      3000,
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(PredictionsHomePage.viewAllEventsKey),
+      findsOneWidget,
+      reason:
+          'Cap 8 sự kiện ở hub cần card "Xem tất cả" dẫn sang trang tìm '
+          'kiếm khi còn sự kiện dư (PERF-HN3).',
+    );
   });
 }

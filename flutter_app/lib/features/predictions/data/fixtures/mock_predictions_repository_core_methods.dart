@@ -32,6 +32,9 @@ mixin _MockPredictionsRepositoryMethodsPart01
 
     return PredictionHomeSnapshot(
       events: events,
+      // PERF-HN3: cap 8 (đồng bộ _visibleLimit của markets) tính một lần
+      // tại đây — trang hub không bao giờ dựng quá 8 event card.
+      visibleEvents: List<PredictionEventDraft>.unmodifiable(events.take(8)),
       categories: _predictionCategories,
       positions: _predictionPositions,
       orders: _predictionOrders,
