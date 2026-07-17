@@ -208,15 +208,41 @@ const _navigationCallTokens = [
 
 final class _RouteResolver {
   _RouteResolver(Directory appRoot, String repoRoot)
-    : _pathsText = File(
-        '${appRoot.path}/lib/app/router/app_route_paths.dart',
-      ).readAsStringSync(),
+    : _pathsText = _readRoutePathSources(appRoot),
       _truthTable = File(
         '${repoRoot}docs/02_FLUTTER_MIGRATION/Flutter-Route-Coverage-Truth-Table.md',
       ).readAsStringSync() {
     _parseRoutePathConstants();
     _parseRoutePathBuilders();
     _parseRouteTruthTable();
+  }
+
+  // ARCH-A3: literal path giờ sống trong route_groups/<feature>_route_ids.dart
+  // (facade AppRoutePaths chỉ còn alias unquoted — regex bên dưới bỏ qua
+  // alias theo thiết kế). Đọc concat facade + mọi id file, sort theo path
+  // repo-relative forward-slash để artifact ổn định cross-OS.
+  static String _readRoutePathSources(Directory appRoot) {
+    final sources = <String>[
+      File(
+        '${appRoot.path}/lib/app/router/app_route_paths.dart',
+      ).readAsStringSync(),
+    ];
+    final groupsDir = Directory('${appRoot.path}/lib/app/router/route_groups');
+    final idFiles =
+        groupsDir
+            .listSync()
+            .whereType<File>()
+            .where(
+              (f) => f.path.replaceAll(r'\', '/').endsWith('_route_ids.dart'),
+            )
+            .toList()
+          ..sort(
+            (a, b) => a.path
+                .replaceAll(r'\', '/')
+                .compareTo(b.path.replaceAll(r'\', '/')),
+          );
+    sources.addAll(idFiles.map((f) => f.readAsStringSync()));
+    return sources.join('\n');
   }
 
   final String _pathsText;

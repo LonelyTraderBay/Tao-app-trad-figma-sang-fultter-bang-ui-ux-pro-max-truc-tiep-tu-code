@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -105,7 +106,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/trader/:traderId',
       name: AppRouteNames.sc087TraderProfile,
       builder: (_, state) => TraderProfilePage(
-        traderId: state.pathParameters['traderId'] ?? 'trader001',
+        traderId: requireRouteParam(state, 'traderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -113,7 +114,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/copy-provider/:providerId/assessment',
       name: AppRouteNames.sc071PreCopyAssessment,
       builder: (_, state) {
-        final providerId = state.pathParameters['providerId'] ?? '';
+        final providerId = requireRouteParam(state, 'providerId');
         return PreCopyAssessmentPage(
           providerId: providerId,
           shellRenderMode: shellRenderMode,
@@ -124,7 +125,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/copy-provider/:providerId/configuration',
       name: AppRouteNames.sc072CopyConfiguration,
       builder: (_, state) {
-        final providerId = state.pathParameters['providerId'] ?? '';
+        final providerId = requireRouteParam(state, 'providerId');
         final backPath = resolveSafeBackPath(
           candidate: state.uri.queryParameters['back'],
           fallbackPath: AppRoutePaths.tradeCopyProvider(providerId),
@@ -141,7 +142,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/copy-provider/:providerId/confirmation',
       name: AppRouteNames.sc073CopyConfirmation,
       builder: (_, state) {
-        final providerId = state.pathParameters['providerId'] ?? '';
+        final providerId = requireRouteParam(state, 'providerId');
         return CopyConfirmationPage(
           providerId: providerId,
           shellRenderMode: shellRenderMode,
@@ -158,7 +159,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
           allowedPrefixes: const [AppRoutePaths.trade],
         );
         return CopyProviderDetailPage(
-          providerId: state.pathParameters['providerId'] ?? 'provider001',
+          providerId: requireRouteParam(state, 'providerId'),
           backPath: backPath,
           shellRenderMode: shellRenderMode,
         );
@@ -169,7 +170,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc074CopyPerformance,
       builder: (_, state) {
         return CopyPerformancePage(
-          copyId: state.pathParameters['copyId'] ?? 'copy001',
+          copyId: requireRouteParam(state, 'copyId'),
           shellRenderMode: shellRenderMode,
         );
       },
@@ -179,7 +180,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc075PerformanceAttribution,
       builder: (_, state) {
         return PerformanceAttributionPage(
-          copyId: state.pathParameters['copyId'] ?? 'copy001',
+          copyId: requireRouteParam(state, 'copyId'),
           shellRenderMode: shellRenderMode,
         );
       },
@@ -189,7 +190,7 @@ List<RouteBase> tradeCopyRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc077CopyAuditLog,
       builder: (_, state) {
         return CopyAuditLogPage(
-          copyId: state.pathParameters['copyId'] ?? 'copy001',
+          copyId: requireRouteParam(state, 'copyId'),
           shellRenderMode: shellRenderMode,
         );
       },

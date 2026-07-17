@@ -16,6 +16,7 @@ List<RouteBase> tradeTerminalRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/advanced-chart/:pairId',
       name: AppRouteNames.sc055AdvancedChart,
       builder: (_, state) => AdvancedChartPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         shellRenderMode: shellRenderMode,
       ),

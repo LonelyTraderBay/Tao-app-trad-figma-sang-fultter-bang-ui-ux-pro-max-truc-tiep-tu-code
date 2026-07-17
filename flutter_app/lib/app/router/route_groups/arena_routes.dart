@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_home_page.dart';
@@ -68,7 +69,7 @@ List<RouteBase> arenaCoreRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/mode/:modeId',
       name: AppRouteNames.sc189ArenaModeDetail,
       builder: (_, state) => ArenaModeDetailPage(
-        modeId: state.pathParameters['modeId'] ?? 'mode001',
+        modeId: requireRouteParam(state, 'modeId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -76,7 +77,7 @@ List<RouteBase> arenaCoreRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/challenge/:challengeId',
       name: AppRouteNames.sc190ArenaChallengeDetail,
       builder: (_, state) => ArenaChallengeDetailPage(
-        challengeId: state.pathParameters['challengeId'] ?? 'ch003',
+        challengeId: requireRouteParam(state, 'challengeId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -84,7 +85,7 @@ List<RouteBase> arenaCoreRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/join/:challengeId',
       name: AppRouteNames.sc191ArenaJoin,
       builder: (_, state) => ArenaJoinPage(
-        challengeId: state.pathParameters['challengeId'] ?? 'ch003',
+        challengeId: requireRouteParam(state, 'challengeId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -98,7 +99,7 @@ List<RouteBase> arenaCoreRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/creator/:creatorId',
       name: AppRouteNames.sc193ArenaCreator,
       builder: (_, state) => ArenaCreatorPage(
-        creatorId: state.pathParameters['creatorId'] ?? 'cr001',
+        creatorId: requireRouteParam(state, 'creatorId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -174,7 +175,7 @@ List<RouteBase> arenaExtendedRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/trust/:userId',
       name: AppRouteNames.sc199ArenaTrustBreakdown,
       builder: (_, state) => ArenaTrustBreakdownPage(
-        entityId: state.pathParameters['userId'] ?? 'user001',
+        entityId: requireRouteParam(state, 'userId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -182,7 +183,7 @@ List<RouteBase> arenaExtendedRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/ledger/entry/:entryId',
       name: AppRouteNames.sc200ArenaPointsEntryDetail,
       builder: (_, state) => ArenaPointsEntryDetailPage(
-        entryId: state.pathParameters['entryId'] ?? 'entry001',
+        entryId: requireRouteParam(state, 'entryId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -196,7 +197,7 @@ List<RouteBase> arenaExtendedRoutes(ShellRenderMode shellRenderMode) {
       path: '/arena/report/:caseId',
       name: AppRouteNames.sc202ArenaReportCase,
       builder: (_, state) => ArenaReportCasePage(
-        caseId: state.pathParameters['caseId'] ?? 'case001',
+        caseId: requireRouteParam(state, 'caseId'),
         shellRenderMode: shellRenderMode,
       ),
     ),

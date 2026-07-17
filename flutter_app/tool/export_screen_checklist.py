@@ -211,11 +211,25 @@ def parse_route_groups(app_root: Path) -> list[dict[str, str]]:
     return routes
 
 
+def _route_path_sources(app_root: Path) -> str:
+    # ARCH-A3: literal path song trong route_groups/<feature>_route_ids.dart;
+    # facade app_route_paths.dart chi con alias (khong quoted). Doc concat
+    # facade + moi id file, sort theo POSIX path de on dinh cross-OS.
+    parts = [(app_root / "lib/app/router/app_route_paths.dart").read_text(encoding="utf-8")]
+    groups = app_root / "lib/app/router/route_groups"
+    id_files = sorted(
+        (f for f in groups.glob("*_route_ids.dart")),
+        key=lambda f: f.as_posix(),
+    )
+    parts.extend(f.read_text(encoding="utf-8") for f in id_files)
+    return "
+".join(parts)
+
+
 def resolve_path(route_path: str, app_root: Path) -> str:
     if route_path.startswith("AppRoutePaths."):
         const_name = route_path.removeprefix("AppRoutePaths.")
-        paths_file = app_root / "lib/app/router/app_route_paths.dart"
-        text = paths_file.read_text(encoding="utf-8")
+        text = _route_path_sources(app_root)
         match = re.search(
             rf"static const String {re.escape(const_name)}\s*=\s*'([^']*)'",
             text,
@@ -233,9 +247,21 @@ def resolve_path(route_path: str, app_root: Path) -> str:
 
 
 def load_all_sc_ids(app_root: Path) -> list[str]:
-    names_file = app_root / "lib/app/router/app_route_names.dart"
-    text = names_file.read_text(encoding="utf-8")
-    return re.findall(r"static const String (sc\d+\w+)", text)
+    # ARCH-A3: scNNN name gio song trong route_groups/<feature>_route_ids.dart;
+    # facade van giu alias cung ten nen doc facade la du — nhung doc ca id
+    # files de khong phu thuoc facade ton tai mai. Dedup giu thu tu.
+    text = (app_root / "lib/app/router/app_route_names.dart").read_text(encoding="utf-8")
+    groups = app_root / "lib/app/router/route_groups"
+    for f in sorted(groups.glob("*_route_ids.dart"), key=lambda f: f.as_posix()):
+        text += "
+" + f.read_text(encoding="utf-8")
+    seen: set[str] = set()
+    out: list[str] = []
+    for name in re.findall(r"static const String (sc\d+\w+)", text):
+        if name not in seen:
+            seen.add(name)
+            out.append(name)
+    return out
 
 
 def main() -> None:

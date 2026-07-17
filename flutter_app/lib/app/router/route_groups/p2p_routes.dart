@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/hub/p2p_express_page.dart';
@@ -101,7 +102,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/order/timeline/:orderId',
       name: AppRouteNames.sc212P2POrderTimeline,
       builder: (_, state) => P2POrderTimelinePage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -109,7 +110,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/order/rate/:orderId',
       name: AppRouteNames.sc213P2POrderRate,
       builder: (_, state) => P2POrderRatePage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -117,7 +118,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/order/cancel/:orderId',
       name: AppRouteNames.sc214P2POrderCancel,
       builder: (_, state) => P2POrderCancelPage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -125,7 +126,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/order/proof/:orderId',
       name: AppRouteNames.sc215P2POrderProof,
       builder: (_, state) => P2POrderProofPage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -133,7 +134,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/order/:orderId',
       name: AppRouteNames.sc216P2POrder,
       builder: (_, state) => P2POrderPage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -141,7 +142,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/chat/:orderId',
       name: AppRouteNames.sc217P2PChat,
       builder: (_, state) => P2PChatPage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -149,7 +150,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/dispute/detail/:disputeId',
       name: AppRouteNames.sc218P2PDisputeDetail,
       builder: (_, state) => P2PDisputeDetailPage(
-        disputeId: state.pathParameters['disputeId'] ?? 'sample',
+        disputeId: requireRouteParam(state, 'disputeId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -157,7 +158,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/dispute/evidence/:disputeId',
       name: AppRouteNames.sc219P2PDisputeEvidence,
       builder: (_, state) => P2PDisputeEvidencePage(
-        disputeId: state.pathParameters['disputeId'] ?? 'sample',
+        disputeId: requireRouteParam(state, 'disputeId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -165,7 +166,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/dispute/resolution/:disputeId',
       name: AppRouteNames.sc220P2PDisputeResolution,
       builder: (_, state) => P2PDisputeResolutionPage(
-        disputeId: state.pathParameters['disputeId'] ?? 'sample',
+        disputeId: requireRouteParam(state, 'disputeId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -173,7 +174,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/dispute/:orderId',
       name: AppRouteNames.sc221P2PDispute,
       builder: (_, state) => P2PDisputePage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -186,7 +187,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/ad-analytics/:adId',
       name: AppRouteNames.sc223P2PAdAnalytics,
       builder: (_, state) => P2PAdAnalyticsPage(
-        adId: state.pathParameters['adId'] ?? 'sample',
+        adId: requireRouteParam(state, 'adId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -194,7 +195,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/ad/:adId',
       name: AppRouteNames.sc224P2PAdDetail,
       builder: (_, state) => P2PAdDetailPage(
-        adId: state.pathParameters['adId'] ?? 'sample',
+        adId: requireRouteParam(state, 'adId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -217,7 +218,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/merchant/:merchantId',
       name: AppRouteNames.sc228P2PMerchantProfile,
       builder: (_, state) => P2PMerchantProfilePage(
-        merchantId: state.pathParameters['merchantId'] ?? 'mc001',
+        merchantId: requireRouteParam(state, 'merchantId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -233,7 +234,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/escrow/:orderId',
       name: AppRouteNames.sc246P2PEscrowDetail,
       builder: (_, state) => P2PEscrowDetailPage(
-        orderId: state.pathParameters['orderId'] ?? 'p2p001',
+        orderId: requireRouteParam(state, 'orderId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -336,7 +337,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/report/:merchantId',
       name: AppRouteNames.sc229P2PReportMerchant,
       builder: (_, state) => P2PReportMerchantPage(
-        merchantId: state.pathParameters['merchantId'] ?? 'mc001',
+        merchantId: requireRouteParam(state, 'merchantId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -364,7 +365,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/payment-method/verification/:methodId',
       name: AppRouteNames.sc233P2PPaymentMethodVerification,
       builder: (_, state) => P2PPaymentMethodVerificationPage(
-        methodId: state.pathParameters['methodId'] ?? 'sample',
+        methodId: requireRouteParam(state, 'methodId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -372,7 +373,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/payment-method/ownership/:methodId',
       name: AppRouteNames.sc234P2PPaymentMethodOwnership,
       builder: (_, state) => P2PPaymentMethodOwnershipPage(
-        methodId: state.pathParameters['methodId'] ?? 'sample',
+        methodId: requireRouteParam(state, 'methodId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -432,7 +433,7 @@ List<RouteBase> p2pRoutes(ShellRenderMode shellRenderMode) {
       path: '/p2p/insurance/claim/:claimId',
       name: AppRouteNames.sc243P2PClaimDetail,
       builder: (_, state) => P2PClaimDetailPage(
-        claimId: state.pathParameters['claimId'] ?? 'sample',
+        claimId: requireRouteParam(state, 'claimId'),
         shellRenderMode: shellRenderMode,
       ),
     ),

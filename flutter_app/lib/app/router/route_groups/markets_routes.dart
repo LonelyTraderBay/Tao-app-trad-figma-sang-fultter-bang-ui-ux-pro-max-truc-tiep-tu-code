@@ -136,6 +136,7 @@ List<RouteBase> marketPairRoutes(ShellRenderMode shellRenderMode) {
       path: '/pair/:pairId',
       name: AppRouteNames.sc044PairDetail,
       builder: (_, state) => PairDetailPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         shellRenderMode: shellRenderMode,
       ),
@@ -144,6 +145,7 @@ List<RouteBase> marketPairRoutes(ShellRenderMode shellRenderMode) {
       path: '/pair/:pairId/info',
       name: AppRouteNames.sc045TokenInfo,
       builder: (_, state) => TokenInfoPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         shellRenderMode: shellRenderMode,
       ),
@@ -152,6 +154,7 @@ List<RouteBase> marketPairRoutes(ShellRenderMode shellRenderMode) {
       path: '/pair/:pairId/depth',
       name: AppRouteNames.sc046PairDepth,
       builder: (_, state) {
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         final pairId = state.pathParameters['pairId'] ?? 'btcusdt';
         final returnTo = state.uri.queryParameters['returnTo'];
         return MarketDepthPage(
