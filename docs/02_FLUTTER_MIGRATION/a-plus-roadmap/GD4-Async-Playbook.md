@@ -474,3 +474,21 @@ thấp hơn) — không được để nguyên baseline cũ (ratchet không tự
     thật làm vỡ use_build_context_synchronously + ~30 widget test timing;
     (a) áp cho haptic/clipboard VÔ ĐIỀU KIỆN (429/730 site là loại này).
     Import dart:async đặt ở file library gốc khi site nằm trong part file.
+
+## 10. Bẫy riêng cho Stream (Cụm F7)
+
+32. **KHÔNG dùng `async*`/`await for` bọc `Stream.periodic`** — cancel
+    không lan tới Timer trong generator (FakeAsync `!timersPending`).
+    Dùng combinator thuần: `Future.asStream().asyncExpand((base) =>
+    Stream.periodic(...).map(...))` — cancel đúng.
+33. **`tickInterval` mặc định phải lớn hơn TỔNG thời gian ảo của mọi
+    pumpAndSettle trong một test** (không chỉ lớn hơn loadDelay) — mặc
+    định 30s; test cần tick thật override `Duration(milliseconds: 1)`.
+34. **`StreamController.add()` cần 2 `tester.pump()`** trước khi UI phản
+    ánh (microtask + markNeedsBuild frame 1, rebuild frame 2).
+35. **Emission ĐẦU TIÊN của stream đổi MỌI observer `.select()`**
+    (null → giá trị) — chỉ từ emission thứ 2 tính chất "đúng 1 entry đổi"
+    mới đúng; toán churn benchmark phải cộng bù N observer cho tick 0.
+36. **Artifact audit đánh số dòng stale với MỌI thay đổi số dòng** kể cả
+    khi ngữ nghĩa không đổi — chạm file nào tool quét thì regen write-mode
+    ngay trong batch.

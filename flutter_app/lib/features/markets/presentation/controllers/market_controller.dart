@@ -146,4 +146,12 @@ final class MarketController implements MarketRepository {
   Future<MarketTokenInfoSnapshot> getTokenInfo(String pairId) {
     return _repository.getTokenInfo(pairId);
   }
+
+  @override
+  Stream<List<MarketPair>> watchTicker() => _repository.watchTicker();
+
+  @override
+  Stream<MarketDepthSnapshot> watchDepth(String pairId, {int levels = 25}) {
+    return _repository.watchDepth(pairId, levels: levels);
+  }
 }
