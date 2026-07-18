@@ -59,6 +59,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # GĐ4-F8 (ADR-010): codegen DTO phải được COMMIT — chạy lại
+      # build_runner rồi so diff; *.g.dart lệch source là fail.
+      - name: Codegen DTO (build_runner) — diff phải sạch
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          git diff --exit-code
+
       - name: Check formatting
         run: dart format --output=none --set-exit-if-changed .
 

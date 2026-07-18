@@ -21,12 +21,17 @@ dependencies:
   # KeyValueStore/SecureStore.
   shared_preferences: ^2.5.3
   flutter_secure_storage: ^9.2.4
+  # GĐ4-F8: serialization pilot (ADR-010 — DTO provisional chờ contract ký)
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  # GĐ4-F8: codegen DTO — CI job static kiểm git-diff sạch sau build_runner
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.5
   custom_lint: ^0.8.1
   vittrade_lints:
     path: tool/vittrade_lints

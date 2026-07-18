@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/core/storage/secure_store.dart';
+import 'package:vit_trade_flutter/features/auth/data/dto/auth_dto_mappers.dart';
+import 'package:vit_trade_flutter/features/auth/data/dto/auth_session_dto.dart';
 import 'package:vit_trade_flutter/features/auth/data/providers/auth_repository_provider.dart'
     as data;
 import 'package:vit_trade_flutter/features/auth/presentation/controllers/auth_controller.dart';
@@ -27,6 +29,11 @@ final class AuthSessionController extends Notifier<AuthSession?> {
 
   /// Khôi phục phiên đã lưu khi khởi động app. Fail-safe: JSON hỏng hoặc
   /// thiếu trường KHÔNG throw — chỉ xóa khóa lưu và giữ state `null`.
+  ///
+  /// Giải mã qua [AuthSessionDto] (GĐ4-F8, ADR-010) — `fromJson` ném
+  /// `CheckedFromJsonException` có kiểm soát khi thiếu trường/sai kiểu,
+  /// `jsonDecode` ném `FormatException` khi chuỗi không phải JSON hợp lệ; cả
+  /// hai đều rơi vào nhánh `catch` bên dưới như hành vi cũ.
   Future<void> restore() async {
     final store = ref.read(secureStoreProvider);
     final raw = await store.read(SecureStoreKeys.authSession);
@@ -34,11 +41,7 @@ final class AuthSessionController extends Notifier<AuthSession?> {
 
     try {
       final json = jsonDecode(raw) as Map<String, dynamic>;
-      state = AuthSession(
-        identifier: json['identifier']! as String,
-        demo: json['demo']! as bool,
-        issuedAt: DateTime.parse(json['issuedAt']! as String),
-      );
+      state = AuthSessionDto.fromJson(json).toEntity();
     } catch (_) {
       await store.delete(SecureStoreKeys.authSession);
       state = null;
@@ -49,6 +52,10 @@ final class AuthSessionController extends Notifier<AuthSession?> {
   /// [SecureStore]. Token hiện là `'demo.<identifier>'` (SEC-S46 bật một
   /// nửa GĐ4-F1) — backend thật sẽ thay bằng token server cấp, không đổi
   /// cơ chế truyền. Lỗi từ repository ném nguyên, KHÔNG ghi gì vào store.
+  ///
+  /// Mã hóa qua [AuthSessionDto] (GĐ4-F8, ADR-010) — cùng shape JSON
+  /// (`identifier`/`demo`/`issuedAt` ISO-8601) như trước, tương thích ngược
+  /// với dữ liệu đã lưu bằng code cũ.
   Future<AuthSession> login({
     required String identifier,
     required String password,
@@ -61,11 +68,7 @@ final class AuthSessionController extends Notifier<AuthSession?> {
     final store = ref.read(secureStoreProvider);
     await store.write(
       SecureStoreKeys.authSession,
-      jsonEncode({
-        'identifier': session.identifier,
-        'demo': session.demo,
-        'issuedAt': session.issuedAt.toIso8601String(),
-      }),
+      jsonEncode(session.toDto().toJson()),
     );
     await store.write(SecureStoreKeys.authToken, 'demo.${session.identifier}');
     state = session;
