@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-145 mock repository exposes buy crypto BE draft', () {
-    final snapshot = const MockWalletRepository().getBuyCrypto();
+  test('SC-145 mock repository exposes buy crypto BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getBuyCrypto();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-buy-crypto');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

@@ -57,9 +57,10 @@ class _TransactionHistoryPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletTransactionHistoryProvider);
-    final transactions = _filteredTransactions(snapshot.transactions);
-    final grouped = _groupByDate(transactions);
+    final snapshotAsync = ref.watch(walletTransactionHistoryProvider);
+    final transactionCount = _filteredTransactions(
+      snapshotAsync.value?.transactions ?? const [],
+    ).length;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _historyScrollBottomInset(context, mode);
 
@@ -78,7 +79,7 @@ class _TransactionHistoryPageState
             key: TransactionHistoryPage.exportKey,
             type: VitHeaderActionType.export,
             tooltip: 'Xuất lịch sử',
-            onPressed: () => _showExportNotice(transactions.length),
+            onPressed: () => _showExportNotice(transactionCount),
           ),
         ],
       ),
@@ -91,51 +92,74 @@ class _TransactionHistoryPageState
           density: VitDensity.compact,
           gap: VitContentGap.tight,
           children: [
-            _HistorySummaryBar(
-              count: transactions.length,
-              exportNotice: _exportNotice,
-            ),
-            VitTabBar(
-              tabs: [
-                for (final filter in snapshot.filters)
-                  VitTabItem(
-                    key: filter.id,
-                    label: filter.label,
-                    widgetKey: TransactionHistoryPage.filterKey(filter.id),
+            ...snapshotAsync.when(
+              loading: () => const [VitSkeletonList()],
+              error: (error, stackTrace) => [
+                VitErrorState(
+                  title: 'Không tải được lịch sử giao dịch',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(walletTransactionHistoryProvider),
+                ),
+              ],
+              data: (snapshot) {
+                final transactions = _filteredTransactions(
+                  snapshot.transactions,
+                );
+                final grouped = _groupByDate(transactions);
+                return [
+                  _HistorySummaryBar(
+                    count: transactions.length,
+                    exportNotice: _exportNotice,
                   ),
-              ],
-              activeKey: _filter,
-              onChanged: (id) => setState(() {
-                _filter = id;
-                _exportNotice = null;
-              }),
-              variant: VitTabBarVariant.pill,
-            ),
-            VitPageSection(
-              label: 'Giao dịch gần đây',
-              headerIcon: Icons.receipt_long_outlined,
-              headerIconColor: _historyPrimary,
-              headerVariant: VitSectionHeaderVariant.plain,
-              headerDensity: VitDensity.compact,
-              innerGap: AppSpacing.pageRhythmStandardInnerGap,
-              children: [
-                if (transactions.isEmpty)
-                  const VitEmptyState(
-                    title: 'Không có giao dịch',
-                    message:
-                        'Thử chọn bộ lọc khác hoặc quay lại sau khi ví có hoạt động mới.',
-                    icon: Icons.receipt_long_outlined,
-                  )
-                else ...[
-                  for (final group in grouped)
-                    _TransactionGroup(
-                      group: group,
-                      onTransactionTap: (tx) =>
-                          context.go(AppRoutePaths.walletTransaction(tx.id)),
-                    ),
-                  const _EndOfList(),
-                ],
-              ],
+                  VitTabBar(
+                    tabs: [
+                      for (final filter in snapshot.filters)
+                        VitTabItem(
+                          key: filter.id,
+                          label: filter.label,
+                          widgetKey: TransactionHistoryPage.filterKey(
+                            filter.id,
+                          ),
+                        ),
+                    ],
+                    activeKey: _filter,
+                    onChanged: (id) => setState(() {
+                      _filter = id;
+                      _exportNotice = null;
+                    }),
+                    variant: VitTabBarVariant.pill,
+                  ),
+                  VitPageSection(
+                    label: 'Giao dịch gần đây',
+                    headerIcon: Icons.receipt_long_outlined,
+                    headerIconColor: _historyPrimary,
+                    headerVariant: VitSectionHeaderVariant.plain,
+                    headerDensity: VitDensity.compact,
+                    innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                    children: [
+                      if (transactions.isEmpty)
+                        const VitEmptyState(
+                          title: 'Không có giao dịch',
+                          message:
+                              'Thử chọn bộ lọc khác hoặc quay lại sau khi ví có hoạt động mới.',
+                          icon: Icons.receipt_long_outlined,
+                        )
+                      else ...[
+                        for (final group in grouped)
+                          _TransactionGroup(
+                            group: group,
+                            onTransactionTap: (tx) => context.go(
+                              AppRoutePaths.walletTransaction(tx.id),
+                            ),
+                          ),
+                        const _EndOfList(),
+                      ],
+                    ],
+                  ),
+                ];
+              },
             ),
           ],
         ),

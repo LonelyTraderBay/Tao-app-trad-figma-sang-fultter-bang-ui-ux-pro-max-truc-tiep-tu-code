@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-149 mock repository exposes gas optimizer BE draft', () {
-    final snapshot = const MockWalletRepository().getGasOptimizer();
+  test('SC-149 mock repository exposes gas optimizer BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getGasOptimizer();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-gas-optimizer');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

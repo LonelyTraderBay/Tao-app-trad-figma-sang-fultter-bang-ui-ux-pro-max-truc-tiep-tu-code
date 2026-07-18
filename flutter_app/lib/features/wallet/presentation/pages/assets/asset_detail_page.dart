@@ -59,65 +59,104 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletAssetDetailProvider(widget.assetId));
+    final snapshotAsync = ref.watch(walletAssetDetailProvider(widget.assetId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _assetScrollBottomInset(context, mode);
 
-    return VitAutoHidePageScaffold(
-      semanticLabel: 'Chi tiết tài sản - số dư minh bạch',
-      semanticIdentifier: 'SC-147',
-      background: _assetBackground,
-      header: VitTopChrome(
-        type: VitTopChromeType.detail,
-        title: snapshot.symbol,
-        subtitle: 'Chi tiết tài sản · số dư minh bạch',
-        showBack: true,
-        onBack: () => context.go(AppRoutePaths.wallet),
+    // GD4-F2: title phụ thuộc snapshot.symbol nên bọc CẢ scaffold (không chỉ
+    // children) — khác khuôn mặc định "header tĩnh ở ngoài .when()" (xem
+    // GD4-Async-Playbook.md, mục "header phụ thuộc dữ liệu").
+    return snapshotAsync.when(
+      loading: () => VitAutoHidePageScaffold(
+        semanticLabel: 'Chi tiết tài sản - số dư minh bạch',
+        semanticIdentifier: 'SC-147',
+        background: _assetBackground,
+        header: VitTopChrome(
+          type: VitTopChromeType.detail,
+          title: widget.assetId.toUpperCase(),
+          subtitle: 'Chi tiết tài sản · số dư minh bạch',
+          showBack: true,
+          onBack: () => context.go(AppRoutePaths.wallet),
+        ),
+        body: const VitInsetScrollView(child: VitSkeletonList()),
       ),
-      body: VitInsetScrollView(
-        key: AssetDetailPage.contentKey,
-        bottomInset: bottomInset,
-        child: VitPageContent(
-          rhythm: VitPageRhythm.standard,
-          padding: VitContentPadding.compact,
-          density: VitDensity.compact,
-          gap: VitContentGap.tight,
-          children: [
-            _AssetHero(snapshot: snapshot),
-            _AssetActionGrid(
-              actions: snapshot.actions,
-              onNavigate: (route) => context.go(route),
-            ),
-            VitPageSection(
-              label: 'Biểu đồ giá',
-              headerIcon: Icons.show_chart_rounded,
-              headerIconColor: _assetPrimary,
-              headerVariant: VitSectionHeaderVariant.plain,
-              headerDensity: VitDensity.compact,
-              innerGap: AppSpacing.pageRhythmStandardInnerGap,
-              children: [
-                _PriceChartCard(
-                  snapshot: snapshot,
-                  activePeriod: _period,
-                  onPeriod: (period) => setState(() => _period = period),
-                ),
-              ],
-            ),
-            VitPageSection(
-              label: 'Lịch sử giao dịch',
-              headerIcon: Icons.receipt_long_outlined,
-              headerIconColor: _assetPrimary,
-              headerVariant: VitSectionHeaderVariant.plain,
-              headerDensity: VitDensity.compact,
-              innerGap: AppSpacing.pageRhythmStandardInnerGap,
-              children: [
-                _AssetTransactions(
-                  transactions: snapshot.transactions,
-                  onNavigate: (route) => context.go(route),
-                ),
-              ],
-            ),
-          ],
+      error: (error, stackTrace) => VitAutoHidePageScaffold(
+        semanticLabel: 'Chi tiết tài sản - số dư minh bạch',
+        semanticIdentifier: 'SC-147',
+        background: _assetBackground,
+        header: VitTopChrome(
+          type: VitTopChromeType.detail,
+          title: widget.assetId.toUpperCase(),
+          subtitle: 'Chi tiết tài sản · số dư minh bạch',
+          showBack: true,
+          onBack: () => context.go(AppRoutePaths.wallet),
+        ),
+        body: VitInsetScrollView(
+          child: VitErrorState(
+            title: 'Không tải được chi tiết tài sản',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(walletAssetDetailProvider(widget.assetId)),
+          ),
+        ),
+      ),
+      data: (snapshot) => VitAutoHidePageScaffold(
+        semanticLabel: 'Chi tiết tài sản - số dư minh bạch',
+        semanticIdentifier: 'SC-147',
+        background: _assetBackground,
+        header: VitTopChrome(
+          type: VitTopChromeType.detail,
+          title: snapshot.symbol,
+          subtitle: 'Chi tiết tài sản · số dư minh bạch',
+          showBack: true,
+          onBack: () => context.go(AppRoutePaths.wallet),
+        ),
+        body: VitInsetScrollView(
+          key: AssetDetailPage.contentKey,
+          bottomInset: bottomInset,
+          child: VitPageContent(
+            rhythm: VitPageRhythm.standard,
+            padding: VitContentPadding.compact,
+            density: VitDensity.compact,
+            gap: VitContentGap.tight,
+            children: [
+              _AssetHero(snapshot: snapshot),
+              _AssetActionGrid(
+                actions: snapshot.actions,
+                onNavigate: (route) => context.go(route),
+              ),
+              VitPageSection(
+                label: 'Biểu đồ giá',
+                headerIcon: Icons.show_chart_rounded,
+                headerIconColor: _assetPrimary,
+                headerVariant: VitSectionHeaderVariant.plain,
+                headerDensity: VitDensity.compact,
+                innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                children: [
+                  _PriceChartCard(
+                    snapshot: snapshot,
+                    activePeriod: _period,
+                    onPeriod: (period) => setState(() => _period = period),
+                  ),
+                ],
+              ),
+              VitPageSection(
+                label: 'Lịch sử giao dịch',
+                headerIcon: Icons.receipt_long_outlined,
+                headerIconColor: _assetPrimary,
+                headerVariant: VitSectionHeaderVariant.plain,
+                headerDensity: VitDensity.compact,
+                innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                children: [
+                  _AssetTransactions(
+                    transactions: snapshot.transactions,
+                    onNavigate: (route) => context.go(route),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

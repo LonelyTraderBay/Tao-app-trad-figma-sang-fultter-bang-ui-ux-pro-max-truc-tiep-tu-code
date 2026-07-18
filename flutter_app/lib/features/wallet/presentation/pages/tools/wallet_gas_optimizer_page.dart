@@ -67,7 +67,7 @@ class _WalletGasOptimizerPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletGasOptimizerProvider);
+    final snapshotAsync = ref.watch(walletGasOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding = _gasScrollBottomInset(context, mode);
 
@@ -91,7 +91,17 @@ class _WalletGasOptimizerPageState
                   key: WalletGasOptimizerPage.contentKey,
                   bottomInset: scrollEndPadding,
                   physics: const ClampingScrollPhysics(),
-                  child: _contentForTab(snapshot),
+                  child: snapshotAsync.when(
+                    loading: () => const VitSkeletonList(),
+                    error: (error, stackTrace) => VitErrorState(
+                      title: 'Không tải được dữ liệu tối ưu gas',
+                      message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                      actionLabel: 'Thử lại',
+                      onAction: () =>
+                          ref.invalidate(walletGasOptimizerProvider),
+                    ),
+                    data: _contentForTab,
+                  ),
                 ),
               ),
             ],

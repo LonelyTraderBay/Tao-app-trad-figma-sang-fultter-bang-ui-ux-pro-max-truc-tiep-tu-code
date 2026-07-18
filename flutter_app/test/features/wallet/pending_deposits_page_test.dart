@@ -43,8 +43,10 @@ void main() {
     });
   }
 
-  test('SC-152 mock repository exposes pending deposits BE draft', () {
-    final snapshot = const MockWalletRepository().getPendingDeposits();
+  test('SC-152 mock repository exposes pending deposits BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getPendingDeposits();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-pending-deposits');
     expect(snapshot.actionDraft, 'POST /wallet/deposit-intent');

@@ -10,7 +10,7 @@ final class NotificationsController implements NotificationsRepository {
   final NotificationsRepository _repository;
 
   @override
-  NotificationsSnapshot getNotifications() {
+  Future<NotificationsSnapshot> getNotifications() {
     return _repository.getNotifications();
   }
 }

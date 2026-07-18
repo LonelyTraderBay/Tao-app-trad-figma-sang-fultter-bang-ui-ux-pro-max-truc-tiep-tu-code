@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-148 mock repository exposes multi-manager BE draft', () {
-    final snapshot = const MockWalletRepository().getMultiManager();
+  test('SC-148 mock repository exposes multi-manager BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getMultiManager();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-multi-manager');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

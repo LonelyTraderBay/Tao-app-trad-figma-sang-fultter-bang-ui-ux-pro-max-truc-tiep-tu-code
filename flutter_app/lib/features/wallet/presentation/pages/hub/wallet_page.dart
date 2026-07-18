@@ -60,8 +60,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletSnapshotProvider);
-    final pendingDeposits = ref.watch(walletPendingDepositsProvider);
+    final walletAsync = ref.watch(walletSnapshotProvider);
+    final pendingDepositsAsync = ref.watch(walletPendingDepositsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -71,7 +71,6 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                   WalletSpacingTokens.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom +
         AppSpacing.searchBarCompactHeight;
-    final assets = _filteredAssets(snapshot.assets);
     final showBack = context.canPop();
 
     return VitAutoHidePageScaffold(
@@ -99,75 +98,104 @@ class _WalletPageState extends ConsumerState<WalletPage> {
           padding: VitContentPadding.compact,
           density: VitDensity.compact,
           children: [
-            if (snapshot.supportedStates.contains(WalletScreenState.error))
-              WalletUnavailableBanner(message: snapshot.actionDraft),
-            WalletBalanceHero(
-              snapshot: snapshot,
-              change24hPct: walletPortfolioChange24h(snapshot.assets),
-              hidden: _balanceHidden,
-              onToggle: () => setState(() => _balanceHidden = !_balanceHidden),
-              onNavigate: _navigate,
-              onShowMore: () => _showMoreActions(snapshot.actions),
-            ),
-            if (snapshot.actions.isNotEmpty && pendingDeposits.pendingCount > 0)
-              WalletPendingDepositStatusCard(
-                pendingDeposits: pendingDeposits,
-                onNavigate: _navigate,
-              ),
-            VitPageSection(
-              label: 'T\u00E0i s\u1EA3n',
-              headerIcon: Icons.account_balance_wallet_outlined,
-              headerIconColor: AppModuleAccents.wallet,
-              accentColor: AppModuleAccents.wallet,
-              headerVariant: VitSectionHeaderVariant.plain,
-              actionLabel: 'Ph\u00E2n t\u00EDch',
-              onAction: () => _navigate('/wallet/portfolio-analytics'),
-              innerGap: AppSpacing.pageRhythmCompactInnerGap,
-              children: [
-                if (_tab == 'assets')
-                  WalletSearchAndFilter(
-                    controller: _searchController,
-                    filterActive: _hideSmallBalances,
-                    onChanged: (value) => setState(() => _query = value),
-                    onFilter: () => setState(
-                      () => _hideSmallBalances = !_hideSmallBalances,
-                    ),
-                  ),
-                WalletSegmentedTabs(active: _tab, onChanged: _setTab),
-                if (_tab == 'assets') ...[
-                  WalletAssetHeader(
-                    count: assets.length,
-                    onNavigate: _navigate,
-                  ),
-                  WalletAssetList(
-                    assets: assets,
+            // GD4-F2: pendingDeposits ch\u1EC9 l\u00E0 banner ph\u1EE5, kh\u00F4ng ch\u1EB7n to\u00E0n
+            // trang khi v\u1EABn \u0111ang t\u1EA3i/l\u1ED7i \u2014 d\u00F9ng .value (xem
+            // GD4-Async-Playbook.md, m\u1EE5c "async ph\u1EE5").
+            ...walletAsync.when(
+              loading: () => const [VitSkeletonList()],
+              error: (error, stackTrace) => [
+                VitErrorState(
+                  title:
+                      'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u v\u00ED',
+                  message:
+                      'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+                  actionLabel: 'Th\u1EED l\u1EA1i',
+                  onAction: () => ref.invalidate(walletSnapshotProvider),
+                ),
+              ],
+              data: (snapshot) {
+                final pendingDeposits = pendingDepositsAsync.value;
+                final assets = _filteredAssets(snapshot.assets);
+                return [
+                  if (snapshot.supportedStates.contains(
+                    WalletScreenState.error,
+                  ))
+                    WalletUnavailableBanner(message: snapshot.actionDraft),
+                  WalletBalanceHero(
+                    snapshot: snapshot,
+                    change24hPct: walletPortfolioChange24h(snapshot.assets),
                     hidden: _balanceHidden,
+                    onToggle: () =>
+                        setState(() => _balanceHidden = !_balanceHidden),
                     onNavigate: _navigate,
+                    onShowMore: () => _showMoreActions(snapshot.actions),
                   ),
-                ] else
-                  WalletAllocationCard(assets: snapshot.assets),
-                WalletPortfolioHint(onNavigate: _navigate),
-              ],
-            ),
-            VitPageSection(
-              label: 'C\u00F4ng c\u1EE5 v\u00ED',
-              headerIcon: Icons.grid_view_rounded,
-              headerIconColor: AppModuleAccents.wallet,
-              accentColor: AppModuleAccents.wallet,
-              headerVariant: VitSectionHeaderVariant.plain,
-              innerGap: AppSpacing.pageRhythmCompactInnerGap,
-              children: [
-                WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
-              ],
-            ),
-            VitPageSection(
-              label: 'Mua \u0111\u1ECBnh k\u1EF3',
-              headerIcon: Icons.sync_alt_rounded,
-              headerIconColor: AppColors.accent,
-              accentColor: AppColors.accent,
-              headerVariant: VitSectionHeaderVariant.plain,
-              innerGap: AppSpacing.pageRhythmCompactInnerGap,
-              children: [WalletDcaCard(dca: snapshot.dca)],
+                  if (snapshot.actions.isNotEmpty &&
+                      (pendingDeposits?.pendingCount ?? 0) > 0)
+                    WalletPendingDepositStatusCard(
+                      pendingDeposits: pendingDeposits!,
+                      onNavigate: _navigate,
+                    ),
+                  VitPageSection(
+                    label: 'T\u00E0i s\u1EA3n',
+                    headerIcon: Icons.account_balance_wallet_outlined,
+                    headerIconColor: AppModuleAccents.wallet,
+                    accentColor: AppModuleAccents.wallet,
+                    headerVariant: VitSectionHeaderVariant.plain,
+                    actionLabel: 'Ph\u00E2n t\u00EDch',
+                    onAction: () => _navigate('/wallet/portfolio-analytics'),
+                    innerGap: AppSpacing.pageRhythmCompactInnerGap,
+                    children: [
+                      if (_tab == 'assets')
+                        WalletSearchAndFilter(
+                          controller: _searchController,
+                          filterActive: _hideSmallBalances,
+                          onChanged: (value) => setState(() => _query = value),
+                          onFilter: () => setState(
+                            () => _hideSmallBalances = !_hideSmallBalances,
+                          ),
+                        ),
+                      WalletSegmentedTabs(active: _tab, onChanged: _setTab),
+                      if (_tab == 'assets') ...[
+                        WalletAssetHeader(
+                          count: assets.length,
+                          onNavigate: _navigate,
+                        ),
+                        WalletAssetList(
+                          assets: assets,
+                          hidden: _balanceHidden,
+                          onNavigate: _navigate,
+                        ),
+                      ] else
+                        WalletAllocationCard(assets: snapshot.assets),
+                      WalletPortfolioHint(onNavigate: _navigate),
+                    ],
+                  ),
+                  VitPageSection(
+                    label: 'C\u00F4ng c\u1EE5 v\u00ED',
+                    headerIcon: Icons.grid_view_rounded,
+                    headerIconColor: AppModuleAccents.wallet,
+                    accentColor: AppModuleAccents.wallet,
+                    headerVariant: VitSectionHeaderVariant.plain,
+                    innerGap: AppSpacing.pageRhythmCompactInnerGap,
+                    children: [
+                      WalletToolGrid(
+                        tools: snapshot.tools,
+                        onNavigate: _navigate,
+                      ),
+                    ],
+                  ),
+                  VitPageSection(
+                    label: 'Mua \u0111\u1ECBnh k\u1EF3',
+                    headerIcon: Icons.sync_alt_rounded,
+                    headerIconColor: AppColors.accent,
+                    accentColor: AppColors.accent,
+                    headerVariant: VitSectionHeaderVariant.plain,
+                    innerGap: AppSpacing.pageRhythmCompactInnerGap,
+                    children: [WalletDcaCard(dca: snapshot.dca)],
+                  ),
+                ];
+              },
             ),
           ],
         ),

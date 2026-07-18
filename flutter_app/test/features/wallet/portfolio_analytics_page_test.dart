@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-142 mock repository exposes portfolio analytics BE draft', () {
-    final snapshot = const MockWalletRepository().getPortfolioAnalytics();
+  test('SC-142 mock repository exposes portfolio analytics BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getPortfolioAnalytics();
 
     expect(snapshot.totalUsd, 57664);
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-portfolio-analytics');

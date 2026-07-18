@@ -10,6 +10,13 @@ final notificationsControllerProvider = Provider<NotificationsController>((
   return NotificationsController(ref.watch(notificationsRepositoryProvider));
 });
 
+/// GD4-F2: raw read — NotificationsRepository.getNotifications() is now
+/// `Future<T>` (ADR-001 read idiom). [NotificationsStateController] (the
+/// write/mutation Notifier below) seeds its state from this provider.
+final notificationsSnapshotProvider = FutureProvider<NotificationsSnapshot>(
+  (ref) => ref.watch(notificationsRepositoryProvider).getNotifications(),
+);
+
 final notificationsStateProvider =
     NotifierProvider<NotificationsStateController, NotificationsViewState>(
       NotificationsStateController.new,
@@ -56,12 +63,27 @@ final class NotificationsViewState {
   }
 }
 
+/// GD4-F2 khuôn "controller GHI" (xem GD4-Async-Playbook.md mục "Controller
+/// GHI" — cùng khuôn với `AddressBookStateController` trong
+/// wallet_controller_providers.dart): Notifier vẫn SYNC, `build()` map
+/// AsyncValue của [notificationsSnapshotProvider] sang một
+/// [NotificationsViewState] luôn có sẵn (loading/error → snapshot rỗng với
+/// `screenState` tương ứng) — trang notifications_page.dart đã có sẵn UI
+/// theo `screenState` (switch loading/error/empty/offline/ready) nên KHÔNG
+/// cần đổi trang sang `.when()`, chỉ cần Notifier phản ánh đúng trạng thái.
 final class NotificationsStateController
     extends Notifier<NotificationsViewState> {
   @override
   NotificationsViewState build() {
-    return NotificationsViewState.fromSnapshot(
-      ref.watch(notificationsRepositoryProvider).getNotifications(),
+    final asyncSnapshot = ref.watch(notificationsSnapshotProvider);
+    return asyncSnapshot.when(
+      data: NotificationsViewState.fromSnapshot,
+      loading: () => NotificationsViewState.fromSnapshot(
+        _placeholderSnapshot(NotificationsScreenState.loading),
+      ),
+      error: (error, stackTrace) => NotificationsViewState.fromSnapshot(
+        _placeholderSnapshot(NotificationsScreenState.error),
+      ),
     );
   }
 
@@ -98,9 +120,29 @@ final class NotificationsStateController
     state = state.copyWith(notifications: next);
   }
 
+  /// Retry entry point for the error state's "Thử lại" button — invalidates
+  /// the underlying fetch so [build] re-runs against fresh repository data.
   void resetFromRepository() {
-    state = NotificationsViewState.fromSnapshot(
-      ref.read(notificationsRepositoryProvider).getNotifications(),
-    );
+    ref.invalidate(notificationsSnapshotProvider);
   }
+}
+
+NotificationsSnapshot _placeholderSnapshot(NotificationsScreenState state) {
+  return NotificationsSnapshot(
+    endpoint: '/api/mobile/notifications/notifications',
+    actionDraft: 'PATCH /user/settings or module settings',
+    title: 'Thông báo',
+    subtitle: 'Thông báo · Hệ thống',
+    backRoute: '/home',
+    notifications: const [],
+    contractNotes:
+        'Notifications feed supports read/delete/filter local state. Backend should return notificationsReferenceData and screenState; read/delete actions become PATCH user settings or notification state.',
+    screenState: state,
+    supportedStates: const {
+      NotificationsScreenState.loading,
+      NotificationsScreenState.empty,
+      NotificationsScreenState.error,
+      NotificationsScreenState.offline,
+    },
+  );
 }

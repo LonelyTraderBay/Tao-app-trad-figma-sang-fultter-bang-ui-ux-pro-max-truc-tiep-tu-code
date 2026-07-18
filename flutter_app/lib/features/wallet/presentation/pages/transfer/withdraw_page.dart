@@ -100,34 +100,20 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
-      withdrawControllerProvider((
-        asset: widget.asset,
-
-        assetScoped: widget.assetScoped,
-      )),
+    final controllerRequest = (
+      asset: widget.asset,
+      assetScoped: widget.assetScoped,
     );
-
-    final snapshot = controller.state.snapshot;
-
-    final selected = controller.selectedNetwork(_selectedNetworkId);
-
-    final validationMessage = controller.validationMessage(
-      address: _addressController.text,
-
-      amount: _amountController.text,
-
-      network: selected,
+    final controllerAsync = ref.watch(
+      withdrawControllerProvider(controllerRequest),
     );
-
-    final canPreview = validationMessage == null;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     const formInnerGap = AppSpacing.pageRhythmFormInnerGap;
 
     return VitWalletDetailScaffold(
-      title: 'Rút ${snapshot.asset}',
+      title: 'Rút ${widget.asset.toUpperCase()}',
 
       subtitle: 'Rút tiền · Wallet',
 
@@ -145,170 +131,200 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
 
-      children: [
-        if (snapshot.highRiskContractId != null)
-          VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-
-            title: 'Withdrawal preview required',
-
-            message:
-                'Address, network, amount, fee, and confirmation are tracked as one wallet money-movement contract.',
-
-            contractId: snapshot.highRiskContractId,
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu rút tiền',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(withdrawControllerProvider(controllerRequest)),
           ),
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          final selected = controller.selectedNetwork(_selectedNetworkId);
+          final validationMessage = controller.validationMessage(
+            address: _addressController.text,
+            amount: _amountController.text,
+            network: selected,
+          );
+          final canPreview = validationMessage == null;
 
-        WithdrawBalanceCard(asset: snapshot.asset, value: snapshot.available),
+          return [
+            if (snapshot.highRiskContractId != null)
+              VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
 
-        VitPageSection(
-          label: 'Mạng rút',
+                title: 'Withdrawal preview required',
 
-          headerIcon: Icons.hub_outlined,
+                message:
+                    'Address, network, amount, fee, and confirmation are tracked as one wallet money-movement contract.',
 
-          headerIconColor: withdrawPrimary,
+                contractId: snapshot.highRiskContractId,
+              ),
 
-          headerVariant: VitSectionHeaderVariant.plain,
-
-          accentColor: withdrawPrimary,
-
-          innerGap: formInnerGap,
-
-          children: [
-            WithdrawNetworkSelector(
+            WithdrawBalanceCard(
               asset: snapshot.asset,
-
-              network: selected,
-
-              onTap: () => _openNetworkPicker(controller),
-            ),
-          ],
-        ),
-
-        VitPageSection(
-          label: 'Địa chỉ nhận',
-
-          headerIcon: Icons.wallet_outlined,
-
-          headerIconColor: withdrawPrimary,
-
-          headerVariant: VitSectionHeaderVariant.plain,
-
-          accentColor: withdrawPrimary,
-
-          actionLabel: 'Quét QR',
-
-          actionShowChevron: false,
-
-          actionSemanticLabel: 'Scan withdrawal address QR code',
-
-          onAction: _showScanNotice,
-
-          innerGap: formInnerGap,
-
-          children: [
-            WithdrawAddressInput(
-              asset: snapshot.asset,
-
-              network: selected,
-
-              controller: _addressController,
-
-              onChanged: (_) => setState(() {}),
+              value: snapshot.available,
             ),
 
-            WithdrawRecentAddresses(
-              addresses: snapshot.recentAddresses,
+            VitPageSection(
+              label: 'Mạng rút',
 
-              onSelect: (address) {
-                _addressController.text = address.address;
+              headerIcon: Icons.hub_outlined,
+
+              headerIconColor: withdrawPrimary,
+
+              headerVariant: VitSectionHeaderVariant.plain,
+
+              accentColor: withdrawPrimary,
+
+              innerGap: formInnerGap,
+
+              children: [
+                WithdrawNetworkSelector(
+                  asset: snapshot.asset,
+
+                  network: selected,
+
+                  onTap: () => _openNetworkPicker(controller),
+                ),
+              ],
+            ),
+
+            VitPageSection(
+              label: 'Địa chỉ nhận',
+
+              headerIcon: Icons.wallet_outlined,
+
+              headerIconColor: withdrawPrimary,
+
+              headerVariant: VitSectionHeaderVariant.plain,
+
+              accentColor: withdrawPrimary,
+
+              actionLabel: 'Quét QR',
+
+              actionShowChevron: false,
+
+              actionSemanticLabel: 'Scan withdrawal address QR code',
+
+              onAction: _showScanNotice,
+
+              innerGap: formInnerGap,
+
+              children: [
+                WithdrawAddressInput(
+                  asset: snapshot.asset,
+
+                  network: selected,
+
+                  controller: _addressController,
+
+                  onChanged: (_) => setState(() {}),
+                ),
+
+                WithdrawRecentAddresses(
+                  addresses: snapshot.recentAddresses,
+
+                  onSelect: (address) {
+                    _addressController.text = address.address;
+
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+
+            VitPageSection(
+              label: 'Số lượng',
+
+              headerIcon: Icons.payments_outlined,
+
+              headerIconColor: withdrawPrimary,
+
+              headerVariant: VitSectionHeaderVariant.plain,
+
+              accentColor: withdrawPrimary,
+
+              actionLabel: 'Tất cả',
+
+              actionKey: withdrawAllAmountKey,
+
+              actionShowChevron: false,
+
+              actionSemanticLabel: 'Dùng toàn bộ số dư có thể rút',
+
+              onAction: () {
+                _amountController.text = formatWithdrawBalance(
+                  snapshot.available,
+                );
 
                 setState(() {});
               },
+
+              innerGap: formInnerGap,
+
+              children: [
+                WithdrawAmountInput(
+                  asset: snapshot.asset,
+
+                  controller: _amountController,
+
+                  onChanged: (_) => setState(() {}),
+                ),
+              ],
             ),
-          ],
-        ),
 
-        VitPageSection(
-          label: 'Số lượng',
+            VitPageSection(
+              label: 'An toàn',
 
-          headerIcon: Icons.payments_outlined,
+              headerIcon: Icons.shield_outlined,
 
-          headerIconColor: withdrawPrimary,
+              headerIconColor: withdrawAmber,
 
-          headerVariant: VitSectionHeaderVariant.plain,
+              headerVariant: VitSectionHeaderVariant.plain,
 
-          accentColor: withdrawPrimary,
+              accentColor: withdrawAmber,
 
-          actionLabel: 'Tất cả',
+              innerGap: formInnerGap,
 
-          actionKey: withdrawAllAmountKey,
-
-          actionShowChevron: false,
-
-          actionSemanticLabel: 'Dùng toàn bộ số dư có thể rút',
-
-          onAction: () {
-            _amountController.text = formatWithdrawBalance(snapshot.available);
-
-            setState(() {});
-          },
-
-          innerGap: formInnerGap,
-
-          children: [
-            WithdrawAmountInput(
-              asset: snapshot.asset,
-
-              controller: _amountController,
-
-              onChanged: (_) => setState(() {}),
+              children: [
+                WithdrawWarning(asset: snapshot.asset, network: selected),
+              ],
             ),
-          ],
-        ),
 
-        VitPageSection(
-          label: 'An toàn',
+            if (validationMessage != null)
+              WithdrawPreviewBlockedNotice(message: validationMessage),
 
-          headerIcon: Icons.shield_outlined,
+            WithdrawNextButton(
+              onTap: canPreview
+                  ? () => _showConfirmPreview(controller, selected)
+                  : null,
 
-          headerIconColor: withdrawAmber,
-
-          headerVariant: VitSectionHeaderVariant.plain,
-
-          accentColor: withdrawAmber,
-
-          innerGap: formInnerGap,
-
-          children: [WithdrawWarning(asset: snapshot.asset, network: selected)],
-        ),
-
-        if (validationMessage != null)
-          WithdrawPreviewBlockedNotice(message: validationMessage),
-
-        WithdrawNextButton(
-          onTap: canPreview
-              ? () => _showConfirmPreview(controller, selected)
-              : null,
-
-          disabledReason: validationMessage,
-        ),
-
-        WithdrawSupportLink(
-          onTap: () => context.go(
-            ContextualSupportContracts.supportRouteFor(
-              ContextualSupportFlow.withdrawal,
-
-              referenceId: 'withdraw-${snapshot.asset.toLowerCase()}',
-
-              sourceRoute: widget.assetScoped
-                  ? AppRoutePaths.walletWithdrawAsset(snapshot.asset)
-                  : AppRoutePaths.walletWithdraw,
-
-              issueLabel: 'Withdrawal support for ${snapshot.asset}',
+              disabledReason: validationMessage,
             ),
-          ),
-        ),
-      ],
+
+            WithdrawSupportLink(
+              onTap: () => context.go(
+                ContextualSupportContracts.supportRouteFor(
+                  ContextualSupportFlow.withdrawal,
+
+                  referenceId: 'withdraw-${snapshot.asset.toLowerCase()}',
+
+                  sourceRoute: widget.assetScoped
+                      ? AppRoutePaths.walletWithdrawAsset(snapshot.asset)
+                      : AppRoutePaths.walletWithdraw,
+
+                  issueLabel: 'Withdrawal support for ${snapshot.asset}',
+                ),
+              ),
+            ),
+          ];
+        },
+      ),
     );
   }
 

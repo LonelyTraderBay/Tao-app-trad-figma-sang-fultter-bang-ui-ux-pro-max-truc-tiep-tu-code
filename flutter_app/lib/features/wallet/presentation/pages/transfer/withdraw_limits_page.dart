@@ -49,7 +49,7 @@ class WithdrawLimitsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(walletWithdrawLimitsProvider);
+    final snapshotAsync = ref.watch(walletWithdrawLimitsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _limitsScrollBottomInset(context, mode);
 
@@ -79,30 +79,47 @@ class WithdrawLimitsPage extends ConsumerWidget {
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      _CurrentTierCard(snapshot: snapshot),
-                      _QuickStats(tier: snapshot.currentTier),
-                      const _LimitWarning(),
-                      VitPageSection(
-                        label:
-                            'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
-                        headerIcon: Icons.verified_user_outlined,
-                        headerVariant: VitSectionHeaderVariant.accentBar,
-                        headerDensity: VitDensity.compact,
-                        innerGap: AppSpacing.pageRhythmFormInnerGap,
-                        children: [
-                          for (final tier in snapshot.tiers)
-                            _KycTierCard(
-                              tier: tier,
-                              currentLevel: snapshot.currentLevel,
-                            ),
+                      ...snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title:
+                                'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c h\u1EA1n m\u1EE9c',
+                            message:
+                                'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+                            actionLabel: 'Th\u1EED l\u1EA1i',
+                            onAction: () =>
+                                ref.invalidate(walletWithdrawLimitsProvider),
+                          ),
                         ],
-                      ),
-                      VitPageSection(
-                        label: 'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
-                        headerIcon: Icons.help_outline_rounded,
-                        headerVariant: VitSectionHeaderVariant.plain,
-                        innerGap: AppSpacing.pageRhythmFormInnerGap,
-                        children: [_FaqCard(faqs: snapshot.faqs)],
+                        data: (snapshot) => [
+                          _CurrentTierCard(snapshot: snapshot),
+                          _QuickStats(tier: snapshot.currentTier),
+                          const _LimitWarning(),
+                          VitPageSection(
+                            label:
+                                'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
+                            headerIcon: Icons.verified_user_outlined,
+                            headerVariant: VitSectionHeaderVariant.accentBar,
+                            headerDensity: VitDensity.compact,
+                            innerGap: AppSpacing.pageRhythmFormInnerGap,
+                            children: [
+                              for (final tier in snapshot.tiers)
+                                _KycTierCard(
+                                  tier: tier,
+                                  currentLevel: snapshot.currentLevel,
+                                ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label:
+                                'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
+                            headerIcon: Icons.help_outline_rounded,
+                            headerVariant: VitSectionHeaderVariant.plain,
+                            innerGap: AppSpacing.pageRhythmFormInnerGap,
+                            children: [_FaqCard(faqs: snapshot.faqs)],
+                          ),
+                        ],
                       ),
                     ],
                   ),

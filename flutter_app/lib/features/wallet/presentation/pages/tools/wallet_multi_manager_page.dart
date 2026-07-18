@@ -59,7 +59,7 @@ class _WalletMultiManagerPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletMultiManagerProvider);
+    final snapshotAsync = ref.watch(walletMultiManagerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _managerScrollBottomInset(context, mode);
 
@@ -91,19 +91,33 @@ class _WalletMultiManagerPageState
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      PortfolioSummaryCard(snapshot: snapshot),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Bảo mật địa chỉ ví',
-                        message:
-                            'Chỉ hiện hoặc sao chép địa chỉ khi bạn tin tưởng đích đến và bước tiếp theo.',
-                        density: VitDensity.compact,
+                      ...snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được dữ liệu đa ví',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(walletMultiManagerProvider),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          PortfolioSummaryCard(snapshot: snapshot),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Bảo mật địa chỉ ví',
+                            message:
+                                'Chỉ hiện hoặc sao chép địa chỉ khi bạn tin tưởng đích đến và bước tiếp theo.',
+                            density: VitDensity.compact,
+                          ),
+                          WalletManagerTabs(
+                            activeTab: _tab,
+                            onChanged: (tab) => setState(() => _tab = tab),
+                          ),
+                          _contentForTab(snapshot),
+                        ],
                       ),
-                      WalletManagerTabs(
-                        activeTab: _tab,
-                        onChanged: (tab) => setState(() => _tab = tab),
-                      ),
-                      _contentForTab(snapshot),
                     ],
                   ),
                 ),

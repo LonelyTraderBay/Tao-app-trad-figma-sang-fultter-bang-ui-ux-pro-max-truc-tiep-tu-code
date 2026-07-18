@@ -62,77 +62,97 @@ class _DepositPageState extends ConsumerState<DepositPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       walletDepositControllerProvider((
         asset: widget.asset,
         assetScoped: widget.assetScoped,
       )),
     );
-    final selected = _selectedNetwork(snapshot.networks);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     return VitWalletDetailScaffold(
-      title: 'Nạp ${snapshot.asset}',
+      title: 'Nạp ${widget.asset.toUpperCase()}',
       subtitle: 'Nạp tiền · Wallet',
       semanticLabel: widget.assetScoped ? 'Nạp tiền theo tài sản' : 'Nạp tiền',
       semanticIdentifier: widget.assetScoped ? 'SC-138' : 'SC-137',
       contentKey: DepositPage.contentKey,
       shellRenderMode: mode,
       onBack: () => context.go(AppRoutePaths.wallet),
-      children: [
-        VitPageSection(
-          label: 'Mạng nạp',
-          headerIcon: Icons.hub_outlined,
-          headerIconColor: _depositPrimary,
-          headerVariant: VitSectionHeaderVariant.plain,
-          accentColor: _depositPrimary,
-          innerGap: AppSpacing.pageRhythmFormInnerGap,
-          children: [
-            _NetworkSelector(
-              asset: snapshot.asset,
-              selected: selected,
-              onTap: () => _openNetworkPicker(snapshot.networks),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu nạp tiền',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(
+              walletDepositControllerProvider((
+                asset: widget.asset,
+                assetScoped: widget.assetScoped,
+              )),
             ),
-          ],
-        ),
-        VitPageSection(
-          label: 'Địa chỉ nạp',
-          headerIcon: Icons.qr_code_2_rounded,
-          headerIconColor: _depositPrimary,
-          headerVariant: VitSectionHeaderVariant.plain,
-          accentColor: _depositPrimary,
-          innerGap: AppSpacing.pageRhythmFormInnerGap,
-          children: [
-            _QrAddressCard(
-              asset: snapshot.asset,
-              network: selected,
-              copied: _copied,
-              onCopy: () => _copyAddress(selected.address),
+          ),
+        ],
+        data: (snapshot) {
+          final selected = _selectedNetwork(snapshot.networks);
+          return [
+            VitPageSection(
+              label: 'Mạng nạp',
+              headerIcon: Icons.hub_outlined,
+              headerIconColor: _depositPrimary,
+              headerVariant: VitSectionHeaderVariant.plain,
+              accentColor: _depositPrimary,
+              innerGap: AppSpacing.pageRhythmFormInnerGap,
+              children: [
+                _NetworkSelector(
+                  asset: snapshot.asset,
+                  selected: selected,
+                  onTap: () => _openNetworkPicker(snapshot.networks),
+                ),
+              ],
             ),
-          ],
-        ),
-        VitPageSection(
-          label: 'An toàn',
-          headerIcon: Icons.shield_outlined,
-          headerIconColor: _depositRed,
-          headerVariant: VitSectionHeaderVariant.plain,
-          accentColor: _depositRed,
-          innerGap: AppSpacing.pageRhythmFormInnerGap,
-          children: [_WarningCard(asset: snapshot.asset, network: selected)],
-        ),
-        VitPageSection(
-          label: 'Chi tiết nạp',
-          headerIcon: Icons.receipt_long_outlined,
-          headerIconColor: _depositPrimary,
-          headerVariant: VitSectionHeaderVariant.plain,
-          accentColor: _depositPrimary,
-          innerGap: AppSpacing.pageRhythmFormInnerGap,
-          children: [
-            _DepositInfoCard(asset: snapshot.asset, network: selected),
-            _RefreshButton(onTap: _refreshDepositIntent),
-          ],
-        ),
-      ],
+            VitPageSection(
+              label: 'Địa chỉ nạp',
+              headerIcon: Icons.qr_code_2_rounded,
+              headerIconColor: _depositPrimary,
+              headerVariant: VitSectionHeaderVariant.plain,
+              accentColor: _depositPrimary,
+              innerGap: AppSpacing.pageRhythmFormInnerGap,
+              children: [
+                _QrAddressCard(
+                  asset: snapshot.asset,
+                  network: selected,
+                  copied: _copied,
+                  onCopy: () => _copyAddress(selected.address),
+                ),
+              ],
+            ),
+            VitPageSection(
+              label: 'An toàn',
+              headerIcon: Icons.shield_outlined,
+              headerIconColor: _depositRed,
+              headerVariant: VitSectionHeaderVariant.plain,
+              accentColor: _depositRed,
+              innerGap: AppSpacing.pageRhythmFormInnerGap,
+              children: [
+                _WarningCard(asset: snapshot.asset, network: selected),
+              ],
+            ),
+            VitPageSection(
+              label: 'Chi tiết nạp',
+              headerIcon: Icons.receipt_long_outlined,
+              headerIconColor: _depositPrimary,
+              headerVariant: VitSectionHeaderVariant.plain,
+              accentColor: _depositPrimary,
+              innerGap: AppSpacing.pageRhythmFormInnerGap,
+              children: [
+                _DepositInfoCard(asset: snapshot.asset, network: selected),
+                _RefreshButton(onTap: _refreshDepositIntent),
+              ],
+            ),
+          ];
+        },
+      ),
     );
   }
 

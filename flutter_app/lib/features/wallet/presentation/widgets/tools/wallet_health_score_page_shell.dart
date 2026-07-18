@@ -5,12 +5,9 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletHealthScoreProvider);
+    final snapshotAsync = ref.watch(walletHealthScoreProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding = _healthScrollBottomInset(context, mode);
-    final primaryRecommendation = snapshot.priorityRecommendations.isEmpty
-        ? null
-        : snapshot.priorityRecommendations.first;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -38,26 +35,48 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      _OverallScoreCard(snapshot: snapshot),
-                      if (primaryRecommendation != null)
-                        _RecommendationCard(
-                          recommendation: primaryRecommendation,
-                          onTap: () =>
-                              _showRecommendationSheet(primaryRecommendation),
-                        )
-                      else
-                        const VitEmptyState(
-                          title: 'No priority recommendations',
-                          message:
-                              'Wallet health actions will appear here when needed.',
-                        ),
-                      _HealthTabs(
-                        activeTab: _tab,
-                        onChanged: (tab) => setState(() => _tab = tab),
-                      ),
-                      ..._tabSectionChildren(
-                        snapshot,
-                        primaryRecommendationId: primaryRecommendation?.id,
+                      ...snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được điểm sức khỏe ví',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(walletHealthScoreProvider),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          final primaryRecommendation =
+                              snapshot.priorityRecommendations.isEmpty
+                              ? null
+                              : snapshot.priorityRecommendations.first;
+                          return [
+                            _OverallScoreCard(snapshot: snapshot),
+                            if (primaryRecommendation != null)
+                              _RecommendationCard(
+                                recommendation: primaryRecommendation,
+                                onTap: () => _showRecommendationSheet(
+                                  primaryRecommendation,
+                                ),
+                              )
+                            else
+                              const VitEmptyState(
+                                title: 'No priority recommendations',
+                                message:
+                                    'Wallet health actions will appear here when needed.',
+                              ),
+                            _HealthTabs(
+                              activeTab: _tab,
+                              onChanged: (tab) => setState(() => _tab = tab),
+                            ),
+                            ..._tabSectionChildren(
+                              snapshot,
+                              primaryRecommendationId:
+                                  primaryRecommendation?.id,
+                            ),
+                          ];
+                        },
                       ),
                     ],
                   ),

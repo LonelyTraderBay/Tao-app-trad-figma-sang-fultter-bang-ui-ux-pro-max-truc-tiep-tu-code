@@ -57,6 +57,12 @@ void main() {
     await tester.pumpWidget(
       appWith(const MockHomeRepository(loadDelay: Duration(milliseconds: 500))),
     );
+    // Hai pump thay vì một (GĐ4-F2): badge thông báo trên shell giờ là
+    // FutureProvider (mock Duration.zero) — cần thêm đúng một frame để badge
+    // render ổn định trước khi chụp, nếu không pixel compare race theo
+    // microtask (lúc có lúc không 500px diff). Home vẫn giữ loading nhờ
+    // loadDelay 500ms nên frame thứ hai không đổi trạng thái skeleton.
+    await tester.pump();
     await tester.pump();
 
     await expectLater(

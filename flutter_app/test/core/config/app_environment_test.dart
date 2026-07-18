@@ -152,7 +152,7 @@ void main() {
     },
   );
 
-  test('wallet repository fails closed with safe empty snapshots', () {
+  test('wallet repository fails closed with safe empty snapshots', () async {
     final container = ProviderContainer(
       overrides: [
         appConfigProvider.overrideWithValue(
@@ -167,7 +167,7 @@ void main() {
     addTearDown(container.dispose);
 
     final repository = container.read(walletRepositoryProvider);
-    final snapshot = repository.getWallet();
+    final snapshot = await repository.getWallet();
 
     expect(repository, isA<FailClosedWalletRepository>());
     expect(snapshot.totalUsd, 0);

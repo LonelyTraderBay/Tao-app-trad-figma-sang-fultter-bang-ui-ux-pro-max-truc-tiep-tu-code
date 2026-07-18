@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-139 mock repository exposes withdraw BE draft', () {
-    final snapshot = const MockWalletRepository().getWithdraw('USDT');
+  test('SC-139 mock repository exposes withdraw BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getWithdraw('USDT');
 
     expect(snapshot.asset, 'USDT');
     expect(snapshot.available, 10200);
@@ -54,30 +56,32 @@ void main() {
     );
   });
 
-  test('SC-140 mock repository exposes asset-scoped withdraw BE draft', () {
-    final snapshot = const MockWalletRepository().getWithdraw(
-      'USDT',
-      assetScoped: true,
-    );
+  test(
+    'SC-140 mock repository exposes asset-scoped withdraw BE draft',
+    () async {
+      final snapshot = await const MockWalletRepository(
+        loadDelay: Duration.zero,
+      ).getWithdraw('USDT', assetScoped: true);
 
-    expect(snapshot.asset, 'USDT');
-    expect(snapshot.endpoint, '/api/mobile/wallet/wallet-withdraw-usdt');
-    expect(
-      snapshot.actionDraft,
-      'POST /wallet/withdraw-preview + POST /wallet/withdraw-confirm',
-    );
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        WalletScreenState.loading,
-        WalletScreenState.empty,
-        WalletScreenState.error,
-        WalletScreenState.offline,
-        WalletScreenState.submitting,
-        WalletScreenState.success,
-      ]),
-    );
-  });
+      expect(snapshot.asset, 'USDT');
+      expect(snapshot.endpoint, '/api/mobile/wallet/wallet-withdraw-usdt');
+      expect(
+        snapshot.actionDraft,
+        'POST /wallet/withdraw-preview + POST /wallet/withdraw-confirm',
+      );
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          WalletScreenState.loading,
+          WalletScreenState.empty,
+          WalletScreenState.error,
+          WalletScreenState.offline,
+          WalletScreenState.submitting,
+          WalletScreenState.success,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-139 renders withdraw baseline in Wallet shell', (
     tester,

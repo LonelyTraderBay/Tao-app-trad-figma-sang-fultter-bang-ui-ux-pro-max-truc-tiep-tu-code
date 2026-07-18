@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-141 mock repository exposes transaction detail BE draft', () {
-    final snapshot = const MockWalletRepository().getTransactionDetail('tx001');
+  test('SC-141 mock repository exposes transaction detail BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getTransactionDetail('tx001');
 
     expect(snapshot.transaction?.id, 'tx001');
     expect(snapshot.transaction?.asset, 'USDT');

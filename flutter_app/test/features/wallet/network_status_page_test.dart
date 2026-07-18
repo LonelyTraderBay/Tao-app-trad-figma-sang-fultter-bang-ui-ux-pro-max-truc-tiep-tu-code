@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-155 mock repository exposes network status BE draft', () {
-    final snapshot = const MockWalletRepository().getNetworkStatus();
+  test('SC-155 mock repository exposes network status BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getNetworkStatus();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-network-status');
     expect(snapshot.actionDraft, 'read-only refresh');

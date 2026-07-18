@@ -12,7 +12,7 @@ final class FailClosedWalletRepository implements WalletRepository {
       const WalletBackendContractMissingException().userMessage;
 
   @override
-  WalletSnapshot getWallet() {
+  Future<WalletSnapshot> getWallet() async {
     return WalletSnapshot(
       totalUsd: 0,
       totalBtc: 0,
@@ -37,7 +37,7 @@ final class FailClosedWalletRepository implements WalletRepository {
   }
 
   @override
-  WalletPendingDepositsSnapshot getPendingDeposits() {
+  Future<WalletPendingDepositsSnapshot> getPendingDeposits() async {
     return WalletPendingDepositsSnapshot(
       deposits: const [],
       endpoint: _endpoint,

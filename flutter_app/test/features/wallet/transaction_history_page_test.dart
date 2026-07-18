@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-136 mock repository exposes wallet history BE draft', () {
-    final snapshot = const MockWalletRepository().getTransactionHistory();
+  test('SC-136 mock repository exposes wallet history BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getTransactionHistory();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-history');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

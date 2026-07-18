@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-291 mock repository exposes notifications BE draft', () {
-    final snapshot = const MockNotificationsRepository().getNotifications();
+  test('SC-291 mock repository exposes notifications BE draft', () async {
+    final snapshot = await const MockNotificationsRepository(
+      loadDelay: Duration.zero,
+    ).getNotifications();
 
     expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
     expect(snapshot.actionDraft, 'PATCH /user/settings or module settings');

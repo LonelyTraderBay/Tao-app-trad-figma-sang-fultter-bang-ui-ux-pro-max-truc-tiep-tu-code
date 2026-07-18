@@ -52,8 +52,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-143 mock repository exposes add address BE draft', () {
-    final snapshot = const MockWalletRepository().getAddressAdd();
+  test('SC-143 mock repository exposes add address BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getAddressAdd();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-address-book-add');
     expect(

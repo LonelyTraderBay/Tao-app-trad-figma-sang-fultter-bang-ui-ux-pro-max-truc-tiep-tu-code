@@ -88,6 +88,16 @@ Interceptor errorMappingInterceptor() {
             statusCode: null,
             userMessage: 'Không thể hoàn tất yêu cầu. Vui lòng thử lại.',
           );
+        // Dio thêm case enum mới theo minor version (vd 5.10.0 thêm
+        // transformTimeout làm switch exhaustive vỡ biên dịch — PR bump của
+        // dependabot từng đỏ vì đúng lỗi này). Nhánh chặn mọi case tương lai:
+        // lỗi chưa phân loại → thông điệp chung, an toàn với mọi bản dio.
+        // ignore: unreachable_switch_default
+        default:
+          mapped = const ApiFailure(
+            statusCode: null,
+            userMessage: 'Không thể hoàn tất yêu cầu. Vui lòng thử lại.',
+          );
       }
       handler.reject(
         DioException(

@@ -10,21 +10,24 @@ import 'package:vit_trade_flutter/features/notifications/data/notifications_repo
 /// unread count reuse the literals already proven in
 /// notifications_controller_test.dart.
 void main() {
-  const repository = MockNotificationsRepository();
+  const repository = MockNotificationsRepository(loadDelay: Duration.zero);
 
   group('MockNotificationsRepository smoke test', () {
-    test('getNotifications pins the endpoint, back route and feed length', () {
-      final snapshot = repository.getNotifications();
+    test(
+      'getNotifications pins the endpoint, back route and feed length',
+      () async {
+        final snapshot = await repository.getNotifications();
 
-      expect(snapshot, isA<NotificationsSnapshot>());
-      expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
-      expect(snapshot.backRoute, '/home');
-      expect(snapshot.notifications, hasLength(15));
-      expect(snapshot.screenState, NotificationsScreenState.ready);
-    });
+        expect(snapshot, isA<NotificationsSnapshot>());
+        expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
+        expect(snapshot.backRoute, '/home');
+        expect(snapshot.notifications, hasLength(15));
+        expect(snapshot.screenState, NotificationsScreenState.ready);
+      },
+    );
 
-    test('notifications pin the first entry and the unread count', () {
-      final snapshot = repository.getNotifications();
+    test('notifications pin the first entry and the unread count', () async {
+      final snapshot = await repository.getNotifications();
       final first = snapshot.notifications.first;
 
       expect(first.id, 'notif001');
@@ -34,24 +37,27 @@ void main() {
       expect(snapshot.notifications.where((n) => !n.isRead), hasLength(7));
     });
 
-    test('notifications cover every AppNotificationType used by the app', () {
-      final snapshot = repository.getNotifications();
-      final types = snapshot.notifications.map((n) => n.type).toSet();
+    test(
+      'notifications cover every AppNotificationType used by the app',
+      () async {
+        final snapshot = await repository.getNotifications();
+        final types = snapshot.notifications.map((n) => n.type).toSet();
 
-      expect(
-        types,
-        containsAll(<AppNotificationType>{
-          AppNotificationType.trade,
-          AppNotificationType.priceAlert,
-          AppNotificationType.deposit,
-          AppNotificationType.security,
-          AppNotificationType.p2p,
-          AppNotificationType.system,
-          AppNotificationType.withdraw,
-          AppNotificationType.referral,
-          AppNotificationType.arena,
-        }),
-      );
-    });
+        expect(
+          types,
+          containsAll(<AppNotificationType>{
+            AppNotificationType.trade,
+            AppNotificationType.priceAlert,
+            AppNotificationType.deposit,
+            AppNotificationType.security,
+            AppNotificationType.p2p,
+            AppNotificationType.system,
+            AppNotificationType.withdraw,
+            AppNotificationType.referral,
+            AppNotificationType.arena,
+          }),
+        );
+      },
+    );
   });
 }

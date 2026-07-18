@@ -56,7 +56,7 @@ class _PortfolioAnalyticsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletPortfolioAnalyticsProvider);
+    final snapshotAsync = ref.watch(walletPortfolioAnalyticsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -84,20 +84,34 @@ class _PortfolioAnalyticsPageState
           density: VitDensity.compact,
           gap: VitContentGap.tight,
           children: [
-            _ValueSummary(snapshot: snapshot),
-            _ViewSwitcher(
-              active: _activeView,
-              onChanged: (view) => setState(() => _activeView = view),
+            ...snapshotAsync.when(
+              loading: () => const [VitSkeletonList()],
+              error: (error, stackTrace) => [
+                VitErrorState(
+                  title: 'Không tải được phân tích danh mục',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(walletPortfolioAnalyticsProvider),
+                ),
+              ],
+              data: (snapshot) => [
+                _ValueSummary(snapshot: snapshot),
+                _ViewSwitcher(
+                  active: _activeView,
+                  onChanged: (view) => setState(() => _activeView = view),
+                ),
+                if (_activeView == 'overview') ...[
+                  ..._OverviewContent(
+                    snapshot: snapshot,
+                    activePeriod: _activePeriod,
+                    onPeriodChanged: (period) =>
+                        setState(() => _activePeriod = period),
+                  ).sectionChildren,
+                ] else
+                  _PlaceholderAnalyticsView(view: _activeView),
+              ],
             ),
-            if (_activeView == 'overview') ...[
-              ..._OverviewContent(
-                snapshot: snapshot,
-                activePeriod: _activePeriod,
-                onPeriodChanged: (period) =>
-                    setState(() => _activePeriod = period),
-              ).sectionChildren,
-            ] else
-              _PlaceholderAnalyticsView(view: _activeView),
           ],
         ),
       ),
