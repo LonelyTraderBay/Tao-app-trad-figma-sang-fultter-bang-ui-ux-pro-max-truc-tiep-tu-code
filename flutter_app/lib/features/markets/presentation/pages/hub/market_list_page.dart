@@ -57,6 +57,10 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
 
   @override
   Widget build(BuildContext context) {
+    // GD4-F3: trang gate qua marketListSnapshotProvider.when() (mục 5+6)
+    // trước khi đọc marketListStateControllerProvider — khi `data:` chạy,
+    // snapshot async đã resolve nên Notifier không bao giờ trả fallback rỗng.
+    final listAsync = ref.watch(marketListSnapshotProvider);
     // `snapshot` giữ nguyên tham chiếu suốt phiên (Notifier chỉ gọi
     // getMarketList() một lần trong build()) nên select này không kích
     // rebuild khi query/category/sort/favoriteIds đổi.
@@ -109,49 +113,60 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
               rhythm: VitPageRhythm.compact,
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
-              children: [
-                MarketListHeader(
-                  onNavigate: _go,
-                  lastUpdatedLabel: snapshot.lastUpdatedLabel,
-                ),
-                VitSearchBar(
-                  key: MarketListPage.searchKey,
-                  controller: _searchController,
-                  placeholder: 'Tìm kiếm BTC, ETH...',
-                  variant: VitSearchBarVariant.compact,
-                  filterActive: _showSort || sort != 'default',
-                  filterInline: true,
-                  onChanged: notifier.setQuery,
-                  onClear: () => notifier.setQuery(''),
-                  onFilterTap: () => setState(() => _showSort = !_showSort),
-                ),
-                if (_showSort)
-                  MarketListSortSheet(
-                    sortOptions: snapshot.screenFilters.sortOptions,
-                    activeSort: sort,
-                    onSelected: (value) {
-                      notifier.setSort(value);
-                      setState(() => _showSort = false);
-                    },
+              children: listAsync.when(
+                loading: () => const [VitSkeletonList()],
+                error: (error, stackTrace) => [
+                  VitErrorState(
+                    title: 'Không tải được thị trường',
+                    message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () => ref.invalidate(marketListSnapshotProvider),
                   ),
-                MarketListCategoryTabs(
-                  categories: snapshot.screenFilters.categories,
-                  activeCategory: category,
-                  onSelected: notifier.setCategory,
-                ),
-                if (showMarketSummary) ...[
-                  MarketListTopMovers(pairs: snapshot.marketPairs),
-                  MarketListTools(onNavigate: _go),
                 ],
-                MarketListColumnHeader(
-                  lastUpdatedLabel: snapshot.lastUpdatedLabel,
-                ),
-                _MarketListPairsSection(
-                  onNavigate: _go,
-                  onResetFilters: _resetFilters,
-                ),
-                const MarketListDiscoverMoreSection(),
-              ],
+                data: (_) => [
+                  MarketListHeader(
+                    onNavigate: _go,
+                    lastUpdatedLabel: snapshot.lastUpdatedLabel,
+                  ),
+                  VitSearchBar(
+                    key: MarketListPage.searchKey,
+                    controller: _searchController,
+                    placeholder: 'Tìm kiếm BTC, ETH...',
+                    variant: VitSearchBarVariant.compact,
+                    filterActive: _showSort || sort != 'default',
+                    filterInline: true,
+                    onChanged: notifier.setQuery,
+                    onClear: () => notifier.setQuery(''),
+                    onFilterTap: () => setState(() => _showSort = !_showSort),
+                  ),
+                  if (_showSort)
+                    MarketListSortSheet(
+                      sortOptions: snapshot.screenFilters.sortOptions,
+                      activeSort: sort,
+                      onSelected: (value) {
+                        notifier.setSort(value);
+                        setState(() => _showSort = false);
+                      },
+                    ),
+                  MarketListCategoryTabs(
+                    categories: snapshot.screenFilters.categories,
+                    activeCategory: category,
+                    onSelected: notifier.setCategory,
+                  ),
+                  if (showMarketSummary) ...[
+                    MarketListTopMovers(pairs: snapshot.marketPairs),
+                    MarketListTools(onNavigate: _go),
+                  ],
+                  MarketListColumnHeader(
+                    lastUpdatedLabel: snapshot.lastUpdatedLabel,
+                  ),
+                  _MarketListPairsSection(
+                    onNavigate: _go,
+                    onResetFilters: _resetFilters,
+                  ),
+                  const MarketListDiscoverMoreSection(),
+                ],
+              ),
             ),
           ),
         ),

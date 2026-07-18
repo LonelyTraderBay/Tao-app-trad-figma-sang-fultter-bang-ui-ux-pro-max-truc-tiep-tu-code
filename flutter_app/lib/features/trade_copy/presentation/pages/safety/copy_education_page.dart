@@ -46,9 +46,7 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getCopyEducation();
+    final snapshotAsync = ref.watch(tradeCopyEducationProvider);
 
     return VitTradeHubScaffold(
       title: 'Hướng dẫn Copy Trading',
@@ -63,44 +61,59 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
-          title: 'Giới thiệu',
-          child: VitTradeComplianceHero(
-            title: snapshot.introTitle,
-            description: snapshot.introDescription,
-            icon: Icons.menu_book_outlined,
-            accentColor: _copyPrimary,
-          ),
-        ),
-        const VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review copy trading education',
-            message:
-                'Understand fees, drawdown, slippage, provider risk, and copy modes before copying a provider.',
-            contractId: 'Education module: copy trading',
-          ),
-        ),
-        VitTradeSection(
-          title: 'Chủ đề',
-          child: _EducationTabs(
-            tabs: snapshot.tabs,
-            active: _activeTab,
-            onChanged: (value) => setState(() => _activeTab = value),
-          ),
-        ),
-        VitTradeSection(
-          title: _activeTab == 'how-it-works' ? 'Cách hoạt động' : 'Nội dung',
-          child: _activeTab == 'how-it-works'
-              ? _HowItWorksContent(snapshot: snapshot)
-              : _SupplementalTabContent(activeTab: _activeTab),
-        ),
-        VitTradeSection(
-          title: 'Tiếp theo',
-          child: _ProviderCta(
-            onTap: () => context.push(AppRoutePaths.tradeCopyTrading),
-          ),
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được hướng dẫn copy trading',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeCopyEducationProvider),
+            ),
+          ],
+          data: (snapshot) => [
+            VitTradeSection(
+              title: 'Giới thiệu',
+              child: VitTradeComplianceHero(
+                title: snapshot.introTitle,
+                description: snapshot.introDescription,
+                icon: Icons.menu_book_outlined,
+                accentColor: _copyPrimary,
+              ),
+            ),
+            const VitTradeSection(
+              title: 'Đánh giá rủi ro',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review copy trading education',
+                message:
+                    'Understand fees, drawdown, slippage, provider risk, and copy modes before copying a provider.',
+                contractId: 'Education module: copy trading',
+              ),
+            ),
+            VitTradeSection(
+              title: 'Chủ đề',
+              child: _EducationTabs(
+                tabs: snapshot.tabs,
+                active: _activeTab,
+                onChanged: (value) => setState(() => _activeTab = value),
+              ),
+            ),
+            VitTradeSection(
+              title: _activeTab == 'how-it-works'
+                  ? 'Cách hoạt động'
+                  : 'Nội dung',
+              child: _activeTab == 'how-it-works'
+                  ? _HowItWorksContent(snapshot: snapshot)
+                  : _SupplementalTabContent(activeTab: _activeTab),
+            ),
+            VitTradeSection(
+              title: 'Tiếp theo',
+              child: _ProviderCta(
+                onTap: () => context.push(AppRoutePaths.tradeCopyTrading),
+              ),
+            ),
+          ],
         ),
       ],
     );

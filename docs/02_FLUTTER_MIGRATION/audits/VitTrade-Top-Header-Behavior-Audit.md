@@ -4,9 +4,9 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 
 ```text
 total_routed_screens=415
-fixed_vit_header_remaining=20
+fixed_vit_header_remaining=21
 auto_hide_header=382
-custom_scroll_header=2
+custom_scroll_header=1
 no_top_header=11
 unresolved=0
 ```
@@ -20,6 +20,7 @@ unresolved=0
 | trade_bots | 3 |
 | enterprise_states | 2 |
 | trade | 2 |
+| markets | 1 |
 
 ## Route Header Inventory
 
@@ -185,7 +186,7 @@ unresolved=0
 | launchpad | `AppRoutePaths.launchpadStaking` | `LaunchpadStakingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_staking_page.dart` |
 | launchpad | `AppRoutePaths.launchpadSwapAggregator` | `LaunchpadSwapAggregatorPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_swap_aggregator_page.dart` |
 | launchpad | `AppRoutePaths.launchpadWebhooks` | `LaunchpadWebhooksPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart` |
-| markets | `'/pair/:pairId'` | `PairDetailPage` | custom_scroll_header | trade_custom_in_scroll | `flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart` |
+| markets | `'/pair/:pairId'` | `PairDetailPage` | fixed_vit_header | trade_custom_in_scroll | `flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart` |
 | markets | `'/pair/:pairId/depth'` | `MarketDepthPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` |
 | markets | `'/pair/:pairId/info'` | `TokenInfoPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/markets/presentation/pages/research/token_info_page.dart` |
 | markets | `AppRoutePaths.markets` | `MarketListPage` | custom_scroll_header | market_custom_in_scroll | `flutter_app/lib/features/markets/presentation/pages/hub/market_list_page.dart` |

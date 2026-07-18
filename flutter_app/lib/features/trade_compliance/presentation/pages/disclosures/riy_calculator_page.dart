@@ -54,33 +54,11 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
   late double _expectedReturn;
   late double _totalCosts;
   late int _years;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(tradeRegulatoryRepositoryProvider)
-        .getRiyCalculator();
-    _investment = snapshot.investmentAmount;
-    _expectedReturn = snapshot.expectedReturnPct;
-    _totalCosts = snapshot.totalCostsPct;
-    _years = snapshot.holdingPeriodYears;
-  }
+  bool _seeded = false;
 
   @override
   Widget build(BuildContext context) {
-    final projections = _buildProjections(
-      investment: _investment,
-      expectedReturn: _expectedReturn,
-      totalCosts: _totalCosts,
-      years: _years,
-    );
-    final finalWithoutCosts = projections.last.withoutCosts;
-    final finalWithCosts = projections.last.withCosts;
-    final difference = finalWithoutCosts - finalWithCosts;
-    final lossPct = finalWithoutCosts <= 0
-        ? 0.0
-        : (difference / finalWithoutCosts) * 100;
+    final async = ref.watch(tradeRiyCalculatorProvider);
 
     return VitTradeHubScaffold(
       title: 'RIY Calculator',
@@ -94,101 +72,138 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
         fallbackPath: AppRoutePaths.tradeCopyExAnteCosts,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review cost impact before proceeding',
-            message:
-                'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeRiyCalculatorProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'RIY impact',
-          statusPill: VitStatusPill(
-            label: 'Loss ${lossPct.toStringAsFixed(1)}%',
-            status: VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Investment',
-              value: _formatEur(_investment),
-            ),
-            VitTradeComplianceItem(
-              label: 'Holding period',
-              value: '$_years years',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Investment Parameters',
-          child: _InputCard(
+        ],
+        data: (snapshot) {
+          if (!_seeded) {
+            _investment = snapshot.investmentAmount;
+            _expectedReturn = snapshot.expectedReturnPct;
+            _totalCosts = snapshot.totalCostsPct;
+            _years = snapshot.holdingPeriodYears;
+            _seeded = true;
+          }
+          final projections = _buildProjections(
             investment: _investment,
             expectedReturn: _expectedReturn,
             totalCosts: _totalCosts,
             years: _years,
-            onInvestmentChanged: (value) => setState(() => _investment = value),
-            onExpectedReturnChanged: (value) =>
-                setState(() => _expectedReturn = value),
-            onTotalCostsChanged: (value) => setState(() => _totalCosts = value),
-            onYearsChanged: (value) => setState(() => _years = value),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Impact Analysis',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
+          );
+          final finalWithoutCosts = projections.last.withoutCosts;
+          final finalWithCosts = projections.last.withCosts;
+          final difference = finalWithoutCosts - finalWithCosts;
+          final lossPct = finalWithoutCosts <= 0
+              ? 0.0
+              : (difference / finalWithoutCosts) * 100;
+
+          return [
+            const VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review cost impact before proceeding',
+                message:
+                    'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
+                density: VitDensity.compact,
+              ),
+            ),
+            VitTradeComplianceSection(
+              title: 'RIY impact',
+              statusPill: VitStatusPill(
+                label: 'Loss ${lossPct.toStringAsFixed(1)}%',
+                status: VitStatusPillStatus.warning,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Investment',
+                  value: _formatEur(_investment),
+                ),
+                VitTradeComplianceItem(
+                  label: 'Holding period',
+                  value: '$_years years',
+                ),
+              ],
+            ),
+            VitTradeSection(
+              title: 'Investment Parameters',
+              child: _InputCard(
+                investment: _investment,
+                expectedReturn: _expectedReturn,
+                totalCosts: _totalCosts,
+                years: _years,
+                onInvestmentChanged: (value) =>
+                    setState(() => _investment = value),
+                onExpectedReturnChanged: (value) =>
+                    setState(() => _expectedReturn = value),
+                onTotalCostsChanged: (value) =>
+                    setState(() => _totalCosts = value),
+                onYearsChanged: (value) => setState(() => _years = value),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Impact Analysis',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: _ResultMetric(
-                      label: 'Without Costs',
-                      value: _formatEur(finalWithoutCosts),
-                      color: _riyGreen,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _ResultMetric(
+                          label: 'Without Costs',
+                          value: _formatEur(finalWithoutCosts),
+                          color: _riyGreen,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.x3),
+                      Expanded(
+                        child: _ResultMetric(
+                          label: 'With Costs',
+                          value: _formatEur(finalWithCosts),
+                          color: _riyRed,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: _ResultMetric(
-                      label: 'With Costs',
-                      value: _formatEur(finalWithCosts),
-                      color: _riyRed,
-                    ),
+                  _CostImpactCard(
+                    years: _years,
+                    difference: difference,
+                    lossPct: lossPct,
                   ),
                 ],
               ),
-              _CostImpactCard(
-                years: _years,
-                difference: difference,
-                lossPct: lossPct,
+            ),
+            VitTradeSection(
+              title: 'Growth Comparison',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _ChartCard(projections: projections),
+                  const TradeBodyReviewSection(
+                    title: 'RIY body review',
+                    message: 'RIY calculator body reviewed',
+                    detail:
+                        'Investment, return, cost, holding period, chart, empty, and result states stay visible.',
+                    primary:
+                        'Input assumptions remain above cost-impact outputs.',
+                    secondary:
+                        'Without-cost and with-cost values stay comparable.',
+                    tertiary:
+                        'Projection copy remains cost analysis, not performance advice.',
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Growth Comparison',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _ChartCard(projections: projections),
-              const TradeBodyReviewSection(
-                title: 'RIY body review',
-                message: 'RIY calculator body reviewed',
-                detail:
-                    'Investment, return, cost, holding period, chart, empty, and result states stay visible.',
-                primary: 'Input assumptions remain above cost-impact outputs.',
-                secondary: 'Without-cost and with-cost values stay comparable.',
-                tertiary:
-                    'Projection copy remains cost analysis, not performance advice.',
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ];
+        },
+      ),
     );
   }
 }

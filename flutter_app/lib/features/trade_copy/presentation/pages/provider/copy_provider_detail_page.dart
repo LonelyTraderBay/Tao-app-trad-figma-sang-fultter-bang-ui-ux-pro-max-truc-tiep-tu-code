@@ -40,14 +40,63 @@ class CopyProviderDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeCopyProviderDetailProvider(providerId));
-    final provider = snapshot.provider;
+    final snapshotAsync = ref.watch(
+      tradeCopyProviderDetailProvider(providerId),
+    );
     final resolvedBackPath = resolveSafeBackPath(
       candidate: backPath,
       fallbackPath: AppRoutePaths.tradeCopyTrading,
       allowedPrefixes: const [AppRoutePaths.trade],
     );
 
+    return snapshotAsync.when(
+      loading: () => VitTradeDetailScaffold(
+        title: 'Chi tiết provider',
+        semanticLabel: 'Chi tiết provider',
+        semanticIdentifier: 'SC-070',
+        contentKey: contentKey,
+        shellRenderMode: shellRenderMode,
+        useCopyTradingInset: true,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: resolvedBackPath,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitTradeDetailScaffold(
+        title: 'Chi tiết provider',
+        semanticLabel: 'Chi tiết provider',
+        semanticIdentifier: 'SC-070',
+        contentKey: contentKey,
+        shellRenderMode: shellRenderMode,
+        useCopyTradingInset: true,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: resolvedBackPath,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        children: [
+          VitErrorState(
+            title: 'Không tải được chi tiết provider',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeCopyProviderDetailProvider(providerId)),
+          ),
+        ],
+      ),
+      data: (snapshot) =>
+          _body(context, snapshot, snapshot.provider, resolvedBackPath),
+    );
+  }
+
+  Widget _body(
+    BuildContext context,
+    TradeCopyProviderDetailSnapshot snapshot,
+    TradeCopyTrader? provider,
+    String resolvedBackPath,
+  ) {
     if (provider == null) {
       return VitTradeDetailScaffold(
         title: 'Không tìm thấy provider',

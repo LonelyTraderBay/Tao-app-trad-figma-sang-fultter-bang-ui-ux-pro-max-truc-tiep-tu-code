@@ -44,17 +44,7 @@ class _BotStrategyComparePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotStrategyCompare();
-    final selectedStrategies = snapshot.strategies
-        .where((strategy) => _selected.contains(strategy.id))
-        .toList();
-    final best = selectedStrategies.reduce(
-      (best, current) => current.metrics.sharpeRatio > best.metrics.sharpeRatio
-          ? current
-          : best,
-    );
+    final snapshotAsync = ref.watch(tradeBotStrategyCompareProvider);
     return VitTradeHubScaffold(
       title: 'Strategy Compare',
       subtitle: 'So sánh hiệu suất các chiến lược bot',
@@ -68,67 +58,89 @@ class _BotStrategyComparePageState
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Đã chọn',
-          primaryValue: '${selectedStrategies.length}',
-          secondaryLabel: 'Sharpe tốt nhất',
-          secondaryValue: best.metrics.sharpeRatio.toStringAsFixed(2),
-          secondaryColor: _compareGreen,
-        ),
-        VitTradeSection(
-          title: 'Select Strategies (2-4)',
-          child: _StrategySelectionGrid(
-            strategies: snapshot.strategies,
-            selectedIds: _selected,
-            onToggle: _toggleStrategy,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được so sánh chiến lược',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotStrategyCompareProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Best strategy',
-          child: _BestStrategyCard(strategy: best),
-        ),
-        VitTradeSection(
-          title: 'Equity Curves Comparison',
-          child: _EquityChartCard(
-            points: snapshot.equityPoints,
-            strategies: selectedStrategies,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Performance Radar',
-          child: _RadarCard(strategies: selectedStrategies),
-        ),
-        VitTradeSection(
-          title: 'Detailed Metrics',
-          child: _MetricsTable(strategies: selectedStrategies),
-        ),
-        VitTradeSection(
-          title: 'Which Strategy to Choose?',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final recommendation in snapshot.recommendations)
-                _RecommendationCard(
-                  recommendation: recommendation,
-                  strategy: snapshot.strategies.firstWhere(
-                    (item) => item.id == recommendation.strategyId,
-                  ),
-                ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Analysis period',
-          child: _AnalysisPeriodCard(text: snapshot.analysisPeriod),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Strategy comparison review',
-          message:
-              'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
-          contractId: 'bot-strategy-compare-review',
-        ),
-      ],
+        ],
+        data: (snapshot) {
+          final selectedStrategies = snapshot.strategies
+              .where((strategy) => _selected.contains(strategy.id))
+              .toList();
+          final best = selectedStrategies.reduce(
+            (best, current) =>
+                current.metrics.sharpeRatio > best.metrics.sharpeRatio
+                ? current
+                : best,
+          );
+          return [
+            VitBotSubpageHero(
+              primaryLabel: 'Đã chọn',
+              primaryValue: '${selectedStrategies.length}',
+              secondaryLabel: 'Sharpe tốt nhất',
+              secondaryValue: best.metrics.sharpeRatio.toStringAsFixed(2),
+              secondaryColor: _compareGreen,
+            ),
+            VitTradeSection(
+              title: 'Select Strategies (2-4)',
+              child: _StrategySelectionGrid(
+                strategies: snapshot.strategies,
+                selectedIds: _selected,
+                onToggle: _toggleStrategy,
+              ),
+            ),
+            VitTradeSection(
+              title: 'Best strategy',
+              child: _BestStrategyCard(strategy: best),
+            ),
+            VitTradeSection(
+              title: 'Equity Curves Comparison',
+              child: _EquityChartCard(
+                points: snapshot.equityPoints,
+                strategies: selectedStrategies,
+              ),
+            ),
+            VitTradeSection(
+              title: 'Performance Radar',
+              child: _RadarCard(strategies: selectedStrategies),
+            ),
+            VitTradeSection(
+              title: 'Detailed Metrics',
+              child: _MetricsTable(strategies: selectedStrategies),
+            ),
+            VitTradeSection(
+              title: 'Which Strategy to Choose?',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final recommendation in snapshot.recommendations)
+                    _RecommendationCard(
+                      recommendation: recommendation,
+                      strategy: snapshot.strategies.firstWhere(
+                        (item) => item.id == recommendation.strategyId,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            VitTradeSection(
+              title: 'Analysis period',
+              child: _AnalysisPeriodCard(text: snapshot.analysisPeriod),
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'Strategy comparison review',
+              message:
+                  'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
+              contractId: 'bot-strategy-compare-review',
+            ),
+          ];
+        },
+      ),
     );
   }
 

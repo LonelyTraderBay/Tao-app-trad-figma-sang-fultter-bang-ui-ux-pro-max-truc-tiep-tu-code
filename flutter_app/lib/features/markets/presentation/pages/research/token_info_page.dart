@@ -120,17 +120,86 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getTokenInfo(widget.pairId);
-    final pair = snapshot.pair;
+    final tokenInfoAsync = ref.watch(
+      marketTokenInfoSnapshotProvider(widget.pairId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? _tokenInfoVisualScrollClearance
             : _tokenInfoNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
+    final fallbackTitle = '${widget.pairId.toUpperCase()} - Thông tin';
 
+    // GD4-F3 (mục 5, biến thể 2): tiêu đề = pair.baseAsset (không suy ra
+    // được từ pairId route param) — bọc toàn bộ return trong .when().
+    return tokenInfoAsync.when(
+      loading: () => _TokenInfoScaffold(
+        title: fallbackTitle,
+        onBack: () => context.go(AppRoutePaths.pairDetail(widget.pairId)),
+        tab: _tab,
+        onTabChanged: (tab) => setState(() => _tab = tab),
+        scrollEndClearance: scrollEndClearance,
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => _TokenInfoScaffold(
+        title: fallbackTitle,
+        onBack: () => context.go(AppRoutePaths.pairDetail(widget.pairId)),
+        tab: _tab,
+        onTabChanged: (tab) => setState(() => _tab = tab),
+        scrollEndClearance: scrollEndClearance,
+        children: [
+          VitErrorState(
+            title: 'Không tải được thông tin token',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(marketTokenInfoSnapshotProvider(widget.pairId)),
+          ),
+        ],
+      ),
+      data: (snapshot) => _TokenInfoScaffold(
+        title: '${snapshot.pair.baseAsset} - Thông tin',
+        onBack: () => context.go(AppRoutePaths.pairDetail(snapshot.pair.id)),
+        tab: _tab,
+        onTabChanged: (tab) => setState(() => _tab = tab),
+        scrollEndClearance: scrollEndClearance,
+        children: [
+          if (_tab == _TokenInfoTab.overview)
+            _OverviewTab(snapshot: snapshot)
+          else if (_tab == _TokenInfoTab.onchain)
+            _OnchainTab(snapshot: snapshot)
+          else
+            _ProjectTab(snapshot: snapshot),
+          const _Disclaimer(),
+        ],
+      ),
+    );
+  }
+}
+
+/// Khung trang chung cho 3 nhánh `.when()` của [TokenInfoPage] — tiêu đề
+/// phụ thuộc `snapshot.pair.baseAsset` nên cả 3 nhánh dựng scaffold đầy đủ
+/// riêng (mục 5, biến thể 2 của GD4-Async-Playbook).
+class _TokenInfoScaffold extends StatelessWidget {
+  const _TokenInfoScaffold({
+    required this.title,
+    required this.onBack,
+    required this.tab,
+    required this.onTabChanged,
+    required this.scrollEndClearance,
+    required this.children,
+  });
+
+  final String title;
+  final VoidCallback onBack;
+  final _TokenInfoTab tab;
+  final ValueChanged<_TokenInfoTab> onTabChanged;
+  final double scrollEndClearance;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'Thông tin token',
@@ -138,18 +207,11 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: '${pair.baseAsset} - Thông tin',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.pairDetail(pair.id)),
-          ),
+          header: VitHeader(title: title, showBack: true, onBack: onBack),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _TokenTabs(
-                active: _tab,
-                onChanged: (tab) => setState(() => _tab = tab),
-              ),
+              _TokenTabs(active: tab, onChanged: onTabChanged),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -164,15 +226,7 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        if (_tab == _TokenInfoTab.overview)
-                          _OverviewTab(snapshot: snapshot)
-                        else if (_tab == _TokenInfoTab.onchain)
-                          _OnchainTab(snapshot: snapshot)
-                        else
-                          _ProjectTab(snapshot: snapshot),
-                        const _Disclaimer(),
-                      ],
+                      children: children,
                     ),
                   ),
                 ),

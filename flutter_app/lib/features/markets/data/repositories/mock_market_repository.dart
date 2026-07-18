@@ -10,16 +10,45 @@ part '../fixtures/mock_market_social_sentiment_methods.dart';
 part '../fixtures/mock_market_portfolio_news_methods.dart';
 part '../fixtures/mock_market_token_detail_methods.dart';
 
-mixin _MockMarketRepositoryBase implements MarketRepository {}
+abstract class _MockMarketRepositoryBase implements MarketRepository {
+  const _MockMarketRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
 
-final class MockMarketRepository
+  /// When `true`, every method throws a [StateError] after [loadDelay] —
+  /// used to exercise error/retry UI states in tests.
+  final bool simulateError;
+
+  /// Simulated network latency before a method resolves. Tests should pass
+  /// [Duration.zero] to avoid slowing down the suite.
+  final Duration loadDelay;
+
+  /// Shared network simulation for every mock method: awaits [loadDelay],
+  /// then throws when [simulateError] is set. Khuôn MockHomeRepository.
+  /// Sống ở base class (không phải mixin) vì 6 mixin method đều cần gọi nó
+  /// và Dart mixin không thấy method của mixin anh em cùng "on" constraint.
+  ///
+  /// Delay 0 thì KHÔNG tạo timer — Future.delayed(Duration.zero) vẫn là
+  /// timer và tester.pump() không-duration không đẩy fake clock (xem
+  /// GD4-Async-Playbook §9, bẫy 10).
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('markets_mock_fetch_failed');
+    }
+  }
+}
+
+final class MockMarketRepository extends _MockMarketRepositoryBase
     with
-        _MockMarketRepositoryBase,
         _MockMarketRepositoryOverviewMethods,
         _MockMarketRepositoryScreeningMethods,
         _MockMarketRepositoryCalendarDerivativesMethods,
         _MockMarketRepositorySocialSentimentMethods,
         _MockMarketRepositoryPortfolioNewsMethods,
         _MockMarketRepositoryTokenDetailMethods {
-  const MockMarketRepository();
+  const MockMarketRepository({super.simulateError, super.loadDelay});
 }

@@ -22,13 +22,13 @@ void main() {
       group('advanced tools getters', () {
         test(
           'getAdvancedChart / getRiskManagement return populated snapshots',
-          () {
-            final chart = repo.getAdvancedChart();
+          () async {
+            final chart = await repo.getAdvancedChart();
             expect(chart.candles, isNotEmpty);
             expect(chart.indicators, isNotEmpty);
             expect(chart.timeframes, contains('1D'));
 
-            final risk = repo.getRiskManagement();
+            final risk = await repo.getRiskManagement();
             expect(risk.accountBalance, 50000);
             expect(risk.currentPrice, 69000);
             expect(risk.features, isNotEmpty);
@@ -37,12 +37,12 @@ void main() {
 
         test(
           'getExecutionQuality / getAdvancedTools return populated snapshots',
-          () {
-            final quality = repo.getExecutionQuality();
+          () async {
+            final quality = await repo.getExecutionQuality();
             expect(quality.features, isNotEmpty);
             expect(quality.slippageSettings, isNotNull);
 
-            final tools = repo.getAdvancedTools();
+            final tools = await repo.getAdvancedTools();
             expect(tools.ladderOrders, isNotEmpty);
             expect(tools.bulkOrders, isNotEmpty);
             expect(tools.shortcuts, isNotEmpty);
@@ -51,8 +51,8 @@ void main() {
       });
 
       group('advanced tools actions', () {
-        test('submitOcoOrder pins the generated order id and status', () {
-          final result = repo.submitOcoOrder(
+        test('submitOcoOrder pins the generated order id and status', () async {
+          final result = await repo.submitOcoOrder(
             const TradeOcoOrderDraft(
               symbol: 'BTC/USDT',
               side: TradeOrderSide.buy,
@@ -67,8 +67,8 @@ void main() {
           expect(result.status, 'submitted');
         });
 
-        test('calculatePositionSize pins the risk-based computation', () {
-          final result = repo.calculatePositionSize(
+        test('calculatePositionSize pins the risk-based computation', () async {
+          final result = await repo.calculatePositionSize(
             const TradePositionSizeRequest(
               accountBalance: 50000,
               riskPct: 1,
@@ -81,16 +81,19 @@ void main() {
           expect(result.suggestedAmount, closeTo(.3333, .001));
         });
 
-        test('updateSlippageSettings echoes the settings back unchanged', () {
-          final current = repo.getExecutionQuality().slippageSettings;
-          final result = repo.updateSlippageSettings(current);
-          expect(result, current);
-        });
+        test(
+          'updateSlippageSettings echoes the settings back unchanged',
+          () async {
+            final current = (await repo.getExecutionQuality()).slippageSettings;
+            final result = await repo.updateSlippageSettings(current);
+            expect(result, current);
+          },
+        );
 
         test(
           'amendOrder pins the modified status and preserved queue position',
-          () {
-            final result = repo.amendOrder(
+          () async {
+            final result = await repo.amendOrder(
               const TradeOrderAmendmentRequest(
                 orderId: 'ord001',
                 newPrice: 69000,
@@ -103,36 +106,42 @@ void main() {
           },
         );
 
-        test('submitAdvancedToolAction pins the affected order count', () {
-          final result = repo.submitAdvancedToolAction(
-            const TradeAdvancedToolActionRequest(
-              toolId: 'bulk',
-              action: 'cancel',
-              orderIds: ['o1', 'o2'],
-            ),
-          );
-          expect(result.status, 'accepted');
-          expect(result.affectedCount, 2);
-        });
+        test(
+          'submitAdvancedToolAction pins the affected order count',
+          () async {
+            final result = await repo.submitAdvancedToolAction(
+              const TradeAdvancedToolActionRequest(
+                toolId: 'bulk',
+                action: 'cancel',
+                orderIds: ['o1', 'o2'],
+              ),
+            );
+            expect(result.status, 'accepted');
+            expect(result.affectedCount, 2);
+          },
+        );
       });
 
       group('conversions & utilities getters', () {
-        test('getTradeExport / getConvert return fixture-backed snapshots', () {
-          final export = repo.getTradeExport();
-          expect(export.stats.totalTrades, 847);
-          expect(export.formats, isNotEmpty);
+        test(
+          'getTradeExport / getConvert return fixture-backed snapshots',
+          () async {
+            final export = await repo.getTradeExport();
+            expect(export.stats.totalTrades, 847);
+            expect(export.formats, isNotEmpty);
 
-          final convert = repo.getConvert();
-          expect(convert.fromAsset.symbol, 'USDT');
-          expect(convert.toAsset.symbol, 'BTC');
-          expect(convert.minUsd, 10);
-          expect(convert.maxUsd, 500000);
-        });
+            final convert = await repo.getConvert();
+            expect(convert.fromAsset.symbol, 'USDT');
+            expect(convert.toAsset.symbol, 'BTC');
+            expect(convert.minUsd, 10);
+            expect(convert.maxUsd, 500000);
+          },
+        );
       });
 
       group('conversions & utilities actions', () {
-        test('createTradeExport pins the generated export id', () {
-          final result = repo.createTradeExport(
+        test('createTradeExport pins the generated export id', () async {
+          final result = await repo.createTradeExport(
             const TradeExportRequest(
               format: 'csv',
               period: '30d',
@@ -144,23 +153,26 @@ void main() {
           expect(result.downloadUrl, '/exports/EXP-TRADE-054.csv');
         });
 
-        test('previewConvert / submitConvert pin the generated convert id', () {
-          const request = TradeConvertRequest(
-            fromSymbol: 'USDT',
-            toSymbol: 'BTC',
-            amount: 500,
-            slippagePct: .5,
-            mode: 'market',
-          );
-          final quote = repo.previewConvert(request);
-          expect(quote.fromSymbol, 'USDT');
-          expect(quote.toSymbol, 'BTC');
-          expect(quote.canSubmit, isTrue);
+        test(
+          'previewConvert / submitConvert pin the generated convert id',
+          () async {
+            const request = TradeConvertRequest(
+              fromSymbol: 'USDT',
+              toSymbol: 'BTC',
+              amount: 500,
+              slippagePct: .5,
+              mode: 'market',
+            );
+            final quote = await repo.previewConvert(request);
+            expect(quote.fromSymbol, 'USDT');
+            expect(quote.toSymbol, 'BTC');
+            expect(quote.canSubmit, isTrue);
 
-          final receipt = repo.submitConvert(request);
-          expect(receipt.convertId, 'CVT-DEMO-056');
-          expect(receipt.status, 'submitted');
-        });
+            final receipt = await repo.submitConvert(request);
+            expect(receipt.convertId, 'CVT-DEMO-056');
+            expect(receipt.status, 'submitted');
+          },
+        );
       });
     },
   );

@@ -49,11 +49,7 @@ class _ProviderGovernancePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeProviderGovernanceProvider);
-    if (!_initialized) {
-      _activeTabId = snapshot.defaultTabId;
-      _initialized = true;
-    }
+    final snapshotAsync = ref.watch(tradeProviderGovernanceProvider);
 
     return Material(
       type: MaterialType.transparency,
@@ -71,90 +67,112 @@ class _ProviderGovernancePageState
               mode: BackNavigationMode.historyThenFallback,
             ),
             children: [
-              VitTradeSection(
-                title: 'Dashboard',
-                child: VitTradeAnalyticsHero(
-                  icon: Icons.shield_outlined,
-                  title: 'Provider Dashboard',
-                  subtitle: 'Managing ${snapshot.stats.followers} followers',
-                  stats: [
-                    VitTradeAnalyticsStat(
-                      label: 'AUM',
-                      value:
-                          '\$${formatTradeCompactNumber(snapshot.stats.aum.round())}',
-                      color: _governancePrimary,
-                    ),
-                    VitTradeAnalyticsStat(
-                      label: 'This Month',
-                      value:
-                          '\$${snapshot.stats.monthlyFeesEarned.toStringAsFixed(0)}',
-                      color: _governancePrimary,
-                    ),
-                    VitTradeAnalyticsStat(
-                      label: 'Compliance',
-                      value: '${snapshot.stats.complianceScore}/100',
-                      color: _governancePrimary,
-                    ),
-                  ],
-                ),
-              ),
-              const VitTradeSection(
-                title: 'Review',
-                child: VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Provider governance review',
-                  message:
-                      'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
-                  contractId: 'SC-081 provider governance review',
-                  density: VitDensity.compact,
-                ),
-              ),
-              VitTradeComplianceSection(
-                title: 'Governance status',
-                statusPill: VitStatusPill(
-                  label: 'Score ${snapshot.stats.complianceScore}',
-                  status: VitStatusPillStatus.info,
-                  size: VitStatusPillSize.sm,
-                ),
-                items: [
-                  VitTradeComplianceItem(
-                    label: 'Followers',
-                    value: '${snapshot.stats.followers}',
-                  ),
-                  VitTradeComplianceItem(
-                    label: 'Last updated',
-                    value: snapshot.lastUpdatedLabel,
+              ...snapshotAsync.when(
+                loading: () => const [VitSkeletonList()],
+                error: (error, stackTrace) => [
+                  VitErrorState(
+                    title: 'Không tải được dữ liệu quản trị provider',
+                    message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () =>
+                        ref.invalidate(tradeProviderGovernanceProvider),
                   ),
                 ],
-              ),
-              VitTradeSection(
-                title: 'Details',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _GovernanceTabs(
-                      tabs: snapshot.tabs,
-                      activeId: _activeTabId,
-                      onChanged: (id) => setState(() => _activeTabId = id),
+                data: (snapshot) {
+                  if (!_initialized) {
+                    _activeTabId = snapshot.defaultTabId;
+                    _initialized = true;
+                  }
+                  return [
+                    VitTradeSection(
+                      title: 'Dashboard',
+                      child: VitTradeAnalyticsHero(
+                        icon: Icons.shield_outlined,
+                        title: 'Provider Dashboard',
+                        subtitle:
+                            'Managing ${snapshot.stats.followers} followers',
+                        stats: [
+                          VitTradeAnalyticsStat(
+                            label: 'AUM',
+                            value:
+                                '\$${formatTradeCompactNumber(snapshot.stats.aum.round())}',
+                            color: _governancePrimary,
+                          ),
+                          VitTradeAnalyticsStat(
+                            label: 'This Month',
+                            value:
+                                '\$${snapshot.stats.monthlyFeesEarned.toStringAsFixed(0)}',
+                            color: _governancePrimary,
+                          ),
+                          VitTradeAnalyticsStat(
+                            label: 'Compliance',
+                            value: '${snapshot.stats.complianceScore}/100',
+                            color: _governancePrimary,
+                          ),
+                        ],
+                      ),
                     ),
-                    if (_activeTabId == 'modifications')
-                      _ModificationsTab(
-                        snapshot: snapshot,
-                        onRequest: () =>
-                            setState(() => _showMessagePanel = true),
-                      )
-                    else if (_activeTabId == 'communication')
-                      _CommunicationTab(
-                        snapshot: snapshot,
-                        onBroadcast: () =>
-                            setState(() => _showMessagePanel = true),
-                      )
-                    else if (_activeTabId == 'fees')
-                      _FeesTab(snapshot: snapshot)
-                    else
-                      _ComplianceTab(snapshot: snapshot),
-                  ],
-                ),
+                    const VitTradeSection(
+                      title: 'Review',
+                      child: VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Provider governance review',
+                        message:
+                            'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
+                        contractId: 'SC-081 provider governance review',
+                        density: VitDensity.compact,
+                      ),
+                    ),
+                    VitTradeComplianceSection(
+                      title: 'Governance status',
+                      statusPill: VitStatusPill(
+                        label: 'Score ${snapshot.stats.complianceScore}',
+                        status: VitStatusPillStatus.info,
+                        size: VitStatusPillSize.sm,
+                      ),
+                      items: [
+                        VitTradeComplianceItem(
+                          label: 'Followers',
+                          value: '${snapshot.stats.followers}',
+                        ),
+                        VitTradeComplianceItem(
+                          label: 'Last updated',
+                          value: snapshot.lastUpdatedLabel,
+                        ),
+                      ],
+                    ),
+                    VitTradeSection(
+                      title: 'Details',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _GovernanceTabs(
+                            tabs: snapshot.tabs,
+                            activeId: _activeTabId,
+                            onChanged: (id) =>
+                                setState(() => _activeTabId = id),
+                          ),
+                          if (_activeTabId == 'modifications')
+                            _ModificationsTab(
+                              snapshot: snapshot,
+                              onRequest: () =>
+                                  setState(() => _showMessagePanel = true),
+                            )
+                          else if (_activeTabId == 'communication')
+                            _CommunicationTab(
+                              snapshot: snapshot,
+                              onBroadcast: () =>
+                                  setState(() => _showMessagePanel = true),
+                            )
+                          else if (_activeTabId == 'fees')
+                            _FeesTab(snapshot: snapshot)
+                          else
+                            _ComplianceTab(snapshot: snapshot),
+                        ],
+                      ),
+                    ),
+                  ];
+                },
               ),
             ],
           ),

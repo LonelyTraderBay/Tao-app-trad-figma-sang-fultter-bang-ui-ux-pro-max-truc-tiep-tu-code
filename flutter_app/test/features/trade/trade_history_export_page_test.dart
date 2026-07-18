@@ -34,10 +34,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-054 mock repository exposes export BE draft', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getTradeExport();
-    final result = repo.createTradeExport(
+  test('SC-054 mock repository exposes export BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getTradeExport();
+    final result = await repo.createTradeExport(
       const TradeExportRequest(
         format: 'csv',
         period: '30d',
@@ -168,16 +168,18 @@ void main() {
 }
 
 class _CapturingTradeRepository implements TradeRepository {
-  final MockTradeRepository _delegate = const MockTradeRepository();
+  final MockTradeRepository _delegate = const MockTradeRepository(
+    loadDelay: Duration.zero,
+  );
   TradeExportRequest? lastRequest;
 
   @override
-  TradeExportSnapshot getTradeExport() {
+  Future<TradeExportSnapshot> getTradeExport() {
     return _delegate.getTradeExport();
   }
 
   @override
-  TradeExportResult createTradeExport(TradeExportRequest request) {
+  Future<TradeExportResult> createTradeExport(TradeExportRequest request) {
     lastRequest = request;
     return _delegate.createTradeExport(request);
   }

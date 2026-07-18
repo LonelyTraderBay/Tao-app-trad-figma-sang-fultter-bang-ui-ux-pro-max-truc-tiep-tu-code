@@ -81,9 +81,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradingBotsRepositoryProvider)
-        .getBotTermsOfService();
+    final snapshotAsync = ref.watch(tradeBotTermsOfServiceProvider);
     return VitTradeHubScaffold(
       title: 'Trading Bots Terms',
       subtitle: 'Điều khoản sử dụng bot giao dịch',
@@ -97,55 +95,66 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitTradeSection(
-          title: 'Information',
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: _termsInfoMinExtent),
-            child: VitInfoCallout(
-              title: snapshot.infoTitle,
-              message: snapshot.infoDescription,
-              icon: Icons.description_outlined,
-              accentColor: _termsPrimary,
-              padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được điều khoản bot',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotTermsOfServiceProvider),
+          ),
+        ],
+        data: (snapshot) => [
+          VitTradeSection(
+            title: 'Information',
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: _termsInfoMinExtent),
+              child: VitInfoCallout(
+                title: snapshot.infoTitle,
+                message: snapshot.infoDescription,
+                icon: Icons.description_outlined,
+                accentColor: _termsPrimary,
+                padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
+              ),
             ),
           ),
-        ),
-        VitTradeSection(
-          title: 'Terms',
-          child: _TermsCard(snapshot: snapshot, controller: _termsController),
-        ),
-        VitTradeSection(
-          title: snapshot.acceptSectionLabel,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (!_readToEnd) _ScrollWarning(snapshot: snapshot),
-              _AgreementCard(
-                snapshot: snapshot,
-                enabled: _readToEnd,
-                agreed: _agreed,
-                onTap: _toggleAgreement,
-              ),
-              _TermsCta(
-                snapshot: snapshot,
-                agreed: _agreed,
-                onPressed: _acceptTerms,
-              ),
-            ],
+          VitTradeSection(
+            title: 'Terms',
+            child: _TermsCard(snapshot: snapshot, controller: _termsController),
           ),
-        ),
-        VitTradeSection(
-          title: 'Compliance',
-          child: _ComplianceNote(snapshot: snapshot),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Terms acceptance review',
-          message:
-              'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
-          contractId: 'bot-terms-acceptance-review',
-        ),
-      ],
+          VitTradeSection(
+            title: snapshot.acceptSectionLabel,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (!_readToEnd) _ScrollWarning(snapshot: snapshot),
+                _AgreementCard(
+                  snapshot: snapshot,
+                  enabled: _readToEnd,
+                  agreed: _agreed,
+                  onTap: _toggleAgreement,
+                ),
+                _TermsCta(
+                  snapshot: snapshot,
+                  agreed: _agreed,
+                  onPressed: _acceptTerms,
+                ),
+              ],
+            ),
+          ),
+          VitTradeSection(
+            title: 'Compliance',
+            child: _ComplianceNote(snapshot: snapshot),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Terms acceptance review',
+            message:
+                'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
+            contractId: 'bot-terms-acceptance-review',
+          ),
+        ],
+      ),
     );
   }
 

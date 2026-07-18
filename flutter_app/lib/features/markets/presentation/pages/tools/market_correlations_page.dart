@@ -74,10 +74,11 @@ class _MarketCorrelationsPageState
 
   @override
   Widget build(BuildContext context) {
-    final repo = ref.watch(marketControllerProvider);
-    final snapshot = repo.getMarketCorrelations(
-      timeframe: _timeframe,
-      sortOrder: _sortOrder,
+    final correlationsAsync = ref.watch(
+      marketCorrelationsSnapshotProvider((
+        timeframe: _timeframe,
+        sortOrder: _sortOrder,
+      )),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
@@ -120,65 +121,83 @@ class _MarketCorrelationsPageState
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _TimeframeChips(
-                          timeframe: _timeframe,
-                          onSelected: (value) =>
-                              setState(() => _timeframe = value),
-                        ),
-                        if (_tab == 'matrix') ...[
-                          _MatrixCard(snapshot: snapshot),
-                          const _CorrelationLegend(),
-                          const _MatrixInfoCard(),
-                          _QuickInsights(score: snapshot.diversificationScore),
-                          _RecommendationCard(
-                            recommendation:
-                                snapshot.diversificationScore.recommendation,
-                          ),
-                        ] else if (_tab == 'pairs') ...[
-                          _SortChips(
-                            sortOrder: _sortOrder,
-                            onSelected: (value) =>
-                                setState(() => _sortOrder = value),
-                          ),
-                          for (
-                            var index = 0;
-                            index < snapshot.pairs.length;
-                            index += 1
-                          )
-                            _PairCorrelationRow(
-                              key: MarketCorrelationsPage.pairKey(
-                                '${snapshot.pairs[index].assetA}-${snapshot.pairs[index].assetB}',
-                              ),
-                              rank: index + 1,
-                              pair: snapshot.pairs[index],
-                              timeframe: _timeframe,
-                              maxValue: _maxCorrelation(snapshot),
+                      children: correlationsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được tương quan thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketCorrelationsSnapshotProvider((
+                                timeframe: _timeframe,
+                                sortOrder: _sortOrder,
+                              )),
                             ),
-                        ] else ...[
-                          _DiversificationHero(
-                            score: snapshot.diversificationScore,
                           ),
-                          _DiversificationMetrics(
-                            score: snapshot.diversificationScore,
-                          ),
-                          const VitSectionHeader(
-                            title: 'So sánh theo thời gian',
-                            accentColor: AppColors.accent,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _TimeframeScoreCard(repo: repo),
-                          const _CorrelationDisclaimer(),
                         ],
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message: 'Tương quan chỉ mang tính tham khảo',
-                          detail:
-                              'Không phải khuyến nghị phân bổ. Quá khứ không đảm bảo kết quả tương lai.',
-                        ),
-                      ],
+                        data: (snapshot) => [
+                          _TimeframeChips(
+                            timeframe: _timeframe,
+                            onSelected: (value) =>
+                                setState(() => _timeframe = value),
+                          ),
+                          if (_tab == 'matrix') ...[
+                            _MatrixCard(snapshot: snapshot),
+                            const _CorrelationLegend(),
+                            const _MatrixInfoCard(),
+                            _QuickInsights(
+                              score: snapshot.diversificationScore,
+                            ),
+                            _RecommendationCard(
+                              recommendation:
+                                  snapshot.diversificationScore.recommendation,
+                            ),
+                          ] else if (_tab == 'pairs') ...[
+                            _SortChips(
+                              sortOrder: _sortOrder,
+                              onSelected: (value) =>
+                                  setState(() => _sortOrder = value),
+                            ),
+                            for (
+                              var index = 0;
+                              index < snapshot.pairs.length;
+                              index += 1
+                            )
+                              _PairCorrelationRow(
+                                key: MarketCorrelationsPage.pairKey(
+                                  '${snapshot.pairs[index].assetA}-${snapshot.pairs[index].assetB}',
+                                ),
+                                rank: index + 1,
+                                pair: snapshot.pairs[index],
+                                timeframe: _timeframe,
+                                maxValue: _maxCorrelation(snapshot),
+                              ),
+                          ] else ...[
+                            _DiversificationHero(
+                              score: snapshot.diversificationScore,
+                            ),
+                            _DiversificationMetrics(
+                              score: snapshot.diversificationScore,
+                            ),
+                            const VitSectionHeader(
+                              title: 'So sánh theo thời gian',
+                              accentColor: AppColors.accent,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                              variant: VitSectionHeaderVariant.accentBar,
+                            ),
+                            _TimeframeScoreCard(sortOrder: _sortOrder),
+                            const _CorrelationDisclaimer(),
+                          ],
+                          const VitBanner(
+                            variant: VitBannerVariant.info,
+                            icon: Icons.info_outline_rounded,
+                            message: 'Tương quan chỉ mang tính tham khảo',
+                            detail:
+                                'Không phải khuyến nghị phân bổ. Quá khứ không đảm bảo kết quả tương lai.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

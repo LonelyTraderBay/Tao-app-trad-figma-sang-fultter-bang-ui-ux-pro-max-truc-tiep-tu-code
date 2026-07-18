@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-106 mock repository exposes RIY calculator BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository().getRiyCalculator();
+  test('SC-106 mock repository exposes RIY calculator BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getRiyCalculator();
 
     expect(snapshot.investmentAmount, 10000);
     expect(snapshot.expectedReturnPct, 8);

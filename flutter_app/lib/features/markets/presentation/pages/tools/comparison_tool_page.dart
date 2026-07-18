@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/comparison_tool_common.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/comparison_tool_content.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/comparison_tool_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class ComparisonToolPage extends ConsumerStatefulWidget {
@@ -69,6 +70,9 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
 
   @override
   Widget build(BuildContext context) {
+    // GD4-F3: trang gate qua marketComparisonSnapshotProvider.when() (mục
+    // 5+6) trước khi đọc marketComparisonStateControllerProvider.
+    final comparisonAsync = ref.watch(marketComparisonSnapshotProvider);
     final viewState = ref.watch(marketComparisonStateControllerProvider);
     final snapshot = viewState.snapshot;
     final selectedIds = viewState.selectedIds;
@@ -114,44 +118,58 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        ComparisonSelectedTokensStrip(
-                          selectedPairs: selectedPairs,
-                          canAdd: selectedIds.length < comparisonToolMaxCompare,
-                          canRemove: selectedIds.length > 2,
-                          onAdd: () => setState(() => _showPicker = true),
-                          onRemove: _removeToken,
-                        ),
-                        if (_showPicker)
-                          ComparisonTokenPickerCard(
-                            snapshot: snapshot,
-                            selectedIds: selectedIds,
-                            controller: _pickerSearchController,
-                            onChanged: () => setState(() {}),
-                            onClose: () => setState(() {
-                              _showPicker = false;
-                              _pickerSearchController.clear();
-                            }),
-                            onTokenSelected: _addToken,
+                      children: comparisonAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được công cụ so sánh',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketComparisonSnapshotProvider,
+                            ),
                           ),
-                        if (selectedPairs.length >= 2)
-                          ComparisonSparklineCard(pairs: selectedPairs),
-                        if (selectedPairs.length >= 2)
-                          ComparisonMetricSection(
-                            pairs: selectedPairs,
-                            metrics: snapshot.metrics,
+                        ],
+                        data: (_) => [
+                          ComparisonSelectedTokensStrip(
+                            selectedPairs: selectedPairs,
+                            canAdd:
+                                selectedIds.length < comparisonToolMaxCompare,
+                            canRemove: selectedIds.length > 2,
+                            onAdd: () => setState(() => _showPicker = true),
+                            onRemove: _removeToken,
                           ),
-                        if (selectedPairs.length >= 2)
-                          ComparisonVolumeDistributionCard(
-                            pairs: selectedPairs,
-                          ),
-                        if (selectedPairs.length >= 2)
-                          ComparisonMarketCapDistributionCard(
-                            pairs: selectedPairs,
-                          ),
-                        if (selectedPairs.length < 2)
-                          const ComparisonNeedMoreTokensCard(),
-                      ],
+                          if (_showPicker)
+                            ComparisonTokenPickerCard(
+                              snapshot: snapshot,
+                              selectedIds: selectedIds,
+                              controller: _pickerSearchController,
+                              onChanged: () => setState(() {}),
+                              onClose: () => setState(() {
+                                _showPicker = false;
+                                _pickerSearchController.clear();
+                              }),
+                              onTokenSelected: _addToken,
+                            ),
+                          if (selectedPairs.length >= 2)
+                            ComparisonSparklineCard(pairs: selectedPairs),
+                          if (selectedPairs.length >= 2)
+                            ComparisonMetricSection(
+                              pairs: selectedPairs,
+                              metrics: snapshot.metrics,
+                            ),
+                          if (selectedPairs.length >= 2)
+                            ComparisonVolumeDistributionCard(
+                              pairs: selectedPairs,
+                            ),
+                          if (selectedPairs.length >= 2)
+                            ComparisonMarketCapDistributionCard(
+                              pairs: selectedPairs,
+                            ),
+                          if (selectedPairs.length < 2)
+                            const ComparisonNeedMoreTokensCard(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

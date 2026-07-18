@@ -32,9 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-095 mock repository exposes ARM integration BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getArmIntegrationStatus();
+  test('SC-095 mock repository exposes ARM integration BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getArmIntegrationStatus();
 
     expect(snapshot.connections.map((item) => item.provider), [
       'REGIS-TR',

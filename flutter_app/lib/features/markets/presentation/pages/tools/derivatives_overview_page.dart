@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/ma
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/market_derivatives_overview.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/market_derivatives_perpetual.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/market_derivatives_tabs.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class DerivativesOverviewPage extends ConsumerStatefulWidget {
@@ -44,9 +45,9 @@ class _DerivativesOverviewPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getMarketDerivatives(sortBy: _sortBy);
+    final derivativesAsync = ref.watch(
+      marketDerivativesSnapshotProvider(_sortBy),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -89,56 +90,69 @@ class _DerivativesOverviewPageState
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        if (_tab == 'overview') ...[
-                          MarketDerivativesOpenInterestHero(
-                            stats: snapshot.globalStats,
+                      children: derivativesAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được dữ liệu phái sinh',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketDerivativesSnapshotProvider(_sortBy),
+                            ),
                           ),
-                          MarketDerivativesOverviewStatGrid(
-                            stats: snapshot.globalStats,
-                          ),
-                          const MarketDerivativesSectionHeader(
-                            label: 'Thanh lý theo thời gian (24h)',
-                            accentColor: AppColors.sell,
-                          ),
-                          MarketDerivativesLiquidationTimeline(
-                            history: snapshot.liquidationHistory,
-                            pairs: snapshot.pairs,
-                          ),
-                          const MarketDerivativesSectionHeader(
-                            label: 'Top Open Interest',
-                            accentColor: marketDerivativesPrimary,
-                          ),
-                          MarketDerivativesTopOpenInterestList(
-                            pairs: snapshot.pairs.take(5).toList(),
-                          ),
-                        ] else if (_tab == 'perpetual') ...[
-                          MarketDerivativesSortChips(
-                            active: _sortBy,
-                            onSelected: (value) => setState(() {
-                              _sortBy = value;
-                            }),
-                          ),
-                          for (final pair in snapshot.pairs)
-                            MarketDerivativesPerpetualPairCard(pair: pair),
-                        ] else ...[
-                          MarketDerivativesLiquidationSummary(
-                            stats: snapshot.globalStats,
-                          ),
-                          const MarketDerivativesSectionHeader(
-                            label: 'Thanh lý theo cặp',
-                            accentColor: AppColors.sell,
-                          ),
-                          for (final pair
-                              in [...snapshot.pairs]..sort(
-                                (a, b) => b.totalLiquidations24h.compareTo(
-                                  a.totalLiquidations24h,
-                                ),
-                              ))
-                            MarketDerivativesLiquidationPairCard(pair: pair),
-                          const MarketDerivativesRiskWarningCard(),
                         ],
-                      ],
+                        data: (snapshot) => [
+                          if (_tab == 'overview') ...[
+                            MarketDerivativesOpenInterestHero(
+                              stats: snapshot.globalStats,
+                            ),
+                            MarketDerivativesOverviewStatGrid(
+                              stats: snapshot.globalStats,
+                            ),
+                            const MarketDerivativesSectionHeader(
+                              label: 'Thanh lý theo thời gian (24h)',
+                              accentColor: AppColors.sell,
+                            ),
+                            MarketDerivativesLiquidationTimeline(
+                              history: snapshot.liquidationHistory,
+                              pairs: snapshot.pairs,
+                            ),
+                            const MarketDerivativesSectionHeader(
+                              label: 'Top Open Interest',
+                              accentColor: marketDerivativesPrimary,
+                            ),
+                            MarketDerivativesTopOpenInterestList(
+                              pairs: snapshot.pairs.take(5).toList(),
+                            ),
+                          ] else if (_tab == 'perpetual') ...[
+                            MarketDerivativesSortChips(
+                              active: _sortBy,
+                              onSelected: (value) => setState(() {
+                                _sortBy = value;
+                              }),
+                            ),
+                            for (final pair in snapshot.pairs)
+                              MarketDerivativesPerpetualPairCard(pair: pair),
+                          ] else ...[
+                            MarketDerivativesLiquidationSummary(
+                              stats: snapshot.globalStats,
+                            ),
+                            const MarketDerivativesSectionHeader(
+                              label: 'Thanh lý theo cặp',
+                              accentColor: AppColors.sell,
+                            ),
+                            for (final pair
+                                in [...snapshot.pairs]..sort(
+                                  (a, b) => b.totalLiquidations24h.compareTo(
+                                    a.totalLiquidations24h,
+                                  ),
+                                ))
+                              MarketDerivativesLiquidationPairCard(pair: pair),
+                            const MarketDerivativesRiskWarningCard(),
+                          ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -55,8 +55,7 @@ class _BotSuitabilityAssessmentPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(tradeBotSuitabilityControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(tradeBotSuitabilityControllerProvider);
     return VitTradeHubScaffold(
       title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
       subtitle: 'Đánh giá mức độ phù hợp với bot',
@@ -72,47 +71,63 @@ class _BotSuitabilityAssessmentPageState
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        if (!_showResult)
-          VitBotSubpageHero(
-            primaryLabel: 'Câu hỏi',
-            primaryValue:
-                '${_currentQuestion + 1}/${snapshot.questions.length}',
-            secondaryLabel: 'Đã trả lời',
-            secondaryValue: '${_answers.length}',
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được đánh giá phù hợp',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeBotSuitabilityAssessmentSnapshotProvider),
           ),
-        if (_showResult)
-          VitTradeSection(
-            title: 'Kết quả',
-            child: _ResultView(
-              snapshot: snapshot,
-              score: _score(snapshot),
-              answers: _answers,
-              onComplete: _handleComplete,
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          return [
+            if (!_showResult)
+              VitBotSubpageHero(
+                primaryLabel: 'Câu hỏi',
+                primaryValue:
+                    '${_currentQuestion + 1}/${snapshot.questions.length}',
+                secondaryLabel: 'Đã trả lời',
+                secondaryValue: '${_answers.length}',
+              ),
+            if (_showResult)
+              VitTradeSection(
+                title: 'Kết quả',
+                child: _ResultView(
+                  snapshot: snapshot,
+                  score: controller.score(_answers),
+                  answers: _answers,
+                  onComplete: _handleComplete,
+                ),
+              )
+            else
+              VitTradeSection(
+                title: 'Câu hỏi',
+                child: _QuestionView(
+                  snapshot: snapshot,
+                  currentQuestion: _currentQuestion,
+                  answers: _answers,
+                  onAnswer: _handleAnswer,
+                ),
+              ),
+            const VitBotRiskReviewFooter(
+              title: 'Review bot suitability risk',
+              message:
+                  'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
             ),
-          )
-        else
-          VitTradeSection(
-            title: 'Câu hỏi',
-            child: _QuestionView(
-              snapshot: snapshot,
-              currentQuestion: _currentQuestion,
-              answers: _answers,
-              onAnswer: _handleAnswer,
-            ),
-          ),
-        const VitBotRiskReviewFooter(
-          title: 'Review bot suitability risk',
-          message:
-              'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
-        ),
-      ],
+          ];
+        },
+      ),
     );
   }
 
   void _handleAnswer(String optionId) {
     final snapshot = ref
         .read(tradeBotSuitabilityControllerProvider)
+        .value!
         .state
         .snapshot;
     final question = snapshot.questions[_currentQuestion];
@@ -131,11 +146,8 @@ class _BotSuitabilityAssessmentPageState
     if (result.outcome == TradeBotSuitabilityOutcome.fail) return;
     final path = ref
         .read(tradeBotSuitabilityControllerProvider)
+        .value!
         .completionPathFor(result);
     if (path.isNotEmpty) context.go(path);
-  }
-
-  int _score(TradeBotSuitabilityAssessmentSnapshot snapshot) {
-    return ref.read(tradeBotSuitabilityControllerProvider).score(_answers);
   }
 }

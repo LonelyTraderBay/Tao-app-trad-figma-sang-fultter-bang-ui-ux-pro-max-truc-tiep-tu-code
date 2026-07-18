@@ -8,58 +8,77 @@
 // (getters, unchanged) plus this domain's slice of
 // mock_trade_repository_core_test.dart (getTraderProfile) and
 // mock_trade_repository_actions_test.dart (copy action methods).
+//
+// GD4-F3: every method is `Future<T>` — mock simulates network latency via
+// `loadDelay`; tests pass `Duration.zero` (see
+// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md).
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository.dart';
 
 void main() {
-  const repo = MockTradeCopyTradingRepository();
+  const repo = MockTradeCopyTradingRepository(loadDelay: Duration.zero);
 
   group('MockTradeCopyTradingRepository smoke test', () {
     group('getters', () {
-      test('getTraderProfile', () {
-        expect(repo.getTraderProfile(), isA<TradeTraderProfileSnapshot>());
+      test('getTraderProfile', () async {
         expect(
-          repo.getTraderProfile(traderId: 'trader002'),
+          await repo.getTraderProfile(),
+          isA<TradeTraderProfileSnapshot>(),
+        );
+        expect(
+          await repo.getTraderProfile(traderId: 'trader002'),
           isA<TradeTraderProfileSnapshot>(),
         );
       });
 
-      test('getCopyTrading / getCopyCardDemo / getCopyEducation', () {
-        expect(repo.getCopyTrading(), isA<TradeCopyTradingSnapshot>());
-        expect(repo.getCopyCardDemo(), isA<TradeCopyCardDemoSnapshot>());
-        expect(repo.getCopyEducation(), isA<TradeCopyEducationSnapshot>());
-      });
-
-      test('getActiveCopies / getCopySettings / getCopyNotifications', () {
-        expect(repo.getActiveCopies(), isA<TradeActiveCopiesSnapshot>());
-        expect(repo.getCopySettings(), isA<TradeCopySettingsSnapshot>());
+      test('getCopyTrading / getCopyCardDemo / getCopyEducation', () async {
+        expect(await repo.getCopyTrading(), isA<TradeCopyTradingSnapshot>());
+        expect(await repo.getCopyCardDemo(), isA<TradeCopyCardDemoSnapshot>());
         expect(
-          repo.getCopyNotifications(),
-          isA<TradeCopyNotificationsSnapshot>(),
+          await repo.getCopyEducation(),
+          isA<TradeCopyEducationSnapshot>(),
         );
       });
 
       test(
-        'getProviderApplication / getCopyProviderDetail / getPreCopyAssessment',
-        () {
+        'getActiveCopies / getCopySettings / getCopyNotifications',
+        () async {
           expect(
-            repo.getProviderApplication(),
+            await repo.getActiveCopies(),
+            isA<TradeActiveCopiesSnapshot>(),
+          );
+          expect(
+            await repo.getCopySettings(),
+            isA<TradeCopySettingsSnapshot>(),
+          );
+          expect(
+            await repo.getCopyNotifications(),
+            isA<TradeCopyNotificationsSnapshot>(),
+          );
+        },
+      );
+
+      test(
+        'getProviderApplication / getCopyProviderDetail / getPreCopyAssessment',
+        () async {
+          expect(
+            await repo.getProviderApplication(),
             isA<TradeProviderApplicationSnapshot>(),
           );
           expect(
-            repo.getCopyProviderDetail(),
+            await repo.getCopyProviderDetail(),
             isA<TradeCopyProviderDetailSnapshot>(),
           );
           expect(
-            repo.getCopyProviderDetail(providerId: 'provider002'),
+            await repo.getCopyProviderDetail(providerId: 'provider002'),
             isA<TradeCopyProviderDetailSnapshot>(),
           );
           expect(
-            repo.getPreCopyAssessment(),
+            await repo.getPreCopyAssessment(),
             isA<TradePreCopyAssessmentSnapshot>(),
           );
           expect(
-            repo.getPreCopyAssessment(providerId: 'provider002'),
+            await repo.getPreCopyAssessment(providerId: 'provider002'),
             isA<TradePreCopyAssessmentSnapshot>(),
           );
         },
@@ -67,29 +86,29 @@ void main() {
 
       test(
         'getCopyConfiguration / getCopyConfirmation / getCopyPerformance',
-        () {
+        () async {
           expect(
-            repo.getCopyConfiguration(),
+            await repo.getCopyConfiguration(),
             isA<TradeCopyConfigurationSnapshot>(),
           );
           expect(
-            repo.getCopyConfiguration(providerId: 'provider002'),
+            await repo.getCopyConfiguration(providerId: 'provider002'),
             isA<TradeCopyConfigurationSnapshot>(),
           );
           expect(
-            repo.getCopyConfirmation(),
+            await repo.getCopyConfirmation(),
             isA<TradeCopyConfirmationSnapshot>(),
           );
           expect(
-            repo.getCopyConfirmation(providerId: 'provider002'),
+            await repo.getCopyConfirmation(providerId: 'provider002'),
             isA<TradeCopyConfirmationSnapshot>(),
           );
           expect(
-            repo.getCopyPerformance(),
+            await repo.getCopyPerformance(),
             isA<TradeCopyPerformanceSnapshot>(),
           );
           expect(
-            repo.getCopyPerformance(copyId: 'copy002'),
+            await repo.getCopyPerformance(copyId: 'copy002'),
             isA<TradeCopyPerformanceSnapshot>(),
           );
         },
@@ -97,22 +116,25 @@ void main() {
 
       test(
         'getPerformanceAttribution / getProviderComparison / getCopyAuditLog',
-        () {
+        () async {
           expect(
-            repo.getPerformanceAttribution(),
+            await repo.getPerformanceAttribution(),
             isA<TradePerformanceAttributionSnapshot>(),
           );
           expect(
-            repo.getPerformanceAttribution(copyId: 'copy002'),
+            await repo.getPerformanceAttribution(copyId: 'copy002'),
             isA<TradePerformanceAttributionSnapshot>(),
           );
           expect(
-            repo.getProviderComparison(),
+            await repo.getProviderComparison(),
             isA<TradeProviderComparisonSnapshot>(),
           );
-          expect(repo.getCopyAuditLog(), isA<TradeCopyAuditLogSnapshot>());
           expect(
-            repo.getCopyAuditLog(copyId: 'copy002'),
+            await repo.getCopyAuditLog(),
+            isA<TradeCopyAuditLogSnapshot>(),
+          );
+          expect(
+            await repo.getCopyAuditLog(copyId: 'copy002'),
             isA<TradeCopyAuditLogSnapshot>(),
           );
         },
@@ -120,17 +142,17 @@ void main() {
 
       test(
         'getPortfolioRiskAnalysis / getProviderLeaderboard / getSafetyEducation',
-        () {
+        () async {
           expect(
-            repo.getPortfolioRiskAnalysis(),
+            await repo.getPortfolioRiskAnalysis(),
             isA<TradePortfolioRiskAnalysisSnapshot>(),
           );
           expect(
-            repo.getProviderLeaderboard(),
+            await repo.getProviderLeaderboard(),
             isA<TradeProviderLeaderboardSnapshot>(),
           );
           expect(
-            repo.getSafetyEducation(),
+            await repo.getSafetyEducation(),
             isA<TradeSafetyEducationSnapshot>(),
           );
         },
@@ -138,17 +160,17 @@ void main() {
 
       test(
         'getProviderGovernance / getDisputeResolution / getCopySafetyCenter',
-        () {
+        () async {
           expect(
-            repo.getProviderGovernance(),
+            await repo.getProviderGovernance(),
             isA<TradeProviderGovernanceSnapshot>(),
           );
           expect(
-            repo.getDisputeResolution(),
+            await repo.getDisputeResolution(),
             isA<TradeDisputeResolutionSnapshot>(),
           );
           expect(
-            repo.getCopySafetyCenter(),
+            await repo.getCopySafetyCenter(),
             isA<TradeCopySafetyCenterSnapshot>(),
           );
         },
@@ -156,24 +178,26 @@ void main() {
     });
 
     group('write / action methods', () {
-      test('patchCopySettings', () {
-        final snapshot = repo.getCopySettings();
+      test('patchCopySettings', () async {
+        final snapshot = await repo.getCopySettings();
         final updated = snapshot.settings.copyWith(defaultCopyRatio: 60);
-        final result = repo.patchCopySettings(updated);
+        final result = await repo.patchCopySettings(updated);
         expect(result, isA<TradeCopySettingsSaveResult>());
         expect(result.status, 'saved');
       });
 
-      test('previewCopyConfiguration', () {
-        final found = repo.getCopyConfiguration(providerId: 'provider001');
-        final preview = repo.previewCopyConfiguration(found.defaultDraft);
+      test('previewCopyConfiguration', () async {
+        final found = await repo.getCopyConfiguration(
+          providerId: 'provider001',
+        );
+        final preview = await repo.previewCopyConfiguration(found.defaultDraft);
         expect(preview, isA<TradeCopyConfigurationPreview>());
         expect(preview.status, 'ready');
       });
 
-      test('submitCopyConfirmation', () {
-        final found = repo.getCopyConfirmation(providerId: 'ct001');
-        final accepted = repo.submitCopyConfirmation(
+      test('submitCopyConfirmation', () async {
+        final found = await repo.getCopyConfirmation(providerId: 'ct001');
+        final accepted = await repo.submitCopyConfirmation(
           TradeCopyConfirmationRequest(
             providerId: 'ct001',
             configuration: found.configuration,
@@ -185,15 +209,17 @@ void main() {
         expect(accepted, isA<TradeCopyConfirmationResult>());
       });
 
-      test('submitProviderApplication', () {
-        final snapshot = repo.getProviderApplication();
-        final result = repo.submitProviderApplication(snapshot.defaultDraft);
+      test('submitProviderApplication', () async {
+        final snapshot = await repo.getProviderApplication();
+        final result = await repo.submitProviderApplication(
+          snapshot.defaultDraft,
+        );
         expect(result, isA<TradeProviderApplicationResult>());
         expect(result.status, 'submitted');
       });
 
-      test('createCopyAuditExport', () {
-        final result = repo.createCopyAuditExport(
+      test('createCopyAuditExport', () async {
+        final result = await repo.createCopyAuditExport(
           const TradeCopyAuditExportRequest(
             copyId: 'copy001',
             format: 'csv',
@@ -204,8 +230,8 @@ void main() {
         expect(result, isA<TradeCopyAuditExportResult>());
       });
 
-      test('submitDisputeComplaint', () {
-        final result = repo.submitDisputeComplaint(
+      test('submitDisputeComplaint', () async {
+        final result = await repo.submitDisputeComplaint(
           const TradeDisputeComplaintDraft(
             complaintType: 'execution_issue',
             providerId: 'trader-2',
@@ -217,8 +243,8 @@ void main() {
         expect(result.status, 'submitted');
       });
 
-      test('submitCopyTradingAction', () {
-        final result = repo.submitCopyTradingAction(
+      test('submitCopyTradingAction', () async {
+        final result = await repo.submitCopyTradingAction(
           const TradeCopyActionRequest(providerId: 'ct001', action: 'follow'),
         );
         expect(result, isA<TradeCopyActionResult>());

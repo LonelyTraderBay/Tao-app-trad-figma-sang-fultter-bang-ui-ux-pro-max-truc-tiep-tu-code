@@ -14,74 +14,83 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 
 void main() {
-  const repo = MockTradeBotsRepository();
+  const repo = MockTradeBotsRepository(loadDelay: Duration.zero);
 
   group('MockTradeBotsRepository analytics & backtest smoke test', () {
-    test('getBotBacktesting pins the default strategy, pair and capital', () {
-      final backtest = repo.getBotBacktesting();
-      expect(backtest.defaultStrategyId, 'grid');
-      expect(backtest.defaultPair, 'BTC/USDT');
-      expect(backtest.defaultCapital, 1000);
-      expect(backtest.strategies, isNotEmpty);
-    });
+    test(
+      'getBotBacktesting pins the default strategy, pair and capital',
+      () async {
+        final backtest = await repo.getBotBacktesting();
+        expect(backtest.defaultStrategyId, 'grid');
+        expect(backtest.defaultPair, 'BTC/USDT');
+        expect(backtest.defaultCapital, 1000);
+        expect(backtest.strategies, isNotEmpty);
+      },
+    );
 
-    test('getBotStrategyCompare pins the default selection', () {
-      final compare = repo.getBotStrategyCompare();
+    test('getBotStrategyCompare pins the default selection', () async {
+      final compare = await repo.getBotStrategyCompare();
       expect(compare.defaultSelectedIds, ['grid', 'momentum']);
       expect(compare.strategies, isNotEmpty);
     });
 
-    test('getBotOptimization pins the default optimization target', () {
-      final optimization = repo.getBotOptimization();
+    test('getBotOptimization pins the default optimization target', () async {
+      final optimization = await repo.getBotOptimization();
       expect(optimization.defaultTargetId, 'sharpe');
       expect(optimization.targets, isNotEmpty);
     });
 
-    test('getBotPortfolioDashboard returns populated allocations', () {
-      final dashboard = repo.getBotPortfolioDashboard();
+    test('getBotPortfolioDashboard returns populated allocations', () async {
+      final dashboard = await repo.getBotPortfolioDashboard();
       expect(dashboard.allocations, isNotEmpty);
       expect(dashboard.healthItems, isNotEmpty);
     });
 
     test(
       'getBotDrawdownAnalyzer / getBotEquityCurve return populated data',
-      () {
-        final drawdown = repo.getBotDrawdownAnalyzer();
+      () async {
+        final drawdown = await repo.getBotDrawdownAnalyzer();
         expect(drawdown.events, isNotEmpty);
         expect(drawdown.insights, isNotEmpty);
 
-        final equity = repo.getBotEquityCurve();
+        final equity = await repo.getBotEquityCurve();
         expect(equity.equityPoints, isNotEmpty);
         expect(equity.performanceStats, isNotEmpty);
       },
     );
 
-    test('getBotGuide / getBotFaq return populated content', () {
-      final guide = repo.getBotGuide();
+    test('getBotGuide / getBotFaq return populated content', () async {
+      final guide = await repo.getBotGuide();
       expect(guide.strategies, isNotEmpty);
       expect(guide.bestPractices, isNotEmpty);
 
-      final faq = repo.getBotFaq();
+      final faq = await repo.getBotFaq();
       expect(faq.categories, isNotEmpty);
       expect(faq.totalFaqs, greaterThan(0));
     });
 
-    test('getBotTaxReporting pins the default year and cost basis method', () {
-      final tax = repo.getBotTaxReporting();
-      expect(tax.defaultYear, '2025');
-      expect(tax.defaultCostBasisMethod, 'FIFO');
-      expect(tax.taxYears, contains('2025'));
-    });
+    test(
+      'getBotTaxReporting pins the default year and cost basis method',
+      () async {
+        final tax = await repo.getBotTaxReporting();
+        expect(tax.defaultYear, '2025');
+        expect(tax.defaultCostBasisMethod, 'FIFO');
+        expect(tax.taxYears, contains('2025'));
+      },
+    );
 
-    test('getBotApiDocumentation pins the default view and websocket url', () {
-      final docs = repo.getBotApiDocumentation();
-      expect(docs.defaultView, 'endpoints');
-      expect(
-        docs.websocketUrl,
-        'wss://ws.tradingplatform.com/bots?apiKey=YOUR_API_KEY',
-      );
-      expect(docs.endpoints, isNotEmpty);
-    });
+    test(
+      'getBotApiDocumentation pins the default view and websocket url',
+      () async {
+        final docs = await repo.getBotApiDocumentation();
+        expect(docs.defaultView, 'endpoints');
+        expect(
+          docs.websocketUrl,
+          'wss://ws.tradingplatform.com/bots?apiKey=YOUR_API_KEY',
+        );
+        expect(docs.endpoints, isNotEmpty);
+      },
+    );
 
     test('runBotBacktest pins the queued status, report id and progress', () {
       final result = repo.runBotBacktest(

@@ -37,9 +37,7 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getRegulatoryInspectionReady();
+    final async = ref.watch(tradeRegulatoryInspectionReadyProvider);
     return VitTradeHubScaffold(
       title: 'Regulatory Compliance',
       subtitle: 'Inspection Ready Dashboard',
@@ -55,70 +53,82 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
       headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
-            title: 'Review inspection readiness evidence',
-            message:
-                'Confirm report scope, access limits, retained records, and next steps before sharing compliance material.',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeRegulatoryInspectionReadyProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Inspection status',
-          statusPill: VitStatusPill(
-            label: 'Score ${snapshot.complianceScore}',
-            status: VitStatusPillStatus.success,
-            size: VitStatusPillSize.sm,
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Review inspection readiness evidence',
+              message:
+                  'Confirm report scope, access limits, retained records, and next steps before sharing compliance material.',
+            ),
           ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Frameworks',
-              value: '${snapshot.frameworks.length} covered',
+          VitTradeComplianceSection(
+            title: 'Inspection status',
+            statusPill: VitStatusPill(
+              label: 'Score ${snapshot.complianceScore}',
+              status: VitStatusPillStatus.success,
+              size: VitStatusPillSize.sm,
             ),
-            VitTradeComplianceItem(
-              label: 'Documents',
-              value: '${snapshot.documents.length} retained',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Readiness',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _ComplianceScoreCard(snapshot: snapshot),
-              _QuickStats(stats: snapshot.stats),
-              const VitSectionHeader(
-                title: 'Regulatory Framework Coverage',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _inspectionPrimary,
+            items: [
+              VitTradeComplianceItem(
+                label: 'Frameworks',
+                value: '${snapshot.frameworks.length} covered',
               ),
-              for (final framework in snapshot.frameworks)
-                _FrameworkCard(framework: framework),
-              const VitSectionHeader(
-                title: 'Document Repository',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _inspectionPrimary,
+              VitTradeComplianceItem(
+                label: 'Documents',
+                value: '${snapshot.documents.length} retained',
               ),
-              for (final document in snapshot.documents)
-                _DocumentCard(document: document),
-              const VitSectionHeader(
-                title: 'Regulatory Inspector Access',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _inspectionPrimary,
-              ),
-              _InspectorPortalCard(snapshot: snapshot),
-              _ReportButton(snapshot: snapshot),
             ],
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'Readiness',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ComplianceScoreCard(snapshot: snapshot),
+                _QuickStats(stats: snapshot.stats),
+                const VitSectionHeader(
+                  title: 'Regulatory Framework Coverage',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _inspectionPrimary,
+                ),
+                for (final framework in snapshot.frameworks)
+                  _FrameworkCard(framework: framework),
+                const VitSectionHeader(
+                  title: 'Document Repository',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _inspectionPrimary,
+                ),
+                for (final document in snapshot.documents)
+                  _DocumentCard(document: document),
+                const VitSectionHeader(
+                  title: 'Regulatory Inspector Access',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _inspectionPrimary,
+                ),
+                _InspectorPortalCard(snapshot: snapshot),
+                _ReportButton(snapshot: snapshot),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

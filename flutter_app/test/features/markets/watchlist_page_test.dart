@@ -32,8 +32,10 @@ void main() {
     return router;
   }
 
-  test('SC-012 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketWatchlist();
+  test('SC-012 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketWatchlist();
 
     expect(snapshot.entries, hasLength(3));
     expect(snapshot.entries.map((entry) => entry.pairId), [

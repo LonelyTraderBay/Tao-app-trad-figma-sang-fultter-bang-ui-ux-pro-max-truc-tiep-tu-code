@@ -35,9 +35,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-101 mock repository exposes target market BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getTargetMarketDefinition();
+  test('SC-101 mock repository exposes target market BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getTargetMarketDefinition();
 
     expect(snapshot.product.name, 'Mirror Copy Trading');
     expect(

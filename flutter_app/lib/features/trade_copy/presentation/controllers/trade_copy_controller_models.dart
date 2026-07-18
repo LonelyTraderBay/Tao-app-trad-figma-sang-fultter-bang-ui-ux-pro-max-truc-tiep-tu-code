@@ -53,7 +53,7 @@ final class TradeCopyConfirmationController {
         .every((item) => state.acceptedConsentIds.contains(item.id));
   }
 
-  TradeCopyConfirmationResult submit() {
+  Future<TradeCopyConfirmationResult> submit() {
     return _repository.submitCopyConfirmation(
       TradeCopyConfirmationRequest(
         providerId: state.snapshot.providerId,
@@ -91,7 +91,7 @@ final class TradeActiveCopiesController {
     );
   }
 
-  TradeCopyActionResult submitCopyAction({
+  Future<TradeCopyActionResult> submitCopyAction({
     required String providerId,
     required String action,
   }) {
@@ -138,7 +138,7 @@ final class TradeCopySettingsController {
   final TradeCopySettingsViewState state;
   final TradeCopyTradingRepository _repository;
 
-  TradeCopySettingsSaveResult save(TradeCopySettings settings) {
+  Future<TradeCopySettingsSaveResult> save(TradeCopySettings settings) {
     return _repository.patchCopySettings(settings);
   }
 
@@ -227,7 +227,9 @@ final class TradeProviderApplicationController {
   final TradeProviderApplicationViewState state;
   final TradeCopyTradingRepository _repository;
 
-  TradeProviderApplicationResult submit(TradeProviderApplicationDraft draft) {
+  Future<TradeProviderApplicationResult> submit(
+    TradeProviderApplicationDraft draft,
+  ) {
     return _repository.submitProviderApplication(draft);
   }
 

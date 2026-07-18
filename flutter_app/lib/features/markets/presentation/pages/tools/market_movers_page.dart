@@ -130,7 +130,8 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketControllerProvider).getMarketMovers();
+    final moversAsync = ref.watch(marketMoversSnapshotProvider);
+    final lastUpdatedLabel = moversAsync.value?.lastUpdatedLabel ?? '...';
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -139,7 +140,6 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
-    final movers = _visibleMovers(snapshot);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -150,7 +150,7 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Biến động thị trường',
-            subtitle: 'So sánh nhanh · Cập nhật ${snapshot.lastUpdatedLabel}',
+            subtitle: 'So sánh nhanh · Cập nhật $lastUpdatedLabel',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -171,88 +171,105 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.defaultPadding,
                       gap: VitContentGap.tight,
-                      children: [
-                        _MoverTabs(
-                          tabs: snapshot.tabs,
-                          activeTab: _tab,
-                          onSelected: _setTab,
-                        ),
-                        if (_tab != 'Mới niêm yết')
-                          _TimeframeSelector(
-                            timeframes: snapshot.timeframes,
-                            activeTimeframe: _timeframe,
-                            onSelected: (value) {
-                              setState(() => _timeframe = value);
-                            },
+                      children: moversAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được biến động thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(marketMoversSnapshotProvider),
                           ),
-                        _CategoryDropdown(
-                          category: _category,
-                          expanded: _showCategories,
-                          onTap: () {
-                            setState(() => _showCategories = !_showCategories);
-                          },
-                        ),
-                        if (_showCategories)
-                          _CategoryPicker(
-                            categories: snapshot.screenFilters.categories,
-                            activeCategory: _category,
-                            onSelected: _setCategory,
-                          ),
-                        _SortSelector(
-                          options: snapshot.screenFilters.sortOptions,
-                          activeSort: _sort,
-                          onSelected: (value) {
-                            setState(() {
-                              _sort = value;
-                              _showCategories = false;
-                            });
-                          },
-                        ),
-                        _ResultSummary(
-                          count: movers.length,
-                          sortLabel: _sortLabel,
-                          timeframe: _timeframe,
-                        ),
-                        if (movers.isEmpty)
-                          VitEmptyState(
-                            icon: Icons.trending_flat_rounded,
-                            title: 'Không có kết quả',
-                            message:
-                                'Thử đổi tab, danh mục hoặc khung thời gian khác',
-                            actionLabel: 'Xóa bộ lọc',
-                            onAction: () {
-                              setState(() {
-                                _tab = 'Tăng mạnh';
-                                _timeframe = '24h';
-                                _category = 'Tất cả';
-                                _sort = 'change';
-                                _showCategories = false;
-                              });
-                            },
-                          )
-                        else
-                          _MoverListCard(
-                            movers: movers,
-                            tab: _tab,
-                            changeFor: _changeFor,
-                            onTap: (mover) => context.go(
-                              AppRoutePaths.pairDetail('${mover.id}usdt'),
+                        ],
+                        data: (snapshot) {
+                          final movers = _visibleMovers(snapshot);
+                          return [
+                            _MoverTabs(
+                              tabs: snapshot.tabs,
+                              activeTab: _tab,
+                              onSelected: _setTab,
                             ),
-                          ),
-                        const MarketBodyReviewSection(
-                          title: 'Movers state review',
-                          message: 'Market movers data reviewed',
-                          detail:
-                              'Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.',
-                          primary:
-                              'Filter chips and result summary keep the active market slice explicit.',
-                          secondary:
-                              'Empty results include a reset path before the shared review section.',
-                          tertiary:
-                              'Mover rows preserve pair identity, movement, volume, and next navigation.',
-                        ),
-                        const _DataRefreshFooter(),
-                      ],
+                            if (_tab != 'Mới niêm yết')
+                              _TimeframeSelector(
+                                timeframes: snapshot.timeframes,
+                                activeTimeframe: _timeframe,
+                                onSelected: (value) {
+                                  setState(() => _timeframe = value);
+                                },
+                              ),
+                            _CategoryDropdown(
+                              category: _category,
+                              expanded: _showCategories,
+                              onTap: () {
+                                setState(
+                                  () => _showCategories = !_showCategories,
+                                );
+                              },
+                            ),
+                            if (_showCategories)
+                              _CategoryPicker(
+                                categories: snapshot.screenFilters.categories,
+                                activeCategory: _category,
+                                onSelected: _setCategory,
+                              ),
+                            _SortSelector(
+                              options: snapshot.screenFilters.sortOptions,
+                              activeSort: _sort,
+                              onSelected: (value) {
+                                setState(() {
+                                  _sort = value;
+                                  _showCategories = false;
+                                });
+                              },
+                            ),
+                            _ResultSummary(
+                              count: movers.length,
+                              sortLabel: _sortLabel,
+                              timeframe: _timeframe,
+                            ),
+                            if (movers.isEmpty)
+                              VitEmptyState(
+                                icon: Icons.trending_flat_rounded,
+                                title: 'Không có kết quả',
+                                message:
+                                    'Thử đổi tab, danh mục hoặc khung thời gian khác',
+                                actionLabel: 'Xóa bộ lọc',
+                                onAction: () {
+                                  setState(() {
+                                    _tab = 'Tăng mạnh';
+                                    _timeframe = '24h';
+                                    _category = 'Tất cả';
+                                    _sort = 'change';
+                                    _showCategories = false;
+                                  });
+                                },
+                              )
+                            else
+                              _MoverListCard(
+                                movers: movers,
+                                tab: _tab,
+                                changeFor: _changeFor,
+                                onTap: (mover) => context.go(
+                                  AppRoutePaths.pairDetail('${mover.id}usdt'),
+                                ),
+                              ),
+                            const MarketBodyReviewSection(
+                              title: 'Movers state review',
+                              message: 'Market movers data reviewed',
+                              detail:
+                                  'Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.',
+                              primary:
+                                  'Filter chips and result summary keep the active market slice explicit.',
+                              secondary:
+                                  'Empty results include a reset path before the shared review section.',
+                              tertiary:
+                                  'Mover rows preserve pair identity, movement, volume, and next navigation.',
+                            ),
+                            const _DataRefreshFooter(),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

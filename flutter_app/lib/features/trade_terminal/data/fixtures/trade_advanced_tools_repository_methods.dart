@@ -3,8 +3,11 @@ part of '../repositories/mock_trade_terminal_repository.dart';
 mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
     on _MockTradeTerminalRepositoryBase {
   @override
-  TradeAdvancedChartSnapshot getAdvancedChart({String pairId = 'btcusdt'}) {
-    final trade = getTrade(pairId: pairId);
+  Future<TradeAdvancedChartSnapshot> getAdvancedChart({
+    String pairId = 'btcusdt',
+  }) async {
+    await _simulateNetwork();
+    final trade = await getTrade(pairId: pairId);
     return TradeAdvancedChartSnapshot(
       trade: trade,
       pair: trade.pair,
@@ -31,9 +34,10 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradeRiskManagementSnapshot getRiskManagement() {
+  Future<TradeRiskManagementSnapshot> getRiskManagement() async {
+    await _simulateNetwork();
     return TradeRiskManagementSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       features: _riskFeatures,
       positions: _riskPositions,
       statusItems: _riskStatusItems,
@@ -54,9 +58,10 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradeExecutionQualitySnapshot getExecutionQuality() {
+  Future<TradeExecutionQualitySnapshot> getExecutionQuality() async {
+    await _simulateNetwork();
     return TradeExecutionQualitySnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       features: _executionFeatures,
       report: _executionReport,
       openOrder: _executionOpenOrder,
@@ -76,9 +81,10 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradeAdvancedToolsSnapshot getAdvancedTools() {
+  Future<TradeAdvancedToolsSnapshot> getAdvancedTools() async {
+    await _simulateNetwork();
     return TradeAdvancedToolsSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       features: _advancedToolFeatures,
       ladderOrders: _ladderOrders,
       bulkOrders: _bulkOrders,
@@ -98,7 +104,8 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradeOcoOrderResult submitOcoOrder(TradeOcoOrderDraft draft) {
+  Future<TradeOcoOrderResult> submitOcoOrder(TradeOcoOrderDraft draft) async {
+    await _simulateNetwork();
     return TradeOcoOrderResult(
       orderId: 'OCO-DEMO-060',
       symbol: draft.symbol,
@@ -107,9 +114,10 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradePositionSizeResult calculatePositionSize(
+  Future<TradePositionSizeResult> calculatePositionSize(
     TradePositionSizeRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     final riskAmount = request.accountBalance * request.riskPct / 100;
     final perUnitRisk = (request.entryPrice - request.stopPrice).abs();
     final suggestedAmount = perUnitRisk <= 0 ? 0.0 : riskAmount / perUnitRisk;
@@ -122,12 +130,18 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradeSlippageSettings updateSlippageSettings(TradeSlippageSettings settings) {
+  Future<TradeSlippageSettings> updateSlippageSettings(
+    TradeSlippageSettings settings,
+  ) async {
+    await _simulateNetwork();
     return settings;
   }
 
   @override
-  TradeOrderAmendmentResult amendOrder(TradeOrderAmendmentRequest request) {
+  Future<TradeOrderAmendmentResult> amendOrder(
+    TradeOrderAmendmentRequest request,
+  ) async {
+    await _simulateNetwork();
     return TradeOrderAmendmentResult(
       orderId: request.orderId,
       status: 'modified',
@@ -136,9 +150,10 @@ mixin _MockTradeTerminalRepositoryAdvancedToolsMethods
   }
 
   @override
-  TradeAdvancedToolActionResult submitAdvancedToolAction(
+  Future<TradeAdvancedToolActionResult> submitAdvancedToolAction(
     TradeAdvancedToolActionRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeAdvancedToolActionResult(
       toolId: request.toolId,
       action: request.action,

@@ -50,6 +50,26 @@ class LeveragePage extends ConsumerStatefulWidget {
 class _LeveragePageState extends ConsumerState<LeveragePage> {
   @override
   Widget build(BuildContext context) {
+    // GD4 Cụm F3: `getFuturesLeverage` giờ Future<T> — trang gate qua
+    // `.when()` trước khi dựng TradeLeverageController (mục 6), đảm bảo
+    // `.value` bên trong Notifier không bao giờ null trong luồng UI thật.
+    final snapshotAsync = ref.watch(
+      tradeFuturesLeverageSnapshotProvider(widget.pairId),
+    );
+    return snapshotAsync.when(
+      loading: () => const VitSkeletonList(),
+      error: (error, stackTrace) => VitErrorState(
+        title: 'Không tải được màn hình đòn bẩy',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () =>
+            ref.invalidate(tradeFuturesLeverageSnapshotProvider(widget.pairId)),
+      ),
+      data: (_) => _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     // STATE-S22: nấc đòn bẩy sống trong Notifier (family key = pairId) —
     // hết dual-source `late int _leverage` + setState của bản cũ.
     final leverageState = ref.watch(

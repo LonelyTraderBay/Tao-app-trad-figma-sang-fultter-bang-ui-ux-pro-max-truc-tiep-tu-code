@@ -31,38 +31,42 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-079 mock repository exposes provider leaderboard BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository()
-        .getProviderLeaderboard();
+  test(
+    'SC-079 mock repository exposes provider leaderboard BE draft',
+    () async {
+      final snapshot = await const MockTradeCopyTradingRepository(
+        loadDelay: Duration.zero,
+      ).getProviderLeaderboard();
 
-    expect(snapshot.providers, hasLength(5));
-    expect(snapshot.defaultSortId, 'roi');
-    expect(snapshot.defaultRiskFilterId, 'all');
-    expect(snapshot.defaultVerifiedOnly, isFalse);
-    expect(snapshot.sortOptions.map((item) => item.id), [
-      'roi',
-      'sharpe',
-      'followers',
-      'recent',
-    ]);
-    expect(snapshot.riskFilters.map((item) => item.id), [
-      'all',
-      'low',
-      'medium',
-      'high',
-    ]);
-    expect(snapshot.warningTitle, 'Survivorship Bias Warning');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.providers, hasLength(5));
+      expect(snapshot.defaultSortId, 'roi');
+      expect(snapshot.defaultRiskFilterId, 'all');
+      expect(snapshot.defaultVerifiedOnly, isFalse);
+      expect(snapshot.sortOptions.map((item) => item.id), [
+        'roi',
+        'sharpe',
+        'followers',
+        'recent',
+      ]);
+      expect(snapshot.riskFilters.map((item) => item.id), [
+        'all',
+        'low',
+        'medium',
+        'high',
+      ]);
+      expect(snapshot.warningTitle, 'Survivorship Bias Warning');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-079 renders leaderboard baseline inside the Trade shell', (
     tester,

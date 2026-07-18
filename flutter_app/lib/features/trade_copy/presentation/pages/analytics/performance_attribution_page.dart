@@ -58,9 +58,9 @@ class _PerformanceAttributionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getPerformanceAttribution(copyId: widget.copyId);
+    final snapshotAsync = ref.watch(
+      tradePerformanceAttributionProvider(widget.copyId),
+    );
 
     return VitTradeDetailScaffold(
       title: 'Phân tích hiệu suất',
@@ -74,39 +74,54 @@ class _PerformanceAttributionPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        const VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
-            title: 'Xem lại phân bổ hiệu suất',
-            message:
-                'Xác nhận drawdown, mức phơi nhiễm, giới hạn và bước tiếp theo trước khi điều chỉnh phân bổ copy.',
-          ),
-        ),
-        VitTradeSection(
-          title: 'Tổng quan',
-          child: _SummaryGrid(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Phân tích',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _AttributionTabs(
-                activeTab: _activeTab,
-                onChanged: (value) => setState(() => _activeTab = value),
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được phân bổ hiệu suất',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                tradePerformanceAttributionProvider(widget.copyId),
               ),
-              if (_activeTab == 'attribution')
-                _AttributionTab(snapshot: snapshot)
-              else if (_activeTab == 'drawdown')
-                _DrawdownTab(snapshot: snapshot)
-              else if (_activeTab == 'projection')
-                _ProjectionTab(snapshot: snapshot)
-              else
-                _CorrelationTab(snapshot: snapshot),
-            ],
-          ),
+            ),
+          ],
+          data: (snapshot) => [
+            const VitTradeSection(
+              title: 'Đánh giá rủi ro',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                density: VitDensity.compact,
+                title: 'Xem lại phân bổ hiệu suất',
+                message:
+                    'Xác nhận drawdown, mức phơi nhiễm, giới hạn và bước tiếp theo trước khi điều chỉnh phân bổ copy.',
+              ),
+            ),
+            VitTradeSection(
+              title: 'Tổng quan',
+              child: _SummaryGrid(snapshot: snapshot),
+            ),
+            VitTradeSection(
+              title: 'Phân tích',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _AttributionTabs(
+                    activeTab: _activeTab,
+                    onChanged: (value) => setState(() => _activeTab = value),
+                  ),
+                  if (_activeTab == 'attribution')
+                    _AttributionTab(snapshot: snapshot)
+                  else if (_activeTab == 'drawdown')
+                    _DrawdownTab(snapshot: snapshot)
+                  else if (_activeTab == 'projection')
+                    _ProjectionTab(snapshot: snapshot)
+                  else
+                    _CorrelationTab(snapshot: snapshot),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );

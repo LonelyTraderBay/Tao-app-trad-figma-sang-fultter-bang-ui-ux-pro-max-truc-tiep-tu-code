@@ -52,13 +52,7 @@ class _ClientCategorizationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getClientCategorization();
-    _tab ??= snapshot.defaultTab;
-    final current = snapshot.categories.firstWhere(
-      (item) => item.id == snapshot.currentCategoryId,
-    );
+    final async = ref.watch(tradeClientCategorizationProvider);
     return VitTradeHubScaffold(
       title: 'Client Categorization',
       subtitle: 'MiFID II Classification',
@@ -72,78 +66,95 @@ class _ClientCategorizationPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       useCopyTradingInset: true,
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Client classification review',
-            message:
-                'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
-            contractId: 'client-categorization-review',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeClientCategorizationProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Current category',
-          child: _CurrentCategoryCard(category: current),
-        ),
-        VitTradeComplianceSection(
-          title: 'Classification review',
-          statusPill: const VitStatusPill(
-            label: 'Compliance gated',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(label: 'Category', value: current.label),
-            VitTradeComplianceItem(
-              label: 'Options',
-              value: '${snapshot.categories.length} tiers',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Details',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const _InfoNotice(),
-              VitSegmentedTabBar(
-                tabs: [
-                  for (final tab in const [
-                    ('overview', 'Overview'),
-                    ('protections', 'Protections'),
-                    ('requirements', 'Requirements'),
-                    ('history', 'History'),
-                  ])
-                    VitTabItem(
-                      key: tab.$1,
-                      label: tab.$2,
-                      widgetKey: ClientCategorizationPage.tabKey(tab.$1),
-                    ),
-                ],
-                activeKey: _tab!,
-                onChanged: (id) => setState(() => _tab = id),
+        ],
+        data: (snapshot) {
+          _tab ??= snapshot.defaultTab;
+          final current = snapshot.categories.firstWhere(
+            (item) => item.id == snapshot.currentCategoryId,
+          );
+          return [
+            const VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Client classification review',
+                message:
+                    'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
+                contractId: 'client-categorization-review',
               ),
-              if (_tab == 'overview')
-                _OverviewTab(
-                  categories: snapshot.categories,
-                  currentCategoryId: snapshot.currentCategoryId,
-                )
-              else if (_tab == 'protections')
-                _ProtectionsTab(categories: snapshot.categories)
-              else if (_tab == 'requirements')
-                _RequirementsTab(categories: snapshot.categories)
-              else
-                _HistoryTab(
-                  categories: snapshot.categories,
-                  history: snapshot.history,
+            ),
+            VitTradeSection(
+              title: 'Current category',
+              child: _CurrentCategoryCard(category: current),
+            ),
+            VitTradeComplianceSection(
+              title: 'Classification review',
+              statusPill: const VitStatusPill(
+                label: 'Compliance gated',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(label: 'Category', value: current.label),
+                VitTradeComplianceItem(
+                  label: 'Options',
+                  value: '${snapshot.categories.length} tiers',
                 ),
-              const _QuickLinks(),
-            ],
-          ),
-        ),
-      ],
+              ],
+            ),
+            VitTradeSection(
+              title: 'Details',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const _InfoNotice(),
+                  VitSegmentedTabBar(
+                    tabs: [
+                      for (final tab in const [
+                        ('overview', 'Overview'),
+                        ('protections', 'Protections'),
+                        ('requirements', 'Requirements'),
+                        ('history', 'History'),
+                      ])
+                        VitTabItem(
+                          key: tab.$1,
+                          label: tab.$2,
+                          widgetKey: ClientCategorizationPage.tabKey(tab.$1),
+                        ),
+                    ],
+                    activeKey: _tab!,
+                    onChanged: (id) => setState(() => _tab = id),
+                  ),
+                  if (_tab == 'overview')
+                    _OverviewTab(
+                      categories: snapshot.categories,
+                      currentCategoryId: snapshot.currentCategoryId,
+                    )
+                  else if (_tab == 'protections')
+                    _ProtectionsTab(categories: snapshot.categories)
+                  else if (_tab == 'requirements')
+                    _RequirementsTab(categories: snapshot.categories)
+                  else
+                    _HistoryTab(
+                      categories: snapshot.categories,
+                      history: snapshot.history,
+                    ),
+                  const _QuickLinks(),
+                ],
+              ),
+            ),
+          ];
+        },
+      ),
     );
   }
 }

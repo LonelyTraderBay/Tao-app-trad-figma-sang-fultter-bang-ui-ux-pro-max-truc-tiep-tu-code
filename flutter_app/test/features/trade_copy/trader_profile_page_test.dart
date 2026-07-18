@@ -30,10 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-087 mock repository exposes trader profile BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository().getTraderProfile(
-      traderId: 'trader001',
-    );
+  test('SC-087 mock repository exposes trader profile BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getTraderProfile(traderId: 'trader001');
 
     expect(snapshot.traderId, 'trader001');
     expect(snapshot.trader.name, 'AlphaHunter_VN');

@@ -189,6 +189,22 @@ final class TradeFuturesLeverageRequest {
   final String pairId;
   final int leverage;
   final double exampleMargin;
+
+  // Value equality (GD4 Cụm F3): `previewFuturesLeverage` is now `Future<T>`
+  // (ADR-001), watched behind a `FutureProvider.family` keyed on this
+  // request — value equality lets a request rebuilt with the same on-screen
+  // values resolve to the same cache entry instead of a new one each time
+  // (khuôn PERF-HN1, xem `TradeOrderDraft`/`TradeFuturesOrderDraft`).
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TradeFuturesLeverageRequest &&
+          other.pairId == pairId &&
+          other.leverage == leverage &&
+          other.exampleMargin == exampleMargin);
+
+  @override
+  int get hashCode => Object.hash(pairId, leverage, exampleMargin);
 }
 
 /// Computed risk preview (liquidation distance, fee, projected PnL) for a

@@ -33,8 +33,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-090 mock repository exposes margin hub BE draft', () {
-    final snapshot = const MockTradeRepository().getMarginTradingHub();
+  test('SC-090 mock repository exposes margin hub BE draft', () async {
+    final snapshot = await const MockTradeRepository(
+      loadDelay: Duration.zero,
+    ).getMarginTradingHub();
 
     expect(snapshot.stats, hasLength(2));
     expect(snapshot.stats.map((item) => item.value), ['4', '\$6,080']);

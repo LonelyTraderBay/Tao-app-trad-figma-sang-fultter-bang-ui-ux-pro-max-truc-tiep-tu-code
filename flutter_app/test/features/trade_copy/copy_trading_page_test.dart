@@ -31,10 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-063 mock repository exposes copy trading BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getCopyTrading();
-    final result = repo.submitCopyTradingAction(
+  test('SC-063 mock repository exposes copy trading BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getCopyTrading();
+    final result = await repo.submitCopyTradingAction(
       const TradeCopyActionRequest(providerId: 'ct001', action: 'follow'),
     );
 

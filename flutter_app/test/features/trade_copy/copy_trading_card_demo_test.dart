@@ -28,8 +28,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-401 mock repository exposes copy card demo BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository().getCopyCardDemo();
+  test('SC-401 mock repository exposes copy card demo BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getCopyCardDemo();
 
     expect(snapshot.endpoint, '/api/mobile/demo/demo-copy-card');
     expect(

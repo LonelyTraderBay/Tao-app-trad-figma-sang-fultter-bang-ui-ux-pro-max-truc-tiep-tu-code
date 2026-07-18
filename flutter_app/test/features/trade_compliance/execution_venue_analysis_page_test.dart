@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-097 mock repository exposes venue analysis BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getExecutionVenueAnalysis();
+  test('SC-097 mock repository exposes venue analysis BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getExecutionVenueAnalysis();
 
     expect(snapshot.defaultTab, 'comparison');
     expect(snapshot.defaultSort, 'volume');

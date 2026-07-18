@@ -10,8 +10,42 @@ part '../fixtures/trade_bot_guide_docs_repository_fixtures.dart';
 part '../fixtures/trade_bot_lifecycle_risk_repository_methods.dart';
 part '../fixtures/trade_bot_lifecycle_risk_repository_fixtures.dart';
 
-mixin _MockTradeBotsRepositoryBase
-    implements TradingBotsRepository, TradeBotAnalyticsRepository {}
+abstract class _MockTradeBotsRepositoryBase
+    implements TradingBotsRepository, TradeBotAnalyticsRepository {
+  const _MockTradeBotsRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  /// When `true`, every method throws a [StateError] after [loadDelay] —
+  /// used to exercise error/retry UI states in tests.
+  final bool simulateError;
+
+  /// Simulated network latency before a method resolves. Tests should pass
+  /// [Duration.zero] to avoid slowing down the suite.
+  final Duration loadDelay;
+
+  /// Shared network simulation for every method: awaits [loadDelay], then
+  /// throws when [simulateError] is set. Khuôn MockHomeRepository.
+  ///
+  /// Declared here (on the base class, not inside either method mixin) so
+  /// both `_MockTradeBotsRepositoryBacktestPortfolioMethods` and
+  /// `_MockTradeBotsRepositoryLifecycleRiskMethods` can call it without one
+  /// mixin depending on the other's `on` clause (GD4-F3 bẫy — the F2 pilot
+  /// only ever had a single method-mixin per mock repo).
+  ///
+  /// Delay 0 thì KHÔNG tạo timer — Future.delayed(Duration.zero) vẫn là
+  /// timer và tester.pump() không-duration không đẩy fake clock (bẫy F2,
+  /// xem GD4-Async-Playbook §9).
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('trade_bots_mock_fetch_failed');
+    }
+  }
+}
 
 /// Independent mock implementation of both [TradingBotsRepository] and
 /// [TradeBotAnalyticsRepository] (trade_bots extraction, Batch 3 of Phase 3
@@ -35,10 +69,9 @@ mixin _MockTradeBotsRepositoryBase
 /// `_MockTradeRepositoryBotBacktestPortfolioMethods` for the latter). This
 /// class keeps that same "two mixin groups, one class" shape under its new
 /// name.
-final class MockTradeBotsRepository
+final class MockTradeBotsRepository extends _MockTradeBotsRepositoryBase
     with
-        _MockTradeBotsRepositoryBase,
         _MockTradeBotsRepositoryBacktestPortfolioMethods,
         _MockTradeBotsRepositoryLifecycleRiskMethods {
-  const MockTradeBotsRepository();
+  const MockTradeBotsRepository({super.simulateError, super.loadDelay});
 }

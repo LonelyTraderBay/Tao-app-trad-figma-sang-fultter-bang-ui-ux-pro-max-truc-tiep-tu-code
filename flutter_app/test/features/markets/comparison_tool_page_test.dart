@@ -30,8 +30,10 @@ void main() {
     return router;
   }
 
-  test('SC-016 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketComparison();
+  test('SC-016 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketComparison();
 
     expect(snapshot.marketPairs, hasLength(10));
     expect(snapshot.selectedPairIds, ['btcusdt', 'ethusdt']);

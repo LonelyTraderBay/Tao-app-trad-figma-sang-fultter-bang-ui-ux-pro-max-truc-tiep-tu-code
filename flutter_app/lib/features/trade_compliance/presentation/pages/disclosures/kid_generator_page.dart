@@ -48,9 +48,7 @@ class KIDGeneratorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getKidGenerator();
+    final async = ref.watch(tradeKidGeneratorProvider);
     return VitTradeHubScaffold(
       title: 'Key Information Document',
       subtitle: 'PRIIPs KID',
@@ -67,69 +65,80 @@ class KIDGeneratorPage extends ConsumerWidget {
       headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'KID document review required',
-            message:
-                'Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.',
-            contractId: 'kid-generator-review',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeKidGeneratorProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'KID review',
-          statusPill: const VitStatusPill(
-            label: 'Review required',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            const VitTradeComplianceItem(
-              label: 'Regulation',
-              value: 'PRIIPs KID',
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'KID document review required',
+              message:
+                  'Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.',
+              contractId: 'kid-generator-review',
             ),
-            VitTradeComplianceItem(
-              label: 'Sections',
-              value: '${snapshot.sections.length} required',
-            ),
-          ],
-        ),
-        const VitTradeSection(
-          title: 'Notice',
-          child: VitTradeComplianceHero(
-            title: 'Mandatory PRIIPs Document',
-            description:
-                'This Key Information Document must be provided before you '
-                'invest. It contains essential information in a standardized '
-                'format (max 3 pages).',
-            icon: Icons.shield_outlined,
-            accentColor: _kidPrimary,
           ),
-        ),
-        VitTradeSection(
-          title: 'Document',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _KidPreviewCard(document: snapshot.document),
-              const VitSectionHeader(
-                title: 'Document Sections',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _kidPrimary,
+          VitTradeComplianceSection(
+            title: 'KID review',
+            statusPill: const VitStatusPill(
+              label: 'Review required',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              const VitTradeComplianceItem(
+                label: 'Regulation',
+                value: 'PRIIPs KID',
               ),
-              for (final section in snapshot.sections) ...[
-                _KidSectionCard(section: section),
-                if (section != snapshot.sections.last)
-                  const SizedBox(height: _kidSectionCardGap),
-              ],
-              const _Actions(),
+              VitTradeComplianceItem(
+                label: 'Sections',
+                value: '${snapshot.sections.length} required',
+              ),
             ],
           ),
-        ),
-      ],
+          const VitTradeSection(
+            title: 'Notice',
+            child: VitTradeComplianceHero(
+              title: 'Mandatory PRIIPs Document',
+              description:
+                  'This Key Information Document must be provided before you '
+                  'invest. It contains essential information in a standardized '
+                  'format (max 3 pages).',
+              icon: Icons.shield_outlined,
+              accentColor: _kidPrimary,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Document',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _KidPreviewCard(document: snapshot.document),
+                const VitSectionHeader(
+                  title: 'Document Sections',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _kidPrimary,
+                ),
+                for (final section in snapshot.sections) ...[
+                  _KidSectionCard(section: section),
+                  if (section != snapshot.sections.last)
+                    const SizedBox(height: _kidSectionCardGap),
+                ],
+                const _Actions(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

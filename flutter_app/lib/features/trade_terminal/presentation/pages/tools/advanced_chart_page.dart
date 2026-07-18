@@ -83,22 +83,12 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeReadModelControllerProvider)
-        .getAdvancedChart(pairId: widget.pairId);
+    final snapshotAsync = ref.watch(
+      tradeAdvancedChartSnapshotProvider(widget.pairId),
+    );
     final indicators = ref
         .watch(advancedChartStateControllerProvider(widget.pairId))
         .indicators;
-    final pair = snapshot.pair;
-    final enabledIndicators = indicators
-        .where((indicator) => indicator.enabled)
-        .toList(growable: false);
-    final productTabs = tradeShellWithProductTabs(
-      context: context,
-      activeProductId: 'spot',
-      productPair: pair,
-      children: const [],
-    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -112,52 +102,77 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
           fullBleed: true,
           children: [
             Expanded(
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      VitTradeTerminalHeader(
-                        symbol: pair.symbol,
-                        showBack: true,
-                        onBack: () => goBackOrFallback(
-                          context,
-                          fallbackPath: AppRoutePaths.tradePair(pair.id),
-                          mode: BackNavigationMode.historyThenFallback,
-                        ),
-                        pairTapKey: AdvancedChartPage.pairSelectorKey,
-                        onPairTap: () => context.go(AppRoutePaths.markets),
-                        priceLabel: formatTradePrice(pair.price),
-                        changePct: pair.changePct,
-                      ),
-                      ...productTabs,
-                      _OhlcvBar(ohlcv: snapshot.ohlcv),
-                      _ChartToolbar(
-                        timeframes: snapshot.timeframes,
-                        activeTimeframe: _timeframe,
-                        activeChartType: _chartType,
-                        activeIndicatorCount: enabledIndicators.length,
-                        onTimeframeChanged: (value) =>
-                            setState(() => _timeframe = value),
-                        onChartTypeChanged: (value) =>
-                            setState(() => _chartType = value),
-                        onIndicators: () =>
-                            setState(() => _showIndicators = true),
-                      ),
-                      _ChartArea(
-                        candles: _expandedCandlesFor(snapshot.candles),
-                        indicators: indicators,
-                        chartType: _chartType,
-                      ),
-                      _ActionBar(pairId: pair.id),
-                    ],
+              child: snapshotAsync.when(
+                loading: () => const VitSkeletonList(),
+                error: (error, stackTrace) => VitErrorState(
+                  title: 'Không tải được biểu đồ giao dịch nâng cao',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () => ref.invalidate(
+                    tradeAdvancedChartSnapshotProvider(widget.pairId),
                   ),
-                  if (_showIndicators)
-                    _IndicatorSheet(
-                      indicators: indicators,
-                      onToggle: _toggleIndicator,
-                      onClose: () => setState(() => _showIndicators = false),
-                    ),
-                ],
+                ),
+                data: (snapshot) {
+                  final pair = snapshot.pair;
+                  final enabledIndicators = indicators
+                      .where((indicator) => indicator.enabled)
+                      .toList(growable: false);
+                  final productTabs = tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'spot',
+                    productPair: pair,
+                    children: const [],
+                  );
+
+                  return Stack(
+                    children: [
+                      Column(
+                        children: [
+                          VitTradeTerminalHeader(
+                            symbol: pair.symbol,
+                            showBack: true,
+                            onBack: () => goBackOrFallback(
+                              context,
+                              fallbackPath: AppRoutePaths.tradePair(pair.id),
+                              mode: BackNavigationMode.historyThenFallback,
+                            ),
+                            pairTapKey: AdvancedChartPage.pairSelectorKey,
+                            onPairTap: () => context.go(AppRoutePaths.markets),
+                            priceLabel: formatTradePrice(pair.price),
+                            changePct: pair.changePct,
+                          ),
+                          ...productTabs,
+                          _OhlcvBar(ohlcv: snapshot.ohlcv),
+                          _ChartToolbar(
+                            timeframes: snapshot.timeframes,
+                            activeTimeframe: _timeframe,
+                            activeChartType: _chartType,
+                            activeIndicatorCount: enabledIndicators.length,
+                            onTimeframeChanged: (value) =>
+                                setState(() => _timeframe = value),
+                            onChartTypeChanged: (value) =>
+                                setState(() => _chartType = value),
+                            onIndicators: () =>
+                                setState(() => _showIndicators = true),
+                          ),
+                          _ChartArea(
+                            candles: _expandedCandlesFor(snapshot.candles),
+                            indicators: indicators,
+                            chartType: _chartType,
+                          ),
+                          _ActionBar(pairId: pair.id),
+                        ],
+                      ),
+                      if (_showIndicators)
+                        _IndicatorSheet(
+                          indicators: indicators,
+                          onToggle: _toggleIndicator,
+                          onClose: () =>
+                              setState(() => _showIndicators = false),
+                        ),
+                    ],
+                  );
+                },
               ),
             ),
           ],

@@ -13,11 +13,11 @@ final class _OfflineSubmitTradeRepository implements TradeRepository {
   static const _mock = MockTradeRepository(loadDelay: Duration.zero);
 
   @override
-  TradeScreenSnapshot getTrade({String pairId = 'btcusdt'}) =>
+  Future<TradeScreenSnapshot> getTrade({String pairId = 'btcusdt'}) =>
       _mock.getTrade(pairId: pairId);
 
   @override
-  TradeOrderPreview previewOrder(TradeOrderDraft draft) =>
+  Future<TradeOrderPreview> previewOrder(TradeOrderDraft draft) =>
       _mock.previewOrder(draft);
 
   @override
@@ -58,9 +58,14 @@ void main() {
     () async {
       const repository = MockTradeRepository(loadDelay: Duration.zero);
       final container = containerWith(repository);
-      final snapshot = repository.getTrade();
+      final snapshot = await repository.getTrade();
       final request = (pairId: snapshot.pair.id, draft: draftFor(snapshot));
       final provider = tradeOrderControllerProvider(request);
+      // GD4 Cụm F3: getTrade/previewOrder giờ Future<T> — resolve trước khi
+      // đọc controller đồng bộ (khuôn playbook mục 7: await ...future trước
+      // khi đọc giá trị đồng bộ).
+      await container.read(tradeScreenProvider(request.pairId).future);
+      await container.read(tradeOrderPreviewProvider(request.draft).future);
 
       final statuses = <TradeHighRiskFlowStatus>[];
       final subscription = container.listen(
@@ -95,35 +100,38 @@ void main() {
     },
   );
 
-  test('Trade order controller seed draft/validationError từ build()', () {
-    const repository = MockTradeRepository(loadDelay: Duration.zero);
-    final container = containerWith(repository);
-    final snapshot = repository.getTrade();
+  test(
+    'Trade order controller seed draft/validationError từ build()',
+    () async {
+      const repository = MockTradeRepository(loadDelay: Duration.zero);
+      final container = containerWith(repository);
+      final snapshot = await repository.getTrade();
 
-    final emptyRequest = (
-      pairId: snapshot.pair.id,
-      draft: draftFor(snapshot, amount: 0),
-    );
-    expect(
-      container.read(tradeOrderControllerProvider(emptyRequest)).status,
-      TradeHighRiskFlowStatus.draft,
-    );
+      final emptyRequest = (
+        pairId: snapshot.pair.id,
+        draft: draftFor(snapshot, amount: 0),
+      );
+      expect(
+        container.read(tradeOrderControllerProvider(emptyRequest)).status,
+        TradeHighRiskFlowStatus.draft,
+      );
 
-    final invalidRequest = (
-      pairId: snapshot.pair.id,
-      draft: draftFor(snapshot, price: 0),
-    );
-    expect(
-      container.read(tradeOrderControllerProvider(invalidRequest)).status,
-      TradeHighRiskFlowStatus.validationError,
-    );
-    expect(
-      container
-          .read(tradeOrderControllerProvider(invalidRequest).notifier)
-          .validationMessage(),
-      'Enter a valid order price before preview.',
-    );
-  });
+      final invalidRequest = (
+        pairId: snapshot.pair.id,
+        draft: draftFor(snapshot, price: 0),
+      );
+      expect(
+        container.read(tradeOrderControllerProvider(invalidRequest)).status,
+        TradeHighRiskFlowStatus.validationError,
+      );
+      expect(
+        container
+            .read(tradeOrderControllerProvider(invalidRequest).notifier)
+            .validationMessage(),
+        'Enter a valid order price before preview.',
+      );
+    },
+  );
 
   test(
     'Trade order controller preview mở/đóng và nhánh error khi repo ném',
@@ -133,7 +141,10 @@ void main() {
         simulateError: true,
       );
       final container = containerWith(repository);
-      final snapshot = repository.getTrade();
+      // `repository` ném lỗi trên MỌI call (kể cả getTrade) — dùng repo
+      // riêng không lỗi chỉ để dựng draft hợp lệ cho request.
+      const seedRepository = MockTradeRepository(loadDelay: Duration.zero);
+      final snapshot = await seedRepository.getTrade();
       final request = (pairId: snapshot.pair.id, draft: draftFor(snapshot));
       final provider = tradeOrderControllerProvider(request);
       // Giữ listener suốt test: provider autoDispose không có listener sẽ
@@ -159,11 +170,13 @@ void main() {
     'Trade order controller phân loại OfflineFailure về status offline',
     () async {
       final container = containerWith(const _OfflineSubmitTradeRepository());
-      final snapshot = const _OfflineSubmitTradeRepository().getTrade();
+      final snapshot = await const _OfflineSubmitTradeRepository().getTrade();
       final request = (pairId: snapshot.pair.id, draft: draftFor(snapshot));
       final provider = tradeOrderControllerProvider(request);
       final subscription = container.listen(provider, (_, _) {});
       addTearDown(subscription.close);
+      await container.read(tradeScreenProvider(request.pairId).future);
+      await container.read(tradeOrderPreviewProvider(request.draft).future);
 
       await container.read(provider.notifier).submit();
 
@@ -178,6 +191,20 @@ void main() {
     () async {
       const repository = MockTradeRepository(loadDelay: Duration.zero);
       final container = containerWith(repository);
+      // GD4 Cụm F3: getFuturesLeverage/previewFuturesLeverage giờ Future<T>
+      // — resolve snapshot trước khi đọc controller đồng bộ.
+      final leverageSnapshot = await container.read(
+        tradeFuturesLeverageSnapshotProvider('btcusdt').future,
+      );
+      await container.read(
+        tradeFuturesLeveragePreviewProvider(
+          TradeFuturesLeverageRequest(
+            pairId: 'btcusdt',
+            leverage: leverageSnapshot.currentLeverage,
+            exampleMargin: leverageSnapshot.exampleMargin,
+          ),
+        ).future,
+      );
       final provider = tradeLeverageControllerProvider('btcusdt');
       final subscription = container.listen(provider, (_, _) {});
       addTearDown(subscription.close);
@@ -188,14 +215,16 @@ void main() {
       // build() seed từ snapshot.currentLeverage của read-model.
       expect(container.read(provider).request.leverage, 10);
 
-      controller.setLeverage(25);
+      // GD4 Cụm F3: setLeverage giờ tự await preview mới (previewFuturesLeverage
+      // là Future<T>) — request cập nhật đồng bộ nhưng preview cần await.
+      await controller.setLeverage(25);
       expect(container.read(provider).request.leverage, 25);
       expect(container.read(provider).preview.showRiskTips, isTrue);
       expect(controller.canSubmit, isTrue);
       expect(controller.validationMessage(), isNull);
 
       // setLeverage sanitize tại nguồn — không thể vượt 100 qua API công khai.
-      controller.setLeverage(150);
+      await controller.setLeverage(150);
       expect(container.read(provider).request.leverage, 100);
 
       await controller.submit();
@@ -208,9 +237,9 @@ void main() {
 
   test(
     'Trade margin controller owns mode totals and max amount calculation',
-    () {
-      final repository = const MockTradeRepository();
-      final snapshot = repository.getMarginTrading();
+    () async {
+      const repository = MockTradeRepository(loadDelay: Duration.zero);
+      final snapshot = await repository.getMarginTrading();
       final controller = TradeMarginController(
         state: TradeMarginViewState(snapshot: snapshot),
       );
@@ -244,7 +273,7 @@ void main() {
     () async {
       const repository = MockTradeRepository(loadDelay: Duration.zero);
       final container = containerWith(repository);
-      final futures = repository.getFutures(pairId: 'btcusdt');
+      final futures = await repository.getFutures(pairId: 'btcusdt');
       final futuresDraft = TradeFuturesOrderDraft(
         pairId: futures.pair.id,
         side: TradeFuturesSide.long,
@@ -256,6 +285,13 @@ void main() {
         pairId: futures.pair.id,
         draft: futuresDraft,
       ));
+      // GD4 Cụm F3: getFutures/previewFuturesOrder giờ Future<T> — resolve
+      // trước khi đọc controller đồng bộ (canSubmit phụ thuộc
+      // snapshot.accountBalance/usedMargin thật, không phải fallback rỗng).
+      await container.read(tradeFuturesProvider(futures.pair.id).future);
+      await container.read(
+        tradeFuturesOrderPreviewProvider(futuresDraft).future,
+      );
       final statuses = <TradeHighRiskFlowStatus>[];
       final subscription = container.listen(
         provider,
@@ -284,11 +320,11 @@ void main() {
       final ordersController = TradeOrdersHistoryController(
         repository: repository,
         state: TradeOrdersHistoryViewState(
-          snapshot: repository.getOrdersHistory(),
+          snapshot: await repository.getOrdersHistory(),
         ),
       );
       expect(ordersController.cancelValidationMessage('ord001'), isNull);
-      expect(ordersController.cancelOrder('ord001').action, 'cancel');
+      expect((await ordersController.cancelOrder('ord001')).action, 'cancel');
     },
   );
 
@@ -298,7 +334,10 @@ void main() {
       simulateError: true,
     );
     final container = containerWith(repository);
-    final futures = repository.getFutures(pairId: 'btcusdt');
+    // `repository` ném lỗi trên MỌI call (kể cả getFutures) — dùng repo
+    // riêng không lỗi chỉ để dựng draft hợp lệ cho request.
+    const seedRepository = MockTradeRepository(loadDelay: Duration.zero);
+    final futures = await seedRepository.getFutures(pairId: 'btcusdt');
     final provider = tradeFuturesOrderControllerProvider((
       pairId: futures.pair.id,
       draft: TradeFuturesOrderDraft(

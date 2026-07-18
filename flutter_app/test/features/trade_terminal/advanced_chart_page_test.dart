@@ -34,9 +34,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-055 mock repository exposes advanced chart BE draft', () {
-    final repo = const MockTradeTerminalRepository();
-    final snapshot = repo.getAdvancedChart(pairId: 'btcusdt');
+  test('SC-055 mock repository exposes advanced chart BE draft', () async {
+    final repo = const MockTradeTerminalRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getAdvancedChart(pairId: 'btcusdt');
 
     expect(snapshot.trade.pairs, hasLength(3));
     expect(snapshot.pair.symbol, 'BTC/USDT');

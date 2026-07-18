@@ -30,31 +30,35 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-124 mock repository exposes performance analytics BE draft', () {
-    final snapshot = const MockTradeBotsRepository()
-        .getBotPerformanceAnalytics();
+  test(
+    'SC-124 mock repository exposes performance analytics BE draft',
+    () async {
+      final snapshot = await const MockTradeBotsRepository(
+        loadDelay: Duration.zero,
+      ).getBotPerformanceAnalytics();
 
-    expect(snapshot.pnlPoints, hasLength(8));
-    expect(snapshot.winLossPoints, hasLength(4));
-    expect(snapshot.strategyPerformance, hasLength(3));
-    expect(snapshot.durationDistribution, hasLength(4));
-    expect(snapshot.metrics.totalPnl, 199.30);
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/trade/trade-bots-performance-analytics',
-    );
-    expect(snapshot.actionDraft, contains('POST /bots/create'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.pnlPoints, hasLength(8));
+      expect(snapshot.winLossPoints, hasLength(4));
+      expect(snapshot.strategyPerformance, hasLength(3));
+      expect(snapshot.durationDistribution, hasLength(4));
+      expect(snapshot.metrics.totalPnl, 199.30);
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-bots-performance-analytics',
+      );
+      expect(snapshot.actionDraft, contains('POST /bots/create'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-124 renders performance analytics baseline in Trade shell', (
     tester,

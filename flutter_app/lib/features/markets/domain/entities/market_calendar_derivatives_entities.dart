@@ -123,6 +123,19 @@ final class MarketCalendarQuery {
       impact: clearImpact ? null : impact ?? this.impact,
     );
   }
+
+  // GD4-F3: value equality required so FutureProvider.family(query) caches
+  // by content instead of instance identity — otherwise every rebuild would
+  // create a brand-new provider element and re-flash the loading state.
+  @override
+  bool operator ==(Object other) {
+    return other is MarketCalendarQuery &&
+        other.type == type &&
+        other.impact == impact;
+  }
+
+  @override
+  int get hashCode => Object.hash(type, impact);
 }
 
 /// Aggregate calendar stats (upcoming/high-impact/this-week counts).

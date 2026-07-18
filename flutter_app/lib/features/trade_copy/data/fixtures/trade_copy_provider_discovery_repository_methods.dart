@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_copy_trading_repository.dart';
 mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
     on _MockTradeCopyTradingRepositoryBase {
   @override
-  TradeProviderComparisonSnapshot getProviderComparison() {
+  Future<TradeProviderComparisonSnapshot> getProviderComparison() async {
+    await _simulateNetwork();
     return const TradeProviderComparisonSnapshot(
       selectedCount: 3,
       maxProviders: 5,
@@ -25,7 +26,8 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradeProviderLeaderboardSnapshot getProviderLeaderboard() {
+  Future<TradeProviderLeaderboardSnapshot> getProviderLeaderboard() async {
+    await _simulateNetwork();
     return const TradeProviderLeaderboardSnapshot(
       trade: _providerDiscoveryTradeSnapshot,
       providers: _copyTraders,
@@ -52,7 +54,8 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradeProviderGovernanceSnapshot getProviderGovernance() {
+  Future<TradeProviderGovernanceSnapshot> getProviderGovernance() async {
+    await _simulateNetwork();
     return const TradeProviderGovernanceSnapshot(
       trade: _providerDiscoveryTradeSnapshot,
       tabs: _providerGovernanceTabs,
@@ -82,7 +85,10 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradeTraderProfileSnapshot getTraderProfile({String traderId = 'trader001'}) {
+  Future<TradeTraderProfileSnapshot> getTraderProfile({
+    String traderId = 'trader001',
+  }) async {
+    await _simulateNetwork();
     final trader = _copyTraders.firstWhere(
       (item) => item.id == traderId,
       orElse: () => _copyTraders.first,
@@ -105,7 +111,8 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradeProviderApplicationSnapshot getProviderApplication() {
+  Future<TradeProviderApplicationSnapshot> getProviderApplication() async {
+    await _simulateNetwork();
     return const TradeProviderApplicationSnapshot(
       trade: _providerDiscoveryTradeSnapshot,
       steps: [
@@ -134,9 +141,10 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradeCopyProviderDetailSnapshot getCopyProviderDetail({
+  Future<TradeCopyProviderDetailSnapshot> getCopyProviderDetail({
     String providerId = 'provider001',
-  }) {
+  }) async {
+    await _simulateNetwork();
     TradeCopyTrader? provider;
     for (final trader in _copyTraders) {
       if (trader.id == providerId) {
@@ -160,10 +168,11 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradePreCopyAssessmentSnapshot getPreCopyAssessment({
+  Future<TradePreCopyAssessmentSnapshot> getPreCopyAssessment({
     String providerId = 'provider001',
-  }) {
-    final detail = getCopyProviderDetail(providerId: providerId);
+  }) async {
+    await _simulateNetwork();
+    final detail = await getCopyProviderDetail(providerId: providerId);
     return TradePreCopyAssessmentSnapshot(
       providerId: providerId,
       provider: detail.provider,
@@ -181,9 +190,10 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
   }
 
   @override
-  TradeProviderApplicationResult submitProviderApplication(
+  Future<TradeProviderApplicationResult> submitProviderApplication(
     TradeProviderApplicationDraft draft,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return const TradeProviderApplicationResult(
       applicationId: 'CPA-069-DEMO',
       status: 'submitted',

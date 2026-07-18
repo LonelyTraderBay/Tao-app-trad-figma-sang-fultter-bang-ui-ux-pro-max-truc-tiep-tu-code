@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-025 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getSocialSignals();
+  test('SC-025 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getSocialSignals();
 
     expect(snapshot.signals.map((signal) => signal.id), [
       's1',
@@ -77,12 +77,12 @@ void main() {
       ]),
     );
 
-    final targetHit = repo.getSocialSignals(
+    final targetHit = await repo.getSocialSignals(
       statusFilter: TradingSignalStatus.targetHit,
     );
     expect(targetHit.signals.single.pair, 'LINK/USDT');
 
-    final scalp = repo.getSocialSignals(
+    final scalp = await repo.getSocialSignals(
       categoryFilter: TradingSignalCategory.scalp,
     );
     expect(scalp.signals.single.providerName, 'ScalpKing');

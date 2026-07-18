@@ -38,7 +38,7 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeRiskIndicatorExplainerProvider);
+    final async = ref.watch(tradeRiskIndicatorExplainerProvider);
     return VitTradeHubScaffold(
       title: 'Risk Indicator',
       subtitle: 'Summary Risk Indicator (SRI)',
@@ -52,67 +52,78 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Risk indicator review',
-            message:
-                'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
-            contractId: 'risk-indicator-review',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeRiskIndicatorExplainerProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Risk review',
-          statusPill: VitStatusPill(
-            label: 'SRI ${snapshot.productSri}/7',
-            status: VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Holding period',
-              value: '${snapshot.holdingPeriodYears} years',
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Risk indicator review',
+              message:
+                  'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
+              contractId: 'risk-indicator-review',
+              density: VitDensity.compact,
             ),
-            VitTradeComplianceItem(
-              label: 'Risk levels',
-              value: '${snapshot.levels.length} defined',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Product SRI',
-          child: _ProductSriCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'What is the Summary Risk Indicator?',
-          child: _SriExplanationCard(
-            holdingPeriodYears: snapshot.holdingPeriodYears,
           ),
-        ),
-        VitTradeSection(
-          title: 'Understanding the 1-7 Scale',
-          child: VitPageSection(
-            density: VitDensity.compact,
-            children: [
-              for (final level in snapshot.levels)
-                _RiskLevelCard(
-                  level: level,
-                  isProductLevel: level.level == snapshot.productSri,
-                ),
+          VitTradeComplianceSection(
+            title: 'Risk review',
+            statusPill: VitStatusPill(
+              label: 'SRI ${snapshot.productSri}/7',
+              status: VitStatusPillStatus.warning,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Holding period',
+                value: '${snapshot.holdingPeriodYears} years',
+              ),
+              VitTradeComplianceItem(
+                label: 'Risk levels',
+                value: '${snapshot.levels.length} defined',
+              ),
             ],
           ),
-        ),
-        VitTradeSection(
-          title: 'Additional Risks Not Captured by SRI',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [_AdditionalRisksCard(risks: snapshot.additionalRisks)],
+          VitTradeSection(
+            title: 'Product SRI',
+            child: _ProductSriCard(snapshot: snapshot),
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'What is the Summary Risk Indicator?',
+            child: _SriExplanationCard(
+              holdingPeriodYears: snapshot.holdingPeriodYears,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Understanding the 1-7 Scale',
+            child: VitPageSection(
+              density: VitDensity.compact,
+              children: [
+                for (final level in snapshot.levels)
+                  _RiskLevelCard(
+                    level: level,
+                    isProductLevel: level.level == snapshot.productSri,
+                  ),
+              ],
+            ),
+          ),
+          VitTradeSection(
+            title: 'Additional Risks Not Captured by SRI',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [_AdditionalRisksCard(risks: snapshot.additionalRisks)],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

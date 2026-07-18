@@ -29,7 +29,7 @@ final class TradeAdvancedToolsController {
   final TradeAdvancedToolsViewState state;
   final SpotTradeRepository _repository;
 
-  TradeAdvancedToolActionResult submitAction(
+  Future<TradeAdvancedToolActionResult> submitAction(
     TradeAdvancedToolActionRequest request,
   ) {
     return _repository.submitAdvancedToolAction(request);
@@ -51,7 +51,9 @@ final class TradeAdvancedToolsController {
     return null;
   }
 
-  TradeOrderAmendmentResult amendOrder(TradeOrderAmendmentRequest request) {
+  Future<TradeOrderAmendmentResult> amendOrder(
+    TradeOrderAmendmentRequest request,
+  ) {
     return _repository.amendOrder(request);
   }
 

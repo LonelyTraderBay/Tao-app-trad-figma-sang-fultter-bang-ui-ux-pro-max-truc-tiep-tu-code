@@ -42,16 +42,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradingBotsRepositoryProvider).getBotHistory();
-    final filteredTrades = _filtered(snapshot.trades);
-    final totalPnL = filteredTrades.fold<double>(
-      0,
-      (sum, trade) => sum + trade.pnl,
-    );
-    final totalFees = filteredTrades.fold<double>(
-      0,
-      (sum, trade) => sum + trade.fee,
-    );
+    final snapshotAsync = ref.watch(tradeBotHistoryProvider);
     return VitTradeHubScaffold(
       title: 'Trade History',
       subtitle: 'Lịch sử giao dịch và lãi/lỗ bot',
@@ -71,84 +62,112 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
           onPressed: _handleExport,
         ),
       ],
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Giao dịch',
-          primaryValue: '${filteredTrades.length}',
-          secondaryLabel: 'Lãi/lỗ',
-          secondaryValue:
-              '${totalPnL >= 0 ? '+' : ''}\$${totalPnL.toStringAsFixed(2)}',
-          secondaryColor: totalPnL >= 0 ? _historyGreen : _historyRed,
-        ),
-        VitTradeSection(
-          title: 'Summary',
-          child: _StatsCard(
-            totalTrades: filteredTrades.length,
-            totalPnL: totalPnL,
-            totalFees: totalFees,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được lịch sử giao dịch',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotHistoryProvider),
           ),
-        ),
-        const VitTradeSection(
-          title: 'Search',
-          child: VitSearchBar(
-            enabled: false,
-            placeholder: 'Search by bot name or pair...',
-          ),
-        ),
-        VitTradeSection(
-          title: 'Filter',
-          child: VitTabBar(
-            tabs: [
-              VitTabItem(
-                key: _HistoryFilter.all.name,
-                label: 'All (${snapshot.trades.length})',
-                widgetKey: BotHistoryPage.filterKey(_HistoryFilter.all.name),
-              ),
-              VitTabItem(
-                key: _HistoryFilter.buy.name,
-                label:
-                    'Buy (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.buy).length})',
-                widgetKey: BotHistoryPage.filterKey(_HistoryFilter.buy.name),
-              ),
-              VitTabItem(
-                key: _HistoryFilter.sell.name,
-                label:
-                    'Sell (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.sell).length})',
-                widgetKey: BotHistoryPage.filterKey(_HistoryFilter.sell.name),
-              ),
-            ],
-            activeKey: _filter.name,
-            onChanged: (key) => setState(
-              () => _filter = _HistoryFilter.values.firstWhere(
-                (filter) => filter.name == key,
+        ],
+        data: (snapshot) {
+          final filteredTrades = _filtered(snapshot.trades);
+          final totalPnL = filteredTrades.fold<double>(
+            0,
+            (sum, trade) => sum + trade.pnl,
+          );
+          final totalFees = filteredTrades.fold<double>(
+            0,
+            (sum, trade) => sum + trade.fee,
+          );
+          return [
+            VitBotSubpageHero(
+              primaryLabel: 'Giao dịch',
+              primaryValue: '${filteredTrades.length}',
+              secondaryLabel: 'Lãi/lỗ',
+              secondaryValue:
+                  '${totalPnL >= 0 ? '+' : ''}\$${totalPnL.toStringAsFixed(2)}',
+              secondaryColor: totalPnL >= 0 ? _historyGreen : _historyRed,
+            ),
+            VitTradeSection(
+              title: 'Summary',
+              child: _StatsCard(
+                totalTrades: filteredTrades.length,
+                totalPnL: totalPnL,
+                totalFees: totalFees,
               ),
             ),
-            variant: VitTabBarVariant.segment,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Trades (${filteredTrades.length})',
-          child: filteredTrades.isEmpty
-              ? const _EmptyHistory()
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (final trade in filteredTrades)
-                      _TradeCard(trade: trade),
-                  ],
+            const VitTradeSection(
+              title: 'Search',
+              child: VitSearchBar(
+                enabled: false,
+                placeholder: 'Search by bot name or pair...',
+              ),
+            ),
+            VitTradeSection(
+              title: 'Filter',
+              child: VitTabBar(
+                tabs: [
+                  VitTabItem(
+                    key: _HistoryFilter.all.name,
+                    label: 'All (${snapshot.trades.length})',
+                    widgetKey: BotHistoryPage.filterKey(
+                      _HistoryFilter.all.name,
+                    ),
+                  ),
+                  VitTabItem(
+                    key: _HistoryFilter.buy.name,
+                    label:
+                        'Buy (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.buy).length})',
+                    widgetKey: BotHistoryPage.filterKey(
+                      _HistoryFilter.buy.name,
+                    ),
+                  ),
+                  VitTabItem(
+                    key: _HistoryFilter.sell.name,
+                    label:
+                        'Sell (${snapshot.trades.where((t) => t.side == TradeBotHistorySide.sell).length})',
+                    widgetKey: BotHistoryPage.filterKey(
+                      _HistoryFilter.sell.name,
+                    ),
+                  ),
+                ],
+                activeKey: _filter.name,
+                onChanged: (key) => setState(
+                  () => _filter = _HistoryFilter.values.firstWhere(
+                    (filter) => filter.name == key,
+                  ),
                 ),
-        ),
-        VitTradeSection(
-          title: 'Export',
-          child: _ExportNote(onTap: _handleExport),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'History export review',
-          message:
-              'Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.',
-          contractId: 'bot-history-export-review',
-        ),
-      ],
+                variant: VitTabBarVariant.segment,
+              ),
+            ),
+            VitTradeSection(
+              title: 'Trades (${filteredTrades.length})',
+              child: filteredTrades.isEmpty
+                  ? const _EmptyHistory()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (final trade in filteredTrades)
+                          _TradeCard(trade: trade),
+                      ],
+                    ),
+            ),
+            VitTradeSection(
+              title: 'Export',
+              child: _ExportNote(onTap: _handleExport),
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'History export review',
+              message:
+                  'Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.',
+              contractId: 'bot-history-export-review',
+            ),
+          ];
+        },
+      ),
     );
   }
 

@@ -30,38 +30,42 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-093 mock repository exposes transaction reporting BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getTransactionReporting();
+  test(
+    'SC-093 mock repository exposes transaction reporting BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getTransactionReporting();
 
-    expect(snapshot.defaultTab, 'queue');
-    expect(snapshot.stats.total, 5);
-    expect(snapshot.stats.pending, 3);
-    expect(snapshot.stats.failed, 1);
-    expect(snapshot.stats.totalValue, 205025);
-    expect(snapshot.reports.map((item) => item.id), [
-      'RPT-001',
-      'RPT-002',
-      'RPT-003',
-      'RPT-004',
-      'RPT-005',
-    ]);
-    expect(snapshot.reportsForTab('queue').length, 3);
-    expect(
-      snapshot.reportsForTab('failed').single.errorMessage,
-      contains('LEI'),
-    );
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.defaultTab, 'queue');
+      expect(snapshot.stats.total, 5);
+      expect(snapshot.stats.pending, 3);
+      expect(snapshot.stats.failed, 1);
+      expect(snapshot.stats.totalValue, 205025);
+      expect(snapshot.reports.map((item) => item.id), [
+        'RPT-001',
+        'RPT-002',
+        'RPT-003',
+        'RPT-004',
+        'RPT-005',
+      ]);
+      expect(snapshot.reportsForTab('queue').length, 3);
+      expect(
+        snapshot.reportsForTab('failed').single.errorMessage,
+        contains('LEI'),
+      );
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-093 renders transaction reporting inside the Trade shell', (
     tester,

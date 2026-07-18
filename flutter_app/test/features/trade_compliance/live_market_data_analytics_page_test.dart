@@ -28,27 +28,31 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-091 mock repository exposes live market analytics BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getLiveMarketDataAnalytics();
+  test(
+    'SC-091 mock repository exposes live market analytics BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getLiveMarketDataAnalytics();
 
-    expect(snapshot.selectedPair, 'BTC/USDT');
-    expect(snapshot.openInterest.current, 25433440000);
-    expect(snapshot.openInterest.change24hPct, -.96);
-    expect(snapshot.longShortRatio.longPct, 61.6);
-    expect(snapshot.topTraders.change24h, -.6);
-    expect(snapshot.fundingRate.nextFundingLabel, '01:29');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.selectedPair, 'BTC/USDT');
+      expect(snapshot.openInterest.current, 25433440000);
+      expect(snapshot.openInterest.change24hPct, -.96);
+      expect(snapshot.longShortRatio.longPct, 61.6);
+      expect(snapshot.topTraders.change24h, -.6);
+      expect(snapshot.fundingRate.nextFundingLabel, '01:29');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-091 renders live market analytics inside the Trade shell', (
     tester,

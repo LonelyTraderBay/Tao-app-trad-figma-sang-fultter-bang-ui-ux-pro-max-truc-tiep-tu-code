@@ -3,8 +3,8 @@ part of '../repositories/mock_trade_terminal_repository.dart';
 mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
     on _MockTradeTerminalRepositoryBase {
   @override
-  TradeFuturesSnapshot getFutures({String pairId = 'btcusdt'}) {
-    final trade = getTrade(pairId: pairId);
+  Future<TradeFuturesSnapshot> getFutures({String pairId = 'btcusdt'}) async {
+    final trade = await getTrade(pairId: pairId);
     return TradeFuturesSnapshot(
       trade: trade,
       pair: trade.pair,
@@ -30,9 +30,11 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
   }
 
   @override
-  TradeFuturesLeverageSnapshot getFuturesLeverage({String pairId = 'btcusdt'}) {
+  Future<TradeFuturesLeverageSnapshot> getFuturesLeverage({
+    String pairId = 'btcusdt',
+  }) async {
     return TradeFuturesLeverageSnapshot(
-      futures: getFutures(pairId: pairId),
+      futures: await getFutures(pairId: pairId),
       currentLeverage: 10,
       presets: const [1, 2, 3, 5, 10, 20, 25, 50, 75, 100],
       sliderStops: const [1, 10, 25, 50, 75, 100],
@@ -51,11 +53,11 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
   }
 
   @override
-  TradeMarginTradingSnapshot getMarginTrading({
+  Future<TradeMarginTradingSnapshot> getMarginTrading({
     String pairId = 'btcusdt',
     bool pairRouteVariant = false,
-  }) {
-    final trade = getTrade(pairId: pairId);
+  }) async {
+    final trade = await getTrade(pairId: pairId);
     final pair = trade.pairs.firstWhere(
       (item) => item.id == pairId,
       orElse: () => trade.pair,
@@ -92,7 +94,8 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
   }
 
   @override
-  TradeMarginTradingHubSnapshot getMarginTradingHub() {
+  Future<TradeMarginTradingHubSnapshot> getMarginTradingHub() async {
+    await _simulateNetwork();
     return const TradeMarginTradingHubSnapshot(
       stats: _marginHubStats,
       menuItems: _marginHubMenuItems,
@@ -110,8 +113,10 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
   }
 
   @override
-  TradeFuturesPreview previewFuturesOrder(TradeFuturesOrderDraft draft) {
-    final futures = getFutures(pairId: draft.pairId);
+  Future<TradeFuturesPreview> previewFuturesOrder(
+    TradeFuturesOrderDraft draft,
+  ) async {
+    final futures = await getFutures(pairId: draft.pairId);
     final price = draft.limitPrice ?? futures.markPrice;
     final positionSize = draft.margin * draft.leverage;
     final liquidationDistance = 90 / draft.leverage;
@@ -137,15 +142,16 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
     }
     return TradeFuturesReceipt(
       orderId: 'FUT-DEMO-057',
-      preview: previewFuturesOrder(draft),
+      preview: await previewFuturesOrder(draft),
       status: 'submitted',
     );
   }
 
   @override
-  TradeFuturesLeveragePreview previewFuturesLeverage(
+  Future<TradeFuturesLeveragePreview> previewFuturesLeverage(
     TradeFuturesLeverageRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     final leverage = request.leverage.clamp(1, 100).toInt();
     final risk = _futuresLeverageRisk(leverage);
     final positionSize = request.exampleMargin * leverage;
@@ -176,7 +182,7 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
     return TradeFuturesLeverageReceipt(
       adjustmentId: 'LEV-DEMO-058',
       pairId: request.pairId,
-      preview: previewFuturesLeverage(request),
+      preview: await previewFuturesLeverage(request),
       status: 'submitted',
     );
   }

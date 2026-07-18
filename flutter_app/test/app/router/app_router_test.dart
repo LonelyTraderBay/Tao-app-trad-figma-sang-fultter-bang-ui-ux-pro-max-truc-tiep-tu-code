@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/trade/data/providers/trade_repository_provider.dart';
+import 'package:vit_trade_flutter/features/trade/data/repositories/mock_trade_repository.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -69,6 +71,14 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        // GĐ4-F3 (bẫy playbook §9.16): route trade giờ có provider async
+        // family — override delay 0 để không còn pending timer khi test kết
+        // thúc.
+        overrides: [
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.trade),
         ),

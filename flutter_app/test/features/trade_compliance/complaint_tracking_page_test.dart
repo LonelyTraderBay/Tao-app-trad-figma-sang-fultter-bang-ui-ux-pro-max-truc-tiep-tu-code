@@ -31,9 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-113 mock repository exposes complaint tracking BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getComplaintTracking();
+  test('SC-113 mock repository exposes complaint tracking BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getComplaintTracking();
 
     expect(snapshot.complaintId, 'undefined');
     expect(snapshot.statusLabel, 'Under Review');

@@ -387,3 +387,33 @@ thấp hơn) — không được để nguyên baseline cũ (ratchet không tự
     `Duration.zero`; (b) focused test KHÔNG đủ cho thay đổi chạm shell —
     bắt buộc full suite trước khi tuyên bố xong (trùng bài học
     shared-widget blast radius).
+12. **Mock nhiều mixin thật sự** (compliance 4, bots 2, copy 3 — khác wallet
+    1 mixin): `_simulateNetwork()` phải đặt trên `abstract class` BASE,
+    không phải "mixin đầu tiên" — mixin `on Base` chỉ thấy member của Base,
+    không thấy mixin anh em. Mock chưa có base (markets) thì dựng
+    `_MockXRepositoryBase` + đổi `with` → `extends ... with`.
+13. **Family key phải có value equality**: class query/request dùng làm key
+    `FutureProvider.family` (MarketCalendarQuery, TradeConvertRequest...)
+    bắt buộc override `==`/`hashCode` (khuôn TradeOrderDraft PERF-HN1) —
+    thiếu thì mỗi setState tạo instance mới → UI nhấp nháy loading vô hạn.
+14. **`initState()`/constructor seed từ getter giờ-đã-async**: xóa
+    initState, dùng field nullable + `_field ??= snapshot.x` TRONG nhánh
+    `data:` (seed 1 lần, không ghi đè khi user đã chỉnh).
+15. **Repo gọi trong event handler** (không phải build): chỉ cần `await`
+    thẳng tại chỗ, KHÔNG cần provider trung gian. Header/footer ngoài
+    `.when()` cần snapshot lúc tap: đọc `provider.value` lười trong
+    callback, đừng bắt snapshot lúc build.
+16. **autoDispose family preview + mock delay > 0 = orphaned timer**: mỗi
+    keystroke tạo family member mới, member cũ dispose khi timer còn bay →
+    `!timersPending` dù đã pumpAndSettle. MỌI widget test chạm trang
+    preview-family phải override repo `loadDelay: Duration.zero` (mở rộng
+    phạm vi bẫy 11 — không chỉ provider shell-watch).
+17. **`simulateError: true` giờ đánh cả đường đọc**: test "trang load ok,
+    chỉ submit fail" phải dùng test-double hẹp (khuôn
+    _OfflineSubmitTradeRepository) thay vì cờ blanket.
+18. **Mock gọi chuỗi mock khác** (getOrdersHistory → getTrade,
+    submitConvert → previewConvert): bỏ `_simulateNetwork()` ở lớp ngoài —
+    delay/error chỉ mô phỏng MỘT lần.
+19. **Mutation cần dữ liệu async**: method controller GHI phải thành
+    `Future<void>`, giữ preview cũ hiển thị trong lúc await + guard
+    out-of-order `if (state.request == request)` trước khi áp kết quả.

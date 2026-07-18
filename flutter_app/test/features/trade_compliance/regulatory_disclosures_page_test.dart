@@ -30,34 +30,38 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-084 mock repository exposes regulatory disclosures BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getRegulatoryDisclosures();
+  test(
+    'SC-084 mock repository exposes regulatory disclosures BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getRegulatoryDisclosures();
 
-    expect(snapshot.defaultTabId, 'mifid');
-    expect(snapshot.tabs.map((tab) => tab.id), [
-      'mifid',
-      'protection',
-      'restrictions',
-      'liability',
-      'contact',
-    ]);
-    expect(snapshot.heroTitle, 'Legal & Regulatory Framework');
-    expect(snapshot.mifidArticles, hasLength(4));
-    expect(snapshot.protection.coverage.title, 'Coverage Limit');
-    expect(snapshot.restrictions.unavailableCountries, contains('Iran'));
-    expect(snapshot.contacts, hasLength(3));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.defaultTabId, 'mifid');
+      expect(snapshot.tabs.map((tab) => tab.id), [
+        'mifid',
+        'protection',
+        'restrictions',
+        'liability',
+        'contact',
+      ]);
+      expect(snapshot.heroTitle, 'Legal & Regulatory Framework');
+      expect(snapshot.mifidArticles, hasLength(4));
+      expect(snapshot.protection.coverage.title, 'Coverage Limit');
+      expect(snapshot.restrictions.unavailableCountries, contains('Iran'));
+      expect(snapshot.contacts, hasLength(3));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-084 renders MiFID baseline inside the Trade shell', (
     tester,

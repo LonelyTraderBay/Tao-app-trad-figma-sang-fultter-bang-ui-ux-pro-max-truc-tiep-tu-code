@@ -43,9 +43,7 @@ class BotRiskDashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradingBotsRepositoryProvider)
-        .getBotRiskDashboard();
+    final snapshotAsync = ref.watch(tradeBotRiskDashboardProvider);
 
     return VitTradeHubScaffold(
       title: 'Risk Dashboard',
@@ -64,62 +62,76 @@ class BotRiskDashboardPage extends ConsumerWidget {
         VitHeaderActionItem(
           key: BotRiskDashboardPage.emergencyHeaderKey,
           type: VitHeaderActionType.emergency,
-          onPressed: () => context.go(snapshot.emergencyPath),
+          onPressed: () {
+            final path = snapshotAsync.value?.emergencyPath;
+            if (path != null) context.go(path);
+          },
         ),
       ],
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Điểm rủi ro',
-          primaryValue: '${snapshot.riskScore}',
-          primaryColor: _riskAmber,
-          secondaryLabel: 'Bot đang chạy',
-          secondaryValue: '${snapshot.runningBots}',
-          secondaryColor: AppColors.buy,
-        ),
-        VitTradeSection(
-          title: 'Tổng quan rủi ro',
-          child: _RiskScoreCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Critical Metrics',
-          child: _CriticalMetricsGrid(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Drawdown Trend (24h)',
-          child: _DrawdownChartCard(points: snapshot.drawdownPoints),
-        ),
-        VitTradeSection(
-          title: 'Exposure by Asset',
-          child: _ExposureCard(exposures: snapshot.exposures),
-        ),
-        VitTradeSection(
-          title: 'VaR Trend (7 days)',
-          child: _VarChartCard(points: snapshot.varHistory),
-        ),
-        VitTradeSection(
-          title: 'Safety Controls',
-          child: _SafetyControlsCard(controls: snapshot.safetyControls),
-        ),
-        VitTradeSection(
-          title: 'Emergency Actions',
-          child: _EmergencyActionCard(
-            runningBots: snapshot.runningBots,
-            onTap: () => context.go(snapshot.emergencyPath),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được bảng rủi ro',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotRiskDashboardProvider),
           ),
-        ),
-        const VitTradeSection(
-          title: 'Risk explanation',
-          child: _RiskExplanationCard(),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Risk dashboard review',
-          message:
-              'Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.',
-          contractId: 'bot-risk-dashboard-review',
-          statusLabel: 'Emergency route confirmed',
-          status: VitStatusPillStatus.warning,
-        ),
-      ],
+        ],
+        data: (snapshot) => [
+          VitBotSubpageHero(
+            primaryLabel: 'Điểm rủi ro',
+            primaryValue: '${snapshot.riskScore}',
+            primaryColor: _riskAmber,
+            secondaryLabel: 'Bot đang chạy',
+            secondaryValue: '${snapshot.runningBots}',
+            secondaryColor: AppColors.buy,
+          ),
+          VitTradeSection(
+            title: 'Tổng quan rủi ro',
+            child: _RiskScoreCard(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: 'Critical Metrics',
+            child: _CriticalMetricsGrid(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: 'Drawdown Trend (24h)',
+            child: _DrawdownChartCard(points: snapshot.drawdownPoints),
+          ),
+          VitTradeSection(
+            title: 'Exposure by Asset',
+            child: _ExposureCard(exposures: snapshot.exposures),
+          ),
+          VitTradeSection(
+            title: 'VaR Trend (7 days)',
+            child: _VarChartCard(points: snapshot.varHistory),
+          ),
+          VitTradeSection(
+            title: 'Safety Controls',
+            child: _SafetyControlsCard(controls: snapshot.safetyControls),
+          ),
+          VitTradeSection(
+            title: 'Emergency Actions',
+            child: _EmergencyActionCard(
+              runningBots: snapshot.runningBots,
+              onTap: () => context.go(snapshot.emergencyPath),
+            ),
+          ),
+          const VitTradeSection(
+            title: 'Risk explanation',
+            child: _RiskExplanationCard(),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Risk dashboard review',
+            message:
+                'Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.',
+            contractId: 'bot-risk-dashboard-review',
+            statusLabel: 'Emergency route confirmed',
+            status: VitStatusPillStatus.warning,
+          ),
+        ],
+      ),
     );
   }
 }

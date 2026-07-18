@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-108 mock repository exposes KID generator BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository().getKidGenerator();
+  test('SC-108 mock repository exposes KID generator BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getKidGenerator();
 
     expect(snapshot.document.title, 'Mirror Copy Trading - KID');
     expect(snapshot.document.documentType, 'PRIIPs KID');

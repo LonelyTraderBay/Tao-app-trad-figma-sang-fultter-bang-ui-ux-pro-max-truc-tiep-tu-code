@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -67,29 +69,66 @@ class _ProviderApplicationPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(tradeProviderApplicationControllerProvider);
-    final snapshot = controller.state.snapshot;
-    _step ??= snapshot.defaultStep;
-    _draft ??= snapshot.defaultDraft;
-    if (!_controllersReady) {
-      _monthsController = TextEditingController(
-        text: _draft!.tradingMonths.toString(),
-      );
-      _strategyController = TextEditingController(
-        text: _draft!.strategyDescription,
-      );
-      _controllersReady = true;
-    }
-
-    final step = _step!;
-    final draft = _draft!;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
+    final controllerAsync = ref.watch(
+      tradeProviderApplicationControllerProvider,
     );
-    final footerPadding = scrollClearance;
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
+    return controllerAsync.when(
+      loading: () => _shell(context, mode, const [VitSkeletonList()], null),
+      error: (error, stackTrace) => _shell(context, mode, [
+        VitErrorState(
+          title: 'Không tải được đơn đăng ký provider',
+          message: 'Vui lòng kiểm tra kết nối và thử lại.',
+          actionLabel: 'Thử lại',
+          onAction: () =>
+              ref.invalidate(tradeProviderApplicationControllerProvider),
+        ),
+      ], null),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        _step ??= snapshot.defaultStep;
+        _draft ??= snapshot.defaultDraft;
+        if (!_controllersReady) {
+          _monthsController = TextEditingController(
+            text: _draft!.tradingMonths.toString(),
+          );
+          _strategyController = TextEditingController(
+            text: _draft!.strategyDescription,
+          );
+          _controllersReady = true;
+        }
+
+        final step = _step!;
+        final draft = _draft!;
+        final footer = SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: TradeSpacingTokens.providerApplicationFooterPadding(
+              tradeScrollBottomInset(context, shellRenderMode: mode),
+            ),
+            child: VitStickyFooter(
+              backgroundColor: AppColors.bg,
+              child: _FooterButton(
+                step: step,
+                enabled: _canProceed(step, draft),
+                onPressed: () => _handlePrimaryAction(controller),
+              ),
+            ),
+          ),
+        );
+
+        return _shell(context, mode, _steps(step, draft, snapshot), footer);
+      },
+    );
+  }
+
+  Widget _shell(
+    BuildContext context,
+    ShellRenderMode mode,
+    List<Widget> children,
+    Widget? footer,
+  ) {
     return ColoredBox(
       color: AppColors.bg,
       child: Column(
@@ -108,109 +147,91 @@ class _ProviderApplicationPageState
                 fallbackPath: AppRoutePaths.tradeCopyTrading,
                 mode: BackNavigationMode.historyThenFallback,
               ),
-              children: [
-                VitTradeSection(
-                  title: 'Tiến trình',
-                  child: _ProgressBars(steps: snapshot.steps, activeStep: step),
-                ),
-                VitTradeSection(
-                  title: _stepTitle(step),
-                  child: switch (step) {
-                    TradeProviderApplicationStep.intro => _IntroStep(
-                      snapshot: snapshot,
-                    ),
-                    TradeProviderApplicationStep.requirements =>
-                      _RequirementsStep(
-                        draft: draft,
-                        onChanged: _updateDraft,
-                        monthsController: _monthsController,
-                      ),
-                    TradeProviderApplicationStep.disclosure => _DisclosureStep(
-                      draft: draft,
-                      onChanged: _updateDraft,
-                    ),
-                    TradeProviderApplicationStep.fees => _FeesStep(
-                      draft: draft,
-                      onChanged: _updateDraft,
-                      strategyController: _strategyController,
-                    ),
-                    TradeProviderApplicationStep.review => Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _ReviewStep(draft: draft, onChanged: _updateDraft),
-                        VitFinancialSafetySummary(
-                          title: 'Xem lại đơn đăng ký provider',
-                          contractId: 'SC-069 Provider application',
-                          footer:
-                              'Xác nhận KYC, công bố thông tin, nghĩa vụ ủy thác, giới hạn phí và điều khoản trước khi gửi đơn.',
-                          items: [
-                            VitFinancialSafetyItem(
-                              label: 'KYC đã xác minh',
-                              value: draft.hasKyc ? 'Có' : 'Chờ xử lý',
-                              leading: const Icon(Icons.verified_user_outlined),
-                              valueColor: draft.hasKyc
-                                  ? AppColors.buy
-                                  : AppColors.warn,
-                            ),
-                            VitFinancialSafetyItem(
-                              label: 'Công bố thông tin',
-                              value:
-                                  draft.agreedToDisclosure &&
-                                      draft.agreedToFiduciary
-                                  ? 'Đã đủ'
-                                  : 'Chưa đủ',
-                              leading: const Icon(Icons.description_outlined),
-                              valueColor:
-                                  draft.agreedToDisclosure &&
-                                      draft.agreedToFiduciary
-                                  ? AppColors.buy
-                                  : AppColors.warn,
-                            ),
-                            VitFinancialSafetyItem(
-                              label: 'Phí hiệu suất',
-                              value:
-                                  '${draft.performanceFee.toStringAsFixed(0)}%',
-                              leading: const Icon(Icons.percent_rounded),
-                              valueColor: AppColors.text2,
-                            ),
-                            VitFinancialSafetyItem(
-                              label: 'Điều khoản',
-                              value: draft.agreedToTerms
-                                  ? 'Đã đồng ý'
-                                  : 'Bắt buộc',
-                              leading: const Icon(Icons.gavel_outlined),
-                              valueColor: draft.agreedToTerms
-                                  ? AppColors.buy
-                                  : AppColors.sell,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  },
-                ),
-              ],
+              children: children,
             ),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: TradeSpacingTokens.providerApplicationFooterPadding(
-                footerPadding,
-              ),
-              child: VitStickyFooter(
-                backgroundColor: AppColors.bg,
-                child: _FooterButton(
-                  step: step,
-                  enabled: _canProceed(step, draft),
-                  onPressed: () => _handlePrimaryAction(controller),
-                ),
-              ),
-            ),
-          ),
+          ?footer,
         ],
       ),
     );
+  }
+
+  List<Widget> _steps(
+    TradeProviderApplicationStep step,
+    TradeProviderApplicationDraft draft,
+    TradeProviderApplicationSnapshot snapshot,
+  ) {
+    return [
+      VitTradeSection(
+        title: 'Tiến trình',
+        child: _ProgressBars(steps: snapshot.steps, activeStep: step),
+      ),
+      VitTradeSection(
+        title: _stepTitle(step),
+        child: switch (step) {
+          TradeProviderApplicationStep.intro => _IntroStep(snapshot: snapshot),
+          TradeProviderApplicationStep.requirements => _RequirementsStep(
+            draft: draft,
+            onChanged: _updateDraft,
+            monthsController: _monthsController,
+          ),
+          TradeProviderApplicationStep.disclosure => _DisclosureStep(
+            draft: draft,
+            onChanged: _updateDraft,
+          ),
+          TradeProviderApplicationStep.fees => _FeesStep(
+            draft: draft,
+            onChanged: _updateDraft,
+            strategyController: _strategyController,
+          ),
+          TradeProviderApplicationStep.review => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _ReviewStep(draft: draft, onChanged: _updateDraft),
+              VitFinancialSafetySummary(
+                title: 'Xem lại đơn đăng ký provider',
+                contractId: 'SC-069 Provider application',
+                footer:
+                    'Xác nhận KYC, công bố thông tin, nghĩa vụ ủy thác, giới hạn phí và điều khoản trước khi gửi đơn.',
+                items: [
+                  VitFinancialSafetyItem(
+                    label: 'KYC đã xác minh',
+                    value: draft.hasKyc ? 'Có' : 'Chờ xử lý',
+                    leading: const Icon(Icons.verified_user_outlined),
+                    valueColor: draft.hasKyc ? AppColors.buy : AppColors.warn,
+                  ),
+                  VitFinancialSafetyItem(
+                    label: 'Công bố thông tin',
+                    value: draft.agreedToDisclosure && draft.agreedToFiduciary
+                        ? 'Đã đủ'
+                        : 'Chưa đủ',
+                    leading: const Icon(Icons.description_outlined),
+                    valueColor:
+                        draft.agreedToDisclosure && draft.agreedToFiduciary
+                        ? AppColors.buy
+                        : AppColors.warn,
+                  ),
+                  VitFinancialSafetyItem(
+                    label: 'Phí hiệu suất',
+                    value: '${draft.performanceFee.toStringAsFixed(0)}%',
+                    leading: const Icon(Icons.percent_rounded),
+                    valueColor: AppColors.text2,
+                  ),
+                  VitFinancialSafetyItem(
+                    label: 'Điều khoản',
+                    value: draft.agreedToTerms ? 'Đã đồng ý' : 'Bắt buộc',
+                    leading: const Icon(Icons.gavel_outlined),
+                    valueColor: draft.agreedToTerms
+                        ? AppColors.buy
+                        : AppColors.sell,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        },
+      ),
+    ];
   }
 
   String _stepTitle(TradeProviderApplicationStep step) {
@@ -260,7 +281,7 @@ class _ProviderApplicationPageState
       case TradeProviderApplicationStep.fees:
         setState(() => _step = TradeProviderApplicationStep.review);
       case TradeProviderApplicationStep.review:
-        controller.submit(draft);
+        unawaited(controller.submit(draft));
         context.go(AppRoutePaths.tradeCopyTrading);
     }
   }

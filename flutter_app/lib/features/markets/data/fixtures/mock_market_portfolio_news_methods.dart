@@ -2,9 +2,10 @@ part of '../repositories/mock_market_repository.dart';
 
 mixin _MockMarketRepositoryPortfolioNewsMethods on _MockMarketRepositoryBase {
   @override
-  MarketPortfolioSnapshot getPortfolioTracker({
+  Future<MarketPortfolioSnapshot> getPortfolioTracker({
     MarketPortfolioSort sortBy = MarketPortfolioSort.value,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final sortedHoldings = [..._portfolioHoldings];
     switch (sortBy) {
       case MarketPortfolioSort.value:
@@ -59,10 +60,11 @@ mixin _MockMarketRepositoryPortfolioNewsMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketNewsSnapshot getMarketNews({
+  Future<MarketNewsSnapshot> getMarketNews({
     String category = 'all',
     MarketNewsSentiment? sentiment,
-  }) {
+  }) async {
+    await _simulateNetwork();
     var items = [..._marketNews];
     if (category != 'all') {
       items = category == 'breaking'

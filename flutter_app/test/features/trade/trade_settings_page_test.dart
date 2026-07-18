@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-052 mock repository exposes trade settings BE draft', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getTradeSettings();
+  test('SC-052 mock repository exposes trade settings BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getTradeSettings();
     final settings = snapshot.settings;
 
     expect(snapshot.trade.pairs, hasLength(3));
@@ -45,7 +45,7 @@ void main() {
     expect(settings.defaultPctButtons, isTrue);
     expect(settings.chartTimeframe, '1h');
     expect(settings.priceDecimals, 'auto');
-    expect(repo.patchTradeSettings(settings).defaultOrderType, 'limit');
+    expect((await repo.patchTradeSettings(settings)).defaultOrderType, 'limit');
     expect(
       snapshot.supportedStates,
       containsAll([

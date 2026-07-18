@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/app/providers/trade_copy_controller_providers.
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
+import 'package:vit_trade_flutter/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart';
 
 part '../../widgets/flow/copy_configuration_provider_capital_mode.dart';
 part '../../widgets/flow/copy_configuration_risk_summary.dart';
@@ -71,30 +72,63 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       tradeCopyConfigurationProvider(widget.providerId),
     );
 
-    if (snapshot.isNotFound) {
-      return const VitPageLayout(
-        variant: VitPageVariant.flush,
-        semanticLabel: 'Cấu hình Copy',
-        semanticIdentifier: 'SC-072',
-        child: SizedBox.expand(),
-      );
-    }
+    return snapshotAsync.when(
+      loading: () => _scaffold(context, const [VitSkeletonList()]),
+      error: (error, stackTrace) => _scaffold(context, [
+        VitErrorState(
+          title: 'Không tải được cấu hình copy',
+          message: 'Vui lòng kiểm tra kết nối và thử lại.',
+          actionLabel: 'Thử lại',
+          onAction: () =>
+              ref.invalidate(tradeCopyConfigurationProvider(widget.providerId)),
+        ),
+      ]),
+      data: (snapshot) {
+        if (snapshot.isNotFound) {
+          return const VitPageLayout(
+            variant: VitPageVariant.flush,
+            semanticLabel: 'Cấu hình Copy',
+            semanticIdentifier: 'SC-072',
+            child: SizedBox.expand(),
+          );
+        }
 
-    _ensureDraft(snapshot);
-    final draft = _draft!;
-    final controller = ref.watch(
-      tradeCopyConfigurationControllerProvider((
-        providerId: widget.providerId,
-        draft: draft,
-      )),
+        _ensureDraft(snapshot);
+        final draft = _draft!;
+        final controllerAsync = ref.watch(
+          tradeCopyConfigurationControllerProvider((
+            providerId: widget.providerId,
+            draft: draft,
+          )),
+        );
+
+        return controllerAsync.when(
+          loading: () => _scaffold(context, const [VitSkeletonList()]),
+          error: (error, stackTrace) => _scaffold(context, [
+            VitErrorState(
+              title: 'Không tải được xem trước cấu hình',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                tradeCopyConfigurationControllerProvider((
+                  providerId: widget.providerId,
+                  draft: draft,
+                )),
+              ),
+            ),
+          ]),
+          data: (controller) =>
+              _scaffold(context, _body(context, snapshot, draft, controller)),
+        );
+      },
     );
-    final preview = controller.state.preview;
-    final provider = snapshot.provider!;
-    final allocationPercent = draft.copyCapital / snapshot.totalPortfolio * 100;
+  }
+
+  Widget _scaffold(BuildContext context, List<Widget> children) {
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
       fallbackPath: AppRoutePaths.tradeCopyProvider(widget.providerId),
@@ -114,54 +148,65 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
         fallbackPath: resolvedBackPath,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        _CapitalSection(
-          controller: _capitalController,
-          allocationPercent: allocationPercent,
-          availableCapital: snapshot.availableCapital,
-          totalPortfolio: snapshot.totalPortfolio,
-          onChanged: _updateCapital,
-          onPreset: _setCapitalPercent,
-        ),
-        VitTradeSection(
-          title: 'Provider',
-          child: _ProviderCard(provider: provider),
-        ),
-        _ModeSection(
-          selected: draft.copyMode,
-          copyRatio: draft.copyRatio,
-          onModeChanged: _setMode,
-          onRatioChanged: _setCopyRatio,
-        ),
-        _RiskSection(draft: draft, onDraftChanged: _setDraft),
-        _FeeSection(preview: preview),
-        if (preview.validations.isNotEmpty)
-          _ValidationList(items: preview.validations),
-        _SummaryCard(draft: draft),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Xem lại cấu hình copy',
-          message:
-              'Tóm tắt provider, phân bổ vốn, chế độ copy, kiểm soát rủi ro, phí dự kiến và thông báo xác thực hiển thị trước khi xác nhận.',
-          contractId: 'SC-072',
-          density: VitDensity.compact,
-        ),
-        VitCtaButton(
-          key: CopyConfigurationPage.confirmKey,
-          onPressed: preview.hasBlockingErrors
-              ? null
-              : () => context.push(
-                  AppRoutePaths.tradeCopyProviderConfirmation(
-                    widget.providerId,
-                  ),
-                ),
-          variant: VitCtaButtonVariant.auth,
-          height: _configurationButtonHeight,
-          trailing: const Icon(Icons.chevron_right_rounded),
-          child: const Text('Xem xác nhận'),
-        ),
-      ],
+      children: children,
     );
+  }
+
+  List<Widget> _body(
+    BuildContext context,
+    TradeCopyConfigurationSnapshot snapshot,
+    TradeCopyConfigurationDraft draft,
+    TradeCopyConfigurationController controller,
+  ) {
+    final preview = controller.state.preview;
+    final provider = snapshot.provider!;
+    final allocationPercent = draft.copyCapital / snapshot.totalPortfolio * 100;
+
+    return [
+      _CapitalSection(
+        controller: _capitalController,
+        allocationPercent: allocationPercent,
+        availableCapital: snapshot.availableCapital,
+        totalPortfolio: snapshot.totalPortfolio,
+        onChanged: _updateCapital,
+        onPreset: _setCapitalPercent,
+      ),
+      VitTradeSection(
+        title: 'Provider',
+        child: _ProviderCard(provider: provider),
+      ),
+      _ModeSection(
+        selected: draft.copyMode,
+        copyRatio: draft.copyRatio,
+        onModeChanged: _setMode,
+        onRatioChanged: _setCopyRatio,
+      ),
+      _RiskSection(draft: draft, onDraftChanged: _setDraft),
+      _FeeSection(preview: preview),
+      if (preview.validations.isNotEmpty)
+        _ValidationList(items: preview.validations),
+      _SummaryCard(draft: draft),
+      const VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: 'Xem lại cấu hình copy',
+        message:
+            'Tóm tắt provider, phân bổ vốn, chế độ copy, kiểm soát rủi ro, phí dự kiến và thông báo xác thực hiển thị trước khi xác nhận.',
+        contractId: 'SC-072',
+        density: VitDensity.compact,
+      ),
+      VitCtaButton(
+        key: CopyConfigurationPage.confirmKey,
+        onPressed: preview.hasBlockingErrors
+            ? null
+            : () => context.push(
+                AppRoutePaths.tradeCopyProviderConfirmation(widget.providerId),
+              ),
+        variant: VitCtaButtonVariant.auth,
+        height: _configurationButtonHeight,
+        trailing: const Icon(Icons.chevron_right_rounded),
+        child: const Text('Xem xác nhận'),
+      ),
+    ];
   }
 
   void _ensureDraft(TradeCopyConfigurationSnapshot snapshot) {

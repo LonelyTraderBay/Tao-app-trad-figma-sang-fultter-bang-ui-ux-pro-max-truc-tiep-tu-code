@@ -34,8 +34,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-009 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketOverview();
+  test('SC-009 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketOverview();
 
     expect(snapshot.globalStats.totalMarketCap, 2456789012345);
     expect(snapshot.marketBreadth.advancing, 5843);

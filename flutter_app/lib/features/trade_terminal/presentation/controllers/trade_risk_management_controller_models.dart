@@ -35,7 +35,7 @@ final class TradeRiskManagementController {
   final TradeRiskManagementViewState state;
   final SpotTradeRepository _repository;
 
-  TradeOcoOrderResult submitOcoOrder(TradeOcoOrderDraft draft) {
+  Future<TradeOcoOrderResult> submitOcoOrder(TradeOcoOrderDraft draft) {
     return _repository.submitOcoOrder(draft);
   }
 
@@ -66,7 +66,7 @@ final class TradeRiskManagementController {
     return null;
   }
 
-  TradePositionSizeResult calculatePositionSize(
+  Future<TradePositionSizeResult> calculatePositionSize(
     TradePositionSizeRequest request,
   ) {
     return _repository.calculatePositionSize(request);

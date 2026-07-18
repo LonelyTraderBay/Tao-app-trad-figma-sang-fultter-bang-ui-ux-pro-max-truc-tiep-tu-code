@@ -59,19 +59,15 @@ class TradeSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
-  late TradeSettings _settings;
-
-  @override
-  void initState() {
-    super.initState();
-    _settings = ref
-        .read(tradeReadModelControllerProvider)
-        .getTradeSettings()
-        .settings;
-  }
+  // GD4 Cụm F3: `getTradeSettings`/`patchTradeSettings` giờ Future<T> —
+  // `initState()` không thể await, nên seed lười trong nhánh `data:` của
+  // `.when()` (chỉ seed lần đầu, `??=`); `_settings` vẫn là bản nháp cục bộ
+  // (mutation local qua `_updateSettings`, không re-seed lại từ snapshot).
+  TradeSettings? _settings;
 
   @override
   Widget build(BuildContext context) {
+    final settingsAsync = ref.watch(tradeSettingsSnapshotProvider);
     return VitTradeHubScaffold(
       title: 'Cài đặt giao dịch',
       semanticLabel: 'Cài đặt giao dịch',
@@ -84,79 +80,100 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
       ),
       showProductTabs: true,
       navigationBuilder: buildTradeProductNavigation,
-      children: [
-        const VitTradeSection(
-          title: 'An toàn giao dịch',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Trade settings safety review',
-              message:
-                  'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
-              contractId: 'SC-052 settings review',
-              density: VitDensity.compact,
-            ),
+      children: settingsAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được cài đặt giao dịch',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeSettingsSnapshotProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Mặc định lệnh',
-          child: _OrderDefaultsCard(
-            settings: _settings,
-            onChanged: _updateSettings,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Xác nhận lệnh',
-          child: _ConfirmationCard(
-            settings: _settings,
-            onChanged: _updateSettings,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Phản hồi',
-          child: _FeedbackCard(settings: _settings, onChanged: _updateSettings),
-        ),
-        VitTradeSection(
-          title: 'Hiển thị',
-          child: _DisplayCard(settings: _settings, onChanged: _updateSettings),
-        ),
-        VitTradeSection(
-          title: 'Khôi phục',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _ResetButton(onReset: _resetSettings),
-              const SizedBox(height: _settingsSpace),
-              const _InfoNote(),
-            ],
-          ),
-        ),
-        const TradeBodyReviewSection(
-          title: 'Settings body review',
-          message: 'Trade settings body reviewed',
-          detail:
-              'Order defaults, confirmations, feedback, display, reset, and result states stay visible.',
-          primary: 'Safety review remains above settings mutations.',
-          secondary:
-              'Confirmation and slippage settings stay grouped by risk intent.',
-          tertiary: 'Reset remains separated from informational guidance.',
-        ),
-      ],
+        ],
+        data: (snapshot) {
+          _settings ??= snapshot.settings;
+          return _buildSettingsChildren(_settings!);
+        },
+      ),
     );
   }
 
-  void _updateSettings(TradeSettings settings) {
-    final updated = ref
+  List<Widget> _buildSettingsChildren(TradeSettings settings) {
+    return [
+      const VitTradeSection(
+        title: 'An toàn giao dịch',
+        child: VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.cardPaddingCompact,
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Trade settings safety review',
+            message:
+                'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
+            contractId: 'SC-052 settings review',
+            density: VitDensity.compact,
+          ),
+        ),
+      ),
+      VitTradeSection(
+        title: 'Mặc định lệnh',
+        child: _OrderDefaultsCard(
+          settings: settings,
+          onChanged: _updateSettings,
+        ),
+      ),
+      VitTradeSection(
+        title: 'Xác nhận lệnh',
+        child: _ConfirmationCard(
+          settings: settings,
+          onChanged: _updateSettings,
+        ),
+      ),
+      VitTradeSection(
+        title: 'Phản hồi',
+        child: _FeedbackCard(settings: settings, onChanged: _updateSettings),
+      ),
+      VitTradeSection(
+        title: 'Hiển thị',
+        child: _DisplayCard(settings: settings, onChanged: _updateSettings),
+      ),
+      VitTradeSection(
+        title: 'Khôi phục',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _ResetButton(onReset: _resetSettings),
+            const SizedBox(height: _settingsSpace),
+            const _InfoNote(),
+          ],
+        ),
+      ),
+      const TradeBodyReviewSection(
+        title: 'Settings body review',
+        message: 'Trade settings body reviewed',
+        detail:
+            'Order defaults, confirmations, feedback, display, reset, and result states stay visible.',
+        primary: 'Safety review remains above settings mutations.',
+        secondary:
+            'Confirmation and slippage settings stay grouped by risk intent.',
+        tertiary: 'Reset remains separated from informational guidance.',
+      ),
+    ];
+  }
+
+  Future<void> _updateSettings(TradeSettings settings) async {
+    final updated = await ref
         .read(tradeReadModelControllerProvider)
         .patchTradeSettings(settings);
+    if (!mounted) return;
     setState(() => _settings = updated);
   }
 
-  void _resetSettings() {
-    _updateSettings(
-      ref.read(tradeReadModelControllerProvider).getTradeSettings().settings,
-    );
+  Future<void> _resetSettings() async {
+    final snapshot = await ref
+        .read(tradeReadModelControllerProvider)
+        .getTradeSettings();
+    if (!mounted) return;
+    await _updateSettings(snapshot.settings);
   }
 }

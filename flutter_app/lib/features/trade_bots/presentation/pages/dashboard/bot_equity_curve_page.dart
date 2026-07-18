@@ -48,9 +48,7 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotEquityCurve();
+    final snapshotAsync = ref.watch(tradeBotEquityCurveProvider);
     return VitTradeHubScaffold(
       title: 'Equity Curve',
       subtitle: 'Đường cong vốn và so sánh thị trường',
@@ -64,76 +62,88 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Lợi nhuận bot',
-          primaryValue: '+${snapshot.summary.botReturnPct.toStringAsFixed(1)}%',
-          primaryColor: _equityGreen,
-          secondaryLabel: 'Alpha',
-          secondaryValue: '+${snapshot.summary.alphaPct.toStringAsFixed(1)}%',
-          secondaryColor: _equityPrimary,
-        ),
-        VitTradeSection(
-          title: 'Summary',
-          child: _SummaryRow(summary: snapshot.summary),
-        ),
-        VitTradeSection(
-          title: 'View',
-          child: VitTabBar(
-            tabs: [
-              VitTabItem(
-                key: 'equity',
-                label: 'Equity Curve',
-                widgetKey: BotEquityCurvePage.tabKey('equity'),
-              ),
-              VitTabItem(
-                key: 'sharpe',
-                label: 'Rolling Sharpe',
-                widgetKey: BotEquityCurvePage.tabKey('sharpe'),
-              ),
-              VitTabItem(
-                key: 'alpha',
-                label: 'Monthly Alpha',
-                widgetKey: BotEquityCurvePage.tabKey('alpha'),
-              ),
-            ],
-            activeKey: _view,
-            onChanged: (id) => setState(() => _view = id),
-            variant: VitTabBarVariant.segment,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được đường cong vốn',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotEquityCurveProvider),
           ),
-        ),
-        if (_view == 'equity')
-          VitTradeSection(
-            title: 'Equity Curve vs Buy & Hold',
-            child: _EquityChartCard(points: snapshot.equityPoints),
-          )
-        else if (_view == 'sharpe')
-          VitTradeSection(
-            title: 'Rolling 30-Day Sharpe Ratio',
-            child: _SharpeCard(points: snapshot.equityPoints),
-          )
-        else
-          VitTradeSection(
-            title: 'Monthly Alpha (Bot vs Market)',
-            child: _MonthlyAlphaCard(months: snapshot.monthlyReturns),
+        ],
+        data: (snapshot) => [
+          VitBotSubpageHero(
+            primaryLabel: 'Lợi nhuận bot',
+            primaryValue:
+                '+${snapshot.summary.botReturnPct.toStringAsFixed(1)}%',
+            primaryColor: _equityGreen,
+            secondaryLabel: 'Alpha',
+            secondaryValue: '+${snapshot.summary.alphaPct.toStringAsFixed(1)}%',
+            secondaryColor: _equityPrimary,
           ),
-        VitTradeSection(
-          title: 'Performance Statistics',
-          child: _PerformanceCard(stats: snapshot.performanceStats),
-        ),
-        VitTradeSection(
-          title: 'Analysis',
-          child: _AnalysisCard(items: snapshot.analysisItems),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Equity curve review',
-          message:
-              'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
-          contractId: 'bot-equity-curve-review',
-          statusLabel: 'Performance is not guaranteed',
-          status: VitStatusPillStatus.warning,
-        ),
-      ],
+          VitTradeSection(
+            title: 'Summary',
+            child: _SummaryRow(summary: snapshot.summary),
+          ),
+          VitTradeSection(
+            title: 'View',
+            child: VitTabBar(
+              tabs: [
+                VitTabItem(
+                  key: 'equity',
+                  label: 'Equity Curve',
+                  widgetKey: BotEquityCurvePage.tabKey('equity'),
+                ),
+                VitTabItem(
+                  key: 'sharpe',
+                  label: 'Rolling Sharpe',
+                  widgetKey: BotEquityCurvePage.tabKey('sharpe'),
+                ),
+                VitTabItem(
+                  key: 'alpha',
+                  label: 'Monthly Alpha',
+                  widgetKey: BotEquityCurvePage.tabKey('alpha'),
+                ),
+              ],
+              activeKey: _view,
+              onChanged: (id) => setState(() => _view = id),
+              variant: VitTabBarVariant.segment,
+            ),
+          ),
+          if (_view == 'equity')
+            VitTradeSection(
+              title: 'Equity Curve vs Buy & Hold',
+              child: _EquityChartCard(points: snapshot.equityPoints),
+            )
+          else if (_view == 'sharpe')
+            VitTradeSection(
+              title: 'Rolling 30-Day Sharpe Ratio',
+              child: _SharpeCard(points: snapshot.equityPoints),
+            )
+          else
+            VitTradeSection(
+              title: 'Monthly Alpha (Bot vs Market)',
+              child: _MonthlyAlphaCard(months: snapshot.monthlyReturns),
+            ),
+          VitTradeSection(
+            title: 'Performance Statistics',
+            child: _PerformanceCard(stats: snapshot.performanceStats),
+          ),
+          VitTradeSection(
+            title: 'Analysis',
+            child: _AnalysisCard(items: snapshot.analysisItems),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Equity curve review',
+            message:
+                'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
+            contractId: 'bot-equity-curve-review',
+            statusLabel: 'Performance is not guaranteed',
+            status: VitStatusPillStatus.warning,
+          ),
+        ],
+      ),
     );
   }
 }

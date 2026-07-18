@@ -57,9 +57,7 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getExAnteCosts();
+    final async = ref.watch(tradeExAnteCostsProvider);
     return VitTradeHubScaffold(
       title: 'Cost Disclosure (Ex-Ante)',
       subtitle: 'Before You Invest',
@@ -75,92 +73,103 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
       headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Ex-ante cost preview',
-            message:
-                'Review fees, RIY impact, limits, and next-step documents before investing.',
-            contractId: 'SC-105 ex-ante costs review',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeExAnteCostsProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Cost preview',
-          statusPill: const VitStatusPill(
-            label: 'Review required',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Investment',
-              value: '€${snapshot.investmentAmount.toStringAsFixed(0)}',
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Ex-ante cost preview',
+              message:
+                  'Review fees, RIY impact, limits, and next-step documents before investing.',
+              contractId: 'SC-105 ex-ante costs review',
+              density: VitDensity.compact,
             ),
-            VitTradeComplianceItem(
-              label: 'Holding period',
-              value: '$_holdingPeriod years',
-            ),
-          ],
-        ),
-        const VitTradeSection(
-          title: 'Notice',
-          child: VitTradeComplianceHero(
-            title: 'PRIIPs Cost Disclosure',
-            description:
-                'This document shows all costs you will pay before investing. '
-                'Required by EU regulation for retail clients.',
-            icon: Icons.shield_outlined,
-            accentColor: _costPrimary,
           ),
-        ),
-        VitTradeSection(
-          title: 'Costs',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _InvestmentCard(snapshot: snapshot),
-              // card-tile: allow-start — fixed surface, not horizontal strip tile
-              VitCard(
-                height: _costTabExtent,
-                density: VitDensity.compact,
-                padding: AppSpacing.zeroInsets,
-                child: VitTabBar(
-                  activeKey: _tab,
-                  onChanged: _setTab,
-                  variant: VitTabBarVariant.underline,
-                  tabs: [
-                    for (final tab in const [
-                      ('summary', 'Summary'),
-                      ('breakdown', 'Breakdown'),
-                      ('scenarios', 'Scenarios'),
-                    ])
-                      VitTabItem(
-                        key: tab.$1,
-                        label: tab.$2,
-                        widgetKey: ExAnteCostsPage.tabKey(tab.$1),
-                      ),
-                  ],
-                ),
+          VitTradeComplianceSection(
+            title: 'Cost preview',
+            statusPill: const VitStatusPill(
+              label: 'Review required',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Investment',
+                value: '€${snapshot.investmentAmount.toStringAsFixed(0)}',
               ),
-              if (_tab == 'summary')
-                _Summary(snapshot: snapshot)
-              else if (_tab == 'breakdown')
-                _Breakdown(snapshot: snapshot)
-              else
-                _Scenarios(
-                  snapshot: snapshot,
-                  holdingPeriod: _holdingPeriod,
-                  onChanged: (period) =>
-                      setState(() => _holdingPeriod = period),
-                ),
-              const _QuickLinks(),
+              VitTradeComplianceItem(
+                label: 'Holding period',
+                value: '$_holdingPeriod years',
+              ),
             ],
           ),
-        ),
-      ],
+          const VitTradeSection(
+            title: 'Notice',
+            child: VitTradeComplianceHero(
+              title: 'PRIIPs Cost Disclosure',
+              description:
+                  'This document shows all costs you will pay before investing. '
+                  'Required by EU regulation for retail clients.',
+              icon: Icons.shield_outlined,
+              accentColor: _costPrimary,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Costs',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _InvestmentCard(snapshot: snapshot),
+                // card-tile: allow-start — fixed surface, not horizontal strip tile
+                VitCard(
+                  height: _costTabExtent,
+                  density: VitDensity.compact,
+                  padding: AppSpacing.zeroInsets,
+                  child: VitTabBar(
+                    activeKey: _tab,
+                    onChanged: _setTab,
+                    variant: VitTabBarVariant.underline,
+                    tabs: [
+                      for (final tab in const [
+                        ('summary', 'Summary'),
+                        ('breakdown', 'Breakdown'),
+                        ('scenarios', 'Scenarios'),
+                      ])
+                        VitTabItem(
+                          key: tab.$1,
+                          label: tab.$2,
+                          widgetKey: ExAnteCostsPage.tabKey(tab.$1),
+                        ),
+                    ],
+                  ),
+                ),
+                if (_tab == 'summary')
+                  _Summary(snapshot: snapshot)
+                else if (_tab == 'breakdown')
+                  _Breakdown(snapshot: snapshot)
+                else
+                  _Scenarios(
+                    snapshot: snapshot,
+                    holdingPeriod: _holdingPeriod,
+                    onChanged: (period) =>
+                        setState(() => _holdingPeriod = period),
+                  ),
+                const _QuickLinks(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

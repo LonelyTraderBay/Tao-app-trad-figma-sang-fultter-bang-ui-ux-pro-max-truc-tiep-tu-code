@@ -31,11 +31,11 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-067 mock repository exposes copy settings BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getCopySettings();
+  test('SC-067 mock repository exposes copy settings BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getCopySettings();
     final updated = snapshot.settings.copyWith(defaultCopyRatio: 60);
-    final result = repo.patchCopySettings(updated);
+    final result = await repo.patchCopySettings(updated);
 
     expect(snapshot.trade.copyProviders, isNotEmpty);
     expect(snapshot.settings.defaultCopyMode, TradeCopySettingsMode.fixed);
@@ -139,6 +139,11 @@ void main() {
     await tester.ensureVisible(find.byKey(CopySettingsPage.saveKey));
     await tester.tap(find.byKey(CopySettingsPage.saveKey));
     await tester.pump();
+    // Repo's default 300ms simulated network delay must elapse before the
+    // save() Future resolves — advance the fake clock without running the
+    // full pumpAndSettle (which would also fire the 2s "hide saved" Timer
+    // and make the assertion below flaky).
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('Đã lưu!'), findsOneWidget);
   });

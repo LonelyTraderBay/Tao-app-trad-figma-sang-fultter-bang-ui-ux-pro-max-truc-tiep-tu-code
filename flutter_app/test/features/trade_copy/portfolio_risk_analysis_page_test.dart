@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-078 mock repository exposes portfolio risk BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository()
-        .getPortfolioRiskAnalysis();
+  test('SC-078 mock repository exposes portfolio risk BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getPortfolioRiskAnalysis();
 
     expect(snapshot.totalExposure, 8000);
     expect(snapshot.var95, -273);

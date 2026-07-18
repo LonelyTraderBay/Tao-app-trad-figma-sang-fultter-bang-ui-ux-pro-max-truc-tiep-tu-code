@@ -59,10 +59,7 @@ class _RiskManagementDemoPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRiskManagementControllerProvider)
-        .state
-        .snapshot;
+    final controllerAsync = ref.watch(tradeRiskManagementControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     return Stack(
@@ -82,55 +79,70 @@ class _RiskManagementDemoPageState
           ),
           showProductTabs: true,
           navigationBuilder: buildTradeProductNavigation,
-          children: [
-            const _IntroCard(),
-            const VitCard(
-              variant: VitCardVariant.inner,
-              padding: TradeSpacingTokens.tradeToolRiskReviewPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  VitHighRiskStatePanel(
-                    state: VitHighRiskUiState.riskReview,
-                    title: 'Xem lại công cụ rủi ro',
-                    message:
-                        'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
-                    contractId: 'risk-management-demo-review',
-                    density: VitDensity.compact,
-                  ),
-                  SizedBox(height: _riskSpace),
-                  VitStatusPill(
-                    label: 'Xem trước khi thực hiện',
-                    status: VitStatusPillStatus.warning,
-                    size: VitStatusPillSize.sm,
-                  ),
-                ],
-              ),
-            ),
-            for (final feature in snapshot.features) ...[
-              _FeatureCard(
-                feature: feature,
-                onTap: () => _onFeatureTap(feature),
+          children: controllerAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được quản lý rủi ro',
+                message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () =>
+                    ref.invalidate(tradeRiskManagementSnapshotProvider),
               ),
             ],
-            const _BenefitsCard(),
-            _StatusCard(items: snapshot.statusItems),
-            _RiskTabs(
-              active: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            VitPageSection(
-              density: VitDensity.compact,
-              children: [
-                if (_tab == _RiskTab.oco)
-                  _OcoTab(onOpen: _openOcoSheet)
-                else if (_tab == _RiskTab.positions)
-                  _PositionsTab(positions: snapshot.positions)
-                else
-                  _CalculatorTab(onOpen: _openCalculatorSheet),
-              ],
-            ),
-          ],
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              return [
+                const _IntroCard(),
+                const VitCard(
+                  variant: VitCardVariant.inner,
+                  padding: TradeSpacingTokens.tradeToolRiskReviewPadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Xem lại công cụ rủi ro',
+                        message:
+                            'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
+                        contractId: 'risk-management-demo-review',
+                        density: VitDensity.compact,
+                      ),
+                      SizedBox(height: _riskSpace),
+                      VitStatusPill(
+                        label: 'Xem trước khi thực hiện',
+                        status: VitStatusPillStatus.warning,
+                        size: VitStatusPillSize.sm,
+                      ),
+                    ],
+                  ),
+                ),
+                for (final feature in snapshot.features) ...[
+                  _FeatureCard(
+                    feature: feature,
+                    onTap: () => _onFeatureTap(feature),
+                  ),
+                ],
+                const _BenefitsCard(),
+                _StatusCard(items: snapshot.statusItems),
+                _RiskTabs(
+                  active: _tab,
+                  onChanged: (tab) => setState(() => _tab = tab),
+                ),
+                VitPageSection(
+                  density: VitDensity.compact,
+                  children: [
+                    if (_tab == _RiskTab.oco)
+                      _OcoTab(onOpen: _openOcoSheet)
+                    else if (_tab == _RiskTab.positions)
+                      _PositionsTab(positions: snapshot.positions)
+                    else
+                      _CalculatorTab(onOpen: _openCalculatorSheet),
+                  ],
+                ),
+              ];
+            },
+          ),
         ),
         if (_successMessage != null)
           Positioned(
@@ -169,38 +181,39 @@ class _RiskManagementDemoPageState
       builder: (context) => const _OcoSheet(),
     );
     if (submitted != true || !mounted) return;
-    final result = ref
-        .read(tradeRiskManagementControllerProvider)
-        .submitOcoOrder(
-          const TradeOcoOrderDraft(
-            symbol: 'BTC/USDT',
-            side: TradeOrderSide.buy,
-            quantity: .015,
-            limitPrice: 69000,
-            takeProfitPrice: 72000,
-            stopPrice: 66000,
-          ),
-        );
+    final controller = ref.read(tradeRiskManagementControllerProvider).value;
+    if (controller == null) return;
+    final result = await controller.submitOcoOrder(
+      const TradeOcoOrderDraft(
+        symbol: 'BTC/USDT',
+        side: TradeOrderSide.buy,
+        quantity: .015,
+        limitPrice: 69000,
+        takeProfitPrice: 72000,
+        stopPrice: 66000,
+      ),
+    );
+    if (!mounted) return;
     setState(() => _successMessage = 'Đã đặt ${result.orderId}');
   }
 
   Future<void> _openCalculatorSheet() async {
+    final controller = ref.read(tradeRiskManagementControllerProvider).value;
+    if (controller == null) return;
+    final result = await controller.calculatePositionSize(
+      const TradePositionSizeRequest(
+        accountBalance: 50000,
+        riskPct: 1,
+        entryPrice: 69000,
+        stopPrice: 67500,
+      ),
+    );
+    if (!mounted) return;
     final applied = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (context) => _CalculatorSheet(
-        result: ref
-            .read(tradeRiskManagementControllerProvider)
-            .calculatePositionSize(
-              const TradePositionSizeRequest(
-                accountBalance: 50000,
-                riskPct: 1,
-                entryPrice: 69000,
-                stopPrice: 67500,
-              ),
-            ),
-      ),
+      builder: (context) => _CalculatorSheet(result: result),
     );
     if (applied != true || !mounted) return;
     setState(() => _successMessage = 'Đã áp dụng khối lượng đề xuất');

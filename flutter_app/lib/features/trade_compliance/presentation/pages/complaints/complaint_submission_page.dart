@@ -82,10 +82,7 @@ class _ComplaintSubmissionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getComplaintSubmission();
-    final canSubmit = _canSubmit(snapshot);
+    final async = ref.watch(tradeComplaintSubmissionProvider);
 
     return VitTradeHubScaffold(
       title: 'Submit Complaint',
@@ -99,95 +96,109 @@ class _ComplaintSubmissionPageState
         fallbackPath: AppRoutePaths.tradeCopyComplaintsHandling,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review complaint submission',
-            message:
-                'Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeComplaintSubmissionProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Complaint Details',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              VitTradeComplianceHero(
-                title: snapshot.processTitle,
-                description: snapshot.processDescription,
-                icon: Icons.info_outline_rounded,
-                accentColor: AppColors.text1,
+        ],
+        data: (snapshot) {
+          final canSubmit = _canSubmit(snapshot);
+          return [
+            const VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review complaint submission',
+                message:
+                    'Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.',
+                density: VitDensity.compact,
               ),
-              _CategoryField(
-                value: _category,
-                categories: snapshot.categories,
-                onChanged: (value) => setState(() => _category = value),
-              ),
-              _TextInputBlock(
-                label: 'Subject *',
-                controller: _subjectController,
-                hint: 'Brief summary of your complaint',
-                maxLength: snapshot.subjectMaxLength,
-                minLength: snapshot.subjectMinLength,
-                onChanged: (_) => setState(() {}),
-              ),
-              _TextInputBlock(
-                label: 'Description *',
-                controller: _descriptionController,
-                hint:
-                    'Please provide full details of your complaint, including dates, amounts, and any relevant information',
-                maxLength: snapshot.descriptionMaxLength,
-                minLength: snapshot.descriptionMinLength,
-                multiline: true,
-                onChanged: (_) => setState(() {}),
-              ),
-              const _EvidenceUploadCard(),
-              _TermsCard(
-                snapshot: snapshot,
-                accepted: _acceptTerms,
-                onChanged: (value) => setState(() => _acceptTerms = value),
-              ),
-              const TradeBodyReviewSection(
-                title: 'Complaint submission body review',
-                message: 'Complaint submission body reviewed',
-                detail:
-                    'Category, subject, description, evidence, consent, submitting, and result states stay visible.',
-                primary:
-                    'Process notice remains above the regulated complaint form.',
-                secondary:
-                    'Evidence and terms stay visible before the submit action.',
-                tertiary:
-                    'Submission copy remains regulatory and non-promotional.',
-              ),
-              _SubmissionFooter(
-                enabled: canSubmit,
-                onSubmit: () => _submit(context, snapshot, canSubmit),
-              ),
-            ],
-          ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Submission status',
-          statusPill: const VitStatusPill(
-            label: 'Regulated intake',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Categories',
-              value: '${snapshot.categories.length} available',
             ),
-            const VitTradeComplianceItem(
-              label: 'Framework',
-              value: 'FCA regulated intake',
+            VitTradeSection(
+              title: 'Complaint Details',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  VitTradeComplianceHero(
+                    title: snapshot.processTitle,
+                    description: snapshot.processDescription,
+                    icon: Icons.info_outline_rounded,
+                    accentColor: AppColors.text1,
+                  ),
+                  _CategoryField(
+                    value: _category,
+                    categories: snapshot.categories,
+                    onChanged: (value) => setState(() => _category = value),
+                  ),
+                  _TextInputBlock(
+                    label: 'Subject *',
+                    controller: _subjectController,
+                    hint: 'Brief summary of your complaint',
+                    maxLength: snapshot.subjectMaxLength,
+                    minLength: snapshot.subjectMinLength,
+                    onChanged: (_) => setState(() {}),
+                  ),
+                  _TextInputBlock(
+                    label: 'Description *',
+                    controller: _descriptionController,
+                    hint:
+                        'Please provide full details of your complaint, including dates, amounts, and any relevant information',
+                    maxLength: snapshot.descriptionMaxLength,
+                    minLength: snapshot.descriptionMinLength,
+                    multiline: true,
+                    onChanged: (_) => setState(() {}),
+                  ),
+                  const _EvidenceUploadCard(),
+                  _TermsCard(
+                    snapshot: snapshot,
+                    accepted: _acceptTerms,
+                    onChanged: (value) => setState(() => _acceptTerms = value),
+                  ),
+                  const TradeBodyReviewSection(
+                    title: 'Complaint submission body review',
+                    message: 'Complaint submission body reviewed',
+                    detail:
+                        'Category, subject, description, evidence, consent, submitting, and result states stay visible.',
+                    primary:
+                        'Process notice remains above the regulated complaint form.',
+                    secondary:
+                        'Evidence and terms stay visible before the submit action.',
+                    tertiary:
+                        'Submission copy remains regulatory and non-promotional.',
+                  ),
+                  _SubmissionFooter(
+                    enabled: canSubmit,
+                    onSubmit: () => _submit(context, snapshot, canSubmit),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ],
+            VitTradeComplianceSection(
+              title: 'Submission status',
+              statusPill: const VitStatusPill(
+                label: 'Regulated intake',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Categories',
+                  value: '${snapshot.categories.length} available',
+                ),
+                const VitTradeComplianceItem(
+                  label: 'Framework',
+                  value: 'FCA regulated intake',
+                ),
+              ],
+            ),
+          ];
+        },
+      ),
     );
   }
 

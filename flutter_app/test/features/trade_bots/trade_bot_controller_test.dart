@@ -7,12 +7,12 @@ import 'package:vit_trade_flutter/features/trade_bots/presentation/controllers/t
 void main() {
   test(
     'Trade bot safety controllers own emergency, security, and suitability',
-    () {
-      final repository = const MockTradeBotsRepository();
+    () async {
+      const repository = MockTradeBotsRepository(loadDelay: Duration.zero);
       final emergencyController = TradeBotEmergencyStopController(
         repository: repository,
         state: TradeBotEmergencyStopViewState(
-          snapshot: repository.getBotEmergencyStop(),
+          snapshot: await repository.getBotEmergencyStop(),
         ),
       );
 
@@ -40,14 +40,14 @@ void main() {
       final securityController = TradeBotSecuritySettingsController(
         repository: repository,
         state: TradeBotSecuritySettingsViewState(
-          snapshot: repository.getBotSecuritySettings(),
+          snapshot: await repository.getBotSecuritySettings(),
         ),
       );
 
       expect(securityController.saveValidationMessage(), isNull);
       expect(securityController.saveTwoFa(true).twoFaEnabled, isTrue);
 
-      final suitability = repository.getBotSuitabilityAssessment();
+      final suitability = await repository.getBotSuitabilityAssessment();
       final answers = {
         for (final question in suitability.questions)
           question.id: question.options.last.id,
@@ -64,57 +64,70 @@ void main() {
     },
   );
 
-  test('TradeBotsController Notifier owns bot list mutations reactively', () {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
+  test(
+    'TradeBotsController Notifier owns bot list mutations reactively',
+    () async {
+      final container = ProviderContainer(
+        overrides: [
+          tradingBotsRepositoryProvider.overrideWithValue(
+            const MockTradeBotsRepository(loadDelay: Duration.zero),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
 
-    final initial = container.read(tradeBotsControllerProvider);
-    final botId = initial.snapshot.activeBots.first.id;
-    final originalStatus = initial.snapshot.activeBots.first.status;
+      await container.read(tradingBotsSnapshotProvider.future);
+      final initial = container.read(tradeBotsControllerProvider);
+      final botId = initial.snapshot.activeBots.first.id;
+      final originalStatus = initial.snapshot.activeBots.first.status;
 
-    expect(
-      initial.botActionValidationMessage(botId: botId, action: 'toggle'),
-      isNull,
-    );
+      expect(
+        initial.botActionValidationMessage(botId: botId, action: 'toggle'),
+        isNull,
+      );
 
-    final notifier = container.read(tradeBotsControllerProvider.notifier);
-    final actionResult = notifier.submitAction(botId: botId, action: 'toggle');
+      final notifier = container.read(tradeBotsControllerProvider.notifier);
+      final actionResult = notifier.submitAction(
+        botId: botId,
+        action: 'toggle',
+      );
 
-    expect(actionResult.action, 'toggle');
-    final afterToggle = container.read(tradeBotsControllerProvider);
-    expect(
-      afterToggle.snapshot.activeBots
-          .firstWhere((bot) => bot.id == botId)
-          .status,
-      isNot(originalStatus),
-    );
+      expect(actionResult.action, 'toggle');
+      final afterToggle = container.read(tradeBotsControllerProvider);
+      expect(
+        afterToggle.snapshot.activeBots
+            .firstWhere((bot) => bot.id == botId)
+            .status,
+        isNot(originalStatus),
+      );
 
-    notifier.submitAction(botId: botId, action: 'delete');
-    final afterDelete = container.read(tradeBotsControllerProvider);
-    expect(
-      afterDelete.snapshot.activeBots.any((bot) => bot.id == botId),
-      isFalse,
-    );
+      notifier.submitAction(botId: botId, action: 'delete');
+      final afterDelete = container.read(tradeBotsControllerProvider);
+      expect(
+        afterDelete.snapshot.activeBots.any((bot) => bot.id == botId),
+        isFalse,
+      );
 
-    expect(
-      notifier.createValidationMessage(
-        const TradeBotCreateRequest(
-          strategyId: 'grid',
-          params: {'pair': 'BTC/USDT'},
+      expect(
+        notifier.createValidationMessage(
+          const TradeBotCreateRequest(
+            strategyId: 'grid',
+            params: {'pair': 'BTC/USDT'},
+          ),
         ),
-      ),
-      isNull,
-    );
-    expect(
-      notifier
-          .createBot(
-            const TradeBotCreateRequest(
-              strategyId: 'grid',
-              params: {'pair': 'BTC/USDT'},
-            ),
-          )
-          .strategyId,
-      'grid',
-    );
-  });
+        isNull,
+      );
+      expect(
+        notifier
+            .createBot(
+              const TradeBotCreateRequest(
+                strategyId: 'grid',
+                params: {'pair': 'BTC/USDT'},
+              ),
+            )
+            .strategyId,
+        'grid',
+      );
+    },
+  );
 }

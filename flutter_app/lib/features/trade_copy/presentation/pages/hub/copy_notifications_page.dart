@@ -47,16 +47,7 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeCopyTradingRepositoryProvider);
-    final snapshot = repository.getCopyNotifications();
-    final activeTab = _activeTab ?? snapshot.defaultTab;
-    _activeTab ??= snapshot.defaultTab;
-    _notifications ??= snapshot.notifications;
-
-    final notifications = _notifications!;
-    final unreadCount = notifications.where((item) => !item.read).length;
-    final tabs = _tabsFor(notifications, snapshot.tabs);
-    final filteredNotifications = _filtered(notifications, activeTab);
+    final snapshotAsync = ref.watch(tradeCopyNotificationsProvider);
 
     return VitTradeDetailScaffold(
       title: 'Thông báo',
@@ -78,83 +69,111 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
         ),
       ],
       children: [
-        if (unreadCount > 0)
-          VitTradeSection(
-            title: 'Chưa đọc',
-            child: _UnreadSummary(
-              unreadCount: unreadCount,
-              onMarkAllRead: _markAllRead,
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được thông báo',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeCopyNotificationsProvider),
             ),
-          ),
-        VitTradeSection(
-          title: 'Bộ lọc',
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                for (final tab in tabs) ...[
-                  VitFilterChip(
-                    key: CopyNotificationsPage.tabKey(tab.id),
-                    label: tab.label,
-                    active: tab.id == activeTab,
-                    onTap: () => setState(() => _activeTab = tab.id),
-                    color: _notificationPrimary,
-                    count: tab.badge,
+          ],
+          data: (snapshot) {
+            final activeTab = _activeTab ?? snapshot.defaultTab;
+            _activeTab ??= snapshot.defaultTab;
+            _notifications ??= snapshot.notifications;
+
+            final notifications = _notifications!;
+            final unreadCount = notifications
+                .where((item) => !item.read)
+                .length;
+            final tabs = _tabsFor(notifications, snapshot.tabs);
+            final filteredNotifications = _filtered(notifications, activeTab);
+
+            return [
+              if (unreadCount > 0)
+                VitTradeSection(
+                  title: 'Chưa đọc',
+                  child: _UnreadSummary(
+                    unreadCount: unreadCount,
+                    onMarkAllRead: _markAllRead,
                   ),
-                  if (tab != tabs.last)
-                    const SizedBox(
-                      width: AppSpacing.statusPillHorizontalPaddingMd,
-                    ),
-                ],
-              ],
-            ),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Danh sách',
-          child: filteredNotifications.isEmpty
-              ? _EmptyNotifications(activeTab: activeTab)
-              : Column(
-                  children: [
-                    for (final notification in filteredNotifications) ...[
-                      _NotificationCard(
-                        key: CopyNotificationsPage.notificationKey(
-                          notification.id,
-                        ),
-                        notification: notification,
-                        onTap: () => _handleNotificationTap(notification),
-                      ),
-                      if (notification != filteredNotifications.last)
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmCompactInnerGap,
-                        ),
-                    ],
-                  ],
                 ),
-        ),
-        const VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Notification risk review',
-              message:
-                  'Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.',
-              contractId: 'copy-notifications-review',
-            ),
-          ),
-        ),
-        const TradeBodyReviewSection(
-          title: 'Notification body review',
-          message: 'Copy notification body reviewed',
-          detail:
-              'Unread summary, filters, cards, empty, bulk read, and navigation states stay visible.',
-          primary:
-              'Unread risk alerts remain separated from general copy updates.',
-          secondary: 'Filter state stays visible before notification actions.',
-          tertiary: 'Navigation stays scoped to copy-trading review screens.',
+              VitTradeSection(
+                title: 'Bộ lọc',
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final tab in tabs) ...[
+                        VitFilterChip(
+                          key: CopyNotificationsPage.tabKey(tab.id),
+                          label: tab.label,
+                          active: tab.id == activeTab,
+                          onTap: () => setState(() => _activeTab = tab.id),
+                          color: _notificationPrimary,
+                          count: tab.badge,
+                        ),
+                        if (tab != tabs.last)
+                          const SizedBox(
+                            width: AppSpacing.statusPillHorizontalPaddingMd,
+                          ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              VitTradeSection(
+                title: 'Danh sách',
+                child: filteredNotifications.isEmpty
+                    ? _EmptyNotifications(activeTab: activeTab)
+                    : Column(
+                        children: [
+                          for (final notification in filteredNotifications) ...[
+                            _NotificationCard(
+                              key: CopyNotificationsPage.notificationKey(
+                                notification.id,
+                              ),
+                              notification: notification,
+                              onTap: () => _handleNotificationTap(notification),
+                            ),
+                            if (notification != filteredNotifications.last)
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
+                          ],
+                        ],
+                      ),
+              ),
+              const VitTradeSection(
+                title: 'Đánh giá rủi ro',
+                child: VitCard(
+                  variant: VitCardVariant.inner,
+                  padding: AppSpacing.cardPaddingCompact,
+                  child: VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Notification risk review',
+                    message:
+                        'Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.',
+                    contractId: 'copy-notifications-review',
+                  ),
+                ),
+              ),
+              const TradeBodyReviewSection(
+                title: 'Notification body review',
+                message: 'Copy notification body reviewed',
+                detail:
+                    'Unread summary, filters, cards, empty, bulk read, and navigation states stay visible.',
+                primary:
+                    'Unread risk alerts remain separated from general copy updates.',
+                secondary:
+                    'Filter state stays visible before notification actions.',
+                tertiary:
+                    'Navigation stays scoped to copy-trading review screens.',
+              ),
+            ];
+          },
         ),
       ],
     );

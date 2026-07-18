@@ -28,8 +28,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (repository != null)
-            tradeRepositoryProvider.overrideWithValue(repository),
+          // GD4 Cụm F3: previewOrder giờ Future<T>, watch theo family key =
+          // draft (đổi mỗi keystroke) — loadDelay mặc định 300ms để lại
+          // pending timer mồ côi khi draft cũ bị autoDispose trước khi
+          // Future resolve (xem GD4-Async-Playbook.md mục 9).
+          tradeRepositoryProvider.overrideWithValue(
+            repository ?? const MockTradeRepository(loadDelay: Duration.zero),
+          ),
         ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: initialLocation),
@@ -39,44 +44,47 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-048 mock repository exposes the trade BE draft read model', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getTrade();
-    final pairSnapshot = repo.getTrade(pairId: 'btcusdt');
+  test(
+    'SC-048 mock repository exposes the trade BE draft read model',
+    () async {
+      final repo = const MockTradeRepository(loadDelay: Duration.zero);
+      final snapshot = await repo.getTrade();
+      final pairSnapshot = await repo.getTrade(pairId: 'btcusdt');
 
-    expect(snapshot.pair.symbol, 'BTC/USDT');
-    expect(pairSnapshot.pair.id, 'btcusdt');
-    expect(snapshot.pairs, hasLength(3));
-    expect(snapshot.orderBook.bids, isNotEmpty);
-    expect(snapshot.trades, isNotEmpty);
-    expect(snapshot.orders, isNotEmpty);
-    expect(snapshot.positions, isNotEmpty);
-    expect(snapshot.copyProviders, isNotEmpty);
-    expect(snapshot.botStrategies, isNotEmpty);
-    expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
+      expect(snapshot.pair.symbol, 'BTC/USDT');
+      expect(pairSnapshot.pair.id, 'btcusdt');
+      expect(snapshot.pairs, hasLength(3));
+      expect(snapshot.orderBook.bids, isNotEmpty);
+      expect(snapshot.trades, isNotEmpty);
+      expect(snapshot.orders, isNotEmpty);
+      expect(snapshot.positions, isNotEmpty);
+      expect(snapshot.copyProviders, isNotEmpty);
+      expect(snapshot.botStrategies, isNotEmpty);
+      expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
 
-    final preview = repo.previewOrder(
-      const TradeOrderDraft(
-        pairId: 'btcusdt',
-        side: TradeOrderSide.buy,
-        type: TradeOrderType.limit,
-        price: 67543.21,
-        amount: .1,
-      ),
-    );
-    expect(preview.total, closeTo(6754.321, .001));
-    expect(preview.feeRate, .00085);
-  });
+      final preview = await repo.previewOrder(
+        const TradeOrderDraft(
+          pairId: 'btcusdt',
+          side: TradeOrderSide.buy,
+          type: TradeOrderType.limit,
+          price: 67543.21,
+          amount: .1,
+        ),
+      );
+      expect(preview.total, closeTo(6754.321, .001));
+      expect(preview.feeRate, .00085);
+    },
+  );
 
   testWidgets('SC-049 renders the BTC pair route variant', (tester) async {
     await pumpTrade(
@@ -199,13 +207,12 @@ void main() {
   testWidgets(
     'SC-048 nhánh lỗi ADR-001: repo ném thì ở lại trang, hiện error, không điều hướng receipt',
     (tester) async {
-      await pumpTrade(
-        tester,
-        repository: const MockTradeRepository(
-          loadDelay: Duration.zero,
-          simulateError: true,
-        ),
-      );
+      // GD4 Cụm F3: `simulateError: true` giờ ảnh hưởng CẢ đường đọc
+      // (getTrade cũng qua `_simulateNetwork()`) — test này muốn trang tải
+      // bình thường và CHỈ submitOrder thất bại, nên dùng double riêng thay
+      // vì cờ `simulateError` toàn repo (khuôn `_OfflineSubmitTradeRepository`
+      // trong trade_controller_test.dart).
+      await pumpTrade(tester, repository: const _SubmitFailsTradeRepository());
 
       await tester.scrollUntilVisible(
         find.byKey(TradePage.pctKey(25)),
@@ -243,6 +250,11 @@ void main() {
     configureFirstViewport(tester, VitFirstViewport.minimumPhone);
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.trade),
         ),
@@ -272,4 +284,31 @@ void main() {
 
     expect(find.text('Thêm'), findsNothing);
   });
+}
+
+/// Double chỉ phục vụ nhánh lỗi generic (không offline) của máy trạng thái
+/// ADR-001: đường đọc forward sang mock thật (zero delay), submitOrder ném
+/// lỗi generic — mirror `_OfflineSubmitTradeRepository` trong
+/// trade_controller_test.dart nhưng cho nhánh `error` thay vì `offline`.
+final class _SubmitFailsTradeRepository implements TradeRepository {
+  const _SubmitFailsTradeRepository();
+
+  static const _mock = MockTradeRepository(loadDelay: Duration.zero);
+
+  @override
+  Future<TradeScreenSnapshot> getTrade({String pairId = 'btcusdt'}) =>
+      _mock.getTrade(pairId: pairId);
+
+  @override
+  Future<TradeOrderPreview> previewOrder(TradeOrderDraft draft) =>
+      _mock.previewOrder(draft);
+
+  @override
+  Future<TradeOrderReceipt> submitOrder(TradeOrderDraft draft) async {
+    throw StateError('trade_submit_failed_test');
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('${invocation.memberName}');
 }

@@ -30,10 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-077 mock repository exposes copy audit BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getCopyAuditLog(copyId: 'copy001');
-    final export = repo.createCopyAuditExport(
+  test('SC-077 mock repository exposes copy audit BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getCopyAuditLog(copyId: 'copy001');
+    final export = await repo.createCopyAuditExport(
       const TradeCopyAuditExportRequest(
         copyId: 'copy001',
         format: 'csv',

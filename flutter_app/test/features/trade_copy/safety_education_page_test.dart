@@ -31,9 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-080 mock repository exposes safety education BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository()
-        .getSafetyEducation();
+  test('SC-080 mock repository exposes safety education BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getSafetyEducation();
 
     expect(snapshot.defaultTabId, 'scams');
     expect(snapshot.tabs.map((tab) => tab.id), [

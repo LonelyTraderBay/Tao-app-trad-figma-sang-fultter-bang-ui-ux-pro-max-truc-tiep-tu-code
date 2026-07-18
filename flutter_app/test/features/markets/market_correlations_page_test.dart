@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-026 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getMarketCorrelations();
+  test('SC-026 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarketCorrelations();
 
     expect(snapshot.assets.map((asset) => asset.symbol), [
       'BTC',
@@ -76,13 +76,13 @@ void main() {
       ]),
     );
 
-    final lowSorted = repo.getMarketCorrelations(
+    final lowSorted = await repo.getMarketCorrelations(
       sortOrder: CorrelationSortOrder.low,
     );
     expect(lowSorted.pairs.first.assetA, 'XRP');
     expect(lowSorted.pairs.first.assetB, 'LINK');
 
-    final d30 = repo.getMarketCorrelations(
+    final d30 = await repo.getMarketCorrelations(
       timeframe: MarketCorrelationTimeframe.d30,
     );
     expect(d30.matrix.first[1], 0.89);

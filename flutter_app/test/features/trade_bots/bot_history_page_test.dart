@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-123 mock repository exposes bot history BE draft', () {
-    final repo = const MockTradeBotsRepository();
-    final snapshot = repo.getBotHistory();
+  test('SC-123 mock repository exposes bot history BE draft', () async {
+    final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getBotHistory();
     final export = repo.createBotHistoryExport(
       const TradeBotHistoryExportRequest(format: 'csv'),
     );

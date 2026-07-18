@@ -31,9 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-119 mock repository exposes bot suitability BE draft', () {
-    final snapshot = const MockTradeBotsRepository()
-        .getBotSuitabilityAssessment();
+  test('SC-119 mock repository exposes bot suitability BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotSuitabilityAssessment();
 
     expect(snapshot.questions, hasLength(8));
     expect(snapshot.questions.first.id, 'q1');

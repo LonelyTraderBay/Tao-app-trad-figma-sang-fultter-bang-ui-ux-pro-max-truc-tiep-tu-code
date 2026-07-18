@@ -128,6 +128,9 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // GD4-F3: trang gate qua marketPriceAlertsSnapshotProvider.when() (mục
+    // 5+6) trước khi đọc marketPriceAlertsStateControllerProvider.
+    final alertsAsync = ref.watch(marketPriceAlertsSnapshotProvider);
     final viewState = ref.watch(marketPriceAlertsStateControllerProvider);
     final snapshot = viewState.snapshot;
     final alerts = viewState.alerts;
@@ -210,36 +213,49 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _StatsSummary(
-                          total: alerts.length,
-                          active: activeCount,
-                          triggered: triggeredCount,
-                        ),
-                        if (filteredAlerts.isEmpty)
-                          const _EmptyAlertsCard()
-                        else
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              for (final alert in filteredAlerts) ...[
-                                _AlertCard(
-                                  alert: alert,
-                                  pair: _findPair(
-                                    snapshot.marketPairs,
-                                    alert.pairId,
-                                  ),
-                                  onToggle: () => _toggleAlert(alert.id),
-                                  onDelete: () => _deleteAlert(alert.id),
-                                ),
-                                if (alert != filteredAlerts.last)
-                                  const SizedBox(height: _alertsCardGap),
-                              ],
-                            ],
+                      children: alertsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được cảnh báo giá',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketPriceAlertsSnapshotProvider,
+                            ),
                           ),
-                        _AddAlertButton(onTap: _showAddPlaceholder),
-                        if (_showAddNotice) const _AddAlertNotice(),
-                      ],
+                        ],
+                        data: (_) => [
+                          _StatsSummary(
+                            total: alerts.length,
+                            active: activeCount,
+                            triggered: triggeredCount,
+                          ),
+                          if (filteredAlerts.isEmpty)
+                            const _EmptyAlertsCard()
+                          else
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                for (final alert in filteredAlerts) ...[
+                                  _AlertCard(
+                                    alert: alert,
+                                    pair: _findPair(
+                                      snapshot.marketPairs,
+                                      alert.pairId,
+                                    ),
+                                    onToggle: () => _toggleAlert(alert.id),
+                                    onDelete: () => _deleteAlert(alert.id),
+                                  ),
+                                  if (alert != filteredAlerts.last)
+                                    const SizedBox(height: _alertsCardGap),
+                                ],
+                              ],
+                            ),
+                          _AddAlertButton(onTap: _showAddPlaceholder),
+                          if (_showAddNotice) const _AddAlertNotice(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_copy_trading_repository.dart';
 mixin _MockTradeCopyTradingRepositoryLifecycleMethods
     on _MockTradeCopyTradingRepositoryBase {
   @override
-  TradeCopyTradingSnapshot getCopyTrading() {
+  Future<TradeCopyTradingSnapshot> getCopyTrading() async {
+    await _simulateNetwork();
     return TradeCopyTradingSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       traders: _copyTraders,
@@ -35,7 +36,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopyCardDemoSnapshot getCopyCardDemo() {
+  Future<TradeCopyCardDemoSnapshot> getCopyCardDemo() async {
+    await _simulateNetwork();
     return const TradeCopyCardDemoSnapshot(
       endpoint: '/api/mobile/demo/demo-copy-card',
       actionDraft: 'POST /copy-trading/follow|configure|stop where applicable',
@@ -221,7 +223,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopyEducationSnapshot getCopyEducation() {
+  Future<TradeCopyEducationSnapshot> getCopyEducation() async {
+    await _simulateNetwork();
     return const TradeCopyEducationSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: _copyEducationTabs,
@@ -244,7 +247,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeActiveCopiesSnapshot getActiveCopies() {
+  Future<TradeActiveCopiesSnapshot> getActiveCopies() async {
+    await _simulateNetwork();
     return const TradeActiveCopiesSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       portfolio: TradeActiveCopyPortfolio(
@@ -275,7 +279,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopySettingsSnapshot getCopySettings() {
+  Future<TradeCopySettingsSnapshot> getCopySettings() async {
+    await _simulateNetwork();
     return const TradeCopySettingsSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       settings: _defaultCopySettings,
@@ -293,7 +298,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopyNotificationsSnapshot getCopyNotifications() {
+  Future<TradeCopyNotificationsSnapshot> getCopyNotifications() async {
+    await _simulateNetwork();
     final unreadCount = _copyNotifications
         .where((notification) => !notification.read)
         .length;
@@ -374,7 +380,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeSafetyEducationSnapshot getSafetyEducation() {
+  Future<TradeSafetyEducationSnapshot> getSafetyEducation() async {
+    await _simulateNetwork();
     return const TradeSafetyEducationSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: _safetyEducationTabs,
@@ -398,7 +405,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeDisputeResolutionSnapshot getDisputeResolution() {
+  Future<TradeDisputeResolutionSnapshot> getDisputeResolution() async {
+    await _simulateNetwork();
     return const TradeDisputeResolutionSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: [
@@ -426,7 +434,8 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopySafetyCenterSnapshot getCopySafetyCenter() {
+  Future<TradeCopySafetyCenterSnapshot> getCopySafetyCenter() async {
+    await _simulateNetwork();
     return const TradeCopySafetyCenterSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: _copySafetyCenterTabs,
@@ -456,14 +465,18 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopySettingsSaveResult patchCopySettings(TradeCopySettings settings) {
+  Future<TradeCopySettingsSaveResult> patchCopySettings(
+    TradeCopySettings settings,
+  ) async {
+    await _simulateNetwork();
     return TradeCopySettingsSaveResult(status: 'saved', settings: settings);
   }
 
   @override
-  TradeDisputeSubmissionResult submitDisputeComplaint(
+  Future<TradeDisputeSubmissionResult> submitDisputeComplaint(
     TradeDisputeComplaintDraft draft,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return const TradeDisputeSubmissionResult(
       caseId: 'case-003',
       status: 'submitted',
@@ -472,9 +485,10 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
   }
 
   @override
-  TradeCopyActionResult submitCopyTradingAction(
+  Future<TradeCopyActionResult> submitCopyTradingAction(
     TradeCopyActionRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeCopyActionResult(
       providerId: request.providerId,
       action: request.action,

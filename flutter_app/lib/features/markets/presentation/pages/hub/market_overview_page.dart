@@ -54,7 +54,8 @@ class MarketOverviewPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(marketControllerProvider).getMarketOverview();
+    final overviewAsync = ref.watch(marketOverviewSnapshotProvider);
+    final lastUpdatedLabel = overviewAsync.value?.lastUpdatedLabel ?? '...';
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -73,8 +74,7 @@ class MarketOverviewPage extends ConsumerWidget {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tổng quan thị trường',
-            subtitle:
-                'Dữ liệu tham khảo · Cập nhật ${snapshot.lastUpdatedLabel}',
+            subtitle: 'Dữ liệu tham khảo · Cập nhật $lastUpdatedLabel',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -94,31 +94,43 @@ class MarketOverviewPage extends ConsumerWidget {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _MarketCapHero(stats: snapshot.globalStats),
-                        _StatsGrid(stats: snapshot.globalStats),
-                        const _QuickNavigation(),
-                        _MoversGrid(movers: snapshot.movers),
-                        _SentimentGrid(
-                          stats: snapshot.globalStats,
-                          breadth: snapshot.marketBreadth,
-                        ),
-                        _SectorPerformance(sectors: snapshot.sectors),
-                        _FearGreedHistory(points: snapshot.fearGreedHistory),
-                        const _MarketTools(),
-                        const MarketBodyReviewSection(
-                          title: 'Overview state review',
-                          message: 'Market overview data reviewed',
-                          detail:
-                              'Global stats, movers, sectors, heatmap links, empty, and refresh states remain visible.',
-                          primary:
-                              'Global cap and breadth metrics stay above exploratory market tools.',
-                          secondary:
-                              'Gainers, losers, and sectors preserve direction before pair navigation.',
-                          tertiary:
-                              'Tools remain grouped below market context so scanning is not interrupted.',
-                        ),
-                      ],
+                      children: overviewAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được tổng quan thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(marketOverviewSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _MarketCapHero(stats: snapshot.globalStats),
+                          _StatsGrid(stats: snapshot.globalStats),
+                          const _QuickNavigation(),
+                          _MoversGrid(movers: snapshot.movers),
+                          _SentimentGrid(
+                            stats: snapshot.globalStats,
+                            breadth: snapshot.marketBreadth,
+                          ),
+                          _SectorPerformance(sectors: snapshot.sectors),
+                          _FearGreedHistory(points: snapshot.fearGreedHistory),
+                          const _MarketTools(),
+                          const MarketBodyReviewSection(
+                            title: 'Overview state review',
+                            message: 'Market overview data reviewed',
+                            detail:
+                                'Global stats, movers, sectors, heatmap links, empty, and refresh states remain visible.',
+                            primary:
+                                'Global cap and breadth metrics stay above exploratory market tools.',
+                            secondary:
+                                'Gainers, losers, and sectors preserve direction before pair navigation.',
+                            tertiary:
+                                'Tools remain grouped below market context so scanning is not interrupted.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -30,35 +30,41 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-122 mock repository exposes bot security settings BE draft', () {
-    final repo = const MockTradeBotsRepository();
-    final snapshot = repo.getBotSecuritySettings();
-    final result = repo.patchBotSecuritySettings(
-      const TradeBotSecuritySettingsDraft(twoFaEnabled: false),
-    );
+  test(
+    'SC-122 mock repository exposes bot security settings BE draft',
+    () async {
+      final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
+      final snapshot = await repo.getBotSecuritySettings();
+      final result = repo.patchBotSecuritySettings(
+        const TradeBotSecuritySettingsDraft(twoFaEnabled: false),
+      );
 
-    expect(snapshot.twoFaEnabled, isTrue);
-    expect(snapshot.apiKeys, hasLength(2));
-    expect(snapshot.ipWhitelist, hasLength(2));
-    expect(snapshot.recentActivity, hasLength(4));
-    expect(snapshot.securityTips, hasLength(5));
-    expect(snapshot.endpoint, '/api/mobile/trade/trade-bots-security-settings');
-    expect(snapshot.actionDraft, contains('PATCH /user/settings'));
-    expect(result.status, 'saved');
-    expect(result.twoFaEnabled, isFalse);
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.submitting,
-        TradeScreenState.success,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.twoFaEnabled, isTrue);
+      expect(snapshot.apiKeys, hasLength(2));
+      expect(snapshot.ipWhitelist, hasLength(2));
+      expect(snapshot.recentActivity, hasLength(4));
+      expect(snapshot.securityTips, hasLength(5));
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-bots-security-settings',
+      );
+      expect(snapshot.actionDraft, contains('PATCH /user/settings'));
+      expect(result.status, 'saved');
+      expect(result.twoFaEnabled, isFalse);
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.submitting,
+          TradeScreenState.success,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-122 renders security settings baseline in Trade shell', (
     tester,

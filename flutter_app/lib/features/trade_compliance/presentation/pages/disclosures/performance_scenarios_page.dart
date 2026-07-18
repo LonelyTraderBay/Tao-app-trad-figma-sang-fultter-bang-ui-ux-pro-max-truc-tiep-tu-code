@@ -51,10 +51,7 @@ class _PerformanceScenariosPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getPerformanceScenarios();
-    final selectedPeriod = _holdingPeriod ?? snapshot.defaultHoldingPeriod;
+    final async = ref.watch(tradePerformanceScenariosProvider);
     return VitTradeHubScaffold(
       title: 'Performance Scenarios',
       subtitle: 'Potential Outcomes',
@@ -67,77 +64,93 @@ class _PerformanceScenariosPageState
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review performance scenario risk',
-            message:
-                'Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradePerformanceScenariosProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Scenario status',
-          statusPill: VitStatusPill(
-            label: '$selectedPeriod year hold',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Investment',
-              value: '€${snapshot.investment.toStringAsFixed(0)}',
-            ),
-            VitTradeComplianceItem(
-              label: 'Scenarios',
-              value: '${snapshot.scenarios.length} modeled',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Outcomes',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const _WarningNotice(),
-              _InvestmentCard(investment: snapshot.investment),
-              _HoldingPeriodSelector(
-                periods: snapshot.holdingPeriods,
-                selectedPeriod: selectedPeriod,
-                onChanged: (value) => setState(() => _holdingPeriod = value),
-              ),
-              VitPageSection(
-                label: 'Potential Outcomes',
-                accentColor: _scenarioPrimary,
+        ],
+        data: (snapshot) {
+          final selectedPeriod =
+              _holdingPeriod ?? snapshot.defaultHoldingPeriod;
+          return [
+            const VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review performance scenario risk',
+                message:
+                    'Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.',
                 density: VitDensity.compact,
+              ),
+            ),
+            VitTradeComplianceSection(
+              title: 'Scenario status',
+              statusPill: VitStatusPill(
+                label: '$selectedPeriod year hold',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Investment',
+                  value: '€${snapshot.investment.toStringAsFixed(0)}',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Scenarios',
+                  value: '${snapshot.scenarios.length} modeled',
+                ),
+              ],
+            ),
+            VitTradeSection(
+              title: 'Outcomes',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  for (final scenario in snapshot.scenarios)
-                    _ScenarioCard(
-                      scenario: scenario,
-                      investment: snapshot.investment,
-                      holdingPeriod: selectedPeriod,
-                    ),
+                  const _WarningNotice(),
+                  _InvestmentCard(investment: snapshot.investment),
+                  _HoldingPeriodSelector(
+                    periods: snapshot.holdingPeriods,
+                    selectedPeriod: selectedPeriod,
+                    onChanged: (value) =>
+                        setState(() => _holdingPeriod = value),
+                  ),
+                  VitPageSection(
+                    label: 'Potential Outcomes',
+                    accentColor: _scenarioPrimary,
+                    density: VitDensity.compact,
+                    children: [
+                      for (final scenario in snapshot.scenarios)
+                        _ScenarioCard(
+                          scenario: scenario,
+                          investment: snapshot.investment,
+                          holdingPeriod: selectedPeriod,
+                        ),
+                    ],
+                  ),
+                  const _InfoNote(),
+                  const TradeBodyReviewSection(
+                    title: 'Scenario body review',
+                    message: 'Performance scenario body reviewed',
+                    detail:
+                        'Holding period, modeled outcomes, warnings, assumptions, empty, and result states stay visible.',
+                    primary:
+                        'Risk warning and investment summary stay before modeled outcomes.',
+                    secondary:
+                        'Scenario cards remain assumptions, not return promises.',
+                    tertiary:
+                        'Holding-period controls stay tied to visible outcome calculations.',
+                  ),
                 ],
               ),
-              const _InfoNote(),
-              const TradeBodyReviewSection(
-                title: 'Scenario body review',
-                message: 'Performance scenario body reviewed',
-                detail:
-                    'Holding period, modeled outcomes, warnings, assumptions, empty, and result states stay visible.',
-                primary:
-                    'Risk warning and investment summary stay before modeled outcomes.',
-                secondary:
-                    'Scenario cards remain assumptions, not return promises.',
-                tertiary:
-                    'Holding-period controls stay tied to visible outcome calculations.',
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ];
+        },
+      ),
     );
   }
 }

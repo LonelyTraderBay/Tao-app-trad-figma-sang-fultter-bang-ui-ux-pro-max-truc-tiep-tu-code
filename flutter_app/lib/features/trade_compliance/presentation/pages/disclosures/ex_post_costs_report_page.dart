@@ -45,9 +45,7 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeRegulatoryRepositoryProvider);
-    final snapshot = repository.getExPostCostsReport();
-    final report = snapshot.reportForYear(_selectedYear);
+    final async = ref.watch(tradeExPostCostsReportProvider);
     return VitTradeHubScaffold(
       title: 'Ex-Post Cost Report',
       subtitle: 'Annual Actual Costs',
@@ -63,119 +61,134 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
       headerActions: [
         VitHeaderActionItem(
           type: VitHeaderActionType.export,
-          onPressed: () =>
-              repository.createExPostCostsReportExport(year: _selectedYear),
+          onPressed: () => ref
+              .read(tradeRegulatoryRepositoryProvider)
+              .createExPostCostsReportExport(year: _selectedYear),
         ),
       ],
-      children: [
-        VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Actual cost report ready',
-            message:
-                'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
-            contractId: 'SC-107 ${report.year} report',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeExPostCostsReportProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Report status',
-          statusPill: VitStatusPill(
-            label: '${report.year} report',
-            status: VitStatusPillStatus.success,
-            size: VitStatusPillSize.sm,
-          ),
-          items: const [
-            VitTradeComplianceItem(
-              label: 'Framework',
-              value: 'MiFID II cost disclosure',
+        ],
+        data: (snapshot) {
+          final report = snapshot.reportForYear(_selectedYear);
+          return [
+            VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Actual cost report ready',
+                message:
+                    'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
+                contractId: 'SC-107 ${report.year} report',
+                density: VitDensity.compact,
+              ),
             ),
-            VitTradeComplianceItem(
-              label: 'Action',
-              value: 'Review variance before export',
+            VitTradeComplianceSection(
+              title: 'Report status',
+              statusPill: VitStatusPill(
+                label: '${report.year} report',
+                status: VitStatusPillStatus.success,
+                size: VitStatusPillSize.sm,
+              ),
+              items: const [
+                VitTradeComplianceItem(
+                  label: 'Framework',
+                  value: 'MiFID II cost disclosure',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Action',
+                  value: 'Review variance before export',
+                ),
+              ],
             ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Notice',
-          child: VitTradeComplianceHero(
-            title: 'Annual Cost Report Available',
-            description:
-                'This report shows the actual costs you paid in '
-                '${report.year}. Required by PRIIPs regulation.',
-            icon: Icons.check_circle_outline_rounded,
-            accentColor: _reportPrimary,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Report',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
+            VitTradeSection(
+              title: 'Notice',
+              child: VitTradeComplianceHero(
+                title: 'Annual Cost Report Available',
+                description:
+                    'This report shows the actual costs you paid in '
+                    '${report.year}. Required by PRIIPs regulation.',
+                icon: Icons.check_circle_outline_rounded,
+                accentColor: _reportPrimary,
+              ),
+            ),
+            VitTradeSection(
+              title: 'Report',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: _SummaryCard(
-                      label: 'Total Actual Costs',
-                      value: _formatEur(report.totalActual),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _SummaryCard(
+                          label: 'Total Actual Costs',
+                          value: _formatEur(report.totalActual),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.x2),
+                      Expanded(
+                        child: _SummaryCard(
+                          label: 'Estimated Costs',
+                          value: _formatEur(report.totalEstimated),
+                          muted: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _YearTabs(
+                    reports: snapshot.reports,
+                    activeYear: _selectedYear,
+                    onChanged: (year) => setState(() {
+                      _selectedYear = year;
+                    }),
+                  ),
+                  const VitSectionHeader(
+                    title: 'Actual vs. Estimated',
+                    bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                    variant: VitSectionHeaderVariant.accentBar,
+                    accentColor: _reportPrimary,
+                  ),
+                  _CostBreakdownCard(
+                    title: 'One-off Costs',
+                    actual: report.oneOff,
+                    estimate: report.estimatedOneOff,
+                  ),
+                  _CostBreakdownCard(
+                    title: 'Recurring Costs',
+                    actual: report.recurring,
+                    estimate: report.estimatedRecurring,
+                    note: _VarianceNote.lower(
+                      report.estimatedRecurring - report.recurring,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: _SummaryCard(
-                      label: 'Estimated Costs',
-                      value: _formatEur(report.totalEstimated),
-                      muted: true,
+                  _CostBreakdownCard(
+                    title: 'Incidental Costs',
+                    actual: report.incidental,
+                    estimate: report.estimatedIncidental,
+                    note: _VarianceNote.higher(
+                      report.incidental - report.estimatedIncidental,
                     ),
                   ),
+                  const VitSectionHeader(
+                    title: 'Variance Analysis',
+                    bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                    variant: VitSectionHeaderVariant.accentBar,
+                    accentColor: _reportPrimary,
+                  ),
+                  _VarianceCard(report: report),
                 ],
               ),
-              _YearTabs(
-                reports: snapshot.reports,
-                activeYear: _selectedYear,
-                onChanged: (year) => setState(() {
-                  _selectedYear = year;
-                }),
-              ),
-              const VitSectionHeader(
-                title: 'Actual vs. Estimated',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _reportPrimary,
-              ),
-              _CostBreakdownCard(
-                title: 'One-off Costs',
-                actual: report.oneOff,
-                estimate: report.estimatedOneOff,
-              ),
-              _CostBreakdownCard(
-                title: 'Recurring Costs',
-                actual: report.recurring,
-                estimate: report.estimatedRecurring,
-                note: _VarianceNote.lower(
-                  report.estimatedRecurring - report.recurring,
-                ),
-              ),
-              _CostBreakdownCard(
-                title: 'Incidental Costs',
-                actual: report.incidental,
-                estimate: report.estimatedIncidental,
-                note: _VarianceNote.higher(
-                  report.incidental - report.estimatedIncidental,
-                ),
-              ),
-              const VitSectionHeader(
-                title: 'Variance Analysis',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _reportPrimary,
-              ),
-              _VarianceCard(report: report),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ];
+        },
+      ),
     );
   }
 }

@@ -41,23 +41,16 @@ class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
 class _ExecutionQualityDemoPageState
     extends ConsumerState<ExecutionQualityDemoPage> {
   ExecutionQualityTab _tab = ExecutionQualityTab.slippage;
-  late TradeSlippageSettings _settings;
+
+  /// GD4 Cụm F3: seed từ snapshot async lần đầu build() có `data:` (mục 5) —
+  /// null trước đó (loading/error), lazily gán trong `data:` branch bên dưới
+  /// thay vì initState() (getExecutionQuality() giờ là `Future<T>`).
+  TradeSlippageSettings? _settings;
   String? _successMessage;
 
   @override
-  void initState() {
-    super.initState();
-    _settings = ref
-        .read(tradeReadModelControllerProvider)
-        .getExecutionQuality()
-        .slippageSettings;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeReadModelControllerProvider)
-        .getExecutionQuality();
+    final snapshotAsync = ref.watch(tradeExecutionQualitySnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     return Stack(
@@ -76,38 +69,53 @@ class _ExecutionQualityDemoPageState
           ),
           showProductTabs: true,
           navigationBuilder: buildTradeProductNavigation,
-          children: [
-            const ExecutionQualityIntroCard(),
-            const VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Xem lại chất lượng khớp lệnh',
-              message:
-                  'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
-              contractId: 'execution-quality-demo-review',
-              density: VitDensity.compact,
-            ),
-            for (final feature in snapshot.features)
-              ExecutionQualityFeatureCard(
-                feature: feature,
-                onTap: () => _onFeatureTap(feature),
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được chất lượng khớp lệnh',
+                message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () =>
+                    ref.invalidate(tradeExecutionQualitySnapshotProvider),
               ),
-            const ExecutionQualityBenefitsCard(),
-            ExecutionQualityProgressCard(items: snapshot.statusItems),
-            const ExecutionQualityParityCard(),
-            ExecutionQualityTabs(
-              active: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            if (_tab == ExecutionQualityTab.slippage)
-              ExecutionQualitySlippageTab(
-                settings: _settings,
-                onOpen: _openSlippageSheet,
-              )
-            else if (_tab == ExecutionQualityTab.execution)
-              ExecutionQualityExecutionTab(onOpen: _openExecutionSheet)
-            else
-              ExecutionQualityAmendmentTab(onOpen: _openAmendmentSheet),
-          ],
+            ],
+            data: (snapshot) {
+              final settings = _settings ??= snapshot.slippageSettings;
+              return [
+                const ExecutionQualityIntroCard(),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Xem lại chất lượng khớp lệnh',
+                  message:
+                      'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
+                  contractId: 'execution-quality-demo-review',
+                  density: VitDensity.compact,
+                ),
+                for (final feature in snapshot.features)
+                  ExecutionQualityFeatureCard(
+                    feature: feature,
+                    onTap: () => _onFeatureTap(feature),
+                  ),
+                const ExecutionQualityBenefitsCard(),
+                ExecutionQualityProgressCard(items: snapshot.statusItems),
+                const ExecutionQualityParityCard(),
+                ExecutionQualityTabs(
+                  active: _tab,
+                  onChanged: (tab) => setState(() => _tab = tab),
+                ),
+                if (_tab == ExecutionQualityTab.slippage)
+                  ExecutionQualitySlippageTab(
+                    settings: settings,
+                    onOpen: _openSlippageSheet,
+                  )
+                else if (_tab == ExecutionQualityTab.execution)
+                  ExecutionQualityExecutionTab(onOpen: _openExecutionSheet)
+                else
+                  ExecutionQualityAmendmentTab(onOpen: _openAmendmentSheet),
+              ];
+            },
+          ),
         ),
         if (_successMessage != null)
           Positioned(
@@ -139,16 +147,19 @@ class _ExecutionQualityDemoPageState
   }
 
   Future<void> _openSlippageSheet() async {
+    final current = _settings;
+    if (current == null) return;
     final updated = await showVitBottomSheet<TradeSlippageSettings>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (context) => ExecutionQualitySlippageSheet(settings: _settings),
+      builder: (context) => ExecutionQualitySlippageSheet(settings: current),
     );
     if (updated == null || !mounted) return;
-    final saved = ref
+    final saved = await ref
         .read(tradeReadModelControllerProvider)
         .updateSlippageSettings(updated);
+    if (!mounted) return;
     setState(() {
       _settings = saved;
       _successMessage =
@@ -157,24 +168,25 @@ class _ExecutionQualityDemoPageState
   }
 
   Future<void> _openExecutionSheet() async {
+    final snapshot = await ref
+        .read(tradeReadModelControllerProvider)
+        .getExecutionQuality();
+    if (!mounted) return;
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (context) => ExecutionQualityExecutionSheet(
-        report: ref
-            .read(tradeReadModelControllerProvider)
-            .getExecutionQuality()
-            .report,
-      ),
+      builder: (context) =>
+          ExecutionQualityExecutionSheet(report: snapshot.report),
     );
   }
 
   Future<void> _openAmendmentSheet() async {
-    final order = ref
+    final snapshot = await ref
         .read(tradeReadModelControllerProvider)
-        .getExecutionQuality()
-        .openOrder;
+        .getExecutionQuality();
+    if (!mounted) return;
+    final order = snapshot.openOrder;
     final amended = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -182,7 +194,7 @@ class _ExecutionQualityDemoPageState
       builder: (context) => ExecutionQualityAmendmentSheet(order: order),
     );
     if (amended != true || !mounted) return;
-    final result = ref
+    final result = await ref
         .read(tradeReadModelControllerProvider)
         .amendOrder(
           TradeOrderAmendmentRequest(
@@ -191,6 +203,7 @@ class _ExecutionQualityDemoPageState
             newAmount: order.amount,
           ),
         );
+    if (!mounted) return;
     setState(() => _successMessage = 'Order Modified · ${result.orderId}');
   }
 }

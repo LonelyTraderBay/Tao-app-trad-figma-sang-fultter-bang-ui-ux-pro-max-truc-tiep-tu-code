@@ -48,9 +48,7 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradingBotsRepositoryProvider)
-        .getBotRiskDisclosure();
+    final snapshotAsync = ref.watch(tradeBotRiskDisclosureProvider);
     return VitTradeHubScaffold(
       title: 'Risk Disclosure',
       subtitle: 'Công bố rủi ro trước khi dùng bot',
@@ -64,71 +62,84 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Nhóm rủi ro',
-          primaryValue: '${snapshot.categories.length}',
-          secondaryLabel: 'Xác nhận',
-          secondaryValue: _acknowledged ? 'Đã đọc' : 'Chưa đọc',
-          secondaryColor: _acknowledged ? _botRiskGreen : _botRiskAmber,
-        ),
-        VitTradeSection(
-          title: 'High risk notice',
-          child: _HighRiskBanner(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Past performance',
-          child: _PastPerformanceCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: snapshot.riskSectionLabel,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final category in snapshot.categories)
-                _RiskCategoryCard(category: category),
-            ],
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được công bố rủi ro',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotRiskDisclosureProvider),
           ),
-        ),
-        VitTradeSection(
-          title: snapshot.additionalWarningsLabel,
-          child: _AdditionalWarningsCard(warnings: snapshot.additionalWarnings),
-        ),
-        VitTradeSection(
-          title: snapshot.regulatoryNoticeLabel,
-          child: _RegulatoryNoticeCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: snapshot.acknowledgmentLabel,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _AcknowledgmentCard(
-                snapshot: snapshot,
-                acknowledged: _acknowledged,
-                onTap: () => setState(() => _acknowledged = !_acknowledged),
-              ),
-              _RiskCta(
-                snapshot: snapshot,
-                acknowledged: _acknowledged,
-                onPressed: () => context.go(snapshot.nextPath),
-              ),
-            ],
+        ],
+        data: (snapshot) => [
+          VitBotSubpageHero(
+            primaryLabel: 'Nhóm rủi ro',
+            primaryValue: '${snapshot.categories.length}',
+            secondaryLabel: 'Xác nhận',
+            secondaryValue: _acknowledged ? 'Đã đọc' : 'Chưa đọc',
+            secondaryColor: _acknowledged ? _botRiskGreen : _botRiskAmber,
           ),
-        ),
-        VitTradeSection(
-          title: 'Help',
-          child: _HelpCard(snapshot: snapshot),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Bot risk disclosure review',
-          message:
-              'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
-          contractId: 'bot-risk-disclosure-review',
-          statusLabel: 'Acknowledgment required',
-          status: VitStatusPillStatus.error,
-        ),
-      ],
+          VitTradeSection(
+            title: 'High risk notice',
+            child: _HighRiskBanner(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: 'Past performance',
+            child: _PastPerformanceCard(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: snapshot.riskSectionLabel,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final category in snapshot.categories)
+                  _RiskCategoryCard(category: category),
+              ],
+            ),
+          ),
+          VitTradeSection(
+            title: snapshot.additionalWarningsLabel,
+            child: _AdditionalWarningsCard(
+              warnings: snapshot.additionalWarnings,
+            ),
+          ),
+          VitTradeSection(
+            title: snapshot.regulatoryNoticeLabel,
+            child: _RegulatoryNoticeCard(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: snapshot.acknowledgmentLabel,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _AcknowledgmentCard(
+                  snapshot: snapshot,
+                  acknowledged: _acknowledged,
+                  onTap: () => setState(() => _acknowledged = !_acknowledged),
+                ),
+                _RiskCta(
+                  snapshot: snapshot,
+                  acknowledged: _acknowledged,
+                  onPressed: () => context.go(snapshot.nextPath),
+                ),
+              ],
+            ),
+          ),
+          VitTradeSection(
+            title: 'Help',
+            child: _HelpCard(snapshot: snapshot),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Bot risk disclosure review',
+            message:
+                'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
+            contractId: 'bot-risk-disclosure-review',
+            statusLabel: 'Acknowledgment required',
+            status: VitStatusPillStatus.error,
+          ),
+        ],
+      ),
     );
   }
 }

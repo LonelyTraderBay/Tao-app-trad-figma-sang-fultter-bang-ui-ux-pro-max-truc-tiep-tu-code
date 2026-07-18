@@ -32,9 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-094 mock repository exposes regulatory reports BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getRegulatoryReportsDashboard();
+  test('SC-094 mock repository exposes regulatory reports BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getRegulatoryReportsDashboard();
 
     expect(snapshot.defaultTab, 'overview');
     expect(snapshot.defaultRange, '7D');

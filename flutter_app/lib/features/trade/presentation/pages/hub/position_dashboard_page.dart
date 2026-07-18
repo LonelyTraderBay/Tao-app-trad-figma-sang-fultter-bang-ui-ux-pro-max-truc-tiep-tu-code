@@ -40,10 +40,7 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeReadModelControllerProvider)
-        .getTradePositions();
-    final positions = _visiblePositions(snapshot.positions);
+    final positionsAsync = ref.watch(tradePositionsProvider);
 
     return VitTradeHubScaffold(
       title: 'Vị thế đang mở',
@@ -57,56 +54,71 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
       ),
       showProductTabs: true,
       navigationBuilder: buildTradeProductNavigation,
-      children: [
-        VitTradeSection(
-          title: 'Tổng quan',
-          child: _SummaryCard(positions: snapshot.positions),
-        ),
-        const VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Open position risk review',
-              message:
-                  'PnL, notional exposure, margin risk, close path, fees and next steps are reviewed before position actions.',
-              contractId: 'position-dashboard-review',
+      children: positionsAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được vị thế đang mở',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradePositionsProvider),
+          ),
+        ],
+        data: (snapshot) {
+          final positions = _visiblePositions(snapshot.positions);
+          return [
+            VitTradeSection(
+              title: 'Tổng quan',
+              child: _SummaryCard(positions: snapshot.positions),
             ),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Loại vị thế',
-          child: _TypeTabs(
-            active: _activeTab,
-            positions: snapshot.positions,
-            onChanged: (tab) => setState(() => _activeTab = tab),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Sắp xếp',
-          child: _SortChips(
-            active: _sortBy,
-            onChanged: (sort) => setState(() => _sortBy = sort),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Vị thế mở',
-          child: positions.isEmpty
-              ? const _EmptyPositions()
-              : _PositionList(positions: positions),
-        ),
-        const TradeBodyReviewSection(
-          title: 'Position body review',
-          message: 'Position dashboard body reviewed',
-          detail:
-              'Summary, risk, tabs, sort, empty, position rows, and result states stay visible.',
-          primary: 'Risk review remains above open position actions.',
-          secondary: 'Tabs and sort chips keep exposure scanning explicit.',
-          tertiary: 'Position rows preserve PnL, notional, and margin context.',
-        ),
-      ],
+            const VitTradeSection(
+              title: 'Đánh giá rủi ro',
+              child: VitCard(
+                variant: VitCardVariant.inner,
+                padding: AppSpacing.cardPaddingCompact,
+                child: VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Open position risk review',
+                  message:
+                      'PnL, notional exposure, margin risk, close path, fees and next steps are reviewed before position actions.',
+                  contractId: 'position-dashboard-review',
+                ),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Loại vị thế',
+              child: _TypeTabs(
+                active: _activeTab,
+                positions: snapshot.positions,
+                onChanged: (tab) => setState(() => _activeTab = tab),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Sắp xếp',
+              child: _SortChips(
+                active: _sortBy,
+                onChanged: (sort) => setState(() => _sortBy = sort),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Vị thế mở',
+              child: positions.isEmpty
+                  ? const _EmptyPositions()
+                  : _PositionList(positions: positions),
+            ),
+            const TradeBodyReviewSection(
+              title: 'Position body review',
+              message: 'Position dashboard body reviewed',
+              detail:
+                  'Summary, risk, tabs, sort, empty, position rows, and result states stay visible.',
+              primary: 'Risk review remains above open position actions.',
+              secondary: 'Tabs and sort chips keep exposure scanning explicit.',
+              tertiary:
+                  'Position rows preserve PnL, notional, and margin context.',
+            ),
+          ];
+        },
+      ),
     );
   }
 

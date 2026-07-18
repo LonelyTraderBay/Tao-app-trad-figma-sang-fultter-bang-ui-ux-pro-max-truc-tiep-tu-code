@@ -67,9 +67,7 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
       type: _typeFilter.type,
       impact: _impactFilter,
     );
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getMarketCalendar(query: query);
+    final calendarAsync = ref.watch(marketCalendarSnapshotProvider(query));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -111,41 +109,54 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        MarketCalendarStatsSummary(stats: snapshot.stats),
-                        MarketCalendarTypeFilters(
-                          active: _typeFilter,
-                          onSelected: _setType,
-                        ),
-                        MarketCalendarImpactFilters(
-                          activeImpact: _impactFilter,
-                          onSelected: _toggleImpact,
-                        ),
-                        if (_view == 'list')
-                          if (snapshot.events.isEmpty)
-                            const VitEmptyState(
-                              icon: Icons.calendar_month_rounded,
-                              title: 'Không có sự kiện phù hợp',
-                              message:
-                                  'Thử đổi loại sự kiện hoặc mức tác động.',
-                            )
-                          else
-                            MarketCalendarEventGroups(
-                              events: snapshot.events,
-                              expandedId: _expandedId,
-                              onToggle: (id) => setState(() {
-                                _expandedId = _expandedId == id ? null : id;
-                              }),
-                            )
-                        else
-                          MarketCalendarMonthGrid(
-                            events: snapshot.events,
-                            onEventDaySelected: (event) => setState(() {
-                              _view = 'list';
-                              _expandedId = event.id;
-                            }),
+                      children: calendarAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được lịch sự kiện',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketCalendarSnapshotProvider(query),
+                            ),
                           ),
-                      ],
+                        ],
+                        data: (snapshot) => [
+                          MarketCalendarStatsSummary(stats: snapshot.stats),
+                          MarketCalendarTypeFilters(
+                            active: _typeFilter,
+                            onSelected: _setType,
+                          ),
+                          MarketCalendarImpactFilters(
+                            activeImpact: _impactFilter,
+                            onSelected: _toggleImpact,
+                          ),
+                          if (_view == 'list')
+                            if (snapshot.events.isEmpty)
+                              const VitEmptyState(
+                                icon: Icons.calendar_month_rounded,
+                                title: 'Không có sự kiện phù hợp',
+                                message:
+                                    'Thử đổi loại sự kiện hoặc mức tác động.',
+                              )
+                            else
+                              MarketCalendarEventGroups(
+                                events: snapshot.events,
+                                expandedId: _expandedId,
+                                onToggle: (id) => setState(() {
+                                  _expandedId = _expandedId == id ? null : id;
+                                }),
+                              )
+                          else
+                            MarketCalendarMonthGrid(
+                              events: snapshot.events,
+                              onEventDaySelected: (event) => setState(() {
+                                _view = 'list';
+                                _expandedId = event.id;
+                              }),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

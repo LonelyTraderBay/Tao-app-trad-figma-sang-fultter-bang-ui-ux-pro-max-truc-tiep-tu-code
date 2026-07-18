@@ -28,9 +28,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-076 mock repository exposes provider comparison BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getProviderComparison();
+  test('SC-076 mock repository exposes provider comparison BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getProviderComparison();
 
     expect(snapshot.selectedCount, 3);
     expect(snapshot.maxProviders, 5);

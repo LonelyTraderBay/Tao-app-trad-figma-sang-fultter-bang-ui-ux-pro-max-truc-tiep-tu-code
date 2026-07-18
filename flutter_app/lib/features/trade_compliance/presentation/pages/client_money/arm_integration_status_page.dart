@@ -62,9 +62,7 @@ class _ArmIntegrationStatusPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getArmIntegrationStatus();
+    final async = ref.watch(tradeArmIntegrationStatusProvider);
     return VitTradeHubScaffold(
       title: 'ARM Integration',
       subtitle: 'Connection Health · Monitoring',
@@ -78,80 +76,91 @@ class _ArmIntegrationStatusPageState
         fallbackPath: AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
-            title: 'Review ARM integration health',
-            message:
-                'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeArmIntegrationStatusProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'ARM status',
-          statusPill: VitStatusPill(
-            label: 'Uptime ${snapshot.sla.uptime.toStringAsFixed(1)}%',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Providers',
-              value: '${snapshot.connections.length} connected',
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Review ARM integration health',
+              message:
+                  'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',
             ),
-            VitTradeComplianceItem(
-              label: 'Avg latency',
-              value: '${snapshot.sla.latencyAvg}ms',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'ARM Providers',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const _OperationalAlert(),
-              for (final connection in snapshot.connections)
-                _ArmProviderCard(
-                  connection: connection,
-                  isTesting: _testingId == connection.id,
-                  onTest: () => _testConnection(connection.id),
-                ),
-            ],
           ),
-        ),
-        VitTradeSection(
-          title: 'Monitoring',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const VitSectionHeader(
-                title: 'Latency Monitoring (Last 15 min)',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _armPrimary,
+          VitTradeComplianceSection(
+            title: 'ARM status',
+            statusPill: VitStatusPill(
+              label: 'Uptime ${snapshot.sla.uptime.toStringAsFixed(1)}%',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Providers',
+                value: '${snapshot.connections.length} connected',
               ),
-              _LatencyCard(points: snapshot.latencyHistory),
-              const VitSectionHeader(
-                title: 'SLA Compliance',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _armPrimary,
-              ),
-              _SlaCard(sla: snapshot.sla),
-              _QuickActions(
-                onQueue: () =>
-                    context.push(AppRoutePaths.tradeCopyTransactionReporting),
-                onDashboard: () => context.push(
-                  AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
-                ),
+              VitTradeComplianceItem(
+                label: 'Avg latency',
+                value: '${snapshot.sla.latencyAvg}ms',
               ),
             ],
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'ARM Providers',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const _OperationalAlert(),
+                for (final connection in snapshot.connections)
+                  _ArmProviderCard(
+                    connection: connection,
+                    isTesting: _testingId == connection.id,
+                    onTest: () => _testConnection(connection.id),
+                  ),
+              ],
+            ),
+          ),
+          VitTradeSection(
+            title: 'Monitoring',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const VitSectionHeader(
+                  title: 'Latency Monitoring (Last 15 min)',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _armPrimary,
+                ),
+                _LatencyCard(points: snapshot.latencyHistory),
+                const VitSectionHeader(
+                  title: 'SLA Compliance',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _armPrimary,
+                ),
+                _SlaCard(sla: snapshot.sla),
+                _QuickActions(
+                  onQueue: () =>
+                      context.push(AppRoutePaths.tradeCopyTransactionReporting),
+                  onDashboard: () => context.push(
+                    AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

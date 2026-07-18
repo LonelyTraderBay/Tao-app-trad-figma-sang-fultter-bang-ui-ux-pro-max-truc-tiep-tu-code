@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-127 mock repository exposes optimization BE draft', () {
-    final repo = const MockTradeBotsRepository();
-    final snapshot = repo.getBotOptimization();
+  test('SC-127 mock repository exposes optimization BE draft', () async {
+    final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getBotOptimization();
     final result = repo.runBotOptimization(
       const TradeBotOptimizationRequest(
         targetId: 'sharpe',

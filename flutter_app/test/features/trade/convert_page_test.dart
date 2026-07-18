@@ -23,6 +23,15 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          // GD4 Cụm F3: previewConvert giờ Future<T>, watch theo family key
+          // = request (đổi mỗi keystroke) — loadDelay mặc định 300ms để lại
+          // pending timer mồ côi khi request cũ bị autoDispose trước khi
+          // Future resolve (xem GD4-Async-Playbook.md mục 9).
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.tradeConvert,
@@ -33,10 +42,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-056 mock repository exposes convert BE draft', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getConvert();
-    final quote = repo.previewConvert(
+  test('SC-056 mock repository exposes convert BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getConvert();
+    final quote = await repo.previewConvert(
       const TradeConvertRequest(
         fromSymbol: 'USDT',
         toSymbol: 'BTC',
@@ -45,7 +54,7 @@ void main() {
         mode: 'market',
       ),
     );
-    final receipt = repo.submitConvert(
+    final receipt = await repo.submitConvert(
       const TradeConvertRequest(
         fromSymbol: 'USDT',
         toSymbol: 'BTC',
@@ -203,6 +212,11 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.trade),
         ),

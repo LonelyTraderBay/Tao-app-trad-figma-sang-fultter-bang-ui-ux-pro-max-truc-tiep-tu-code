@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-131 mock repository exposes bot guide BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotGuide();
+  test('SC-131 mock repository exposes bot guide BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotGuide();
 
     expect(snapshot.strategies, hasLength(4));
     expect(snapshot.bestPractices, hasLength(6));

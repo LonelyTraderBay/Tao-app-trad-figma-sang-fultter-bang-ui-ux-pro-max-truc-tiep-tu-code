@@ -31,30 +31,37 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-069 mock repository exposes provider application BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getProviderApplication();
-    final result = repo.submitProviderApplication(snapshot.defaultDraft);
+  test(
+    'SC-069 mock repository exposes provider application BE draft',
+    () async {
+      final repo = const MockTradeCopyTradingRepository(
+        loadDelay: Duration.zero,
+      );
+      final snapshot = await repo.getProviderApplication();
+      final result = await repo.submitProviderApplication(
+        snapshot.defaultDraft,
+      );
 
-    expect(snapshot.steps, hasLength(5));
-    expect(snapshot.defaultStep, TradeProviderApplicationStep.intro);
-    expect(snapshot.benefits, hasLength(3));
-    expect(snapshot.requirements.first.label, 'KYC Level 2');
-    expect(snapshot.defaultDraft.minCapital, 10000);
-    expect(result.status, 'submitted');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.submitting,
-        TradeScreenState.success,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.steps, hasLength(5));
+      expect(snapshot.defaultStep, TradeProviderApplicationStep.intro);
+      expect(snapshot.benefits, hasLength(3));
+      expect(snapshot.requirements.first.label, 'KYC Level 2');
+      expect(snapshot.defaultDraft.minCapital, 10000);
+      expect(result.status, 'submitted');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.submitting,
+          TradeScreenState.success,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-069 renders ProviderApplicationPage inside the Trade shell', (
     tester,

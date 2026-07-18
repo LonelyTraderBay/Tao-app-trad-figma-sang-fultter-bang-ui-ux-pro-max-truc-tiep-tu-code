@@ -45,9 +45,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotGuide();
+    final snapshotAsync = ref.watch(tradeBotGuideProvider);
     return VitTradeHubScaffold(
       title: 'Trading Bots Guide',
       subtitle: 'Hướng dẫn chiến lược và thực hành bot',
@@ -61,68 +59,79 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Chiến lược',
-          primaryValue: '${snapshot.strategies.length}',
-          secondaryLabel: 'Thực hành',
-          secondaryValue: '${snapshot.bestPractices.length}',
-        ),
-        const VitTradeSection(title: 'Tổng quan', child: _IntroBanner()),
-        VitTradeSection(
-          title: 'Chủ đề',
-          child: VitTabBar(
-            tabs: [
-              VitTabItem(
-                key: 'strategies',
-                label: 'Chiến lược',
-                widgetKey: BotGuidePage.tabKey('strategies'),
-              ),
-              VitTabItem(
-                key: 'best-practices',
-                label: 'Thực hành',
-                widgetKey: BotGuidePage.tabKey('best-practices'),
-              ),
-              VitTabItem(
-                key: 'mistakes',
-                label: 'Sai lầm',
-                widgetKey: BotGuidePage.tabKey('mistakes'),
-              ),
-            ],
-            activeKey: _view,
-            onChanged: _setView,
-            variant: VitTabBarVariant.pill,
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được hướng dẫn bot',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotGuideProvider),
           ),
-        ),
-        VitTradeSection(
-          title: _view == 'strategies'
-              ? 'Strategies'
-              : _view == 'best-practices'
-              ? 'Best practices'
-              : 'Common mistakes',
-          child: _view == 'strategies'
-              ? _StrategiesView(
-                  strategies: snapshot.strategies,
-                  expandedStrategyId: _expandedStrategyId,
-                  onToggle: _toggleStrategy,
-                )
-              : _view == 'best-practices'
-              ? _BestPracticesView(items: snapshot.bestPractices)
-              : _MistakesView(items: snapshot.mistakes),
-        ),
-        const VitTradeSection(
-          title: 'Video tutorials',
-          child: _VideoTutorialsCard(),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Bot education review',
-          message:
-              'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
-          contractId: 'bot-guide-review',
-          statusLabel: 'Education before activation',
-          status: VitStatusPillStatus.warning,
-        ),
-      ],
+        ],
+        data: (snapshot) => [
+          VitBotSubpageHero(
+            primaryLabel: 'Chiến lược',
+            primaryValue: '${snapshot.strategies.length}',
+            secondaryLabel: 'Thực hành',
+            secondaryValue: '${snapshot.bestPractices.length}',
+          ),
+          const VitTradeSection(title: 'Tổng quan', child: _IntroBanner()),
+          VitTradeSection(
+            title: 'Chủ đề',
+            child: VitTabBar(
+              tabs: [
+                VitTabItem(
+                  key: 'strategies',
+                  label: 'Chiến lược',
+                  widgetKey: BotGuidePage.tabKey('strategies'),
+                ),
+                VitTabItem(
+                  key: 'best-practices',
+                  label: 'Thực hành',
+                  widgetKey: BotGuidePage.tabKey('best-practices'),
+                ),
+                VitTabItem(
+                  key: 'mistakes',
+                  label: 'Sai lầm',
+                  widgetKey: BotGuidePage.tabKey('mistakes'),
+                ),
+              ],
+              activeKey: _view,
+              onChanged: _setView,
+              variant: VitTabBarVariant.pill,
+            ),
+          ),
+          VitTradeSection(
+            title: _view == 'strategies'
+                ? 'Strategies'
+                : _view == 'best-practices'
+                ? 'Best practices'
+                : 'Common mistakes',
+            child: _view == 'strategies'
+                ? _StrategiesView(
+                    strategies: snapshot.strategies,
+                    expandedStrategyId: _expandedStrategyId,
+                    onToggle: _toggleStrategy,
+                  )
+                : _view == 'best-practices'
+                ? _BestPracticesView(items: snapshot.bestPractices)
+                : _MistakesView(items: snapshot.mistakes),
+          ),
+          const VitTradeSection(
+            title: 'Video tutorials',
+            child: _VideoTutorialsCard(),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Bot education review',
+            message:
+                'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
+            contractId: 'bot-guide-review',
+            statusLabel: 'Education before activation',
+            status: VitStatusPillStatus.warning,
+          ),
+        ],
+      ),
     );
   }
 

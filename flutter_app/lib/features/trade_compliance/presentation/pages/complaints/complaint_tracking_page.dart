@@ -48,11 +48,12 @@ class ComplaintTrackingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getComplaintTracking(complaintId: complaintId);
+    final async = ref.watch(tradeComplaintTrackingProvider(complaintId));
     return VitTradeHubScaffold(
-      title: 'Complaint ${snapshot.complaintId}',
+      // Header không cần đợi async: complaintId hiển thị luôn suy ra được từ
+      // tham số trang (mock chuẩn hoá `snapshot.complaintId` y hệt
+      // `complaintId ?? 'undefined'`) — xem GD4-Async-Playbook.md mục 5.
+      title: 'Complaint ${complaintId ?? 'undefined'}',
       semanticLabel: 'Theo dõi tiến trình xử lý khiếu nại',
       semanticIdentifier: 'SC-113',
       contentKey: contentKey,
@@ -62,52 +63,64 @@ class ComplaintTrackingPage extends ConsumerWidget {
         fallbackPath: AppRoutePaths.tradeCopyComplaintsHandling,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review complaint case status',
-            message:
-                'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
-            density: VitDensity.compact,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeComplaintTrackingProvider(complaintId)),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Case review',
-          statusPill: VitStatusPill(
-            label: snapshot.statusLabel,
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Review complaint case status',
+              message:
+                  'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
+              density: VitDensity.compact,
+            ),
           ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Deadline',
-              value: snapshot.responseDueLabel,
+          VitTradeComplianceSection(
+            title: 'Case review',
+            statusPill: VitStatusPill(
+              label: snapshot.statusLabel,
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
             ),
-            VitTradeComplianceItem(
-              label: 'Timeline',
-              value: '${snapshot.timeline.length} steps',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Status',
-          child: _StatusCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Investigation Timeline',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _TimelineList(steps: snapshot.timeline),
-              _DeadlineNotice(snapshot: snapshot),
-              for (final action in snapshot.actions)
-                _TrackingActionButton(action: action),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Deadline',
+                value: snapshot.responseDueLabel,
+              ),
+              VitTradeComplianceItem(
+                label: 'Timeline',
+                value: '${snapshot.timeline.length} steps',
+              ),
             ],
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'Status',
+            child: _StatusCard(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: 'Investigation Timeline',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _TimelineList(steps: snapshot.timeline),
+                _DeadlineNotice(snapshot: snapshot),
+                for (final action in snapshot.actions)
+                  _TrackingActionButton(action: action),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

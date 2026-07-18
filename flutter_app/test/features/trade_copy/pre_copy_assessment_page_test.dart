@@ -35,10 +35,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-071 mock repository exposes pre-copy assessment BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final notFound = repo.getPreCopyAssessment(providerId: 'provider001');
-    final found = repo.getPreCopyAssessment(providerId: 'ct001');
+  test('SC-071 mock repository exposes pre-copy assessment BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final notFound = await repo.getPreCopyAssessment(providerId: 'provider001');
+    final found = await repo.getPreCopyAssessment(providerId: 'ct001');
 
     expect(notFound.isNotFound, isTrue);
     expect(found.provider?.name, 'AlphaHunter_VN');

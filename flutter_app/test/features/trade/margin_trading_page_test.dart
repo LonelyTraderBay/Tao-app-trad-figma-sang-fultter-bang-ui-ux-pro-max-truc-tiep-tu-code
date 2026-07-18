@@ -30,8 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-085 mock repository exposes margin trading BE draft', () {
-    final snapshot = const MockTradeRepository().getMarginTrading();
+  test('SC-085 mock repository exposes margin trading BE draft', () async {
+    const repo = MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarginTrading();
 
     expect(snapshot.pair.symbol, 'BTC/USDT');
     expect(snapshot.account.totalEquity, 12450.80);
@@ -44,13 +45,8 @@ void main() {
     );
     expect(snapshot.referencePrices.markPrice, 67543.21);
     expect(snapshot.referencePrices.lastPrice, 67572.63);
-    expect(
-      const MockTradeRepository()
-          .getMarginTrading(pairRouteVariant: true)
-          .referencePrices
-          .lastPrice,
-      67516.13,
-    );
+    final routeVariant = await repo.getMarginTrading(pairRouteVariant: true);
+    expect(routeVariant.referencePrices.lastPrice, 67516.13);
     expect(snapshot.riskWarning.title, 'Rủi ro đòn bẩy 5x');
     expect(
       snapshot.supportedStates,

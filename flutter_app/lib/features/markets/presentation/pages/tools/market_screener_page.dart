@@ -170,13 +170,14 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final baseSnapshot = ref
-        .watch(marketControllerProvider)
-        .getMarketScreener();
+    // GD4-F3: `presets`/`screenFilters` không đổi theo query (const trong
+    // mock) — chỉ cần 1 provider theo appliedQuery, không cần gọi
+    // getMarketScreener() không tham số riêng (khác social_signals/
+    // token_unlocks vì screener KHÔNG có field nào phụ thuộc toàn tập).
     final appliedQuery = _query.copyWith(searchQuery: _searchController.text);
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getMarketScreener(query: appliedQuery);
+    final screenerAsync = ref.watch(
+      marketScreenerSnapshotProvider(appliedQuery),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? _visualNavClearance
@@ -217,46 +218,59 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        VitSearchBar(
-                          key: MarketScreenerPage.searchKey,
-                          controller: _searchController,
-                          placeholder: 'Tìm kiếm token...',
-                          filterInline: true,
-                          filterActive: _hasActiveFilters,
-                          onChanged: (_) => setState(() {}),
-                          onClear: () => setState(() {}),
-                          onFilterTap: () {
-                            setState(() => _showFilters = !_showFilters);
-                          },
-                        ),
-                        _PresetScroller(
-                          presets: baseSnapshot.presets,
-                          activePresetId: _activePresetId,
-                          onPresetSelected: _applyPreset,
-                        ),
-                        if (_showFilters)
-                          _AdvancedFiltersCard(
+                      children: screenerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được bộ lọc thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketScreenerSnapshotProvider(appliedQuery),
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          VitSearchBar(
+                            key: MarketScreenerPage.searchKey,
+                            controller: _searchController,
+                            placeholder: 'Tìm kiếm token...',
+                            filterInline: true,
+                            filterActive: _hasActiveFilters,
+                            onChanged: (_) => setState(() {}),
+                            onClear: () => setState(() {}),
+                            onFilterTap: () {
+                              setState(() => _showFilters = !_showFilters);
+                            },
+                          ),
+                          _PresetScroller(
+                            presets: snapshot.presets,
+                            activePresetId: _activePresetId,
+                            onPresetSelected: _applyPreset,
+                          ),
+                          if (_showFilters)
+                            _AdvancedFiltersCard(
+                              query: _query,
+                              categories: snapshot.screenFilters.categories,
+                              onCategorySelected: _toggleCategory,
+                              onRangeChanged: _updateRange,
+                              onReset: _resetFilters,
+                            ),
+                          _SortScroller(
                             query: _query,
-                            categories: baseSnapshot.screenFilters.categories,
-                            onCategorySelected: _toggleCategory,
-                            onRangeChanged: _updateRange,
-                            onReset: _resetFilters,
+                            resultCount: snapshot.marketPairs.length,
+                            onSortSelected: _toggleSort,
                           ),
-                        _SortScroller(
-                          query: _query,
-                          resultCount: snapshot.marketPairs.length,
-                          onSortSelected: _toggleSort,
-                        ),
-                        if (snapshot.marketPairs.isEmpty)
-                          _ScreenerEmptyState(onReset: _resetFilters)
-                        else
-                          _ScreenerResults(
-                            pairs: snapshot.marketPairs,
-                            onPairTap: (pair) =>
-                                context.go(AppRoutePaths.pairDetail(pair.id)),
-                          ),
-                      ],
+                          if (snapshot.marketPairs.isEmpty)
+                            _ScreenerEmptyState(onReset: _resetFilters)
+                          else
+                            _ScreenerResults(
+                              pairs: snapshot.marketPairs,
+                              onPairTap: (pair) =>
+                                  context.go(AppRoutePaths.pairDetail(pair.id)),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

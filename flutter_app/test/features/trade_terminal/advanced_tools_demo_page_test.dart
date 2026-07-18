@@ -31,10 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-062 mock repository exposes advanced tools BE draft', () {
-    final repo = const MockTradeTerminalRepository();
-    final snapshot = repo.getAdvancedTools();
-    final result = repo.submitAdvancedToolAction(
+  test('SC-062 mock repository exposes advanced tools BE draft', () async {
+    final repo = const MockTradeTerminalRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getAdvancedTools();
+    final result = await repo.submitAdvancedToolAction(
       const TradeAdvancedToolActionRequest(
         toolId: 'bulk',
         action: 'cancel',

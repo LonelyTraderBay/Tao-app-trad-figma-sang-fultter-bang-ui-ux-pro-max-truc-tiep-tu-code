@@ -30,31 +30,35 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-112 mock repository exposes complaint submission BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getComplaintSubmission();
+  test(
+    'SC-112 mock repository exposes complaint submission BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getComplaintSubmission();
 
-    expect(snapshot.processTitle, 'Complaint Process');
-    expect(snapshot.categories, contains('Trade Execution'));
-    expect(snapshot.subjectMinLength, 10);
-    expect(snapshot.descriptionMinLength, 50);
-    expect(snapshot.confirmationComplaintId, 'COMP-2026-NEW');
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/trade/trade-copy-trading-complaint-submission',
-    );
-    expect(snapshot.actionDraft, contains('POST /copy-trading/follow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.processTitle, 'Complaint Process');
+      expect(snapshot.categories, contains('Trade Execution'));
+      expect(snapshot.subjectMinLength, 10);
+      expect(snapshot.descriptionMinLength, 50);
+      expect(snapshot.confirmationComplaintId, 'COMP-2026-NEW');
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-copy-trading-complaint-submission',
+      );
+      expect(snapshot.actionDraft, contains('POST /copy-trading/follow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-112 renders complaint submission form in Trade shell', (
     tester,

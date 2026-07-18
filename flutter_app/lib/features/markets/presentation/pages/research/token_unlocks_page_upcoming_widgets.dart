@@ -8,12 +8,25 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repo = ref.watch(marketControllerProvider);
-    final snapshot = repo.getTokenUnlocks(
-      sortBy: _sortBy,
-      impactFilter: _impactFilter,
+    // GD4-F3: getTokenUnlocks gọi 2 lần với filter khác nhau — chính =
+    // unfiltered (hero/phân tích/lịch trình dùng chung — impactConfigs/
+    // categoryConfigs giống hệt bản lọc vì là config tĩnh), phụ = filtered
+    // đọc qua .value (mục 5, "2 async song song trên 1 trang").
+    final allAsync = ref.watch(
+      marketTokenUnlocksSnapshotProvider((
+        sortBy: MarketUnlockSort.nearest,
+        impactFilter: null,
+      )),
     );
-    final allSnapshot = repo.getTokenUnlocks();
+    final filteredUnlocks = ref
+        .watch(
+          marketTokenUnlocksSnapshotProvider((
+            sortBy: _sortBy,
+            impactFilter: _impactFilter,
+          )),
+        )
+        .value
+        ?.unlocks;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -56,76 +69,98 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        if (_tab == 'upcoming') ...[
-                          _UnlockHero(snapshot: allSnapshot),
-                          _UnlockFilters(
-                            sortBy: _sortBy,
-                            impactFilter: _impactFilter,
-                            impactConfigs: snapshot.impactConfigs,
-                            onSortSelected: (value) =>
-                                setState(() => _sortBy = value),
-                            onImpactSelected: (value) => setState(() {
-                              _impactFilter = _impactFilter == value
-                                  ? null
-                                  : value;
-                            }),
-                            onAllImpacts: () => setState(() {
-                              _impactFilter = null;
-                            }),
-                          ),
-                          if (snapshot.unlocks.isEmpty)
-                            VitEmptyState(
-                              title: 'Không có unlock phù hợp',
-                              message:
-                                  'Thử xóa bộ lọc tác động hoặc đổi cách sắp xếp',
-                              icon: Icons.lock_outline_rounded,
-                              actionLabel: 'Xóa bộ lọc',
-                              onAction: () => setState(() {
-                                _impactFilter = null;
-                                _sortBy = MarketUnlockSort.nearest;
-                              }),
-                            )
-                          else
-                            _UnlockList(
-                              unlocks: snapshot.unlocks,
-                              impactConfigs: snapshot.impactConfigs,
-                              categoryConfigs: snapshot.categoryConfigs,
-                              expandedId: _expandedId,
-                              onToggleExpanded: (unlock) => setState(() {
-                                _expandedId = _expandedId == unlock.id
-                                    ? null
-                                    : unlock.id;
-                              }),
+                      children: allAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được mở khóa token',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketTokenUnlocksSnapshotProvider((
+                                sortBy: MarketUnlockSort.nearest,
+                                impactFilter: null,
+                              )),
                             ),
-                        ] else if (_tab == 'analysis') ...[
-                          _ImpactOverview(snapshot: allSnapshot),
-                          const VitSectionHeader(
-                            title: 'Theo loại',
-                            accentColor: AppColors.accent,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
                           ),
-                          _CategoryBreakdown(snapshot: allSnapshot),
-                          const VitSectionHeader(
-                            title: 'Rủi ro pha loãng cao nhất',
-                            accentColor: AppColors.sell,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _DilutionRanking(snapshot: allSnapshot),
-                          const _UnlockWarningCard(),
-                        ] else ...[
-                          _ScheduleList(snapshot: allSnapshot),
                         ],
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message: 'Dữ liệu unlock chỉ mang tính tham khảo',
-                          detail:
-                              'Unlock lớn có thể tạo áp lực bán tiềm ẩn. Không phải khuyến nghị đầu tư.',
-                        ),
-                      ],
+                        data: (allSnapshot) {
+                          final unlocks =
+                              filteredUnlocks ?? const <TokenUnlockDraft>[];
+                          return [
+                            if (_tab == 'upcoming') ...[
+                              _UnlockHero(snapshot: allSnapshot),
+                              _UnlockFilters(
+                                sortBy: _sortBy,
+                                impactFilter: _impactFilter,
+                                impactConfigs: allSnapshot.impactConfigs,
+                                onSortSelected: (value) =>
+                                    setState(() => _sortBy = value),
+                                onImpactSelected: (value) => setState(() {
+                                  _impactFilter = _impactFilter == value
+                                      ? null
+                                      : value;
+                                }),
+                                onAllImpacts: () => setState(() {
+                                  _impactFilter = null;
+                                }),
+                              ),
+                              if (unlocks.isEmpty)
+                                VitEmptyState(
+                                  title: 'Không có unlock phù hợp',
+                                  message:
+                                      'Thử xóa bộ lọc tác động hoặc đổi cách sắp xếp',
+                                  icon: Icons.lock_outline_rounded,
+                                  actionLabel: 'Xóa bộ lọc',
+                                  onAction: () => setState(() {
+                                    _impactFilter = null;
+                                    _sortBy = MarketUnlockSort.nearest;
+                                  }),
+                                )
+                              else
+                                _UnlockList(
+                                  unlocks: unlocks,
+                                  impactConfigs: allSnapshot.impactConfigs,
+                                  categoryConfigs: allSnapshot.categoryConfigs,
+                                  expandedId: _expandedId,
+                                  onToggleExpanded: (unlock) => setState(() {
+                                    _expandedId = _expandedId == unlock.id
+                                        ? null
+                                        : unlock.id;
+                                  }),
+                                ),
+                            ] else if (_tab == 'analysis') ...[
+                              _ImpactOverview(snapshot: allSnapshot),
+                              const VitSectionHeader(
+                                title: 'Theo loại',
+                                accentColor: AppColors.accent,
+                                bottomGap:
+                                    AppSpacing.pageRhythmStandardInnerGap,
+                                variant: VitSectionHeaderVariant.accentBar,
+                              ),
+                              _CategoryBreakdown(snapshot: allSnapshot),
+                              const VitSectionHeader(
+                                title: 'Rủi ro pha loãng cao nhất',
+                                accentColor: AppColors.sell,
+                                bottomGap:
+                                    AppSpacing.pageRhythmStandardInnerGap,
+                                variant: VitSectionHeaderVariant.accentBar,
+                              ),
+                              _DilutionRanking(snapshot: allSnapshot),
+                              const _UnlockWarningCard(),
+                            ] else ...[
+                              _ScheduleList(snapshot: allSnapshot),
+                            ],
+                            const VitBanner(
+                              variant: VitBannerVariant.info,
+                              icon: Icons.info_outline_rounded,
+                              message: 'Dữ liệu unlock chỉ mang tính tham khảo',
+                              detail:
+                                  'Unlock lớn có thể tạo áp lực bán tiềm ẩn. Không phải khuyến nghị đầu tư.',
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-118 mock repository exposes bot risk BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotRiskDisclosure();
+  test('SC-118 mock repository exposes bot risk BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotRiskDisclosure();
 
     expect(snapshot.highRiskTitle, 'HIGH RISK WARNING');
     expect(snapshot.categories, hasLength(6));

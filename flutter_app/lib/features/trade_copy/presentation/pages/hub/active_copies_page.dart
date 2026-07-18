@@ -57,137 +57,178 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(tradeActiveCopiesControllerProvider);
-    final snapshot = controller.state.snapshot;
-    final copies = _filteredCopies(snapshot.copies);
+    final controllerAsync = ref.watch(tradeActiveCopiesControllerProvider);
 
-    return Stack(
-      children: [
-        VitTradeHubScaffold(
-          title: 'Copy đang chạy',
-          semanticLabel: 'Copy đang chạy',
-          semanticIdentifier: 'SC-066',
-          contentKey: ActiveCopiesPage.contentKey,
-          shellRenderMode: widget.shellRenderMode,
-          onBack: () => goBackOrFallback(
-            context,
-            fallbackPath: AppRoutePaths.tradeCopyTrading,
-            mode: BackNavigationMode.historyThenFallback,
-          ),
-          headerActions: [
-            VitHeaderActionItem(
-              key: ActiveCopiesPage.addCopyKey,
-              type: VitHeaderActionType.add,
-              onPressed: () => context.push(AppRoutePaths.tradeCopyTrading),
-            ),
-          ],
-          children: [
-            VitTradeSection(
-              title: 'Tổng quan portfolio',
-              child: _PortfolioOverview(snapshot: snapshot.portfolio),
-            ),
-            VitTradeSection(
-              title: 'Đánh giá rủi ro',
-              child: VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
-                title: 'Review active copy exposure',
-                message:
-                    'Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.',
-                contractId: 'Active copies: ${copies.length}',
-              ),
-            ),
-            VitTradeSection(
-              title: 'Trạng thái',
-              child: VitSegmentedTabBar(
-                activeKey: _activeTab,
-                onChanged: (id) => setState(() {
-                  _activeTab = id;
-                  _expandedCopyId = null;
-                }),
-                tabs: [
-                  for (final tab in snapshot.tabs)
-                    VitTabItem(
-                      key: tab.id,
-                      label: tab.label,
-                      widgetKey: ActiveCopiesPage.tabKey(tab.id),
-                    ),
-                ],
-              ),
-            ),
-            VitTradeSection(
-              title: 'Danh sách copy',
-              child: copies.isEmpty
-                  ? _EmptyCopiesState(
-                      history: _activeTab == 'history',
-                      onExplore: () =>
-                          context.push(AppRoutePaths.tradeCopyTrading),
-                    )
-                  : _ActiveCopyList(
-                      copies: copies,
-                      expandedCopyId: _expandedCopyId,
-                      onToggle: (copyId) => setState(() {
-                        _expandedCopyId = _expandedCopyId == copyId
-                            ? null
-                            : copyId;
-                      }),
-                      onViewDetails: (copy) => context.push(
-                        AppRoutePaths.tradeCopyProvider(
-                          copy.providerId,
-                          backPath: AppRoutePaths.tradeCopyActive,
-                        ),
-                      ),
-                      onConfigure: (copy) => context.push(
-                        AppRoutePaths.tradeCopyProviderConfiguration(
-                          copy.providerId,
-                          backPath: AppRoutePaths.tradeCopyActive,
-                        ),
-                      ),
-                      onStop: (copy) {
-                        if (copy.status == TradeActiveCopyStatus.coolingOff) {
-                          return;
-                        }
-                        setState(() {
-                          _pendingStopCopy = copy;
-                          _confirmText = '';
-                        });
-                      },
-                    ),
-            ),
-            if (_actionStatus != null)
-              VitTradeSection(
-                title: 'Trạng thái thao tác',
-                child: _ActionStatusBanner(text: _actionStatus!),
-              ),
-            if (controller.hasRiskAlert(snapshot.copies))
-              VitTradeSection(
-                title: 'Cảnh báo',
-                child: _RiskAlert(
-                  onViewDetails: () => setState(() => _activeTab = 'active'),
-                ),
-              ),
-          ],
+    return controllerAsync.when(
+      loading: () => VitTradeHubScaffold(
+        title: 'Copy đang chạy',
+        semanticLabel: 'Copy đang chạy',
+        semanticIdentifier: 'SC-066',
+        contentKey: ActiveCopiesPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          mode: BackNavigationMode.historyThenFallback,
         ),
-        if (_pendingStopCopy != null)
-          _StopCopyModal(
-            copy: _pendingStopCopy!,
-            confirmText: _confirmText,
-            onTextChanged: (value) => setState(() => _confirmText = value),
-            onCancel: () => setState(() => _pendingStopCopy = null),
-            onConfirm: () {
-              final result = controller.submitCopyAction(
-                providerId: _pendingStopCopy!.providerId,
-                action: 'stop',
-              );
-              setState(() {
-                _actionStatus =
-                    'Yêu cầu ${result.action} ${result.providerId} đã được ghi nhận';
-                _pendingStopCopy = null;
-                _confirmText = '';
-              });
-            },
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitTradeHubScaffold(
+        title: 'Copy đang chạy',
+        semanticLabel: 'Copy đang chạy',
+        semanticIdentifier: 'SC-066',
+        contentKey: ActiveCopiesPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyTrading,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        children: [
+          VitErrorState(
+            title: 'Không tải được danh sách copy đang chạy',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeActiveCopiesControllerProvider),
           ),
-      ],
+        ],
+      ),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        final copies = _filteredCopies(snapshot.copies);
+
+        return Stack(
+          children: [
+            VitTradeHubScaffold(
+              title: 'Copy đang chạy',
+              semanticLabel: 'Copy đang chạy',
+              semanticIdentifier: 'SC-066',
+              contentKey: ActiveCopiesPage.contentKey,
+              shellRenderMode: widget.shellRenderMode,
+              onBack: () => goBackOrFallback(
+                context,
+                fallbackPath: AppRoutePaths.tradeCopyTrading,
+                mode: BackNavigationMode.historyThenFallback,
+              ),
+              headerActions: [
+                VitHeaderActionItem(
+                  key: ActiveCopiesPage.addCopyKey,
+                  type: VitHeaderActionType.add,
+                  onPressed: () => context.push(AppRoutePaths.tradeCopyTrading),
+                ),
+              ],
+              children: [
+                VitTradeSection(
+                  title: 'Tổng quan portfolio',
+                  child: _PortfolioOverview(snapshot: snapshot.portfolio),
+                ),
+                VitTradeSection(
+                  title: 'Đánh giá rủi ro',
+                  child: VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    density: VitDensity.compact,
+                    title: 'Review active copy exposure',
+                    message:
+                        'Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.',
+                    contractId: 'Active copies: ${copies.length}',
+                  ),
+                ),
+                VitTradeSection(
+                  title: 'Trạng thái',
+                  child: VitSegmentedTabBar(
+                    activeKey: _activeTab,
+                    onChanged: (id) => setState(() {
+                      _activeTab = id;
+                      _expandedCopyId = null;
+                    }),
+                    tabs: [
+                      for (final tab in snapshot.tabs)
+                        VitTabItem(
+                          key: tab.id,
+                          label: tab.label,
+                          widgetKey: ActiveCopiesPage.tabKey(tab.id),
+                        ),
+                    ],
+                  ),
+                ),
+                VitTradeSection(
+                  title: 'Danh sách copy',
+                  child: copies.isEmpty
+                      ? _EmptyCopiesState(
+                          history: _activeTab == 'history',
+                          onExplore: () =>
+                              context.push(AppRoutePaths.tradeCopyTrading),
+                        )
+                      : _ActiveCopyList(
+                          copies: copies,
+                          expandedCopyId: _expandedCopyId,
+                          onToggle: (copyId) => setState(() {
+                            _expandedCopyId = _expandedCopyId == copyId
+                                ? null
+                                : copyId;
+                          }),
+                          onViewDetails: (copy) => context.push(
+                            AppRoutePaths.tradeCopyProvider(
+                              copy.providerId,
+                              backPath: AppRoutePaths.tradeCopyActive,
+                            ),
+                          ),
+                          onConfigure: (copy) => context.push(
+                            AppRoutePaths.tradeCopyProviderConfiguration(
+                              copy.providerId,
+                              backPath: AppRoutePaths.tradeCopyActive,
+                            ),
+                          ),
+                          onStop: (copy) {
+                            if (copy.status ==
+                                TradeActiveCopyStatus.coolingOff) {
+                              return;
+                            }
+                            setState(() {
+                              _pendingStopCopy = copy;
+                              _confirmText = '';
+                            });
+                          },
+                        ),
+                ),
+                if (_actionStatus != null)
+                  VitTradeSection(
+                    title: 'Trạng thái thao tác',
+                    child: _ActionStatusBanner(text: _actionStatus!),
+                  ),
+                if (controller.hasRiskAlert(snapshot.copies))
+                  VitTradeSection(
+                    title: 'Cảnh báo',
+                    child: _RiskAlert(
+                      onViewDetails: () =>
+                          setState(() => _activeTab = 'active'),
+                    ),
+                  ),
+              ],
+            ),
+            if (_pendingStopCopy != null)
+              _StopCopyModal(
+                copy: _pendingStopCopy!,
+                confirmText: _confirmText,
+                onTextChanged: (value) => setState(() => _confirmText = value),
+                onCancel: () => setState(() => _pendingStopCopy = null),
+                onConfirm: () async {
+                  final result = await controller.submitCopyAction(
+                    providerId: _pendingStopCopy!.providerId,
+                    action: 'stop',
+                  );
+                  if (!mounted) return;
+                  setState(() {
+                    _actionStatus =
+                        'Yêu cầu ${result.action} ${result.providerId} đã được ghi nhận';
+                    _pendingStopCopy = null;
+                    _confirmText = '';
+                  });
+                },
+              ),
+          ],
+        );
+      },
     );
   }
 

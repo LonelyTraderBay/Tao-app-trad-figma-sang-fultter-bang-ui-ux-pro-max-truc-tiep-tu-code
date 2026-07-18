@@ -59,9 +59,12 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getMarketNews(category: _category, sentiment: _sentimentFilter);
+    final newsAsync = ref.watch(
+      marketNewsSnapshotProvider((
+        category: _category,
+        sentiment: _sentimentFilter,
+      )),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
@@ -99,64 +102,82 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        if (snapshot.breakingNews.isNotEmpty &&
-                            _category == 'all')
-                          _BreakingNewsCard(news: snapshot.breakingNews.first),
-                        _CategoryFilters(
-                          categories: snapshot.categories,
-                          activeCategory: _category,
-                          onSelected: (value) => setState(() {
-                            _category = value;
-                          }),
-                        ),
-                        _SentimentFilters(
-                          badges: snapshot.sentimentBadges,
-                          active: _sentimentFilter,
-                          onSelected: (value) => setState(() {
-                            _sentimentFilter = _sentimentFilter == value
-                                ? null
-                                : value;
-                          }),
-                        ),
-                        if (snapshot.news.isEmpty)
-                          _NewsEmptyState(
-                            onReset: () => setState(() {
-                              _category = 'all';
-                              _sentimentFilter = null;
-                            }),
-                          )
-                        else
-                          _NewsFeed(
-                            news: snapshot.news,
-                            categories: snapshot.categories,
-                            badges: snapshot.sentimentBadges,
-                            savedIds: _savedIds,
-                            expandedId: _expandedId,
-                            onToggleExpanded: (id) => setState(() {
-                              _expandedId = _expandedId == id ? null : id;
-                            }),
-                            onToggleSaved: (id) => setState(() {
-                              if (_savedIds.contains(id)) {
-                                _savedIds.remove(id);
-                              } else {
-                                _savedIds.add(id);
-                              }
-                            }),
-                            onTokenTap: (token) => context.go(
-                              AppRoutePaths.pairDetail(
-                                '${token.toLowerCase()}usdt',
-                              ),
+                      children: newsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được tin thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketNewsSnapshotProvider((
+                                category: _category,
+                                sentiment: _sentimentFilter,
+                              )),
                             ),
                           ),
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message: 'Tin tức chỉ mang tính tham khảo',
-                          detail:
-                              'Nội dung biên tập không phải khuyến nghị giao dịch. Kiểm tra nguồn trước khi quyết định.',
-                        ),
-                      ],
+                        ],
+                        data: (snapshot) => [
+                          if (snapshot.breakingNews.isNotEmpty &&
+                              _category == 'all')
+                            _BreakingNewsCard(
+                              news: snapshot.breakingNews.first,
+                            ),
+                          _CategoryFilters(
+                            categories: snapshot.categories,
+                            activeCategory: _category,
+                            onSelected: (value) => setState(() {
+                              _category = value;
+                            }),
+                          ),
+                          _SentimentFilters(
+                            badges: snapshot.sentimentBadges,
+                            active: _sentimentFilter,
+                            onSelected: (value) => setState(() {
+                              _sentimentFilter = _sentimentFilter == value
+                                  ? null
+                                  : value;
+                            }),
+                          ),
+                          if (snapshot.news.isEmpty)
+                            _NewsEmptyState(
+                              onReset: () => setState(() {
+                                _category = 'all';
+                                _sentimentFilter = null;
+                              }),
+                            )
+                          else
+                            _NewsFeed(
+                              news: snapshot.news,
+                              categories: snapshot.categories,
+                              badges: snapshot.sentimentBadges,
+                              savedIds: _savedIds,
+                              expandedId: _expandedId,
+                              onToggleExpanded: (id) => setState(() {
+                                _expandedId = _expandedId == id ? null : id;
+                              }),
+                              onToggleSaved: (id) => setState(() {
+                                if (_savedIds.contains(id)) {
+                                  _savedIds.remove(id);
+                                } else {
+                                  _savedIds.add(id);
+                                }
+                              }),
+                              onTokenTap: (token) => context.go(
+                                AppRoutePaths.pairDetail(
+                                  '${token.toLowerCase()}usdt',
+                                ),
+                              ),
+                            ),
+                          const VitBanner(
+                            variant: VitBannerVariant.info,
+                            icon: Icons.info_outline_rounded,
+                            message: 'Tin tức chỉ mang tính tham khảo',
+                            detail:
+                                'Nội dung biên tập không phải khuyến nghị giao dịch. Kiểm tra nguồn trước khi quyết định.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

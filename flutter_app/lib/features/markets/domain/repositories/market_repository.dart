@@ -5,69 +5,73 @@ import 'package:vit_trade_flutter/features/markets/domain/entities/market_entiti
 /// sentiment, portfolio, news, charts, unlocks, signals, correlations,
 /// and per-pair detail/token-info screens.
 abstract interface class MarketRepository {
-  MarketListSnapshot getMarketList();
+  Future<MarketListSnapshot> getMarketList();
 
-  MarketOverviewSnapshot getMarketOverview();
+  Future<MarketOverviewSnapshot> getMarketOverview();
 
-  MarketMoversSnapshot getMarketMovers();
+  Future<MarketMoversSnapshot> getMarketMovers();
 
-  MarketSectorsSnapshot getMarketSectors();
+  Future<MarketSectorsSnapshot> getMarketSectors();
 
-  MarketWatchlistSnapshot getMarketWatchlist();
+  Future<MarketWatchlistSnapshot> getMarketWatchlist();
 
-  MarketHeatmapSnapshot getMarketHeatmap();
+  Future<MarketHeatmapSnapshot> getMarketHeatmap();
 
-  MarketAlertsSnapshot getPriceAlerts();
+  Future<MarketAlertsSnapshot> getPriceAlerts();
 
-  MarketScreenerSnapshot getMarketScreener({MarketScreenerQuery? query});
+  Future<MarketScreenerSnapshot> getMarketScreener({
+    MarketScreenerQuery? query,
+  });
 
-  MarketComparisonSnapshot getMarketComparison();
+  Future<MarketComparisonSnapshot> getMarketComparison();
 
-  MarketCalendarSnapshot getMarketCalendar({MarketCalendarQuery? query});
+  Future<MarketCalendarSnapshot> getMarketCalendar({
+    MarketCalendarQuery? query,
+  });
 
-  MarketDerivativesSnapshot getMarketDerivatives({
+  Future<MarketDerivativesSnapshot> getMarketDerivatives({
     MarketDerivativesSort sortBy = MarketDerivativesSort.openInterest,
   });
 
-  MarketDepthSnapshot getMarketDepth({
+  Future<MarketDepthSnapshot> getMarketDepth({
     String pairId = 'btcusdt',
     int levels = 25,
   });
 
-  MarketSocialSentimentSnapshot getSocialSentiment({
+  Future<MarketSocialSentimentSnapshot> getSocialSentiment({
     MarketSentimentSort sortBy = MarketSentimentSort.sentiment,
   });
 
-  MarketPortfolioSnapshot getPortfolioTracker({
+  Future<MarketPortfolioSnapshot> getPortfolioTracker({
     MarketPortfolioSort sortBy = MarketPortfolioSort.value,
   });
 
-  MarketNewsSnapshot getMarketNews({
+  Future<MarketNewsSnapshot> getMarketNews({
     String category = 'all',
     MarketNewsSentiment? sentiment,
   });
 
-  MarketAdvancedChartsSnapshot getAdvancedCharts({
+  Future<MarketAdvancedChartsSnapshot> getAdvancedCharts({
     String indicatorCategory = 'all',
     String drawingCategory = 'all',
   });
 
-  MarketTokenUnlocksSnapshot getTokenUnlocks({
+  Future<MarketTokenUnlocksSnapshot> getTokenUnlocks({
     MarketUnlockSort sortBy = MarketUnlockSort.nearest,
     MarketUnlockImpact? impactFilter,
   });
 
-  MarketSocialSignalsSnapshot getSocialSignals({
+  Future<MarketSocialSignalsSnapshot> getSocialSignals({
     TradingSignalStatus? statusFilter,
     TradingSignalCategory? categoryFilter,
   });
 
-  MarketCorrelationsSnapshot getMarketCorrelations({
+  Future<MarketCorrelationsSnapshot> getMarketCorrelations({
     MarketCorrelationTimeframe timeframe = MarketCorrelationTimeframe.d7,
     CorrelationSortOrder sortOrder = CorrelationSortOrder.high,
   });
 
-  MarketPairDetailSnapshot getPairDetail(String pairId);
+  Future<MarketPairDetailSnapshot> getPairDetail(String pairId);
 
-  MarketTokenInfoSnapshot getTokenInfo(String pairId);
+  Future<MarketTokenInfoSnapshot> getTokenInfo(String pairId);
 }

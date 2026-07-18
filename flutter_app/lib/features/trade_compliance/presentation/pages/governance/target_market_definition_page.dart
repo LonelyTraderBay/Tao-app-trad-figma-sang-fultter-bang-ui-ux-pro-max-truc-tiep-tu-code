@@ -34,74 +34,105 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getTargetMarketDefinition(productId: productId ?? 'prod-1');
-    return VitTradeHubScaffold(
-      title: 'Target Market Definition',
-      subtitle: snapshot.product.name,
-      semanticLabel: 'Xác định thị trường mục tiêu sản phẩm',
-      semanticIdentifier: 'SC-101',
-      contentKey: contentKey,
-      shellRenderMode: shellRenderMode,
-      onBack: () => goBackOrFallback(
-        context,
-        fallbackPath: AppRoutePaths.tradeCopyProductGovernance,
-        mode: BackNavigationMode.historyThenFallback,
+    final resolvedProductId = productId ?? 'prod-1';
+    final async = ref.watch(
+      tradeTargetMarketDefinitionProvider(resolvedProductId),
+    );
+
+    Widget scaffold({
+      required String subtitle,
+      required List<Widget> children,
+    }) {
+      return VitTradeHubScaffold(
+        title: 'Target Market Definition',
+        subtitle: subtitle,
+        semanticLabel: 'Xác định thị trường mục tiêu sản phẩm',
+        semanticIdentifier: 'SC-101',
+        contentKey: contentKey,
+        shellRenderMode: shellRenderMode,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyProductGovernance,
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        useCopyTradingInset: true,
+        children: children,
+      );
+    }
+
+    return async.when(
+      loading: () => scaffold(
+        subtitle: resolvedProductId,
+        children: const [VitSkeletonList()],
       ),
-      useCopyTradingInset: true,
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
+      error: (error, stackTrace) => scaffold(
+        subtitle: resolvedProductId,
+        children: [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(
+              tradeTargetMarketDefinitionProvider(resolvedProductId),
+            ),
+          ),
+        ],
+      ),
+      data: (snapshot) => scaffold(
+        subtitle: snapshot.product.name,
+        children: [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Target market review',
+              message:
+                  'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
+              contractId: 'target-market-review',
+              density: VitDensity.compact,
+            ),
+          ),
+          VitTradeComplianceSection(
             title: 'Target market review',
-            message:
-                'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
-            contractId: 'target-market-review',
-            density: VitDensity.compact,
-          ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Target market review',
-          statusPill: const VitStatusPill(
-            label: 'Review required',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Product',
-              value: snapshot.product.name,
+            statusPill: const VitStatusPill(
+              label: 'Review required',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
             ),
-            VitTradeComplianceItem(
-              label: 'Criteria',
-              value: '${snapshot.dimensions.length} dimensions',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Product summary',
-          child: VitTradeComplianceHero(
-            title: snapshot.product.name,
-            description:
-                'High-risk product requiring advanced knowledge and '
-                'significant capital.',
-            icon: Icons.gps_fixed_rounded,
-            accentColor: _targetPrimary,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Target Market Criteria',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final dimension in snapshot.dimensions)
-                _DimensionCard(dimension: dimension),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Product',
+                value: snapshot.product.name,
+              ),
+              VitTradeComplianceItem(
+                label: 'Criteria',
+                value: '${snapshot.dimensions.length} dimensions',
+              ),
             ],
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'Product summary',
+            child: VitTradeComplianceHero(
+              title: snapshot.product.name,
+              description:
+                  'High-risk product requiring advanced knowledge and '
+                  'significant capital.',
+              icon: Icons.gps_fixed_rounded,
+              accentColor: _targetPrimary,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Target Market Criteria',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final dimension in snapshot.dimensions)
+                  _DimensionCard(dimension: dimension),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

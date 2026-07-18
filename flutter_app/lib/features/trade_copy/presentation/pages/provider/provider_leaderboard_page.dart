@@ -55,15 +55,7 @@ class _ProviderLeaderboardPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeProviderLeaderboardProvider);
-    if (!_initialized) {
-      _sortId = snapshot.defaultSortId;
-      _riskFilterId = snapshot.defaultRiskFilterId;
-      _verifiedOnly = snapshot.defaultVerifiedOnly;
-      _initialized = true;
-    }
-
-    final providers = _filteredProviders(snapshot);
+    final snapshotAsync = ref.watch(tradeProviderLeaderboardProvider);
 
     return VitTradeHubScaffold(
       title: 'Leaderboard',
@@ -78,80 +70,105 @@ class _ProviderLeaderboardPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
-          title: 'Disclaimer',
-          child: _SurvivorshipWarning(snapshot: snapshot),
-        ),
-        const VitTradeComplianceSection(
-          title: 'Compliance review',
-          statusPill: VitStatusPill(
-            label: 'Review required',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Scope',
-              value: 'Ranking, verified status, risk, drawdown',
-            ),
-            VitTradeComplianceItem(
-              label: 'Action',
-              value: 'Review before copying',
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được bảng xếp hạng',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeProviderLeaderboardProvider),
             ),
           ],
-        ),
-        VitTradeSection(
-          title: 'Bộ lọc',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _SortTabs(
-                options: snapshot.sortOptions,
-                activeId: _sortId,
-                onChanged: (id) => setState(() => _sortId = id),
+          data: (snapshot) {
+            if (!_initialized) {
+              _sortId = snapshot.defaultSortId;
+              _riskFilterId = snapshot.defaultRiskFilterId;
+              _verifiedOnly = snapshot.defaultVerifiedOnly;
+              _initialized = true;
+            }
+
+            final providers = _filteredProviders(snapshot);
+
+            return [
+              VitTradeSection(
+                title: 'Disclaimer',
+                child: _SurvivorshipWarning(snapshot: snapshot),
               ),
-              _RiskFilters(
-                filters: snapshot.riskFilters,
-                activeId: _riskFilterId,
-                onChanged: (id) => setState(() => _riskFilterId = id),
-              ),
-              _VerifiedToggle(
-                label: snapshot.verifiedOnlyLabel,
-                checked: _verifiedOnly,
-                onChanged: (value) => setState(() => _verifiedOnly = value),
-              ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Providers',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Hiển thị ${providers.length} providers',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: _leaderLineFlat,
+              const VitTradeComplianceSection(
+                title: 'Compliance review',
+                statusPill: VitStatusPill(
+                  label: 'Review required',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
                 ),
-              ),
-              for (final entry in providers.indexed) ...[
-                _ProviderRankCard(
-                  rank: entry.$1 + 1,
-                  provider: entry.$2,
-                  onOpen: () => context.push(
-                    AppRoutePaths.tradeCopyProvider(
-                      entry.$2.id,
-                      backPath: AppRoutePaths.tradeCopyLeaderboard,
-                    ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Scope',
+                    value: 'Ranking, verified status, risk, drawdown',
                   ),
+                  VitTradeComplianceItem(
+                    label: 'Action',
+                    value: 'Review before copying',
+                  ),
+                ],
+              ),
+              VitTradeSection(
+                title: 'Bộ lọc',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _SortTabs(
+                      options: snapshot.sortOptions,
+                      activeId: _sortId,
+                      onChanged: (id) => setState(() => _sortId = id),
+                    ),
+                    _RiskFilters(
+                      filters: snapshot.riskFilters,
+                      activeId: _riskFilterId,
+                      onChanged: (id) => setState(() => _riskFilterId = id),
+                    ),
+                    _VerifiedToggle(
+                      label: snapshot.verifiedOnlyLabel,
+                      checked: _verifiedOnly,
+                      onChanged: (value) =>
+                          setState(() => _verifiedOnly = value),
+                    ),
+                  ],
                 ),
-                if (entry.$1 != providers.length - 1)
-                  const SizedBox(height: AppSpacing.rowGap),
-              ],
-              _Disclaimer(text: snapshot.disclaimer),
-            ],
-          ),
+              ),
+              VitTradeSection(
+                title: 'Providers',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Hiển thị ${providers.length} providers',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: _leaderLineFlat,
+                      ),
+                    ),
+                    for (final entry in providers.indexed) ...[
+                      _ProviderRankCard(
+                        rank: entry.$1 + 1,
+                        provider: entry.$2,
+                        onOpen: () => context.push(
+                          AppRoutePaths.tradeCopyProvider(
+                            entry.$2.id,
+                            backPath: AppRoutePaths.tradeCopyLeaderboard,
+                          ),
+                        ),
+                      ),
+                      if (entry.$1 != providers.length - 1)
+                        const SizedBox(height: AppSpacing.rowGap),
+                    ],
+                    _Disclaimer(text: snapshot.disclaimer),
+                  ],
+                ),
+              ),
+            ];
+          },
         ),
       ],
     );

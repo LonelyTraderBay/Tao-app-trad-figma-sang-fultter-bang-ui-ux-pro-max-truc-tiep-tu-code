@@ -56,9 +56,7 @@ class _BestExecutionReportsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getBestExecutionReports();
+    final async = ref.watch(tradeBestExecutionReportsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     return Material(
       color: _bestBackground,
@@ -82,73 +80,89 @@ class _BestExecutionReportsPageState
                 onPressed: () => setState(() => _notice = 'PDF export queued'),
               ),
             ],
-            children: [
-              const VitTradeSection(
-                title: 'Notice',
-                child: _ComplianceNotice(),
-              ),
-              VitTradeComplianceSection(
-                title: 'Execution review',
-                statusPill: VitStatusPill(
-                  label: 'Updated ${snapshot.lastUpdatedLabel}',
-                  status: VitStatusPillStatus.info,
-                  size: VitStatusPillSize.sm,
+            children: async.when(
+              loading: () => const [VitSkeletonList()],
+              error: (error, stackTrace) => [
+                VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(tradeBestExecutionReportsProvider),
                 ),
-                items: [
-                  VitTradeComplianceItem(
-                    label: 'Venues',
-                    value: '${snapshot.venues.length} tracked',
+              ],
+              data: (snapshot) => [
+                const VitTradeSection(
+                  title: 'Notice',
+                  child: _ComplianceNotice(),
+                ),
+                VitTradeComplianceSection(
+                  title: 'Execution review',
+                  statusPill: VitStatusPill(
+                    label: 'Updated ${snapshot.lastUpdatedLabel}',
+                    status: VitStatusPillStatus.info,
+                    size: VitStatusPillSize.sm,
                   ),
-                  VitTradeComplianceItem(
-                    label: 'Archive',
-                    value: '${snapshot.archive.length} reports',
-                  ),
-                ],
-              ),
-              VitTradeSection(
-                title: 'Reports',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SummaryGrid(summary: snapshot.summary),
-                    VitTabBar(
-                      variant: VitTabBarVariant.segment,
-                      activeKey: _tab,
-                      onChanged: _setTab,
-                      tabs: [
-                        VitTabItem(
-                          key: 'current',
-                          label: 'Q1 2026 (Current)',
-                          widgetKey: BestExecutionReportsPage.tabKey('current'),
-                        ),
-                        VitTabItem(
-                          key: 'archive',
-                          label: 'Archive',
-                          widgetKey: BestExecutionReportsPage.tabKey('archive'),
-                        ),
-                      ],
+                  items: [
+                    VitTradeComplianceItem(
+                      label: 'Venues',
+                      value: '${snapshot.venues.length} tracked',
                     ),
-                    if (_tab == 'current')
-                      _CurrentReport(
-                        venues: snapshot.venues,
-                        onAnalysis: () => context.push(
-                          AppRoutePaths.tradeCopyExecutionVenueAnalysis,
-                        ),
-                        onExport: () =>
-                            setState(() => _notice = 'PDF export queued'),
-                        onPublish: () =>
-                            setState(() => _notice = 'Report submitted'),
-                      )
-                    else
-                      _ArchiveReport(
-                        reports: snapshot.archive,
-                        onExport: (id) =>
-                            setState(() => _notice = '$id PDF queued'),
-                      ),
+                    VitTradeComplianceItem(
+                      label: 'Archive',
+                      value: '${snapshot.archive.length} reports',
+                    ),
                   ],
                 ),
-              ),
-            ],
+                VitTradeSection(
+                  title: 'Reports',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SummaryGrid(summary: snapshot.summary),
+                      VitTabBar(
+                        variant: VitTabBarVariant.segment,
+                        activeKey: _tab,
+                        onChanged: _setTab,
+                        tabs: [
+                          VitTabItem(
+                            key: 'current',
+                            label: 'Q1 2026 (Current)',
+                            widgetKey: BestExecutionReportsPage.tabKey(
+                              'current',
+                            ),
+                          ),
+                          VitTabItem(
+                            key: 'archive',
+                            label: 'Archive',
+                            widgetKey: BestExecutionReportsPage.tabKey(
+                              'archive',
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (_tab == 'current')
+                        _CurrentReport(
+                          venues: snapshot.venues,
+                          onAnalysis: () => context.push(
+                            AppRoutePaths.tradeCopyExecutionVenueAnalysis,
+                          ),
+                          onExport: () =>
+                              setState(() => _notice = 'PDF export queued'),
+                          onPublish: () =>
+                              setState(() => _notice = 'Report submitted'),
+                        )
+                      else
+                        _ArchiveReport(
+                          reports: snapshot.archive,
+                          onExport: (id) =>
+                              setState(() => _notice = '$id PDF queued'),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           if (_notice != null)
             Positioned(

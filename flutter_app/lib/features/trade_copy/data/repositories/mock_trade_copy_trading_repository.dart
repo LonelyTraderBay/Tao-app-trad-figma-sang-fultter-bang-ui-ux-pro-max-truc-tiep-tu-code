@@ -10,8 +10,42 @@ part '../fixtures/trade_copy_lifecycle_repository_fixtures.dart';
 part '../fixtures/trade_copy_provider_discovery_repository_methods.dart';
 part '../fixtures/trade_copy_provider_discovery_repository_fixtures.dart';
 
-mixin _MockTradeCopyTradingRepositoryBase
-    implements TradeCopyTradingRepository {}
+/// GD4-F3: `abstract class` (not `mixin`) because it now holds the
+/// `simulateError`/`loadDelay` constructor fields — 3 method mixins below
+/// (`on _MockTradeCopyTradingRepositoryBase`) share `_simulateNetwork()`
+/// declared here in the base rather than in "the first mixin" (khuôn
+/// wallet's single-mixin split) since trade_copy splits across 3 mixins
+/// that all need it (GD4-Async-Playbook.md §9 bẫy mới).
+abstract class _MockTradeCopyTradingRepositoryBase
+    implements TradeCopyTradingRepository {
+  const _MockTradeCopyTradingRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  /// When `true`, every method throws a [StateError] after [loadDelay] —
+  /// used to exercise error/retry UI states in tests.
+  final bool simulateError;
+
+  /// Simulated network latency before a method resolves. Tests should pass
+  /// [Duration.zero] to avoid slowing down the suite.
+  final Duration loadDelay;
+
+  /// Shared network simulation for every method: awaits [loadDelay], then
+  /// throws when [simulateError] is set. Khuôn MockHomeRepository.
+  ///
+  /// Delay 0 thì KHÔNG tạo timer — Future.delayed(Duration.zero) vẫn là
+  /// timer và tester.pump() không-duration không đẩy fake clock (GD4-Async-
+  /// Playbook.md §9 bẫy 9.10).
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('trade_copy_mock_fetch_failed');
+    }
+  }
+}
 
 /// Independent mock implementation of [TradeCopyTradingRepository]
 /// (trade_copy extraction, Batch 3 of Phase 2 of the trade module split).
@@ -22,10 +56,10 @@ mixin _MockTradeCopyTradingRepositoryBase
 /// surface to an instance of this class instead of implementing it
 /// directly (see `_MockTradeRepositoryCopyTradingDelegate` there).
 final class MockTradeCopyTradingRepository
+    extends _MockTradeCopyTradingRepositoryBase
     with
-        _MockTradeCopyTradingRepositoryBase,
         _MockTradeCopyTradingRepositoryConfigurationMethods,
         _MockTradeCopyTradingRepositoryLifecycleMethods,
         _MockTradeCopyTradingRepositoryProviderDiscoveryMethods {
-  const MockTradeCopyTradingRepository();
+  const MockTradeCopyTradingRepository({super.simulateError, super.loadDelay});
 }

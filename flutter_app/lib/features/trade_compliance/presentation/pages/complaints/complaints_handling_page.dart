@@ -53,9 +53,7 @@ class _ComplaintsHandlingPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getComplaintsHandling();
+    final async = ref.watch(tradeComplaintsHandlingProvider);
     return VitTradeHubScaffold(
       title: 'Complaints Handling',
       subtitle: 'FCA Regulated Process',
@@ -68,103 +66,115 @@ class _ComplaintsHandlingPageState
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
-            title: 'Complaint process review',
-            message:
-                'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
-            contractId: 'complaints-handling-review',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeComplaintsHandlingProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Complaint process',
-          statusPill: const VitStatusPill(
-            label: 'Regulated process',
-            status: VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Open cases',
-              value: '${snapshot.complaints.length}',
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Complaint process review',
+              message:
+                  'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
+              contractId: 'complaints-handling-review',
             ),
-            VitTradeComplianceItem(
-              label: 'Response SLA',
-              value: '${snapshot.averageResolutionDays} days avg',
-            ),
-          ],
-        ),
-        const VitTradeSection(
-          title: 'Rights',
-          child: VitTradeComplianceHero(
-            title: 'Your Rights',
-            description:
-                'You have the right to complain. We will investigate fairly '
-                'and respond within 8 weeks. If dissatisfied, you can refer '
-                'to the Financial Ombudsman Service.',
-            icon: Icons.shield_outlined,
-            accentColor: _complaintsPrimary,
           ),
-        ),
-        VitTradeSection(
-          title: 'Complaints',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _StatsRow(snapshot: snapshot),
-              const _SubmitComplaintButton(),
-              VitCard(
-                variant: VitCardVariant.inner,
-                density: VitDensity.compact,
-                child: VitTabBar(
-                  variant: VitTabBarVariant.underline,
-                  activeKey: _tab.name,
-                  tabs: [
-                    VitTabItem(
-                      key: _ComplaintsTab.overview.name,
-                      label: 'Overview',
-                      widgetKey: ComplaintsHandlingPage.tabKey(
-                        _ComplaintsTab.overview.name,
-                      ),
-                    ),
-                    VitTabItem(
-                      key: _ComplaintsTab.myComplaints.name,
-                      label: 'My Complaints',
-                      widgetKey: ComplaintsHandlingPage.tabKey(
-                        _ComplaintsTab.myComplaints.name,
-                      ),
-                    ),
-                    VitTabItem(
-                      key: _ComplaintsTab.process.name,
-                      label: 'Process',
-                      widgetKey: ComplaintsHandlingPage.tabKey(
-                        _ComplaintsTab.process.name,
-                      ),
-                    ),
-                  ],
-                  onChanged: (key) =>
-                      setState(() => _tab = _ComplaintsTab.values.byName(key)),
-                ),
+          VitTradeComplianceSection(
+            title: 'Complaint process',
+            statusPill: const VitStatusPill(
+              label: 'Regulated process',
+              status: VitStatusPillStatus.warning,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Open cases',
+                value: '${snapshot.complaints.length}',
               ),
-              VitPageSection(
-                density: VitDensity.compact,
-                children: [
-                  if (_tab == _ComplaintsTab.overview)
-                    _OverviewContent(snapshot: snapshot),
-                  if (_tab == _ComplaintsTab.myComplaints)
-                    _MyComplaintsContent(complaints: snapshot.complaints),
-                  if (_tab == _ComplaintsTab.process)
-                    _ProcessContent(snapshot: snapshot),
-                ],
+              VitTradeComplianceItem(
+                label: 'Response SLA',
+                value: '${snapshot.averageResolutionDays} days avg',
               ),
             ],
           ),
-        ),
-      ],
+          const VitTradeSection(
+            title: 'Rights',
+            child: VitTradeComplianceHero(
+              title: 'Your Rights',
+              description:
+                  'You have the right to complain. We will investigate fairly '
+                  'and respond within 8 weeks. If dissatisfied, you can refer '
+                  'to the Financial Ombudsman Service.',
+              icon: Icons.shield_outlined,
+              accentColor: _complaintsPrimary,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Complaints',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _StatsRow(snapshot: snapshot),
+                const _SubmitComplaintButton(),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  density: VitDensity.compact,
+                  child: VitTabBar(
+                    variant: VitTabBarVariant.underline,
+                    activeKey: _tab.name,
+                    tabs: [
+                      VitTabItem(
+                        key: _ComplaintsTab.overview.name,
+                        label: 'Overview',
+                        widgetKey: ComplaintsHandlingPage.tabKey(
+                          _ComplaintsTab.overview.name,
+                        ),
+                      ),
+                      VitTabItem(
+                        key: _ComplaintsTab.myComplaints.name,
+                        label: 'My Complaints',
+                        widgetKey: ComplaintsHandlingPage.tabKey(
+                          _ComplaintsTab.myComplaints.name,
+                        ),
+                      ),
+                      VitTabItem(
+                        key: _ComplaintsTab.process.name,
+                        label: 'Process',
+                        widgetKey: ComplaintsHandlingPage.tabKey(
+                          _ComplaintsTab.process.name,
+                        ),
+                      ),
+                    ],
+                    onChanged: (key) => setState(
+                      () => _tab = _ComplaintsTab.values.byName(key),
+                    ),
+                  ),
+                ),
+                VitPageSection(
+                  density: VitDensity.compact,
+                  children: [
+                    if (_tab == _ComplaintsTab.overview)
+                      _OverviewContent(snapshot: snapshot),
+                    if (_tab == _ComplaintsTab.myComplaints)
+                      _MyComplaintsContent(complaints: snapshot.complaints),
+                    if (_tab == _ComplaintsTab.process)
+                      _ProcessContent(snapshot: snapshot),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

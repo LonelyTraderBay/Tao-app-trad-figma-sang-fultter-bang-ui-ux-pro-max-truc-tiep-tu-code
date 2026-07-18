@@ -3,119 +3,121 @@ import 'package:vit_trade_flutter/features/trade_terminal/data/trade_terminal_re
 import 'package:vit_trade_flutter/features/trade_terminal/presentation/controllers/trade_controller_models.dart';
 
 void main() {
-  test('Trade risk management controller owns oco/position-size intents', () {
-    final repository = const MockTradeTerminalRepository();
-    final riskController = TradeRiskManagementController(
-      repository: repository,
-      state: TradeRiskManagementViewState(
-        snapshot: repository.getRiskManagement(),
-      ),
-    );
-    expect(
-      riskController.ocoValidationMessage(
-        const TradeOcoOrderDraft(
-          symbol: 'BTC/USDT',
-          side: TradeOrderSide.buy,
-          quantity: .015,
-          limitPrice: 69000,
-          takeProfitPrice: 72000,
-          stopPrice: 66000,
+  test(
+    'Trade risk management controller owns oco/position-size intents',
+    () async {
+      final repository = const MockTradeTerminalRepository(
+        loadDelay: Duration.zero,
+      );
+      final riskController = TradeRiskManagementController(
+        repository: repository,
+        state: TradeRiskManagementViewState(
+          snapshot: await repository.getRiskManagement(),
         ),
-      ),
-      isNull,
-    );
-    expect(
-      riskController
-          .submitOcoOrder(
-            const TradeOcoOrderDraft(
-              symbol: 'BTC/USDT',
-              side: TradeOrderSide.buy,
-              quantity: .015,
-              limitPrice: 69000,
-              takeProfitPrice: 72000,
-              stopPrice: 66000,
-            ),
-          )
-          .status,
-      isNotEmpty,
-    );
-    expect(
-      riskController
-          .calculatePositionSize(
-            const TradePositionSizeRequest(
-              accountBalance: 50000,
-              riskPct: 1,
-              entryPrice: 69000,
-              stopPrice: 67500,
-            ),
-          )
-          .suggestedAmount,
-      greaterThan(0),
-    );
-    expect(
-      riskController.positionSizeValidationMessage(
-        const TradePositionSizeRequest(
-          accountBalance: 50000,
-          riskPct: 1,
-          entryPrice: 69000,
-          stopPrice: 67500,
+      );
+      expect(
+        riskController.ocoValidationMessage(
+          const TradeOcoOrderDraft(
+            symbol: 'BTC/USDT',
+            side: TradeOrderSide.buy,
+            quantity: .015,
+            limitPrice: 69000,
+            takeProfitPrice: 72000,
+            stopPrice: 66000,
+          ),
         ),
-      ),
-      isNull,
-    );
-  });
+        isNull,
+      );
+      expect(
+        (await riskController.submitOcoOrder(
+          const TradeOcoOrderDraft(
+            symbol: 'BTC/USDT',
+            side: TradeOrderSide.buy,
+            quantity: .015,
+            limitPrice: 69000,
+            takeProfitPrice: 72000,
+            stopPrice: 66000,
+          ),
+        )).status,
+        isNotEmpty,
+      );
+      expect(
+        (await riskController.calculatePositionSize(
+          const TradePositionSizeRequest(
+            accountBalance: 50000,
+            riskPct: 1,
+            entryPrice: 69000,
+            stopPrice: 67500,
+          ),
+        )).suggestedAmount,
+        greaterThan(0),
+      );
+      expect(
+        riskController.positionSizeValidationMessage(
+          const TradePositionSizeRequest(
+            accountBalance: 50000,
+            riskPct: 1,
+            entryPrice: 69000,
+            stopPrice: 67500,
+          ),
+        ),
+        isNull,
+      );
+    },
+  );
 
-  test('Trade advanced tools controller owns action and amendment intents', () {
-    final repository = const MockTradeTerminalRepository();
-    final controller = TradeAdvancedToolsController(
-      repository: repository,
-      state: TradeAdvancedToolsViewState(
-        snapshot: repository.getAdvancedTools(),
-      ),
-    );
-    expect(
-      controller.actionValidationMessage(
-        const TradeAdvancedToolActionRequest(
-          toolId: 'bulk',
-          action: 'cancel',
-          orderIds: ['ord001', 'ord002'],
+  test(
+    'Trade advanced tools controller owns action and amendment intents',
+    () async {
+      final repository = const MockTradeTerminalRepository(
+        loadDelay: Duration.zero,
+      );
+      final controller = TradeAdvancedToolsController(
+        repository: repository,
+        state: TradeAdvancedToolsViewState(
+          snapshot: await repository.getAdvancedTools(),
         ),
-      ),
-      isNull,
-    );
-    expect(
-      controller
-          .submitAction(
-            const TradeAdvancedToolActionRequest(
-              toolId: 'bulk',
-              action: 'cancel',
-              orderIds: ['ord001', 'ord002'],
-            ),
-          )
-          .affectedCount,
-      2,
-    );
-    expect(
-      controller
-          .amendOrder(
-            const TradeOrderAmendmentRequest(
-              orderId: 'ord001',
-              newPrice: 69000,
-              newAmount: .02,
-            ),
-          )
-          .queuePositionPreserved,
-      isTrue,
-    );
-    expect(
-      controller.amendmentValidationMessage(
-        const TradeOrderAmendmentRequest(
-          orderId: 'ord001',
-          newPrice: 69000,
-          newAmount: .02,
+      );
+      expect(
+        controller.actionValidationMessage(
+          const TradeAdvancedToolActionRequest(
+            toolId: 'bulk',
+            action: 'cancel',
+            orderIds: ['ord001', 'ord002'],
+          ),
         ),
-      ),
-      isNull,
-    );
-  });
+        isNull,
+      );
+      expect(
+        (await controller.submitAction(
+          const TradeAdvancedToolActionRequest(
+            toolId: 'bulk',
+            action: 'cancel',
+            orderIds: ['ord001', 'ord002'],
+          ),
+        )).affectedCount,
+        2,
+      );
+      expect(
+        (await controller.amendOrder(
+          const TradeOrderAmendmentRequest(
+            orderId: 'ord001',
+            newPrice: 69000,
+            newAmount: .02,
+          ),
+        )).queuePositionPreserved,
+        isTrue,
+      );
+      expect(
+        controller.amendmentValidationMessage(
+          const TradeOrderAmendmentRequest(
+            orderId: 'ord001',
+            newPrice: 69000,
+            newAmount: .02,
+          ),
+        ),
+        isNull,
+      );
+    },
+  );
 }

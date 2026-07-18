@@ -28,9 +28,7 @@ class _LiveMarketDataAnalyticsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getLiveMarketDataAnalytics();
+    final async = ref.watch(tradeLiveMarketDataAnalyticsProvider);
 
     return VitTradeHubScaffold(
       title: 'Phân tích trực tiếp',
@@ -45,21 +43,33 @@ class _LiveMarketDataAnalyticsPageState
         fallbackPath: AppRoutePaths.tradeMargin,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Xem lại rủi ro dữ liệu trực tiếp',
-          message:
-              'Luồng realtime có thể trễ hoặc ngắt khi biến động mạnh. Xác nhận thanh khoản, giới hạn và rủi ro khớp lệnh trước khi giao dịch.',
-        ),
-        LiveMarketPairCard(snapshot: snapshot),
-        LiveMarketUnderlineTabs(
-          activeId: _tab,
-          onChanged: (id) => setState(() => _tab = id),
-          keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
-        ),
-        LiveMarketTabContent(activeTab: _tab, snapshot: snapshot),
-      ],
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeLiveMarketDataAnalyticsProvider),
+          ),
+        ],
+        data: (snapshot) => [
+          const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Xem lại rủi ro dữ liệu trực tiếp',
+            message:
+                'Luồng realtime có thể trễ hoặc ngắt khi biến động mạnh. Xác nhận thanh khoản, giới hạn và rủi ro khớp lệnh trước khi giao dịch.',
+          ),
+          LiveMarketPairCard(snapshot: snapshot),
+          LiveMarketUnderlineTabs(
+            activeId: _tab,
+            onChanged: (id) => setState(() => _tab = id),
+            keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
+          ),
+          LiveMarketTabContent(activeTab: _tab, snapshot: snapshot),
+        ],
+      ),
     );
   }
 }

@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-008 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketList();
+  test('SC-008 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketList();
 
     expect(snapshot.marketPairs, hasLength(10));
     expect(snapshot.watchlist, containsAll(['btcusdt', 'ethusdt', 'solusdt']));

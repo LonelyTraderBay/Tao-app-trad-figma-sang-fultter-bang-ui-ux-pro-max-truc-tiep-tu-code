@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-089 mock repository exposes market analytics BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getMarketDataAnalytics();
+  test('SC-089 mock repository exposes market analytics BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getMarketDataAnalytics();
 
     expect(snapshot.selectedPair, 'BTC/USDT');
     expect(snapshot.markPrice, 67543.21);

@@ -32,11 +32,11 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-107 mock repository exposes ex-post costs BE draft', () {
-    final repo = const MockTradeRegulatoryRepository();
-    final snapshot = repo.getExPostCostsReport();
+  test('SC-107 mock repository exposes ex-post costs BE draft', () async {
+    final repo = const MockTradeRegulatoryRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getExPostCostsReport();
     final report = snapshot.reportForYear(2025);
-    final export = repo.createExPostCostsReportExport(year: 2025);
+    final export = await repo.createExPostCostsReportExport(year: 2025);
 
     expect(report.totalActual, 455);
     expect(report.totalEstimated, 450);

@@ -30,42 +30,46 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-116 mock repository exposes inspection readiness BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getRegulatoryInspectionReady();
+  test(
+    'SC-116 mock repository exposes inspection readiness BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getRegulatoryInspectionReady();
 
-    expect(snapshot.complianceScore, 97);
-    expect(snapshot.stats.map((stat) => stat.value), [
-      '10',
-      '3.4k',
-      '45k',
-      '7yr',
-    ]);
-    expect(snapshot.frameworks.map((framework) => framework.name), [
-      'MiFID II',
-      'PRIIPs Regulation',
-      'FCA CASS 7',
-      'FCA DISP',
-    ]);
-    expect(snapshot.documents, hasLength(10));
-    expect(snapshot.portalCta, 'Inspector Portal Access');
-    expect(snapshot.reportCta, 'Download Full Compliance Report (PDF)');
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/trade/trade-copy-trading-regulatory-inspection-ready',
-    );
-    expect(snapshot.actionDraft, contains('POST /copy-trading/follow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.complianceScore, 97);
+      expect(snapshot.stats.map((stat) => stat.value), [
+        '10',
+        '3.4k',
+        '45k',
+        '7yr',
+      ]);
+      expect(snapshot.frameworks.map((framework) => framework.name), [
+        'MiFID II',
+        'PRIIPs Regulation',
+        'FCA CASS 7',
+        'FCA DISP',
+      ]);
+      expect(snapshot.documents, hasLength(10));
+      expect(snapshot.portalCta, 'Inspector Portal Access');
+      expect(snapshot.reportCta, 'Download Full Compliance Report (PDF)');
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-copy-trading-regulatory-inspection-ready',
+      );
+      expect(snapshot.actionDraft, contains('POST /copy-trading/follow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-116 renders inspection readiness in Trade shell', (
     tester,

@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-129 mock repository exposes drawdown analyzer BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotDrawdownAnalyzer();
+  test('SC-129 mock repository exposes drawdown analyzer BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotDrawdownAnalyzer();
 
     expect(snapshot.summary.maxDrawdownPct, -10.3);
     expect(snapshot.summary.avgDrawdownPct, -5.2);

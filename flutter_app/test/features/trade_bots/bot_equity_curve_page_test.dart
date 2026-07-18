@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-130 mock repository exposes equity curve BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotEquityCurve();
+  test('SC-130 mock repository exposes equity curve BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotEquityCurve();
 
     expect(snapshot.summary.botReturnPct, 74.5);
     expect(snapshot.summary.buyHoldReturnPct, 62.1);

@@ -12,9 +12,11 @@ import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository
 /// file complements that coverage by pinning concrete, hand-verified
 /// values from
 /// `lib/features/trade_copy/data/fixtures/trade_copy_lifecycle_repository_*.dart`
-/// so a silent fixture edit shows up as a failing assertion. Every method
-/// here is a plain synchronous getter/action — there is no `loadDelay`/
-/// `Future` on this mock (unlike some other feature mocks under ADR-001).
+/// so a silent fixture edit shows up as a failing assertion.
+///
+/// GD4-F3: every method is `Future<T>` — mock simulates network latency via
+/// `loadDelay`; tests pass `Duration.zero` (see
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md).
 ///
 /// Split by behavior group (mirrors the production repository's own
 /// provider-discovery / configuration / lifecycle mixin split): this file
@@ -30,13 +32,13 @@ import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository
 /// `test/quality/high_risk_state_primitives_guardrail_test.dart`'s
 /// allowlist expectations.
 void main() {
-  const repository = MockTradeCopyTradingRepository();
+  const repository = MockTradeCopyTradingRepository(loadDelay: Duration.zero);
 
   group('MockTradeCopyTradingRepository lifecycle data smoke test', () {
     test(
       'getCopyTrading pins the tradeCopy high-risk contract id and totals',
-      () {
-        final snapshot = repository.getCopyTrading();
+      () async {
+        final snapshot = await repository.getCopyTrading();
 
         expect(snapshot.highRiskContractId, HighRiskFlowContractIds.tradeCopy);
         expect(snapshot.highRiskContractId, 'trade_copy');
@@ -48,8 +50,8 @@ void main() {
       },
     );
 
-    test('getCopyCardDemo pins the metrics and variant/issue counts', () {
-      final snapshot = repository.getCopyCardDemo();
+    test('getCopyCardDemo pins the metrics and variant/issue counts', () async {
+      final snapshot = await repository.getCopyCardDemo();
 
       expect(snapshot.endpoint, '/api/mobile/demo/demo-copy-card');
       expect(snapshot.metrics.traders, 5);
@@ -60,19 +62,22 @@ void main() {
       expect(snapshot.issues, hasLength(7));
     });
 
-    test('getCopyEducation pins the tab/step/mode-guide/concept counts', () {
-      final snapshot = repository.getCopyEducation();
+    test(
+      'getCopyEducation pins the tab/step/mode-guide/concept counts',
+      () async {
+        final snapshot = await repository.getCopyEducation();
 
-      expect(snapshot.tabs, hasLength(5));
-      expect(snapshot.defaultTab, 'how-it-works');
-      expect(snapshot.steps, hasLength(4));
-      expect(snapshot.copyModes, hasLength(3));
-      expect(snapshot.copyModes.first.title, 'Mirror Copy');
-      expect(snapshot.concepts, hasLength(4));
-    });
+        expect(snapshot.tabs, hasLength(5));
+        expect(snapshot.defaultTab, 'how-it-works');
+        expect(snapshot.steps, hasLength(4));
+        expect(snapshot.copyModes, hasLength(3));
+        expect(snapshot.copyModes.first.title, 'Mirror Copy');
+        expect(snapshot.concepts, hasLength(4));
+      },
+    );
 
-    test('getActiveCopies pins the portfolio totals and copy count', () {
-      final snapshot = repository.getActiveCopies();
+    test('getActiveCopies pins the portfolio totals and copy count', () async {
+      final snapshot = await repository.getActiveCopies();
 
       expect(snapshot.portfolio.totalCapital, 10000);
       expect(snapshot.portfolio.totalValue, 10500);
@@ -87,8 +92,8 @@ void main() {
 
     test(
       'getCopySettings pins the default copy ratio and stop/take-profit',
-      () {
-        final snapshot = repository.getCopySettings();
+      () async {
+        final snapshot = await repository.getCopySettings();
 
         expect(snapshot.settings.defaultCopyRatio, 50);
         expect(snapshot.settings.defaultStopLoss, 10);
@@ -98,18 +103,21 @@ void main() {
       },
     );
 
-    test('getCopyNotifications pins the unread count and tab badge shape', () {
-      final snapshot = repository.getCopyNotifications();
+    test(
+      'getCopyNotifications pins the unread count and tab badge shape',
+      () async {
+        final snapshot = await repository.getCopyNotifications();
 
-      expect(snapshot.notifications, hasLength(7));
-      expect(snapshot.tabs, hasLength(6));
-      expect(snapshot.tabs.first.id, 'all');
-      expect(snapshot.tabs.first.badge, 3);
-      expect(snapshot.notifications.where((n) => !n.read), hasLength(3));
-    });
+        expect(snapshot.notifications, hasLength(7));
+        expect(snapshot.tabs, hasLength(6));
+        expect(snapshot.tabs.first.id, 'all');
+        expect(snapshot.tabs.first.badge, 3);
+        expect(snapshot.notifications.where((n) => !n.read), hasLength(3));
+      },
+    );
 
-    test('getSafetyEducation pins the scam/red-flag/tier counts', () {
-      final snapshot = repository.getSafetyEducation();
+    test('getSafetyEducation pins the scam/red-flag/tier counts', () async {
+      final snapshot = await repository.getSafetyEducation();
 
       expect(snapshot.tabs, hasLength(4));
       expect(snapshot.defaultTabId, 'scams');
@@ -121,8 +129,8 @@ void main() {
 
     test(
       'getDisputeResolution pins the active/history case counts and badges',
-      () {
-        final snapshot = repository.getDisputeResolution();
+      () async {
+        final snapshot = await repository.getDisputeResolution();
 
         expect(snapshot.tabs, hasLength(3));
         expect(snapshot.tabs[1].badgeCount, 1);
@@ -136,31 +144,37 @@ void main() {
       },
     );
 
-    test('getCopySafetyCenter pins the verification-tier and tool counts', () {
-      final snapshot = repository.getCopySafetyCenter();
+    test(
+      'getCopySafetyCenter pins the verification-tier and tool counts',
+      () async {
+        final snapshot = await repository.getCopySafetyCenter();
 
-      expect(snapshot.tabs, hasLength(5));
-      expect(snapshot.defaultTabId, 'verification');
-      expect(snapshot.verificationTiers, hasLength(3));
-      expect(snapshot.trustMetrics, hasLength(4));
-      expect(snapshot.prohibitedBehaviors, hasLength(7));
-      expect(snapshot.followerResponsibilities, hasLength(6));
-      expect(snapshot.reportingSteps, hasLength(4));
-      expect(snapshot.safetyTools, hasLength(3));
-      expect(snapshot.enforcementActions, hasLength(3));
-    });
+        expect(snapshot.tabs, hasLength(5));
+        expect(snapshot.defaultTabId, 'verification');
+        expect(snapshot.verificationTiers, hasLength(3));
+        expect(snapshot.trustMetrics, hasLength(4));
+        expect(snapshot.prohibitedBehaviors, hasLength(7));
+        expect(snapshot.followerResponsibilities, hasLength(6));
+        expect(snapshot.reportingSteps, hasLength(4));
+        expect(snapshot.safetyTools, hasLength(3));
+        expect(snapshot.enforcementActions, hasLength(3));
+      },
+    );
 
-    test('patchCopySettings echoes the saved settings with status saved', () {
-      final snapshot = repository.getCopySettings();
-      final updated = snapshot.settings.copyWith(defaultCopyRatio: 60);
-      final result = repository.patchCopySettings(updated);
+    test(
+      'patchCopySettings echoes the saved settings with status saved',
+      () async {
+        final snapshot = await repository.getCopySettings();
+        final updated = snapshot.settings.copyWith(defaultCopyRatio: 60);
+        final result = await repository.patchCopySettings(updated);
 
-      expect(result.status, 'saved');
-      expect(result.settings.defaultCopyRatio, 60);
-    });
+        expect(result.status, 'saved');
+        expect(result.settings.defaultCopyRatio, 60);
+      },
+    );
 
-    test('submitDisputeComplaint returns the fixed demo case id', () {
-      final result = repository.submitDisputeComplaint(
+    test('submitDisputeComplaint returns the fixed demo case id', () async {
+      final result = await repository.submitDisputeComplaint(
         const TradeDisputeComplaintDraft(
           complaintType: 'execution_issue',
           providerId: 'trader-2',
@@ -174,14 +188,17 @@ void main() {
       expect(result.message, 'Complaint submitted successfully');
     });
 
-    test('submitCopyTradingAction echoes the requested provider/action', () {
-      final result = repository.submitCopyTradingAction(
-        const TradeCopyActionRequest(providerId: 'ct001', action: 'follow'),
-      );
+    test(
+      'submitCopyTradingAction echoes the requested provider/action',
+      () async {
+        final result = await repository.submitCopyTradingAction(
+          const TradeCopyActionRequest(providerId: 'ct001', action: 'follow'),
+        );
 
-      expect(result.providerId, 'ct001');
-      expect(result.action, 'follow');
-      expect(result.status, 'accepted');
-    });
+        expect(result.providerId, 'ct001');
+        expect(result.action, 'follow');
+        expect(result.status, 'accepted');
+      },
+    );
   });
 }

@@ -32,10 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-066 mock repository exposes active copies BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getActiveCopies();
-    final result = repo.submitCopyTradingAction(
+  test('SC-066 mock repository exposes active copies BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getActiveCopies();
+    final result = await repo.submitCopyTradingAction(
       const TradeCopyActionRequest(providerId: 'provider001', action: 'stop'),
     );
 

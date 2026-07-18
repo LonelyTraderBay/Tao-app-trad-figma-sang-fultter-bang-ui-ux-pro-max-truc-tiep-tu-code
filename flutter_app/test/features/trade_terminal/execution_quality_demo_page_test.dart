@@ -29,17 +29,17 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-061 mock repository exposes execution quality BE draft', () {
-    final repo = const MockTradeTerminalRepository();
-    final snapshot = repo.getExecutionQuality();
-    final settings = repo.updateSlippageSettings(
+  test('SC-061 mock repository exposes execution quality BE draft', () async {
+    final repo = const MockTradeTerminalRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getExecutionQuality();
+    final settings = await repo.updateSlippageSettings(
       const TradeSlippageSettings(
         tolerancePct: 1,
         rejectOnExceed: true,
         partialFillAllowed: false,
       ),
     );
-    final amended = repo.amendOrder(
+    final amended = await repo.amendOrder(
       const TradeOrderAmendmentRequest(
         orderId: 'ORD-2026-03-11-B9G4E3',
         newPrice: 68600,

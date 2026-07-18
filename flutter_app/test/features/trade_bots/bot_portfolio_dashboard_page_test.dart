@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-128 mock repository exposes portfolio dashboard BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotPortfolioDashboard();
+  test('SC-128 mock repository exposes portfolio dashboard BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotPortfolioDashboard();
 
     expect(snapshot.summary.totalEquity, 3245);
     expect(snapshot.summary.totalPnl, 745);

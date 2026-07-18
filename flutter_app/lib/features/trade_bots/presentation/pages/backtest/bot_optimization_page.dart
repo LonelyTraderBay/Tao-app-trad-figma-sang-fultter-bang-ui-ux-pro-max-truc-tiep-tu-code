@@ -43,9 +43,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotOptimization();
+    final snapshotAsync = ref.watch(tradeBotOptimizationProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     const stickyFooterHeight =
         TradeSpacingTokens.tradeBotSheetActionHeight + AppSpacing.x3;
@@ -69,50 +67,61 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
             fallbackPath: AppRoutePaths.tradeBots,
             mode: BackNavigationMode.historyThenFallback,
           ),
-          children: [
-            if (_lastResult != null) _QueuedCard(result: _lastResult!),
-            VitBotSubpageHero(
-              primaryLabel: 'Mục tiêu',
-              primaryValue: _selectedTarget.toUpperCase(),
-              secondaryLabel: 'Kết quả',
-              secondaryValue: _lastResult == null ? '—' : 'Sẵn sàng',
-              secondaryColor: _lastResult == null
-                  ? AppColors.text3
-                  : _optimizationPrimary,
-            ),
-            const VitTradeSection(title: 'Overview', child: _IntroCard()),
-            VitTradeSection(
-              title: 'Optimization Target',
-              child: _TargetCard(
-                targets: snapshot.targets,
-                selectedId: _selectedTarget,
-                onChanged: (id) => setState(() => _selectedTarget = id),
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được dữ liệu tối ưu hóa',
+                message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(tradeBotOptimizationProvider),
               ),
-            ),
-            VitTradeSection(
-              title: 'Parameter Ranges',
-              child: _RangeCard(
-                ranges: snapshot.parameterRanges,
-                gridCount: _gridCount,
-                gridRange: _gridRange,
-                onGridCountChanged: (value) =>
-                    setState(() => _gridCount = value),
-                onGridRangeChanged: (value) =>
-                    setState(() => _gridRange = value),
+            ],
+            data: (snapshot) => [
+              if (_lastResult != null) _QueuedCard(result: _lastResult!),
+              VitBotSubpageHero(
+                primaryLabel: 'Mục tiêu',
+                primaryValue: _selectedTarget.toUpperCase(),
+                secondaryLabel: 'Kết quả',
+                secondaryValue: _lastResult == null ? '—' : 'Sẵn sàng',
+                secondaryColor: _lastResult == null
+                    ? AppColors.text3
+                    : _optimizationPrimary,
               ),
-            ),
-            VitTradeSection(
-              title: 'How it works',
-              child: _HowItWorksCard(steps: snapshot.steps),
-            ),
-            const VitBotRiskReviewFooter(
-              title: 'Optimization review required',
-              message:
-                  'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
-              contractId: 'bot-optimization-review',
-              statusLabel: 'Queued before apply',
-            ),
-          ],
+              const VitTradeSection(title: 'Overview', child: _IntroCard()),
+              VitTradeSection(
+                title: 'Optimization Target',
+                child: _TargetCard(
+                  targets: snapshot.targets,
+                  selectedId: _selectedTarget,
+                  onChanged: (id) => setState(() => _selectedTarget = id),
+                ),
+              ),
+              VitTradeSection(
+                title: 'Parameter Ranges',
+                child: _RangeCard(
+                  ranges: snapshot.parameterRanges,
+                  gridCount: _gridCount,
+                  gridRange: _gridRange,
+                  onGridCountChanged: (value) =>
+                      setState(() => _gridCount = value),
+                  onGridRangeChanged: (value) =>
+                      setState(() => _gridRange = value),
+                ),
+              ),
+              VitTradeSection(
+                title: 'How it works',
+                child: _HowItWorksCard(steps: snapshot.steps),
+              ),
+              const VitBotRiskReviewFooter(
+                title: 'Optimization review required',
+                message:
+                    'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
+                contractId: 'bot-optimization-review',
+                statusLabel: 'Queued before apply',
+              ),
+            ],
+          ),
         ),
         Positioned(
           left: 0,

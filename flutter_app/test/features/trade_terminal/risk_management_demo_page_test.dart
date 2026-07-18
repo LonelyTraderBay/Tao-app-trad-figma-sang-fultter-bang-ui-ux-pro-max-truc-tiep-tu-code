@@ -31,10 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-060 mock repository exposes risk management BE draft', () {
-    final repo = const MockTradeTerminalRepository();
-    final snapshot = repo.getRiskManagement();
-    final oco = repo.submitOcoOrder(
+  test('SC-060 mock repository exposes risk management BE draft', () async {
+    final repo = const MockTradeTerminalRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getRiskManagement();
+    final oco = await repo.submitOcoOrder(
       const TradeOcoOrderDraft(
         symbol: 'BTC/USDT',
         side: TradeOrderSide.buy,
@@ -44,7 +44,7 @@ void main() {
         stopPrice: 66000,
       ),
     );
-    final sizing = repo.calculatePositionSize(
+    final sizing = await repo.calculatePositionSize(
       const TradePositionSizeRequest(
         accountBalance: 50000,
         riskPct: 1,

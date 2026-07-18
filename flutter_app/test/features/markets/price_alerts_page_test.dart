@@ -34,8 +34,10 @@ void main() {
     return router;
   }
 
-  test('SC-014 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getPriceAlerts();
+  test('SC-014 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getPriceAlerts();
 
     expect(snapshot.priceAlerts, hasLength(4));
     expect(snapshot.priceAlerts.where((alert) => alert.isActive), hasLength(3));

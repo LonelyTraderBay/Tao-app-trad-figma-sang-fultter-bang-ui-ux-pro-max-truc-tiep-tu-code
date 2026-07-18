@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-053 mock repository exposes position dashboard BE draft', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getTradePositions();
+  test('SC-053 mock repository exposes position dashboard BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getTradePositions();
 
     expect(snapshot.trade.pair.symbol, 'BTC/USDT');
     expect(snapshot.positions, hasLength(6));

@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-017 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getMarketCalendar();
+  test('SC-017 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarketCalendar();
 
     expect(snapshot.events, hasLength(12));
     expect(snapshot.stats.upcoming, 12);
@@ -61,7 +61,7 @@ void main() {
       ]),
     );
 
-    final unlocks = repo.getMarketCalendar(
+    final unlocks = await repo.getMarketCalendar(
       query: const MarketCalendarQuery(type: MarketCalendarEventType.unlock),
     );
     expect(unlocks.events.map((event) => event.title), [

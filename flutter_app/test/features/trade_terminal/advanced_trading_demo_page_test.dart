@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-088 mock repository exposes advanced demo BE draft', () {
-    final snapshot = const MockTradeTerminalRepository()
-        .getAdvancedTradingDemo();
+  test('SC-088 mock repository exposes advanced demo BE draft', () async {
+    final snapshot = await const MockTradeTerminalRepository(
+      loadDelay: Duration.zero,
+    ).getAdvancedTradingDemo();
 
     expect(snapshot.position.pair, 'BTC/USDT');
     expect(snapshot.position.currentPnl, 1250);

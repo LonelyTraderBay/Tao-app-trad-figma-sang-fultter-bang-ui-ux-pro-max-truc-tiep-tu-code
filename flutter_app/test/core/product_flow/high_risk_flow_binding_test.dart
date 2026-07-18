@@ -114,33 +114,33 @@ void main() {
   test(
     'mock repository snapshots expose high-risk contract metadata',
     () async {
-      const trade = MockTradeTerminalRepository();
+      const trade = MockTradeTerminalRepository(loadDelay: Duration.zero);
       expect(
-        trade.getTrade().highRiskContractId,
+        (await trade.getTrade()).highRiskContractId,
         HighRiskFlowContractIds.tradeSpotOrder,
       );
       expect(
-        trade.getOrderReceipt().highRiskContractId,
+        (await trade.getOrderReceipt()).highRiskContractId,
         HighRiskFlowContractIds.tradeSpotOrder,
       );
       expect(
-        trade.getFutures().highRiskContractId,
+        (await trade.getFutures()).highRiskContractId,
         HighRiskFlowContractIds.tradeMarginFutures,
       );
       expect(
-        trade.getMarginTrading().highRiskContractId,
+        (await trade.getMarginTrading()).highRiskContractId,
         HighRiskFlowContractIds.tradeMarginFutures,
       );
 
-      const bots = MockTradeBotsRepository();
+      const bots = MockTradeBotsRepository(loadDelay: Duration.zero);
       expect(
-        bots.getTradingBots().highRiskContractId,
+        (await bots.getTradingBots()).highRiskContractId,
         HighRiskFlowContractIds.tradeBots,
       );
 
-      const copy = MockTradeCopyTradingRepository();
+      const copy = MockTradeCopyTradingRepository(loadDelay: Duration.zero);
       expect(
-        copy.getCopyTrading().highRiskContractId,
+        (await copy.getCopyTrading()).highRiskContractId,
         HighRiskFlowContractIds.tradeCopy,
       );
 

@@ -33,9 +33,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-044 mock repository exposes the pair detail BE draft', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getPairDetail('btcusdt');
+  test('SC-044 mock repository exposes the pair detail BE draft', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getPairDetail('btcusdt');
 
     expect(snapshot.pair.symbol, 'BTC/USDT');
     expect(snapshot.marketPairs, isNotEmpty);

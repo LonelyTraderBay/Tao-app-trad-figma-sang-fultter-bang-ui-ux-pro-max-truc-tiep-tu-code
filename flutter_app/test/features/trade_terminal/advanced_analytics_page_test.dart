@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-092 mock repository exposes advanced analytics BE draft', () {
-    final snapshot = const MockTradeTerminalRepository().getAdvancedAnalytics();
+  test('SC-092 mock repository exposes advanced analytics BE draft', () async {
+    final snapshot = await const MockTradeTerminalRepository(
+      loadDelay: Duration.zero,
+    ).getAdvancedAnalytics();
 
     expect(snapshot.defaultTab, 'ai');
     expect(snapshot.stats.map((item) => item.value), [
