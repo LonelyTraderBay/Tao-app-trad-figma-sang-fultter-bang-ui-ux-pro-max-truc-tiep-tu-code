@@ -416,6 +416,13 @@ jobs:
         working-directory: flutter_app
 
     steps:
+      # Tên repo dài + path feature sâu vượt MAX_PATH 260 ký tự của git trên
+      # Windows — checkout chết "Filename too long" nếu không bật longpaths
+      # TRƯỚC bước checkout (bài học lần chạy đầu của job này).
+      - name: Enable git long paths (Windows MAX_PATH)
+        run: git config --system core.longpaths true
+        working-directory: ${{ github.workspace }}
+
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
