@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-029 mock repository exposes the breaking movers BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getBreaking();
+  test('SC-029 mock repository exposes the breaking movers BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getBreaking();
 
     expect(snapshot.movers, hasLength(12));
     expect(snapshot.movers.map((event) => event.id).take(3), [
@@ -60,7 +60,7 @@ void main() {
       ]),
     );
 
-    final crypto = repo.getBreaking(category: 'Live Crypto');
+    final crypto = await repo.getBreaking(category: 'Live Crypto');
     expect(crypto.movers.map((event) => event.category).toSet(), {
       'Live Crypto',
     });

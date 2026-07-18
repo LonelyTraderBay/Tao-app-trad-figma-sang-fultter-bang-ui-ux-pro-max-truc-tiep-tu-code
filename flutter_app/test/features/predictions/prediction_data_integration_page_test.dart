@@ -28,32 +28,35 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-043 mock repository exposes the data integration BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getDataIntegration();
+  test(
+    'SC-043 mock repository exposes the data integration BE draft',
+    () async {
+      final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+      final snapshot = await repo.getDataIntegration();
 
-    expect(snapshot.sources, hasLength(4));
-    expect(snapshot.apiKeys, hasLength(2));
-    expect(snapshot.webhooks, hasLength(2));
-    expect(snapshot.activeSources, 3);
-    expect(snapshot.averageReliability.toStringAsFixed(1), '99.5');
-    expect(snapshot.eventsResolved, 2807);
-    expect(snapshot.predictionEvents, isNotEmpty);
-    expect(snapshot.orders, hasLength(3));
-    expect(snapshot.receipts, hasLength(6));
-    expect(snapshot.rewards, isNotEmpty);
-    expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        PredictionScreenState.loading,
-        PredictionScreenState.empty,
-        PredictionScreenState.error,
-        PredictionScreenState.offline,
-        PredictionScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.sources, hasLength(4));
+      expect(snapshot.apiKeys, hasLength(2));
+      expect(snapshot.webhooks, hasLength(2));
+      expect(snapshot.activeSources, 3);
+      expect(snapshot.averageReliability.toStringAsFixed(1), '99.5');
+      expect(snapshot.eventsResolved, 2807);
+      expect(snapshot.predictionEvents, isNotEmpty);
+      expect(snapshot.orders, hasLength(3));
+      expect(snapshot.receipts, hasLength(6));
+      expect(snapshot.rewards, isNotEmpty);
+      expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          PredictionScreenState.loading,
+          PredictionScreenState.empty,
+          PredictionScreenState.error,
+          PredictionScreenState.offline,
+          PredictionScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-043 first viewport reaches configured source content', (
     tester,

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -59,7 +60,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pOrderBookProvider(_selectedAsset));
+    final snapshotAsync = ref.watch(p2pOrderBookProvider(_selectedAsset));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -73,67 +74,91 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
       semanticIdentifier: 'SC-273',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pOrderBookScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _AssetSelector(
-                          snapshot: snapshot,
-                          selectedAsset: _selectedAsset,
-                          onChanged: (asset) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedAsset = asset);
-                          },
-                        ),
-                        _MarketTicker(
-                          snapshot: snapshot,
-                          isRefreshing: _isRefreshing,
-                          onRefresh: _refresh,
-                        ),
-                        _DepthChartCard(snapshot: snapshot),
-                        _BestPriceCards(snapshot: snapshot),
-                        _OrderBookLists(snapshot: snapshot),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại thanh khoản sổ lệnh',
-                          message:
-                              'Tài sản, làm mới dữ liệu, biểu đồ độ sâu, giá bid/ask tốt nhất và rủi ro thanh khoản được xem lại trước khi khớp lệnh P2P.',
-                          contractId: 'p2p-order-book-review',
-                        ),
-                        Text(
-                          snapshot.contractNotes,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pOrderBookProvider(_selectedAsset)),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pOrderBookScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _AssetSelector(
+                            snapshot: snapshot,
+                            selectedAsset: _selectedAsset,
+                            onChanged: (asset) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selectedAsset = asset);
+                            },
                           ),
-                        ),
-                      ],
+                          _MarketTicker(
+                            snapshot: snapshot,
+                            isRefreshing: _isRefreshing,
+                            onRefresh: _refresh,
+                          ),
+                          _DepthChartCard(snapshot: snapshot),
+                          _BestPriceCards(snapshot: snapshot),
+                          _OrderBookLists(snapshot: snapshot),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Xem lại thanh khoản sổ lệnh',
+                            message:
+                                'Tài sản, làm mới dữ liệu, biểu đồ độ sâu, giá bid/ask tốt nhất và rủi ro thanh khoản được xem lại trước khi khớp lệnh P2P.',
+                            contractId: 'p2p-order-book-review',
+                          ),
+                          Text(
+                            snapshot.contractNotes,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

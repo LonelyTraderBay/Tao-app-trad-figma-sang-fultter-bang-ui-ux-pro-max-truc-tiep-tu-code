@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -47,7 +48,7 @@ class _P2PContributionHistoryPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pContributionHistoryProvider);
+    final snapshotAsync = ref.watch(p2pContributionHistoryProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -63,78 +64,101 @@ class _P2PContributionHistoryPageState
       semanticIdentifier: 'SC-242',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Lịch sử đóng góp',
-            subtitle: 'Bảo hiểm · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pInsurance),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pContributionScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _ContributionSummaryCard(snapshot: snapshot),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        VitCtaButton(
-                          key: P2PContributionHistoryPage.exportKey,
-                          variant: VitCtaButtonVariant.secondary,
-                          leading: const Icon(Icons.download_rounded),
-                          onPressed: () {
-                            HapticFeedback.selectionClick();
-                            setState(
-                              () => _feedback =
-                                  'Đã chuẩn bị báo cáo CSV lịch sử đóng góp',
-                            );
-                          },
-                          child: const Text('Xuất CSV'),
-                        ),
-                        if (_feedback != null) ...[
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pInsurance),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pContributionHistoryProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Lịch sử đóng góp',
+              subtitle: 'Bảo hiểm · P2P',
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pContributionScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _ContributionSummaryCard(snapshot: snapshot),
                           const SizedBox(
                             height: AppSpacing.pageRhythmStandardInnerGap,
                           ),
-                          _FeedbackBanner(message: _feedback!),
-                        ],
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _MonthlyContributionGroups(
-                          groups: snapshot.monthlyGroups,
-                        ),
-                        const VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Xem lại lịch sử đóng góp',
-                              message:
-                                  'Xuất báo cáo, nhóm theo tháng, tỷ lệ phí bảo hiểm, tổng đóng góp và phản hồi thành công được xem lại trước thao tác báo cáo P2P.',
-                              contractId: 'SC-242',
+                          VitCtaButton(
+                            key: P2PContributionHistoryPage.exportKey,
+                            variant: VitCtaButtonVariant.secondary,
+                            leading: const Icon(Icons.download_rounded),
+                            onPressed: () {
+                              HapticFeedback.selectionClick();
+                              setState(
+                                () => _feedback =
+                                    'Đã chuẩn bị báo cáo CSV lịch sử đóng góp',
+                              );
+                            },
+                            child: const Text('Xuất CSV'),
+                          ),
+                          if (_feedback != null) ...[
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
                             ),
+                            _FeedbackBanner(message: _feedback!),
                           ],
-                        ),
-                      ],
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
+                          _MonthlyContributionGroups(
+                            groups: snapshot.monthlyGroups,
+                          ),
+                          const VitPageContent(
+                            rhythm: VitPageRhythm.standard,
+                            padding: VitContentPadding.none,
+                            fullBleed: true,
+                            children: [
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Xem lại lịch sử đóng góp',
+                                message:
+                                    'Xuất báo cáo, nhóm theo tháng, tỷ lệ phí bảo hiểm, tổng đóng góp và phản hồi thành công được xem lại trước thao tác báo cáo P2P.',
+                                contractId: 'SC-242',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

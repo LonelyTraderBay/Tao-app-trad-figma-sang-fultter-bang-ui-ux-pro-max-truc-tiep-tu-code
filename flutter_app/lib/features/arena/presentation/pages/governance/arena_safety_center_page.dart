@@ -55,9 +55,7 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaSafetyCenter();
+    final snapshotAsync = ref.watch(arenaSafetyCenterSnapshotProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -97,71 +95,84 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        _SafetyHero(snapshot: snapshot),
-                        _SafetySection(
-                          title: 'Quy tắc cộng đồng',
-                          accentColor: AppColors.primary,
-                          children: [
-                            for (final entry
-                                in snapshot.communityRules.asMap().entries)
-                              _RuleCard(
-                                key: entry.key == 0
-                                    ? firstCommunityRuleKey
-                                    : null,
-                                rule: entry.value,
-                              ),
-                          ],
-                        ),
-                        _SafetySection(
-                          title: 'Nội dung bị cấm',
-                          accentColor: AppColors.sell,
-                          children: [
-                            _BannedContentCard(items: snapshot.bannedContent),
-                          ],
-                        ),
-                        _SafetySection(
-                          title: 'Cách báo cáo và chặn',
-                          accentColor: AppColors.warn,
-                          children: [
-                            for (final action in snapshot.reportActions)
-                              _RuleCard(rule: action),
-                          ],
-                        ),
-                        _SafetySection(
-                          title: 'Quy trình xử lý vi phạm',
-                          accentColor: AppColors.buy,
-                          children: [
-                            _ViolationProcessCard(
-                              items: snapshot.violationProcess,
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Trung tâm an toàn',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaSafetyCenterSnapshotProvider,
                             ),
-                          ],
-                        ),
-                        _SafetySection(
-                          title: 'Cách chốt kết quả',
-                          accentColor: AppColors.primary,
-                          children: [_InfoCard(info: snapshot.resolution)],
-                        ),
-                        _SafetySection(
-                          title: 'Không giao dịch ngoài nền tảng',
-                          accentColor: AppColors.sell,
-                          children: [_InfoCard(info: snapshot.offPlatform)],
-                        ),
-                        _SafetySection(
-                          title: 'Về Arena Points',
-                          accentColor: AppColors.accent,
-                          children: [
-                            _InfoCard(info: snapshot.pointsDisclaimer),
-                          ],
-                        ),
-                        _QuickLinks(links: snapshot.quickLinks),
-                        VitCtaButton(
-                          key: acknowledgeKey,
-                          onPressed: () => _acknowledge(context),
-                          child: Text(snapshot.ctaLabel),
-                        ),
-                        VitCommunityRulesLink(label: snapshot.footerLabel),
-                      ],
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _SafetyHero(snapshot: snapshot),
+                          _SafetySection(
+                            title: 'Quy tắc cộng đồng',
+                            accentColor: AppColors.primary,
+                            children: [
+                              for (final entry
+                                  in snapshot.communityRules.asMap().entries)
+                                _RuleCard(
+                                  key: entry.key == 0
+                                      ? firstCommunityRuleKey
+                                      : null,
+                                  rule: entry.value,
+                                ),
+                            ],
+                          ),
+                          _SafetySection(
+                            title: 'Nội dung bị cấm',
+                            accentColor: AppColors.sell,
+                            children: [
+                              _BannedContentCard(items: snapshot.bannedContent),
+                            ],
+                          ),
+                          _SafetySection(
+                            title: 'Cách báo cáo và chặn',
+                            accentColor: AppColors.warn,
+                            children: [
+                              for (final action in snapshot.reportActions)
+                                _RuleCard(rule: action),
+                            ],
+                          ),
+                          _SafetySection(
+                            title: 'Quy trình xử lý vi phạm',
+                            accentColor: AppColors.buy,
+                            children: [
+                              _ViolationProcessCard(
+                                items: snapshot.violationProcess,
+                              ),
+                            ],
+                          ),
+                          _SafetySection(
+                            title: 'Cách chốt kết quả',
+                            accentColor: AppColors.primary,
+                            children: [_InfoCard(info: snapshot.resolution)],
+                          ),
+                          _SafetySection(
+                            title: 'Không giao dịch ngoài nền tảng',
+                            accentColor: AppColors.sell,
+                            children: [_InfoCard(info: snapshot.offPlatform)],
+                          ),
+                          _SafetySection(
+                            title: 'Về Arena Points',
+                            accentColor: AppColors.accent,
+                            children: [
+                              _InfoCard(info: snapshot.pointsDisclaimer),
+                            ],
+                          ),
+                          _QuickLinks(links: snapshot.quickLinks),
+                          VitCtaButton(
+                            key: acknowledgeKey,
+                            onPressed: () => _acknowledge(context),
+                            child: Text(snapshot.ctaLabel),
+                          ),
+                          VitCommunityRulesLink(label: snapshot.footerLabel),
+                        ],
+                      ),
                     ),
                   ),
                 ),

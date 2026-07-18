@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/rewards_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -65,21 +66,17 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(rewardsControllerProvider).getHub();
+    final rewardsAsync = ref.watch(rewardsHubSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x6
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final visibleTasks = snapshot.tasks
-        .where(
-          (task) => _activeFilter == 'Tất cả' || task.filter == _activeFilter,
-        )
-        .toList(growable: false);
+    final resolvedSnapshot = rewardsAsync.value;
     final showOfflineBanner =
-        snapshot.screenState == RewardsScreenState.offline &&
-        snapshot.tasks.isNotEmpty;
+        resolvedSnapshot?.screenState == RewardsScreenState.offline &&
+        (resolvedSnapshot?.tasks.isNotEmpty ?? false);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,10 +86,13 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Trung tâm Phần thưởng',
+            subtitle: 'Phần thưởng · Rewards',
             showBack: true,
-            onBack: () => _close(context, snapshot.backRoute),
+            onBack: () => _close(
+              context,
+              rewardsAsync.value?.backRoute ?? AppRoutePaths.home,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,86 +125,115 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
-                      children: switch (snapshot.screenState) {
-                        RewardsScreenState.loading => [
-                          const VitSkeletonList(
+                      children: rewardsAsync.when(
+                        loading: () => const [
+                          VitSkeletonList(
                             key: RewardsHubPage.loadingKey,
                             rows: 4,
                           ),
                         ],
-                        RewardsScreenState.error => [
+                        error: (error, stackTrace) => [
                           VitErrorState(
                             key: RewardsHubPage.errorKey,
                             title: 'Không tải được phần thưởng',
                             message: 'Thử lại sau hoặc quay lại trang chủ.',
                             actionLabel: 'Thử lại',
-                            onAction: () => context.go(snapshot.backRoute),
+                            onAction: () =>
+                                ref.invalidate(rewardsHubSnapshotProvider),
                           ),
                         ],
-                        RewardsScreenState.empty => [
-                          VitEmptyState(
-                            key: RewardsHubPage.emptyKey,
-                            icon: Icons.redeem_outlined,
-                            title: 'Chưa có phần thưởng',
-                            message:
-                                'Hoàn thành nhiệm vụ để nhận Arena Points.',
-                            actionLabel: 'Về trang chủ',
-                            onAction: () => context.go(snapshot.backRoute),
-                          ),
-                        ],
-                        RewardsScreenState.offline
-                            when snapshot.tasks.isEmpty =>
-                          [
-                            const VitEmptyState(
-                              key: RewardsHubPage.offlineKey,
-                              icon: Icons.wifi_off_rounded,
-                              title: 'Đang ngoại tuyến',
-                              message:
-                                  'Kết nối lại để xem phần thưởng mới nhất.',
-                            ),
-                          ],
-                        _ => [
-                          _RewardsHero(
-                            summary: snapshot.summary,
-                            claimedAll: _claimedAll,
-                            onClaimAll: () {
-                              HapticFeedback.selectionClick();
-                              setState(() => _claimedAll = true);
-                            },
-                          ),
-                          _CategoryProgress(
-                            categories: snapshot.categories,
-                            completionLabel: snapshot.summary.completionLabel,
-                          ),
-                          _CheckInSection(checkIns: snapshot.checkIns),
-                          _ReferralBanner(
-                            onTap: () {
-                              HapticFeedback.selectionClick();
-                              context.go(snapshot.referralRoute);
-                            },
-                          ),
-                          _TaskSection(
-                            completionLabel: snapshot.summary.completionLabel,
-                            filters: snapshot.filters,
-                            activeFilter: _activeFilter,
-                            tasks: visibleTasks,
-                            onFilter: (filter) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _activeFilter = filter);
-                            },
-                          ),
-                          _BonusSection(rows: snapshot.bonusRows),
-                          _ProgressSection(
-                            summary: snapshot.summary,
-                            leaderboard: snapshot.leaderboard,
-                            onLeaderboardTap: () {
-                              HapticFeedback.selectionClick();
-                              context.go(snapshot.leaderboardRoute);
-                            },
-                          ),
-                          _RewardsDisclaimer(text: snapshot.disclaimer),
-                        ],
-                      },
+                        data: (snapshot) {
+                          final visibleTasks = snapshot.tasks
+                              .where(
+                                (task) =>
+                                    _activeFilter == 'Tất cả' ||
+                                    task.filter == _activeFilter,
+                              )
+                              .toList(growable: false);
+                          return switch (snapshot.screenState) {
+                            RewardsScreenState.loading => [
+                              const VitSkeletonList(
+                                key: RewardsHubPage.loadingKey,
+                                rows: 4,
+                              ),
+                            ],
+                            RewardsScreenState.error => [
+                              VitErrorState(
+                                key: RewardsHubPage.errorKey,
+                                title: 'Không tải được phần thưởng',
+                                message: 'Thử lại sau hoặc quay lại trang chủ.',
+                                actionLabel: 'Thử lại',
+                                onAction: () => context.go(snapshot.backRoute),
+                              ),
+                            ],
+                            RewardsScreenState.empty => [
+                              VitEmptyState(
+                                key: RewardsHubPage.emptyKey,
+                                icon: Icons.redeem_outlined,
+                                title: 'Chưa có phần thưởng',
+                                message:
+                                    'Hoàn thành nhiệm vụ để nhận Arena Points.',
+                                actionLabel: 'Về trang chủ',
+                                onAction: () => context.go(snapshot.backRoute),
+                              ),
+                            ],
+                            RewardsScreenState.offline
+                                when snapshot.tasks.isEmpty =>
+                              [
+                                const VitEmptyState(
+                                  key: RewardsHubPage.offlineKey,
+                                  icon: Icons.wifi_off_rounded,
+                                  title: 'Đang ngoại tuyến',
+                                  message:
+                                      'Kết nối lại để xem phần thưởng mới nhất.',
+                                ),
+                              ],
+                            _ => [
+                              _RewardsHero(
+                                summary: snapshot.summary,
+                                claimedAll: _claimedAll,
+                                onClaimAll: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _claimedAll = true);
+                                },
+                              ),
+                              _CategoryProgress(
+                                categories: snapshot.categories,
+                                completionLabel:
+                                    snapshot.summary.completionLabel,
+                              ),
+                              _CheckInSection(checkIns: snapshot.checkIns),
+                              _ReferralBanner(
+                                onTap: () {
+                                  HapticFeedback.selectionClick();
+                                  context.go(snapshot.referralRoute);
+                                },
+                              ),
+                              _TaskSection(
+                                completionLabel:
+                                    snapshot.summary.completionLabel,
+                                filters: snapshot.filters,
+                                activeFilter: _activeFilter,
+                                tasks: visibleTasks,
+                                onFilter: (filter) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _activeFilter = filter);
+                                },
+                              ),
+                              _BonusSection(rows: snapshot.bonusRows),
+                              _ProgressSection(
+                                summary: snapshot.summary,
+                                leaderboard: snapshot.leaderboard,
+                                onLeaderboardTap: () {
+                                  HapticFeedback.selectionClick();
+                                  context.go(snapshot.leaderboardRoute);
+                                },
+                              ),
+                              _RewardsDisclaimer(text: snapshot.disclaimer),
+                            ],
+                          };
+                        },
+                      ),
                     ),
                   ),
                 ),

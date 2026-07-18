@@ -47,8 +47,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-259 mock repository exposes E2E info BE draft', () {
-    final snapshot = const MockP2PRepository().getE2EInfo();
+  test('SC-259 mock repository exposes E2E info BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getE2EInfo();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-e2e-info');
     expect(

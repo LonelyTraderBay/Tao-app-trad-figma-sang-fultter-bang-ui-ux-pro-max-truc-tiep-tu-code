@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -42,10 +43,7 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pRiskAssessmentProvider);
-    final controller = P2PRiskAssessmentController(
-      state: P2PRiskAssessmentViewState(snapshot: snapshot),
-    );
+    final snapshotAsync = ref.watch(p2pRiskAssessmentProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -59,55 +57,86 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
       semanticIdentifier: 'SC-271',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pComplianceOverview),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pRiskAssessmentScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _RiskScoreHero(snapshot: snapshot),
-                        _RiskInfo(snapshot: snapshot),
-                        Text(
-                          snapshot.factorTitle,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontWeight: AppTextStyles.bold,
-                          ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pComplianceOverview),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pRiskAssessmentProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final controller = P2PRiskAssessmentController(
+              state: P2PRiskAssessmentViewState(snapshot: snapshot),
+            );
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pRiskAssessmentScrollPadding(
+                              scrollEndPadding,
+                            ),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _RiskScoreHero(snapshot: snapshot),
+                            _RiskInfo(snapshot: snapshot),
+                            Text(
+                              snapshot.factorTitle,
+                              style: AppTextStyles.baseMedium.copyWith(
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                            _RiskFactorList(
+                              factors: controller.materialFactors,
+                            ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'P2P risk score review',
+                              message:
+                                  'Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.',
+                              contractId: 'p2p-risk-assessment-review',
+                            ),
+                          ],
                         ),
-                        _RiskFactorList(factors: controller.materialFactors),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'P2P risk score review',
-                          message:
-                              'Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.',
-                          contractId: 'p2p-risk-assessment-review',
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

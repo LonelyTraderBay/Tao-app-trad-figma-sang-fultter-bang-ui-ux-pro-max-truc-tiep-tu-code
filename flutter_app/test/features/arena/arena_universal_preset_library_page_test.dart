@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-187 mock repository exposes Preset Library BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaPresetLibrary();
+  test('SC-187 mock repository exposes Preset Library BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaPresetLibrary();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-studio-presets');
     expect(

@@ -442,3 +442,20 @@ thấp hơn) — không được để nguyên baseline cũ (ratchet không tự
     `AppRoutePaths.*`/helper hàm; bài học F4: 110 site fallback literal
     làm nợ nhảy 28→138, phải sửa lại toàn bộ. (Sửa lại chỉ dẫn sai ở
     bẫy 24 về hardcode backRoute.)
+26. **Dòng `XController(state: ...(snapshot))`/`_ensureState(snapshot)` ngay
+    sau `ref.watch()`** phải chuyển VÀO trong block `data: (snapshot) { }`
+    (arrow → block) — không đứng ở top-level build nữa.
+27. **`VitHeader(showBack: true)` bắt buộc `onBack`** — nhánh `loading:`
+    thiếu onBack là runtime assertion crash (không phải lỗi biên dịch,
+    analyze vẫn xanh): copy CÙNG fallback route của nhánh `error:` sang
+    `loading:`. VitP2PFlowScaffold showBack mặc định true — cùng bẫy.
+28. **`await expr.getX().chain()` sai precedence** — parse thành
+    `await (expr.getX().chain())`; có chain sau lời gọi repo thì phải tự
+    đóng ngoặc `(await expr.getX()).chain()`.
+29. **Controller forwarder mỏng (không ViewState riêng)** giữ
+    `Provider<XController>` thuần + snapshot FutureProvider gọi XUYÊN QUA
+    controller (khuôn market) — KHÔNG ép STATE-S25 wrapper; header hằng
+    thật sự (không đổi theo mọi call mock) hardcode thẳng. Notifier vừa
+    seed async vừa mutation async: test ProviderContainer phải
+    `await container.read(xSnapshotProvider.future)` TRƯỚC khi listen
+    (tránh build() re-run giữa mutation).

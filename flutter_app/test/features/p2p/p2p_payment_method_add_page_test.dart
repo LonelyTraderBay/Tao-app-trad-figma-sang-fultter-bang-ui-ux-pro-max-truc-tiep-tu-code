@@ -28,30 +28,35 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-232 mock repository exposes P2P payment-method add BE draft', () {
-    final snapshot = const MockP2PRepository().getPaymentMethodAdd();
+  test(
+    'SC-232 mock repository exposes P2P payment-method add BE draft',
+    () async {
+      final snapshot = await const MockP2PRepository(
+        loadDelay: Duration.zero,
+      ).getPaymentMethodAdd();
 
-    expect(snapshot.endpoint, '/api/mobile/p2p/p2p-payment-method-add');
-    expect(
-      snapshot.actionDraft,
-      'POST /p2p/* workflow action where applicable; POST /p2p/payment-methods',
-    );
-    expect(snapshot.bankOptions, containsAll(['Vietcombank', 'TPBank']));
-    expect(snapshot.ewalletOptions, containsAll(['Momo', 'ShopeePay']));
-    expect(snapshot.defaultBankAccountHint, '0071000123456');
-    expect(snapshot.ownerNameHint, 'NGUYEN VAN A');
-    expect(snapshot.saveRoute, AppRoutePaths.p2pPaymentMethods);
-    expect(snapshot.contractNotes, contains('High-risk action'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        P2PScreenState.loading,
-        P2PScreenState.empty,
-        P2PScreenState.error,
-        P2PScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/p2p/p2p-payment-method-add');
+      expect(
+        snapshot.actionDraft,
+        'POST /p2p/* workflow action where applicable; POST /p2p/payment-methods',
+      );
+      expect(snapshot.bankOptions, containsAll(['Vietcombank', 'TPBank']));
+      expect(snapshot.ewalletOptions, containsAll(['Momo', 'ShopeePay']));
+      expect(snapshot.defaultBankAccountHint, '0071000123456');
+      expect(snapshot.ownerNameHint, 'NGUYEN VAN A');
+      expect(snapshot.saveRoute, AppRoutePaths.p2pPaymentMethods);
+      expect(snapshot.contractNotes, contains('High-risk action'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          P2PScreenState.loading,
+          P2PScreenState.empty,
+          P2PScreenState.error,
+          P2PScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-232 renders bank payment-method baseline form', (
     tester,

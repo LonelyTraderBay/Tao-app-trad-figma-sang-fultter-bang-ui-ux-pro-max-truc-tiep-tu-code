@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-269 mock repository exposes source of funds BE draft', () {
-    final snapshot = const MockP2PRepository().getSourceOfFunds();
+  test('SC-269 mock repository exposes source of funds BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getSourceOfFunds();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-compliance-source-of-funds');
     expect(

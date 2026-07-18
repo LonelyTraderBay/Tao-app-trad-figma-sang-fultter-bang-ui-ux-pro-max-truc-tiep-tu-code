@@ -34,8 +34,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-227 mock repository exposes P2P merchant apply BE draft', () {
-    final snapshot = const MockP2PRepository().getMerchantApply();
+  test('SC-227 mock repository exposes P2P merchant apply BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getMerchantApply();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-merchant-apply');
     expect(

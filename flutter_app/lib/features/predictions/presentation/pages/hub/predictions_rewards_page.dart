@@ -51,25 +51,13 @@ class _PredictionsRewardsPageState
     extends ConsumerState<PredictionsRewardsPage> {
   String _category = 'All';
   bool _favoritesOnly = false;
-  late final Set<String> _favorites;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(predictionsReadModelControllerProvider)
-        .getRewards();
-    _favorites = snapshot.rewards
-        .where((reward) => reward.isFavorite)
-        .map((reward) => reward.id)
-        .toSet();
-  }
+  // GD4-F5 (bẫy 14): seed lười trong nhánh `data:` — thay initState đọc repo
+  // giờ đã async; `??=` chỉ seed 1 lần, không ghi đè khi user đã chỉnh.
+  Set<String>? _favorites;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getRewards();
+    final rewardsAsync = ref.watch(predictionsRewardsSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -78,11 +66,6 @@ class _PredictionsRewardsPageState
         navClearance +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
-    final rewards = snapshot.rewards.where((reward) {
-      final categoryMatch = _category == 'All' || reward.category == _category;
-      final favoriteMatch = !_favoritesOnly || _favorites.contains(reward.id);
-      return categoryMatch && favoriteMatch;
-    }).toList();
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -114,31 +97,61 @@ class _PredictionsRewardsPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _RewardsHero(snapshot: snapshot),
-                        const _HowItWorksNote(),
-                        _CategoryFilters(
-                          categories: ['All', ...snapshot.categories],
-                          activeCategory: _category,
-                          favoritesOnly: _favoritesOnly,
-                          onCategoryChanged: (value) => setState(() {
-                            _category = value;
-                          }),
-                          onFavoritesToggle: () => setState(() {
-                            _favoritesOnly = !_favoritesOnly;
-                          }),
-                        ),
-                        _RewardsTable(
-                          snapshot: snapshot,
-                          rewards: rewards,
-                          favorites: _favorites,
-                          onFavoriteToggle: (id) => setState(() {
-                            if (!_favorites.add(id)) _favorites.remove(id);
-                          }),
-                        ),
-                        _RiskLink(onTap: () => _showRiskSheet(context)),
-                        _ArenaRooms(snapshot: snapshot),
-                      ],
+                      children: rewardsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được phần thưởng',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsRewardsSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          _favorites ??= snapshot.rewards
+                              .where((reward) => reward.isFavorite)
+                              .map((reward) => reward.id)
+                              .toSet();
+                          final favorites = _favorites!;
+                          final rewards = snapshot.rewards.where((reward) {
+                            final categoryMatch =
+                                _category == 'All' ||
+                                reward.category == _category;
+                            final favoriteMatch =
+                                !_favoritesOnly ||
+                                favorites.contains(reward.id);
+                            return categoryMatch && favoriteMatch;
+                          }).toList();
+
+                          return [
+                            _RewardsHero(snapshot: snapshot),
+                            const _HowItWorksNote(),
+                            _CategoryFilters(
+                              categories: ['All', ...snapshot.categories],
+                              activeCategory: _category,
+                              favoritesOnly: _favoritesOnly,
+                              onCategoryChanged: (value) => setState(() {
+                                _category = value;
+                              }),
+                              onFavoritesToggle: () => setState(() {
+                                _favoritesOnly = !_favoritesOnly;
+                              }),
+                            ),
+                            _RewardsTable(
+                              snapshot: snapshot,
+                              rewards: rewards,
+                              favorites: favorites,
+                              onFavoriteToggle: (id) => setState(() {
+                                if (!favorites.add(id)) favorites.remove(id);
+                              }),
+                            ),
+                            _RiskLink(onTap: () => _showRiskSheet(context)),
+                            _ArenaRooms(snapshot: snapshot),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

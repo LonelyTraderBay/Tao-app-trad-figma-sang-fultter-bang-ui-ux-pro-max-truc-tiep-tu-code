@@ -4,14 +4,16 @@ import 'package:vit_trade_flutter/features/referral/presentation/controllers/ref
 
 void main() {
   group('ReferralController', () {
-    test('exposes referral snapshots through repository contract', () {
-      final controller = const ReferralController(MockReferralRepository());
+    test('exposes referral snapshots through repository contract', () async {
+      final controller = const ReferralController(
+        MockReferralRepository(loadDelay: Duration.zero),
+      );
 
-      final home = controller.getHome();
-      final filtered = controller.getHistory(
+      final home = await controller.getHome();
+      final filtered = await controller.getHistory(
         filter: ReferralFriendFilter.pendingKyc,
       );
-      final rewards = controller.getRewards(
+      final rewards = await controller.getRewards(
         filter: ReferralRewardFilter.kycBonus,
       );
 

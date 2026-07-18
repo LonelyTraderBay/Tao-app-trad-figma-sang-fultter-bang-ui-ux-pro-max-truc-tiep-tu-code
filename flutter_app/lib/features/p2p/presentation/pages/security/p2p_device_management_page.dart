@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -56,67 +57,95 @@ class _P2PDeviceManagementPageState
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(p2pDeviceManagementStateControllerProvider);
-    final snapshot = viewState.snapshot;
-    final devices = viewState.devices;
-    final trustedDevices = devices
-        .where((device) => device.isTrusted)
-        .toList(growable: false);
-    final otherDevices = devices
-        .where((device) => !device.isTrusted)
-        .toList(growable: false);
+    // GD4 bẫy 21: trang chỉ watch Notifier — bọc .when() trên snapshot
+    // provider gốc để tránh render fallback rỗng trong cửa sổ loading.
+    final snapshotAsync = ref.watch(p2pDeviceManagementProvider);
 
-    return VitP2PFlowScaffold(
-      title: 'Quản lý thiết bị',
-      subtitle: 'Bảo mật · P2P',
-      semanticLabel: 'Quản lý thiết bị',
-      semanticIdentifier: 'SC-255',
-      shellRenderMode: widget.shellRenderMode,
-      onBack: () => context.go(snapshot.parentRoute),
-      onRefresh: () async {
-        HapticFeedback.selectionClick();
-        await Future<void>.delayed(const Duration(milliseconds: 120));
-      },
-      children: [
-        _DeviceStatsCard(
-          total: devices.length,
-          trusted: trustedDevices.length,
-          untrusted: otherDevices.length,
-        ),
-        _TrustedDeviceNotice(snapshot: snapshot),
-        _DeviceSection(
-          key: P2PDeviceManagementPage.trustedSectionKey,
-          title: 'Thiết bị tin cậy (${trustedDevices.length})',
-          devices: trustedDevices,
-          expandedDeviceId: _expandedDeviceId,
-          onToggleExpanded: _toggleExpanded,
-          onTrust: _trustDevice,
-          onRevoke: _revokeTrust,
-          onRemove: _removeDevice,
-        ),
-        _DeviceSection(
-          key: P2PDeviceManagementPage.otherSectionKey,
-          title: 'Thiết bị khác (${otherDevices.length})',
-          devices: otherDevices,
-          expandedDeviceId: _expandedDeviceId,
-          onToggleExpanded: _toggleExpanded,
-          onTrust: _trustDevice,
-          onRevoke: _revokeTrust,
-          onRemove: _removeDevice,
-        ),
-        _SecurityTips(tips: snapshot.securityTips),
-        const VitCard(
-          variant: VitCardVariant.inner,
-          padding: P2PSpacingTokens.p2pDevicesInnerPadding,
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Rà soát thiết bị tin cậy',
-            message:
-                'Trạng thái tin cậy, thu hồi/xóa thiết bị, bằng chứng thiết bị, rủi ro bảo mật và bước xác minh tiếp theo được rà soát trước khi thay đổi.',
-            contractId: 'SC-255',
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Quản lý thiết bị',
+        semanticIdentifier: 'SC-255',
+        onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Quản lý thiết bị',
+        semanticIdentifier: 'SC-255',
+        onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pDeviceManagementProvider),
           ),
-        ),
-      ],
+        ],
+      ),
+      data: (_) {
+        final viewState = ref.watch(p2pDeviceManagementStateControllerProvider);
+        final snapshot = viewState.snapshot;
+        final devices = viewState.devices;
+        final trustedDevices = devices
+            .where((device) => device.isTrusted)
+            .toList(growable: false);
+        final otherDevices = devices
+            .where((device) => !device.isTrusted)
+            .toList(growable: false);
+        return VitP2PFlowScaffold(
+          title: 'Quản lý thiết bị',
+          subtitle: 'Bảo mật · P2P',
+          semanticLabel: 'Quản lý thiết bị',
+          semanticIdentifier: 'SC-255',
+          shellRenderMode: widget.shellRenderMode,
+          onBack: () => context.go(snapshot.parentRoute),
+          onRefresh: () async {
+            HapticFeedback.selectionClick();
+            await Future<void>.delayed(const Duration(milliseconds: 120));
+          },
+          children: [
+            _DeviceStatsCard(
+              total: devices.length,
+              trusted: trustedDevices.length,
+              untrusted: otherDevices.length,
+            ),
+            _TrustedDeviceNotice(snapshot: snapshot),
+            _DeviceSection(
+              key: P2PDeviceManagementPage.trustedSectionKey,
+              title: 'Thiết bị tin cậy (${trustedDevices.length})',
+              devices: trustedDevices,
+              expandedDeviceId: _expandedDeviceId,
+              onToggleExpanded: _toggleExpanded,
+              onTrust: _trustDevice,
+              onRevoke: _revokeTrust,
+              onRemove: _removeDevice,
+            ),
+            _DeviceSection(
+              key: P2PDeviceManagementPage.otherSectionKey,
+              title: 'Thiết bị khác (${otherDevices.length})',
+              devices: otherDevices,
+              expandedDeviceId: _expandedDeviceId,
+              onToggleExpanded: _toggleExpanded,
+              onTrust: _trustDevice,
+              onRevoke: _revokeTrust,
+              onRemove: _removeDevice,
+            ),
+            _SecurityTips(tips: snapshot.securityTips),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              padding: P2PSpacingTokens.p2pDevicesInnerPadding,
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Rà soát thiết bị tin cậy',
+                message:
+                    'Trạng thái tin cậy, thu hồi/xóa thiết bị, bằng chứng thiết bị, rủi ro bảo mật và bước xác minh tiếp theo được rà soát trước khi thay đổi.',
+                contractId: 'SC-255',
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

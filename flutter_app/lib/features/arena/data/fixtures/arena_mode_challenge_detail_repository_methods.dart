@@ -3,7 +3,8 @@ part of '../repositories/mock_arena_repository.dart';
 mixin _MockArenaRepositoryModeChallengeDetailMethods
     on _MockArenaRepositoryBase {
   @override
-  ArenaModeDetailSnapshot getArenaModeDetail(String modeId) {
+  Future<ArenaModeDetailSnapshot> getArenaModeDetail(String modeId) async {
+    await _simulateNetwork();
     const mode = ArenaModeDetailDraft(
       id: 'mode001',
       title: 'BTC Weekly Predict',
@@ -102,7 +103,10 @@ mixin _MockArenaRepositoryModeChallengeDetailMethods
   }
 
   @override
-  ArenaChallengeDetailSnapshot getArenaChallengeDetail(String challengeId) {
+  Future<ArenaChallengeDetailSnapshot> getArenaChallengeDetail(
+    String challengeId,
+  ) async {
+    await _simulateNetwork();
     return const ArenaChallengeDetailSnapshot(
       endpoint: '/api/mobile/arena/arena-challenge-ch003',
       actionDraft:
@@ -251,7 +255,8 @@ mixin _MockArenaRepositoryModeChallengeDetailMethods
   }
 
   @override
-  ArenaJoinSnapshot getArenaJoin(String challengeId) {
+  Future<ArenaJoinSnapshot> getArenaJoin(String challengeId) async {
+    await _simulateNetwork();
     return const ArenaJoinSnapshot(
       endpoint: '/api/mobile/arena/arena-join-ch003',
       actionDraft:
@@ -315,7 +320,8 @@ mixin _MockArenaRepositoryModeChallengeDetailMethods
   }
 
   @override
-  ArenaResolutionCenterSnapshot getArenaResolutionCenter() {
+  Future<ArenaResolutionCenterSnapshot> getArenaResolutionCenter() async {
+    await _simulateNetwork();
     return const ArenaResolutionCenterSnapshot(
       endpoint: '/api/mobile/arena/arena-resolution',
       actionDraft:

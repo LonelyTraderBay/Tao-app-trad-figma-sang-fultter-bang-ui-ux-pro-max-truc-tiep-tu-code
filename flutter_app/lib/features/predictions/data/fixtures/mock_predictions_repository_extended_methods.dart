@@ -3,7 +3,10 @@ part of '../repositories/mock_predictions_repository.dart';
 mixin _MockPredictionsRepositoryMethodsPart02
     on _MockPredictionsRepositoryBase {
   @override
-  PredictionEventCalendarSnapshot getEventCalendar({String? category}) {
+  Future<PredictionEventCalendarSnapshot> getEventCalendar({
+    String? category,
+  }) async {
+    await _simulateNetwork();
     final events = category == null
         ? _predictionCalendarEvents
         : _predictionCalendarEvents
@@ -29,7 +32,8 @@ mixin _MockPredictionsRepositoryMethodsPart02
   }
 
   @override
-  PredictionSocialSnapshot getSocial() {
+  Future<PredictionSocialSnapshot> getSocial() async {
+    await _simulateNetwork();
     return PredictionSocialSnapshot(
       eventTitle: 'BTC > \$100K by Dec 2026?',
       comments: _predictionSocialComments,
@@ -52,7 +56,10 @@ mixin _MockPredictionsRepositoryMethodsPart02
   }
 
   @override
-  PredictionAdvancedChartSnapshot getAdvancedChart(String eventId) {
+  Future<PredictionAdvancedChartSnapshot> getAdvancedChart(
+    String eventId,
+  ) async {
+    await _simulateNetwork();
     return PredictionAdvancedChartSnapshot(
       eventId: eventId,
       priceHistory: _predictionAdvancedPriceHistory,
@@ -75,7 +82,8 @@ mixin _MockPredictionsRepositoryMethodsPart02
   }
 
   @override
-  PredictionTournamentsSnapshot getTournaments() {
+  Future<PredictionTournamentsSnapshot> getTournaments() async {
+    await _simulateNetwork();
     return PredictionTournamentsSnapshot(
       tournaments: _predictionTournaments,
       leaderboard: _predictionTournamentLeaderboard,
@@ -95,7 +103,8 @@ mixin _MockPredictionsRepositoryMethodsPart02
   }
 
   @override
-  PredictionDataIntegrationSnapshot getDataIntegration() {
+  Future<PredictionDataIntegrationSnapshot> getDataIntegration() async {
+    await _simulateNetwork();
     return PredictionDataIntegrationSnapshot(
       sources: _predictionDataSources,
       apiKeys: _predictionApiKeys,

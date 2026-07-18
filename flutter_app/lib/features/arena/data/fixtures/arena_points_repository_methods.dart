@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryPointsMethods on _MockArenaRepositoryBase {
   @override
-  ArenaPointsSnapshot getArenaPoints() {
+  Future<ArenaPointsSnapshot> getArenaPoints() async {
+    await _simulateNetwork();
     return const ArenaPointsSnapshot(
       endpoint: '/api/mobile/arena/arena-points',
       actionDraft:
@@ -414,7 +415,8 @@ mixin _MockArenaRepositoryPointsMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaPointsLedgerSnapshot getArenaPointsLedger() {
+  Future<ArenaPointsLedgerSnapshot> getArenaPointsLedger() async {
+    await _simulateNetwork();
     return const ArenaPointsLedgerSnapshot(
       endpoint: '/api/mobile/arena/arena-ledger',
       actionDraft:
@@ -677,8 +679,13 @@ mixin _MockArenaRepositoryPointsMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaPointsEntryDetailSnapshot getArenaPointsEntryDetail(String entryId) {
-    for (final ledgerEntry in getArenaPointsLedger().entries) {
+  Future<ArenaPointsEntryDetailSnapshot> getArenaPointsEntryDetail(
+    String entryId,
+  ) async {
+    // Bẫy 18 (GD4 Playbook mục 9): getArenaPointsLedger() đã tự
+    // _simulateNetwork() — không lặp lại delay/error ở lớp ngoài.
+    final ledger = await getArenaPointsLedger();
+    for (final ledgerEntry in ledger.entries) {
       if (ledgerEntry.id != entryId) continue;
 
       return ArenaPointsEntryDetailSnapshot(

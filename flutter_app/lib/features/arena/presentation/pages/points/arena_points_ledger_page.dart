@@ -54,10 +54,7 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaPointsLedger();
-    final entries = _filteredEntries(snapshot.entries);
+    final snapshotAsync = ref.watch(arenaPointsLedgerSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -97,46 +94,62 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        _BalanceSummary(summary: snapshot.summary),
-                        VitSearchBar(
-                          key: ArenaPointsLedgerPage.searchKey,
-                          placeholder: 'Tìm theo tên challenge, lý do...',
-                          onChanged: (value) {
-                            setState(() => _searchQuery = value);
-                          },
-                        ),
-                        _LedgerFilterRow(
-                          filters: snapshot.filters,
-                          activeFilter: _activeFilter,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeFilter = id);
-                          },
-                        ),
-                        Text(
-                          '${entries.length} bản ghi',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được sổ điểm Arena',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaPointsLedgerSnapshotProvider,
+                            ),
                           ),
-                        ),
-                        if (entries.isEmpty)
-                          VitEmptyState(
-                            icon: Icons.receipt_long_outlined,
-                            title: snapshot.emptyTitle,
-                            message: snapshot.emptySubtitle,
-                          )
-                        else
-                          _LedgerList(entries: entries),
-                        _AuditNotice(disclaimer: snapshot.disclaimer),
-                        VitCommunityRulesLink(
-                          key: ArenaPointsLedgerPage.communityRulesKey,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            context.go(AppRoutePaths.arenaSafety);
-                          },
-                        ),
-                      ],
+                        ],
+                        data: (snapshot) {
+                          final entries = _filteredEntries(snapshot.entries);
+                          return [
+                            _BalanceSummary(summary: snapshot.summary),
+                            VitSearchBar(
+                              key: ArenaPointsLedgerPage.searchKey,
+                              placeholder: 'Tìm theo tên challenge, lý do...',
+                              onChanged: (value) {
+                                setState(() => _searchQuery = value);
+                              },
+                            ),
+                            _LedgerFilterRow(
+                              filters: snapshot.filters,
+                              activeFilter: _activeFilter,
+                              onChanged: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _activeFilter = id);
+                              },
+                            ),
+                            Text(
+                              '${entries.length} bản ghi',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                            if (entries.isEmpty)
+                              VitEmptyState(
+                                icon: Icons.receipt_long_outlined,
+                                title: snapshot.emptyTitle,
+                                message: snapshot.emptySubtitle,
+                              )
+                            else
+                              _LedgerList(entries: entries),
+                            _AuditNotice(disclaimer: snapshot.disclaimer),
+                            VitCommunityRulesLink(
+                              key: ArenaPointsLedgerPage.communityRulesKey,
+                              onTap: () {
+                                HapticFeedback.selectionClick();
+                                context.go(AppRoutePaths.arenaSafety);
+                              },
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

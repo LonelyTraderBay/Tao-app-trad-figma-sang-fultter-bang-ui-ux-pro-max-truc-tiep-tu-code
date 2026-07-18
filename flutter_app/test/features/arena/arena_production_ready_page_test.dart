@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-206 mock repository exposes release readiness BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaProductionReady();
+  test('SC-206 mock repository exposes release readiness BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaProductionReady();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-production');
     expect(

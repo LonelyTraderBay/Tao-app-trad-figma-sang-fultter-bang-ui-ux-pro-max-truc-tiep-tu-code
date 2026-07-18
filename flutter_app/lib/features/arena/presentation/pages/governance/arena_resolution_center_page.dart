@@ -32,9 +32,7 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaResolutionCenter();
+    final snapshotAsync = ref.watch(arenaResolutionCenterSnapshotProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -79,32 +77,45 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: VitEmptyState(
-                              key: emptyKey,
-                              icon: Icons.warning_amber_rounded,
-                              title: snapshot.emptyTitle,
-                              message: snapshot.emptySubtitle,
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Trung tâm chốt kết quả',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaResolutionCenterSnapshotProvider,
                             ),
                           ),
-                        ),
-                        const _ResolutionStatusCard(
-                          icon: Icons.rule_folder_outlined,
-                          title: 'Phạm vi chốt kết quả',
-                          body:
-                              'Bằng chứng creator, rà soát oracle và kết quả kiểm duyệt được gom tại đây khi thử thách cần quyết định cuối.',
-                        ),
-                        const _ResolutionStatusCard(
-                          icon: Icons.verified_user_outlined,
-                          title: 'Toàn vẹn điểm Arena',
-                          body:
-                              'Open Arena tạm dừng thay đổi điểm cho đến khi rà soát kết thúc và ghi quyết định cuối vào sổ điểm.',
-                        ),
-                      ],
+                        ],
+                        data: (snapshot) => [
+                          VitCard(
+                            padding: AppSpacing.zeroInsets,
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: VitEmptyState(
+                                key: emptyKey,
+                                icon: Icons.warning_amber_rounded,
+                                title: snapshot.emptyTitle,
+                                message: snapshot.emptySubtitle,
+                              ),
+                            ),
+                          ),
+                          const _ResolutionStatusCard(
+                            icon: Icons.rule_folder_outlined,
+                            title: 'Phạm vi chốt kết quả',
+                            body:
+                                'Bằng chứng creator, rà soát oracle và kết quả kiểm duyệt được gom tại đây khi thử thách cần quyết định cuối.',
+                          ),
+                          const _ResolutionStatusCard(
+                            icon: Icons.verified_user_outlined,
+                            title: 'Toàn vẹn điểm Arena',
+                            body:
+                                'Open Arena tạm dừng thay đổi điểm cho đến khi rà soát kết thúc và ghi quyết định cuối vào sổ điểm.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

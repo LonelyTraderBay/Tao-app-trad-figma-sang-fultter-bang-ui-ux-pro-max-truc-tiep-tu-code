@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-218 mock repository exposes P2P dispute detail BE draft', () {
-    final snapshot = const MockP2PRepository().getDisputeDetail('sample');
+  test('SC-218 mock repository exposes P2P dispute detail BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeDetail('sample');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-dispute-detail-sample');
     expect(

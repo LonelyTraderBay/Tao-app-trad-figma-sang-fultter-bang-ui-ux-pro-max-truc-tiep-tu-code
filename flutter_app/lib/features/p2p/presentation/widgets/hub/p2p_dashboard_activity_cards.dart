@@ -129,7 +129,9 @@ class _TopMerchantsCard extends StatelessWidget {
               merchant: snapshot.topMerchants[index],
               onTap: () {
                 HapticFeedback.selectionClick();
-                context.go('/p2p/merchant/${snapshot.topMerchants[index].id}');
+                context.go(
+                  AppRoutePaths.p2pMerchant(snapshot.topMerchants[index].id),
+                );
               },
             ),
         ],

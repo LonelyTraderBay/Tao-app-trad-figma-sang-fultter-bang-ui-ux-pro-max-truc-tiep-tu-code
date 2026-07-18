@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-262 mock repository exposes fund lock history BE draft', () {
-    final snapshot = const MockP2PRepository().getFundLockHistory();
+  test('SC-262 mock repository exposes fund lock history BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getFundLockHistory();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-wallet-fund-lock-history');
     expect(
@@ -52,10 +54,10 @@ void main() {
     );
   });
 
-  test('SC-263 alias repository uses wallet-history endpoint', () {
-    final snapshot = const MockP2PRepository().getFundLockHistory(
-      walletHistoryAlias: true,
-    );
+  test('SC-263 alias repository uses wallet-history endpoint', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getFundLockHistory(walletHistoryAlias: true);
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-wallet-history');
     expect(snapshot.emptyTitle, 'Chưa có lịch sử ví P2P');

@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-207 mock repository exposes bridge foundation BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaPredictionBridge();
+  test('SC-207 mock repository exposes bridge foundation BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaPredictionBridge();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-bridge');
     expect(

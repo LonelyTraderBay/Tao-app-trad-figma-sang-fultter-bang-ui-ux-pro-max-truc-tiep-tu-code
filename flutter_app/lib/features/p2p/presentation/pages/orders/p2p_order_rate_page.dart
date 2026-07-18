@@ -68,7 +68,7 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pOrderRateProvider(widget.orderId));
+    final snapshotAsync = ref.watch(p2pOrderRateProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -89,63 +89,73 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
             showBack: true,
             onBack: () => _close(context),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _submitted
-                    ? _SuccessView(
-                        title: snapshot.successTitle,
-                        message: snapshot.successMessage,
-                        onBackToP2P: () => context.go(AppRoutePaths.p2p),
-                      )
-                    : ScrollConfiguration(
-                        behavior: ScrollConfiguration.of(
-                          context,
-                        ).copyWith(scrollbars: false),
-                        child: SingleChildScrollView(
-                          key: P2POrderRatePage.contentKey,
-                          physics: const ClampingScrollPhysics(),
-                          padding:
-                              P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
-                                scrollEndPadding,
-                              ),
-                          child: VitPageContent(
-                            rhythm: VitPageRhythm.form,
-                            padding: VitContentPadding.compact,
-                            children: [
-                              _MerchantSummary(order: snapshot.order),
-                              _RatingCard(
-                                rating: _rating,
-                                onRating: _setRating,
-                              ),
-                              if (_rating > 0)
-                                _QuickTags(
-                                  tags: snapshot.quickTags,
-                                  selectedTags: _selectedTags,
-                                  onToggle: _toggleTag,
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pOrderRateProvider(widget.orderId)),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: _submitted
+                      ? _SuccessView(
+                          title: snapshot.successTitle,
+                          message: snapshot.successMessage,
+                          onBackToP2P: () => context.go(AppRoutePaths.p2p),
+                        )
+                      : ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(
+                            context,
+                          ).copyWith(scrollbars: false),
+                          child: SingleChildScrollView(
+                            key: P2POrderRatePage.contentKey,
+                            physics: const ClampingScrollPhysics(),
+                            padding:
+                                P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
+                                  scrollEndPadding,
                                 ),
-                              if (_rating > 0)
-                                _ReviewBox(controller: _reviewController),
-                              _ActionRow(
-                                enabled: _rating > 0,
-                                loading: _isSubmitting,
-                                onSkip: () => _close(context),
-                                onSubmit: _submit,
-                              ),
-                              const VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Order rating state review',
-                                message:
-                                    'Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.',
-                                contractId: 'SC-213',
-                              ),
-                            ],
+                            child: VitPageContent(
+                              rhythm: VitPageRhythm.form,
+                              padding: VitContentPadding.compact,
+                              children: [
+                                _MerchantSummary(order: snapshot.order),
+                                _RatingCard(
+                                  rating: _rating,
+                                  onRating: _setRating,
+                                ),
+                                if (_rating > 0)
+                                  _QuickTags(
+                                    tags: snapshot.quickTags,
+                                    selectedTags: _selectedTags,
+                                    onToggle: _toggleTag,
+                                  ),
+                                if (_rating > 0)
+                                  _ReviewBox(controller: _reviewController),
+                                _ActionRow(
+                                  enabled: _rating > 0,
+                                  loading: _isSubmitting,
+                                  onSkip: () => _close(context),
+                                  onSubmit: _submit,
+                                ),
+                                const VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Order rating state review',
+                                  message:
+                                      'Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.',
+                                  contractId: 'SC-213',
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

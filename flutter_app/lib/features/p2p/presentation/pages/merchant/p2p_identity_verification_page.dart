@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -49,7 +50,7 @@ class _P2PIdentityVerificationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pIdentityVerificationProvider);
+    final snapshotAsync = ref.watch(p2pIdentityVerificationProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -58,12 +59,6 @@ class _P2PIdentityVerificationPageState
             : DeviceMetrics.nativeBottomChrome +
                   P2PSpacingTokens.p2pKycBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
-    final selectedDocument = _selectedTypeId == null
-        ? null
-        : snapshot.documentTypes.firstWhere(
-            (document) => document.id == _selectedTypeId,
-            orElse: () => snapshot.documentTypes.first,
-          );
     final routeName = GoRouterState.of(context).uri.path;
     final screenContract = routeName.startsWith('/p2p/kyc/verify')
         ? 'SC-402'
@@ -75,98 +70,133 @@ class _P2PIdentityVerificationPageState
       semanticIdentifier: screenContract,
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Xác minh danh tính',
-            subtitle: 'KYC · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycStatus),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pKycScrollPadding(bottomInset),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _IdentityHero(snapshot: snapshot),
-                        if (selectedDocument == null)
-                          _DocumentTypePicker(
-                            documents: snapshot.documentTypes,
-                            onSelected: (document) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _selectedTypeId = document.id);
-                            },
-                          )
-                        else ...[
-                          _GuidelinesCard(snapshot: snapshot),
-                          _UploadSection(
-                            selectedDocument: selectedDocument,
-                            frontUploaded: _frontUploaded,
-                            backUploaded: _backUploaded,
-                            onFrontUpload: () {
-                              HapticFeedback.selectionClick();
-                              setState(() => _frontUploaded = true);
-                            },
-                            onBackUpload: _frontUploaded
-                                ? () {
-                                    HapticFeedback.selectionClick();
-                                    setState(() => _backUploaded = true);
-                                  }
-                                : null,
-                            onFrontRemove: () {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _frontUploaded = false;
-                                _backUploaded = false;
-                              });
-                            },
-                            onBackRemove: () {
-                              HapticFeedback.selectionClick();
-                              setState(() => _backUploaded = false);
-                            },
-                          ),
-                          _SecurityCard(snapshot: snapshot),
-                          VitCtaButton(
-                            key: P2PIdentityVerificationPage.submitKey,
-                            onPressed: _frontUploaded && _backUploaded
-                                ? () {
-                                    HapticFeedback.selectionClick();
-                                    context.go(snapshot.nextRoute);
-                                  }
-                                : null,
-                            trailing: const Icon(Icons.chevron_right_rounded),
-                            child: const Text('Tiếp tục'),
-                          ),
-                        ],
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Identity document review',
-                            message:
-                                'Document type, front/back upload status, security notice, KYC route and next verification step are reviewed before continuing.',
-                            contractId: 'p2p-identity-verification-review',
-                          ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycStatus),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pIdentityVerificationProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final selectedDocument = _selectedTypeId == null
+                ? null
+                : snapshot.documentTypes.firstWhere(
+                    (document) => document.id == _selectedTypeId,
+                    orElse: () => snapshot.documentTypes.first,
+                  );
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Xác minh danh tính',
+                subtitle: 'KYC · P2P',
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pKycScrollPadding(
+                          bottomInset,
                         ),
-                      ],
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.form,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _IdentityHero(snapshot: snapshot),
+                            if (selectedDocument == null)
+                              _DocumentTypePicker(
+                                documents: snapshot.documentTypes,
+                                onSelected: (document) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _selectedTypeId = document.id);
+                                },
+                              )
+                            else ...[
+                              _GuidelinesCard(snapshot: snapshot),
+                              _UploadSection(
+                                selectedDocument: selectedDocument,
+                                frontUploaded: _frontUploaded,
+                                backUploaded: _backUploaded,
+                                onFrontUpload: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _frontUploaded = true);
+                                },
+                                onBackUpload: _frontUploaded
+                                    ? () {
+                                        HapticFeedback.selectionClick();
+                                        setState(() => _backUploaded = true);
+                                      }
+                                    : null,
+                                onFrontRemove: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _frontUploaded = false;
+                                    _backUploaded = false;
+                                  });
+                                },
+                                onBackRemove: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _backUploaded = false);
+                                },
+                              ),
+                              _SecurityCard(snapshot: snapshot),
+                              VitCtaButton(
+                                key: P2PIdentityVerificationPage.submitKey,
+                                onPressed: _frontUploaded && _backUploaded
+                                    ? () {
+                                        HapticFeedback.selectionClick();
+                                        context.go(snapshot.nextRoute);
+                                      }
+                                    : null,
+                                trailing: const Icon(
+                                  Icons.chevron_right_rounded,
+                                ),
+                                child: const Text('Tiếp tục'),
+                              ),
+                            ],
+                            const VitCard(
+                              variant: VitCardVariant.inner,
+                              padding: EdgeInsetsDirectional.all(AppSpacing.x3),
+                              child: VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Identity document review',
+                                message:
+                                    'Document type, front/back upload status, security notice, KYC route and next verification step are reviewed before continuing.',
+                                contractId: 'p2p-identity-verification-review',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

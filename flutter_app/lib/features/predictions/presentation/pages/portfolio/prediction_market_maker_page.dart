@@ -55,33 +55,31 @@ class PredictionMarketMakerPage extends ConsumerStatefulWidget {
 class _PredictionMarketMakerPageState
     extends ConsumerState<PredictionMarketMakerPage> {
   _MarketMakerTab _activeTab = _MarketMakerTab.provide;
-  late final TextEditingController _eventController;
-  late final TextEditingController _amountController;
-  late final TextEditingController _minDepthController;
+  // GD4-F5 (bẫy 14): controller giờ dựng lười trong nhánh `data:` (thay
+  // initState đọc repo giờ đã async) — nullable, `_ensureControllers` chỉ
+  // seed 1 lần, không ghi đè khi user đã chỉnh.
+  TextEditingController? _eventController;
+  TextEditingController? _amountController;
+  TextEditingController? _minDepthController;
   int _spreadBps = 50;
 
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(predictionsReadModelControllerProvider)
-        .getMarketMaker();
+  void _ensureControllers(PredictionMarketMakerSnapshot snapshot) {
+    if (_eventController != null) return;
     _spreadBps = snapshot.defaultSpreadBps;
     _eventController = TextEditingController(text: snapshot.defaultEventName);
     _amountController = TextEditingController();
     _minDepthController = TextEditingController(
       text: _formatInput(snapshot.defaultMinDepth),
     );
-    _amountController.addListener(_refresh);
+    _amountController!.addListener(_refresh);
   }
 
   @override
   void dispose() {
-    _amountController
-      ..removeListener(_refresh)
-      ..dispose();
-    _eventController.dispose();
-    _minDepthController.dispose();
+    _amountController?.removeListener(_refresh);
+    _amountController?.dispose();
+    _eventController?.dispose();
+    _minDepthController?.dispose();
     super.dispose();
   }
 
@@ -91,9 +89,7 @@ class _PredictionMarketMakerPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getMarketMaker();
+    final marketMakerAsync = ref.watch(predictionsMarketMakerSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -137,22 +133,38 @@ class _PredictionMarketMakerPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: _activeTab == _MarketMakerTab.provide
-                          ? [
-                              _AddLiquidityForm(
-                                eventController: _eventController,
-                                amountController: _amountController,
-                                minDepthController: _minDepthController,
-                                spreadBps: _spreadBps,
-                                onSpreadChanged: (value) =>
-                                    setState(() => _spreadBps = value),
-                              ),
-                              _LiquidityOverview(snapshot: snapshot),
-                              const _LiquidityWarning(),
-                            ]
-                          : _activeTab == _MarketMakerTab.positions
-                          ? [_PositionsTab(snapshot: snapshot)]
-                          : [_EarningsTab(snapshot: snapshot)],
+                      children: marketMakerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được market maker',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsMarketMakerSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          _ensureControllers(snapshot);
+                          return _activeTab == _MarketMakerTab.provide
+                              ? [
+                                  _AddLiquidityForm(
+                                    eventController: _eventController!,
+                                    amountController: _amountController!,
+                                    minDepthController: _minDepthController!,
+                                    spreadBps: _spreadBps,
+                                    onSpreadChanged: (value) =>
+                                        setState(() => _spreadBps = value),
+                                  ),
+                                  _LiquidityOverview(snapshot: snapshot),
+                                  const _LiquidityWarning(),
+                                ]
+                              : _activeTab == _MarketMakerTab.positions
+                              ? [_PositionsTab(snapshot: snapshot)]
+                              : [_EarningsTab(snapshot: snapshot)];
+                        },
+                      ),
                     ),
                   ),
                 ),

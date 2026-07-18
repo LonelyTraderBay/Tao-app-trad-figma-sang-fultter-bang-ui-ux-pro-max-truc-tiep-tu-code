@@ -26,10 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-234 mock repository exposes ownership BE draft', () {
-    final snapshot = const MockP2PRepository().getPaymentMethodOwnership(
-      'sample',
-    );
+  test('SC-234 mock repository exposes ownership BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getPaymentMethodOwnership('sample');
 
     expect(
       snapshot.endpoint,

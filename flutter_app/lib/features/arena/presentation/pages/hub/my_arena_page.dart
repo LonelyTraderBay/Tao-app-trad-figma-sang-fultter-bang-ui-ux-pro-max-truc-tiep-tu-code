@@ -66,15 +66,11 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
 
   @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(arenaReadModelControllerProvider);
-    final baseSnapshot = switch (widget.contractScope) {
-      MyArenaContractScope.profile => repository.getMyArena(),
-      MyArenaContractScope.arena => repository.getArenaMy(),
+    final baseSnapshotAsync = switch (widget.contractScope) {
+      MyArenaContractScope.profile => ref.watch(myArenaSnapshotProvider),
+      MyArenaContractScope.arena => ref.watch(arenaMySnapshotProvider),
     };
-    final snapshot = _mergeArenaCreationSnapshot(
-      baseSnapshot,
-      ref.watch(arenaCreationProvider),
-    );
+    final creationState = ref.watch(arenaCreationProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -116,71 +112,98 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _PointsHero(
-                          stats: snapshot.stats,
-                          onDetails: () =>
-                              context.goHaptic(AppRoutePaths.arenaPoints),
-                          onLedger: () =>
-                              context.goHaptic(AppRoutePaths.arenaLedger),
-                          onEarn: () => context.goHaptic('/rewards'),
-                        ),
-                        _StatsGrid(stats: snapshot.stats),
-                        VitCtaButton(
-                          key: MyArenaPage.createChallengeKey,
-                          onPressed: () =>
-                              context.goHaptic(AppRoutePaths.arenaStudio),
-                          density: VitDensity.compact,
-                          leading: const Icon(Icons.auto_awesome_rounded),
-                          child: const Text('Tạo challenge mới'),
-                        ),
-                        _QuickLinks(
-                          onLeaderboard: () =>
-                              context.goHaptic(AppRoutePaths.arenaLeaderboard),
-                          onDiscover: () =>
-                              context.goHaptic(AppRoutePaths.arena),
-                        ),
-                        _ArenaTabs(
-                          activeTab: _activeTab,
-                          onChanged: (tab) => setState(() => _activeTab = tab),
-                        ),
-                        _TabContent(
-                          tab: _activeTab,
-                          snapshot: snapshot,
-                          onChallenge: (id) => context.goHaptic(
-                            AppRoutePaths.arenaChallenge(id),
+                      children: baseSnapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Sân chơi của tôi',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => switch (widget.contractScope) {
+                              MyArenaContractScope.profile => ref.invalidate(
+                                myArenaSnapshotProvider,
+                              ),
+                              MyArenaContractScope.arena => ref.invalidate(
+                                arenaMySnapshotProvider,
+                              ),
+                            },
                           ),
-                          onMode: (id) =>
-                              context.goHaptic(AppRoutePaths.arenaMode(id)),
-                          onStudio: () =>
-                              context.goHaptic(AppRoutePaths.arenaStudio),
-                          onDiscover: () =>
-                              context.goHaptic(AppRoutePaths.arena),
-                        ),
-                        _CreatedModesSection(
-                          snapshot: snapshot,
-                          onTap: () =>
-                              context.goHaptic(AppRoutePaths.arenaStudio),
-                        ),
-                        _RewardAnalyticsSection(
-                          history: snapshot.rewardHistory,
-                          onViewChallenge: () => context.goHaptic(
-                            AppRoutePaths.arenaChallenge('sample'),
-                          ),
-                        ),
-                        _SafetySection(
-                          onReports: () =>
-                              context.goHaptic(AppRoutePaths.arenaMyReports),
-                          onBlocked: () =>
-                              context.goHaptic(AppRoutePaths.arenaBlocked),
-                          onSafety: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                        _ArenaFooter(
-                          onRules: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                      ],
+                        ],
+                        data: (baseSnapshot) {
+                          final snapshot = _mergeArenaCreationSnapshot(
+                            baseSnapshot,
+                            creationState,
+                          );
+                          return [
+                            _PointsHero(
+                              stats: snapshot.stats,
+                              onDetails: () =>
+                                  context.goHaptic(AppRoutePaths.arenaPoints),
+                              onLedger: () =>
+                                  context.goHaptic(AppRoutePaths.arenaLedger),
+                              onEarn: () => context.goHaptic('/rewards'),
+                            ),
+                            _StatsGrid(stats: snapshot.stats),
+                            VitCtaButton(
+                              key: MyArenaPage.createChallengeKey,
+                              onPressed: () =>
+                                  context.goHaptic(AppRoutePaths.arenaStudio),
+                              density: VitDensity.compact,
+                              leading: const Icon(Icons.auto_awesome_rounded),
+                              child: const Text('Tạo challenge mới'),
+                            ),
+                            _QuickLinks(
+                              onLeaderboard: () => context.goHaptic(
+                                AppRoutePaths.arenaLeaderboard,
+                              ),
+                              onDiscover: () =>
+                                  context.goHaptic(AppRoutePaths.arena),
+                            ),
+                            _ArenaTabs(
+                              activeTab: _activeTab,
+                              onChanged: (tab) =>
+                                  setState(() => _activeTab = tab),
+                            ),
+                            _TabContent(
+                              tab: _activeTab,
+                              snapshot: snapshot,
+                              onChallenge: (id) => context.goHaptic(
+                                AppRoutePaths.arenaChallenge(id),
+                              ),
+                              onMode: (id) =>
+                                  context.goHaptic(AppRoutePaths.arenaMode(id)),
+                              onStudio: () =>
+                                  context.goHaptic(AppRoutePaths.arenaStudio),
+                              onDiscover: () =>
+                                  context.goHaptic(AppRoutePaths.arena),
+                            ),
+                            _CreatedModesSection(
+                              snapshot: snapshot,
+                              onTap: () =>
+                                  context.goHaptic(AppRoutePaths.arenaStudio),
+                            ),
+                            _RewardAnalyticsSection(
+                              history: snapshot.rewardHistory,
+                              onViewChallenge: () => context.goHaptic(
+                                AppRoutePaths.arenaChallenge('sample'),
+                              ),
+                            ),
+                            _SafetySection(
+                              onReports: () => context.goHaptic(
+                                AppRoutePaths.arenaMyReports,
+                              ),
+                              onBlocked: () =>
+                                  context.goHaptic(AppRoutePaths.arenaBlocked),
+                              onSafety: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
+                            ),
+                            _ArenaFooter(
+                              onRules: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

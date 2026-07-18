@@ -28,9 +28,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-042 mock repository exposes the tournaments BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getTournaments();
+  test('SC-042 mock repository exposes the tournaments BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getTournaments();
 
     expect(snapshot.tournaments, hasLength(4));
     expect(snapshot.activeTournaments, hasLength(2));

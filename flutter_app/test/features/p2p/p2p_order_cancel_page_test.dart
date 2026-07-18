@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-214 mock repository exposes P2P order cancel BE draft', () {
-    final snapshot = const MockP2PRepository().getOrderCancel('p2p001');
+  test('SC-214 mock repository exposes P2P order cancel BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrderCancel('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-cancel-p2p001');
     expect(
@@ -78,10 +80,9 @@ void main() {
     tester,
   ) async {
     await pumpP2POrderCancel(tester);
-    final firstReason = const MockP2PRepository()
-        .getOrderCancel('p2p001')
-        .reasons
-        .first;
+    final firstReason = (await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrderCancel('p2p001')).reasons.first;
 
     expectRouteSemanticInFirstViewport(
       tester,

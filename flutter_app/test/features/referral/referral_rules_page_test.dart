@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-288 mock repository exposes referral rules BE draft', () {
-    final snapshot = const MockReferralRepository().getRules();
+  test('SC-288 mock repository exposes referral rules BE draft', () async {
+    final snapshot = await const MockReferralRepository(
+      loadDelay: Duration.zero,
+    ).getRules();
 
     expect(snapshot.endpoint, '/api/mobile/referral/referral-rules');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

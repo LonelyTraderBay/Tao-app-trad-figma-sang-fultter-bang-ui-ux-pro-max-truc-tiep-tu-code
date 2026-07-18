@@ -69,9 +69,10 @@ class _PredictionsLeaderboardPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getLeaderboard(timeFilter: _timeFilter, metric: _metric);
+    final leaderboardQuery = (timeFilter: _timeFilter, metric: _metric);
+    final leaderboardAsync = ref.watch(
+      predictionsLeaderboardSnapshotProvider(leaderboardQuery),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
@@ -109,24 +110,39 @@ class _PredictionsLeaderboardPageState
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _TimeFilters(
-                          active: _timeFilter,
-                          onSelected: (value) => setState(() {
-                            _timeFilter = value;
-                          }),
-                        ),
-                        _MetricTabs(
-                          active: _metric,
-                          onSelected: (value) => setState(() {
-                            _metric = value;
-                          }),
-                          onInfoTap: () => _showPnlInfo(context),
-                        ),
-                        _Podium(traders: snapshot.traders.take(3).toList()),
-                        _Rankings(snapshot: snapshot),
-                        _BiggestWins(snapshot: snapshot),
-                      ],
+                      children: leaderboardAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được bảng xếp hạng',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsLeaderboardSnapshotProvider(
+                                leaderboardQuery,
+                              ),
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _TimeFilters(
+                            active: _timeFilter,
+                            onSelected: (value) => setState(() {
+                              _timeFilter = value;
+                            }),
+                          ),
+                          _MetricTabs(
+                            active: _metric,
+                            onSelected: (value) => setState(() {
+                              _metric = value;
+                            }),
+                            onInfoTap: () => _showPnlInfo(context),
+                          ),
+                          _Podium(traders: snapshot.traders.take(3).toList()),
+                          _Rankings(snapshot: snapshot),
+                          _BiggestWins(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),

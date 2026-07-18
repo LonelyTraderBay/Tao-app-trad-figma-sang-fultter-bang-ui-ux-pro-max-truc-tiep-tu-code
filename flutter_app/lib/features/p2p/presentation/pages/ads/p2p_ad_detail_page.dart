@@ -51,22 +51,13 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pAdDetailProvider(widget.adId));
-    final ad = snapshot.ad;
+    final snapshotAsync = ref.watch(p2pAdDetailProvider(widget.adId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? _p2pAdDetailVisualNavClearance + _p2pAdDetailVisualClearance
             : _p2pAdDetailNativeNavClearance + _p2pAdDetailNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final fiatAmount = _selectedPercent == null
-        ? 0
-        : (ad.maxLimit * _selectedPercent! / 100).round();
-    final cryptoAmount = fiatAmount == 0 ? 0.0 : fiatAmount / ad.price;
-    final isValid =
-        fiatAmount >= ad.minLimit &&
-        fiatAmount <= ad.maxLimit &&
-        cryptoAmount <= snapshot.availableAmount;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,68 +72,93 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PAdDetailPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pAdDetailFlushScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _MerchantCard(snapshot: snapshot),
-                        _TrustMarketRow(snapshot: snapshot),
-                        _SignalChips(snapshot: snapshot),
-                        _PriceCard(snapshot: snapshot),
-                        _AmountCard(
-                          snapshot: snapshot,
-                          selectedPercent: _selectedPercent,
-                          fiatAmount: fiatAmount,
-                          cryptoAmount: cryptoAmount,
-                          onPercent: (percent) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedPercent = percent);
-                          },
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pAdDetailProvider(widget.adId)),
+            ),
+            data: (snapshot) {
+              final ad = snapshot.ad;
+              final fiatAmount = _selectedPercent == null
+                  ? 0
+                  : (ad.maxLimit * _selectedPercent! / 100).round();
+              final cryptoAmount = fiatAmount == 0
+                  ? 0.0
+                  : fiatAmount / ad.price;
+              final isValid =
+                  fiatAmount >= ad.minLimit &&
+                  fiatAmount <= ad.maxLimit &&
+                  cryptoAmount <= snapshot.availableAmount;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PAdDetailPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pAdDetailFlushScrollPadding(
+                          scrollEndPadding,
                         ),
-                        _RequirementCard(snapshot: snapshot),
-                        _TermsCard(snapshot: snapshot),
-                        _EscrowCard(snapshot: snapshot, amount: cryptoAmount),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'P2P order preview review',
-                          message:
-                              'Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.',
-                          contractId: 'p2p-ad-detail-order-review',
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _MerchantCard(snapshot: snapshot),
+                            _TrustMarketRow(snapshot: snapshot),
+                            _SignalChips(snapshot: snapshot),
+                            _PriceCard(snapshot: snapshot),
+                            _AmountCard(
+                              snapshot: snapshot,
+                              selectedPercent: _selectedPercent,
+                              fiatAmount: fiatAmount,
+                              cryptoAmount: cryptoAmount,
+                              onPercent: (percent) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _selectedPercent = percent);
+                              },
+                            ),
+                            _RequirementCard(snapshot: snapshot),
+                            _TermsCard(snapshot: snapshot),
+                            _EscrowCard(
+                              snapshot: snapshot,
+                              amount: cryptoAmount,
+                            ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'P2P order preview review',
+                              message:
+                                  'Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.',
+                              contractId: 'p2p-ad-detail-order-review',
+                            ),
+                            VitCtaButton(
+                              key: P2PAdDetailPage.buyButtonKey,
+                              onPressed: isValid
+                                  ? () => context.go(
+                                      AppRoutePaths.p2pOrder(
+                                        snapshot.targetOrderId,
+                                      ),
+                                    )
+                                  : null,
+                              variant: VitCtaButtonVariant.success,
+                              child: Text('Mua ${ad.asset}'),
+                            ),
+                          ],
                         ),
-                        VitCtaButton(
-                          key: P2PAdDetailPage.buyButtonKey,
-                          onPressed: isValid
-                              ? () => context.go(
-                                  AppRoutePaths.p2pOrder(
-                                    snapshot.targetOrderId,
-                                  ),
-                                )
-                              : null,
-                          variant: VitCtaButtonVariant.success,
-                          child: Text('Mua ${ad.asset}'),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),

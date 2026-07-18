@@ -6,11 +6,11 @@ import 'package:vit_trade_flutter/features/referral/data/referral_repository.dar
 /// computed results against the known fixture data in
 /// mock_referral_repository_*_fixtures.dart.
 void main() {
-  const repository = MockReferralRepository();
+  const repository = MockReferralRepository(loadDelay: Duration.zero);
 
   group('MockReferralRepository.getHome', () {
-    test('returns a populated snapshot', () {
-      final snapshot = repository.getHome();
+    test('returns a populated snapshot', () async {
+      final snapshot = await repository.getHome();
 
       expect(snapshot, isA<ReferralHomeSnapshot>());
       expect(snapshot.referralCode, isNotEmpty);
@@ -25,16 +25,16 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('stats.totalFriends matches the friend fixture count', () {
-      final stats = repository.getHome().stats;
+    test('stats.totalFriends matches the friend fixture count', () async {
+      final stats = (await repository.getHome()).stats;
 
       expect(stats.totalFriends, 8);
     });
 
     test(
       'stats.kycCompleted counts friends whose status is not pendingKyc',
-      () {
-        final stats = repository.getHome().stats;
+      () async {
+        final stats = (await repository.getHome()).stats;
 
         // Fixture: friend007 and friend008 are pendingKyc; the other 6
         // friends (kycDone or activeTrader) count as KYC-completed.
@@ -42,30 +42,30 @@ void main() {
       },
     );
 
-    test('stats.activeFriends counts only activeTrader friends', () {
-      final stats = repository.getHome().stats;
+    test('stats.activeFriends counts only activeTrader friends', () async {
+      final stats = (await repository.getHome()).stats;
 
       // Fixture: friend001, 002, 003, 005, 006 are activeTrader.
       expect(stats.activeFriends, 5);
     });
 
-    test('stats.totalVolume sums totalVolume across every friend', () {
-      final stats = repository.getHome().stats;
+    test('stats.totalVolume sums totalVolume across every friend', () async {
+      final stats = (await repository.getHome()).stats;
 
       // 23450 + 12380 + 8920 + 0 + 18760 + 5640 + 0 + 0
       expect(stats.totalVolume, 69150.0);
     });
 
     test('stats.totalCommission/pendingCommission match the completed and '
-        'pending reward totals', () {
-      final stats = repository.getHome().stats;
+        'pending reward totals', () async {
+      final stats = (await repository.getHome()).stats;
 
       expect(stats.totalCommission, 128.90);
       expect(stats.pendingCommission, 10.0);
     });
 
-    test('stats.activeFriends never exceeds stats.totalFriends', () {
-      final stats = repository.getHome().stats;
+    test('stats.activeFriends never exceeds stats.totalFriends', () async {
+      final stats = (await repository.getHome()).stats;
 
       expect(stats.activeFriends, lessThanOrEqualTo(stats.totalFriends));
       expect(stats.kycCompleted, lessThanOrEqualTo(stats.totalFriends));
@@ -73,8 +73,10 @@ void main() {
   });
 
   group('MockReferralRepository.getHistory filters', () {
-    test('filter=all returns every friend in the fixture', () {
-      final snapshot = repository.getHistory(filter: ReferralFriendFilter.all);
+    test('filter=all returns every friend in the fixture', () async {
+      final snapshot = await repository.getHistory(
+        filter: ReferralFriendFilter.all,
+      );
 
       expect(snapshot.friends, hasLength(8));
       expect(snapshot.friends.map((friend) => friend.id).toSet(), {
@@ -89,8 +91,8 @@ void main() {
       });
     });
 
-    test('filter=activeTrader returns only activeTrader friends', () {
-      final snapshot = repository.getHistory(
+    test('filter=activeTrader returns only activeTrader friends', () async {
+      final snapshot = await repository.getHistory(
         filter: ReferralFriendFilter.activeTrader,
       );
 
@@ -110,8 +112,8 @@ void main() {
       });
     });
 
-    test('filter=kycDone returns only kycDone friends', () {
-      final snapshot = repository.getHistory(
+    test('filter=kycDone returns only kycDone friends', () async {
+      final snapshot = await repository.getHistory(
         filter: ReferralFriendFilter.kycDone,
       );
 
@@ -125,8 +127,8 @@ void main() {
       expect(snapshot.friends.single.id, 'friend004');
     });
 
-    test('filter=pendingKyc returns only pendingKyc friends', () {
-      final snapshot = repository.getHistory(
+    test('filter=pendingKyc returns only pendingKyc friends', () async {
+      final snapshot = await repository.getHistory(
         filter: ReferralFriendFilter.pendingKyc,
       );
 
@@ -145,9 +147,9 @@ void main() {
   });
 
   group('MockReferralRepository.getHistory search', () {
-    test('query matches case-insensitively against the friend name', () {
-      final lower = repository.getHistory(query: 'thanh');
-      final upper = repository.getHistory(query: 'THANH');
+    test('query matches case-insensitively against the friend name', () async {
+      final lower = await repository.getHistory(query: 'thanh');
+      final upper = await repository.getHistory(query: 'THANH');
 
       expect(lower.friends, hasLength(1));
       expect(lower.friends.single.id, 'friend001');
@@ -155,37 +157,40 @@ void main() {
       expect(upper.friends.single.id, 'friend001');
     });
 
-    test('query with no matches returns an empty friend list', () {
-      final snapshot = repository.getHistory(query: 'zzz-not-a-friend');
+    test('query with no matches returns an empty friend list', () async {
+      final snapshot = await repository.getHistory(query: 'zzz-not-a-friend');
 
       expect(snapshot.friends, isEmpty);
     });
   });
 
   group('MockReferralRepository.getHistory sort', () {
-    test('sort=commission orders friends by totalCommission descending', () {
-      final friends = repository
-          .getHistory(sort: ReferralHistorySort.commission)
-          .friends;
+    test(
+      'sort=commission orders friends by totalCommission descending',
+      () async {
+        final friends = (await repository.getHistory(
+          sort: ReferralHistorySort.commission,
+        )).friends;
 
-      // Highest two commissions in the fixture are unambiguous.
-      expect(friends.first.id, 'friend001');
-      expect(friends.first.totalCommission, 46.90);
-      expect(friends[1].id, 'friend005');
-      expect(friends[1].totalCommission, 37.50);
+        // Highest two commissions in the fixture are unambiguous.
+        expect(friends.first.id, 'friend001');
+        expect(friends.first.totalCommission, 46.90);
+        expect(friends[1].id, 'friend005');
+        expect(friends[1].totalCommission, 37.50);
 
-      for (var i = 0; i < friends.length - 1; i++) {
-        expect(
-          friends[i].totalCommission,
-          greaterThanOrEqualTo(friends[i + 1].totalCommission),
-        );
-      }
-    });
+        for (var i = 0; i < friends.length - 1; i++) {
+          expect(
+            friends[i].totalCommission,
+            greaterThanOrEqualTo(friends[i + 1].totalCommission),
+          );
+        }
+      },
+    );
 
-    test('sort=volume orders friends by totalVolume descending', () {
-      final friends = repository
-          .getHistory(sort: ReferralHistorySort.volume)
-          .friends;
+    test('sort=volume orders friends by totalVolume descending', () async {
+      final friends = (await repository.getHistory(
+        sort: ReferralHistorySort.volume,
+      )).friends;
 
       expect(friends.first.id, 'friend001');
       expect(friends.first.totalVolume, 23450);
@@ -200,35 +205,40 @@ void main() {
       }
     });
 
-    test('sort=date is a no-op comparator and preserves the fixture order', () {
-      final friends = repository
-          .getHistory(sort: ReferralHistorySort.date)
-          .friends;
+    test(
+      'sort=date is a no-op comparator and preserves the fixture order',
+      () async {
+        final friends = (await repository.getHistory(
+          sort: ReferralHistorySort.date,
+        )).friends;
 
-      expect(friends.map((friend) => friend.id).toList(), [
-        'friend001',
-        'friend002',
-        'friend003',
-        'friend004',
-        'friend005',
-        'friend006',
-        'friend007',
-        'friend008',
-      ]);
-    });
+        expect(friends.map((friend) => friend.id).toList(), [
+          'friend001',
+          'friend002',
+          'friend003',
+          'friend004',
+          'friend005',
+          'friend006',
+          'friend007',
+          'friend008',
+        ]);
+      },
+    );
   });
 
   group('MockReferralRepository.getRewards filters', () {
-    test('filter=all returns every reward record', () {
-      final snapshot = repository.getRewards(filter: ReferralRewardFilter.all);
+    test('filter=all returns every reward record', () async {
+      final snapshot = await repository.getRewards(
+        filter: ReferralRewardFilter.all,
+      );
 
       expect(snapshot.records, hasLength(14));
       expect(snapshot.completedCount, 12);
       expect(snapshot.pendingCount, 2);
     });
 
-    test('filter=kycBonus returns only kycBonus records', () {
-      final snapshot = repository.getRewards(
+    test('filter=kycBonus returns only kycBonus records', () async {
+      final snapshot = await repository.getRewards(
         filter: ReferralRewardFilter.kycBonus,
       );
 
@@ -251,28 +261,31 @@ void main() {
       expect(snapshot.pendingCount, 2);
     });
 
-    test('filter=tradeCommission returns only tradeCommission records', () {
-      final snapshot = repository.getRewards(
-        filter: ReferralRewardFilter.tradeCommission,
-      );
+    test(
+      'filter=tradeCommission returns only tradeCommission records',
+      () async {
+        final snapshot = await repository.getRewards(
+          filter: ReferralRewardFilter.tradeCommission,
+        );
 
-      expect(snapshot.records, hasLength(8));
-      expect(
-        snapshot.records.every(
-          (record) => record.type == ReferralRewardType.tradeCommission,
-        ),
-        isTrue,
-      );
-      expect(snapshot.completedCount, 8);
-      expect(snapshot.pendingCount, 0);
-    });
+        expect(snapshot.records, hasLength(8));
+        expect(
+          snapshot.records.every(
+            (record) => record.type == ReferralRewardType.tradeCommission,
+          ),
+          isTrue,
+        );
+        expect(snapshot.completedCount, 8);
+        expect(snapshot.pendingCount, 0);
+      },
+    );
   });
 
   group('MockReferralRepository.getRewards sort', () {
-    test('sort=amount orders records by amount descending', () {
-      final records = repository
-          .getRewards(sort: ReferralRewardSort.amount)
-          .records;
+    test('sort=amount orders records by amount descending', () async {
+      final records = (await repository.getRewards(
+        sort: ReferralRewardSort.amount,
+      )).records;
 
       // Highest two amounts in the fixture are unambiguous.
       expect(records.first.id, 'cr-01');
@@ -285,34 +298,37 @@ void main() {
       }
     });
 
-    test('sort=date is a no-op comparator and preserves the fixture order', () {
-      final records = repository
-          .getRewards(sort: ReferralRewardSort.date)
-          .records;
+    test(
+      'sort=date is a no-op comparator and preserves the fixture order',
+      () async {
+        final records = (await repository.getRewards(
+          sort: ReferralRewardSort.date,
+        )).records;
 
-      expect(records.map((record) => record.id).toList(), [
-        'cr-01',
-        'cr-02',
-        'cr-03',
-        'cr-04',
-        'cr-05',
-        'cr-06',
-        'cr-07',
-        'cr-08',
-        'cr-09',
-        'cr-10',
-        'cr-11',
-        'cr-12',
-        'cr-13',
-        'cr-14',
-      ]);
-    });
+        expect(records.map((record) => record.id).toList(), [
+          'cr-01',
+          'cr-02',
+          'cr-03',
+          'cr-04',
+          'cr-05',
+          'cr-06',
+          'cr-07',
+          'cr-08',
+          'cr-09',
+          'cr-10',
+          'cr-11',
+          'cr-12',
+          'cr-13',
+          'cr-14',
+        ]);
+      },
+    );
   });
 
   group('MockReferralRepository.getRewards aggregates', () {
     test('kycBonusTotal and tradeCommissionTotal are computed from '
-        'completed records only, independent of the filter argument', () {
-      final snapshot = repository.getRewards();
+        'completed records only, independent of the filter argument', () async {
+      final snapshot = await repository.getRewards();
 
       // cr-03 + cr-06 + cr-09 + cr-10 (completed kycBonus records, 5 each)
       expect(snapshot.kycBonusTotal, 20.0);
@@ -321,8 +337,8 @@ void main() {
     });
 
     test('totalCommission and pendingCommission match the completed and '
-        'pending reward totals', () {
-      final snapshot = repository.getRewards();
+        'pending reward totals', () async {
+      final snapshot = await repository.getRewards();
 
       expect(snapshot.totalCommission, 128.90);
       expect(snapshot.pendingCommission, 10.0);
@@ -330,8 +346,8 @@ void main() {
   });
 
   group('MockReferralRepository.getRules', () {
-    test('returns a populated snapshot with all program tiers', () {
-      final snapshot = repository.getRules();
+    test('returns a populated snapshot with all program tiers', () async {
+      final snapshot = await repository.getRules();
 
       expect(snapshot, isA<ReferralRulesSnapshot>());
       expect(snapshot.tiers, hasLength(5));
@@ -344,8 +360,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('currentTierIndex points at the Silver tier', () {
-      final snapshot = repository.getRules();
+    test('currentTierIndex points at the Silver tier', () async {
+      final snapshot = await repository.getRules();
 
       expect(snapshot.currentTierIndex, 1);
       expect(snapshot.tiers[snapshot.currentTierIndex].id, 'silver');
@@ -353,8 +369,8 @@ void main() {
   });
 
   group('MockReferralRepository.getFriendDetail', () {
-    test('echoes the requested friendId back on the snapshot', () {
-      final snapshot = repository.getFriendDetail('friend001');
+    test('echoes the requested friendId back on the snapshot', () async {
+      final snapshot = await repository.getFriendDetail('friend001');
 
       expect(snapshot, isA<ReferralFriendDetailSnapshot>());
       expect(snapshot.friendId, 'friend001');
@@ -362,8 +378,8 @@ void main() {
     });
 
     test('always resolves to the not-found state regardless of friendId '
-        '(SC-289: no friend detail data source is wired up yet)', () {
-      final snapshot = repository.getFriendDetail('friend001');
+        '(SC-289: no friend detail data source is wired up yet)', () async {
+      final snapshot = await repository.getFriendDetail('friend001');
 
       expect(snapshot.found, isFalse);
       expect(snapshot.emptyTitle, isNotEmpty);
@@ -372,13 +388,9 @@ void main() {
     });
 
     test('does not throw for an unrecognized friendId and falls back to '
-        'the same not-found state', () {
-      late final ReferralFriendDetailSnapshot snapshot;
+        'the same not-found state', () async {
+      final snapshot = await repository.getFriendDetail('does-not-exist');
 
-      expect(
-        () => snapshot = repository.getFriendDetail('does-not-exist'),
-        returnsNormally,
-      );
       expect(snapshot.found, isFalse);
       expect(snapshot.friendId, 'does-not-exist');
       expect(snapshot.endpoint, contains('does-not-exist'));

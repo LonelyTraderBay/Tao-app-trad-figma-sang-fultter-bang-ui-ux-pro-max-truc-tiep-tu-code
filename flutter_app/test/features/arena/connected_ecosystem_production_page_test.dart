@@ -29,9 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-208 mock repository exposes connected ecosystem BE draft', () {
-    final snapshot = const MockArenaRepository()
-        .getConnectedEcosystemProduction();
+  test('SC-208 mock repository exposes connected ecosystem BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getConnectedEcosystemProduction();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-ecosystem');
     expect(

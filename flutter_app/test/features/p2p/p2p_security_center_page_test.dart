@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-253 mock repository exposes security center BE draft', () {
-    final snapshot = const MockP2PRepository().getSecurityCenter();
+  test('SC-253 mock repository exposes security center BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getSecurityCenter();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-security-center');
     expect(

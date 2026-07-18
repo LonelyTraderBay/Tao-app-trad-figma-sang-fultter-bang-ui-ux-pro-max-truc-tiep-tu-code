@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-189 mock repository exposes Arena Mode Detail BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaModeDetail('mode001');
+  test('SC-189 mock repository exposes Arena Mode Detail BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaModeDetail('mode001');
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-mode-mode001');
     expect(

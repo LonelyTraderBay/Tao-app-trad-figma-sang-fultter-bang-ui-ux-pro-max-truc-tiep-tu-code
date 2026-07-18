@@ -71,9 +71,9 @@ class _PredictionAdvancedChartPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getAdvancedChart(widget.eventId);
+    final chartAsync = ref.watch(
+      predictionsAdvancedChartSnapshotProvider(widget.eventId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -118,57 +118,73 @@ class _PredictionAdvancedChartPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.flush,
                       density: VitDensity.compact,
-                      children: [
-                        ...switch (_activeTab) {
-                          _ChartTab.chart => [
-                            _TimeframeSelector(
-                              active: _timeframe,
-                              onChanged: (value) =>
-                                  setState(() => _timeframe = value),
+                      children: chartAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được biểu đồ nâng cao',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsAdvancedChartSnapshotProvider(
+                                widget.eventId,
+                              ),
                             ),
-                            _ProbabilitySummaryCard(snapshot: snapshot),
-                            _ProbabilityChartCard(
-                              snapshot: snapshot,
-                              showMA7: _showMA7,
-                              showMA25: _showMA25,
-                              showBB: _showBB,
-                            ),
-                            if (_showVolume)
-                              _VolumeChartCard(snapshot: snapshot),
-                            _ChartLayerControls(
-                              showMA7: _showMA7,
-                              showMA25: _showMA25,
-                              showBB: _showBB,
-                              showVolume: _showVolume,
-                              onMA7: () => setState(() => _showMA7 = !_showMA7),
-                              onMA25: () =>
-                                  setState(() => _showMA25 = !_showMA25),
-                              onBB: () => setState(() => _showBB = !_showBB),
-                              onVolume: () =>
-                                  setState(() => _showVolume = !_showVolume),
-                            ),
-                          ],
-                          _ChartTab.indicators => [
-                            _RsiCard(snapshot: snapshot),
-                            _IndicatorSummarySection(snapshot: snapshot),
-                            const _OverallSignalCard(),
-                          ],
-                          _ChartTab.analysis => [
-                            _OrderFlowCard(snapshot: snapshot),
-                            _SupportResistanceSection(snapshot: snapshot),
-                            _PatternRecognitionCard(snapshot: snapshot),
-                            const _AnalysisDisclaimer(),
-                          ],
-                        },
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Prediction advanced-chart review',
-                          message:
-                              'Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.',
-                          contractId: 'SC-041',
-                          density: VitDensity.compact,
-                        ),
-                      ],
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          ...switch (_activeTab) {
+                            _ChartTab.chart => [
+                              _TimeframeSelector(
+                                active: _timeframe,
+                                onChanged: (value) =>
+                                    setState(() => _timeframe = value),
+                              ),
+                              _ProbabilitySummaryCard(snapshot: snapshot),
+                              _ProbabilityChartCard(
+                                snapshot: snapshot,
+                                showMA7: _showMA7,
+                                showMA25: _showMA25,
+                                showBB: _showBB,
+                              ),
+                              if (_showVolume)
+                                _VolumeChartCard(snapshot: snapshot),
+                              _ChartLayerControls(
+                                showMA7: _showMA7,
+                                showMA25: _showMA25,
+                                showBB: _showBB,
+                                showVolume: _showVolume,
+                                onMA7: () =>
+                                    setState(() => _showMA7 = !_showMA7),
+                                onMA25: () =>
+                                    setState(() => _showMA25 = !_showMA25),
+                                onBB: () => setState(() => _showBB = !_showBB),
+                                onVolume: () =>
+                                    setState(() => _showVolume = !_showVolume),
+                              ),
+                            ],
+                            _ChartTab.indicators => [
+                              _RsiCard(snapshot: snapshot),
+                              _IndicatorSummarySection(snapshot: snapshot),
+                              const _OverallSignalCard(),
+                            ],
+                            _ChartTab.analysis => [
+                              _OrderFlowCard(snapshot: snapshot),
+                              _SupportResistanceSection(snapshot: snapshot),
+                              _PatternRecognitionCard(snapshot: snapshot),
+                              const _AnalysisDisclaimer(),
+                            ],
+                          },
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Prediction advanced-chart review',
+                            message:
+                                'Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.',
+                            contractId: 'SC-041',
+                            density: VitDensity.compact,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

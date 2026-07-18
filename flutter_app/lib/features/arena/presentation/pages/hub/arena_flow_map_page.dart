@@ -76,9 +76,7 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaFlowMap();
+    final snapshotAsync = ref.watch(arenaFlowMapSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -118,63 +116,77 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _FlowHero(stats: snapshot.stats),
-                        _CollapsibleSection(
-                          id: 'flow',
-                          title: 'SECTION 1 — Flow Map',
-                          badge: '${snapshot.groups.length} flows',
-                          icon: Icons.map_outlined,
-                          color: AppColors.primary,
-                          expanded: _expandedSection == 'flow',
-                          onTap: () => _toggle('flow'),
-                          child: _FlowMapBody(
-                            snapshot: snapshot,
-                            onRoute: (route) => _go(context, route),
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Flow Map',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(arenaFlowMapSnapshotProvider),
                           ),
-                        ),
-                        _CollapsibleSection(
-                          id: 'handoff',
-                          title: 'SECTION 2 — Handoff Notes',
-                          badge: '${snapshot.handoffNotes.length} notes',
-                          icon: Icons.menu_book_outlined,
-                          color: AppColors.warn,
-                          expanded: _expandedSection == 'handoff',
-                          onTap: () => _toggle('handoff'),
-                          child: _HandoffNotes(notes: snapshot.handoffNotes),
-                        ),
-                        _CollapsibleSection(
-                          id: 'qa',
-                          title: 'SECTION 3 — QA Checklist',
-                          badge:
-                              '${_checkedQa.length}/${snapshot.qaItems.length}',
-                          icon: Icons.check_circle_outline,
-                          color: AppColors.buy,
-                          expanded: _expandedSection == 'qa',
-                          onTap: () => _toggle('qa'),
-                          child: _QaChecklist(
-                            items: snapshot.qaItems,
-                            checkedIds: _checkedQa,
-                            onToggle: (id) {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                if (!_checkedQa.add(id)) _checkedQa.remove(id);
-                              });
-                            },
-                            onCheckAll: () {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _checkedQa
-                                  ..clear()
-                                  ..addAll(
-                                    snapshot.qaItems.map((item) => item.id),
-                                  );
-                              });
-                            },
+                        ],
+                        data: (snapshot) => [
+                          _FlowHero(stats: snapshot.stats),
+                          _CollapsibleSection(
+                            id: 'flow',
+                            title: 'SECTION 1 — Flow Map',
+                            badge: '${snapshot.groups.length} flows',
+                            icon: Icons.map_outlined,
+                            color: AppColors.primary,
+                            expanded: _expandedSection == 'flow',
+                            onTap: () => _toggle('flow'),
+                            child: _FlowMapBody(
+                              snapshot: snapshot,
+                              onRoute: (route) => _go(context, route),
+                            ),
                           ),
-                        ),
-                        _FlowDisclaimer(text: snapshot.disclaimer),
-                      ],
+                          _CollapsibleSection(
+                            id: 'handoff',
+                            title: 'SECTION 2 — Handoff Notes',
+                            badge: '${snapshot.handoffNotes.length} notes',
+                            icon: Icons.menu_book_outlined,
+                            color: AppColors.warn,
+                            expanded: _expandedSection == 'handoff',
+                            onTap: () => _toggle('handoff'),
+                            child: _HandoffNotes(notes: snapshot.handoffNotes),
+                          ),
+                          _CollapsibleSection(
+                            id: 'qa',
+                            title: 'SECTION 3 — QA Checklist',
+                            badge:
+                                '${_checkedQa.length}/${snapshot.qaItems.length}',
+                            icon: Icons.check_circle_outline,
+                            color: AppColors.buy,
+                            expanded: _expandedSection == 'qa',
+                            onTap: () => _toggle('qa'),
+                            child: _QaChecklist(
+                              items: snapshot.qaItems,
+                              checkedIds: _checkedQa,
+                              onToggle: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  if (!_checkedQa.add(id)) {
+                                    _checkedQa.remove(id);
+                                  }
+                                });
+                              },
+                              onCheckAll: () {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _checkedQa
+                                    ..clear()
+                                    ..addAll(
+                                      snapshot.qaItems.map((item) => item.id),
+                                    );
+                                });
+                              },
+                            ),
+                          ),
+                          _FlowDisclaimer(text: snapshot.disclaimer),
+                        ],
+                      ),
                     ),
                   ),
                 ),

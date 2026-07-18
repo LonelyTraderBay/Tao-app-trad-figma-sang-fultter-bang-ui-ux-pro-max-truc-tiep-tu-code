@@ -156,23 +156,23 @@ void main() {
 
       const p2p = MockP2PRepository();
       expect(
-        p2p.getHome().highRiskContractId,
+        (await p2p.getHome()).highRiskContractId,
         HighRiskFlowContractIds.p2pEscrowOrder,
       );
       expect(
-        p2p.getExpressConfirm(fiatAmount: 5000000).highRiskContractId,
+        (await p2p.getExpressConfirm(fiatAmount: 5000000)).highRiskContractId,
         HighRiskFlowContractIds.p2pEscrowOrder,
       );
       expect(
-        p2p.getOrderTimeline('order001').highRiskContractId,
+        (await p2p.getOrderTimeline('order001')).highRiskContractId,
         HighRiskFlowContractIds.p2pEscrowOrder,
       );
       expect(
-        p2p.getOrder('order001').highRiskContractId,
+        (await p2p.getOrder('order001')).highRiskContractId,
         HighRiskFlowContractIds.p2pEscrowOrder,
       );
       expect(
-        p2p.getClaimDetail('sample').highRiskContractId,
+        (await p2p.getClaimDetail('sample')).highRiskContractId,
         HighRiskFlowContractIds.p2pEscrowOrder,
       );
 
@@ -190,17 +190,17 @@ void main() {
         HighRiskFlowContractIds.launchpadTokenAccess,
       );
 
-      const predictions = MockPredictionsRepository();
+      const predictions = MockPredictionsRepository(loadDelay: Duration.zero);
       expect(
-        predictions.getHome().highRiskContractId,
+        (await predictions.getHome()).highRiskContractId,
         HighRiskFlowContractIds.predictionMarketEvent,
       );
       expect(
-        predictions.getEventDetail('event001').highRiskContractId,
+        (await predictions.getEventDetail('event001')).highRiskContractId,
         HighRiskFlowContractIds.predictionMarketEvent,
       );
       expect(
-        predictions.getOrderReceipt('receipt001').highRiskContractId,
+        (await predictions.getOrderReceipt('receipt001')).highRiskContractId,
         HighRiskFlowContractIds.predictionMarketEvent,
       );
     },

@@ -61,9 +61,9 @@ class _ConnectedEcosystemProductionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getConnectedEcosystemProduction();
+    final snapshotAsync = ref.watch(
+      connectedEcosystemProductionSnapshotProvider,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -105,27 +105,40 @@ class _ConnectedEcosystemProductionPageState
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        const _EcosystemHero(),
-                        _SectionTabs(
-                          active: _activeSection,
-                          onChanged: (section) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeSection = section);
-                          },
-                        ),
-                        _ActiveSection(
-                          section: _activeSection,
-                          snapshot: snapshot,
-                          activeHandoffBoard: _activeHandoffBoard,
-                          onHandoffBoardChanged: (board) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeHandoffBoard = board);
-                          },
-                          onRoute: (route) => _go(context, route),
-                        ),
-                        _EcosystemFooter(text: snapshot.footerDisclosure),
-                      ],
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Connected Ecosystem',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              connectedEcosystemProductionSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          const _EcosystemHero(),
+                          _SectionTabs(
+                            active: _activeSection,
+                            onChanged: (section) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeSection = section);
+                            },
+                          ),
+                          _ActiveSection(
+                            section: _activeSection,
+                            snapshot: snapshot,
+                            activeHandoffBoard: _activeHandoffBoard,
+                            onHandoffBoardChanged: (board) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeHandoffBoard = board);
+                            },
+                            onRoute: (route) => _go(context, route),
+                          ),
+                          _EcosystemFooter(text: snapshot.footerDisclosure),
+                        ],
+                      ),
                     ),
                   ),
                 ),

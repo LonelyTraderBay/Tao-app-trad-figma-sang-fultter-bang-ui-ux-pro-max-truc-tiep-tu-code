@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-223 mock repository exposes P2P ad analytics BE draft', () {
-    final snapshot = const MockP2PRepository().getAdAnalytics('sample');
+  test('SC-223 mock repository exposes P2P ad analytics BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getAdAnalytics('sample');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-ad-analytics-sample');
     expect(

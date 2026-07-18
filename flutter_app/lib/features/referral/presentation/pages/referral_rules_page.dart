@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -50,7 +51,7 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(referralControllerProvider).getRules();
+    final rulesAsync = ref.watch(referralRulesSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -66,10 +67,12 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Quy tắc chương trình',
+            subtitle: 'Quy tắc · Referral',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(
+              rulesAsync.value?.backRoute ?? AppRoutePaths.referral,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,41 +92,53 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        const _ReferralRulesSection(
-                          title: 'Hệ thống hạng',
-                          subtitle: 'Mời càng nhiều, thưởng càng lớn',
-                          accentColor: AppColors.warn,
-                        ),
-                        _TierTable(snapshot: snapshot),
-                        const _ReferralRulesSection(
-                          title: 'Các loại thưởng',
-                          accentColor: AppModuleAccents.trade,
-                        ),
-                        _RewardTypes(snapshot: snapshot),
-                        const _ReferralRulesSection(
-                          title: 'Điều khoản chương trình',
-                          accentColor: AppColors.text2,
-                        ),
-                        _TermsList(snapshot: snapshot),
-                        const _ReferralRulesSection(
-                          title: 'Câu hỏi thường gặp',
-                          accentColor: AppColors.accent,
-                        ),
-                        _FaqList(
-                          snapshot: snapshot,
-                          openIndex: _openFaqIndex,
-                          onToggle: (index) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _openFaqIndex = _openFaqIndex == index
-                                  ? null
-                                  : index;
-                            });
-                          },
-                        ),
-                        _Disclaimer(snapshot: snapshot),
-                      ],
+                      children: rulesAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được quy tắc',
+                            message: 'Thử lại sau hoặc quay lại trang chủ.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(referralRulesSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          const _ReferralRulesSection(
+                            title: 'Hệ thống hạng',
+                            subtitle: 'Mời càng nhiều, thưởng càng lớn',
+                            accentColor: AppColors.warn,
+                          ),
+                          _TierTable(snapshot: snapshot),
+                          const _ReferralRulesSection(
+                            title: 'Các loại thưởng',
+                            accentColor: AppModuleAccents.trade,
+                          ),
+                          _RewardTypes(snapshot: snapshot),
+                          const _ReferralRulesSection(
+                            title: 'Điều khoản chương trình',
+                            accentColor: AppColors.text2,
+                          ),
+                          _TermsList(snapshot: snapshot),
+                          const _ReferralRulesSection(
+                            title: 'Câu hỏi thường gặp',
+                            accentColor: AppColors.accent,
+                          ),
+                          _FaqList(
+                            snapshot: snapshot,
+                            openIndex: _openFaqIndex,
+                            onToggle: (index) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _openFaqIndex = _openFaqIndex == index
+                                    ? null
+                                    : index;
+                              });
+                            },
+                          ),
+                          _Disclaimer(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),

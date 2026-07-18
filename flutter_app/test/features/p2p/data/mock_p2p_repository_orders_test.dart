@@ -20,30 +20,35 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 /// proven to work in the corresponding page tests (see
 /// `test/features/p2p/p2p_*_page_test.dart` and `p2p_controller_test.dart`).
 void main() {
-  const repository = MockP2PRepository();
+  const repository = MockP2PRepository(loadDelay: Duration.zero);
 
   group('MockP2PRepository smoke test', () {
     group('home / express getters', () {
-      test('getHome, getExpress, getExpressConfirm return plausible data', () {
-        final home = repository.getHome();
-        expect(home.endpoint, isNotEmpty);
-        expect(home.assets, isNotEmpty);
-        expect(home.ads, isNotEmpty);
+      test(
+        'getHome, getExpress, getExpressConfirm return plausible data',
+        () async {
+          final home = await repository.getHome();
+          expect(home.endpoint, isNotEmpty);
+          expect(home.assets, isNotEmpty);
+          expect(home.ads, isNotEmpty);
 
-        final express = repository.getExpress();
-        expect(express.endpoint, isNotEmpty);
-        expect(express.assets, isNotEmpty);
-        expect(express.ads, isNotEmpty);
+          final express = await repository.getExpress();
+          expect(express.endpoint, isNotEmpty);
+          expect(express.assets, isNotEmpty);
+          expect(express.ads, isNotEmpty);
 
-        final expressConfirm = repository.getExpressConfirm(adId: 'ad001');
-        expect(expressConfirm.endpoint, isNotEmpty);
-        expect(expressConfirm.supportedStates, isNotEmpty);
-      });
+          final expressConfirm = await repository.getExpressConfirm(
+            adId: 'ad001',
+          );
+          expect(expressConfirm.endpoint, isNotEmpty);
+          expect(expressConfirm.supportedStates, isNotEmpty);
+        },
+      );
     });
 
     group('order lifecycle getters', () {
-      test('getOrder returns a populated order snapshot', () {
-        final snapshot = repository.getOrder('p2p001');
+      test('getOrder returns a populated order snapshot', () async {
+        final snapshot = await repository.getOrder('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.order.id, 'p2p001');
         expect(snapshot.paymentFields, isNotEmpty);
@@ -51,39 +56,39 @@ void main() {
         expect(snapshot.quickActions, isNotEmpty);
       });
 
-      test('getOrderTimeline returns populated timeline events', () {
-        final snapshot = repository.getOrderTimeline('p2p001');
+      test('getOrderTimeline returns populated timeline events', () async {
+        final snapshot = await repository.getOrderTimeline('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.events, isNotEmpty);
       });
 
-      test('getOrderRate returns quick tags', () {
-        final snapshot = repository.getOrderRate('p2p001');
+      test('getOrderRate returns quick tags', () async {
+        final snapshot = await repository.getOrderRate('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.quickTags, isNotEmpty);
       });
 
-      test('getOrderCancel returns cancel reasons', () {
-        final snapshot = repository.getOrderCancel('p2p001');
+      test('getOrderCancel returns cancel reasons', () async {
+        final snapshot = await repository.getOrderCancel('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.reasons, isNotEmpty);
       });
 
-      test('getOrderProof returns tips', () {
-        final snapshot = repository.getOrderProof('p2p001');
+      test('getOrderProof returns tips', () async {
+        final snapshot = await repository.getOrderProof('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.tips, isNotEmpty);
       });
 
-      test('getChat returns messages and quick replies', () {
-        final snapshot = repository.getChat('p2p001');
+      test('getChat returns messages and quick replies', () async {
+        final snapshot = await repository.getChat('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.messages, isNotEmpty);
         expect(snapshot.quickReplies, isNotEmpty);
       });
 
-      test('getMyOrders returns populated tabs and orders', () {
-        final snapshot = repository.getMyOrders();
+      test('getMyOrders returns populated tabs and orders', () async {
+        final snapshot = await repository.getMyOrders();
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.tabs, isNotEmpty);
         expect(snapshot.orders, isNotEmpty);
@@ -91,8 +96,8 @@ void main() {
     });
 
     group('dispute getters', () {
-      test('getDisputeDetail returns levels, evidence, timeline', () {
-        final snapshot = repository.getDisputeDetail('sample');
+      test('getDisputeDetail returns levels, evidence, timeline', () async {
+        final snapshot = await repository.getDisputeDetail('sample');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.levels, isNotEmpty);
         expect(snapshot.evidence, isNotEmpty);
@@ -100,30 +105,33 @@ void main() {
         expect(snapshot.supportMessages, isNotEmpty);
       });
 
-      test('getDisputeEvidence returns documents', () {
-        final snapshot = repository.getDisputeEvidence('sample');
+      test('getDisputeEvidence returns documents', () async {
+        final snapshot = await repository.getDisputeEvidence('sample');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.documents, isNotEmpty);
       });
 
-      test('getDisputeResolution returns a plausible snapshot', () {
-        final snapshot = repository.getDisputeResolution('sample');
+      test('getDisputeResolution returns a plausible snapshot', () async {
+        final snapshot = await repository.getDisputeResolution('sample');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.supportedStates, isNotEmpty);
       });
 
-      test('getDisputeOpen returns reasons', () {
-        final snapshot = repository.getDisputeOpen('p2p001');
+      test('getDisputeOpen returns reasons', () async {
+        final snapshot = await repository.getDisputeOpen('p2p001');
         expect(snapshot.endpoint, isNotEmpty);
         expect(snapshot.reasons, isNotEmpty);
       });
 
-      test('getDisputes returns populated dispute list and guide steps', () {
-        final snapshot = repository.getDisputes();
-        expect(snapshot.endpoint, isNotEmpty);
-        expect(snapshot.disputes, isNotEmpty);
-        expect(snapshot.guideSteps, isNotEmpty);
-      });
+      test(
+        'getDisputes returns populated dispute list and guide steps',
+        () async {
+          final snapshot = await repository.getDisputes();
+          expect(snapshot.endpoint, isNotEmpty);
+          expect(snapshot.disputes, isNotEmpty);
+          expect(snapshot.guideSteps, isNotEmpty);
+        },
+      );
     });
   });
 }

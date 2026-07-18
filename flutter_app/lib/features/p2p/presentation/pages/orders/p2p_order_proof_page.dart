@@ -58,7 +58,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pOrderProofProvider(widget.orderId));
+    final snapshotAsync = ref.watch(p2pOrderProofProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -80,94 +80,105 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
             showBack: true,
             onBack: () => _close(context),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2POrderProofPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _OrderProofSummary(order: snapshot.order),
-                        Padding(
-                          padding: P2PSpacingTokens
-                              .p2pFinancialSafetyHorizontalPadding,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const SizedBox(
-                                height: AppSpacing.pageRhythmStandardInnerGap,
-                              ),
-                              _UploadSection(
-                                title: snapshot.uploadTitle,
-                                subtitle: snapshot.uploadSubtitle,
-                                isUploading: _isUploading,
-                                onCamera: () => _addProof('camera'),
-                                onGallery: () => _addProof('gallery'),
-                              ),
-                              if (_proofs.isNotEmpty) ...[
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pOrderProofProvider(widget.orderId)),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2POrderProofPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _OrderProofSummary(order: snapshot.order),
+                          Padding(
+                            padding: P2PSpacingTokens
+                                .p2pFinancialSafetyHorizontalPadding,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
                                 const SizedBox(
                                   height: AppSpacing.pageRhythmStandardInnerGap,
                                 ),
-                                _UploadedProofs(
-                                  proofs: _proofs,
-                                  onRemove: _removeProof,
+                                _UploadSection(
+                                  title: snapshot.uploadTitle,
+                                  subtitle: snapshot.uploadSubtitle,
+                                  isUploading: _isUploading,
+                                  onCamera: () => _addProof('camera'),
+                                  onGallery: () => _addProof('gallery'),
                                 ),
+                                if (_proofs.isNotEmpty) ...[
+                                  const SizedBox(
+                                    height:
+                                        AppSpacing.pageRhythmStandardInnerGap,
+                                  ),
+                                  _UploadedProofs(
+                                    proofs: _proofs,
+                                    onRemove: _removeProof,
+                                  ),
+                                ],
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmStandardInnerGap,
+                                ),
+                                _TipsCard(
+                                  title: snapshot.tipsTitle,
+                                  tips: snapshot.tips,
+                                ),
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmStandardInnerGap,
+                                ),
+                                _ProofWarning(message: snapshot.warningMessage),
                               ],
-                              const SizedBox(
-                                height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
+                          VitCtaButton(
+                            key: P2POrderProofPage.confirmKey,
+                            onPressed: _proofs.isEmpty
+                                ? null
+                                : () => _confirm(context, snapshot.order),
+                            loading: _isSubmitting,
+                            leading: const Icon(Icons.upload_outlined),
+                            child: Text('Xác nhận (${_proofs.length} ảnh)'),
+                          ),
+                          const VitPageContent(
+                            rhythm: VitPageRhythm.standard,
+                            padding: VitContentPadding.compact,
+                            children: [
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Payment proof state review',
+                                message:
+                                    'Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.',
+                                contractId: 'SC-215',
                               ),
-                              _TipsCard(
-                                title: snapshot.tipsTitle,
-                                tips: snapshot.tips,
-                              ),
-                              const SizedBox(
-                                height: AppSpacing.pageRhythmStandardInnerGap,
-                              ),
-                              _ProofWarning(message: snapshot.warningMessage),
                             ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        VitCtaButton(
-                          key: P2POrderProofPage.confirmKey,
-                          onPressed: _proofs.isEmpty
-                              ? null
-                              : () => _confirm(context, snapshot.order),
-                          loading: _isSubmitting,
-                          leading: const Icon(Icons.upload_outlined),
-                          child: Text('Xác nhận (${_proofs.length} ảnh)'),
-                        ),
-                        const VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.compact,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Payment proof state review',
-                              message:
-                                  'Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.',
-                              contractId: 'SC-215',
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

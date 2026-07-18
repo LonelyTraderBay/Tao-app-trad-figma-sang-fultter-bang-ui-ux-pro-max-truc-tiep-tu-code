@@ -54,9 +54,7 @@ class _PredictionTournamentsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getTournaments();
+    final tournamentsAsync = ref.watch(predictionsTournamentsSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -100,43 +98,56 @@ class _PredictionTournamentsPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: switch (_activeTab) {
-                        _TournamentTab.active => [
-                          for (final tournament
-                              in snapshot.activeTournaments.where(
-                                (item) => item.featured,
-                              ))
-                            _FeaturedTournamentBlock(tournament: tournament),
-                          _TournamentSection(
-                            label: 'Tat ca giai dau',
-                            tournaments: snapshot.activeTournaments
-                                .where((item) => !item.featured)
-                                .toList(),
-                          ),
-                          _TournamentSection(
-                            label: 'Sap dien ra',
-                            tournaments: snapshot.upcomingTournaments,
-                          ),
-                          const _TournamentInfoCard(),
-                        ],
-                        _TournamentTab.mine => [
-                          _MyTournamentStats(snapshot: snapshot),
-                          _TournamentSection(
-                            label: 'Giai dau dang tham gia',
-                            tournaments: snapshot.myTournaments,
-                            empty: const _EmptyTournamentsCard(),
+                      children: tournamentsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được giải đấu',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsTournamentsSnapshotProvider,
+                            ),
                           ),
                         ],
-                        _TournamentTab.ended => [
-                          _TournamentSection(
-                            label: 'Giai dau da ket thuc',
-                            tournaments: snapshot.pastTournaments,
-                            empty: const _NoPastTournamentsCard(),
-                          ),
-                          if (snapshot.pastTournaments.isNotEmpty)
-                            _FinalLeaderboard(entries: snapshot.leaderboard),
-                        ],
-                      },
+                        data: (snapshot) => switch (_activeTab) {
+                          _TournamentTab.active => [
+                            for (final tournament
+                                in snapshot.activeTournaments.where(
+                                  (item) => item.featured,
+                                ))
+                              _FeaturedTournamentBlock(tournament: tournament),
+                            _TournamentSection(
+                              label: 'Tat ca giai dau',
+                              tournaments: snapshot.activeTournaments
+                                  .where((item) => !item.featured)
+                                  .toList(),
+                            ),
+                            _TournamentSection(
+                              label: 'Sap dien ra',
+                              tournaments: snapshot.upcomingTournaments,
+                            ),
+                            const _TournamentInfoCard(),
+                          ],
+                          _TournamentTab.mine => [
+                            _MyTournamentStats(snapshot: snapshot),
+                            _TournamentSection(
+                              label: 'Giai dau dang tham gia',
+                              tournaments: snapshot.myTournaments,
+                              empty: const _EmptyTournamentsCard(),
+                            ),
+                          ],
+                          _TournamentTab.ended => [
+                            _TournamentSection(
+                              label: 'Giai dau da ket thuc',
+                              tournaments: snapshot.pastTournaments,
+                              empty: const _NoPastTournamentsCard(),
+                            ),
+                            if (snapshot.pastTournaments.isNotEmpty)
+                              _FinalLeaderboard(entries: snapshot.leaderboard),
+                          ],
+                        },
+                      ),
                     ),
                   ),
                 ),

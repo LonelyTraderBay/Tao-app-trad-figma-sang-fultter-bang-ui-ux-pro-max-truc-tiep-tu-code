@@ -28,10 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-233 mock repository exposes payment verification BE draft', () {
-    final snapshot = const MockP2PRepository().getPaymentMethodVerification(
-      'sample',
-    );
+  test('SC-233 mock repository exposes payment verification BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getPaymentMethodVerification('sample');
 
     expect(
       snapshot.endpoint,

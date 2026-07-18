@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -57,30 +58,18 @@ class _SupportPageState extends ConsumerState<SupportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(supportControllerProvider).getSupportHub();
-    final activeTickets = snapshot.tickets
-        .where(
-          (ticket) =>
-              ticket.status == SupportTicketStatus.open ||
-              ticket.status == SupportTicketStatus.inProgress,
-        )
-        .toList();
-    final doneTickets = snapshot.tickets
-        .where(
-          (ticket) =>
-              ticket.status == SupportTicketStatus.resolved ||
-              ticket.status == SupportTicketStatus.closed,
-        )
-        .toList();
+    final hubAsync = ref.watch(supportHubSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? AppSpacing.x7 + AppSpacing.x6
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
+    final resolvedSnapshot = hubAsync.value;
     final showOfflineBanner =
-        snapshot.screenState == SupportScreenState.offline &&
-        (snapshot.tickets.isNotEmpty || snapshot.faqItems.isNotEmpty);
+        resolvedSnapshot?.screenState == SupportScreenState.offline &&
+        ((resolvedSnapshot?.tickets.isNotEmpty ?? false) ||
+            (resolvedSnapshot?.faqItems.isNotEmpty ?? false));
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -90,11 +79,13 @@ class _SupportPageState extends ConsumerState<SupportPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Hỗ trợ',
+            subtitle: 'Liên hệ · Hỗ trợ',
             showBack: true,
             onBack: () => context.go(
-              widget.supportContext?.sourceRoute ?? snapshot.backRoute,
+              widget.supportContext?.sourceRoute ??
+                  hubAsync.value?.backRoute ??
+                  AppRoutePaths.home,
             ),
           ),
           child: Column(
@@ -131,17 +122,47 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                       fullBleed: true,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: _supportHubPageChildren(
-                        snapshot: snapshot,
-                        supportContext: widget.supportContext,
-                        showFaq: _showFaq,
-                        expandedFaqIndex: _expandedFaqIndex,
-                        activeTickets: activeTickets,
-                        doneTickets: doneTickets,
-                        onShowTickets: () => _setFaq(false),
-                        onShowFaq: () => _setFaq(true),
-                        onToggleFaq: _toggleFaq,
-                        onRetry: () => setState(() {}),
+                      children: hubAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được hub hỗ trợ',
+                            message: 'Kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(supportHubSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          final activeTickets = snapshot.tickets
+                              .where(
+                                (ticket) =>
+                                    ticket.status == SupportTicketStatus.open ||
+                                    ticket.status ==
+                                        SupportTicketStatus.inProgress,
+                              )
+                              .toList();
+                          final doneTickets = snapshot.tickets
+                              .where(
+                                (ticket) =>
+                                    ticket.status ==
+                                        SupportTicketStatus.resolved ||
+                                    ticket.status == SupportTicketStatus.closed,
+                              )
+                              .toList();
+                          return _supportHubPageChildren(
+                            snapshot: snapshot,
+                            supportContext: widget.supportContext,
+                            showFaq: _showFaq,
+                            expandedFaqIndex: _expandedFaqIndex,
+                            activeTickets: activeTickets,
+                            doneTickets: doneTickets,
+                            onShowTickets: () => _setFaq(false),
+                            onShowFaq: () => _setFaq(true),
+                            onToggleFaq: _toggleFaq,
+                            onRetry: () => setState(() {}),
+                          );
+                        },
                       ),
                     ),
                   ),

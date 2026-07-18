@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -49,26 +50,17 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(supportControllerProvider).getAnnouncements();
-    final filter = snapshot.filters.firstWhere(
-      (item) => item.id == _activeFilterId,
-    );
-    final filtered = filter.type == null
-        ? snapshot.announcements
-        : snapshot.announcements
-              .where((item) => item.type == filter.type)
-              .toList();
-    final pinned = filtered.where((item) => item.isPinned).toList();
-    final regular = filtered.where((item) => !item.isPinned).toList();
+    final announcementsAsync = ref.watch(announcementsSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? AppSpacing.x7 + AppSpacing.x6
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
+    final resolvedSnapshot = announcementsAsync.value;
     final showOfflineBanner =
-        snapshot.screenState == SupportScreenState.offline &&
-        snapshot.announcements.isNotEmpty;
+        resolvedSnapshot?.screenState == SupportScreenState.offline &&
+        (resolvedSnapshot?.announcements.isNotEmpty ?? false);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -78,10 +70,12 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Thông báo',
+            subtitle: 'Thông báo · Hỗ trợ',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(
+              announcementsAsync.value?.backRoute ?? AppRoutePaths.support,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,55 +110,84 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       density: VitDensity.compact,
-                      children: [
-                        _AnnouncementTypeFilters(
-                          filters: snapshot.filters,
-                          activeFilterId: _activeFilterId,
-                          onChanged: _setFilter,
-                        ),
-                        ...switch (snapshot.screenState) {
-                          SupportScreenState.loading => [
-                            const VitSkeletonList(
-                              key: AnnouncementsPage.loadingKey,
-                              rows: 4,
+                      children: announcementsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được thông báo',
+                            message: 'Kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(announcementsSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          final filter = snapshot.filters.firstWhere(
+                            (item) => item.id == _activeFilterId,
+                          );
+                          final filtered = filter.type == null
+                              ? snapshot.announcements
+                              : snapshot.announcements
+                                    .where((item) => item.type == filter.type)
+                                    .toList();
+                          final pinned = filtered
+                              .where((item) => item.isPinned)
+                              .toList();
+                          final regular = filtered
+                              .where((item) => !item.isPinned)
+                              .toList();
+                          return [
+                            _AnnouncementTypeFilters(
+                              filters: snapshot.filters,
+                              activeFilterId: _activeFilterId,
+                              onChanged: _setFilter,
                             ),
-                          ],
-                          SupportScreenState.error => [
-                            VitErrorState(
-                              key: AnnouncementsPage.errorKey,
-                              title: 'Không tải được thông báo',
-                              message: 'Kiểm tra kết nối và thử lại.',
-                              actionLabel: 'Thử lại',
-                              onAction: () => setState(() {}),
-                            ),
-                          ],
-                          SupportScreenState.empty || SupportScreenState.offline
-                              when pinned.isEmpty && regular.isEmpty =>
-                            [
-                              const VitEmptyState(
-                                key: AnnouncementsPage.emptyKey,
-                                title: 'Không có thông báo nào',
-                                message:
-                                    'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
-                                icon: Icons.notifications_none_rounded,
-                              ),
-                            ],
-                          _ => [
-                            if (pinned.isNotEmpty)
-                              _PinnedSection(
-                                announcements: pinned,
-                                expandedId: _expandedId,
-                                onToggle: _toggleExpanded,
-                              ),
-                            _AnnouncementList(
-                              announcements: regular,
-                              showEmpty: pinned.isEmpty && regular.isEmpty,
-                              expandedId: _expandedId,
-                              onToggle: _toggleExpanded,
-                            ),
-                          ],
+                            ...switch (snapshot.screenState) {
+                              SupportScreenState.loading => [
+                                const VitSkeletonList(
+                                  key: AnnouncementsPage.loadingKey,
+                                  rows: 4,
+                                ),
+                              ],
+                              SupportScreenState.error => [
+                                VitErrorState(
+                                  key: AnnouncementsPage.errorKey,
+                                  title: 'Không tải được thông báo',
+                                  message: 'Kiểm tra kết nối và thử lại.',
+                                  actionLabel: 'Thử lại',
+                                  onAction: () => setState(() {}),
+                                ),
+                              ],
+                              SupportScreenState.empty ||
+                              SupportScreenState.offline
+                                  when pinned.isEmpty && regular.isEmpty =>
+                                [
+                                  const VitEmptyState(
+                                    key: AnnouncementsPage.emptyKey,
+                                    title: 'Không có thông báo nào',
+                                    message:
+                                        'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
+                                    icon: Icons.notifications_none_rounded,
+                                  ),
+                                ],
+                              _ => [
+                                if (pinned.isNotEmpty)
+                                  _PinnedSection(
+                                    announcements: pinned,
+                                    expandedId: _expandedId,
+                                    onToggle: _toggleExpanded,
+                                  ),
+                                _AnnouncementList(
+                                  announcements: regular,
+                                  showEmpty: pinned.isEmpty && regular.isEmpty,
+                                  expandedId: _expandedId,
+                                  onToggle: _toggleExpanded,
+                                ),
+                              ],
+                            },
+                          ];
                         },
-                      ],
+                      ),
                     ),
                   ),
                 ),

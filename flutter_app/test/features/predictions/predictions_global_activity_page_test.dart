@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-034 mock repository exposes the global activity BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getGlobalActivity();
+  test('SC-034 mock repository exposes the global activity BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getGlobalActivity();
 
     expect(snapshot.activities, hasLength(30));
     expect(snapshot.buyCount, 20);
@@ -58,7 +58,7 @@ void main() {
       ]),
     );
 
-    final filtered = repo.getGlobalActivity(minAmount: 500);
+    final filtered = await repo.getGlobalActivity(minAmount: 500);
     expect(
       filtered.activities.every((activity) => activity.amount >= 500),
       isTrue,

@@ -2,10 +2,24 @@ import 'package:vit_trade_flutter/features/support/domain/entities/support_entit
 import 'package:vit_trade_flutter/features/support/domain/repositories/support_repository.dart';
 
 final class MockSupportRepository implements SupportRepository {
-  const MockSupportRepository();
+  const MockSupportRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('support_mock_fetch_failed');
+  }
 
   @override
-  SupportHubSnapshot getSupportHub() {
+  Future<SupportHubSnapshot> getSupportHub() async {
+    await _simulateNetwork();
     return const SupportHubSnapshot(
       endpoint: '/api/mobile/support/support',
       actionDraft: 'read-only or local navigation action',
@@ -31,7 +45,8 @@ final class MockSupportRepository implements SupportRepository {
   }
 
   @override
-  HelpCenterSnapshot getHelpCenter() {
+  Future<HelpCenterSnapshot> getHelpCenter() async {
+    await _simulateNetwork();
     return const HelpCenterSnapshot(
       endpoint: '/api/mobile/support/support-help',
       actionDraft: 'read-only or local navigation action',
@@ -58,7 +73,8 @@ final class MockSupportRepository implements SupportRepository {
   }
 
   @override
-  AnnouncementsSnapshot getAnnouncements() {
+  Future<AnnouncementsSnapshot> getAnnouncements() async {
+    await _simulateNetwork();
     return const AnnouncementsSnapshot(
       endpoint: '/api/mobile/support/support-announcements',
       actionDraft: 'read-only or local navigation action',

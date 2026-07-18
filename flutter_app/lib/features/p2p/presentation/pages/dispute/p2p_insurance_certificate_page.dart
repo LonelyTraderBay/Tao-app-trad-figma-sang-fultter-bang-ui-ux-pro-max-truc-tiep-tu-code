@@ -51,7 +51,7 @@ class _P2PInsuranceCertificatePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pInsuranceCertificateProvider);
+    final snapshotAsync = ref.watch(p2pInsuranceCertificateProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -59,46 +59,69 @@ class _P2PInsuranceCertificatePageState
             : _p2pInsuranceNativeNavClearance + _p2pInsuranceNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitP2PFlowScaffold(
-      semanticLabel: 'Chứng nhận bảo hiểm',
-      semanticIdentifier: 'SC-239',
-      title: 'Chứng nhận bảo hiểm',
-      subtitle: 'Bảo hiểm · P2P',
-      onBack: () => context.go(AppRoutePaths.p2pInsurance),
-      shellRenderMode: mode,
-      bottomInset: scrollEndPadding,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _ActionRow(
-              snapshot: snapshot,
-              onFeedback: (message) {
-                setState(() => _feedback = message);
-              },
-            ),
-            if (_feedback != null) ...[
-              const SizedBox(height: _p2pInsuranceTightGap),
-              _FeedbackBanner(message: _feedback!),
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        semanticLabel: 'Chứng nhận bảo hiểm',
+        semanticIdentifier: 'SC-239',
+        title: 'Đang tải…',
+        onBack: () => context.go(AppRoutePaths.p2pInsurance),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        semanticLabel: 'Chứng nhận bảo hiểm',
+        semanticIdentifier: 'SC-239',
+        title: 'Không tải được',
+        onBack: () => context.go(AppRoutePaths.p2pInsurance),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pInsuranceCertificateProvider),
+          ),
+        ],
+      ),
+      data: (snapshot) => VitP2PFlowScaffold(
+        semanticLabel: 'Chứng nhận bảo hiểm',
+        semanticIdentifier: 'SC-239',
+        title: 'Chứng nhận bảo hiểm',
+        subtitle: 'Bảo hiểm · P2P',
+        onBack: () => context.go(AppRoutePaths.p2pInsurance),
+        shellRenderMode: mode,
+        bottomInset: scrollEndPadding,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _ActionRow(
+                snapshot: snapshot,
+                onFeedback: (message) {
+                  setState(() => _feedback = message);
+                },
+              ),
+              if (_feedback != null) ...[
+                const SizedBox(height: _p2pInsuranceTightGap),
+                _FeedbackBanner(message: _feedback!),
+              ],
             ],
-          ],
-        ),
-        _CertificateCard(snapshot: snapshot),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _DisclosureCard(snapshot: snapshot),
-            const SizedBox(height: _p2pInsuranceTightGap),
-            const VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Xem lại chứng nhận bảo hiểm',
-              message:
-                  'Thông tin chứng nhận, phạm vi bảo hiểm, tải xuống/chia sẻ và giới hạn chính sách được xem lại trước khi xuất chứng minh P2P.',
-              contractId: 'SC-239',
-            ),
-          ],
-        ),
-      ],
+          ),
+          _CertificateCard(snapshot: snapshot),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _DisclosureCard(snapshot: snapshot),
+              const SizedBox(height: _p2pInsuranceTightGap),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Xem lại chứng nhận bảo hiểm',
+                message:
+                    'Thông tin chứng nhận, phạm vi bảo hiểm, tải xuống/chia sẻ và giới hạn chính sách được xem lại trước khi xuất chứng minh P2P.',
+                contractId: 'SC-239',
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -2,57 +2,62 @@ import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.
 
 /// Abstract data-access contract every Open Arena screen depends on; implemented by mock and remote repositories.
 abstract interface class ArenaRepository {
-  ArenaHomeSnapshot getArenaHome();
+  Future<ArenaHomeSnapshot> getArenaHome();
 
-  ArenaStudioSnapshot getArenaStudio();
+  Future<ArenaStudioSnapshot> getArenaStudio();
 
-  ArenaSmartRulesSnapshot getArenaSmartRules();
+  Future<ArenaSmartRulesSnapshot> getArenaSmartRules();
 
-  ArenaPresetLibrarySnapshot getArenaPresetLibrary();
+  Future<ArenaPresetLibrarySnapshot> getArenaPresetLibrary();
 
-  ArenaGovernanceSnapshot getArenaGovernance();
+  Future<ArenaGovernanceSnapshot> getArenaGovernance();
 
-  ArenaModeDetailSnapshot getArenaModeDetail(String modeId);
+  Future<ArenaModeDetailSnapshot> getArenaModeDetail(String modeId);
 
-  ArenaChallengeDetailSnapshot getArenaChallengeDetail(String challengeId);
+  Future<ArenaChallengeDetailSnapshot> getArenaChallengeDetail(
+    String challengeId,
+  );
 
-  ArenaJoinSnapshot getArenaJoin(String challengeId);
+  Future<ArenaJoinSnapshot> getArenaJoin(String challengeId);
 
-  ArenaResolutionCenterSnapshot getArenaResolutionCenter();
+  Future<ArenaResolutionCenterSnapshot> getArenaResolutionCenter();
 
-  ArenaCreatorProfileSnapshot getArenaCreator(String creatorId);
+  Future<ArenaCreatorProfileSnapshot> getArenaCreator(String creatorId);
 
-  ArenaLeaderboardSnapshot getArenaLeaderboard();
+  Future<ArenaLeaderboardSnapshot> getArenaLeaderboard();
 
-  VerifiedChallengesSnapshot getVerifiedChallenges();
+  Future<VerifiedChallengesSnapshot> getVerifiedChallenges();
 
-  ArenaPointsSnapshot getArenaPoints();
+  Future<ArenaPointsSnapshot> getArenaPoints();
 
-  ArenaFlowMapSnapshot getArenaFlowMap();
+  Future<ArenaFlowMapSnapshot> getArenaFlowMap();
 
-  ArenaSafetyCenterSnapshot getArenaSafetyCenter();
+  Future<ArenaSafetyCenterSnapshot> getArenaSafetyCenter();
 
-  ArenaBlockedUsersSnapshot getArenaBlockedUsers();
+  Future<ArenaBlockedUsersSnapshot> getArenaBlockedUsers();
 
-  ArenaTrustBreakdownSnapshot getArenaTrustBreakdown(String entityId);
+  Future<ArenaTrustBreakdownSnapshot> getArenaTrustBreakdown(String entityId);
 
-  ArenaPointsLedgerSnapshot getArenaPointsLedger();
+  Future<ArenaPointsLedgerSnapshot> getArenaPointsLedger();
 
-  ArenaPointsEntryDetailSnapshot getArenaPointsEntryDetail(String entryId);
+  Future<ArenaPointsEntryDetailSnapshot> getArenaPointsEntryDetail(
+    String entryId,
+  );
 
-  ArenaReportCaseSnapshot getArenaReportCase(String caseId);
+  Future<ArenaReportCaseSnapshot> getArenaReportCase(String caseId);
 
-  MyArenaReportsSnapshot getMyArenaReports();
+  Future<MyArenaReportsSnapshot> getMyArenaReports();
 
-  MyArenaSnapshot getMyArena();
+  Future<MyArenaSnapshot> getMyArena();
 
-  MyArenaSnapshot getArenaMy();
+  Future<MyArenaSnapshot> getArenaMy();
 
-  ArenaProductionReadySnapshot getArenaProductionReady();
+  Future<ArenaProductionReadySnapshot> getArenaProductionReady();
 
-  ArenaPredictionBridgeSnapshot getArenaPredictionBridge();
+  Future<ArenaPredictionBridgeSnapshot> getArenaPredictionBridge();
 
-  ConnectedEcosystemProductionSnapshot getConnectedEcosystemProduction();
+  Future<ConnectedEcosystemProductionSnapshot>
+  getConnectedEcosystemProduction();
 
-  ArenaGuideSnapshot getArenaGuide();
+  Future<ArenaGuideSnapshot> getArenaGuide();
 }

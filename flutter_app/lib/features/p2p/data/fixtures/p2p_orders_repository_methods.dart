@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   @override
-  P2POrderTimelineSnapshot getOrderTimeline(String orderId) {
+  Future<P2POrderTimelineSnapshot> getOrderTimeline(String orderId) async {
+    await _simulateNetwork();
     return P2POrderTimelineSnapshot(
       endpoint: '/api/mobile/p2p/p2p-order-timeline-$orderId',
       actionDraft:
@@ -32,7 +33,8 @@ mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2POrderRateSnapshot getOrderRate(String orderId) {
+  Future<P2POrderRateSnapshot> getOrderRate(String orderId) async {
+    await _simulateNetwork();
     return P2POrderRateSnapshot(
       endpoint: '/api/mobile/p2p/p2p-order-rate-$orderId',
       actionDraft:
@@ -63,7 +65,8 @@ mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2POrderCancelSnapshot getOrderCancel(String orderId) {
+  Future<P2POrderCancelSnapshot> getOrderCancel(String orderId) async {
+    await _simulateNetwork();
     return P2POrderCancelSnapshot(
       endpoint: '/api/mobile/p2p/p2p-order-cancel-$orderId',
       actionDraft:
@@ -98,7 +101,8 @@ mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2POrderProofSnapshot getOrderProof(String orderId) {
+  Future<P2POrderProofSnapshot> getOrderProof(String orderId) async {
+    await _simulateNetwork();
     return P2POrderProofSnapshot(
       endpoint: '/api/mobile/p2p/p2p-order-proof-$orderId',
       actionDraft:
@@ -131,7 +135,8 @@ mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2POrderSnapshot getOrder(String orderId) {
+  Future<P2POrderSnapshot> getOrder(String orderId) async {
+    await _simulateNetwork();
     return P2POrderSnapshot(
       endpoint: '/api/mobile/p2p/p2p-order-$orderId',
       actionDraft:
@@ -189,7 +194,8 @@ mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PChatSnapshot getChat(String orderId) {
+  Future<P2PChatSnapshot> getChat(String orderId) async {
+    await _simulateNetwork();
     return P2PChatSnapshot(
       endpoint: '/api/mobile/p2p/p2p-chat-$orderId',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -216,7 +222,8 @@ mixin _MockP2PRepositoryOrdersMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PMyOrdersSnapshot getMyOrders() {
+  Future<P2PMyOrdersSnapshot> getMyOrders() async {
+    await _simulateNetwork();
     return const P2PMyOrdersSnapshot(
       endpoint: '/api/mobile/p2p/p2p-my-orders',
       actionDraft:

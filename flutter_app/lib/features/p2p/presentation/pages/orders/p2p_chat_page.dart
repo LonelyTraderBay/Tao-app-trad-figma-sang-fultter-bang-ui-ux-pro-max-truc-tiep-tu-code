@@ -62,14 +62,13 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pChatProvider(widget.orderId));
+    final snapshotAsync = ref.watch(p2pChatProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom;
-    final messages = [...snapshot.messages, ..._extraMessages];
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -77,77 +76,89 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
       semanticIdentifier: 'SC-217',
       child: Material(
         type: MaterialType.transparency,
-        child: Column(
-          children: [
-            _ChatHeader(snapshot: snapshot),
-            _RiskBanner(message: snapshot.warning),
-            if (_showE2EBanner)
-              _E2EBanner(
-                title: snapshot.e2eTitle,
-                subtitle: snapshot.e2eSubtitle,
-                onOpen: () => context.go(AppRoutePaths.p2pE2EInfo),
-                onClose: () {
-                  HapticFeedback.selectionClick();
-                  setState(() => _showE2EBanner = false);
-                },
-              ),
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: VitInsetScrollView(
-                  key: P2PChatPage.contentKey,
-                  bottomInset: AppSpacing.x4,
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      Align(
-                        child: VitStatusPill(
-                          label: snapshot.encryptionPill,
-                          status: VitStatusPillStatus.success,
-                          icon: Icons.lock_outline_rounded,
-                          size: VitStatusPillSize.sm,
-                          onTap: () => context.go(AppRoutePaths.p2pE2EInfo),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: snapshotAsync.when(
+          loading: () => const VitSkeletonList(),
+          error: (error, stackTrace) => VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pChatProvider(widget.orderId)),
+          ),
+          data: (snapshot) {
+            final messages = [...snapshot.messages, ..._extraMessages];
+            return Column(
+              children: [
+                _ChatHeader(snapshot: snapshot),
+                _RiskBanner(message: snapshot.warning),
+                if (_showE2EBanner)
+                  _E2EBanner(
+                    title: snapshot.e2eTitle,
+                    subtitle: snapshot.e2eSubtitle,
+                    onOpen: () => context.go(AppRoutePaths.p2pE2EInfo),
+                    onClose: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _showE2EBanner = false);
+                    },
+                  ),
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: VitInsetScrollView(
+                      key: P2PChatPage.contentKey,
+                      bottomInset: AppSpacing.x4,
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
                         children: [
-                          const _DateSeparator(),
-                          for (final message in messages)
-                            _MessageBubble(
-                              message: message,
-                              merchantInitial: snapshot.merchantInitial,
+                          Align(
+                            child: VitStatusPill(
+                              label: snapshot.encryptionPill,
+                              status: VitStatusPillStatus.success,
+                              icon: Icons.lock_outline_rounded,
+                              size: VitStatusPillSize.sm,
+                              onTap: () => context.go(AppRoutePaths.p2pE2EInfo),
                             ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const _DateSeparator(),
+                              for (final message in messages)
+                                _MessageBubble(
+                                  message: message,
+                                  merchantInitial: snapshot.merchantInitial,
+                                ),
+                            ],
+                          ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            _ChatComposer(
-              bottomInset: bottomInset,
-              quickReplies: snapshot.quickReplies,
-              controller: _controller,
-              onShareProof: () => _sendText(
-                'Tôi đã chuyển khoản 5.070.000 VND qua Vietcombank. Nội dung: VITTA P2P001',
-              ),
-              onQuickReply: (reply) {
-                HapticFeedback.selectionClick();
-                _controller.text = reply;
-                _controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: reply.length),
-                );
-                setState(() {});
-              },
-              onChanged: () => setState(() {}),
-              onSend: () => _sendText(_controller.text),
-            ),
-          ],
+                _ChatComposer(
+                  bottomInset: bottomInset,
+                  quickReplies: snapshot.quickReplies,
+                  controller: _controller,
+                  onShareProof: () => _sendText(
+                    'Tôi đã chuyển khoản 5.070.000 VND qua Vietcombank. Nội dung: VITTA P2P001',
+                  ),
+                  onQuickReply: (reply) {
+                    HapticFeedback.selectionClick();
+                    _controller.text = reply;
+                    _controller.selection = TextSelection.fromPosition(
+                      TextPosition(offset: reply.length),
+                    );
+                    setState(() {});
+                  },
+                  onChanged: () => setState(() {}),
+                  onSend: () => _sendText(_controller.text),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

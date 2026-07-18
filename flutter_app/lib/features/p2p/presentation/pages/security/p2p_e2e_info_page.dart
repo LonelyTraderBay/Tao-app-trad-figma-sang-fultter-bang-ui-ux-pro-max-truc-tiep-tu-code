@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -51,7 +52,7 @@ class P2PE2EInfoPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pE2EInfoProvider);
+    final snapshotAsync = ref.watch(p2pE2EInfoProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -65,54 +66,77 @@ class P2PE2EInfoPage extends ConsumerWidget {
       semanticIdentifier: 'SC-259',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Mã hóa đầu cuối',
-            subtitle: 'Bảo mật · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.compact,
-                      density: VitDensity.compact,
-                      children: [
-                        _Hero(snapshot: snapshot),
-                        _EncryptionDiagram(snapshot: snapshot),
-                        _InfoItems(items: snapshot.infoItems),
-                        _FingerprintCard(snapshot: snapshot),
-                        _HowItWorks(steps: snapshot.steps),
-                        _ServerInfo(snapshot: snapshot),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: P2PSpacingTokens.p2pWalletNoticePadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Rà soát mã hóa đầu cuối',
-                            message:
-                                'Sơ đồ mã hóa, mã xác minh bảo mật, các bước hoạt động và lưu ý máy chủ vẫn hiển thị trước khi tin tưởng phiên chat P2P.',
-                            contractId: 'SC-259',
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pE2EInfoProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Mã hóa đầu cuối',
+              subtitle: 'Bảo mật · P2P',
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: [
+                          _Hero(snapshot: snapshot),
+                          _EncryptionDiagram(snapshot: snapshot),
+                          _InfoItems(items: snapshot.infoItems),
+                          _FingerprintCard(snapshot: snapshot),
+                          _HowItWorks(steps: snapshot.steps),
+                          _ServerInfo(snapshot: snapshot),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            padding: P2PSpacingTokens.p2pWalletNoticePadding,
+                            child: VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Rà soát mã hóa đầu cuối',
+                              message:
+                                  'Sơ đồ mã hóa, mã xác minh bảo mật, các bước hoạt động và lưu ý máy chủ vẫn hiển thị trước khi tin tưởng phiên chat P2P.',
+                              contractId: 'SC-259',
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

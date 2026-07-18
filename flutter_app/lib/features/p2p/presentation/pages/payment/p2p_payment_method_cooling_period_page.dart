@@ -35,10 +35,9 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(
+    final controllerAsync = ref.watch(
       p2pPaymentMethodCoolingPeriodControllerProvider,
     );
-    final snapshot = controller.state.snapshot;
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -60,54 +59,69 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PPaymentMethodCoolingPeriodPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pPaymentCoolingScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: controllerAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pPaymentMethodCoolingPeriodControllerProvider,
+              ),
+            ),
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PPaymentMethodCoolingPeriodPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pPaymentCoolingScrollPadding(
+                              scrollEndPadding,
+                            ),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.form,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
                           children: [
-                            _CoolingHero(
-                              daysLeft: controller.daysLeft,
-                              hoursLeft: controller.hoursLeft,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _CoolingHero(
+                                  daysLeft: controller.daysLeft,
+                                  hoursLeft: controller.hoursLeft,
+                                ),
+                                _TimelineCard(snapshot: snapshot),
+                                _ReasonCard(reasons: snapshot.reasons),
+                                _WaitingNote(
+                                  title: snapshot.waitTitle,
+                                  message: snapshot.waitMessage,
+                                ),
+                              ],
                             ),
-                            _TimelineCard(snapshot: snapshot),
-                            _ReasonCard(reasons: snapshot.reasons),
-                            _WaitingNote(
-                              title: snapshot.waitTitle,
-                              message: snapshot.waitMessage,
-                            ),
+                            if (snapshot.highRiskContractId != null)
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Payment method cooling review',
+                                message:
+                                    'New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.',
+                                contractId: snapshot.highRiskContractId,
+                              ),
                           ],
                         ),
-                        if (snapshot.highRiskContractId != null)
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Payment method cooling review',
-                            message:
-                                'New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.',
-                            contractId: snapshot.highRiskContractId,
-                          ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),

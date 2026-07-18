@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-274 mock repository exposes dashboard BE draft', () {
-    final snapshot = const MockP2PRepository().getDashboard();
+  test('SC-274 mock repository exposes dashboard BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDashboard();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-dashboard');
     expect(

@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pDisputeDetailVisualNavClearance =
@@ -68,7 +69,7 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pDisputeDetailProvider(widget.disputeId));
+    final snapshotAsync = ref.watch(p2pDisputeDetailProvider(widget.disputeId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -77,13 +78,6 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
             : _p2pDisputeDetailNativeNavClearance +
                   _p2pDisputeDetailNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final level = _currentLevel ?? snapshot.dispute.currentLevel;
-    final currentLevel = snapshot.levelByNumber(level);
-    final nextLevel = level < snapshot.levels.length
-        ? snapshot.levelByNumber(level + 1)
-        : null;
-    final evidence = [...snapshot.evidence, ..._localEvidence];
-    final messages = [...snapshot.supportMessages, ..._localMessages];
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -98,75 +92,95 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pDisputes),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PDisputeDetailPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pDisputeDetailScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        P2PDisputeStatusBanner(dispute: snapshot.dispute),
-                        P2PDisputeEscalationCard(
-                          escalateKey: P2PDisputeDetailPage.escalateKey,
-                          levels: snapshot.levels,
-                          currentLevel: level,
-                          currentLevelData: currentLevel,
-                          nextLevelData: nextLevel,
-                          onEscalate: nextLevel == null
-                              ? null
-                              : () => _escalate(nextLevel),
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pDisputeDetailProvider(widget.disputeId)),
+            ),
+            data: (snapshot) {
+              final level = _currentLevel ?? snapshot.dispute.currentLevel;
+              final currentLevel = snapshot.levelByNumber(level);
+              final nextLevel = level < snapshot.levels.length
+                  ? snapshot.levelByNumber(level + 1)
+                  : null;
+              final evidence = [...snapshot.evidence, ..._localEvidence];
+              final messages = [...snapshot.supportMessages, ..._localMessages];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PDisputeDetailPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pDisputeDetailScrollPadding(
+                          scrollEndPadding,
                         ),
-                        P2PDisputeReasonCard(dispute: snapshot.dispute),
-                        P2PDisputeEvidenceCard(
-                          addEvidenceKey: P2PDisputeDetailPage.addEvidenceKey,
-                          evidence: evidence,
-                          onAdd: () => context.go(
-                            AppRoutePaths.p2pDisputeEvidence(
-                              snapshot.dispute.id,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.form,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            P2PDisputeStatusBanner(dispute: snapshot.dispute),
+                            P2PDisputeEscalationCard(
+                              escalateKey: P2PDisputeDetailPage.escalateKey,
+                              levels: snapshot.levels,
+                              currentLevel: level,
+                              currentLevelData: currentLevel,
+                              nextLevelData: nextLevel,
+                              onEscalate: nextLevel == null
+                                  ? null
+                                  : () => _escalate(nextLevel),
                             ),
-                          ),
-                        ),
-                        P2PDisputeTimelineCard(timeline: snapshot.timeline),
-                        P2PDisputeSupportChatCard(
-                          inputKey: P2PDisputeDetailPage.inputKey,
-                          sendKey: P2PDisputeDetailPage.sendKey,
-                          currentLevel: level,
-                          messages: messages,
-                          controller: _controller,
-                          onChanged: () => setState(() {}),
-                          onSend: _sendMessage,
-                        ),
-                        P2PDisputeActionsCard(
-                          manageEvidenceKey:
-                              P2PDisputeDetailPage.manageEvidenceKey,
-                          disputesKey: P2PDisputeDetailPage.disputesKey,
-                          onManageEvidence: () => context.go(
-                            AppRoutePaths.p2pDisputeEvidence(
-                              snapshot.dispute.id,
+                            P2PDisputeReasonCard(dispute: snapshot.dispute),
+                            P2PDisputeEvidenceCard(
+                              addEvidenceKey:
+                                  P2PDisputeDetailPage.addEvidenceKey,
+                              evidence: evidence,
+                              onAdd: () => context.go(
+                                AppRoutePaths.p2pDisputeEvidence(
+                                  snapshot.dispute.id,
+                                ),
+                              ),
                             ),
-                          ),
-                          onOpenDisputes: () =>
-                              context.go(AppRoutePaths.p2pDisputes),
+                            P2PDisputeTimelineCard(timeline: snapshot.timeline),
+                            P2PDisputeSupportChatCard(
+                              inputKey: P2PDisputeDetailPage.inputKey,
+                              sendKey: P2PDisputeDetailPage.sendKey,
+                              currentLevel: level,
+                              messages: messages,
+                              controller: _controller,
+                              onChanged: () => setState(() {}),
+                              onSend: _sendMessage,
+                            ),
+                            P2PDisputeActionsCard(
+                              manageEvidenceKey:
+                                  P2PDisputeDetailPage.manageEvidenceKey,
+                              disputesKey: P2PDisputeDetailPage.disputesKey,
+                              onManageEvidence: () => context.go(
+                                AppRoutePaths.p2pDisputeEvidence(
+                                  snapshot.dispute.id,
+                                ),
+                              ),
+                              onOpenDisputes: () =>
+                                  context.go(AppRoutePaths.p2pDisputes),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),

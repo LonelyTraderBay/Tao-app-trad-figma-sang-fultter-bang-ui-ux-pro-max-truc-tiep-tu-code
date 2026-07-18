@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-033 mock repository exposes the leaderboard BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getLeaderboard();
+  test('SC-033 mock repository exposes the leaderboard BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getLeaderboard();
 
     expect(snapshot.timeFilter, PredictionLeaderboardTimeFilter.weekly);
     expect(snapshot.metric, PredictionLeaderboardMetric.pnl);
@@ -54,7 +54,7 @@ void main() {
       ]),
     );
 
-    final volume = repo.getLeaderboard(
+    final volume = await repo.getLeaderboard(
       metric: PredictionLeaderboardMetric.volume,
     );
     expect(volume.traders.first.user, 'AlgoTrader');

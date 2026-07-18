@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -75,7 +76,7 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pWalletProvider);
+    final snapshotAsync = ref.watch(p2pWalletProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -89,81 +90,106 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
       semanticIdentifier: 'SC-264',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-            actions: [
-              VitHeaderActionItem(
-                key: P2PWalletPage.historyActionKey,
-                type: VitHeaderActionType.history,
-                onPressed: () => context.go(snapshot.historyRoute),
-              ),
-            ],
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pWalletScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _WalletHero(
-                          snapshot: snapshot,
-                          balanceVisible: _balanceVisible,
-                          onPrivacyToggle: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _balanceVisible = !_balanceVisible);
-                          },
-                          onTransferFromMain: () => context.go(
-                            '${snapshot.transferRoute}?direction=from-main',
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pWalletProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+              actions: [
+                VitHeaderActionItem(
+                  key: P2PWalletPage.historyActionKey,
+                  type: VitHeaderActionType.history,
+                  onPressed: () => context.go(snapshot.historyRoute),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pWalletScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _WalletHero(
+                            snapshot: snapshot,
+                            balanceVisible: _balanceVisible,
+                            onPrivacyToggle: () {
+                              HapticFeedback.selectionClick();
+                              setState(
+                                () => _balanceVisible = !_balanceVisible,
+                              );
+                            },
+                            onTransferFromMain: () => context.go(
+                              '${snapshot.transferRoute}?direction=from-main',
+                            ),
+                            onTransferToMain: () => context.go(
+                              '${snapshot.transferRoute}?direction=to-main',
+                            ),
                           ),
-                          onTransferToMain: () => context.go(
-                            '${snapshot.transferRoute}?direction=to-main',
+                          _WalletInfoBanner(text: snapshot.infoNote),
+                          _BalanceSection(
+                            snapshot: snapshot,
+                            expandedAsset: _expandedAsset,
+                            onToggle: (asset) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _expandedAsset = _expandedAsset == asset
+                                    ? null
+                                    : asset;
+                              });
+                            },
                           ),
-                        ),
-                        _WalletInfoBanner(text: snapshot.infoNote),
-                        _BalanceSection(
-                          snapshot: snapshot,
-                          expandedAsset: _expandedAsset,
-                          onToggle: (asset) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _expandedAsset = _expandedAsset == asset
-                                  ? null
-                                  : asset;
-                            });
-                          },
-                        ),
-                        _RecentTransactions(snapshot: snapshot),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'P2P wallet state review',
-                          message:
-                              'Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.',
-                          contractId: 'SC-264',
-                          density: VitDensity.compact,
-                        ),
-                      ],
+                          _RecentTransactions(snapshot: snapshot),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P wallet state review',
+                            message:
+                                'Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.',
+                            contractId: 'SC-264',
+                            density: VitDensity.compact,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

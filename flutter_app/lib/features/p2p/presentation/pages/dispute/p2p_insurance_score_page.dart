@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -33,7 +34,7 @@ class P2PInsuranceScorePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pInsuranceScoreProvider);
+    final snapshotAsync = ref.watch(p2pInsuranceScoreProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -47,50 +48,73 @@ class P2PInsuranceScorePage extends ConsumerWidget {
       semanticIdentifier: 'SC-240',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Điểm bảo vệ',
-            subtitle: 'Bảo hiểm · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pInsurance),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pInsuranceScoreScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _ScoreOverviewCard(snapshot: snapshot),
-                        _FactorBreakdownCard(snapshot: snapshot),
-                        _QuickActionsCard(actions: snapshot.quickActions),
-                        _TierPathCard(snapshot: snapshot),
-                        _DisclosureCard(text: snapshot.disclosure),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại điểm bảo vệ',
-                          message:
-                              'Điểm bảo vệ, yếu tố ảnh hưởng, hành động nhanh, lộ trình hạng và cảnh báo được xem lại trước khi thay đổi mức bảo hiểm P2P.',
-                          contractId: 'SC-240',
-                        ),
-                      ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pInsurance),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pInsuranceScoreProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Điểm bảo vệ',
+              subtitle: 'Bảo hiểm · P2P',
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pInsuranceScoreScrollPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _ScoreOverviewCard(snapshot: snapshot),
+                          _FactorBreakdownCard(snapshot: snapshot),
+                          _QuickActionsCard(actions: snapshot.quickActions),
+                          _TierPathCard(snapshot: snapshot),
+                          _DisclosureCard(text: snapshot.disclosure),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Xem lại điểm bảo vệ',
+                            message:
+                                'Điểm bảo vệ, yếu tố ảnh hưởng, hành động nhanh, lộ trình hạng và cảnh báo được xem lại trước khi thay đổi mức bảo hiểm P2P.',
+                            contractId: 'SC-240',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -58,7 +59,7 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pAddressProofProvider);
+    final snapshotAsync = ref.watch(p2pAddressProofProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -67,12 +68,6 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
             : _p2pAddressProofNativeNavClearance +
                   _p2pAddressProofNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final selectedDocument = _selectedTypeId == null
-        ? null
-        : snapshot.documentTypes.firstWhere(
-            (document) => document.id == _selectedTypeId,
-            orElse: () => snapshot.documentTypes.first,
-          );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,100 +75,134 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
       semanticIdentifier: 'SC-250',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Xác minh địa chỉ',
-            subtitle: 'KYC · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycStatus),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pAddressProofScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _AddressHero(snapshot: snapshot),
-                        _RequirementsCard(snapshot: snapshot),
-                        if (selectedDocument == null)
-                          _DocumentTypePicker(
-                            documents: snapshot.documentTypes,
-                            onSelected: (document) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _selectedTypeId = document.id);
-                            },
-                          )
-                        else ...[
-                          _UploadSection(
-                            selectedDocument: selectedDocument,
-                            uploaded: _uploaded,
-                            onChangeType: () {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _selectedTypeId = null;
-                                _uploaded = false;
-                                _manualAddress = '';
-                              });
-                            },
-                            onUpload: () {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _uploaded = true;
-                                _manualAddress = snapshot.extractedAddress;
-                              });
-                            },
-                            onRemove: () {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _uploaded = false;
-                                _manualAddress = '';
-                              });
-                            },
-                          ),
-                          if (_uploaded) ...[
-                            _ExtractedDataCard(snapshot: snapshot),
-                            _AddressConfirmCard(address: _manualAddress),
-                          ],
-                          _SecurityCard(snapshot: snapshot),
-                          VitCtaButton(
-                            key: P2PAddressProofPage.submitKey,
-                            onPressed: _uploaded && _manualAddress.isNotEmpty
-                                ? () {
-                                    HapticFeedback.selectionClick();
-                                    context.go(snapshot.submitRoute);
-                                  }
-                                : null,
-                            trailing: const Icon(Icons.chevron_right_rounded),
-                            child: const Text('Gửi tài liệu'),
-                          ),
-                        ],
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Address proof state review',
-                          message:
-                              'Document type, upload status, extracted address, manual confirmation, and next verification step remain visible before submitting P2P address proof.',
-                          contractId: 'SC-250',
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycStatus),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pAddressProofProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final selectedDocument = _selectedTypeId == null
+                ? null
+                : snapshot.documentTypes.firstWhere(
+                    (document) => document.id == _selectedTypeId,
+                    orElse: () => snapshot.documentTypes.first,
+                  );
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Xác minh địa chỉ',
+                subtitle: 'KYC · P2P',
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pAddressProofScrollPadding(
+                          scrollEndPadding,
                         ),
-                      ],
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _AddressHero(snapshot: snapshot),
+                            _RequirementsCard(snapshot: snapshot),
+                            if (selectedDocument == null)
+                              _DocumentTypePicker(
+                                documents: snapshot.documentTypes,
+                                onSelected: (document) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _selectedTypeId = document.id);
+                                },
+                              )
+                            else ...[
+                              _UploadSection(
+                                selectedDocument: selectedDocument,
+                                uploaded: _uploaded,
+                                onChangeType: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _selectedTypeId = null;
+                                    _uploaded = false;
+                                    _manualAddress = '';
+                                  });
+                                },
+                                onUpload: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _uploaded = true;
+                                    _manualAddress = snapshot.extractedAddress;
+                                  });
+                                },
+                                onRemove: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _uploaded = false;
+                                    _manualAddress = '';
+                                  });
+                                },
+                              ),
+                              if (_uploaded) ...[
+                                _ExtractedDataCard(snapshot: snapshot),
+                                _AddressConfirmCard(address: _manualAddress),
+                              ],
+                              _SecurityCard(snapshot: snapshot),
+                              VitCtaButton(
+                                key: P2PAddressProofPage.submitKey,
+                                onPressed:
+                                    _uploaded && _manualAddress.isNotEmpty
+                                    ? () {
+                                        HapticFeedback.selectionClick();
+                                        context.go(snapshot.submitRoute);
+                                      }
+                                    : null,
+                                trailing: const Icon(
+                                  Icons.chevron_right_rounded,
+                                ),
+                                child: const Text('Gửi tài liệu'),
+                              ),
+                            ],
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Address proof state review',
+                              message:
+                                  'Document type, upload status, extracted address, manual confirmation, and next verification step remain visible before submitting P2P address proof.',
+                              contractId: 'SC-250',
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryKycMethods on _MockP2PRepositoryBase {
   @override
-  P2PKycRequirementsSnapshot getKycRequirements() {
+  Future<P2PKycRequirementsSnapshot> getKycRequirements() async {
+    await _simulateNetwork();
     return P2PKycRequirementsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-requirements',
       actionDraft:
@@ -41,7 +42,8 @@ mixin _MockP2PRepositoryKycMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PKycStatusSnapshot getKycStatus() {
+  Future<P2PKycStatusSnapshot> getKycStatus() async {
+    await _simulateNetwork();
     return P2PKycStatusSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-status',
       actionDraft:
@@ -77,7 +79,8 @@ mixin _MockP2PRepositoryKycMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PIdentityVerificationSnapshot getIdentityVerification() {
+  Future<P2PIdentityVerificationSnapshot> getIdentityVerification() async {
+    await _simulateNetwork();
     return const P2PIdentityVerificationSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-identity',
       actionDraft:
@@ -104,7 +107,8 @@ mixin _MockP2PRepositoryKycMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PAddressProofSnapshot getAddressProof() {
+  Future<P2PAddressProofSnapshot> getAddressProof() async {
+    await _simulateNetwork();
     return const P2PAddressProofSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-address',
       actionDraft:
@@ -134,7 +138,8 @@ mixin _MockP2PRepositoryKycMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PSelfieVerificationSnapshot getSelfieVerification() {
+  Future<P2PSelfieVerificationSnapshot> getSelfieVerification() async {
+    await _simulateNetwork();
     return P2PSelfieVerificationSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-selfie',
       actionDraft:
@@ -171,7 +176,8 @@ mixin _MockP2PRepositoryKycMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PVideoVerificationSnapshot getVideoVerification() {
+  Future<P2PVideoVerificationSnapshot> getVideoVerification() async {
+    await _simulateNetwork();
     return const P2PVideoVerificationSnapshot(
       endpoint: '/api/mobile/p2p/p2p-kyc-video',
       actionDraft:

@@ -26,8 +26,10 @@ void main() {
     return router;
   }
 
-  test('SC-254 mock repository exposes 2FA settings BE draft', () {
-    final snapshot = const MockP2PRepository().getTwoFactorSettings();
+  test('SC-254 mock repository exposes 2FA settings BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getTwoFactorSettings();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-security-2fa');
     expect(

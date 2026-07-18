@@ -59,9 +59,9 @@ class _ArenaPointsEntryDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaPointsEntryDetail(widget.entryId);
+    final snapshotAsync = ref.watch(
+      arenaPointsEntryDetailSnapshotProvider(widget.entryId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -97,46 +97,59 @@ class _ArenaPointsEntryDetailPageState
                     padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       footerPadding,
                     ),
-                    child: snapshot.entry == null
-                        ? VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            padding: VitContentPadding.none,
-                            children: [
-                              VitEmptyState(
-                                icon: Icons.warning_amber_rounded,
-                                title: snapshot.emptyTitle,
-                                message: snapshot.emptySubtitle,
-                              ),
-                            ],
-                          )
-                        : VitPageContent(
-                            padding: VitContentPadding.compact,
-                            gap: VitContentGap.tight,
-                            children: [
-                              _AmountHero(entry: snapshot.entry!),
-                              _EntryDetails(entry: snapshot.entry!),
-                              _BalanceCard(entry: snapshot.entry!),
-                              _ReferenceCard(
-                                entry: snapshot.entry!,
-                                copied: _copied,
-                                onCopy: () => _copyReference(snapshot.entry!),
-                              ),
-                              _AuditNotice(disclaimer: snapshot.disclaimer),
-                              if (_supportOpened)
-                                const VitStatusPill(
-                                  label: 'Hỗ trợ đã nhận yêu cầu',
-                                  status: VitStatusPillStatus.info,
-                                  size: VitStatusPillSize.md,
-                                ),
-                              _EntryActions(
-                                entry: snapshot.entry!,
-                                onSupport: () {
-                                  HapticFeedback.selectionClick();
-                                  setState(() => _supportOpened = true);
-                                },
-                              ),
-                            ],
+                    child: snapshotAsync.when(
+                      loading: () => const VitSkeletonList(),
+                      error: (error, stackTrace) => VitErrorState(
+                        title: 'Không tải được giao dịch điểm',
+                        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () => ref.invalidate(
+                          arenaPointsEntryDetailSnapshotProvider(
+                            widget.entryId,
                           ),
+                        ),
+                      ),
+                      data: (snapshot) => snapshot.entry == null
+                          ? VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.none,
+                              children: [
+                                VitEmptyState(
+                                  icon: Icons.warning_amber_rounded,
+                                  title: snapshot.emptyTitle,
+                                  message: snapshot.emptySubtitle,
+                                ),
+                              ],
+                            )
+                          : VitPageContent(
+                              padding: VitContentPadding.compact,
+                              gap: VitContentGap.tight,
+                              children: [
+                                _AmountHero(entry: snapshot.entry!),
+                                _EntryDetails(entry: snapshot.entry!),
+                                _BalanceCard(entry: snapshot.entry!),
+                                _ReferenceCard(
+                                  entry: snapshot.entry!,
+                                  copied: _copied,
+                                  onCopy: () => _copyReference(snapshot.entry!),
+                                ),
+                                _AuditNotice(disclaimer: snapshot.disclaimer),
+                                if (_supportOpened)
+                                  const VitStatusPill(
+                                    label: 'Hỗ trợ đã nhận yêu cầu',
+                                    status: VitStatusPillStatus.info,
+                                    size: VitStatusPillSize.md,
+                                  ),
+                                _EntryActions(
+                                  entry: snapshot.entry!,
+                                  onSupport: () {
+                                    HapticFeedback.selectionClick();
+                                    setState(() => _supportOpened = true);
+                                  },
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
                 ),
               ),

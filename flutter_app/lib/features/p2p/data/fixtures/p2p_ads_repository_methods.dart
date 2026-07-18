@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryAdsMethods on _MockP2PRepositoryBase {
   @override
-  P2PAdAnalyticsSnapshot getAdAnalytics(String adId) {
+  Future<P2PAdAnalyticsSnapshot> getAdAnalytics(String adId) async {
+    await _simulateNetwork();
     final resolvedAdId = adId.isEmpty ? 'sample' : adId;
     return P2PAdAnalyticsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-ad-analytics-$resolvedAdId',
@@ -50,7 +51,8 @@ mixin _MockP2PRepositoryAdsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PAdDetailSnapshot getAdDetail(String adId) {
+  Future<P2PAdDetailSnapshot> getAdDetail(String adId) async {
+    await _simulateNetwork();
     final resolvedAdId = adId.isEmpty ? 'sample' : adId;
     return P2PAdDetailSnapshot(
       endpoint: '/api/mobile/p2p/p2p-ad-$resolvedAdId',
@@ -87,7 +89,8 @@ mixin _MockP2PRepositoryAdsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PMyAdsSnapshot getMyAds() {
+  Future<P2PMyAdsSnapshot> getMyAds() async {
+    await _simulateNetwork();
     return const P2PMyAdsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-my-ads',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -128,7 +131,8 @@ mixin _MockP2PRepositoryAdsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PCreateAdSnapshot getCreateAd() {
+  Future<P2PCreateAdSnapshot> getCreateAd() async {
+    await _simulateNetwork();
     return const P2PCreateAdSnapshot(
       endpoint: '/api/mobile/p2p/p2p-create',
       actionDraft: 'POST /p2p/* workflow action where applicable',

@@ -53,9 +53,9 @@ class _PredictionsGlobalActivityPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getGlobalActivity(minAmount: _minAmount);
+    final activityAsync = ref.watch(
+      predictionsGlobalActivitySnapshotProvider(_minAmount),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -91,23 +91,38 @@ class _PredictionsGlobalActivityPageState
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _LiveStats(snapshot: snapshot),
-                        _AmountFilters(
-                          active: _minAmount,
-                          onSelected: (value) => setState(() {
-                            _minAmount = value;
-                          }),
-                        ),
-                        if (snapshot.activities.isEmpty)
-                          const VitEmptyState(
-                            title: 'No activity found',
-                            message: 'Lower the minimum amount filter',
-                            icon: Icons.timeline_rounded,
-                          )
-                        else
-                          _ActivityList(snapshot: snapshot),
-                      ],
+                      children: activityAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được hoạt động toàn cầu',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsGlobalActivitySnapshotProvider(
+                                _minAmount,
+                              ),
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _LiveStats(snapshot: snapshot),
+                          _AmountFilters(
+                            active: _minAmount,
+                            onSelected: (value) => setState(() {
+                              _minAmount = value;
+                            }),
+                          ),
+                          if (snapshot.activities.isEmpty)
+                            const VitEmptyState(
+                              title: 'No activity found',
+                              message: 'Lower the minimum amount filter',
+                              icon: Icons.timeline_rounded,
+                            )
+                          else
+                            _ActivityList(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),

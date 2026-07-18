@@ -7,9 +7,7 @@ class _ArenaPredictionBridgeFoundationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaPredictionBridge();
+    final snapshotAsync = ref.watch(arenaPredictionBridgeSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -51,34 +49,47 @@ class _ArenaPredictionBridgeFoundationPageState
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        const _BridgeHero(),
-                        _SectionTabs(
-                          active: _activeSection,
-                          onChanged: (section) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeSection = section);
-                          },
-                        ),
-                        _ActiveSection(
-                          section: _activeSection,
-                          snapshot: snapshot,
-                          selectedTopicId: _selectedTopicId,
-                          onTopicSelected: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _selectedTopicId = _selectedTopicId == id
-                                  ? null
-                                  : id;
-                            });
-                          },
-                          onPredictionTap: () =>
-                              _go(context, AppRoutePaths.profilePredictions),
-                          onArenaTap: () =>
-                              _go(context, AppRoutePaths.profileArena),
-                        ),
-                        _DisclosureFooter(text: snapshot.footerDisclosure),
-                      ],
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Bridge Foundation',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaPredictionBridgeSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          const _BridgeHero(),
+                          _SectionTabs(
+                            active: _activeSection,
+                            onChanged: (section) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeSection = section);
+                            },
+                          ),
+                          _ActiveSection(
+                            section: _activeSection,
+                            snapshot: snapshot,
+                            selectedTopicId: _selectedTopicId,
+                            onTopicSelected: (id) {
+                              HapticFeedback.selectionClick();
+                              setState(() {
+                                _selectedTopicId = _selectedTopicId == id
+                                    ? null
+                                    : id;
+                              });
+                            },
+                            onPredictionTap: () =>
+                                _go(context, AppRoutePaths.profilePredictions),
+                            onArenaTap: () =>
+                                _go(context, AppRoutePaths.profileArena),
+                          ),
+                          _DisclosureFooter(text: snapshot.footerDisclosure),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -13,10 +13,16 @@ void main() {
     return container;
   }
 
-  test('Prediction event controller builds high-risk order preview', () {
+  test('Prediction event controller builds high-risk order preview', () async {
     const repository = MockPredictionsRepository(loadDelay: Duration.zero);
     final container = containerWith(repository);
     final provider = predictionEventDetailControllerProvider('pred-1');
+    // GD4-F5 (bẫy mới #26 — xem GD4-Async-Playbook mục 9.26): đợi snapshot
+    // đọc resolve TRƯỚC KHI build() của Notifier chạy lần đầu, tránh build()
+    // rebuild giữa chừng một mutation và ghi đè status cục bộ về `ready`.
+    await container.read(
+      predictionsEventDetailSnapshotProvider('pred-1').future,
+    );
     final subscription = container.listen(provider, (_, _) {});
     addTearDown(subscription.close);
     final controller = container.read(provider.notifier);
@@ -54,6 +60,9 @@ void main() {
       const repository = MockPredictionsRepository(loadDelay: Duration.zero);
       final container = containerWith(repository);
       final provider = predictionEventDetailControllerProvider('pred-1');
+      await container.read(
+        predictionsEventDetailSnapshotProvider('pred-1').future,
+      );
       final statuses = <PredictionHighRiskFlowStatus>[];
       final subscription = container.listen(
         provider,
@@ -93,6 +102,15 @@ void main() {
       );
       final container = containerWith(repository);
       final provider = predictionEventDetailControllerProvider('pred-1');
+      try {
+        // simulateError đánh cả đường đọc (bẫy 17) — chỉ cần đợi async gap
+        // ổn định, không cần giá trị (nhánh error rớt về fallback rỗng).
+        await container.read(
+          predictionsEventDetailSnapshotProvider('pred-1').future,
+        );
+      } catch (_) {
+        // ignore: đợi cho xong, lỗi đọc được test riêng ở mock repo test.
+      }
       final subscription = container.listen(provider, (_, _) {});
       addTearDown(subscription.close);
 
@@ -116,26 +134,34 @@ void main() {
     },
   );
 
-  test('Predictions portfolio controller owns open-order cancel state', () {
-    final repository = const MockPredictionsRepository();
-    final controller = PredictionsPortfolioController(
-      state: PredictionsPortfolioViewState(snapshot: repository.getPortfolio()),
-    );
+  test(
+    'Predictions portfolio controller owns open-order cancel state',
+    () async {
+      const repository = MockPredictionsRepository(loadDelay: Duration.zero);
+      final controller = PredictionsPortfolioController(
+        state: PredictionsPortfolioViewState(
+          snapshot: await repository.getPortfolio(),
+        ),
+      );
 
-    final openOrders = controller.openOrdersExcluding({'oo-1'});
+      final openOrders = controller.openOrdersExcluding({'oo-1'});
 
-    expect(openOrders.map((order) => order.id), isNot(contains('oo-1')));
-    expect(openOrders.length, repository.getPortfolio().openOrders.length - 1);
-    expect(controller.cancelValidationMessage('oo-1'), isNull);
-    expect(
-      controller.cancelValidationMessage('missing'),
-      'Lệnh đang mở không còn khả dụng.',
-    );
-  });
+      expect(openOrders.map((order) => order.id), isNot(contains('oo-1')));
+      expect(
+        openOrders.length,
+        (await repository.getPortfolio()).openOrders.length - 1,
+      );
+      expect(controller.cancelValidationMessage('oo-1'), isNull);
+      expect(
+        controller.cancelValidationMessage('missing'),
+        'Lệnh đang mở không còn khả dụng.',
+      );
+    },
+  );
 
-  test('Prediction risk and receipt controllers expose review depth', () {
-    final repository = const MockPredictionsRepository();
-    final riskSnapshot = repository.getRiskCalculator();
+  test('Prediction risk and receipt controllers expose review depth', () async {
+    const repository = MockPredictionsRepository(loadDelay: Duration.zero);
+    final riskSnapshot = await repository.getRiskCalculator();
     final riskController = PredictionRiskCalculatorController(
       state: PredictionRiskCalculatorViewState(snapshot: riskSnapshot),
     );
@@ -164,7 +190,7 @@ void main() {
 
     final receiptController = PredictionOrderReceiptController(
       state: PredictionOrderReceiptViewState(
-        snapshot: repository.getOrderReceipt('po-1'),
+        snapshot: await repository.getOrderReceipt('po-1'),
       ),
     );
     final receiptReview = receiptController.review();

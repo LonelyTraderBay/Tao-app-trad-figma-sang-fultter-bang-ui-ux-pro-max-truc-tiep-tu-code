@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -66,17 +67,17 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(supportControllerProvider).getHelpCenter();
-    final articles = _filteredArticles(snapshot);
+    final helpAsync = ref.watch(helpCenterSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x6
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
+    final resolvedSnapshot = helpAsync.value;
     final showOfflineBanner =
-        snapshot.screenState == SupportScreenState.offline &&
-        snapshot.articles.isNotEmpty;
+        resolvedSnapshot?.screenState == SupportScreenState.offline &&
+        (resolvedSnapshot?.articles.isNotEmpty ?? false);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,10 +87,11 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Trung tâm trợ giúp',
+            subtitle: 'Trung tâm · Hỗ trợ',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () =>
+                context.go(helpAsync.value?.backRoute ?? AppRoutePaths.support),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,18 +125,36 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
                       gap: VitContentGap.relaxed,
-                      children: _helpCenterPageChildren(
-                        snapshot: snapshot,
-                        articles: articles,
-                        searchController: _searchController,
-                        query: _query,
-                        selectedCategoryId: _selectedCategoryId,
-                        expandedArticleId: _expandedArticleId,
-                        sectionTitle: _sectionTitle(snapshot, articles.length),
-                        onSearchChanged: _updateSearch,
-                        onCategorySelected: _selectCategory,
-                        onArticleToggle: _toggleArticle,
-                        onRetry: () => setState(() {}),
+                      children: helpAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được trung tâm trợ giúp',
+                            message: 'Kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(helpCenterSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          final articles = _filteredArticles(snapshot);
+                          return _helpCenterPageChildren(
+                            snapshot: snapshot,
+                            articles: articles,
+                            searchController: _searchController,
+                            query: _query,
+                            selectedCategoryId: _selectedCategoryId,
+                            expandedArticleId: _expandedArticleId,
+                            sectionTitle: _sectionTitle(
+                              snapshot,
+                              articles.length,
+                            ),
+                            onSearchChanged: _updateSearch,
+                            onCategorySelected: _selectCategory,
+                            onArticleToggle: _toggleArticle,
+                            onRetry: () => setState(() {}),
+                          );
+                        },
                       ),
                     ),
                   ),

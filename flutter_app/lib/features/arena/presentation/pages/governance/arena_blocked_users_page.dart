@@ -51,8 +51,10 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(arenaBlockedUsersStateControllerProvider);
-    final snapshot = viewState.snapshot;
+    // Bẫy 21 (GD4 Playbook mục 9): Notifier vẫn sync (biến thể A) — trang
+    // PHẢI tự gate qua provider snapshot gốc, nếu không sẽ render fallback
+    // rỗng suốt cửa sổ loading.
+    final snapshotAsync = ref.watch(arenaBlockedUsersSnapshotProvider);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
@@ -89,43 +91,59 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                     padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       footerPadding,
                     ),
-                    child: viewState.users.isEmpty
-                        ? VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            key: ArenaBlockedUsersPage.emptyKey,
-                            padding: VitContentPadding.none,
-                            children: [
-                              VitEmptyState(
-                                icon: Icons.shield_outlined,
-                                title: snapshot.emptyTitle,
-                                message: snapshot.emptySubtitle,
-                              ),
-                            ],
-                          )
-                        : VitPageContent(
-                            padding: VitContentPadding.compact,
-                            gap: VitContentGap.tight,
-                            children: [
-                              _BlockInfoBanner(snapshot: snapshot),
-                              _BlockedUsersCard(
-                                users: viewState.users,
-                                onUnblock: (user) => _requestUnblock(user),
-                                onViewProfile: (user) {
-                                  HapticFeedback.selectionClick();
-                                  context.go(
-                                    AppRoutePaths.arenaCreator(user.id),
-                                  );
-                                },
-                              ),
-                              Text(
-                                '${viewState.users.length} người đã bị chặn',
-                                textAlign: TextAlign.center,
-                                style: AppTextStyles.caption.copyWith(
-                                  color: AppColors.text3,
-                                ),
-                              ),
-                            ],
-                          ),
+                    child: snapshotAsync.when(
+                      loading: () => const VitSkeletonList(),
+                      error: (error, stackTrace) => VitErrorState(
+                        title: 'Không tải được danh sách chặn',
+                        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () =>
+                            ref.invalidate(arenaBlockedUsersSnapshotProvider),
+                      ),
+                      data: (_) {
+                        final viewState = ref.watch(
+                          arenaBlockedUsersStateControllerProvider,
+                        );
+                        final snapshot = viewState.snapshot;
+                        return viewState.users.isEmpty
+                            ? VitPageContent(
+                                rhythm: VitPageRhythm.standard,
+                                key: ArenaBlockedUsersPage.emptyKey,
+                                padding: VitContentPadding.none,
+                                children: [
+                                  VitEmptyState(
+                                    icon: Icons.shield_outlined,
+                                    title: snapshot.emptyTitle,
+                                    message: snapshot.emptySubtitle,
+                                  ),
+                                ],
+                              )
+                            : VitPageContent(
+                                padding: VitContentPadding.compact,
+                                gap: VitContentGap.tight,
+                                children: [
+                                  _BlockInfoBanner(snapshot: snapshot),
+                                  _BlockedUsersCard(
+                                    users: viewState.users,
+                                    onUnblock: (user) => _requestUnblock(user),
+                                    onViewProfile: (user) {
+                                      HapticFeedback.selectionClick();
+                                      context.go(
+                                        AppRoutePaths.arenaCreator(user.id),
+                                      );
+                                    },
+                                  ),
+                                  Text(
+                                    '${viewState.users.length} người đã bị chặn',
+                                    textAlign: TextAlign.center,
+                                    style: AppTextStyles.caption.copyWith(
+                                      color: AppColors.text3,
+                                    ),
+                                  ),
+                                ],
+                              );
+                      },
+                    ),
                   ),
                 ),
               ),

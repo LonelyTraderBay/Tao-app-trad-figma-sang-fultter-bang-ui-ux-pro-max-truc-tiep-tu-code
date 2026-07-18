@@ -32,7 +32,7 @@ class P2PDisputesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pDisputesProvider);
+    final snapshotAsync = ref.watch(p2pDisputesProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -55,46 +55,55 @@ class P2PDisputesPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PDisputesPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pDisputesScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _StatsRow(snapshot: snapshot),
-                        _SafetyNotice(snapshot: snapshot),
-                        _ListHeader(activeCount: snapshot.activeCount),
-                        if (snapshot.disputes.isEmpty)
-                          _EmptyDisputes(snapshot: snapshot)
-                        else
-                          for (final dispute in snapshot.disputes) ...[
-                            _DisputeListTile(dispute: dispute),
-                            if (dispute != snapshot.disputes.last)
-                              const SizedBox(
-                                height: AppSpacing.pageRhythmFormInnerGap,
-                              ),
-                          ],
-                        _GuideCard(snapshot: snapshot),
-                      ],
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pDisputesProvider),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PDisputesPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pDisputesScrollPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.form,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _StatsRow(snapshot: snapshot),
+                          _SafetyNotice(snapshot: snapshot),
+                          _ListHeader(activeCount: snapshot.activeCount),
+                          if (snapshot.disputes.isEmpty)
+                            _EmptyDisputes(snapshot: snapshot)
+                          else
+                            for (final dispute in snapshot.disputes) ...[
+                              _DisputeListTile(dispute: dispute),
+                              if (dispute != snapshot.disputes.last)
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmFormInnerGap,
+                                ),
+                            ],
+                          _GuideCard(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

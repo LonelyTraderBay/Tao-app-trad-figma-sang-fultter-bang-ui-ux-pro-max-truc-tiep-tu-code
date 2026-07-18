@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-212 mock repository exposes P2P order timeline BE draft', () {
-    final snapshot = const MockP2PRepository().getOrderTimeline('p2p001');
+  test('SC-212 mock repository exposes P2P order timeline BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrderTimeline('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-timeline-p2p001');
     expect(

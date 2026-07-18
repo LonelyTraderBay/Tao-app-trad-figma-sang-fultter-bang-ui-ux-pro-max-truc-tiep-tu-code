@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-225 mock repository exposes P2P my ads BE draft', () {
-    final snapshot = const MockP2PRepository().getMyAds();
+  test('SC-225 mock repository exposes P2P my ads BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getMyAds();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-my-ads');
     expect(

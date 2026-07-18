@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -55,49 +56,78 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(p2p2FASettingsStateControllerProvider);
-    final snapshot = viewState.snapshot;
-    final methods = viewState.methods;
-    final enabledMethods = methods.where((method) => method.enabled).length;
-    final primaryMethod = methods.firstWhere(
-      (method) => method.isPrimary,
-      orElse: () => methods.first,
-    );
+    // GD4 bẫy 21: trang chỉ watch Notifier (không watch provider async trực
+    // tiếp) — bọc .when() trên snapshot provider gốc để tránh render
+    // fallback rỗng trong cửa sổ loading; Notifier giữ nguyên (biến thể A).
+    final snapshotAsync = ref.watch(p2pTwoFactorSettingsProvider);
 
-    return VitP2PFlowScaffold(
-      title: '2FA cho P2P',
-      subtitle: 'Bảo mật · P2P',
-      semanticLabel: 'Cài đặt 2FA cho P2P',
-      semanticIdentifier: 'SC-254',
-      shellRenderMode: widget.shellRenderMode,
-      onBack: () => context.go(snapshot.parentRoute),
-      children: [
-        _TwoFactorStatusCard(
-          enabledMethods: enabledMethods,
-          primaryMethod: primaryMethod.label,
-        ),
-        _MethodSection(
-          methods: methods,
-          onToggle: _toggleMethod,
-          onSetPrimary: _setPrimaryMethod,
-        ),
-        _ThresholdSection(
-          thresholds: viewState.thresholds,
-          onToggle: _toggleThreshold,
-        ),
-        _SecurityRecommendation(text: snapshot.recommendation),
-        const VitCard(
-          variant: VitCardVariant.inner,
-          padding: P2PSpacingTokens.p2pTwoFactorInnerPadding,
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Rà soát thay đổi 2FA P2P',
-            message:
-                'Phương thức bật, yếu tố chính, ngưỡng giao dịch, trạng thái thiết lập và bước bảo mật tiếp theo được rà soát trước khi đổi bảo vệ P2P.',
-            contractId: 'SC-254',
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Cài đặt 2FA cho P2P',
+        semanticIdentifier: 'SC-254',
+        onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Cài đặt 2FA cho P2P',
+        semanticIdentifier: 'SC-254',
+        onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pTwoFactorSettingsProvider),
           ),
-        ),
-      ],
+        ],
+      ),
+      data: (_) {
+        final viewState = ref.watch(p2p2FASettingsStateControllerProvider);
+        final snapshot = viewState.snapshot;
+        final methods = viewState.methods;
+        final enabledMethods = methods.where((method) => method.enabled).length;
+        final primaryMethod = methods.firstWhere(
+          (method) => method.isPrimary,
+          orElse: () => methods.first,
+        );
+        return VitP2PFlowScaffold(
+          title: '2FA cho P2P',
+          subtitle: 'Bảo mật · P2P',
+          semanticLabel: 'Cài đặt 2FA cho P2P',
+          semanticIdentifier: 'SC-254',
+          shellRenderMode: widget.shellRenderMode,
+          onBack: () => context.go(snapshot.parentRoute),
+          children: [
+            _TwoFactorStatusCard(
+              enabledMethods: enabledMethods,
+              primaryMethod: primaryMethod.label,
+            ),
+            _MethodSection(
+              methods: methods,
+              onToggle: _toggleMethod,
+              onSetPrimary: _setPrimaryMethod,
+            ),
+            _ThresholdSection(
+              thresholds: viewState.thresholds,
+              onToggle: _toggleThreshold,
+            ),
+            _SecurityRecommendation(text: snapshot.recommendation),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              padding: P2PSpacingTokens.p2pTwoFactorInnerPadding,
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Rà soát thay đổi 2FA P2P',
+                message:
+                    'Phương thức bật, yếu tố chính, ngưỡng giao dịch, trạng thái thiết lập và bước bảo mật tiếp theo được rà soát trước khi đổi bảo vệ P2P.',
+                contractId: 'SC-254',
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

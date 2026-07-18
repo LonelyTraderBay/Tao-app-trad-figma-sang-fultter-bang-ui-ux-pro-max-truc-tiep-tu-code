@@ -3,7 +3,8 @@ part of '../repositories/mock_arena_repository.dart';
 mixin _MockArenaRepositoryProductionEcosystemMethods
     on _MockArenaRepositoryBase {
   @override
-  ArenaProductionReadySnapshot getArenaProductionReady() {
+  Future<ArenaProductionReadySnapshot> getArenaProductionReady() async {
+    await _simulateNetwork();
     return const ArenaProductionReadySnapshot(
       endpoint: '/api/mobile/arena/arena-production',
       actionDraft:
@@ -352,7 +353,8 @@ mixin _MockArenaRepositoryProductionEcosystemMethods
   }
 
   @override
-  ArenaPredictionBridgeSnapshot getArenaPredictionBridge() {
+  Future<ArenaPredictionBridgeSnapshot> getArenaPredictionBridge() async {
+    await _simulateNetwork();
     return const ArenaPredictionBridgeSnapshot(
       endpoint: '/api/mobile/arena/arena-bridge',
       actionDraft:

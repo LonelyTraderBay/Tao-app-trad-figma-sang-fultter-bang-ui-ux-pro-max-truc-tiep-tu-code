@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -49,25 +50,17 @@ class P2PAntiPhishingCodePage extends ConsumerStatefulWidget {
 
 class _P2PAntiPhishingCodePageState
     extends ConsumerState<P2PAntiPhishingCodePage> {
-  late final TextEditingController _codeController;
-  late String _code;
-  late bool _editing;
+  // GD4 bẫy 14: initState-seed từ getter giờ-đã-async — bỏ initState, dùng
+  // field nullable + `??=` trong nhánh data:.
+  TextEditingController? _codeController;
+  String? _code;
+  bool? _editing;
   bool _showCode = false;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(p2pAntiPhishingCodeProvider);
-    _code = snapshot.currentCode;
-    _editing = !snapshot.hasCode;
-    _codeController = TextEditingController(text: _code);
-    _codeController.addListener(_handleCodeChanged);
-  }
-
-  @override
   void dispose() {
-    _codeController.removeListener(_handleCodeChanged);
-    _codeController.dispose();
+    _codeController?.removeListener(_handleCodeChanged);
+    _codeController?.dispose();
     super.dispose();
   }
 
@@ -77,7 +70,7 @@ class _P2PAntiPhishingCodePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pAntiPhishingCodeProvider);
+    final snapshotAsync = ref.watch(p2pAntiPhishingCodeProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -91,77 +84,111 @@ class _P2PAntiPhishingCodePageState
       semanticIdentifier: 'SC-256',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Mã chống phishing',
-            subtitle: 'Bảo mật · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pSecurityDetailsScrollPadding(
-                      bottomInset,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _StatusCard(snapshot: snapshot),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _ExplainerCard(snapshot: snapshot),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        VitSectionHeader(
-                          title: _editing ? 'Thiết lập code' : 'Code hiện tại',
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _editing
-                            ? _editCodeCard()
-                            : _currentCodeCard(code: _code),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        const VitSectionHeader(
-                          title: 'Ví dụ email',
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _EmailExamples(examples: snapshot.examples),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _WarningCard(snapshot: snapshot),
-                        const VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pAntiPhishingCodeProvider),
+            ),
+          ),
+          data: (snapshot) {
+            if (_codeController == null) {
+              _code = snapshot.currentCode;
+              _editing = !snapshot.hasCode;
+              _codeController = TextEditingController(text: _code)
+                ..addListener(_handleCodeChanged);
+            }
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Mã chống phishing',
+                subtitle: 'Bảo mật · P2P',
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pSecurityDetailsScrollPadding(
+                              bottomInset,
+                            ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Anti-phishing code state review',
-                              message:
-                                  'Current code visibility, edit state, examples, warning copy, and save readiness stay visible before changing P2P email security.',
-                              contractId: 'SC-256',
+                            _StatusCard(snapshot: snapshot),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _ExplainerCard(snapshot: snapshot),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            VitSectionHeader(
+                              title: _editing!
+                                  ? 'Thiết lập code'
+                                  : 'Code hiện tại',
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _editing!
+                                ? _editCodeCard()
+                                : _currentCodeCard(code: _code!),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            const VitSectionHeader(
+                              title: 'Ví dụ email',
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _EmailExamples(examples: snapshot.examples),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _WarningCard(snapshot: snapshot),
+                            const VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.none,
+                              fullBleed: true,
+                              children: [
+                                VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Anti-phishing code state review',
+                                  message:
+                                      'Current code visibility, edit state, examples, warning copy, and save readiness stay visible before changing P2P email security.',
+                                  contractId: 'SC-256',
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -232,7 +259,7 @@ class _P2PAntiPhishingCodePageState
                   color: AppModuleAccents.p2p,
                   onTap: () {
                     HapticFeedback.selectionClick();
-                    Clipboard.setData(ClipboardData(text: _code));
+                    Clipboard.setData(ClipboardData(text: _code!));
                   },
                 ),
               ),
@@ -245,7 +272,7 @@ class _P2PAntiPhishingCodePageState
                   color: AppColors.text2,
                   onTap: () {
                     HapticFeedback.selectionClick();
-                    _codeController.text = _code;
+                    _codeController!.text = _code!;
                     setState(() => _editing = true);
                   },
                 ),
@@ -266,7 +293,7 @@ class _P2PAntiPhishingCodePageState
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitInput(
-            controller: _codeController,
+            controller: _codeController!,
             fieldKey: P2PAntiPhishingCodePage.inputKey,
             label: 'Mã chống phishing',
             hintText: 'Nhập code tối thiểu 6 ký tự',
@@ -278,7 +305,7 @@ class _P2PAntiPhishingCodePageState
             onChanged: (value) {
               final upper = value.toUpperCase();
               if (upper != value) {
-                _codeController.value = TextEditingValue(
+                _codeController!.value = TextEditingValue(
                   text: upper,
                   selection: TextSelection.collapsed(offset: upper.length),
                 );
@@ -293,19 +320,19 @@ class _P2PAntiPhishingCodePageState
             color: AppColors.text1,
             onTap: () {
               HapticFeedback.selectionClick();
-              _codeController.text = 'SEC8F2K9';
+              _codeController!.text = 'SEC8F2K9';
             },
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
             key: P2PAntiPhishingCodePage.saveKey,
             variant: VitCtaButtonVariant.success,
-            onPressed: _codeController.text.trim().length < 6
+            onPressed: _codeController!.text.trim().length < 6
                 ? null
                 : () {
                     HapticFeedback.selectionClick();
                     setState(() {
-                      _code = _codeController.text.trim().toUpperCase();
+                      _code = _codeController!.text.trim().toUpperCase();
                       _showCode = true;
                       _editing = false;
                     });

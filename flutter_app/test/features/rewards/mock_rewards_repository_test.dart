@@ -5,11 +5,11 @@ import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart'
 /// [RewardsRepository] and asserts each call succeeds without throwing and
 /// returns a plausible, non-empty result.
 void main() {
-  const repository = MockRewardsRepository();
+  const repository = MockRewardsRepository(loadDelay: Duration.zero);
 
   group('MockRewardsRepository smoke test', () {
-    test('getHub returns a populated snapshot', () {
-      final snapshot = repository.getHub();
+    test('getHub returns a populated snapshot', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot, isA<RewardsHubSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -21,8 +21,8 @@ void main() {
       expect(snapshot.screenState, RewardsScreenState.ready);
     });
 
-    test('getHub returns a populated summary', () {
-      final snapshot = repository.getHub();
+    test('getHub returns a populated summary', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.summary, isA<RewardSummaryDraft>());
       expect(snapshot.summary.bonusPointsClaimed, isNotEmpty);
@@ -32,8 +32,8 @@ void main() {
       expect(snapshot.summary.completionLabel, isNotEmpty);
     });
 
-    test('getHub returns populated categories', () {
-      final snapshot = repository.getHub();
+    test('getHub returns populated categories', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.categories, isNotEmpty);
       for (final category in snapshot.categories) {
@@ -43,27 +43,30 @@ void main() {
       }
     });
 
-    test('getHub returns a 7-day check-in strip with exactly one today', () {
-      final snapshot = repository.getHub();
+    test(
+      'getHub returns a 7-day check-in strip with exactly one today',
+      () async {
+        final snapshot = await repository.getHub();
 
-      expect(snapshot.checkIns, hasLength(7));
-      for (final checkIn in snapshot.checkIns) {
-        expect(checkIn, isA<RewardCheckInDraft>());
-        expect(checkIn.label, isNotEmpty);
-        expect(checkIn.reward, isNotEmpty);
-      }
-      expect(snapshot.checkIns.where((c) => c.today), hasLength(1));
-    });
+        expect(snapshot.checkIns, hasLength(7));
+        for (final checkIn in snapshot.checkIns) {
+          expect(checkIn, isA<RewardCheckInDraft>());
+          expect(checkIn.label, isNotEmpty);
+          expect(checkIn.reward, isNotEmpty);
+        }
+        expect(snapshot.checkIns.where((c) => c.today), hasLength(1));
+      },
+    );
 
-    test('getHub returns populated filters', () {
-      final snapshot = repository.getHub();
+    test('getHub returns populated filters', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.filters, isNotEmpty);
       expect(snapshot.filters, contains('Tất cả'));
     });
 
-    test('getHub returns populated tasks matching the filter list', () {
-      final snapshot = repository.getHub();
+    test('getHub returns populated tasks matching the filter list', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.tasks, isNotEmpty);
       for (final task in snapshot.tasks) {
@@ -75,8 +78,8 @@ void main() {
       }
     });
 
-    test('getHub returns populated bonus rows', () {
-      final snapshot = repository.getHub();
+    test('getHub returns populated bonus rows', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.bonusRows, isNotEmpty);
       for (final bonus in snapshot.bonusRows) {
@@ -86,8 +89,8 @@ void main() {
       }
     });
 
-    test('getHub returns a populated, rank-ordered leaderboard', () {
-      final snapshot = repository.getHub();
+    test('getHub returns a populated, rank-ordered leaderboard', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.leaderboard, isNotEmpty);
       for (final entry in snapshot.leaderboard) {
@@ -98,15 +101,15 @@ void main() {
       expect(snapshot.leaderboard.first.rank, 1);
     });
 
-    test('getHub returns disclaimer and contract notes copy', () {
-      final snapshot = repository.getHub();
+    test('getHub returns disclaimer and contract notes copy', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.disclaimer, isNotEmpty);
       expect(snapshot.contractNotes, isNotEmpty);
     });
 
-    test('getHub reports the full set of supported screen states', () {
-      final snapshot = repository.getHub();
+    test('getHub reports the full set of supported screen states', () async {
+      final snapshot = await repository.getHub();
 
       expect(
         snapshot.supportedStates,
@@ -120,9 +123,9 @@ void main() {
       );
     });
 
-    test('getHub does not throw across repeated calls', () {
-      expect(() => repository.getHub(), returnsNormally);
-      expect(() => repository.getHub(), returnsNormally);
+    test('getHub does not throw across repeated calls', () async {
+      await repository.getHub();
+      await repository.getHub();
     });
   });
 }

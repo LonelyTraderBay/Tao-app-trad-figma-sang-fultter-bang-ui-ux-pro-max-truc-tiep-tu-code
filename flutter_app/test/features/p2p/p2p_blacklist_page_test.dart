@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-277 mock repository exposes blacklist BE draft', () {
-    final snapshot = const MockP2PRepository().getBlacklist();
+  test('SC-277 mock repository exposes blacklist BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getBlacklist();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-blacklist');
     expect(

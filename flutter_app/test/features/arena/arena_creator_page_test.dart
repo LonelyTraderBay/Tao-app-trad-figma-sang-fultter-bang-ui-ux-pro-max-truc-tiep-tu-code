@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-193 mock repository exposes Arena Creator BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaCreator('cr001');
+  test('SC-193 mock repository exposes Arena Creator BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaCreator('cr001');
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-creator-cr001');
     expect(

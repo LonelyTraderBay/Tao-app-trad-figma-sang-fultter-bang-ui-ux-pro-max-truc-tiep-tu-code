@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-237 mock repository exposes payment methods BE draft', () {
-    final snapshot = const MockP2PRepository().getPaymentMethods();
+  test('SC-237 mock repository exposes payment methods BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getPaymentMethods();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-payment-methods');
     expect(

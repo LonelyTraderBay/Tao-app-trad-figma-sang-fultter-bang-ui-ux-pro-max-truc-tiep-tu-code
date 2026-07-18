@@ -47,59 +47,70 @@ ArenaSmartRuleFormDraft _smartRuleForm({
 }
 
 void main() {
-  test('Arena join controller gates points-only acknowledgement state', () {
-    final repository = const MockArenaRepository();
-    final controller = ArenaJoinController(
-      state: ArenaJoinViewState(snapshot: repository.getArenaJoin('ch003')),
-    );
-
-    expect(controller.canJoin(readRules: true, understandPoints: true), isTrue);
-    expect(
-      controller.validationMessage(readRules: false, understandPoints: true),
-      'Review the rules before joining.',
-    );
-    expect(ArenaLocalFlowStatus.confirming.isBusy, isTrue);
-    expect(ArenaLocalFlowStatus.preview.hasPreview, isTrue);
-    expect(ArenaLocalFlowStatus.validationError.isFailure, isTrue);
-    expect(
-      ArenaJoinController(
+  test(
+    'Arena join controller gates points-only acknowledgement state',
+    () async {
+      const repository = MockArenaRepository(loadDelay: Duration.zero);
+      final controller = ArenaJoinController(
         state: ArenaJoinViewState(
-          snapshot: repository.getArenaJoin('ch003'),
-          status: ArenaLocalFlowStatus.offline,
+          snapshot: await repository.getArenaJoin('ch003'),
         ),
-      ).validationMessage(readRules: true, understandPoints: true),
-      'Offline: reconnect before joining with Arena Points.',
-    );
-  });
+      );
 
-  test('Arena governance controller exposes action state boundary copy', () {
-    final repository = const MockArenaRepository();
-    final controller = ArenaGovernanceController(
-      state: ArenaGovernanceViewState(
-        snapshot: repository.getArenaGovernance(),
-      ),
-    );
+      expect(
+        controller.canJoin(readRules: true, understandPoints: true),
+        isTrue,
+      );
+      expect(
+        controller.validationMessage(readRules: false, understandPoints: true),
+        'Review the rules before joining.',
+      );
+      expect(ArenaLocalFlowStatus.confirming.isBusy, isTrue);
+      expect(ArenaLocalFlowStatus.preview.hasPreview, isTrue);
+      expect(ArenaLocalFlowStatus.validationError.isFailure, isTrue);
+      expect(
+        ArenaJoinController(
+          state: ArenaJoinViewState(
+            snapshot: await repository.getArenaJoin('ch003'),
+            status: ArenaLocalFlowStatus.offline,
+          ),
+        ).validationMessage(readRules: true, understandPoints: true),
+        'Offline: reconnect before joining with Arena Points.',
+      );
+    },
+  );
 
-    final state = controller.actionState(
-      canProceed: false,
-      nextAction: 'Add tie rule',
-    );
+  test(
+    'Arena governance controller exposes action state boundary copy',
+    () async {
+      const repository = MockArenaRepository(loadDelay: Duration.zero);
+      final controller = ArenaGovernanceController(
+        state: ArenaGovernanceViewState(
+          snapshot: await repository.getArenaGovernance(),
+        ),
+      );
 
-    expect(state.canContinue, isFalse);
-    expect(state.footerLabel, 'Add tie rule');
-    expect(state.boundaryNote, contains('Arena Points'));
-    expect(
-      controller.validationMessage(canProceed: false),
-      'Complete fair-play and Arena Points rule checks first.',
-    );
-    expect(controller.validationMessage(canProceed: true), isNull);
-  });
+      final state = controller.actionState(
+        canProceed: false,
+        nextAction: 'Add tie rule',
+      );
 
-  test('Arena report controller owns appeal review state', () {
-    final repository = const MockArenaRepository();
+      expect(state.canContinue, isFalse);
+      expect(state.footerLabel, 'Add tie rule');
+      expect(state.boundaryNote, contains('Arena Points'));
+      expect(
+        controller.validationMessage(canProceed: false),
+        'Complete fair-play and Arena Points rule checks first.',
+      );
+      expect(controller.validationMessage(canProceed: true), isNull);
+    },
+  );
+
+  test('Arena report controller owns appeal review state', () async {
+    const repository = MockArenaRepository(loadDelay: Duration.zero);
     final controller = ArenaReportCaseController(
       state: ArenaReportCaseViewState(
-        snapshot: repository.getArenaReportCase('rpt001'),
+        snapshot: await repository.getArenaReportCase('rpt001'),
       ),
     );
 
@@ -121,11 +132,11 @@ void main() {
     ]);
   });
 
-  test('Arena challenge controller builds points-only review model', () {
-    final repository = const MockArenaRepository();
+  test('Arena challenge controller builds points-only review model', () async {
+    const repository = MockArenaRepository(loadDelay: Duration.zero);
     final controller = ArenaChallengeDetailController(
       state: ArenaChallengeDetailViewState(
-        snapshot: repository.getArenaChallengeDetail('ch003'),
+        snapshot: await repository.getArenaChallengeDetail('ch003'),
       ),
     );
 
@@ -139,9 +150,9 @@ void main() {
 
   test(
     'Arena smart rule builder controller resolves options, generates rule copy, and gates submission',
-    () {
-      final repository = const MockArenaRepository();
-      final snapshot = repository.getArenaSmartRules();
+    () async {
+      const repository = MockArenaRepository(loadDelay: Duration.zero);
+      final snapshot = await repository.getArenaSmartRules();
       final controller = ArenaSmartRuleBuilderController(
         state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
       );

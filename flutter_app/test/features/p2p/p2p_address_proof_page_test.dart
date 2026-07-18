@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-250 mock repository exposes address proof BE draft', () {
-    final snapshot = const MockP2PRepository().getAddressProof();
+  test('SC-250 mock repository exposes address proof BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getAddressProof();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-kyc-address');
     expect(

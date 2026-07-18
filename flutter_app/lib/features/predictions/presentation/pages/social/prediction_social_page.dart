@@ -74,9 +74,7 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getSocial();
+    final socialAsync = ref.watch(predictionsSocialSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -120,49 +118,62 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: [
-                        ...switch (_activeTab) {
-                          _SocialTab.comments => [
-                            _EventInfoCard(snapshot: snapshot),
-                            _NewCommentCard(
-                              controller: _commentController,
-                              selectedStance: _selectedStance,
-                              onStanceChanged: (stance) =>
-                                  setState(() => _selectedStance = stance),
+                      children: socialAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được nội dung thảo luận',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsSocialSnapshotProvider,
                             ),
-                            _CommentsSection(snapshot: snapshot),
-                            const _CommentDisclaimer(),
-                          ],
-                          _SocialTab.analysis => [
-                            _SentimentCard(snapshot: snapshot),
-                            _ContributorsSection(snapshot: snapshot),
-                            const _SentimentTrendCard(),
-                          ],
-                          _SocialTab.share => [
-                            _SocialShareButtons(snapshot: snapshot),
-                            _CopyLinkCard(
-                              snapshot: snapshot,
-                              copied: _copied,
-                              onCopy: () {
-                                Clipboard.setData(
-                                  ClipboardData(text: snapshot.shareUrl),
-                                );
-                                setState(() => _copied = true);
-                              },
-                            ),
-                            const _ShareStatsCard(),
-                            _SharePreviewCard(snapshot: snapshot),
-                          ],
-                        },
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Prediction social review',
-                          message:
-                              'Comment stance, moderation context, sentiment analysis, contributor signals, share/copy feedback, and disclaimer states are reviewed before social trading signals influence a prediction decision.',
-                          contractId: 'SC-040',
-                          density: VitDensity.compact,
-                        ),
-                      ],
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          ...switch (_activeTab) {
+                            _SocialTab.comments => [
+                              _EventInfoCard(snapshot: snapshot),
+                              _NewCommentCard(
+                                controller: _commentController,
+                                selectedStance: _selectedStance,
+                                onStanceChanged: (stance) =>
+                                    setState(() => _selectedStance = stance),
+                              ),
+                              _CommentsSection(snapshot: snapshot),
+                              const _CommentDisclaimer(),
+                            ],
+                            _SocialTab.analysis => [
+                              _SentimentCard(snapshot: snapshot),
+                              _ContributorsSection(snapshot: snapshot),
+                              const _SentimentTrendCard(),
+                            ],
+                            _SocialTab.share => [
+                              _SocialShareButtons(snapshot: snapshot),
+                              _CopyLinkCard(
+                                snapshot: snapshot,
+                                copied: _copied,
+                                onCopy: () {
+                                  Clipboard.setData(
+                                    ClipboardData(text: snapshot.shareUrl),
+                                  );
+                                  setState(() => _copied = true);
+                                },
+                              ),
+                              const _ShareStatsCard(),
+                              _SharePreviewCard(snapshot: snapshot),
+                            ],
+                          },
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Prediction social review',
+                            message:
+                                'Comment stance, moderation context, sentiment analysis, contributor signals, share/copy feedback, and disclaimer states are reviewed before social trading signals influence a prediction decision.',
+                            contractId: 'SC-040',
+                            density: VitDensity.compact,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

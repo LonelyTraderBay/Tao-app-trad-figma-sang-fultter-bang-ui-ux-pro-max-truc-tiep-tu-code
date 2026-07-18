@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryCreatorTrustMethods on _MockArenaRepositoryBase {
   @override
-  ArenaBlockedUsersSnapshot getArenaBlockedUsers() {
+  Future<ArenaBlockedUsersSnapshot> getArenaBlockedUsers() async {
+    await _simulateNetwork();
     return const ArenaBlockedUsersSnapshot(
       endpoint: '/api/mobile/arena/arena-blocked',
       actionDraft:
@@ -41,8 +42,11 @@ mixin _MockArenaRepositoryCreatorTrustMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaTrustBreakdownSnapshot getArenaTrustBreakdown(String entityId) {
+  Future<ArenaTrustBreakdownSnapshot> getArenaTrustBreakdown(
+    String entityId,
+  ) async {
     if (entityId != 'cr001') {
+      await _simulateNetwork();
       return ArenaTrustBreakdownSnapshot(
         endpoint: '/api/mobile/arena/arena-trust-$entityId',
         actionDraft:
@@ -66,7 +70,9 @@ mixin _MockArenaRepositoryCreatorTrustMethods on _MockArenaRepositoryBase {
       );
     }
 
-    final profile = getArenaCreator(entityId);
+    // Bẫy 18 (GD4 Playbook mục 9): getArenaCreator() đã tự
+    // _simulateNetwork() — không lặp lại delay/error ở lớp ngoài.
+    final profile = await getArenaCreator(entityId);
     return ArenaTrustBreakdownSnapshot(
       endpoint: '/api/mobile/arena/arena-trust-$entityId',
       actionDraft:
@@ -91,7 +97,8 @@ mixin _MockArenaRepositoryCreatorTrustMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaCreatorProfileSnapshot getArenaCreator(String creatorId) {
+  Future<ArenaCreatorProfileSnapshot> getArenaCreator(String creatorId) async {
+    await _simulateNetwork();
     return const ArenaCreatorProfileSnapshot(
       endpoint: '/api/mobile/arena/arena-creator-cr001',
       actionDraft:
@@ -163,7 +170,8 @@ mixin _MockArenaRepositoryCreatorTrustMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaLeaderboardSnapshot getArenaLeaderboard() {
+  Future<ArenaLeaderboardSnapshot> getArenaLeaderboard() async {
+    await _simulateNetwork();
     return const ArenaLeaderboardSnapshot(
       endpoint: '/api/mobile/arena/arena-leaderboard',
       actionDraft:
@@ -302,7 +310,8 @@ mixin _MockArenaRepositoryCreatorTrustMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  VerifiedChallengesSnapshot getVerifiedChallenges() {
+  Future<VerifiedChallengesSnapshot> getVerifiedChallenges() async {
+    await _simulateNetwork();
     return const VerifiedChallengesSnapshot(
       endpoint: '/api/mobile/arena/arena-verified',
       actionDraft:

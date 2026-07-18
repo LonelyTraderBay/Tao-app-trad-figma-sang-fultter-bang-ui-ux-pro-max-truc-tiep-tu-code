@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-280 mock repository exposes guide BE draft', () {
-    final snapshot = const MockP2PRepository().getGuide();
+  test('SC-280 mock repository exposes guide BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getGuide();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-guide');
     expect(

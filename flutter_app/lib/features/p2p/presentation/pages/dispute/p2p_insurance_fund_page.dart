@@ -69,7 +69,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pInsuranceFundProvider);
+    final snapshotAsync = ref.watch(p2pInsuranceFundProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -77,121 +77,154 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 
-    return Stack(
-      children: [
-        VitPageLayout(
-          variant: VitPageVariant.flush,
-          semanticLabel: 'Quỹ bảo hiểm P2P',
-          semanticIdentifier: 'SC-238',
-          child: Material(
-            type: MaterialType.transparency,
-            child: VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Quỹ bảo hiểm',
-                subtitle: 'Bảo hiểm · P2P',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.p2p),
-                actions: [
-                  VitHeaderActionItem(
-                    type: VitHeaderActionType.help,
-                    tooltip: 'Hướng dẫn sử dụng',
-                    tone: VitHeaderActionTone.primary,
-                    onPressed: () {
-                      HapticFeedback.selectionClick();
-                      setState(() => _showTour = true);
-                    },
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: P2PSpacingTokens.p2pTrustProgressTabPadding,
-                    child: VitTabBar(
-                      variant: VitTabBarVariant.segment,
-                      activeKey: _tab.name,
-                      onChanged: (key) {
+    return snapshotAsync.when(
+      loading: () => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Quỹ bảo hiểm P2P',
+        semanticIdentifier: 'SC-238',
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Đang tải…',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: const VitSkeletonList(),
+        ),
+      ),
+      error: (error, stackTrace) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Quỹ bảo hiểm P2P',
+        semanticIdentifier: 'SC-238',
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Không tải được',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.p2p),
+          ),
+          child: VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pInsuranceFundProvider),
+          ),
+        ),
+      ),
+      data: (snapshot) => Stack(
+        children: [
+          VitPageLayout(
+            variant: VitPageVariant.flush,
+            semanticLabel: 'Quỹ bảo hiểm P2P',
+            semanticIdentifier: 'SC-238',
+            child: Material(
+              type: MaterialType.transparency,
+              child: VitAutoHideHeaderScaffold(
+                header: VitHeader(
+                  title: 'Quỹ bảo hiểm',
+                  subtitle: 'Bảo hiểm · P2P',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.p2p),
+                  actions: [
+                    VitHeaderActionItem(
+                      type: VitHeaderActionType.help,
+                      tooltip: 'Hướng dẫn sử dụng',
+                      tone: VitHeaderActionTone.primary,
+                      onPressed: () {
                         HapticFeedback.selectionClick();
-                        setState(() {
-                          _tab = key == _InsuranceTab.claims.name
-                              ? _InsuranceTab.claims
-                              : _InsuranceTab.overview;
-                        });
+                        setState(() => _showTour = true);
                       },
-                      tabs: const [
-                        VitTabItem(
-                          key: 'overview',
-                          label: 'Tổng quan',
-                          icon: Icons.shield_outlined,
-                        ),
-                        VitTabItem(
-                          key: 'claims',
-                          label: 'Yêu cầu của tôi',
-                          icon: Icons.receipt_long_rounded,
-                        ),
-                      ],
                     ),
-                  ),
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: P2PInsuranceFundPage.contentKey,
-                        physics: const ClampingScrollPhysics(),
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                          AppSpacing.contentPad,
-                          AppSpacing.x3,
-                          AppSpacing.contentPad,
-                          scrollEndPadding,
-                        ),
-                        child: VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          density: VitDensity.compact,
-                          children: [
-                            VitPageSection(
-                              density: VitDensity.compact,
-                              children: [
-                                _tab == _InsuranceTab.overview
-                                    ? _OverviewContent(snapshot: snapshot)
-                                    : _ClaimsContent(snapshot: snapshot),
-                              ],
-                            ),
-                            const VitHighRiskStatePanel(
-                              density: VitDensity.compact,
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Xem lại quỹ bảo hiểm',
-                              message:
-                                  'Sức khỏe quỹ, điều kiện, mức bảo hiểm, danh sách yêu cầu, chứng nhận và bước tiếp theo được xem lại trước khi gửi yêu cầu.',
-                              contractId: 'p2p-insurance-fund-review',
-                            ),
-                          ],
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: P2PSpacingTokens.p2pTrustProgressTabPadding,
+                      child: VitTabBar(
+                        variant: VitTabBarVariant.segment,
+                        activeKey: _tab.name,
+                        onChanged: (key) {
+                          HapticFeedback.selectionClick();
+                          setState(() {
+                            _tab = key == _InsuranceTab.claims.name
+                                ? _InsuranceTab.claims
+                                : _InsuranceTab.overview;
+                          });
+                        },
+                        tabs: const [
+                          VitTabItem(
+                            key: 'overview',
+                            label: 'Tổng quan',
+                            icon: Icons.shield_outlined,
+                          ),
+                          VitTabItem(
+                            key: 'claims',
+                            label: 'Yêu cầu của tôi',
+                            icon: Icons.receipt_long_rounded,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(
+                          context,
+                        ).copyWith(scrollbars: false),
+                        child: SingleChildScrollView(
+                          key: P2PInsuranceFundPage.contentKey,
+                          physics: const ClampingScrollPhysics(),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                            AppSpacing.contentPad,
+                            AppSpacing.x3,
+                            AppSpacing.contentPad,
+                            scrollEndPadding,
+                          ),
+                          child: VitPageContent(
+                            rhythm: VitPageRhythm.standard,
+                            padding: VitContentPadding.none,
+                            fullBleed: true,
+                            density: VitDensity.compact,
+                            children: [
+                              VitPageSection(
+                                density: VitDensity.compact,
+                                children: [
+                                  _tab == _InsuranceTab.overview
+                                      ? _OverviewContent(snapshot: snapshot)
+                                      : _ClaimsContent(snapshot: snapshot),
+                                ],
+                              ),
+                              const VitHighRiskStatePanel(
+                                density: VitDensity.compact,
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Xem lại quỹ bảo hiểm',
+                                message:
+                                    'Sức khỏe quỹ, điều kiện, mức bảo hiểm, danh sách yêu cầu, chứng nhận và bước tiếp theo được xem lại trước khi gửi yêu cầu.',
+                                contractId: 'p2p-insurance-fund-review',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        if (_showTour)
-          _InsuranceTourOverlay(
-            snapshot: snapshot,
-            onClose: () {
-              HapticFeedback.selectionClick();
-              setState(() => _showTour = false);
-            },
-            onContinue: () {
-              HapticFeedback.selectionClick();
-              setState(() => _showTour = false);
-            },
-          ),
-      ],
+          if (_showTour)
+            _InsuranceTourOverlay(
+              snapshot: snapshot,
+              onClose: () {
+                HapticFeedback.selectionClick();
+                setState(() => _showTour = false);
+              },
+              onContinue: () {
+                HapticFeedback.selectionClick();
+                setState(() => _showTour = false);
+              },
+            ),
+        ],
+      ),
     );
   }
 }

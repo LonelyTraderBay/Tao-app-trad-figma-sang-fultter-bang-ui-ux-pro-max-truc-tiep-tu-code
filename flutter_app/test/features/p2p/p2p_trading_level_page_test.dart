@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-230 mock repository exposes P2P trading level BE draft', () {
-    final snapshot = const MockP2PRepository().getTradingLevel();
+  test('SC-230 mock repository exposes P2P trading level BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getTradingLevel();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-trading-level');
     expect(

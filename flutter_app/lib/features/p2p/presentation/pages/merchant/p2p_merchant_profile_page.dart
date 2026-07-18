@@ -59,52 +59,78 @@ class _P2PMerchantProfilePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pMerchantProfileProvider(widget.merchantId));
+    final snapshotAsync = ref.watch(
+      p2pMerchantProfileProvider(widget.merchantId),
+    );
 
-    return VitP2PFlowScaffold(
-      title: 'Hồ sơ Merchant',
-      subtitle: 'Merchant · P2P',
-      semanticLabel: 'Hồ sơ Merchant',
-      semanticIdentifier: 'SC-228',
-      contentKey: P2PMerchantProfilePage.contentKey,
-      shellRenderMode: widget.shellRenderMode,
-      onBack: () => context.go(AppRoutePaths.p2p),
-      children: [
-        _ProfileHeader(
-          snapshot: snapshot,
-          following: _following,
-          onFollow: _toggleFollow,
-          onReport: () => context.go(snapshot.reportRoute),
-          onBlock: () => _confirmBlock(context, snapshot),
-        ),
-        _StatsGrid(merchant: snapshot.merchant),
-        _ReputationCard(snapshot: snapshot),
-        VitTabBar(
-          variant: VitTabBarVariant.segment,
-          activeKey: _tab.name,
-          onChanged: (key) {
-            HapticFeedback.selectionClick();
-            setState(() => _tab = _tabFromKey(key));
-          },
-          tabs: [
-            VitTabItem(
-              key: _MerchantProfileTab.ads.name,
-              label: 'Quảng cáo (${snapshot.ads.length})',
-            ),
-            VitTabItem(
-              key: _MerchantProfileTab.reviews.name,
-              label: 'Đánh giá (${snapshot.reviews.length})',
-              widgetKey: P2PMerchantProfilePage.reviewsTabKey,
-            ),
-          ],
-        ),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 180),
-          child: _tab == _MerchantProfileTab.ads
-              ? _AdsList(snapshot: snapshot)
-              : _ReviewsList(snapshot: snapshot),
-        ),
-      ],
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Hồ sơ Merchant',
+        semanticIdentifier: 'SC-228',
+        onBack: () => context.go(AppRoutePaths.p2p),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Hồ sơ Merchant',
+        semanticIdentifier: 'SC-228',
+        onBack: () => context.go(AppRoutePaths.p2p),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(p2pMerchantProfileProvider(widget.merchantId)),
+          ),
+        ],
+      ),
+      data: (snapshot) => VitP2PFlowScaffold(
+        title: 'Hồ sơ Merchant',
+        subtitle: 'Merchant · P2P',
+        semanticLabel: 'Hồ sơ Merchant',
+        semanticIdentifier: 'SC-228',
+        contentKey: P2PMerchantProfilePage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        onBack: () => context.go(AppRoutePaths.p2p),
+        children: [
+          _ProfileHeader(
+            snapshot: snapshot,
+            following: _following,
+            onFollow: _toggleFollow,
+            onReport: () => context.go(snapshot.reportRoute),
+            onBlock: () => _confirmBlock(context, snapshot),
+          ),
+          _StatsGrid(merchant: snapshot.merchant),
+          _ReputationCard(snapshot: snapshot),
+          VitTabBar(
+            variant: VitTabBarVariant.segment,
+            activeKey: _tab.name,
+            onChanged: (key) {
+              HapticFeedback.selectionClick();
+              setState(() => _tab = _tabFromKey(key));
+            },
+            tabs: [
+              VitTabItem(
+                key: _MerchantProfileTab.ads.name,
+                label: 'Quảng cáo (${snapshot.ads.length})',
+              ),
+              VitTabItem(
+                key: _MerchantProfileTab.reviews.name,
+                label: 'Đánh giá (${snapshot.reviews.length})',
+                widgetKey: P2PMerchantProfilePage.reviewsTabKey,
+              ),
+            ],
+          ),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 180),
+            child: _tab == _MerchantProfileTab.ads
+                ? _AdsList(snapshot: snapshot)
+                : _ReviewsList(snapshot: snapshot),
+          ),
+        ],
+      ),
     );
   }
 

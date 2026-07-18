@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-216 mock repository exposes P2P order BE draft', () {
-    final snapshot = const MockP2PRepository().getOrder('p2p001');
+  test('SC-216 mock repository exposes P2P order BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrder('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-p2p001');
     expect(

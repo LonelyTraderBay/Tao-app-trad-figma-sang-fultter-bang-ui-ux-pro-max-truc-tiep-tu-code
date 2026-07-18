@@ -30,11 +30,25 @@ part '../fixtures/p2p_dashboard_ux_repository_fixtures.dart';
 part '../fixtures/p2p_orders_repository_methods.dart';
 part '../fixtures/p2p_orders_repository_fixtures.dart';
 
-mixin _MockP2PRepositoryBase implements P2PRepository {}
+abstract class _MockP2PRepositoryBase implements P2PRepository {
+  const _MockP2PRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
 
-final class MockP2PRepository
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('p2p_mock_fetch_failed');
+  }
+}
+
+final class MockP2PRepository extends _MockP2PRepositoryBase
     with
-        _MockP2PRepositoryBase,
         _MockP2PRepositoryEscrowMethods,
         _MockP2PRepositoryHomeMethods,
         _MockP2PRepositoryPaymentsMethods,
@@ -48,5 +62,5 @@ final class MockP2PRepository
         _MockP2PRepositoryInsuranceMethods,
         _MockP2PRepositoryDashboardUxMethods,
         _MockP2PRepositoryOrdersMethods {
-  const MockP2PRepository();
+  const MockP2PRepository({super.simulateError, super.loadDelay});
 }

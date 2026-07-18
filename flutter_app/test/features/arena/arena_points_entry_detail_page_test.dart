@@ -30,13 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-200 mock repository exposes Arena Points entry BE draft', () {
-    final missing = const MockArenaRepository().getArenaPointsEntryDetail(
-      'entry001',
-    );
-    final detail = const MockArenaRepository().getArenaPointsEntryDetail(
-      'entry-demo',
-    );
+  test('SC-200 mock repository exposes Arena Points entry BE draft', () async {
+    const repository = MockArenaRepository(loadDelay: Duration.zero);
+    final missing = await repository.getArenaPointsEntryDetail('entry001');
+    final detail = await repository.getArenaPointsEntryDetail('entry-demo');
 
     expect(missing.endpoint, '/api/mobile/arena/arena-ledger-entry-entry001');
     expect(

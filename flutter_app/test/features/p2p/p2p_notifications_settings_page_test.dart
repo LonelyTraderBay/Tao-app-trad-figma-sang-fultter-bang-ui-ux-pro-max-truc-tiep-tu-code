@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-278 mock repository exposes notifications BE draft', () {
-    final snapshot = const MockP2PRepository().getNotificationSettings();
+  test('SC-278 mock repository exposes notifications BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getNotificationSettings();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-settings-notifications');
     expect(snapshot.actionDraft, contains('PATCH /user/settings'));

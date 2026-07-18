@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-032 mock repository exposes the rewards BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getRewards();
+  test('SC-032 mock repository exposes the rewards BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getRewards();
 
     expect(snapshot.rewards, hasLength(10));
     expect(snapshot.totalDailyPool, 373);

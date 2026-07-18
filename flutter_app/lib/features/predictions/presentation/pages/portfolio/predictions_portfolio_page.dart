@@ -65,15 +65,13 @@ class _PredictionsPortfolioPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(predictionsPortfolioControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(predictionsPortfolioControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? AppSpacing.x7 + AppSpacing.x6
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
-    final openOrders = controller.openOrdersExcluding(_cancelledOrderIds);
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
       fallbackPath: AppRoutePaths.marketsPredictions,
@@ -112,82 +110,105 @@ class _PredictionsPortfolioPageState
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        VitCard(
-                          variant: VitCardVariant.hero,
-                          radius: VitCardRadius.large,
-                          clip: true,
-                          padding: SharedSpacingTokens.homeCardPaddingDefault,
-                          background: const VitHeroGlow(),
-                          child: PredictionPortfolioSummaryCard(
-                            snapshot: snapshot,
-                            openOrderCount: openOrders.length,
-                            isHidden: _isHidden,
-                            onToggleHidden: () => setState(() {
-                              _isHidden = !_isHidden;
-                            }),
+                      children: controllerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được danh mục dự đoán',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsPortfolioSnapshotProvider,
+                            ),
                           ),
-                        ),
-                        const VitAnnouncementBanner(
-                          message: predictionPortfolioSharesNoteMessage,
-                          icon: Icons.info_outline_rounded,
-                          accentColor: AppColors.primary,
-                          variant: VitAnnouncementBannerVariant.compact,
-                        ),
-                        VitTabBar(
-                          variant: VitTabBarVariant.segment,
-                          activeKey: _activeTab.name,
-                          onChanged: (key) => setState(() {
-                            _activeTab = PredictionPortfolioTab.values.byName(
-                              key,
-                            );
-                          }),
-                          tabs: [
-                            VitTabItem(
-                              key: PredictionPortfolioTab.active.name,
-                              label: 'Active',
-                              widgetKey: predictionPortfolioActiveTabKey,
+                        ],
+                        data: (controller) {
+                          final snapshot = controller.state.snapshot;
+                          final openOrders = controller.openOrdersExcluding(
+                            _cancelledOrderIds,
+                          );
+                          return [
+                            VitCard(
+                              variant: VitCardVariant.hero,
+                              radius: VitCardRadius.large,
+                              clip: true,
+                              padding:
+                                  SharedSpacingTokens.homeCardPaddingDefault,
+                              background: const VitHeroGlow(),
+                              child: PredictionPortfolioSummaryCard(
+                                snapshot: snapshot,
+                                openOrderCount: openOrders.length,
+                                isHidden: _isHidden,
+                                onToggleHidden: () => setState(() {
+                                  _isHidden = !_isHidden;
+                                }),
+                              ),
                             ),
-                            VitTabItem(
-                              key: PredictionPortfolioTab.closed.name,
-                              label: 'Closed',
-                              widgetKey: predictionPortfolioClosedTabKey,
+                            const VitAnnouncementBanner(
+                              message: predictionPortfolioSharesNoteMessage,
+                              icon: Icons.info_outline_rounded,
+                              accentColor: AppColors.primary,
+                              variant: VitAnnouncementBannerVariant.compact,
                             ),
-                            VitTabItem(
-                              key: PredictionPortfolioTab.history.name,
-                              label: 'History',
-                              widgetKey: predictionPortfolioHistoryTabKey,
+                            VitTabBar(
+                              variant: VitTabBarVariant.segment,
+                              activeKey: _activeTab.name,
+                              onChanged: (key) => setState(() {
+                                _activeTab = PredictionPortfolioTab.values
+                                    .byName(key);
+                              }),
+                              tabs: [
+                                VitTabItem(
+                                  key: PredictionPortfolioTab.active.name,
+                                  label: 'Active',
+                                  widgetKey: predictionPortfolioActiveTabKey,
+                                ),
+                                VitTabItem(
+                                  key: PredictionPortfolioTab.closed.name,
+                                  label: 'Closed',
+                                  widgetKey: predictionPortfolioClosedTabKey,
+                                ),
+                                VitTabItem(
+                                  key: PredictionPortfolioTab.history.name,
+                                  label: 'History',
+                                  widgetKey: predictionPortfolioHistoryTabKey,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        if (_activeTab == PredictionPortfolioTab.active)
-                          PredictionPortfolioPositionsList(
-                            snapshot: snapshot,
-                            positions: snapshot.activePositions,
-                          )
-                        else if (_activeTab == PredictionPortfolioTab.closed)
-                          PredictionPortfolioPositionsList(
-                            snapshot: snapshot,
-                            positions: snapshot.closedPositions,
-                            emptyTitle: 'No closed positions',
-                            emptySubtitle: 'Closed positions will appear here',
-                          )
-                        else
-                          PredictionPortfolioHistorySection(snapshot: snapshot),
-                        if (_activeTab == PredictionPortfolioTab.active &&
-                            openOrders.isNotEmpty)
-                          PredictionPortfolioOpenOrdersSection(
-                            snapshot: snapshot,
-                            orders: openOrders,
-                            onCancel: (orderId) => setState(() {
-                              _cancelledOrderIds.add(orderId);
-                            }),
-                          ),
-                        PredictionsPortfolioArenaBridgeCard(
-                          key: PredictionsPortfolioPage.arenaBridgeKey,
-                          onTap: () => context.go(AppRoutePaths.arena),
-                        ),
-                      ],
+                            if (_activeTab == PredictionPortfolioTab.active)
+                              PredictionPortfolioPositionsList(
+                                snapshot: snapshot,
+                                positions: snapshot.activePositions,
+                              )
+                            else if (_activeTab ==
+                                PredictionPortfolioTab.closed)
+                              PredictionPortfolioPositionsList(
+                                snapshot: snapshot,
+                                positions: snapshot.closedPositions,
+                                emptyTitle: 'No closed positions',
+                                emptySubtitle:
+                                    'Closed positions will appear here',
+                              )
+                            else
+                              PredictionPortfolioHistorySection(
+                                snapshot: snapshot,
+                              ),
+                            if (_activeTab == PredictionPortfolioTab.active &&
+                                openOrders.isNotEmpty)
+                              PredictionPortfolioOpenOrdersSection(
+                                snapshot: snapshot,
+                                orders: openOrders,
+                                onCancel: (orderId) => setState(() {
+                                  _cancelledOrderIds.add(orderId);
+                                }),
+                              ),
+                            PredictionsPortfolioArenaBridgeCard(
+                              key: PredictionsPortfolioPage.arenaBridgeKey,
+                              onTap: () => context.go(AppRoutePaths.arena),
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

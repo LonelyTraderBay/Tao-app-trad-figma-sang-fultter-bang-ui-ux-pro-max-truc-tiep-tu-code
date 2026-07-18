@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-281 mock repository exposes my orders BE draft', () {
-    final snapshot = const MockP2PRepository().getMyOrders();
+  test('SC-281 mock repository exposes my orders BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getMyOrders();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-my-orders');
     expect(snapshot.actionDraft, contains('POST /orders/:id/action'));

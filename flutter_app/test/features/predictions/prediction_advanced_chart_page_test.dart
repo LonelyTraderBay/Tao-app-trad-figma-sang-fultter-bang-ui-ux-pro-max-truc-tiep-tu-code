@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-041 mock repository exposes the advanced chart BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getAdvancedChart('btcusdt');
+  test('SC-041 mock repository exposes the advanced chart BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getAdvancedChart('btcusdt');
 
     expect(snapshot.eventId, 'btcusdt');
     expect(snapshot.priceHistory, hasLength(10));

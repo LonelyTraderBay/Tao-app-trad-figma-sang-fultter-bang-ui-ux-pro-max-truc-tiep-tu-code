@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-184 mock repository exposes Arena Home BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaHome();
+  test('SC-184 mock repository exposes Arena Home BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaHome();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena');
     expect(

@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-251 mock repository exposes selfie verification BE draft', () {
-    final snapshot = const MockP2PRepository().getSelfieVerification();
+  test('SC-251 mock repository exposes selfie verification BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getSelfieVerification();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-kyc-selfie');
     expect(

@@ -70,9 +70,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pMyOrdersProvider);
-    _ensureState(snapshot);
-    final orders = _filteredOrders(snapshot.orders);
+    final snapshotAsync = ref.watch(p2pMyOrdersProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -86,98 +84,127 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
       semanticIdentifier: 'SC-281',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-            actions: [
-              VitHeaderActionItem(
-                key: P2PMyOrdersPage.dashboardKey,
-                type: VitHeaderActionType.analytics,
-                tooltip: 'P2P Dashboard',
-                onPressed: () => context.go(snapshot.dashboardRoute),
-              ),
-            ],
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PMyOrdersPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pMyOrdersScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _StatsRow(snapshot: snapshot),
-                        _OrderTabs(
-                          snapshot: snapshot,
-                          active: _tab,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tab = value);
-                          },
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pMyOrdersProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _ensureState(snapshot);
+            final orders = _filteredOrders(snapshot.orders);
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: P2PMyOrdersPage.dashboardKey,
+                    type: VitHeaderActionType.analytics,
+                    tooltip: 'P2P Dashboard',
+                    onPressed: () => context.go(snapshot.dashboardRoute),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PMyOrdersPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pMyOrdersScrollPadding(
+                          scrollEndPadding,
                         ),
-                        _SearchSortRow(
-                          hint: snapshot.searchHint,
-                          controller: _searchController,
-                          sort: _sort,
-                          onQueryChanged: (value) =>
-                              setState(() => _query = value),
-                          onSort: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _sort = _sort == _OrdersSort.date
-                                  ? _OrdersSort.amount
-                                  : _OrdersSort.date;
-                            });
-                          },
-                        ),
-                        if (orders.isEmpty)
-                          _EmptyOrders(snapshot: snapshot, activeTab: _tab)
-                        else
-                          for (final order in orders)
-                            _OrderCard(
-                              order: order,
-                              onTap: () => _openOrder(context, order),
-                              onDispute: order.status == 'disputed'
-                                  ? () => context.go(
-                                      AppRoutePaths.p2pDisputeDetail(order.id),
-                                    )
-                                  : null,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _StatsRow(snapshot: snapshot),
+                            _OrderTabs(
+                              snapshot: snapshot,
+                              active: _tab,
+                              onChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _tab = value);
+                              },
                             ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại danh sách đơn P2P',
-                          message:
-                              'Đơn chờ, hoàn tất và tranh chấp giữ trạng thái, số tiền, merchant, route chi tiết và bước thanh toán tiếp theo trước khi điều hướng.',
-                          contractId: 'p2p-my-orders-review',
+                            _SearchSortRow(
+                              hint: snapshot.searchHint,
+                              controller: _searchController,
+                              sort: _sort,
+                              onQueryChanged: (value) =>
+                                  setState(() => _query = value),
+                              onSort: () {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _sort = _sort == _OrdersSort.date
+                                      ? _OrdersSort.amount
+                                      : _OrdersSort.date;
+                                });
+                              },
+                            ),
+                            if (orders.isEmpty)
+                              _EmptyOrders(snapshot: snapshot, activeTab: _tab)
+                            else
+                              for (final order in orders)
+                                _OrderCard(
+                                  order: order,
+                                  onTap: () => _openOrder(context, order),
+                                  onDispute: order.status == 'disputed'
+                                      ? () => context.go(
+                                          AppRoutePaths.p2pDisputeDetail(
+                                            order.id,
+                                          ),
+                                        )
+                                      : null,
+                                ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Xem lại danh sách đơn P2P',
+                              message:
+                                  'Đơn chờ, hoàn tất và tranh chấp giữ trạng thái, số tiền, merchant, route chi tiết và bước thanh toán tiếp theo trước khi điều hướng.',
+                              contractId: 'p2p-my-orders-review',
+                            ),
+                            Text(
+                              snapshot.contractNotes,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          snapshot.contractNotes,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -1,10 +1,7 @@
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
-import 'package:vit_trade_flutter/features/predictions/domain/repositories/predictions_repository.dart';
 
 export 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 export 'package:vit_trade_flutter/features/predictions/domain/repositories/predictions_repository.dart';
-
-typedef PredictionsReadModelController = PredictionsRepository;
 
 enum PredictionHighRiskFlowStatus {
   draft,

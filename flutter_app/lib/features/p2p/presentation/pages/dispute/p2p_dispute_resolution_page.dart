@@ -53,7 +53,9 @@ class _P2PDisputeResolutionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pDisputeResolutionProvider(widget.disputeId));
+    final snapshotAsync = ref.watch(
+      p2pDisputeResolutionProvider(widget.disputeId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -77,52 +79,64 @@ class _P2PDisputeResolutionPageState
             onBack: () =>
                 context.go(AppRoutePaths.p2pDisputeDetail(widget.disputeId)),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PDisputeResolutionPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pDisputeResolutionScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _DecisionHero(snapshot: snapshot),
-                        _DecisionDetailCard(snapshot: snapshot),
-                        _AppealCard(
-                          deadline: snapshot.appealDeadline,
-                          appealOpened: _appealOpened,
-                          onAppeal: _openAppeal,
-                        ),
-                        VitCtaButton(
-                          key: P2PDisputeResolutionPage.disputesKey,
-                          onPressed: () =>
-                              context.go(AppRoutePaths.p2pDisputes),
-                          child: const Text('Quay về danh sách tranh chấp'),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Dispute resolution review',
-                          message:
-                              'Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.',
-                          contractId: 'p2p-dispute-resolution-review',
-                        ),
-                      ],
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pDisputeResolutionProvider(widget.disputeId),
+              ),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PDisputeResolutionPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding:
+                          P2PSpacingTokens.p2pDisputeResolutionScrollPadding(
+                            scrollEndPadding,
+                          ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.form,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _DecisionHero(snapshot: snapshot),
+                          _DecisionDetailCard(snapshot: snapshot),
+                          _AppealCard(
+                            deadline: snapshot.appealDeadline,
+                            appealOpened: _appealOpened,
+                            onAppeal: _openAppeal,
+                          ),
+                          VitCtaButton(
+                            key: P2PDisputeResolutionPage.disputesKey,
+                            onPressed: () =>
+                                context.go(AppRoutePaths.p2pDisputes),
+                            child: const Text('Quay về danh sách tranh chấp'),
+                          ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Dispute resolution review',
+                            message:
+                                'Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.',
+                            contractId: 'p2p-dispute-resolution-review',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

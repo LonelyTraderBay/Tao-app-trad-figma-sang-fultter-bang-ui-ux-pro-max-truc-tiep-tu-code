@@ -73,14 +73,15 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getSearch(
-          sort: _sort,
-          status: _status,
-          category: _category,
-          searchQuery: _searchController.text,
-        );
+    final searchQuery = (
+      sort: _sort,
+      status: _status,
+      category: _category,
+      searchQuery: _searchController.text,
+    );
+    final searchAsync = ref.watch(
+      predictionsSearchSnapshotProvider(searchQuery),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -121,58 +122,73 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _SearchControl(
-                          controller: _searchController,
-                          showFilters: _showFilters,
-                          onChanged: () => setState(() {}),
-                          onClear: () => setState(_searchController.clear),
-                          onToggleFilters: () => setState(() {
-                            _showFilters = !_showFilters;
-                          }),
-                        ),
-                        if (_showFilters)
-                          _SearchFilterSection(
-                            sort: _sort,
-                            status: _status,
-                            categories: snapshot.categories,
-                            selectedCategory: _category,
-                            hasActiveFilters: _hasActiveFilters,
-                            onSortSelected: (value) => setState(() {
-                              _sort = value;
-                            }),
-                            onStatusSelected: (value) => setState(() {
-                              _status = value;
-                            }),
-                            onCategorySelected: (value) => setState(() {
-                              _category = value;
-                            }),
-                            onClear: _clearFilters,
-                          ),
-                        Text(
-                          _resultsLabel(snapshot.results.length),
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                        if (snapshot.results.isEmpty)
-                          _SearchEmptyState(
-                            hasActiveFilters: _hasActiveFilters,
-                            onClearFilters: _clearFilters,
-                            onBreaking: () => context.go(
-                              AppRoutePaths.marketsPredictionsBreaking,
+                      children: searchAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được kết quả tìm kiếm',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsSearchSnapshotProvider(searchQuery),
                             ),
-                          )
-                        else
-                          for (final event in snapshot.results)
-                            _SearchResultCard(
-                              key: PredictionsSearchPage.resultKey(event.id),
-                              event: event,
-                              onTap: () => context.go(
-                                AppRoutePaths.marketsPredictionEvent(event.id),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _SearchControl(
+                            controller: _searchController,
+                            showFilters: _showFilters,
+                            onChanged: () => setState(() {}),
+                            onClear: () => setState(_searchController.clear),
+                            onToggleFilters: () => setState(() {
+                              _showFilters = !_showFilters;
+                            }),
+                          ),
+                          if (_showFilters)
+                            _SearchFilterSection(
+                              sort: _sort,
+                              status: _status,
+                              categories: snapshot.categories,
+                              selectedCategory: _category,
+                              hasActiveFilters: _hasActiveFilters,
+                              onSortSelected: (value) => setState(() {
+                                _sort = value;
+                              }),
+                              onStatusSelected: (value) => setState(() {
+                                _status = value;
+                              }),
+                              onCategorySelected: (value) => setState(() {
+                                _category = value;
+                              }),
+                              onClear: _clearFilters,
+                            ),
+                          Text(
+                            _resultsLabel(snapshot.results.length),
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                          if (snapshot.results.isEmpty)
+                            _SearchEmptyState(
+                              hasActiveFilters: _hasActiveFilters,
+                              onClearFilters: _clearFilters,
+                              onBreaking: () => context.go(
+                                AppRoutePaths.marketsPredictionsBreaking,
                               ),
-                            ),
-                      ],
+                            )
+                          else
+                            for (final event in snapshot.results)
+                              _SearchResultCard(
+                                key: PredictionsSearchPage.resultKey(event.id),
+                                event: event,
+                                onTap: () => context.go(
+                                  AppRoutePaths.marketsPredictionEvent(
+                                    event.id,
+                                  ),
+                                ),
+                              ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-226 mock repository exposes P2P create ad BE draft', () {
-    final snapshot = const MockP2PRepository().getCreateAd();
+  test('SC-226 mock repository exposes P2P create ad BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getCreateAd();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-create');
     expect(

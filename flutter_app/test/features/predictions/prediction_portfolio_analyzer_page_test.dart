@@ -28,37 +28,40 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-038 mock repository exposes the portfolio analyzer BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getPortfolioAnalyzer();
+  test(
+    'SC-038 mock repository exposes the portfolio analyzer BE draft',
+    () async {
+      final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+      final snapshot = await repo.getPortfolioAnalyzer();
 
-    expect(snapshot.positions, hasLength(5));
-    expect(snapshot.pnlHistory, hasLength(6));
-    expect(snapshot.openPositions, hasLength(3));
-    expect(snapshot.closedPositions, hasLength(2));
-    expect(snapshot.totalInvested, closeTo(324.6, .001));
-    expect(snapshot.totalPortfolioValue, closeTo(378.4, .001));
-    expect(snapshot.realizedPnl, 52);
-    expect(snapshot.unrealizedPnl, closeTo(1.8, .001));
-    expect(snapshot.totalPnl, closeTo(53.8, .001));
-    expect(snapshot.totalPnlPercent, closeTo(16.57, .01));
-    expect(snapshot.winRate, 50);
-    expect(snapshot.categories, hasLength(4));
-    expect(snapshot.orders, hasLength(3));
-    expect(snapshot.receipts, hasLength(6));
-    expect(snapshot.rewards, isNotEmpty);
-    expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        PredictionScreenState.loading,
-        PredictionScreenState.empty,
-        PredictionScreenState.error,
-        PredictionScreenState.offline,
-        PredictionScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.positions, hasLength(5));
+      expect(snapshot.pnlHistory, hasLength(6));
+      expect(snapshot.openPositions, hasLength(3));
+      expect(snapshot.closedPositions, hasLength(2));
+      expect(snapshot.totalInvested, closeTo(324.6, .001));
+      expect(snapshot.totalPortfolioValue, closeTo(378.4, .001));
+      expect(snapshot.realizedPnl, 52);
+      expect(snapshot.unrealizedPnl, closeTo(1.8, .001));
+      expect(snapshot.totalPnl, closeTo(53.8, .001));
+      expect(snapshot.totalPnlPercent, closeTo(16.57, .01));
+      expect(snapshot.winRate, 50);
+      expect(snapshot.categories, hasLength(4));
+      expect(snapshot.orders, hasLength(3));
+      expect(snapshot.receipts, hasLength(6));
+      expect(snapshot.rewards, isNotEmpty);
+      expect(snapshot.lastUpdatedLabel, 'realtime-refresh');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          PredictionScreenState.loading,
+          PredictionScreenState.empty,
+          PredictionScreenState.error,
+          PredictionScreenState.offline,
+          PredictionScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-038 renders overview inside the Markets shell', (
     tester,

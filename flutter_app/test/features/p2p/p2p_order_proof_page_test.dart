@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-215 mock repository exposes P2P order proof BE draft', () {
-    final snapshot = const MockP2PRepository().getOrderProof('p2p001');
+  test('SC-215 mock repository exposes P2P order proof BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrderProof('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-proof-p2p001');
     expect(

@@ -48,7 +48,7 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pOrderCancelProvider(widget.orderId));
+    final snapshotAsync = ref.watch(p2pOrderCancelProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -69,57 +69,67 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
             showBack: true,
             onBack: () => _close(context),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2POrderCancelPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding:
-                        P2PSpacingTokens.p2pRiskControlsBottomScrollPadding(
-                          bottomInset,
-                        ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
-                      children: [
-                        const _CancelHero(),
-                        _OrderSummary(order: snapshot.order),
-                        _ReasonSelector(
-                          reasons: snapshot.reasons,
-                          selectedReason: _cancelReason,
-                          onSelected: _setReason,
-                        ),
-                        _CancelWarning(
-                          title: snapshot.warningTitle,
-                          message: snapshot.warningMessage,
-                        ),
-                        _ActionRow(
-                          enabled: _cancelReason.isNotEmpty,
-                          loading: _isSubmitting,
-                          onBack: () => _close(context),
-                          onConfirm: () =>
-                              _confirmCancel(context, snapshot.order),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Order cancellation state review',
-                          message:
-                              'Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.',
-                          contractId: 'SC-214',
-                        ),
-                      ],
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pOrderCancelProvider(widget.orderId)),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2POrderCancelPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding:
+                          P2PSpacingTokens.p2pRiskControlsBottomScrollPadding(
+                            bottomInset,
+                          ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          const _CancelHero(),
+                          _OrderSummary(order: snapshot.order),
+                          _ReasonSelector(
+                            reasons: snapshot.reasons,
+                            selectedReason: _cancelReason,
+                            onSelected: _setReason,
+                          ),
+                          _CancelWarning(
+                            title: snapshot.warningTitle,
+                            message: snapshot.warningMessage,
+                          ),
+                          _ActionRow(
+                            enabled: _cancelReason.isNotEmpty,
+                            loading: _isSubmitting,
+                            onBack: () => _close(context),
+                            onConfirm: () =>
+                                _confirmCancel(context, snapshot.order),
+                          ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Order cancellation state review',
+                            message:
+                                'Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.',
+                            contractId: 'SC-214',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

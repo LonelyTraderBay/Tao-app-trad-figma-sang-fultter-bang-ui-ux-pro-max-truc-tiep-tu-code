@@ -36,9 +36,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-031 mock repository exposes the portfolio BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getPortfolio();
+  test('SC-031 mock repository exposes the portfolio BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getPortfolio();
 
     expect(
       snapshot.endpoint,

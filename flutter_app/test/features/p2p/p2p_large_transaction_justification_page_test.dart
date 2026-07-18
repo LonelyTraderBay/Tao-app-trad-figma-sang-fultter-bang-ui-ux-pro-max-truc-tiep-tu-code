@@ -29,10 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-270 mock repository exposes large transaction BE draft', () {
-    final snapshot = const MockP2PRepository().getLargeTransactionJustification(
-      amount: 100000000,
-    );
+  test('SC-270 mock repository exposes large transaction BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getLargeTransactionJustification(amount: 100000000);
 
     expect(
       snapshot.endpoint,

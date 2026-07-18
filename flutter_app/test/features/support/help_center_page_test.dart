@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-292 mock repository exposes support help BE draft', () {
-    final snapshot = const MockSupportRepository().getHelpCenter();
+  test('SC-292 mock repository exposes support help BE draft', () async {
+    final snapshot = await const MockSupportRepository(
+      loadDelay: Duration.zero,
+    ).getHelpCenter();
 
     expect(snapshot.endpoint, '/api/mobile/support/support-help');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

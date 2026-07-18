@@ -62,9 +62,9 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaCreator(widget.creatorId);
+    final snapshotAsync = ref.watch(
+      arenaCreatorSnapshotProvider(widget.creatorId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -105,49 +105,62 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        _CreatorHero(
-                          creator: snapshot.creator,
-                          onTrust: () => context.goHaptic(
-                            AppRoutePaths.arenaTrust(snapshot.creator.id),
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được hồ sơ creator',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaCreatorSnapshotProvider(widget.creatorId),
+                            ),
                           ),
-                        ),
-                        _TrustSection(
-                          metrics: snapshot.trustMetrics,
-                          onDetails: () => context.goHaptic(
-                            AppRoutePaths.arenaTrust(snapshot.creator.id),
+                        ],
+                        data: (snapshot) => [
+                          _CreatorHero(
+                            creator: snapshot.creator,
+                            onTrust: () => context.goHaptic(
+                              AppRoutePaths.arenaTrust(snapshot.creator.id),
+                            ),
                           ),
-                        ),
-                        VitTabBar(
-                          tabs: const [
-                            VitTabItem(key: 'modes', label: 'Modes'),
-                            VitTabItem(key: 'live', label: 'Live Rooms'),
-                            VitTabItem(key: 'history', label: 'Lịch sử'),
-                            VitTabItem(key: 'about', label: 'Giới thiệu'),
-                          ],
-                          activeKey: _activeTab.name,
-                          variant: VitTabBarVariant.segment,
-                          onChanged: (key) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeTab = _tabFromKey(key));
-                          },
-                        ),
-                        _TabContent(
-                          activeTab: _activeTab,
-                          snapshot: snapshot,
-                          onMode: (id) =>
-                              context.goHaptic(AppRoutePaths.arenaMode(id)),
-                          onUseMode: () =>
-                              context.goHaptic(AppRoutePaths.arenaStudio),
-                          onGuide: () =>
-                              context.goHaptic(AppRoutePaths.arenaGuide),
-                        ),
-                        _PolicyLink(
-                          label: snapshot.policyLabel,
-                          onTap: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                      ],
+                          _TrustSection(
+                            metrics: snapshot.trustMetrics,
+                            onDetails: () => context.goHaptic(
+                              AppRoutePaths.arenaTrust(snapshot.creator.id),
+                            ),
+                          ),
+                          VitTabBar(
+                            tabs: const [
+                              VitTabItem(key: 'modes', label: 'Modes'),
+                              VitTabItem(key: 'live', label: 'Live Rooms'),
+                              VitTabItem(key: 'history', label: 'Lịch sử'),
+                              VitTabItem(key: 'about', label: 'Giới thiệu'),
+                            ],
+                            activeKey: _activeTab.name,
+                            variant: VitTabBarVariant.segment,
+                            onChanged: (key) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeTab = _tabFromKey(key));
+                            },
+                          ),
+                          _TabContent(
+                            activeTab: _activeTab,
+                            snapshot: snapshot,
+                            onMode: (id) =>
+                                context.goHaptic(AppRoutePaths.arenaMode(id)),
+                            onUseMode: () =>
+                                context.goHaptic(AppRoutePaths.arenaStudio),
+                            onGuide: () =>
+                                context.goHaptic(AppRoutePaths.arenaGuide),
+                          ),
+                          _PolicyLink(
+                            label: snapshot.policyLabel,
+                            onTap: () =>
+                                context.goHaptic(AppRoutePaths.arenaSafety),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

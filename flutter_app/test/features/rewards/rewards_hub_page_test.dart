@@ -33,8 +33,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-319 mock repository exposes rewards hub BE draft', () {
-    final snapshot = const MockRewardsRepository().getHub();
+  test('SC-319 mock repository exposes rewards hub BE draft', () async {
+    final snapshot = await const MockRewardsRepository(
+      loadDelay: Duration.zero,
+    ).getHub();
 
     expect(snapshot.endpoint, '/api/mobile/rewards/rewards');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

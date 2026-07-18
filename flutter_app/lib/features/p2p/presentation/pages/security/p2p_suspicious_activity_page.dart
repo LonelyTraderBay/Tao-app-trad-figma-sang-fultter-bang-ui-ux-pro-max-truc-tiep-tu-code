@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -41,43 +42,73 @@ class _P2PSuspiciousActivityPageState
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(p2pSuspiciousActivityStateControllerProvider);
-    final snapshot = viewState.snapshot;
-    final alerts = viewState.alerts;
-    final unreviewedCount = alerts.where((alert) => !alert.reviewed).length;
+    // GD4 bẫy 21: trang chỉ watch Notifier — bọc .when() trên snapshot
+    // provider gốc để tránh render fallback rỗng trong cửa sổ loading.
+    final snapshotAsync = ref.watch(p2pSuspiciousActivityProvider);
 
-    return VitP2PFlowScaffold(
-      title: 'Hoạt động đáng ngờ',
-      subtitle: 'An toàn · P2P',
-      semanticLabel: 'Hoạt động đáng ngờ',
-      semanticIdentifier: 'SC-258',
-      shellRenderMode: widget.shellRenderMode,
-      onBack: () => context.go(snapshot.parentRoute),
-      onRefresh: () async {
-        HapticFeedback.selectionClick();
-        await Future<void>.delayed(const Duration(milliseconds: 120));
-      },
-      children: [
-        _SummaryCard(
-          unreviewedCount: unreviewedCount,
-          subtitle: snapshot.summarySubtitle,
-        ),
-        if (alerts.isEmpty)
-          _EmptyState(snapshot: snapshot)
-        else
-          _AlertList(alerts: alerts, onDismiss: _markReviewed),
-        const VitCard(
-          variant: VitCardVariant.inner,
-          padding: P2PSpacingTokens.p2pComplianceCompactCardPadding,
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Suspicious activity review',
-            message:
-                'Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.',
-            contractId: 'p2p-suspicious-activity-review',
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Hoạt động đáng ngờ',
+        semanticIdentifier: 'SC-258',
+        onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Hoạt động đáng ngờ',
+        semanticIdentifier: 'SC-258',
+        onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pSuspiciousActivityProvider),
           ),
-        ),
-      ],
+        ],
+      ),
+      data: (_) {
+        final viewState = ref.watch(
+          p2pSuspiciousActivityStateControllerProvider,
+        );
+        final snapshot = viewState.snapshot;
+        final alerts = viewState.alerts;
+        final unreviewedCount = alerts.where((alert) => !alert.reviewed).length;
+        return VitP2PFlowScaffold(
+          title: 'Hoạt động đáng ngờ',
+          subtitle: 'An toàn · P2P',
+          semanticLabel: 'Hoạt động đáng ngờ',
+          semanticIdentifier: 'SC-258',
+          shellRenderMode: widget.shellRenderMode,
+          onBack: () => context.go(snapshot.parentRoute),
+          onRefresh: () async {
+            HapticFeedback.selectionClick();
+            await Future<void>.delayed(const Duration(milliseconds: 120));
+          },
+          children: [
+            _SummaryCard(
+              unreviewedCount: unreviewedCount,
+              subtitle: snapshot.summarySubtitle,
+            ),
+            if (alerts.isEmpty)
+              _EmptyState(snapshot: snapshot)
+            else
+              _AlertList(alerts: alerts, onDismiss: _markReviewed),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              padding: P2PSpacingTokens.p2pComplianceCompactCardPadding,
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Suspicious activity review',
+                message:
+                    'Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.',
+                contractId: 'p2p-suspicious-activity-review',
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

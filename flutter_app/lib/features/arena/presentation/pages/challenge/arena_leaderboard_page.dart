@@ -86,9 +86,7 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaLeaderboard();
+    final snapshotAsync = ref.watch(arenaLeaderboardSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -128,43 +126,57 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        _MyRankCard(myRank: snapshot.myRank),
-                        _MainTabs(
-                          activeTab: _activeTab,
-                          onChanged: (tab) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeTab = tab);
-                          },
-                        ),
-                        _MetricChips(
-                          chips: snapshot.metricChips,
-                          activeMetric: _activeMetric,
-                          onChanged: (metric) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeMetric = metric);
-                          },
-                        ),
-                        _SeasonFilters(
-                          filters: snapshot.seasonFilters,
-                          activeSeason: _activeSeason,
-                          onChanged: (season) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeSeason = season);
-                          },
-                        ),
-                        _LeaderboardBody(
-                          activeTab: _activeTab,
-                          snapshot: snapshot,
-                          onCreator: (id) =>
-                              context.goHaptic(AppRoutePaths.arenaCreator(id)),
-                        ),
-                        _ArenaFooter(
-                          disclaimer: snapshot.disclaimer,
-                          onRules: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                      ],
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được bảng xếp hạng',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaLeaderboardSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _MyRankCard(myRank: snapshot.myRank),
+                          _MainTabs(
+                            activeTab: _activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeTab = tab);
+                            },
+                          ),
+                          _MetricChips(
+                            chips: snapshot.metricChips,
+                            activeMetric: _activeMetric,
+                            onChanged: (metric) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeMetric = metric);
+                            },
+                          ),
+                          _SeasonFilters(
+                            filters: snapshot.seasonFilters,
+                            activeSeason: _activeSeason,
+                            onChanged: (season) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeSeason = season);
+                            },
+                          ),
+                          _LeaderboardBody(
+                            activeTab: _activeTab,
+                            snapshot: snapshot,
+                            onCreator: (id) => context.goHaptic(
+                              AppRoutePaths.arenaCreator(id),
+                            ),
+                          ),
+                          _ArenaFooter(
+                            disclaimer: snapshot.disclaimer,
+                            onRules: () =>
+                                context.goHaptic(AppRoutePaths.arenaSafety),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

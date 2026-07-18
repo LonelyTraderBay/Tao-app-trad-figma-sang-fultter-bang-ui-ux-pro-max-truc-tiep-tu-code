@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-188 mock repository exposes Governance Gate BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaGovernance();
+  test('SC-188 mock repository exposes Governance Gate BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaGovernance();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-studio-governance');
     expect(

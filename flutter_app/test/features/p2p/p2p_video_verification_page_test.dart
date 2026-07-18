@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-252 mock repository exposes video verification BE draft', () {
-    final snapshot = const MockP2PRepository().getVideoVerification();
+  test('SC-252 mock repository exposes video verification BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getVideoVerification();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-kyc-video');
     expect(

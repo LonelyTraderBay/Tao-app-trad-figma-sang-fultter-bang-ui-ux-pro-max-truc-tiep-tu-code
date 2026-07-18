@@ -84,13 +84,19 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(predictionsReadModelControllerProvider);
-    final snapshot = controller.getHome(
-      filter: _filter,
-      category: _category,
-      searchQuery: _searchQuery,
+    final homeAsync = ref.watch(
+      predictionsHomeSnapshotProvider((
+        filter: _filter,
+        category: _category,
+        searchQuery: _searchQuery,
+      )),
     );
-    final hubTotals = controller.getHome();
+    // Phụ (không chặn trang): tổng số sự kiện toàn cục cho hero, độc lập bộ
+    // lọc hiện tại — đọc `.value` lười, ẩn hero-count đúng nghĩa nếu chưa
+    // resolve (mục 5 GD4-Async-Playbook).
+    final hubTotalsValue = ref
+        .watch(predictionsHomeSnapshotProvider(predictionsHomeDefaultQuery))
+        .value;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -145,132 +151,152 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _PredictionsHero(
-                          openEventCount: hubTotals.events.length,
-                          openPositionCount: snapshot.openPositionCount,
-                          onPositionsTap: () =>
-                              context.go(AppRoutePaths.profilePredictions),
-                        ),
-                        _SearchField(
-                          controller: _searchController,
-                          onChanged: (value) => setState(() {
-                            _searchQuery = value;
-                          }),
-                          onClear: () => setState(() {
-                            _searchController.clear();
-                            _searchQuery = '';
-                          }),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: VitTabBar(
-                            variant: VitTabBarVariant.pill,
-                            activeKey: _filter.name,
-                            onChanged: (key) => setState(
-                              () => _filter = PredictionFilterTab.values.byName(
-                                key,
-                              ),
+                      children: homeAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được trang chủ dự đoán',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsHomeSnapshotProvider((
+                                filter: _filter,
+                                category: _category,
+                                searchQuery: _searchQuery,
+                              )),
                             ),
-                            tabs: const [
-                              VitTabItem(
-                                key: 'trending',
-                                label: 'Xu hướng',
-                                icon: Icons.trending_up_outlined,
-                                widgetKey:
-                                    PredictionsHomePage.trendingFilterKey,
-                              ),
-                              VitTabItem(
-                                key: 'newEvents',
-                                label: 'Mới',
-                                icon: Icons.fiber_new_outlined,
-                                widgetKey: PredictionsHomePage.newFilterKey,
-                              ),
-                              VitTabItem(
-                                key: 'popular',
-                                label: 'Phổ biến',
-                                icon: Icons.group_outlined,
-                                widgetKey: Key('sc027_filter_popular'),
-                              ),
-                              VitTabItem(
-                                key: 'liquid',
-                                label: 'Thanh khoản',
-                                icon: Icons.bar_chart_outlined,
-                                widgetKey: Key('sc027_filter_liquid'),
-                              ),
-                              VitTabItem(
-                                key: 'ending',
-                                label: 'Sắp đóng',
-                                icon: Icons.schedule_outlined,
-                                widgetKey: Key('sc027_filter_ending'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        _CategoryChips(
-                          categories: snapshot.categories,
-                          activeCategory: _category,
-                          onSelected: (value) => setState(() {
-                            _category = _category == value ? null : value;
-                          }),
-                        ),
-                        if (showDiscoveryExtras) ...[
-                          _BreakingMoversStrip(
-                            snapshot: snapshot,
-                            onTap: () => context.go(
-                              AppRoutePaths.marketsPredictionsBreaking,
-                            ),
-                          ),
-                          _ArenaBridgeCard(
-                            onTap: () => context.go(AppRoutePaths.arena),
                           ),
                         ],
-                        if (snapshot.highRiskContractId != null)
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Trạng thái thị trường dự đoán',
-                            message:
-                                'Thiết lập sự kiện, xem trước rủi ro, xác nhận, biên lai, danh mục và hỗ trợ dùng luồng high-risk chung.',
-                            contractId: snapshot.highRiskContractId,
+                        data: (snapshot) => [
+                          _PredictionsHero(
+                            openEventCount:
+                                hubTotalsValue?.events.length ??
+                                snapshot.events.length,
+                            openPositionCount: snapshot.openPositionCount,
+                            onPositionsTap: () =>
+                                context.go(AppRoutePaths.profilePredictions),
                           ),
-                        if (snapshot.events.isEmpty)
-                          _PredictionsEmptyState(
-                            hasActiveFilters: _hasActiveFilters,
-                            onClearFilters: _clearFilters,
-                            onBreaking: () => context.go(
-                              AppRoutePaths.marketsPredictionsBreaking,
+                          _SearchField(
+                            controller: _searchController,
+                            onChanged: (value) => setState(() {
+                              _searchQuery = value;
+                            }),
+                            onClear: () => setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                            }),
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: VitTabBar(
+                              variant: VitTabBarVariant.pill,
+                              activeKey: _filter.name,
+                              onChanged: (key) => setState(
+                                () => _filter = PredictionFilterTab.values
+                                    .byName(key),
+                              ),
+                              tabs: const [
+                                VitTabItem(
+                                  key: 'trending',
+                                  label: 'Xu hướng',
+                                  icon: Icons.trending_up_outlined,
+                                  widgetKey:
+                                      PredictionsHomePage.trendingFilterKey,
+                                ),
+                                VitTabItem(
+                                  key: 'newEvents',
+                                  label: 'Mới',
+                                  icon: Icons.fiber_new_outlined,
+                                  widgetKey: PredictionsHomePage.newFilterKey,
+                                ),
+                                VitTabItem(
+                                  key: 'popular',
+                                  label: 'Phổ biến',
+                                  icon: Icons.group_outlined,
+                                  widgetKey: Key('sc027_filter_popular'),
+                                ),
+                                VitTabItem(
+                                  key: 'liquid',
+                                  label: 'Thanh khoản',
+                                  icon: Icons.bar_chart_outlined,
+                                  widgetKey: Key('sc027_filter_liquid'),
+                                ),
+                                VitTabItem(
+                                  key: 'ending',
+                                  label: 'Sắp đóng',
+                                  icon: Icons.schedule_outlined,
+                                  widgetKey: Key('sc027_filter_ending'),
+                                ),
+                              ],
                             ),
-                          )
-                        else ...[
-                          // PERF-HN3: chỉ dựng lát cắt bounded (cap 8) —
-                          // phần còn lại đi qua trang tìm kiếm.
-                          for (final event in snapshot.visibleEvents)
-                            _PredictionEventCard(
-                              key: PredictionsHomePage.eventCardKey(event.id),
-                              event: event,
+                          ),
+                          _CategoryChips(
+                            categories: snapshot.categories,
+                            activeCategory: _category,
+                            onSelected: (value) => setState(() {
+                              _category = _category == value ? null : value;
+                            }),
+                          ),
+                          if (showDiscoveryExtras) ...[
+                            _BreakingMoversStrip(
+                              snapshot: snapshot,
                               onTap: () => context.go(
-                                AppRoutePaths.marketsPredictionEvent(event.id),
+                                AppRoutePaths.marketsPredictionsBreaking,
                               ),
                             ),
-                          if (snapshot.events.length >
-                              snapshot.visibleEvents.length)
-                            VitCard(
-                              key: PredictionsHomePage.viewAllEventsKey,
-                              onTap: () => context.go(
-                                AppRoutePaths.marketsPredictionsSearch,
+                            _ArenaBridgeCard(
+                              onTap: () => context.go(AppRoutePaths.arena),
+                            ),
+                          ],
+                          if (snapshot.highRiskContractId != null)
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Trạng thái thị trường dự đoán',
+                              message:
+                                  'Thiết lập sự kiện, xem trước rủi ro, xác nhận, biên lai, danh mục và hỗ trợ dùng luồng high-risk chung.',
+                              contractId: snapshot.highRiskContractId,
+                            ),
+                          if (snapshot.events.isEmpty)
+                            _PredictionsEmptyState(
+                              hasActiveFilters: _hasActiveFilters,
+                              onClearFilters: _clearFilters,
+                              onBreaking: () => context.go(
+                                AppRoutePaths.marketsPredictionsBreaking,
                               ),
-                              child: Center(
-                                child: Text(
-                                  'Xem tất cả ${snapshot.events.length} sự kiện',
-                                  style: AppTextStyles.baseMedium.copyWith(
-                                    color: AppColors.accent,
+                            )
+                          else ...[
+                            // PERF-HN3: chỉ dựng lát cắt bounded (cap 8) —
+                            // phần còn lại đi qua trang tìm kiếm.
+                            for (final event in snapshot.visibleEvents)
+                              _PredictionEventCard(
+                                key: PredictionsHomePage.eventCardKey(event.id),
+                                event: event,
+                                onTap: () => context.go(
+                                  AppRoutePaths.marketsPredictionEvent(
+                                    event.id,
                                   ),
                                 ),
                               ),
-                            ),
+                            if (snapshot.events.length >
+                                snapshot.visibleEvents.length)
+                              VitCard(
+                                key: PredictionsHomePage.viewAllEventsKey,
+                                onTap: () => context.go(
+                                  AppRoutePaths.marketsPredictionsSearch,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Xem tất cả ${snapshot.events.length} sự kiện',
+                                    style: AppTextStyles.baseMedium.copyWith(
+                                      color: AppColors.accent,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                          const _RiskDisclaimer(),
                         ],
-                        const _RiskDisclaimer(),
-                      ],
+                      ),
                     ),
                   ),
                 ),

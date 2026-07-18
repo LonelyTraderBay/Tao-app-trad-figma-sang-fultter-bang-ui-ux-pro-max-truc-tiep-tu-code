@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -67,7 +68,7 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pBlacklistAddProvider);
+    final snapshotAsync = ref.watch(p2pBlacklistAddProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -85,79 +86,104 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
       semanticIdentifier: 'SC-276',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pBlacklist),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pBlacklistAddScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _Hero(snapshot: snapshot),
-                        VitInput(
-                          key: const Key(
-                            'sc276_p2p_blacklist_add_username_control',
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pBlacklist),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pBlacklistAddProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pBlacklistAddScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _Hero(snapshot: snapshot),
+                          VitInput(
+                            key: const Key(
+                              'sc276_p2p_blacklist_add_username_control',
+                            ),
+                            controller: _usernameController,
+                            fieldKey: P2PBlacklistAddPage.usernameKey,
+                            label: snapshot.usernameLabel,
+                            hintText: snapshot.usernameHint,
+                            textInputAction: TextInputAction.next,
+                            onChanged: (_) => setState(() {}),
                           ),
-                          controller: _usernameController,
-                          fieldKey: P2PBlacklistAddPage.usernameKey,
-                          label: snapshot.usernameLabel,
-                          hintText: snapshot.usernameHint,
-                          textInputAction: TextInputAction.next,
-                          onChanged: (_) => setState(() {}),
-                        ),
-                        _ReasonSelector(
-                          reasons: snapshot.reasons,
-                          selectedReasonId: _reasonId,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _reasonId = id);
-                          },
-                        ),
-                        _NoteField(
-                          controller: _noteController,
-                          label: snapshot.noteLabel,
-                          hint: snapshot.noteHint,
-                        ),
-                        _WarningCard(snapshot: snapshot),
-                        VitCtaButton(
-                          key: P2PBlacklistAddPage.submitKey,
-                          variant: VitCtaButtonVariant.danger,
-                          loading: _isSubmitting,
-                          onPressed: canSubmit ? () => _submit(snapshot) : null,
-                          leading: const Icon(Icons.block_rounded),
-                          child: Text(snapshot.submitLabel),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Blacklist action review',
-                          message:
-                              'Username, reason, note, warning, submitting state and undo/support next step are reviewed before blocking a merchant.',
-                          contractId: 'p2p-blacklist-add-review',
-                        ),
-                      ],
+                          _ReasonSelector(
+                            reasons: snapshot.reasons,
+                            selectedReasonId: _reasonId,
+                            onChanged: (id) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _reasonId = id);
+                            },
+                          ),
+                          _NoteField(
+                            controller: _noteController,
+                            label: snapshot.noteLabel,
+                            hint: snapshot.noteHint,
+                          ),
+                          _WarningCard(snapshot: snapshot),
+                          VitCtaButton(
+                            key: P2PBlacklistAddPage.submitKey,
+                            variant: VitCtaButtonVariant.danger,
+                            loading: _isSubmitting,
+                            onPressed: canSubmit
+                                ? () => _submit(snapshot)
+                                : null,
+                            leading: const Icon(Icons.block_rounded),
+                            child: Text(snapshot.submitLabel),
+                          ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Blacklist action review',
+                            message:
+                                'Username, reason, note, warning, submitting state and undo/support next step are reviewed before blocking a merchant.',
+                            contractId: 'p2p-blacklist-add-review',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

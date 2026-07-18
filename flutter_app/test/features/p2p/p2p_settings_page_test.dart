@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-279 mock repository exposes settings BE draft', () {
-    final snapshot = const MockP2PRepository().getSettings();
+  test('SC-279 mock repository exposes settings BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getSettings();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-settings');
     expect(snapshot.actionDraft, contains('PATCH /user/settings'));

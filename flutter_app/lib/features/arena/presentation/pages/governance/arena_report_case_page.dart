@@ -81,14 +81,9 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
+    final controllerAsync = ref.watch(
       arenaReportCaseControllerProvider(widget.caseId),
     );
-    final snapshot = controller.state.snapshot;
-    final reviewState = controller.reviewState(
-      appealSubmitted: _appealSubmitted,
-    );
-    final relatedReports = controller.relatedReportsExcludingCurrent();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -123,86 +118,111 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                     padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),
-                    child: snapshot.reportCase == null
-                        ? VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            key: ArenaReportCasePage.emptyKey,
-                            padding: VitContentPadding.none,
-                            children: [
-                              VitEmptyState(
-                                icon: Icons.warning_amber_rounded,
-                                title: snapshot.emptyTitle,
-                                message: snapshot.emptySubtitle,
-                              ),
-                            ],
-                          )
-                        : VitPageContent(
-                            padding: VitContentPadding.compact,
-                            density: VitDensity.compact,
-                            gap: VitContentGap.tight,
-                            children: [
-                              ArenaReportReviewStateCard(
-                                key: ArenaReportCasePage.reviewStateKey,
-                                state: reviewState,
-                              ),
-                              _CaseSummaryCard(
-                                reportCase: snapshot.reportCase!,
-                              ),
-                              _ReportReasonCard(
-                                reportCase: snapshot.reportCase!,
-                              ),
-                              _TimelineCard(reportCase: snapshot.reportCase!),
-                              if (snapshot.reportCase!.actionTaken != null)
-                                _ActionTakenCard(
-                                  reportCase: snapshot.reportCase!,
-                                ),
-                              if (snapshot.reportCase!.actionTaken == null &&
-                                  snapshot.reportCase!.systemNote != null)
-                                _SystemNoteCard(
-                                  note: snapshot.reportCase!.systemNote!,
-                                ),
-                              if (snapshot.reportCase!.relatedChallengeId !=
-                                  null)
-                                _LinkedActionRow(
-                                  key: ArenaReportCasePage.relatedChallengeKey,
-                                  icon: Icons.emoji_events_outlined,
-                                  title: 'Xem challenge liên quan',
-                                  accentColor: AppColors.accent,
-                                  onTap: () => _openChallenge(
-                                    context,
-                                    snapshot.reportCase!,
+                    child: controllerAsync.when(
+                      loading: () => const VitSkeletonList(),
+                      error: (error, stackTrace) => VitErrorState(
+                        title: 'Không tải được báo cáo',
+                        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () => ref.invalidate(
+                          arenaReportCaseControllerProvider(widget.caseId),
+                        ),
+                      ),
+                      data: (controller) {
+                        final snapshot = controller.state.snapshot;
+                        final reviewState = controller.reviewState(
+                          appealSubmitted: _appealSubmitted,
+                        );
+                        final relatedReports = controller
+                            .relatedReportsExcludingCurrent();
+                        return snapshot.reportCase == null
+                            ? VitPageContent(
+                                rhythm: VitPageRhythm.standard,
+                                key: ArenaReportCasePage.emptyKey,
+                                padding: VitContentPadding.none,
+                                children: [
+                                  VitEmptyState(
+                                    icon: Icons.warning_amber_rounded,
+                                    title: snapshot.emptyTitle,
+                                    message: snapshot.emptySubtitle,
                                   ),
-                                ),
-                              if (snapshot.reportCase!.status ==
-                                  ArenaReportCaseStatus.actionTaken)
-                                _AppealNotice(
-                                  state: reviewState,
-                                  onAppeal: _markAppealSubmitted,
-                                ),
-                              _LinkedActionRow(
-                                key: ArenaReportCasePage.myReportsKey,
-                                icon: Icons.flag_outlined,
-                                title: 'Xem tất cả báo cáo',
-                                accentColor: AppColors.text3,
-                                onTap: () {
-                                  HapticFeedback.selectionClick();
-                                  context.go(AppRoutePaths.arenaMyReports);
-                                },
-                              ),
-                              _RelatedReports(reports: relatedReports),
-                              _DisclaimerCard(disclaimer: snapshot.disclaimer),
-                              VitCtaButton(
-                                key: ArenaReportCasePage.primaryCtaKey,
-                                onPressed: () => _handlePrimaryCta(
-                                  context,
-                                  snapshot.reportCase!,
-                                ),
-                                child: Text(
-                                  _primaryCtaLabel(snapshot.reportCase!),
-                                ),
-                              ),
-                            ],
-                          ),
+                                ],
+                              )
+                            : VitPageContent(
+                                padding: VitContentPadding.compact,
+                                density: VitDensity.compact,
+                                gap: VitContentGap.tight,
+                                children: [
+                                  ArenaReportReviewStateCard(
+                                    key: ArenaReportCasePage.reviewStateKey,
+                                    state: reviewState,
+                                  ),
+                                  _CaseSummaryCard(
+                                    reportCase: snapshot.reportCase!,
+                                  ),
+                                  _ReportReasonCard(
+                                    reportCase: snapshot.reportCase!,
+                                  ),
+                                  _TimelineCard(
+                                    reportCase: snapshot.reportCase!,
+                                  ),
+                                  if (snapshot.reportCase!.actionTaken != null)
+                                    _ActionTakenCard(
+                                      reportCase: snapshot.reportCase!,
+                                    ),
+                                  if (snapshot.reportCase!.actionTaken ==
+                                          null &&
+                                      snapshot.reportCase!.systemNote != null)
+                                    _SystemNoteCard(
+                                      note: snapshot.reportCase!.systemNote!,
+                                    ),
+                                  if (snapshot.reportCase!.relatedChallengeId !=
+                                      null)
+                                    _LinkedActionRow(
+                                      key: ArenaReportCasePage
+                                          .relatedChallengeKey,
+                                      icon: Icons.emoji_events_outlined,
+                                      title: 'Xem challenge liên quan',
+                                      accentColor: AppColors.accent,
+                                      onTap: () => _openChallenge(
+                                        context,
+                                        snapshot.reportCase!,
+                                      ),
+                                    ),
+                                  if (snapshot.reportCase!.status ==
+                                      ArenaReportCaseStatus.actionTaken)
+                                    _AppealNotice(
+                                      state: reviewState,
+                                      onAppeal: _markAppealSubmitted,
+                                    ),
+                                  _LinkedActionRow(
+                                    key: ArenaReportCasePage.myReportsKey,
+                                    icon: Icons.flag_outlined,
+                                    title: 'Xem tất cả báo cáo',
+                                    accentColor: AppColors.text3,
+                                    onTap: () {
+                                      HapticFeedback.selectionClick();
+                                      context.go(AppRoutePaths.arenaMyReports);
+                                    },
+                                  ),
+                                  _RelatedReports(reports: relatedReports),
+                                  _DisclaimerCard(
+                                    disclaimer: snapshot.disclaimer,
+                                  ),
+                                  VitCtaButton(
+                                    key: ArenaReportCasePage.primaryCtaKey,
+                                    onPressed: () => _handlePrimaryCta(
+                                      context,
+                                      snapshot.reportCase!,
+                                    ),
+                                    child: Text(
+                                      _primaryCtaLabel(snapshot.reportCase!),
+                                    ),
+                                  ),
+                                ],
+                              );
+                      },
+                    ),
                   ),
                 ),
               ),

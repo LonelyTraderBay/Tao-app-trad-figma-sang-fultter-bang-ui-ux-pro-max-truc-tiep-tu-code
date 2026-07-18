@@ -13,10 +13,13 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(arenaReadModelControllerProvider);
-    final snapshot = controller.getArenaHome();
-    final pointsBalance = controller.getArenaPoints().summary.currentBalance;
-    final activeChallenges = _countActiveArenaChallenges(snapshot.liveRooms);
+    final snapshotAsync = ref.watch(arenaHomeSnapshotProvider);
+    // Provider phụ (không chặn trang): đọc `.value` lười, ẩn số dư nếu
+    // chưa resolve thay vì lồng thêm 1 tầng `.when()` (GD4-Async-Playbook.md
+    // mục 5, bẫy 4).
+    final pointsBalance =
+        ref.watch(arenaPointsSnapshotProvider).value?.summary.currentBalance ??
+        0;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -59,119 +62,144 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        if (hasSearch)
-                          _IntroBlock(
-                            controller: _searchController,
-                            query: _query,
-                            pendingNotifications: snapshot.pendingNotifications,
-                            onChanged: (value) =>
-                                setState(() => _query = value),
-                            onClear: () => setState(() => _query = ''),
-                            onGuide: () =>
-                                context.goHaptic(AppRoutePaths.arenaGuide),
-                            onRewards: () => context.goHaptic(
-                              '${AppRoutePaths.rewards}?tab=arena',
-                            ),
-                            onLeaderboard: () => context.goHaptic(
-                              AppRoutePaths.arenaLeaderboard,
-                            ),
-                            onMyArena: () =>
-                                context.goHaptic(AppRoutePaths.profileArena),
-                          )
-                        else ...[
-                          _HeroCard(
-                            pointsBalance: pointsBalance,
-                            activeChallenges: activeChallenges,
-                            onCreate: () =>
-                                context.goHaptic(AppRoutePaths.arenaStudio),
-                            onExplore: _scrollToTemplates,
-                          ),
-                          _IntroBlock(
-                            controller: _searchController,
-                            query: _query,
-                            pendingNotifications: snapshot.pendingNotifications,
-                            onChanged: (value) =>
-                                setState(() => _query = value),
-                            onClear: () => setState(() => _query = ''),
-                            onGuide: () =>
-                                context.goHaptic(AppRoutePaths.arenaGuide),
-                            onRewards: () => context.goHaptic(
-                              '${AppRoutePaths.rewards}?tab=arena',
-                            ),
-                            onLeaderboard: () => context.goHaptic(
-                              AppRoutePaths.arenaLeaderboard,
-                            ),
-                            onMyArena: () =>
-                                context.goHaptic(AppRoutePaths.profileArena),
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Open Arena',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(arenaHomeSnapshotProvider),
                           ),
                         ],
-                        if (hasSearch)
-                          _SearchResults(
-                            query: _query,
-                            snapshot: snapshot,
-                            onMode: (id) =>
-                                context.goHaptic(AppRoutePaths.arenaMode(id)),
-                            onRoom: (id) => context.goHaptic(
-                              AppRoutePaths.arenaChallenge(id),
-                            ),
-                            onCreator: (id) => context.goHaptic(
-                              AppRoutePaths.arenaCreator(id),
-                            ),
-                          )
-                        else ...[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              _TemplateSection(
-                                anchorKey: _templatesAnchorKey,
-                                templates: snapshot.templates,
-                                onTap: (_) =>
-                                    context.goHaptic(AppRoutePaths.arenaStudio),
-                              ),
-                              const SizedBox(
-                                height: AppSpacing.pageRhythmCompactInnerGap,
-                              ),
-                              _FeaturedModesSection(
-                                modes: snapshot.featuredModes,
-                                onViewAll: () => context.goHaptic(
+                        data: (snapshot) {
+                          final activeChallenges = _countActiveArenaChallenges(
+                            snapshot.liveRooms,
+                          );
+                          return [
+                            if (hasSearch)
+                              _IntroBlock(
+                                controller: _searchController,
+                                query: _query,
+                                pendingNotifications:
+                                    snapshot.pendingNotifications,
+                                onChanged: (value) =>
+                                    setState(() => _query = value),
+                                onClear: () => setState(() => _query = ''),
+                                onGuide: () =>
+                                    context.goHaptic(AppRoutePaths.arenaGuide),
+                                onRewards: () => context.goHaptic(
+                                  '${AppRoutePaths.rewards}?tab=arena',
+                                ),
+                                onLeaderboard: () => context.goHaptic(
                                   AppRoutePaths.arenaLeaderboard,
                                 ),
-                                onMode: (id) => context.goHaptic(
-                                  AppRoutePaths.arenaMode(id),
+                                onMyArena: () => context.goHaptic(
+                                  AppRoutePaths.profileArena,
+                                ),
+                              )
+                            else ...[
+                              _HeroCard(
+                                pointsBalance: pointsBalance,
+                                activeChallenges: activeChallenges,
+                                onCreate: () =>
+                                    context.goHaptic(AppRoutePaths.arenaStudio),
+                                onExplore: _scrollToTemplates,
+                              ),
+                              _IntroBlock(
+                                controller: _searchController,
+                                query: _query,
+                                pendingNotifications:
+                                    snapshot.pendingNotifications,
+                                onChanged: (value) =>
+                                    setState(() => _query = value),
+                                onClear: () => setState(() => _query = ''),
+                                onGuide: () =>
+                                    context.goHaptic(AppRoutePaths.arenaGuide),
+                                onRewards: () => context.goHaptic(
+                                  '${AppRoutePaths.rewards}?tab=arena',
+                                ),
+                                onLeaderboard: () => context.goHaptic(
+                                  AppRoutePaths.arenaLeaderboard,
+                                ),
+                                onMyArena: () => context.goHaptic(
+                                  AppRoutePaths.profileArena,
                                 ),
                               ),
                             ],
-                          ),
-                          _LiveRoomsSection(
-                            rooms: snapshot.liveRooms,
-                            onRoom: (id) => context.goHaptic(
-                              AppRoutePaths.arenaChallenge(id),
+                            if (hasSearch)
+                              _SearchResults(
+                                query: _query,
+                                snapshot: snapshot,
+                                onMode: (id) => context.goHaptic(
+                                  AppRoutePaths.arenaMode(id),
+                                ),
+                                onRoom: (id) => context.goHaptic(
+                                  AppRoutePaths.arenaChallenge(id),
+                                ),
+                                onCreator: (id) => context.goHaptic(
+                                  AppRoutePaths.arenaCreator(id),
+                                ),
+                              )
+                            else ...[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  _TemplateSection(
+                                    anchorKey: _templatesAnchorKey,
+                                    templates: snapshot.templates,
+                                    onTap: (_) => context.goHaptic(
+                                      AppRoutePaths.arenaStudio,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height:
+                                        AppSpacing.pageRhythmCompactInnerGap,
+                                  ),
+                                  _FeaturedModesSection(
+                                    modes: snapshot.featuredModes,
+                                    onViewAll: () => context.goHaptic(
+                                      AppRoutePaths.arenaLeaderboard,
+                                    ),
+                                    onMode: (id) => context.goHaptic(
+                                      AppRoutePaths.arenaMode(id),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              _LiveRoomsSection(
+                                rooms: snapshot.liveRooms,
+                                onRoom: (id) => context.goHaptic(
+                                  AppRoutePaths.arenaChallenge(id),
+                                ),
+                                onGuide: () =>
+                                    context.goHaptic(AppRoutePaths.arenaGuide),
+                              ),
+                              _CreatorSpotlightSection(
+                                creators: snapshot.creators,
+                                onCreator: (id) => context.goHaptic(
+                                  AppRoutePaths.arenaCreator(id),
+                                ),
+                              ),
+                              _PredictionBridge(
+                                onTap: () => context.goHaptic(
+                                  AppRoutePaths.marketsPredictions,
+                                ),
+                              ),
+                              _VerifiedTeaser(
+                                onTap: () => context.goHaptic(
+                                  AppRoutePaths.arenaVerified,
+                                ),
+                              ),
+                            ],
+                            _ArenaFooter(
+                              onRules: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
                             ),
-                            onGuide: () =>
-                                context.goHaptic(AppRoutePaths.arenaGuide),
-                          ),
-                          _CreatorSpotlightSection(
-                            creators: snapshot.creators,
-                            onCreator: (id) => context.goHaptic(
-                              AppRoutePaths.arenaCreator(id),
-                            ),
-                          ),
-                          _PredictionBridge(
-                            onTap: () => context.goHaptic(
-                              AppRoutePaths.marketsPredictions,
-                            ),
-                          ),
-                          _VerifiedTeaser(
-                            onTap: () =>
-                                context.goHaptic(AppRoutePaths.arenaVerified),
-                          ),
-                        ],
-                        _ArenaFooter(
-                          onRules: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                      ],
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

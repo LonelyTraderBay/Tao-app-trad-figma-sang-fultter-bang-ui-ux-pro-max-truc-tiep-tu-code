@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-221 mock repository exposes P2P dispute BE draft', () {
-    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+  test('SC-221 mock repository exposes P2P dispute BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeOpen('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-dispute-p2p001');
     expect(
@@ -56,7 +58,9 @@ void main() {
   });
 
   testWidgets('SC-221 renders P2P dispute form baseline', (tester) async {
-    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeOpen('p2p001');
 
     await pumpP2PDispute(tester);
 
@@ -75,7 +79,9 @@ void main() {
   testWidgets('SC-221 first viewport keeps dispute choices compact', (
     tester,
   ) async {
-    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeOpen('p2p001');
 
     await pumpP2PDispute(tester);
 
@@ -107,7 +113,9 @@ void main() {
   testWidgets('SC-221 enables submit after reason and description', (
     tester,
   ) async {
-    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeOpen('p2p001');
 
     await pumpP2PDispute(tester);
 
@@ -136,7 +144,9 @@ void main() {
   });
 
   testWidgets('SC-221 submit opens dispute detail route', (tester) async {
-    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeOpen('p2p001');
 
     await pumpP2PDispute(tester);
 

@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-217 mock repository exposes P2P chat BE draft', () {
-    final snapshot = const MockP2PRepository().getChat('p2p001');
+  test('SC-217 mock repository exposes P2P chat BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getChat('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-chat-p2p001');
     expect(

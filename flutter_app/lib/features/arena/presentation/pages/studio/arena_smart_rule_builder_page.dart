@@ -115,14 +115,8 @@ class _ArenaSmartRuleBuilderPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaSmartRules();
+    final snapshotAsync = ref.watch(arenaSmartRulesSnapshotProvider);
     final creationState = ref.watch(arenaCreationProvider);
-    _endDate = _endDate.isEmpty ? snapshot.defaultEndDate : _endDate;
-    if (_endDateController.text.isEmpty && _endDate.isNotEmpty) {
-      _endDateController.text = formatArenaDateInput(_endDate);
-    }
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -130,12 +124,6 @@ class _ArenaSmartRuleBuilderPageState
       visualExtra: AppSpacing.x7 + AppSpacing.x7,
       nativeExtra: AppSpacing.x7 + AppSpacing.x7,
     );
-    final ruleController = ArenaSmartRuleBuilderController(
-      state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
-    );
-    final form = _formDraft();
-    final clarity = _ClarityResult(ruleController.clarityScore(form));
-    final canProceed = ruleController.canProceed(form);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -165,172 +153,209 @@ class _ArenaSmartRuleBuilderPageState
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
-                    children: [
-                      ArenaWizardStepper(
-                        steps: snapshot.steps,
-                        activeStep: 3,
-                        style: ArenaWizardStepperStyle.smartRule,
-                      ),
-                      _TitleField(
-                        controller: _titleController,
-                        suggestions: snapshot.titleSuggestions,
-                        onChanged: (value) => setState(() => _title = value),
-                        onSuggestion: _setTitle,
-                      ),
-                      _DomainField(
-                        domain: ruleController.selectedDomain(form),
-                        onTap: () => _selectDomain(snapshot),
-                      ),
-                      _ChallengeTypeGrid(
-                        types: snapshot.challengeTypes,
-                        selectedId: _challengeTypeId,
-                        onSelected: (id) =>
-                            setState(() => _challengeTypeId = id),
-                      ),
-                      _IntroSection(),
-                      _ClarityScoreCard(score: clarity.score),
-                      _GuidanceLink(onTap: _showGuidance),
-                      _ConditionBuilder(
-                        subject: _subject,
-                        action: _action,
-                        metric: _metric,
-                        winType: _winType,
-                        deadlineContext: _deadlineContext,
-                        customWinController: _customWinController,
-                        onSubject: () => _selectTextOption(
-                          title: 'Chọn chủ thể',
-                          options: snapshot.subjects,
-                          selectedValue: _subject,
-                          onSelected: (value) => _subject = value,
+                    children: snapshotAsync.when(
+                      loading: () => const [VitSkeletonList()],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
+                          title: 'Không tải được Smart Rule Builder',
+                          message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                          actionLabel: 'Thử lại',
+                          onAction: () =>
+                              ref.invalidate(arenaSmartRulesSnapshotProvider),
                         ),
-                        onAction: () => _selectTextOption(
-                          title: 'Chọn hành động',
-                          options: snapshot.actions,
-                          selectedValue: _action,
-                          onSelected: (value) => _action = value,
-                        ),
-                        onMetric: () => _selectTextOption(
-                          title: 'Chọn chỉ số / đối tượng',
-                          options: snapshot.metrics,
-                          selectedValue: _metric,
-                          onSelected: (value) => _metric = value,
-                        ),
-                        onWinType: () => _selectTextOption(
-                          title: 'Chọn kiểu thắng',
-                          options: snapshot.winTypes,
-                          selectedValue: _winType,
-                          onSelected: (value) => _winType = value,
-                        ),
-                        onDeadlineContext: () => _selectTextOption(
-                          title: 'Chọn thời điểm kết quả',
-                          options: snapshot.deadlineContexts,
-                          selectedValue: _deadlineContext,
-                          onSelected: (value) => _deadlineContext = value,
-                        ),
-                        onCustomWinChanged: (value) =>
-                            setState(() => _customWinCondition = value),
-                      ),
-                      _DescriptionField(
-                        controller: _descriptionController,
-                        onChanged: (value) =>
-                            setState(() => _description = value),
-                      ),
-                      _QuickSuggestions(
-                        suggestions: ruleController.quickSuggestions(form),
-                        onTap: (value) => setState(() {
-                          if (_title.isEmpty) {
-                            _setTitle(value);
-                          } else {
-                            _setCustomWinCondition(value);
-                          }
-                        }),
-                      ),
-                      _TimingRulesCard(
-                        snapshot: snapshot,
-                        endDateController: _endDateController,
-                        tieRule: _tieRule,
-                        voidRule: _voidRule,
-                        resultDeadline: _resultDeadline,
-                        rematchEnabled: _rematchEnabled,
-                        saveAsMode: _saveAsMode,
-                        onDate: (value) => setState(() => _endDate = value),
-                        onTieRule: () => _selectTextOption(
-                          title: 'Chọn luật hòa',
-                          options: snapshot.tieRules,
-                          selectedValue: _tieRule,
-                          onSelected: (value) => _tieRule = value,
-                        ),
-                        onVoidRule: () => _selectTextOption(
-                          title: 'Chọn luật hủy bỏ',
-                          options: snapshot.voidRules,
-                          selectedValue: _voidRule,
-                          onSelected: (value) => _voidRule = value,
-                        ),
-                        onResultDeadline: () => _selectTextOption(
-                          title: 'Chọn hạn chốt kết quả',
-                          options: snapshot.resultDeadlines,
-                          selectedValue: _resultDeadline,
-                          onSelected: (value) => _resultDeadline = value,
-                        ),
-                        onRematch: () =>
-                            setState(() => _rematchEnabled = !_rematchEnabled),
-                        onSaveAsMode: () =>
-                            setState(() => _saveAsMode = !_saveAsMode),
-                      ),
-                      _RuleSummaryCard(
-                        domain: ruleController.selectedDomain(form)?.label,
-                        challengeType: ruleController
-                            .selectedChallengeType(form)
-                            ?.label,
-                        winCondition: ruleController.generatedWinCondition(
-                          form,
-                        ),
-                        endDate: _endDate,
-                        tieRule: _tieRule,
-                        voidRule: _voidRule,
-                        resultDeadline: _resultDeadline,
-                      ),
-                      const _ModerationNote(),
-                      _BackendPayloadPreviewCard(
-                        creationState: creationState,
-                        draft: ruleController.buildCreationDraft(
-                          form,
-                          clarity.score,
-                        ),
-                      ),
-                      _CreationSafetyChecklist(
-                        ruleReviewAccepted: _ruleReviewAccepted,
-                        pointsBoundaryAccepted: _pointsBoundaryAccepted,
-                        moderationAccepted: _moderationAccepted,
-                        onRuleReview: () => setState(
-                          () => _ruleReviewAccepted = !_ruleReviewAccepted,
-                        ),
-                        onPointsBoundary: () => setState(
-                          () => _pointsBoundaryAccepted =
-                              !_pointsBoundaryAccepted,
-                        ),
-                        onModeration: () => setState(
-                          () => _moderationAccepted = !_moderationAccepted,
-                        ),
-                      ),
-                      _FooterActions(
-                        canProceed: canProceed,
-                        canSubmit: ruleController.canSubmit(
-                          form,
-                          clarity.score,
-                        ),
-                        clarityScore: clarity.score,
-                        statusLabel: _statusLabel,
-                        commandStatusLabel: creationState.statusLabel,
-                        onBack: _close,
-                        onContinue: () => _continue(snapshot),
-                        onPreview: () =>
-                            _previewBackendPayload(snapshot, clarity),
-                        onSave: () => _saveDraftForBackend(snapshot, clarity),
-                        onSubmit: () => _submitForReview(snapshot, clarity),
-                        onReset: _resetForm,
-                      ),
-                    ],
+                      ],
+                      data: (snapshot) {
+                        _endDate = _endDate.isEmpty
+                            ? snapshot.defaultEndDate
+                            : _endDate;
+                        if (_endDateController.text.isEmpty &&
+                            _endDate.isNotEmpty) {
+                          _endDateController.text = formatArenaDateInput(
+                            _endDate,
+                          );
+                        }
+                        final ruleController = ArenaSmartRuleBuilderController(
+                          state: ArenaSmartRuleBuilderViewState(
+                            snapshot: snapshot,
+                          ),
+                        );
+                        final form = _formDraft();
+                        final clarity = _ClarityResult(
+                          ruleController.clarityScore(form),
+                        );
+                        final canProceed = ruleController.canProceed(form);
+
+                        return [
+                          ArenaWizardStepper(
+                            steps: snapshot.steps,
+                            activeStep: 3,
+                            style: ArenaWizardStepperStyle.smartRule,
+                          ),
+                          _TitleField(
+                            controller: _titleController,
+                            suggestions: snapshot.titleSuggestions,
+                            onChanged: (value) =>
+                                setState(() => _title = value),
+                            onSuggestion: _setTitle,
+                          ),
+                          _DomainField(
+                            domain: ruleController.selectedDomain(form),
+                            onTap: () => _selectDomain(snapshot),
+                          ),
+                          _ChallengeTypeGrid(
+                            types: snapshot.challengeTypes,
+                            selectedId: _challengeTypeId,
+                            onSelected: (id) =>
+                                setState(() => _challengeTypeId = id),
+                          ),
+                          _IntroSection(),
+                          _ClarityScoreCard(score: clarity.score),
+                          _GuidanceLink(onTap: _showGuidance),
+                          _ConditionBuilder(
+                            subject: _subject,
+                            action: _action,
+                            metric: _metric,
+                            winType: _winType,
+                            deadlineContext: _deadlineContext,
+                            customWinController: _customWinController,
+                            onSubject: () => _selectTextOption(
+                              title: 'Chọn chủ thể',
+                              options: snapshot.subjects,
+                              selectedValue: _subject,
+                              onSelected: (value) => _subject = value,
+                            ),
+                            onAction: () => _selectTextOption(
+                              title: 'Chọn hành động',
+                              options: snapshot.actions,
+                              selectedValue: _action,
+                              onSelected: (value) => _action = value,
+                            ),
+                            onMetric: () => _selectTextOption(
+                              title: 'Chọn chỉ số / đối tượng',
+                              options: snapshot.metrics,
+                              selectedValue: _metric,
+                              onSelected: (value) => _metric = value,
+                            ),
+                            onWinType: () => _selectTextOption(
+                              title: 'Chọn kiểu thắng',
+                              options: snapshot.winTypes,
+                              selectedValue: _winType,
+                              onSelected: (value) => _winType = value,
+                            ),
+                            onDeadlineContext: () => _selectTextOption(
+                              title: 'Chọn thời điểm kết quả',
+                              options: snapshot.deadlineContexts,
+                              selectedValue: _deadlineContext,
+                              onSelected: (value) => _deadlineContext = value,
+                            ),
+                            onCustomWinChanged: (value) =>
+                                setState(() => _customWinCondition = value),
+                          ),
+                          _DescriptionField(
+                            controller: _descriptionController,
+                            onChanged: (value) =>
+                                setState(() => _description = value),
+                          ),
+                          _QuickSuggestions(
+                            suggestions: ruleController.quickSuggestions(form),
+                            onTap: (value) => setState(() {
+                              if (_title.isEmpty) {
+                                _setTitle(value);
+                              } else {
+                                _setCustomWinCondition(value);
+                              }
+                            }),
+                          ),
+                          _TimingRulesCard(
+                            snapshot: snapshot,
+                            endDateController: _endDateController,
+                            tieRule: _tieRule,
+                            voidRule: _voidRule,
+                            resultDeadline: _resultDeadline,
+                            rematchEnabled: _rematchEnabled,
+                            saveAsMode: _saveAsMode,
+                            onDate: (value) => setState(() => _endDate = value),
+                            onTieRule: () => _selectTextOption(
+                              title: 'Chọn luật hòa',
+                              options: snapshot.tieRules,
+                              selectedValue: _tieRule,
+                              onSelected: (value) => _tieRule = value,
+                            ),
+                            onVoidRule: () => _selectTextOption(
+                              title: 'Chọn luật hủy bỏ',
+                              options: snapshot.voidRules,
+                              selectedValue: _voidRule,
+                              onSelected: (value) => _voidRule = value,
+                            ),
+                            onResultDeadline: () => _selectTextOption(
+                              title: 'Chọn hạn chốt kết quả',
+                              options: snapshot.resultDeadlines,
+                              selectedValue: _resultDeadline,
+                              onSelected: (value) => _resultDeadline = value,
+                            ),
+                            onRematch: () => setState(
+                              () => _rematchEnabled = !_rematchEnabled,
+                            ),
+                            onSaveAsMode: () =>
+                                setState(() => _saveAsMode = !_saveAsMode),
+                          ),
+                          _RuleSummaryCard(
+                            domain: ruleController.selectedDomain(form)?.label,
+                            challengeType: ruleController
+                                .selectedChallengeType(form)
+                                ?.label,
+                            winCondition: ruleController.generatedWinCondition(
+                              form,
+                            ),
+                            endDate: _endDate,
+                            tieRule: _tieRule,
+                            voidRule: _voidRule,
+                            resultDeadline: _resultDeadline,
+                          ),
+                          const _ModerationNote(),
+                          _BackendPayloadPreviewCard(
+                            creationState: creationState,
+                            draft: ruleController.buildCreationDraft(
+                              form,
+                              clarity.score,
+                            ),
+                          ),
+                          _CreationSafetyChecklist(
+                            ruleReviewAccepted: _ruleReviewAccepted,
+                            pointsBoundaryAccepted: _pointsBoundaryAccepted,
+                            moderationAccepted: _moderationAccepted,
+                            onRuleReview: () => setState(
+                              () => _ruleReviewAccepted = !_ruleReviewAccepted,
+                            ),
+                            onPointsBoundary: () => setState(
+                              () => _pointsBoundaryAccepted =
+                                  !_pointsBoundaryAccepted,
+                            ),
+                            onModeration: () => setState(
+                              () => _moderationAccepted = !_moderationAccepted,
+                            ),
+                          ),
+                          _FooterActions(
+                            canProceed: canProceed,
+                            canSubmit: ruleController.canSubmit(
+                              form,
+                              clarity.score,
+                            ),
+                            clarityScore: clarity.score,
+                            statusLabel: _statusLabel,
+                            commandStatusLabel: creationState.statusLabel,
+                            onBack: _close,
+                            onContinue: () => _continue(snapshot),
+                            onPreview: () =>
+                                _previewBackendPayload(snapshot, clarity),
+                            onSave: () =>
+                                _saveDraftForBackend(snapshot, clarity),
+                            onSubmit: () => _submitForReview(snapshot, clarity),
+                            onReset: _resetForm,
+                          ),
+                        ];
+                      },
+                    ),
                   ),
                 ),
               ),

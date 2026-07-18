@@ -28,36 +28,47 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-293 mock repository exposes support announcements BE draft', () {
-    final snapshot = const MockSupportRepository().getAnnouncements();
+  test(
+    'SC-293 mock repository exposes support announcements BE draft',
+    () async {
+      final snapshot = await const MockSupportRepository(
+        loadDelay: Duration.zero,
+      ).getAnnouncements();
 
-    expect(snapshot.endpoint, '/api/mobile/support/support-announcements');
-    expect(snapshot.actionDraft, 'read-only or local navigation action');
-    expect(snapshot.title, 'Thông báo');
-    expect(snapshot.subtitle, 'Thông báo · Hỗ trợ');
-    expect(snapshot.backRoute, AppRoutePaths.support);
-    expect(snapshot.filters.map((item) => item.label), [
-      'Tất cả',
-      'Khuyến mãi',
-      'Tính năng',
-      'Niêm yết',
-      'Bảo trì',
-      'Bảo mật',
-    ]);
-    expect(snapshot.announcements, hasLength(5));
-    expect(snapshot.announcements.where((item) => item.isPinned), hasLength(2));
-    expect(snapshot.announcements.first.title, 'Phí giao dịch 0% cho BTC/USDT');
-    expect(snapshot.contractNotes, contains('announcements'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        SupportScreenState.loading,
-        SupportScreenState.empty,
-        SupportScreenState.error,
-        SupportScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/support/support-announcements');
+      expect(snapshot.actionDraft, 'read-only or local navigation action');
+      expect(snapshot.title, 'Thông báo');
+      expect(snapshot.subtitle, 'Thông báo · Hỗ trợ');
+      expect(snapshot.backRoute, AppRoutePaths.support);
+      expect(snapshot.filters.map((item) => item.label), [
+        'Tất cả',
+        'Khuyến mãi',
+        'Tính năng',
+        'Niêm yết',
+        'Bảo trì',
+        'Bảo mật',
+      ]);
+      expect(snapshot.announcements, hasLength(5));
+      expect(
+        snapshot.announcements.where((item) => item.isPinned),
+        hasLength(2),
+      );
+      expect(
+        snapshot.announcements.first.title,
+        'Phí giao dịch 0% cho BTC/USDT',
+      );
+      expect(snapshot.contractNotes, contains('announcements'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          SupportScreenState.loading,
+          SupportScreenState.empty,
+          SupportScreenState.error,
+          SupportScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-293 renders announcements baseline', (tester) async {
     await pumpAnnouncements(tester);

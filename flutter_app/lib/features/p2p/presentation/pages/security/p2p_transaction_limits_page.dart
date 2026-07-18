@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -52,7 +53,7 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pTransactionLimitsProvider);
+    final snapshotAsync = ref.watch(p2pTransactionLimitsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -66,51 +67,75 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
       semanticIdentifier: 'SC-266',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pTransactionLimitsScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _TierHero(tier: snapshot.currentTier),
-                        _CurrentUsage(snapshot: snapshot),
-                        _LimitDetails(items: snapshot.detailItems),
-                        _UpgradeCard(snapshot: snapshot),
-                        _LimitInfoNotice(items: snapshot.infoBullets),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại hạn mức giao dịch',
-                          message:
-                              'Tier hiện tại, mức đã dùng, chi tiết giới hạn, CTA nâng cấp và ghi chú chính sách được xem lại trước khi tăng hạn mức P2P.',
-                          contractId: 'SC-266',
-                          density: VitDensity.compact,
-                        ),
-                      ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pTransactionLimitsProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding:
+                          P2PSpacingTokens.p2pTransactionLimitsScrollPadding(
+                            scrollEndPadding,
+                          ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _TierHero(tier: snapshot.currentTier),
+                          _CurrentUsage(snapshot: snapshot),
+                          _LimitDetails(items: snapshot.detailItems),
+                          _UpgradeCard(snapshot: snapshot),
+                          _LimitInfoNotice(items: snapshot.infoBullets),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Xem lại hạn mức giao dịch',
+                            message:
+                                'Tier hiện tại, mức đã dùng, chi tiết giới hạn, CTA nâng cấp và ghi chú chính sách được xem lại trước khi tăng hạn mức P2P.',
+                            contractId: 'SC-266',
+                            density: VitDensity.compact,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

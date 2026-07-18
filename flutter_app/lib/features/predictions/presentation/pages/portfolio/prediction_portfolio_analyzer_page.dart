@@ -55,9 +55,9 @@ class _PredictionPortfolioAnalyzerPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getPortfolioAnalyzer();
+    final analyzerAsync = ref.watch(
+      predictionsPortfolioAnalyzerSnapshotProvider,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -103,34 +103,47 @@ class _PredictionPortfolioAnalyzerPageState
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        ...switch (_activeTab) {
-                          _AnalyzerTab.overview => [
-                            _PortfolioSummaryCard(snapshot: snapshot),
-                            _StatsGrid(snapshot: snapshot),
-                            _CategoryCard(snapshot: snapshot),
-                          ],
-                          _AnalyzerTab.performance => [
-                            _PerformanceChartCard(snapshot: snapshot),
-                            _TradeStatsSection(snapshot: snapshot),
-                            _AttributionSection(snapshot: snapshot),
-                          ],
-                          _AnalyzerTab.risk => [
-                            _RiskMetricsSection(snapshot: snapshot),
-                            _CategoryRiskCard(snapshot: snapshot),
-                            _DiversificationCard(snapshot: snapshot),
-                            const _RiskWarning(),
-                          ],
-                        },
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Prediction portfolio analyzer review',
-                          message:
-                              'Portfolio value, category exposure, P/L attribution, probability drift, risk concentration, diversification, and warning states are reviewed before portfolio decisions.',
-                          contractId: 'SC-038',
-                          density: VitDensity.compact,
-                        ),
-                      ],
+                      children: analyzerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được phân tích danh mục',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsPortfolioAnalyzerSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          ...switch (_activeTab) {
+                            _AnalyzerTab.overview => [
+                              _PortfolioSummaryCard(snapshot: snapshot),
+                              _StatsGrid(snapshot: snapshot),
+                              _CategoryCard(snapshot: snapshot),
+                            ],
+                            _AnalyzerTab.performance => [
+                              _PerformanceChartCard(snapshot: snapshot),
+                              _TradeStatsSection(snapshot: snapshot),
+                              _AttributionSection(snapshot: snapshot),
+                            ],
+                            _AnalyzerTab.risk => [
+                              _RiskMetricsSection(snapshot: snapshot),
+                              _CategoryRiskCard(snapshot: snapshot),
+                              _DiversificationCard(snapshot: snapshot),
+                              const _RiskWarning(),
+                            ],
+                          },
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Prediction portfolio analyzer review',
+                            message:
+                                'Portfolio value, category exposure, P/L attribution, probability drift, risk concentration, diversification, and warning states are reviewed before portfolio decisions.',
+                            contractId: 'SC-038',
+                            density: VitDensity.compact,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

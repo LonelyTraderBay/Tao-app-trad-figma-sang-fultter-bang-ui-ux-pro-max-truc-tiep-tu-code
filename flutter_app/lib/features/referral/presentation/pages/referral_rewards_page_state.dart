@@ -6,9 +6,9 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(referralControllerProvider)
-        .getRewards(filter: _filter, sort: _sort);
+    final rewardsAsync = ref.watch(
+      referralRewardsSnapshotProvider((filter: _filter, sort: _sort)),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -24,10 +24,12 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Phần thưởng',
+            subtitle: 'Phần thưởng · Referral',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(
+              rewardsAsync.value?.backRoute ?? AppRoutePaths.referral,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -45,42 +47,58 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        _RewardHero(
-                          snapshot: snapshot,
-                          onExport: () => _showExportSheet(context, snapshot),
-                          onDisputes: () =>
-                              _showDisputeHistorySheet(context, snapshot),
-                        ),
-                        _ReferralSectionHeader(
-                          title: 'Hoa hồng theo tháng',
-                          trailing:
-                              '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
-                        ),
-                        _RewardChart(snapshot: snapshot),
-                        _RewardTabs(
-                          filters: snapshot.filters,
-                          active: snapshot.filter,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filter = value);
-                          },
-                        ),
-                        _SortRail(
-                          options: snapshot.sortOptions,
-                          active: snapshot.sort,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _sort = value);
-                          },
-                        ),
-                        _RewardLedger(
-                          snapshot: snapshot,
-                          onReport: (record) =>
-                              _showReportSheet(context, snapshot, record),
-                        ),
-                        const _DisputeInfo(),
-                      ],
+                      children: rewardsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được phần thưởng',
+                            message: 'Thử lại sau hoặc quay lại trang chủ.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              referralRewardsSnapshotProvider((
+                                filter: _filter,
+                                sort: _sort,
+                              )),
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _RewardHero(
+                            snapshot: snapshot,
+                            onExport: () => _showExportSheet(context, snapshot),
+                            onDisputes: () =>
+                                _showDisputeHistorySheet(context, snapshot),
+                          ),
+                          _ReferralSectionHeader(
+                            title: 'Hoa hồng theo tháng',
+                            trailing:
+                                '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
+                          ),
+                          _RewardChart(snapshot: snapshot),
+                          _RewardTabs(
+                            filters: snapshot.filters,
+                            active: snapshot.filter,
+                            onChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _filter = value);
+                            },
+                          ),
+                          _SortRail(
+                            options: snapshot.sortOptions,
+                            active: snapshot.sort,
+                            onChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _sort = value);
+                            },
+                          ),
+                          _RewardLedger(
+                            snapshot: snapshot,
+                            onReport: (record) =>
+                                _showReportSheet(context, snapshot, record),
+                          ),
+                          const _DisputeInfo(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

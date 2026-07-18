@@ -57,9 +57,9 @@ class _PredictionEventCalendarPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getEventCalendar(category: _category);
+    final calendarAsync = ref.watch(
+      predictionsEventCalendarSnapshotProvider(_category),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -113,37 +113,52 @@ class _PredictionEventCalendarPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: [
-                        if (_showFilter)
-                          _CategoryFilters(
-                            snapshot: snapshot,
-                            selectedCategory: _category,
-                            onChanged: (category) =>
-                                setState(() => _category = category),
+                      children: calendarAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được lịch sự kiện',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsEventCalendarSnapshotProvider(
+                                _category,
+                              ),
+                            ),
                           ),
-                        ...switch (_activeTab) {
-                          _CalendarTab.calendar => [
-                            _StatsCard(snapshot: snapshot),
-                            for (final month in snapshot.months)
-                              _MonthSection(month: month),
-                          ],
-                          _CalendarTab.upcoming => [
-                            _UpcomingSection(snapshot: snapshot),
-                          ],
-                          _CalendarTab.notifications => [
-                            _NotificationSettings(),
-                            _WatchingSection(snapshot: snapshot),
-                            const _NotificationInfo(),
-                          ],
-                        },
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Prediction event-calendar review',
-                          message:
-                              'Category filters, upcoming catalysts, watched events, notification settings, empty results, and calendar state are reviewed before users act on prediction-market timing signals.',
-                          contractId: 'SC-039',
-                        ),
-                      ],
+                        ],
+                        data: (snapshot) => [
+                          if (_showFilter)
+                            _CategoryFilters(
+                              snapshot: snapshot,
+                              selectedCategory: _category,
+                              onChanged: (category) =>
+                                  setState(() => _category = category),
+                            ),
+                          ...switch (_activeTab) {
+                            _CalendarTab.calendar => [
+                              _StatsCard(snapshot: snapshot),
+                              for (final month in snapshot.months)
+                                _MonthSection(month: month),
+                            ],
+                            _CalendarTab.upcoming => [
+                              _UpcomingSection(snapshot: snapshot),
+                            ],
+                            _CalendarTab.notifications => [
+                              _NotificationSettings(),
+                              _WatchingSection(snapshot: snapshot),
+                              const _NotificationInfo(),
+                            ],
+                          },
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Prediction event-calendar review',
+                            message:
+                                'Category filters, upcoming catalysts, watched events, notification settings, empty results, and calendar state are reviewed before users act on prediction-market timing signals.',
+                            contractId: 'SC-039',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

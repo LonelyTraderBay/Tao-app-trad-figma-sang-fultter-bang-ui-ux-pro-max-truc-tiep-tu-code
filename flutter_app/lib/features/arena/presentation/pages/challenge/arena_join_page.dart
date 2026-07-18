@@ -62,16 +62,8 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
+    final controllerAsync = ref.watch(
       arenaJoinControllerProvider(widget.challengeId),
-    );
-    final snapshot = controller.state.snapshot;
-    final challenge = snapshot.challenge;
-    final hasEnough = snapshot.currentBalance >= challenge.entryPoints;
-    final remainingBalance = snapshot.currentBalance - challenge.entryPoints;
-    final canJoin = controller.canJoin(
-      readRules: _readRules,
-      understandPoints: _understandPoints,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
@@ -113,37 +105,62 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        _ChallengeSummaryCard(challenge: challenge),
-                        _SafetyPolicyLink(
-                          onTap: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                        _AcknowledgementStack(
-                          readRules: _readRules,
-                          understandPoints: _understandPoints,
-                          onRules: () => _toggleRules(),
-                          onPoints: () => _togglePoints(),
-                        ),
-                        _BalanceCard(
-                          currentBalance: snapshot.currentBalance,
-                          entryPoints: challenge.entryPoints,
-                          remainingBalance: remainingBalance,
-                          hasEnough: hasEnough,
-                        ),
-                        _JoinContextCard(
-                          challenge: challenge,
-                          creator: snapshot.creator,
-                        ),
-                        _RulesCard(rules: snapshot.rules),
-                        _NoticeCard(text: snapshot.refundNotice),
-                        _ActionStack(
-                          entryPoints: challenge.entryPoints,
-                          canJoin: canJoin,
-                          onConfirm: _confirmJoin,
-                          onDecline: _decline,
-                        ),
-                      ],
+                      children: controllerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được tham gia thử thách',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaJoinControllerProvider(widget.challengeId),
+                            ),
+                          ),
+                        ],
+                        data: (controller) {
+                          final snapshot = controller.state.snapshot;
+                          final challenge = snapshot.challenge;
+                          final hasEnough =
+                              snapshot.currentBalance >= challenge.entryPoints;
+                          final remainingBalance =
+                              snapshot.currentBalance - challenge.entryPoints;
+                          final canJoin = controller.canJoin(
+                            readRules: _readRules,
+                            understandPoints: _understandPoints,
+                          );
+                          return [
+                            _ChallengeSummaryCard(challenge: challenge),
+                            _SafetyPolicyLink(
+                              onTap: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
+                            ),
+                            _AcknowledgementStack(
+                              readRules: _readRules,
+                              understandPoints: _understandPoints,
+                              onRules: () => _toggleRules(),
+                              onPoints: () => _togglePoints(),
+                            ),
+                            _BalanceCard(
+                              currentBalance: snapshot.currentBalance,
+                              entryPoints: challenge.entryPoints,
+                              remainingBalance: remainingBalance,
+                              hasEnough: hasEnough,
+                            ),
+                            _JoinContextCard(
+                              challenge: challenge,
+                              creator: snapshot.creator,
+                            ),
+                            _RulesCard(rules: snapshot.rules),
+                            _NoticeCard(text: snapshot.refundNotice),
+                            _ActionStack(
+                              entryPoints: challenge.entryPoints,
+                              canJoin: canJoin,
+                              onConfirm: _confirmJoin,
+                              onDecline: _decline,
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

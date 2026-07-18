@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-249 mock repository exposes identity verification BE draft', () {
-    final snapshot = const MockP2PRepository().getIdentityVerification();
+  test('SC-249 mock repository exposes identity verification BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getIdentityVerification();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-kyc-identity');
     expect(

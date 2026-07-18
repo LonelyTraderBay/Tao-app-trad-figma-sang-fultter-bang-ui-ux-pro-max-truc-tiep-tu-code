@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-036 mock repository exposes the risk calculator BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getRiskCalculator();
+  test('SC-036 mock repository exposes the risk calculator BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getRiskCalculator();
 
     expect(snapshot.defaultEventName, 'BTC > \$100K by Dec 2026?');
     expect(snapshot.defaultOutcome, 'yes');

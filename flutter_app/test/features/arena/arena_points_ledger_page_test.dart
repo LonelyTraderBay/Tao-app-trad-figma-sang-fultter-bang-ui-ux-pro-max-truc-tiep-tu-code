@@ -30,11 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-201 mock repository exposes Arena Points ledger BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaPointsLedger();
-    final detail = const MockArenaRepository().getArenaPointsEntryDetail(
-      'le001',
-    );
+  test('SC-201 mock repository exposes Arena Points ledger BE draft', () async {
+    const repository = MockArenaRepository(loadDelay: Duration.zero);
+    final snapshot = await repository.getArenaPointsLedger();
+    final detail = await repository.getArenaPointsEntryDetail('le001');
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-ledger');
     expect(

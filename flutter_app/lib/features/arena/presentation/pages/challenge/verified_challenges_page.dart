@@ -36,9 +36,7 @@ class VerifiedChallengesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getVerifiedChallenges();
+    final snapshotAsync = ref.watch(verifiedChallengesSnapshotProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -79,10 +77,23 @@ class VerifiedChallengesPage extends ConsumerWidget {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        _VerifiedHero(snapshot: snapshot),
-                        _VerifiedInfoCard(snapshot: snapshot),
-                      ],
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Verified Challenges',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              verifiedChallengesSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _VerifiedHero(snapshot: snapshot),
+                          _VerifiedInfoCard(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),

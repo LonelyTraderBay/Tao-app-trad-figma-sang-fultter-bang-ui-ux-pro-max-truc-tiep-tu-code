@@ -31,10 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-035 mock repository exposes the order receipt BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final missing = repo.getOrderReceipt('p2p001');
-    final found = repo.getOrderReceipt('po-1');
+  test('SC-035 mock repository exposes the order receipt BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final missing = await repo.getOrderReceipt('p2p001');
+    final found = await repo.getOrderReceipt('po-1');
 
     expect(missing.receiptId, 'p2p001');
     expect(missing.found, isFalse);

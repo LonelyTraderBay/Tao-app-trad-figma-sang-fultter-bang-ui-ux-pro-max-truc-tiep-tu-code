@@ -2,10 +2,11 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryWalletMethods on _MockP2PRepositoryBase {
   @override
-  P2PWalletTransferSnapshot getWalletTransfer({
+  Future<P2PWalletTransferSnapshot> getWalletTransfer({
     String asset = 'USDT',
     String type = 'deposit',
-  }) {
+  }) async {
+    await _simulateNetwork();
     return const P2PWalletTransferSnapshot(
       endpoint: '/api/mobile/p2p/p2p-wallet-transfer',
       actionDraft:
@@ -35,9 +36,10 @@ mixin _MockP2PRepositoryWalletMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PFundLockHistorySnapshot getFundLockHistory({
+  Future<P2PFundLockHistorySnapshot> getFundLockHistory({
     bool walletHistoryAlias = false,
-  }) {
+  }) async {
+    await _simulateNetwork();
     return P2PFundLockHistorySnapshot(
       endpoint: walletHistoryAlias
           ? '/api/mobile/p2p/p2p-wallet-history'
@@ -62,7 +64,8 @@ mixin _MockP2PRepositoryWalletMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PWalletSnapshot getWallet() {
+  Future<P2PWalletSnapshot> getWallet() async {
+    await _simulateNetwork();
     return const P2PWalletSnapshot(
       endpoint: '/api/mobile/p2p/p2p-wallet',
       actionDraft: 'POST /p2p/* workflow action where applicable',

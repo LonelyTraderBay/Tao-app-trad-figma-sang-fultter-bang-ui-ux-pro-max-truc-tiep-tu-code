@@ -34,9 +34,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-027 mock repository exposes the BE draft read model', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getHome();
+  test('SC-027 mock repository exposes the BE draft read model', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getHome();
 
     expect(snapshot.events.map((event) => event.id).take(3), [
       'pred-5',
@@ -67,16 +67,16 @@ void main() {
       ]),
     );
 
-    final newest = repo.getHome(filter: PredictionFilterTab.newEvents);
+    final newest = await repo.getHome(filter: PredictionFilterTab.newEvents);
     expect(newest.events.first.id, 'pred-10');
 
-    final liveCrypto = repo.getHome(category: 'Live Crypto');
+    final liveCrypto = await repo.getHome(category: 'Live Crypto');
     expect(liveCrypto.events.map((event) => event.id), contains('pred-1'));
     expect(liveCrypto.events.map((event) => event.category).toSet(), {
       'Live Crypto',
     });
 
-    final search = repo.getHome(searchQuery: 'Tesla');
+    final search = await repo.getHome(searchQuery: 'Tesla');
     expect(search.events.single.id, 'pred-10');
   });
 
