@@ -10,54 +10,61 @@ final class MarketController implements MarketRepository {
   final MarketRepository _repository;
 
   @override
-  MarketListSnapshot getMarketList() => _repository.getMarketList();
+  Future<MarketListSnapshot> getMarketList() => _repository.getMarketList();
 
   @override
-  MarketOverviewSnapshot getMarketOverview() {
+  Future<MarketOverviewSnapshot> getMarketOverview() {
     return _repository.getMarketOverview();
   }
 
   @override
-  MarketMoversSnapshot getMarketMovers() => _repository.getMarketMovers();
+  Future<MarketMoversSnapshot> getMarketMovers() =>
+      _repository.getMarketMovers();
 
   @override
-  MarketSectorsSnapshot getMarketSectors() => _repository.getMarketSectors();
+  Future<MarketSectorsSnapshot> getMarketSectors() =>
+      _repository.getMarketSectors();
 
   @override
-  MarketWatchlistSnapshot getMarketWatchlist() {
+  Future<MarketWatchlistSnapshot> getMarketWatchlist() {
     return _repository.getMarketWatchlist();
   }
 
   @override
-  MarketHeatmapSnapshot getMarketHeatmap() => _repository.getMarketHeatmap();
+  Future<MarketHeatmapSnapshot> getMarketHeatmap() =>
+      _repository.getMarketHeatmap();
 
   @override
-  MarketAlertsSnapshot getPriceAlerts() => _repository.getPriceAlerts();
+  Future<MarketAlertsSnapshot> getPriceAlerts() => _repository.getPriceAlerts();
 
   @override
-  MarketScreenerSnapshot getMarketScreener({MarketScreenerQuery? query}) {
+  Future<MarketScreenerSnapshot> getMarketScreener({
+    MarketScreenerQuery? query,
+  }) {
     return _repository.getMarketScreener(query: query);
   }
 
   @override
-  MarketComparisonSnapshot getMarketComparison() {
+  Future<MarketComparisonSnapshot> getMarketComparison() {
     return _repository.getMarketComparison();
   }
 
   @override
-  MarketCalendarSnapshot getMarketCalendar({MarketCalendarQuery? query}) {
+  Future<MarketCalendarSnapshot> getMarketCalendar({
+    MarketCalendarQuery? query,
+  }) {
     return _repository.getMarketCalendar(query: query);
   }
 
   @override
-  MarketDerivativesSnapshot getMarketDerivatives({
+  Future<MarketDerivativesSnapshot> getMarketDerivatives({
     MarketDerivativesSort sortBy = MarketDerivativesSort.openInterest,
   }) {
     return _repository.getMarketDerivatives(sortBy: sortBy);
   }
 
   @override
-  MarketDepthSnapshot getMarketDepth({
+  Future<MarketDepthSnapshot> getMarketDepth({
     String pairId = 'btcusdt',
     int levels = 25,
   }) {
@@ -65,21 +72,21 @@ final class MarketController implements MarketRepository {
   }
 
   @override
-  MarketSocialSentimentSnapshot getSocialSentiment({
+  Future<MarketSocialSentimentSnapshot> getSocialSentiment({
     MarketSentimentSort sortBy = MarketSentimentSort.sentiment,
   }) {
     return _repository.getSocialSentiment(sortBy: sortBy);
   }
 
   @override
-  MarketPortfolioSnapshot getPortfolioTracker({
+  Future<MarketPortfolioSnapshot> getPortfolioTracker({
     MarketPortfolioSort sortBy = MarketPortfolioSort.value,
   }) {
     return _repository.getPortfolioTracker(sortBy: sortBy);
   }
 
   @override
-  MarketNewsSnapshot getMarketNews({
+  Future<MarketNewsSnapshot> getMarketNews({
     String category = 'all',
     MarketNewsSentiment? sentiment,
   }) {
@@ -87,7 +94,7 @@ final class MarketController implements MarketRepository {
   }
 
   @override
-  MarketAdvancedChartsSnapshot getAdvancedCharts({
+  Future<MarketAdvancedChartsSnapshot> getAdvancedCharts({
     String indicatorCategory = 'all',
     String drawingCategory = 'all',
   }) {
@@ -98,7 +105,7 @@ final class MarketController implements MarketRepository {
   }
 
   @override
-  MarketTokenUnlocksSnapshot getTokenUnlocks({
+  Future<MarketTokenUnlocksSnapshot> getTokenUnlocks({
     MarketUnlockSort sortBy = MarketUnlockSort.nearest,
     MarketUnlockImpact? impactFilter,
   }) {
@@ -109,7 +116,7 @@ final class MarketController implements MarketRepository {
   }
 
   @override
-  MarketSocialSignalsSnapshot getSocialSignals({
+  Future<MarketSocialSignalsSnapshot> getSocialSignals({
     TradingSignalStatus? statusFilter,
     TradingSignalCategory? categoryFilter,
   }) {
@@ -120,7 +127,7 @@ final class MarketController implements MarketRepository {
   }
 
   @override
-  MarketCorrelationsSnapshot getMarketCorrelations({
+  Future<MarketCorrelationsSnapshot> getMarketCorrelations({
     MarketCorrelationTimeframe timeframe = MarketCorrelationTimeframe.d7,
     CorrelationSortOrder sortOrder = CorrelationSortOrder.high,
   }) {
@@ -131,12 +138,12 @@ final class MarketController implements MarketRepository {
   }
 
   @override
-  MarketPairDetailSnapshot getPairDetail(String pairId) {
+  Future<MarketPairDetailSnapshot> getPairDetail(String pairId) {
     return _repository.getPairDetail(pairId);
   }
 
   @override
-  MarketTokenInfoSnapshot getTokenInfo(String pairId) {
+  Future<MarketTokenInfoSnapshot> getTokenInfo(String pairId) {
     return _repository.getTokenInfo(pairId);
   }
 }

@@ -138,9 +138,9 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getSocialSentiment(sortBy: _sortBy);
+    final sentimentAsync = ref.watch(
+      marketSocialSentimentSnapshotProvider(_sortBy),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -182,62 +182,75 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        if (_tab == 'overview') ...[
-                          _SentimentHero(global: snapshot.global),
-                          _SentimentStats(global: snapshot.global),
-                          _SocialDominanceCard(global: snapshot.global),
-                          const VitSectionHeader(
-                            title: 'Diễn biến 7 ngày',
-                            accentColor: _marketPrimary,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
+                      children: sentimentAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được tâm lý thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketSocialSentimentSnapshotProvider(_sortBy),
+                            ),
                           ),
-                          _TimelineCard(points: snapshot.timeline),
-                          const VitSectionHeader(
-                            title: 'Xu hướng nóng',
-                            accentColor: AppColors.warn,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _TrendingList(
-                            tokens: snapshot.trendingTokens.take(4).toList(),
-                          ),
-                        ] else if (_tab == 'token') ...[
-                          _SentimentSortChips(
-                            active: _sortBy,
-                            onSelected: (value) => setState(() {
-                              _sortBy = value;
-                            }),
-                          ),
-                          for (final token in snapshot.tokens)
-                            _TokenDetailCard(token: token),
-                        ] else ...[
-                          _TopicCloud(tokens: snapshot.tokens),
-                          const VitSectionHeader(
-                            title: 'Bản đồ tâm lý',
-                            accentColor: AppColors.accent,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _SentimentHeatmap(tokens: snapshot.tokens),
-                          _TrendLeaderboards(tokens: snapshot.tokens),
-                          const VitSectionHeader(
-                            title: 'Tốc độ đề cập (24h)',
-                            accentColor: AppAssetColors.cyanChain,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _MentionVelocity(tokens: snapshot.tokens),
                         ],
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message: 'Chỉ số tâm lý chỉ mang tính tham khảo',
-                          detail:
-                              'Không phải khuyến nghị giao dịch. Dữ liệu xã hội có thể trễ hoặc thiên lệch.',
-                        ),
-                      ],
+                        data: (snapshot) => [
+                          if (_tab == 'overview') ...[
+                            _SentimentHero(global: snapshot.global),
+                            _SentimentStats(global: snapshot.global),
+                            _SocialDominanceCard(global: snapshot.global),
+                            const VitSectionHeader(
+                              title: 'Diễn biến 7 ngày',
+                              accentColor: _marketPrimary,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                              variant: VitSectionHeaderVariant.accentBar,
+                            ),
+                            _TimelineCard(points: snapshot.timeline),
+                            const VitSectionHeader(
+                              title: 'Xu hướng nóng',
+                              accentColor: AppColors.warn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                              variant: VitSectionHeaderVariant.accentBar,
+                            ),
+                            _TrendingList(
+                              tokens: snapshot.trendingTokens.take(4).toList(),
+                            ),
+                          ] else if (_tab == 'token') ...[
+                            _SentimentSortChips(
+                              active: _sortBy,
+                              onSelected: (value) => setState(() {
+                                _sortBy = value;
+                              }),
+                            ),
+                            for (final token in snapshot.tokens)
+                              _TokenDetailCard(token: token),
+                          ] else ...[
+                            _TopicCloud(tokens: snapshot.tokens),
+                            const VitSectionHeader(
+                              title: 'Bản đồ tâm lý',
+                              accentColor: AppColors.accent,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                              variant: VitSectionHeaderVariant.accentBar,
+                            ),
+                            _SentimentHeatmap(tokens: snapshot.tokens),
+                            _TrendLeaderboards(tokens: snapshot.tokens),
+                            const VitSectionHeader(
+                              title: 'Tốc độ đề cập (24h)',
+                              accentColor: AppAssetColors.cyanChain,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                              variant: VitSectionHeaderVariant.accentBar,
+                            ),
+                            _MentionVelocity(tokens: snapshot.tokens),
+                          ],
+                          const VitBanner(
+                            variant: VitBannerVariant.info,
+                            icon: Icons.info_outline_rounded,
+                            message: 'Chỉ số tâm lý chỉ mang tính tham khảo',
+                            detail:
+                                'Không phải khuyến nghị giao dịch. Dữ liệu xã hội có thể trễ hoặc thiên lệch.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

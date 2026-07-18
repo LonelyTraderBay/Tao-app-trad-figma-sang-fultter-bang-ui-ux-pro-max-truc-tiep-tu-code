@@ -52,9 +52,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeReadModelControllerProvider)
-        .getAdvancedAnalytics();
+    final snapshotAsync = ref.watch(tradeAdvancedAnalyticsSnapshotProvider);
 
     return VitTradeHubScaffold(
       title: 'Phân tích nâng cao',
@@ -70,53 +68,65 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
       ),
       showProductTabs: true,
       navigationBuilder: buildTradeProductNavigation,
-      children: [
-        VitTradeSection(
-          title: 'Tổng quan',
-          child: VitTradeAnalyticsHero(
-            icon: Icons.auto_awesome_rounded,
-            title: 'Advanced Analytics',
-            subtitle: 'AI-powered insights va professional trading tools',
-            stats: [
-              for (final stat in snapshot.stats)
-                VitTradeAnalyticsStat(
-                  label: stat.label,
-                  value: stat.value,
-                  color: Color(stat.colorHex),
-                ),
-            ],
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được phân tích nâng cao',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeAdvancedAnalyticsSnapshotProvider),
           ),
-        ),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          density: VitDensity.compact,
-          title: 'Xem lại phân tích nâng cao',
-          message:
-              'Tín hiệu AI, sizing và nhật ký chỉ hỗ trợ quyết định. Xác nhận giới hạn rủi ro trước khi dùng cho lệnh thật.',
-          contractId: 'SC-092',
-        ),
-        _UnderlineTabs(
-          activeId: _tab,
-          onChanged: (id) => setState(() => _tab = id),
-        ),
-        if (_tab == 'ai')
-          _AiSignalsTab(
-            snapshot: snapshot,
-            activeFilter: _filter,
-            onFilterChanged: (id) => setState(() => _filter = id),
-          )
-        else if (_tab == 'risk')
-          _RiskAnalysisTab(snapshot: snapshot)
-        else if (_tab == 'journal')
-          _TradeJournalTab(snapshot: snapshot)
-        else
-          _PositionSizingTab(snapshot: snapshot),
-        const VitTradeSection(title: 'Model info', child: _ModelInfoCard()),
-        VitTradeSection(
-          title: 'Features',
-          child: _FeaturesCard(features: snapshot.features),
-        ),
-      ],
+        ],
+        data: (snapshot) => [
+          VitTradeSection(
+            title: 'Tổng quan',
+            child: VitTradeAnalyticsHero(
+              icon: Icons.auto_awesome_rounded,
+              title: 'Advanced Analytics',
+              subtitle: 'AI-powered insights va professional trading tools',
+              stats: [
+                for (final stat in snapshot.stats)
+                  VitTradeAnalyticsStat(
+                    label: stat.label,
+                    value: stat.value,
+                    color: Color(stat.colorHex),
+                  ),
+              ],
+            ),
+          ),
+          const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Xem lại phân tích nâng cao',
+            message:
+                'Tín hiệu AI, sizing và nhật ký chỉ hỗ trợ quyết định. Xác nhận giới hạn rủi ro trước khi dùng cho lệnh thật.',
+            contractId: 'SC-092',
+          ),
+          _UnderlineTabs(
+            activeId: _tab,
+            onChanged: (id) => setState(() => _tab = id),
+          ),
+          if (_tab == 'ai')
+            _AiSignalsTab(
+              snapshot: snapshot,
+              activeFilter: _filter,
+              onFilterChanged: (id) => setState(() => _filter = id),
+            )
+          else if (_tab == 'risk')
+            _RiskAnalysisTab(snapshot: snapshot)
+          else if (_tab == 'journal')
+            _TradeJournalTab(snapshot: snapshot)
+          else
+            _PositionSizingTab(snapshot: snapshot),
+          const VitTradeSection(title: 'Model info', child: _ModelInfoCard()),
+          VitTradeSection(
+            title: 'Features',
+            child: _FeaturesCard(features: snapshot.features),
+          ),
+        ],
+      ),
     );
   }
 }

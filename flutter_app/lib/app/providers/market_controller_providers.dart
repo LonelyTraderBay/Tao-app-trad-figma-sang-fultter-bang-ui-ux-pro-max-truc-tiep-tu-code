@@ -13,6 +13,179 @@ final marketControllerProvider = Provider<MarketController>((ref) {
   return MarketController(ref.watch(marketRepositoryProvider));
 });
 
+// GD4-F3 (mục 3+4 GD4-Async-Playbook): provider trung gian cho mọi snapshot
+// markets — trang/controller `.watch()` một trong các provider dưới đây
+// thay vì gọi `marketControllerProvider.getX()` trực tiếp trong `build()`
+// (repo giờ trả `Future<T>`). Đọc thuần → FutureProvider forward thẳng,
+// KHÔNG thêm async/await thừa (mục 4).
+
+final marketListSnapshotProvider = FutureProvider<MarketListSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getMarketList(),
+);
+
+final marketOverviewSnapshotProvider = FutureProvider<MarketOverviewSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getMarketOverview(),
+);
+
+final marketMoversSnapshotProvider = FutureProvider<MarketMoversSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getMarketMovers(),
+);
+
+final marketSectorsSnapshotProvider = FutureProvider<MarketSectorsSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getMarketSectors(),
+);
+
+final marketWatchlistSnapshotProvider = FutureProvider<MarketWatchlistSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getMarketWatchlist(),
+);
+
+final marketHeatmapSnapshotProvider = FutureProvider<MarketHeatmapSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getMarketHeatmap(),
+);
+
+final marketPriceAlertsSnapshotProvider = FutureProvider<MarketAlertsSnapshot>(
+  (ref) => ref.watch(marketControllerProvider).getPriceAlerts(),
+);
+
+final marketComparisonSnapshotProvider =
+    FutureProvider<MarketComparisonSnapshot>(
+      (ref) => ref.watch(marketControllerProvider).getMarketComparison(),
+    );
+
+final marketScreenerSnapshotProvider =
+    FutureProvider.family<MarketScreenerSnapshot, MarketScreenerQuery>(
+      (ref, query) =>
+          ref.watch(marketControllerProvider).getMarketScreener(query: query),
+    );
+
+final marketCalendarSnapshotProvider =
+    FutureProvider.family<MarketCalendarSnapshot, MarketCalendarQuery>(
+      (ref, query) =>
+          ref.watch(marketControllerProvider).getMarketCalendar(query: query),
+    );
+
+final marketDerivativesSnapshotProvider =
+    FutureProvider.family<MarketDerivativesSnapshot, MarketDerivativesSort>(
+      (ref, sortBy) => ref
+          .watch(marketControllerProvider)
+          .getMarketDerivatives(sortBy: sortBy),
+    );
+
+/// Family key cho `getMarketDepth(pairId:, levels:)`.
+typedef MarketDepthQuery = ({String pairId, int levels});
+
+final marketDepthSnapshotProvider =
+    FutureProvider.family<MarketDepthSnapshot, MarketDepthQuery>(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .getMarketDepth(pairId: query.pairId, levels: query.levels),
+    );
+
+final marketSocialSentimentSnapshotProvider =
+    FutureProvider.family<MarketSocialSentimentSnapshot, MarketSentimentSort>(
+      (ref, sortBy) => ref
+          .watch(marketControllerProvider)
+          .getSocialSentiment(sortBy: sortBy),
+    );
+
+final marketPortfolioSnapshotProvider =
+    FutureProvider.family<MarketPortfolioSnapshot, MarketPortfolioSort>(
+      (ref, sortBy) => ref
+          .watch(marketControllerProvider)
+          .getPortfolioTracker(sortBy: sortBy),
+    );
+
+/// Family key cho `getMarketNews(category:, sentiment:)`.
+typedef MarketNewsQuery = ({String category, MarketNewsSentiment? sentiment});
+
+final marketNewsSnapshotProvider =
+    FutureProvider.family<MarketNewsSnapshot, MarketNewsQuery>(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .getMarketNews(category: query.category, sentiment: query.sentiment),
+    );
+
+/// Family key cho `getAdvancedCharts(indicatorCategory:, drawingCategory:)`.
+typedef MarketAdvancedChartsQuery = ({
+  String indicatorCategory,
+  String drawingCategory,
+});
+
+final marketAdvancedChartsSnapshotProvider =
+    FutureProvider.family<
+      MarketAdvancedChartsSnapshot,
+      MarketAdvancedChartsQuery
+    >(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .getAdvancedCharts(
+            indicatorCategory: query.indicatorCategory,
+            drawingCategory: query.drawingCategory,
+          ),
+    );
+
+/// Family key cho `getTokenUnlocks(sortBy:, impactFilter:)`.
+typedef MarketTokenUnlocksQuery = ({
+  MarketUnlockSort sortBy,
+  MarketUnlockImpact? impactFilter,
+});
+
+final marketTokenUnlocksSnapshotProvider =
+    FutureProvider.family<MarketTokenUnlocksSnapshot, MarketTokenUnlocksQuery>(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .getTokenUnlocks(
+            sortBy: query.sortBy,
+            impactFilter: query.impactFilter,
+          ),
+    );
+
+/// Family key cho `getSocialSignals(statusFilter:, categoryFilter:)`.
+typedef MarketSocialSignalsQuery = ({
+  TradingSignalStatus? statusFilter,
+  TradingSignalCategory? categoryFilter,
+});
+
+final marketSocialSignalsSnapshotProvider =
+    FutureProvider.family<
+      MarketSocialSignalsSnapshot,
+      MarketSocialSignalsQuery
+    >(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .getSocialSignals(
+            statusFilter: query.statusFilter,
+            categoryFilter: query.categoryFilter,
+          ),
+    );
+
+/// Family key cho `getMarketCorrelations(timeframe:, sortOrder:)`.
+typedef MarketCorrelationsQuery = ({
+  MarketCorrelationTimeframe timeframe,
+  CorrelationSortOrder sortOrder,
+});
+
+final marketCorrelationsSnapshotProvider =
+    FutureProvider.family<MarketCorrelationsSnapshot, MarketCorrelationsQuery>(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .getMarketCorrelations(
+            timeframe: query.timeframe,
+            sortOrder: query.sortOrder,
+          ),
+    );
+
+final marketPairDetailSnapshotProvider =
+    FutureProvider.family<MarketPairDetailSnapshot, String>(
+      (ref, pairId) =>
+          ref.watch(marketControllerProvider).getPairDetail(pairId),
+    );
+
+final marketTokenInfoSnapshotProvider =
+    FutureProvider.family<MarketTokenInfoSnapshot, String>(
+      (ref, pairId) => ref.watch(marketControllerProvider).getTokenInfo(pairId),
+    );
+
 /// STATE-S23: view-state bất biến của Danh sách theo dõi — entries sống ở
 /// Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
 final class MarketWatchlistViewState {
@@ -48,9 +221,14 @@ final class MarketWatchlistStateController
     extends Notifier<MarketWatchlistViewState> {
   @override
   MarketWatchlistViewState build() {
-    return MarketWatchlistViewState.fromSnapshot(
-      ref.watch(marketControllerProvider).getMarketWatchlist(),
-    );
+    // GD4-F3 (mục 6, biến thể A): seed từ AsyncValue.value + fallback rỗng —
+    // trang gate qua marketWatchlistSnapshotProvider.when() trước khi đọc
+    // Notifier này nên fallback chỉ chạm tới khi test đọc Notifier trực
+    // tiếp trước khi provider async resolve.
+    final snapshot =
+        ref.watch(marketWatchlistSnapshotProvider).value ??
+        _emptyMarketWatchlistSnapshot;
+    return MarketWatchlistViewState.fromSnapshot(snapshot);
   }
 
   void removeEntry(String entryId) {
@@ -116,9 +294,11 @@ final class MarketComparisonStateController
     extends Notifier<MarketComparisonViewState> {
   @override
   MarketComparisonViewState build() {
-    return MarketComparisonViewState.fromSnapshot(
-      ref.watch(marketControllerProvider).getMarketComparison(),
-    );
+    // GD4-F3 (mục 6, biến thể A): seed từ AsyncValue.value + fallback rỗng.
+    final snapshot =
+        ref.watch(marketComparisonSnapshotProvider).value ??
+        _emptyMarketComparisonSnapshot;
+    return MarketComparisonViewState.fromSnapshot(snapshot);
   }
 
   /// Trả về `true` nếu token được thêm; `false` khi đã đạt giới hạn so sánh
@@ -183,9 +363,11 @@ final class MarketPriceAlertsStateController
     extends Notifier<MarketPriceAlertsViewState> {
   @override
   MarketPriceAlertsViewState build() {
-    return MarketPriceAlertsViewState.fromSnapshot(
-      ref.watch(marketControllerProvider).getPriceAlerts(),
-    );
+    // GD4-F3 (mục 6, biến thể A): seed từ AsyncValue.value + fallback rỗng.
+    final snapshot =
+        ref.watch(marketPriceAlertsSnapshotProvider).value ??
+        _emptyMarketAlertsSnapshot;
+    return MarketPriceAlertsViewState.fromSnapshot(snapshot);
   }
 
   void toggleAlert(String id) {
@@ -342,8 +524,12 @@ final class MarketListStateController extends Notifier<MarketListViewState> {
     final storedFavorites = ref
         .read(keyValueStoreProvider)
         .getStringList(KeyValueStoreKeys.marketWatchlistFavorites);
+    // GD4-F3 (mục 6, biến thể A): seed từ AsyncValue.value + fallback rỗng —
+    // persistence GĐ4-F1 giữ nguyên, chỉ seed snapshot đổi sang async.
+    final snapshot =
+        ref.watch(marketListSnapshotProvider).value ?? _emptyMarketListSnapshot;
     return MarketListViewState.fromSnapshot(
-      ref.watch(marketControllerProvider).getMarketList(),
+      snapshot,
       favoriteIdsOverride: storedFavorites == null
           ? null
           : Set<String>.of(storedFavorites),
@@ -396,3 +582,59 @@ final marketListStateControllerProvider =
     NotifierProvider<MarketListStateController, MarketListViewState>(
       MarketListStateController.new,
     );
+
+// GD4-F3 (mục 6, biến thể A): fallback rỗng — chỉ chạm tới khi Notifier
+// build() chạy trước khi provider async tương ứng resolve lần đầu (test đọc
+// Notifier trực tiếp); luồng UI thật luôn gate qua `xSnapshotProvider.when()`
+// trước (mục 5) nên `.value` không bao giờ null khi `data:` chạy.
+const _emptyMarketScreenFilters = MarketScreenFilters(
+  categories: [],
+  sortOptions: [],
+  defaultCategory: '',
+  defaultSort: '',
+);
+
+const _emptyMarketListSnapshot = MarketListSnapshot(
+  marketPairs: [],
+  watchlist: {},
+  alerts: [],
+  screenFilters: _emptyMarketScreenFilters,
+  chartSeries: {},
+  lastUpdatedLabel: '',
+  supportedStates: {},
+);
+
+const _emptyMarketWatchlistSnapshot = MarketWatchlistSnapshot(
+  entries: [],
+  marketPairs: [],
+  watchlist: {},
+  alerts: [],
+  screenFilters: _emptyMarketScreenFilters,
+  chartSeries: {},
+  lastUpdatedLabel: '',
+  supportedStates: {},
+);
+
+const _emptyMarketComparisonSnapshot = MarketComparisonSnapshot(
+  marketPairs: [],
+  selectedPairIds: [],
+  popularPairIds: [],
+  metrics: [],
+  watchlist: {},
+  alerts: [],
+  screenFilters: _emptyMarketScreenFilters,
+  chartSeries: {},
+  lastUpdatedLabel: '',
+  supportedStates: {},
+);
+
+const _emptyMarketAlertsSnapshot = MarketAlertsSnapshot(
+  priceAlerts: [],
+  marketPairs: [],
+  watchlist: {},
+  alerts: [],
+  screenFilters: _emptyMarketScreenFilters,
+  chartSeries: {},
+  lastUpdatedLabel: '',
+  supportedStates: {},
+);

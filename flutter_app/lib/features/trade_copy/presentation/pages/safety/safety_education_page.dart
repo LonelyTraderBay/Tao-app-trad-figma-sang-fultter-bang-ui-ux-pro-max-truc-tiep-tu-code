@@ -45,13 +45,7 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getSafetyEducation();
-    if (!_initialized) {
-      _activeTabId = snapshot.defaultTabId;
-      _initialized = true;
-    }
+    final snapshotAsync = ref.watch(tradeSafetyEducationProvider);
 
     return VitTradeHubScaffold(
       title: 'An toàn & Bảo mật',
@@ -65,71 +59,92 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        const VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
-            title: 'Xem lại tín hiệu an toàn copy trading',
-            message:
-                'Xác nhận dấu hiệu lừa đảo, xác minh provider, giới hạn báo cáo và bước tiếp theo trước khi copy.',
-          ),
-        ),
-        VitTradeComplianceSection(
-          title: 'An toàn copy trading',
-          statusPill: const VitStatusPill(
-            label: 'Đọc trước khi copy',
-            status: VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Lừa đảo theo dõi',
-              value: '${snapshot.scams.length}',
-            ),
-            VitTradeComplianceItem(
-              label: 'Cảnh báo đỏ',
-              value: '${snapshot.redFlags.length}',
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được nội dung an toàn',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeSafetyEducationProvider),
             ),
           ],
-        ),
-        VitTradeSection(
-          title: 'Giáo dục',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              VitTradeComplianceHero(
-                title: snapshot.heroTitle,
-                description: snapshot.heroDescription,
-                icon: Icons.shield_outlined,
-                accentColor: _safetyPrimary,
+          data: (snapshot) {
+            if (!_initialized) {
+              _activeTabId = snapshot.defaultTabId;
+              _initialized = true;
+            }
+            return [
+              const VitTradeSection(
+                title: 'Đánh giá rủi ro',
+                child: VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  density: VitDensity.compact,
+                  title: 'Xem lại tín hiệu an toàn copy trading',
+                  message:
+                      'Xác nhận dấu hiệu lừa đảo, xác minh provider, giới hạn báo cáo và bước tiếp theo trước khi copy.',
+                ),
               ),
-              _SafetyTabs(
-                tabs: snapshot.tabs,
-                activeId: _activeTabId,
-                onChanged: (id) {
-                  setState(() {
-                    _activeTabId = id;
-                    _expandedScamId = null;
-                  });
-                },
-              ),
-              if (_activeTabId == 'scams')
-                _ScamsTab(
-                  scams: snapshot.scams,
-                  expandedId: _expandedScamId,
-                  onToggle: (id) => setState(
-                    () => _expandedScamId = _expandedScamId == id ? null : id,
+              VitTradeComplianceSection(
+                title: 'An toàn copy trading',
+                statusPill: const VitStatusPill(
+                  label: 'Đọc trước khi copy',
+                  status: VitStatusPillStatus.warning,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Lừa đảo theo dõi',
+                    value: '${snapshot.scams.length}',
                   ),
-                )
-              else if (_activeTabId == 'redflags')
-                _RedFlagsTab(flags: snapshot.redFlags)
-              else if (_activeTabId == 'verification')
-                _VerificationTab(tiers: snapshot.verificationTiers)
-              else
-                _ReportTab(reasons: snapshot.reportReasons),
-            ],
-          ),
+                  VitTradeComplianceItem(
+                    label: 'Cảnh báo đỏ',
+                    value: '${snapshot.redFlags.length}',
+                  ),
+                ],
+              ),
+              VitTradeSection(
+                title: 'Giáo dục',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    VitTradeComplianceHero(
+                      title: snapshot.heroTitle,
+                      description: snapshot.heroDescription,
+                      icon: Icons.shield_outlined,
+                      accentColor: _safetyPrimary,
+                    ),
+                    _SafetyTabs(
+                      tabs: snapshot.tabs,
+                      activeId: _activeTabId,
+                      onChanged: (id) {
+                        setState(() {
+                          _activeTabId = id;
+                          _expandedScamId = null;
+                        });
+                      },
+                    ),
+                    if (_activeTabId == 'scams')
+                      _ScamsTab(
+                        scams: snapshot.scams,
+                        expandedId: _expandedScamId,
+                        onToggle: (id) => setState(
+                          () => _expandedScamId = _expandedScamId == id
+                              ? null
+                              : id,
+                        ),
+                      )
+                    else if (_activeTabId == 'redflags')
+                      _RedFlagsTab(flags: snapshot.redFlags)
+                    else if (_activeTabId == 'verification')
+                      _VerificationTab(tiers: snapshot.verificationTiers)
+                    else
+                      _ReportTab(reasons: snapshot.reportReasons),
+                  ],
+                ),
+              ),
+            ];
+          },
         ),
       ],
     );

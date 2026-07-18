@@ -54,11 +54,9 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getTraderProfile(traderId: widget.traderId);
-    final trader = snapshot.trader;
-    final risk = _riskPresentation(trader.riskLevel);
+    final snapshotAsync = ref.watch(
+      tradeTraderProfileProvider(widget.traderId),
+    );
 
     return VitTradeHubScaffold(
       title: 'Hồ sơ trader',
@@ -74,115 +72,136 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeDetailHero(
-          borderColor: _profilePrimary.withValues(alpha: .25),
-          avatar: VitAssetAvatar(
-            label: trader.avatar,
-            accentColor: _profilePrimary,
-            size: TradeSpacingTokens.traderProfileAvatarSize,
-            radius: AppRadii.cardRadius,
-            border: true,
-          ),
-          identityTitle: trader.name,
-          identityTrailing: _isFollowing
-              ? const Icon(
-                  Icons.star_rounded,
-                  color: _profileAmber,
-                  size: TradeSpacingTokens.traderProfileActionIcon,
-                )
-              : null,
-          tags: [
-            for (final tag in trader.tags)
-              VitAccentPill(label: tag, accentColor: AppColors.text2),
-            VitAccentPill(
-              label: 'Rủi ro: ${risk.label}',
-              accentColor: risk.color,
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được hồ sơ trader',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(tradeTraderProfileProvider(widget.traderId)),
             ),
           ],
-          stats: [
-            VitTradeAnalyticsStat(
-              label: 'Tổng ROI',
-              value: '+${trader.totalPnlPct.toStringAsFixed(1)}%',
-              color: _profileGreen,
-            ),
-            VitTradeAnalyticsStat(
-              label: 'Win Rate',
-              value: '${trader.winRate.toStringAsFixed(1)}%',
-              color: _profileGreen,
-            ),
-            VitTradeAnalyticsStat(
-              label: 'Sharpe',
-              value: trader.sharpeRatio.toStringAsFixed(2),
-              color: _profileAmber,
-            ),
-            VitTradeAnalyticsStat(
-              label: 'MDD',
-              value: '${trader.maxDrawdown.toStringAsFixed(1)}%',
-              color: _profileRed,
-            ),
-          ],
-          progressValue: (trader.copiers / trader.maxCopiers).clamp(0, 1),
-          progressColor: _profilePrimary,
-          progressLeadingLabel:
-              'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
-          progressTrailingLabel:
-              '${trader.maxCopiers - trader.copiers} slots trống',
-          ctaKey: TraderProfilePage.copyButtonKey,
-          ctaLabel: _isFollowing ? 'Hủy theo dõi' : 'Copy Trader này',
-          ctaLeading: Icon(
-            _isFollowing
-                ? Icons.warning_amber_rounded
-                : Icons.content_copy_rounded,
-            size: TradeSpacingTokens.traderProfileActionIcon,
-          ),
-          ctaVariant: _isFollowing
-              ? VitCtaButtonVariant.destructive
-              : VitCtaButtonVariant.primary,
-          onCtaPressed: () => setState(() => _isFollowing = !_isFollowing),
-        ),
-        VitTradeSection(
-          title: 'Rủi ro & phù hợp',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
-                title: 'Xem lại hồ sơ trader',
-                message:
-                    'Hiệu suất, giao dịch gần đây, thống kê, lịch sử rủi ro và mức phù hợp copy được xem lại trước khi theo dõi.',
-                contractId: 'trader-profile-${widget.traderId}',
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-              const VitStatusPill(
-                label: 'Hiệu suất trước không đảm bảo tương lai',
-                status: VitStatusPillStatus.warning,
-                size: VitStatusPillSize.sm,
-              ),
-            ],
-          ),
-        ),
-        _SegmentTabs(
-          activeId: _tab,
-          tabs: const [
-            _TraderTab(id: 'overview', label: 'Tổng quan'),
-            _TraderTab(id: 'trades', label: 'Giao dịch'),
-            _TraderTab(id: 'stats', label: 'Thống kê'),
-          ],
-          onChanged: (id) => setState(() => _tab = id),
-        ),
-        VitPageSection(
-          density: VitDensity.compact,
-          children: [
-            if (_tab == 'overview')
-              _OverviewTab(snapshot: snapshot)
-            else if (_tab == 'trades')
-              _TradesTab(trades: snapshot.recentTrades)
-            else
-              _StatsTab(trader: trader),
-          ],
+          data: (snapshot) => _buildBody(snapshot),
         ),
       ],
     );
+  }
+
+  List<Widget> _buildBody(TradeTraderProfileSnapshot snapshot) {
+    final trader = snapshot.trader;
+    final risk = _riskPresentation(trader.riskLevel);
+
+    return [
+      VitTradeDetailHero(
+        borderColor: _profilePrimary.withValues(alpha: .25),
+        avatar: VitAssetAvatar(
+          label: trader.avatar,
+          accentColor: _profilePrimary,
+          size: TradeSpacingTokens.traderProfileAvatarSize,
+          radius: AppRadii.cardRadius,
+          border: true,
+        ),
+        identityTitle: trader.name,
+        identityTrailing: _isFollowing
+            ? const Icon(
+                Icons.star_rounded,
+                color: _profileAmber,
+                size: TradeSpacingTokens.traderProfileActionIcon,
+              )
+            : null,
+        tags: [
+          for (final tag in trader.tags)
+            VitAccentPill(label: tag, accentColor: AppColors.text2),
+          VitAccentPill(
+            label: 'Rủi ro: ${risk.label}',
+            accentColor: risk.color,
+          ),
+        ],
+        stats: [
+          VitTradeAnalyticsStat(
+            label: 'Tổng ROI',
+            value: '+${trader.totalPnlPct.toStringAsFixed(1)}%',
+            color: _profileGreen,
+          ),
+          VitTradeAnalyticsStat(
+            label: 'Win Rate',
+            value: '${trader.winRate.toStringAsFixed(1)}%',
+            color: _profileGreen,
+          ),
+          VitTradeAnalyticsStat(
+            label: 'Sharpe',
+            value: trader.sharpeRatio.toStringAsFixed(2),
+            color: _profileAmber,
+          ),
+          VitTradeAnalyticsStat(
+            label: 'MDD',
+            value: '${trader.maxDrawdown.toStringAsFixed(1)}%',
+            color: _profileRed,
+          ),
+        ],
+        progressValue: (trader.copiers / trader.maxCopiers).clamp(0, 1),
+        progressColor: _profilePrimary,
+        progressLeadingLabel:
+            'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
+        progressTrailingLabel:
+            '${trader.maxCopiers - trader.copiers} slots trống',
+        ctaKey: TraderProfilePage.copyButtonKey,
+        ctaLabel: _isFollowing ? 'Hủy theo dõi' : 'Copy Trader này',
+        ctaLeading: Icon(
+          _isFollowing
+              ? Icons.warning_amber_rounded
+              : Icons.content_copy_rounded,
+          size: TradeSpacingTokens.traderProfileActionIcon,
+        ),
+        ctaVariant: _isFollowing
+            ? VitCtaButtonVariant.destructive
+            : VitCtaButtonVariant.primary,
+        onCtaPressed: () => setState(() => _isFollowing = !_isFollowing),
+      ),
+      VitTradeSection(
+        title: 'Rủi ro & phù hợp',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Xem lại hồ sơ trader',
+              message:
+                  'Hiệu suất, giao dịch gần đây, thống kê, lịch sử rủi ro và mức phù hợp copy được xem lại trước khi theo dõi.',
+              contractId: 'trader-profile-${widget.traderId}',
+            ),
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            const VitStatusPill(
+              label: 'Hiệu suất trước không đảm bảo tương lai',
+              status: VitStatusPillStatus.warning,
+              size: VitStatusPillSize.sm,
+            ),
+          ],
+        ),
+      ),
+      _SegmentTabs(
+        activeId: _tab,
+        tabs: const [
+          _TraderTab(id: 'overview', label: 'Tổng quan'),
+          _TraderTab(id: 'trades', label: 'Giao dịch'),
+          _TraderTab(id: 'stats', label: 'Thống kê'),
+        ],
+        onChanged: (id) => setState(() => _tab = id),
+      ),
+      VitPageSection(
+        density: VitDensity.compact,
+        children: [
+          if (_tab == 'overview')
+            _OverviewTab(snapshot: snapshot)
+          else if (_tab == 'trades')
+            _TradesTab(trades: snapshot.recentTrades)
+          else
+            _StatsTab(trader: trader),
+        ],
+      ),
+    ];
   }
 }

@@ -11,7 +11,6 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_formatters.dart';
-import 'package:vit_trade_flutter/features/trade_bots/domain/repositories/trade_bot_analytics_repository.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/widgets/settings/trade_bot_radio_icon.dart';
@@ -47,29 +46,14 @@ class BotTaxReportingPage extends ConsumerStatefulWidget {
 }
 
 class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
-  late String _selectedYear;
-  late String _costBasisMethod;
-  late Set<String> _selectedReportIds;
+  String? _selectedYear;
+  String? _costBasisMethod;
+  Set<String>? _selectedReportIds;
   bool _generating = false;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(tradeBotAnalyticsRepositoryProvider)
-        .getBotTaxReporting();
-    _selectedYear = snapshot.defaultYear;
-    _costBasisMethod = snapshot.defaultCostBasisMethod;
-    _selectedReportIds = {
-      for (final report in snapshot.reportTypes)
-        if (report.selectedByDefault) report.id,
-    };
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final repository = ref.watch(tradeBotAnalyticsRepositoryProvider);
-    final snapshot = repository.getBotTaxReporting();
+    final snapshotAsync = ref.watch(tradeBotTaxReportingProvider);
     const generateFooterHeight = AppSpacing.inputHeight + AppSpacing.x4;
 
     return Stack(
@@ -87,65 +71,87 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
             fallbackPath: AppRoutePaths.tradeBots,
             mode: BackNavigationMode.historyThenFallback,
           ),
-          children: [
-            const VitTradeSection(title: 'Notice', child: _TaxNotice()),
-            VitTradeSection(
-              title: 'Select Tax Year',
-              child: _YearPicker(
-                years: snapshot.taxYears,
-                selectedYear: _selectedYear,
-                onChanged: (year) {
-                  setState(() => _selectedYear = year);
-                },
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được báo cáo thuế',
+                message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(tradeBotTaxReportingProvider),
               ),
-            ),
-            VitTradeSection(
-              title: 'Summary for $_selectedYear',
-              child: _SummaryCard(summary: snapshot.summary),
-            ),
-            VitTradeSection(
-              title: 'Cost Basis Method',
-              child: _CostBasisPicker(
-                selectedMethod: _costBasisMethod,
-                onChanged: (method) {
-                  setState(() => _costBasisMethod = method);
-                },
-              ),
-            ),
-            VitTradeSection(
-              title: 'Select Report Types',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (final report in snapshot.reportTypes)
-                    _ReportTypeCard(
-                      report: report,
-                      selected: _selectedReportIds.contains(report.id),
-                      onTap: () => _toggleReport(report.id),
-                    ),
-                ],
-              ),
-            ),
-            VitTradeSection(
-              title: 'Capital Gains Breakdown',
-              child: _BreakdownCard(
-                summary: snapshot.summary,
-                breakdown: snapshot.breakdown,
-              ),
-            ),
-            VitTradeSection(
-              title: 'Tax notes',
-              child: _TaxNotesCard(notes: snapshot.taxNotes),
-            ),
-            const VitBotRiskReviewFooter(
-              title: 'Tax export review required',
-              message:
-                  'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
-              contractId: 'bot-tax-reporting-review',
-              statusLabel: 'Report preview before export',
-            ),
-            const SizedBox(height: generateFooterHeight),
-          ],
+            ],
+            data: (snapshot) {
+              _selectedYear ??= snapshot.defaultYear;
+              _costBasisMethod ??= snapshot.defaultCostBasisMethod;
+              _selectedReportIds ??= {
+                for (final report in snapshot.reportTypes)
+                  if (report.selectedByDefault) report.id,
+              };
+              final selectedYear = _selectedYear!;
+              final costBasisMethod = _costBasisMethod!;
+              final selectedReportIds = _selectedReportIds!;
+              return [
+                const VitTradeSection(title: 'Notice', child: _TaxNotice()),
+                VitTradeSection(
+                  title: 'Select Tax Year',
+                  child: _YearPicker(
+                    years: snapshot.taxYears,
+                    selectedYear: selectedYear,
+                    onChanged: (year) {
+                      setState(() => _selectedYear = year);
+                    },
+                  ),
+                ),
+                VitTradeSection(
+                  title: 'Summary for $selectedYear',
+                  child: _SummaryCard(summary: snapshot.summary),
+                ),
+                VitTradeSection(
+                  title: 'Cost Basis Method',
+                  child: _CostBasisPicker(
+                    selectedMethod: costBasisMethod,
+                    onChanged: (method) {
+                      setState(() => _costBasisMethod = method);
+                    },
+                  ),
+                ),
+                VitTradeSection(
+                  title: 'Select Report Types',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final report in snapshot.reportTypes)
+                        _ReportTypeCard(
+                          report: report,
+                          selected: selectedReportIds.contains(report.id),
+                          onTap: () => _toggleReport(report.id),
+                        ),
+                    ],
+                  ),
+                ),
+                VitTradeSection(
+                  title: 'Capital Gains Breakdown',
+                  child: _BreakdownCard(
+                    summary: snapshot.summary,
+                    breakdown: snapshot.breakdown,
+                  ),
+                ),
+                VitTradeSection(
+                  title: 'Tax notes',
+                  child: _TaxNotesCard(notes: snapshot.taxNotes),
+                ),
+                const VitBotRiskReviewFooter(
+                  title: 'Tax export review required',
+                  message:
+                      'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
+                  contractId: 'bot-tax-reporting-review',
+                  statusLabel: 'Report preview before export',
+                ),
+                const SizedBox(height: generateFooterHeight),
+              ];
+            },
+          ),
         ),
         Positioned(
           left: 0,
@@ -156,11 +162,11 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
               context,
               shellRenderMode: widget.shellRenderMode,
             ),
-            disabled: _selectedReportIds.isEmpty || _generating,
+            disabled: (_selectedReportIds?.isEmpty ?? true) || _generating,
             generating: _generating,
-            selectedCount: _selectedReportIds.length,
-            selectedYear: _selectedYear,
-            onPressed: () => _generate(repository),
+            selectedCount: _selectedReportIds?.length ?? 0,
+            selectedYear: _selectedYear ?? '',
+            onPressed: _generate,
           ),
         ),
       ],
@@ -169,24 +175,37 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
 
   void _toggleReport(String id) {
     setState(() {
-      if (_selectedReportIds.contains(id)) {
-        _selectedReportIds.remove(id);
+      final ids = {...?_selectedReportIds};
+      if (ids.contains(id)) {
+        ids.remove(id);
       } else {
-        _selectedReportIds.add(id);
+        ids.add(id);
       }
+      _selectedReportIds = ids;
     });
   }
 
-  void _generate(TradeBotAnalyticsRepository repository) {
-    if (_selectedReportIds.isEmpty || _generating) return;
+  void _generate() {
+    final reportIds = _selectedReportIds;
+    final year = _selectedYear;
+    final costBasisMethod = _costBasisMethod;
+    if (reportIds == null ||
+        year == null ||
+        costBasisMethod == null ||
+        reportIds.isEmpty ||
+        _generating) {
+      return;
+    }
     setState(() => _generating = true);
-    repository.createBotTaxReportExport(
-      TradeBotTaxReportExportRequest(
-        year: _selectedYear,
-        reportTypeIds: _selectedReportIds.toList(growable: false),
-        costBasisMethod: _costBasisMethod,
-      ),
-    );
+    ref
+        .read(tradeBotAnalyticsRepositoryProvider)
+        .createBotTaxReportExport(
+          TradeBotTaxReportExportRequest(
+            year: year,
+            reportTypeIds: reportIds.toList(growable: false),
+            costBasisMethod: costBasisMethod,
+          ),
+        );
     setState(() => _generating = false);
   }
 }

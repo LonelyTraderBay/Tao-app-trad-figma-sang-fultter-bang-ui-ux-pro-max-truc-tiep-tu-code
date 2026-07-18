@@ -52,10 +52,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotEmergencyStopControllerProvider)
-        .state
-        .snapshot;
+    final controllerAsync = ref.watch(tradeBotEmergencyStopControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     const stickyActionsHeight = AppSpacing.inputHeight + AppSpacing.x4;
     final scrollEndClearance =
@@ -86,83 +83,99 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
           fallbackPath: AppRoutePaths.tradeBots,
           mode: BackNavigationMode.historyThenFallback,
         ),
-        onSubmit: () => _submit(snapshot),
+        onSubmit: _submit,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Bot cần dừng',
-          primaryValue: '${snapshot.bots.length}',
-          primaryColor: _stopRed,
-          secondaryLabel: 'Lý do',
-          secondaryValue: _reasonId == null ? '—' : 'Đã chọn',
-          secondaryColor: _reasonId == null ? AppColors.text3 : _stopGreen,
-        ),
-        VitTradeSection(
-          title: 'Cảnh báo khẩn cấp',
-          child: _WarningBanner(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Bots to Stop (${snapshot.bots.length})',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [for (final bot in snapshot.bots) _BotCard(bot: bot)],
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu dừng khẩn cấp',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeBotEmergencyStopSnapshotProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Reason for Emergency Stop',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final reason in snapshot.reasons)
-                _ReasonOption(
-                  reason: reason,
-                  selected: reason.id == _reasonId,
-                  onTap: () => setState(() => _reasonId = reason.id),
-                ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Additional Actions',
-          child: _CheckActionCard(
-            key: BotEmergencyStopPage.closePositionsKey,
-            selected: _closePositions,
-            title: snapshot.closePositionsTitle,
-            description: snapshot.closePositionsDescription,
-            danger: false,
-            onTap: () {
-              setState(() => _closePositions = !_closePositions);
-            },
-          ),
-        ),
-        VitTradeSection(
-          title: 'Confirmation',
-          child: _CheckActionCard(
-            key: BotEmergencyStopPage.confirmationKey,
-            selected: _confirmed,
-            title: snapshot.confirmationTitle,
-            description: snapshot.confirmationDescription,
-            danger: true,
-            onTap: () => setState(() => _confirmed = !_confirmed),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Hỗ trợ',
-          child: _SupportNotice(snapshot: snapshot),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Emergency stop review',
-          message:
-              'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
-          contractId: 'bot-emergency-stop-review',
-        ),
-      ],
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          return [
+            VitBotSubpageHero(
+              primaryLabel: 'Bot cần dừng',
+              primaryValue: '${snapshot.bots.length}',
+              primaryColor: _stopRed,
+              secondaryLabel: 'Lý do',
+              secondaryValue: _reasonId == null ? '—' : 'Đã chọn',
+              secondaryColor: _reasonId == null ? AppColors.text3 : _stopGreen,
+            ),
+            VitTradeSection(
+              title: 'Cảnh báo khẩn cấp',
+              child: _WarningBanner(snapshot: snapshot),
+            ),
+            VitTradeSection(
+              title: 'Bots to Stop (${snapshot.bots.length})',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [for (final bot in snapshot.bots) _BotCard(bot: bot)],
+              ),
+            ),
+            VitTradeSection(
+              title: 'Reason for Emergency Stop',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final reason in snapshot.reasons)
+                    _ReasonOption(
+                      reason: reason,
+                      selected: reason.id == _reasonId,
+                      onTap: () => setState(() => _reasonId = reason.id),
+                    ),
+                ],
+              ),
+            ),
+            VitTradeSection(
+              title: 'Additional Actions',
+              child: _CheckActionCard(
+                key: BotEmergencyStopPage.closePositionsKey,
+                selected: _closePositions,
+                title: snapshot.closePositionsTitle,
+                description: snapshot.closePositionsDescription,
+                danger: false,
+                onTap: () {
+                  setState(() => _closePositions = !_closePositions);
+                },
+              ),
+            ),
+            VitTradeSection(
+              title: 'Confirmation',
+              child: _CheckActionCard(
+                key: BotEmergencyStopPage.confirmationKey,
+                selected: _confirmed,
+                title: snapshot.confirmationTitle,
+                description: snapshot.confirmationDescription,
+                danger: true,
+                onTap: () => setState(() => _confirmed = !_confirmed),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Hỗ trợ',
+              child: _SupportNotice(snapshot: snapshot),
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'Emergency stop review',
+              message:
+                  'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
+              contractId: 'bot-emergency-stop-review',
+            ),
+          ];
+        },
+      ),
     );
   }
 
-  void _submit(TradeBotEmergencyStopSnapshot snapshot) {
-    final controller = ref.read(tradeBotEmergencyStopControllerProvider);
-    if (!controller.canSubmit(reasonId: _reasonId, confirmed: _confirmed) ||
+  void _submit() {
+    final controller = ref.read(tradeBotEmergencyStopControllerProvider).value;
+    if (controller == null ||
+        !controller.canSubmit(reasonId: _reasonId, confirmed: _confirmed) ||
         _stopping) {
       return;
     }

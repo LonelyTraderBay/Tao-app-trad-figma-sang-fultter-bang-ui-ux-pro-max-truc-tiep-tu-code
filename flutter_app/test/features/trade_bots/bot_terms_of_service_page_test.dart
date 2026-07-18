@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-117 mock repository exposes bot terms BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotTermsOfService();
+  test('SC-117 mock repository exposes bot terms BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotTermsOfService();
 
     expect(snapshot.infoTitle, 'Legal Agreement Required');
     expect(snapshot.title, 'Trading Bots Terms of Service');

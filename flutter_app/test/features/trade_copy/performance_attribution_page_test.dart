@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-075 mock repository exposes attribution BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getPerformanceAttribution(copyId: 'copy001');
+  test('SC-075 mock repository exposes attribution BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getPerformanceAttribution(copyId: 'copy001');
 
     expect(snapshot.copyId, 'copy001');
     expect(snapshot.totalReturnPct, 9.2);

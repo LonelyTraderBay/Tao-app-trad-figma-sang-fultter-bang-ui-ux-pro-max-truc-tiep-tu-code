@@ -69,10 +69,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getCopyAuditLog(copyId: widget.copyId);
-    final events = _filteredEvents(snapshot);
+    final snapshotAsync = ref.watch(tradeCopyAuditLogProvider(widget.copyId));
 
     return VitTradeDetailScaffold(
       title: 'Audit Log',
@@ -89,73 +86,95 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
         VitHeaderActionItem(
           key: CopyAuditLogPage.exportActionKey,
           type: VitHeaderActionType.export,
-          onPressed: () => _showExportSheet(snapshot),
+          onPressed: () {
+            final snapshot = snapshotAsync.value;
+            if (snapshot != null) _showExportSheet(snapshot);
+          },
         ),
       ],
       children: [
-        VitTradeSection(
-          title: 'Tuân thủ',
-          child: VitTradeComplianceHero(
-            title: snapshot.complianceTitle,
-            description: snapshot.complianceDescription,
-            icon: Icons.shield_outlined,
-            accentColor: _auditPrimary,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review copy audit evidence',
-            message:
-                'Search, filter, and export audit evidence with retention, risk, and config-change context preserved.',
-            contractId: 'Copy ID: ${snapshot.copyId}',
-            density: VitDensity.compact,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Tìm kiếm',
-          child: _AuditSearchField(
-            controller: _searchController,
-            onChanged: (_) => setState(() {}),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Bộ lọc',
-          child: VitTabBar(
-            variant: VitTabBarVariant.segment,
-            activeKey: _activeFilter,
-            onChanged: (id) => setState(() => _activeFilter = id),
-            tabs: [
-              for (final tab in snapshot.tabs)
-                VitTabItem(
-                  key: tab.id,
-                  label: tab.label,
-                  widgetKey: CopyAuditLogPage.tabKey(tab.id),
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được nhật ký kiểm toán',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(tradeCopyAuditLogProvider(widget.copyId)),
+            ),
+          ],
+          data: (snapshot) {
+            final events = _filteredEvents(snapshot);
+            return [
+              VitTradeSection(
+                title: 'Tuân thủ',
+                child: VitTradeComplianceHero(
+                  title: snapshot.complianceTitle,
+                  description: snapshot.complianceDescription,
+                  icon: Icons.shield_outlined,
+                  accentColor: _auditPrimary,
                 ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Sự kiện',
-          child: events.isEmpty
-              ? _EmptyAuditState(searching: _searchController.text.isNotEmpty)
-              : Column(
-                  children: [
-                    for (final event in events) ...[
-                      _AuditEventCard(
-                        key: CopyAuditLogPage.eventKey(event.id),
-                        event: event,
+              ),
+              VitTradeSection(
+                title: 'Đánh giá rủi ro',
+                child: VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Review copy audit evidence',
+                  message:
+                      'Search, filter, and export audit evidence with retention, risk, and config-change context preserved.',
+                  contractId: 'Copy ID: ${snapshot.copyId}',
+                  density: VitDensity.compact,
+                ),
+              ),
+              VitTradeSection(
+                title: 'Tìm kiếm',
+                child: _AuditSearchField(
+                  controller: _searchController,
+                  onChanged: (_) => setState(() {}),
+                ),
+              ),
+              VitTradeSection(
+                title: 'Bộ lọc',
+                child: VitTabBar(
+                  variant: VitTabBarVariant.segment,
+                  activeKey: _activeFilter,
+                  onChanged: (id) => setState(() => _activeFilter = id),
+                  tabs: [
+                    for (final tab in snapshot.tabs)
+                      VitTabItem(
+                        key: tab.id,
+                        label: tab.label,
+                        widgetKey: CopyAuditLogPage.tabKey(tab.id),
                       ),
-                      if (event != events.last)
-                        const SizedBox(height: _auditSpace),
-                    ],
                   ],
                 ),
-        ),
-        VitTradeSection(
-          title: 'Tóm tắt',
-          child: _SummarySection(events: snapshot.events),
+              ),
+              VitTradeSection(
+                title: 'Sự kiện',
+                child: events.isEmpty
+                    ? _EmptyAuditState(
+                        searching: _searchController.text.isNotEmpty,
+                      )
+                    : Column(
+                        children: [
+                          for (final event in events) ...[
+                            _AuditEventCard(
+                              key: CopyAuditLogPage.eventKey(event.id),
+                              event: event,
+                            ),
+                            if (event != events.last)
+                              const SizedBox(height: _auditSpace),
+                          ],
+                        ],
+                      ),
+              ),
+              VitTradeSection(
+                title: 'Tóm tắt',
+                child: _SummarySection(events: snapshot.events),
+              ),
+            ];
+          },
         ),
       ],
     );
@@ -219,8 +238,8 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                   _ExportFormatButton(
                     key: CopyAuditLogPage.exportFormatKey(format.id),
                     format: format,
-                    onTap: () {
-                      ref
+                    onTap: () async {
+                      await ref
                           .read(tradeCopyTradingRepositoryProvider)
                           .createCopyAuditExport(
                             TradeCopyAuditExportRequest(
@@ -230,6 +249,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                               searchQuery: _searchController.text,
                             ),
                           );
+                      if (!sheetContext.mounted) return;
                       Navigator.of(sheetContext).pop();
                     },
                   ),

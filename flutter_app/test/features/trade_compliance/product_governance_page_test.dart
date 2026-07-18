@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-100 mock repository exposes product governance BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getProductGovernance();
+  test('SC-100 mock repository exposes product governance BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getProductGovernance();
 
     expect(snapshot.defaultTab, 'products');
     expect(snapshot.nextReviewLabel, 'June 2026');

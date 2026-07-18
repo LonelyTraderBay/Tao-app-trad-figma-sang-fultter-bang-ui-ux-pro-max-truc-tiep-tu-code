@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-115 mock repository exposes audit trail BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository().getAuditTrail();
+  test('SC-115 mock repository exposes audit trail BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getAuditTrail();
 
     expect(snapshot.noticeTitle, 'Complete Record-Keeping');
     expect(snapshot.stats.map((stat) => stat.value), ['3', '12', '7yr']);

@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-126 mock repository exposes strategy compare BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotStrategyCompare();
+  test('SC-126 mock repository exposes strategy compare BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotStrategyCompare();
 
     expect(snapshot.strategies, hasLength(4));
     expect(snapshot.equityPoints, hasLength(7));

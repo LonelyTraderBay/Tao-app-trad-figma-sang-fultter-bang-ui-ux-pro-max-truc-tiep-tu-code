@@ -58,18 +58,12 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotBacktesting();
+    final snapshotAsync = ref.watch(tradeBotBacktestingProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     const runFooterHeight = AppSpacing.inputHeight + AppSpacing.x4;
     final scrollEndClearance =
         tradeScrollBottomInset(context, shellRenderMode: mode) +
         runFooterHeight;
-    final range = snapshot.dateRanges.firstWhere(
-      (item) => item.id == _selectedRange,
-      orElse: () => snapshot.dateRanges.first,
-    );
 
     return VitTradeDetailScaffold(
       title: 'Backtest Strategy',
@@ -85,69 +79,86 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Chiến lược',
-          primaryValue: '${snapshot.strategies.length}',
-          secondaryLabel: 'Cặp giao dịch',
-          secondaryValue: '${snapshot.pairs.length}',
-        ),
-        VitTradeSection(
-          title: 'Strategy Selection',
-          child: _StrategyGrid(
-            strategies: snapshot.strategies,
-            selectedId: _selectedStrategy,
-            onChanged: (id) => setState(() => _selectedStrategy = id),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu backtest',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotBacktestingProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Trading Pair',
-          child: _PairGrid(
-            pairs: snapshot.pairs,
-            selectedPair: _selectedPair,
-            onChanged: (pair) => setState(() => _selectedPair = pair),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Date Range',
-          child: _DateRangeGrid(
-            ranges: snapshot.dateRanges,
-            selectedId: _selectedRange,
-            onChanged: (id) => setState(() => _selectedRange = id),
-          ),
-        ),
-        VitTradeSection(
-          title: 'Initial Capital',
-          child: _CapitalInput(controller: _capitalController),
-        ),
-        VitTradeSection(
-          title: 'Backtest period',
-          child: _BacktestPeriodCard(
-            strategyId: _selectedStrategy,
-            pair: _selectedPair,
-            range: range,
-            capital: _capitalController.text,
-          ),
-        ),
-        _RunFooter(onRun: () => _handleRun(snapshot)),
-        const TradeBodyReviewSection(
-          title: 'Backtest body review',
-          message: 'Bot backtesting body reviewed',
-          detail:
-              'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
-          primary:
-              'Assumption review remains above strategy and capital controls.',
-          secondary:
-              'Selected strategy, pair, and range stay visible before running.',
-          tertiary:
-              'Backtest output is framed as simulation, not guaranteed performance.',
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Review backtest assumptions',
-          message:
-              'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
-        ),
-      ],
+        ],
+        data: (snapshot) {
+          final range = snapshot.dateRanges.firstWhere(
+            (item) => item.id == _selectedRange,
+            orElse: () => snapshot.dateRanges.first,
+          );
+          return [
+            VitBotSubpageHero(
+              primaryLabel: 'Chiến lược',
+              primaryValue: '${snapshot.strategies.length}',
+              secondaryLabel: 'Cặp giao dịch',
+              secondaryValue: '${snapshot.pairs.length}',
+            ),
+            VitTradeSection(
+              title: 'Strategy Selection',
+              child: _StrategyGrid(
+                strategies: snapshot.strategies,
+                selectedId: _selectedStrategy,
+                onChanged: (id) => setState(() => _selectedStrategy = id),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Trading Pair',
+              child: _PairGrid(
+                pairs: snapshot.pairs,
+                selectedPair: _selectedPair,
+                onChanged: (pair) => setState(() => _selectedPair = pair),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Date Range',
+              child: _DateRangeGrid(
+                ranges: snapshot.dateRanges,
+                selectedId: _selectedRange,
+                onChanged: (id) => setState(() => _selectedRange = id),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Initial Capital',
+              child: _CapitalInput(controller: _capitalController),
+            ),
+            VitTradeSection(
+              title: 'Backtest period',
+              child: _BacktestPeriodCard(
+                strategyId: _selectedStrategy,
+                pair: _selectedPair,
+                range: range,
+                capital: _capitalController.text,
+              ),
+            ),
+            _RunFooter(onRun: () => _handleRun(snapshot)),
+            const TradeBodyReviewSection(
+              title: 'Backtest body review',
+              message: 'Bot backtesting body reviewed',
+              detail:
+                  'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
+              primary:
+                  'Assumption review remains above strategy and capital controls.',
+              secondary:
+                  'Selected strategy, pair, and range stay visible before running.',
+              tertiary:
+                  'Backtest output is framed as simulation, not guaranteed performance.',
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'Review backtest assumptions',
+              message:
+                  'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
+            ),
+          ];
+        },
+      ),
     );
   }
 

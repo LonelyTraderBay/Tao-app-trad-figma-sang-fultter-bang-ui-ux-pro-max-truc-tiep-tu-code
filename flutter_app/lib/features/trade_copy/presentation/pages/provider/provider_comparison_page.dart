@@ -35,7 +35,7 @@ class ProviderComparisonPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(tradeProviderComparisonProvider);
+    final snapshotAsync = ref.watch(tradeProviderComparisonProvider);
 
     return VitTradeHubScaffold(
       title: 'So sánh Providers',
@@ -57,76 +57,90 @@ class ProviderComparisonPage extends ConsumerWidget {
         ),
       ],
       children: [
-        VitTradeSection(
-          title: 'Disclaimer',
-          child: _WarningBanner(text: snapshot.disclaimer),
-        ),
-        VitTradeSection(
-          title: 'So sánh',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Đang so sánh ${snapshot.selectedCount}/${snapshot.maxProviders} providers',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ),
-                  if (snapshot.selectedCount < snapshot.maxProviders)
-                    VitCtaButton(
-                      key: addProviderLinkKey,
-                      onPressed: () =>
-                          context.push(AppRoutePaths.tradeCopyTrading),
-                      variant: VitCtaButtonVariant.ghost,
-                      fullWidth: false,
-                      height: AppSpacing.buttonCompact,
-                      padding: AuthSpacingTokens.authInlineTextButtonPadding,
-                      leading: const Icon(Icons.add_rounded),
-                      child: const Text('+ Thêm provider'),
-                    ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              _ComparisonTable(snapshot: snapshot),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Chú thích',
-          child: _LegendPanel(text: snapshot.legend),
-        ),
-        const VitTradeComplianceSection(
-          title: 'Compliance review',
-          statusPill: VitStatusPill(
-            label: 'Review required',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Scope',
-              value: 'Performance, risk, execution, fees, drawdown',
-            ),
-            VitTradeComplianceItem(
-              label: 'Action',
-              value: 'Review before adding or copying',
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được dữ liệu so sánh provider',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeProviderComparisonProvider),
             ),
           ],
-        ),
-        const TradeBodyReviewSection(
-          title: 'Provider comparison body review',
-          message: 'Provider comparison body reviewed',
-          detail:
-              'Disclaimer, selected providers, metrics, legend, add action, and review states stay visible.',
-          primary: 'Disclaimer remains before provider comparison metrics.',
-          secondary:
-              'Risk, execution, cost, and performance groups stay separated for scanning.',
-          tertiary:
-              'Add-provider actions remain gated by comparison limits and review copy.',
+          data: (snapshot) => [
+            VitTradeSection(
+              title: 'Disclaimer',
+              child: _WarningBanner(text: snapshot.disclaimer),
+            ),
+            VitTradeSection(
+              title: 'So sánh',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Đang so sánh ${snapshot.selectedCount}/${snapshot.maxProviders} providers',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text2,
+                          ),
+                        ),
+                      ),
+                      if (snapshot.selectedCount < snapshot.maxProviders)
+                        VitCtaButton(
+                          key: addProviderLinkKey,
+                          onPressed: () =>
+                              context.push(AppRoutePaths.tradeCopyTrading),
+                          variant: VitCtaButtonVariant.ghost,
+                          fullWidth: false,
+                          height: AppSpacing.buttonCompact,
+                          padding:
+                              AuthSpacingTokens.authInlineTextButtonPadding,
+                          leading: const Icon(Icons.add_rounded),
+                          child: const Text('+ Thêm provider'),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                  _ComparisonTable(snapshot: snapshot),
+                ],
+              ),
+            ),
+            VitTradeSection(
+              title: 'Chú thích',
+              child: _LegendPanel(text: snapshot.legend),
+            ),
+            const VitTradeComplianceSection(
+              title: 'Compliance review',
+              statusPill: VitStatusPill(
+                label: 'Review required',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Scope',
+                  value: 'Performance, risk, execution, fees, drawdown',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Action',
+                  value: 'Review before adding or copying',
+                ),
+              ],
+            ),
+            const TradeBodyReviewSection(
+              title: 'Provider comparison body review',
+              message: 'Provider comparison body reviewed',
+              detail:
+                  'Disclaimer, selected providers, metrics, legend, add action, and review states stay visible.',
+              primary: 'Disclaimer remains before provider comparison metrics.',
+              secondary:
+                  'Risk, execution, cost, and performance groups stay separated for scanning.',
+              tertiary:
+                  'Add-provider actions remain gated by comparison limits and review copy.',
+            ),
+          ],
         ),
       ],
     );

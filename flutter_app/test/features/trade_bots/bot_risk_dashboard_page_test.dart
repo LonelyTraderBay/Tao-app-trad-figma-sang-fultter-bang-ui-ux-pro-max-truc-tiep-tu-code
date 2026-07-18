@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-120 mock repository exposes bot risk dashboard BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotRiskDashboard();
+  test('SC-120 mock repository exposes bot risk dashboard BE draft', () async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotRiskDashboard();
 
     expect(snapshot.riskScore, 68);
     expect(snapshot.riskLabel, 'Medium Risk');

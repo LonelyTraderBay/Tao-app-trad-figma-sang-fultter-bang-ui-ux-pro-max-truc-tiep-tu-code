@@ -84,7 +84,20 @@ class _TradePageState extends ConsumerState<TradePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeScreenProvider(widget.pairId));
+    final screenAsync = ref.watch(tradeScreenProvider(widget.pairId));
+    return screenAsync.when(
+      loading: () => const VitSkeletonList(),
+      error: (error, stackTrace) => VitErrorState(
+        title: 'Không tải được màn hình giao dịch',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () => ref.invalidate(tradeScreenProvider(widget.pairId)),
+      ),
+      data: _buildContent,
+    );
+  }
+
+  Widget _buildContent(TradeScreenSnapshot snapshot) {
     final pair = snapshot.pair;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final amount = double.tryParse(_amountController.text) ?? 0;

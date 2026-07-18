@@ -26,8 +26,8 @@ void main() {
     'MockTradeTerminalRepository core spot + futures/margin smoke test',
     () {
       group('core spot getters', () {
-        test('getTrade pins pair, highRiskContractId and balances', () {
-          final snapshot = repo.getTrade();
+        test('getTrade pins pair, highRiskContractId and balances', () async {
+          final snapshot = await repo.getTrade();
           expect(snapshot.pair.id, 'btcusdt');
           expect(
             snapshot.highRiskContractId,
@@ -37,18 +37,18 @@ void main() {
           expect(snapshot.botStrategies, hasLength(3));
           expect(snapshot.balances.usdtAvailable, 10200);
 
-          final other = repo.getTrade(pairId: 'ethusdt');
+          final other = await repo.getTrade(pairId: 'ethusdt');
           expect(other.pair.id, 'ethusdt');
         });
 
         test(
           'getOrdersHistory / getOrderReceipt pin ids and highRiskContractId',
-          () {
-            final history = repo.getOrdersHistory();
+          () async {
+            final history = await repo.getOrdersHistory();
             expect(history.openOrders, isNotEmpty);
             expect(history.historyOrders, isNotEmpty);
 
-            final receipt = repo.getOrderReceipt();
+            final receipt = await repo.getOrderReceipt();
             expect(receipt.receipt.orderId, 'ORD-98EH1ZT2');
             expect(receipt.receipt.symbol, 'BTC/USDT');
             expect(
@@ -61,24 +61,24 @@ void main() {
 
         test(
           'getTradeSettings / getTradePositions pin fixture-backed values',
-          () {
-            final settings = repo.getTradeSettings();
+          () async {
+            final settings = await repo.getTradeSettings();
             expect(settings.settings.defaultOrderType, 'limit');
 
-            final positions = repo.getTradePositions();
+            final positions = await repo.getTradePositions();
             expect(positions.positions, hasLength(6));
           },
         );
 
         test(
           'getAdvancedTradingDemo / getAdvancedAnalytics pin default tabs',
-          () {
-            final demo = repo.getAdvancedTradingDemo();
+          () async {
+            final demo = await repo.getAdvancedTradingDemo();
             expect(demo.defaultTab, 'position');
             expect(demo.defaultPositionMode, 'one-way');
             expect(demo.positionActions, isNotEmpty);
 
-            final analytics = repo.getAdvancedAnalytics();
+            final analytics = await repo.getAdvancedAnalytics();
             expect(analytics.defaultTab, 'ai');
             expect(analytics.signals, isNotEmpty);
             expect(analytics.features, isNotEmpty);
@@ -89,9 +89,9 @@ void main() {
       group('core spot actions', () {
         test(
           'patchTradeSettings echoes the fixture-backed defaultOrderType',
-          () {
-            final settings = repo.getTradeSettings().settings;
-            final result = repo.patchTradeSettings(settings);
+          () async {
+            final settings = (await repo.getTradeSettings()).settings;
+            final result = await repo.patchTradeSettings(settings);
             expect(result.defaultOrderType, 'limit');
           },
         );
@@ -106,7 +106,7 @@ void main() {
               price: 67543.21,
               amount: .1,
             );
-            final preview = repo.previewOrder(draft);
+            final preview = await repo.previewOrder(draft);
             expect(preview.total, closeTo(6754.321, .001));
             expect(preview.feeRate, .00085);
 
@@ -116,40 +116,49 @@ void main() {
           },
         );
 
-        test('submitOrderAction echoes orderId/action with success status', () {
-          final result = repo.submitOrderAction(
-            orderId: 'ord-open-001',
-            action: 'cancel',
-          );
-          expect(result.orderId, 'ord-open-001');
-          expect(result.action, 'cancel');
-          expect(result.status, 'success');
-        });
+        test(
+          'submitOrderAction echoes orderId/action with success status',
+          () async {
+            final result = await repo.submitOrderAction(
+              orderId: 'ord-open-001',
+              action: 'cancel',
+            );
+            expect(result.orderId, 'ord-open-001');
+            expect(result.action, 'cancel');
+            expect(result.status, 'success');
+          },
+        );
       });
 
       group('futures & margin getters', () {
-        test('getFutures pins highRiskContractId, leverages and margin', () {
-          final futures = repo.getFutures();
-          expect(
-            futures.highRiskContractId,
-            HighRiskFlowContractIds.tradeMarginFutures,
-          );
-          expect(futures.leverages, hasLength(9));
-          expect(futures.accountBalance, 5000);
-          expect(futures.usedMargin, 544);
-        });
+        test(
+          'getFutures pins highRiskContractId, leverages and margin',
+          () async {
+            final futures = await repo.getFutures();
+            expect(
+              futures.highRiskContractId,
+              HighRiskFlowContractIds.tradeMarginFutures,
+            );
+            expect(futures.leverages, hasLength(9));
+            expect(futures.accountBalance, 5000);
+            expect(futures.usedMargin, 544);
+          },
+        );
 
-        test('getFuturesLeverage pins currentLeverage and preset counts', () {
-          final leverage = repo.getFuturesLeverage();
-          expect(leverage.currentLeverage, 10);
-          expect(leverage.presets, hasLength(10));
-          expect(leverage.sliderStops, hasLength(6));
-        });
+        test(
+          'getFuturesLeverage pins currentLeverage and preset counts',
+          () async {
+            final leverage = await repo.getFuturesLeverage();
+            expect(leverage.currentLeverage, 10);
+            expect(leverage.presets, hasLength(10));
+            expect(leverage.sliderStops, hasLength(6));
+          },
+        );
 
         test(
           'getMarginTrading pins highRiskContractId and default leverage',
-          () {
-            final margin = repo.getMarginTrading();
+          () async {
+            final margin = await repo.getMarginTrading();
             expect(
               margin.highRiskContractId,
               HighRiskFlowContractIds.tradeMarginFutures,
@@ -157,7 +166,7 @@ void main() {
             expect(margin.defaultMode, 'cross');
             expect(margin.defaultLeverage, 5);
 
-            final routeVariant = repo.getMarginTrading(
+            final routeVariant = await repo.getMarginTrading(
               pairId: 'ethusdt',
               pairRouteVariant: true,
             );
@@ -165,11 +174,14 @@ void main() {
           },
         );
 
-        test('getMarginTradingHub returns populated stats and menu items', () {
-          final hub = repo.getMarginTradingHub();
-          expect(hub.stats, isNotEmpty);
-          expect(hub.menuItems, isNotEmpty);
-        });
+        test(
+          'getMarginTradingHub returns populated stats and menu items',
+          () async {
+            final hub = await repo.getMarginTradingHub();
+            expect(hub.stats, isNotEmpty);
+            expect(hub.menuItems, isNotEmpty);
+          },
+        );
       });
 
       group('futures & margin actions', () {
@@ -183,7 +195,7 @@ void main() {
               margin: 500,
               leverage: 10,
             );
-            final preview = repo.previewFuturesOrder(draft);
+            final preview = await repo.previewFuturesOrder(draft);
             expect(preview.positionSize, 5000);
             expect(preview.openFee, closeTo(1, .0001));
             expect(preview.canOpen, isTrue);
@@ -201,7 +213,7 @@ void main() {
               pairId: 'btcusdt',
               leverage: 10,
             );
-            final preview = repo.previewFuturesLeverage(request);
+            final preview = await repo.previewFuturesLeverage(request);
             expect(preview.positionSize, 1000);
             expect(preview.liquidationDistancePct, 9);
             expect(preview.showRiskTips, isFalse);

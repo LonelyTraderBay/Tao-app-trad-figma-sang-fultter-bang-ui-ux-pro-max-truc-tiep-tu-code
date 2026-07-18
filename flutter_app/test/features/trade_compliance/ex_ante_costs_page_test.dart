@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-105 mock repository exposes ex-ante costs BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository().getExAnteCosts();
+  test('SC-105 mock repository exposes ex-ante costs BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getExAnteCosts();
 
     expect(snapshot.investmentAmount, 10000);
     expect(snapshot.oneOffCosts, 50);

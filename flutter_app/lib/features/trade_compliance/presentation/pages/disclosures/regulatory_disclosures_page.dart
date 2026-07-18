@@ -49,16 +49,7 @@ class _RegulatoryDisclosuresPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getRegulatoryDisclosures();
-    _activeTabId ??= snapshot.defaultTabId;
-    final activeTabLabel = snapshot.tabs
-        .firstWhere(
-          (tab) => tab.id == _activeTabId,
-          orElse: () => snapshot.tabs.first,
-        )
-        .label;
+    final async = ref.watch(tradeRegulatoryDisclosuresProvider);
 
     return VitTradeHubScaffold(
       title: 'Regulatory Disclosures',
@@ -71,66 +62,89 @@ class _RegulatoryDisclosuresPageState
         fallbackPath: AppRoutePaths.trade,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitTradeSection(
-          title: 'Overview',
-          child: VitTradeComplianceHero(
-            title: snapshot.heroTitle,
-            description: snapshot.heroDescription,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeRegulatoryDisclosuresProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Disclosure review',
-          statusPill: const VitStatusPill(
-            label: 'Disclosure route visible',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Viewing section',
-              value: activeTabLabel,
-            ),
-            VitTradeComplianceItem(
-              label: 'Support contacts',
-              value: '${snapshot.contacts.length} regulatory contacts',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Disclosures',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _LegalTabs(
-                tabs: snapshot.tabs,
-                activeId: _activeTabId!,
-                onChanged: (id) => setState(() => _activeTabId = id),
+        ],
+        data: (snapshot) {
+          _activeTabId ??= snapshot.defaultTabId;
+          final activeTabLabel = snapshot.tabs
+              .firstWhere(
+                (tab) => tab.id == _activeTabId,
+                orElse: () => snapshot.tabs.first,
+              )
+              .label;
+
+          return [
+            VitTradeSection(
+              title: 'Overview',
+              child: VitTradeComplianceHero(
+                title: snapshot.heroTitle,
+                description: snapshot.heroDescription,
               ),
-              _LegalTabBody(
-                snapshot: snapshot,
-                activeTabId: _activeTabId!,
-                onNotice: (notice) => setState(() => _notice = notice),
+            ),
+            VitTradeComplianceSection(
+              title: 'Disclosure review',
+              statusPill: const VitStatusPill(
+                label: 'Disclosure route visible',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
               ),
-              if (_notice != null) ...[
-                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-                _RegulatoryNoticePanel(
-                  text: _notice!,
-                  onClose: () => setState(() => _notice = null),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Viewing section',
+                  value: activeTabLabel,
+                ),
+                VitTradeComplianceItem(
+                  label: 'Support contacts',
+                  value: '${snapshot.contacts.length} regulatory contacts',
                 ),
               ],
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
-                title: 'Disclosure review state',
-                message:
-                    'Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.',
-                contractId: 'regulatory-disclosures-review',
+            ),
+            VitTradeSection(
+              title: 'Disclosures',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _LegalTabs(
+                    tabs: snapshot.tabs,
+                    activeId: _activeTabId!,
+                    onChanged: (id) => setState(() => _activeTabId = id),
+                  ),
+                  _LegalTabBody(
+                    snapshot: snapshot,
+                    activeTabId: _activeTabId!,
+                    onNotice: (notice) => setState(() => _notice = notice),
+                  ),
+                  if (_notice != null) ...[
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
+                    _RegulatoryNoticePanel(
+                      text: _notice!,
+                      onClose: () => setState(() => _notice = null),
+                    ),
+                  ],
+                  const VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    density: VitDensity.compact,
+                    title: 'Disclosure review state',
+                    message:
+                        'Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.',
+                    contractId: 'regulatory-disclosures-review',
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ];
+        },
+      ),
     );
   }
 }

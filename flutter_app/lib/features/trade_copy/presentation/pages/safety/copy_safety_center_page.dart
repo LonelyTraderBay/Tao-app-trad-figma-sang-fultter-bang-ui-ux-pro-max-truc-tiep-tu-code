@@ -53,14 +53,7 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getCopySafetyCenter();
-    _activeTabId ??= snapshot.defaultTabId;
-    final activeTab = snapshot.tabs.firstWhere(
-      (tab) => tab.id == _activeTabId,
-      orElse: () => snapshot.tabs.first,
-    );
+    final snapshotAsync = ref.watch(tradeCopySafetyCenterProvider);
 
     return Material(
       type: MaterialType.transparency,
@@ -79,55 +72,79 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
               mode: BackNavigationMode.historyThenFallback,
             ),
             children: [
-              VitTradeSection(
-                title: 'Overview',
-                child: VitTradeComplianceHero(
-                  title: snapshot.heroTitle,
-                  description: snapshot.heroDescription,
-                  icon: Icons.shield_outlined,
-                  accentColor: _safetyPrimary,
-                ),
-              ),
-              VitTradeSection(
-                title: 'Controls',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SafetyTabs(
-                      tabs: snapshot.tabs,
-                      activeId: _activeTabId!,
-                      onChanged: (id) => setState(() => _activeTabId = id),
-                    ),
-                    _SafetyTabBody(
-                      activeTabId: _activeTabId!,
-                      snapshot: snapshot,
-                      expandedMetric: _expandedMetric,
-                      onMetricToggle: (name) => setState(() {
-                        _expandedMetric = _expandedMetric == name ? null : name;
-                      }),
-                      onEmergency: () =>
-                          setState(() => _showEmergencyPanel = true),
-                    ),
-                  ],
-                ),
-              ),
-              VitTradeComplianceSection(
-                title: 'Safety review',
-                statusPill: VitStatusPill(
-                  label: 'Reviewing: ${activeTab.label}',
-                  status: VitStatusPillStatus.warning,
-                  size: VitStatusPillSize.sm,
-                ),
-                items: const [
-                  VitTradeComplianceItem(
-                    label: 'Scope',
-                    value: 'Verification, trust metrics, reporting',
-                  ),
-                  VitTradeComplianceItem(
-                    label: 'Action',
-                    value: 'Review before allowing copied trades',
+              ...snapshotAsync.when(
+                loading: () => const [VitSkeletonList()],
+                error: (error, stackTrace) => [
+                  VitErrorState(
+                    title: 'Không tải được trung tâm an toàn',
+                    message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () =>
+                        ref.invalidate(tradeCopySafetyCenterProvider),
                   ),
                 ],
+                data: (snapshot) {
+                  _activeTabId ??= snapshot.defaultTabId;
+                  final activeTab = snapshot.tabs.firstWhere(
+                    (tab) => tab.id == _activeTabId,
+                    orElse: () => snapshot.tabs.first,
+                  );
+                  return [
+                    VitTradeSection(
+                      title: 'Overview',
+                      child: VitTradeComplianceHero(
+                        title: snapshot.heroTitle,
+                        description: snapshot.heroDescription,
+                        icon: Icons.shield_outlined,
+                        accentColor: _safetyPrimary,
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Controls',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _SafetyTabs(
+                            tabs: snapshot.tabs,
+                            activeId: _activeTabId!,
+                            onChanged: (id) =>
+                                setState(() => _activeTabId = id),
+                          ),
+                          _SafetyTabBody(
+                            activeTabId: _activeTabId!,
+                            snapshot: snapshot,
+                            expandedMetric: _expandedMetric,
+                            onMetricToggle: (name) => setState(() {
+                              _expandedMetric = _expandedMetric == name
+                                  ? null
+                                  : name;
+                            }),
+                            onEmergency: () =>
+                                setState(() => _showEmergencyPanel = true),
+                          ),
+                        ],
+                      ),
+                    ),
+                    VitTradeComplianceSection(
+                      title: 'Safety review',
+                      statusPill: VitStatusPill(
+                        label: 'Reviewing: ${activeTab.label}',
+                        status: VitStatusPillStatus.warning,
+                        size: VitStatusPillSize.sm,
+                      ),
+                      items: const [
+                        VitTradeComplianceItem(
+                          label: 'Scope',
+                          value: 'Verification, trust metrics, reporting',
+                        ),
+                        VitTradeComplianceItem(
+                          label: 'Action',
+                          value: 'Review before allowing copied trades',
+                        ),
+                      ],
+                    ),
+                  ];
+                },
               ),
             ],
           ),

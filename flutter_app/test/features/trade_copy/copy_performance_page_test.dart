@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-074 mock repository exposes copy performance BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getCopyPerformance(copyId: 'copy001');
+  test('SC-074 mock repository exposes copy performance BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getCopyPerformance(copyId: 'copy001');
 
     expect(snapshot.copyId, 'copy001');
     expect(snapshot.yourReturnPct, 13);

@@ -9,12 +9,12 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getAdvancedCharts(
-          indicatorCategory: _indicatorCategory,
-          drawingCategory: _drawingCategory,
-        );
+    final chartsAsync = ref.watch(
+      marketAdvancedChartsSnapshotProvider((
+        indicatorCategory: _indicatorCategory,
+        drawingCategory: _drawingCategory,
+      )),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -57,72 +57,88 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        if (_tab == 'indicators') ...[
-                          _ActiveIndicatorSummary(
-                            activeCount: _activeIndicatorIds.length,
-                            onClearAll: _activeIndicatorIds.isEmpty
-                                ? null
-                                : () => setState(_activeIndicatorIds.clear),
-                          ),
-                          if (_activeIndicatorIds.isNotEmpty)
-                            _ActiveIndicatorChips(
-                              indicators: _activeIndicators(snapshot),
-                              onRemove: _toggleIndicator,
+                      children: chartsAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được phân tích kỹ thuật',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketAdvancedChartsSnapshotProvider((
+                                indicatorCategory: _indicatorCategory,
+                                drawingCategory: _drawingCategory,
+                              )),
                             ),
-                          _IndicatorCategoryFilter(
-                            categories: snapshot.indicatorCategories,
-                            activeCategory: _indicatorCategory,
-                            onSelected: (value) => setState(() {
-                              _indicatorCategory = value;
-                            }),
                           ),
-                          _IndicatorList(
-                            indicators: snapshot.indicators,
-                            categories: snapshot.indicatorCategories,
-                            activeIndicatorIds: _activeIndicatorIds,
-                            expandedIndicatorId: _expandedIndicatorId,
-                            onToggleActive: _toggleIndicator,
-                            onToggleExpanded: (indicator) => setState(() {
-                              _expandedIndicatorId =
-                                  _expandedIndicatorId == indicator.id
-                                  ? null
-                                  : indicator.id;
-                            }),
-                          ),
-                        ] else if (_tab == 'drawing') ...[
-                          const _DrawingInfoCard(),
-                          _DrawingCategoryFilter(
-                            categories: snapshot.drawingCategories,
-                            activeCategory: _drawingCategory,
-                            onSelected: (value) => setState(() {
-                              _drawingCategory = value;
-                            }),
-                          ),
-                          _DrawingToolsGrid(
-                            tools: snapshot.drawingTools,
-                            categories: snapshot.drawingCategories,
-                          ),
-                          const VitSectionHeader(
-                            title: 'Mẹo sử dụng',
-                            accentColor: AppColors.warn,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          const _TipsCard(),
-                        ] else ...[
-                          for (final signal in snapshot.signalSummaries)
-                            _SignalSummaryCard(signal: signal),
                         ],
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message:
-                              'Tín hiệu kỹ thuật chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư.',
-                          detail:
-                              'Chỉ báo và công cụ vẽ hỗ trợ phân tích — không thay thế quyết định giao dịch.',
-                        ),
-                      ],
+                        data: (snapshot) => [
+                          if (_tab == 'indicators') ...[
+                            _ActiveIndicatorSummary(
+                              activeCount: _activeIndicatorIds.length,
+                              onClearAll: _activeIndicatorIds.isEmpty
+                                  ? null
+                                  : () => setState(_activeIndicatorIds.clear),
+                            ),
+                            if (_activeIndicatorIds.isNotEmpty)
+                              _ActiveIndicatorChips(
+                                indicators: _activeIndicators(snapshot),
+                                onRemove: _toggleIndicator,
+                              ),
+                            _IndicatorCategoryFilter(
+                              categories: snapshot.indicatorCategories,
+                              activeCategory: _indicatorCategory,
+                              onSelected: (value) => setState(() {
+                                _indicatorCategory = value;
+                              }),
+                            ),
+                            _IndicatorList(
+                              indicators: snapshot.indicators,
+                              categories: snapshot.indicatorCategories,
+                              activeIndicatorIds: _activeIndicatorIds,
+                              expandedIndicatorId: _expandedIndicatorId,
+                              onToggleActive: _toggleIndicator,
+                              onToggleExpanded: (indicator) => setState(() {
+                                _expandedIndicatorId =
+                                    _expandedIndicatorId == indicator.id
+                                    ? null
+                                    : indicator.id;
+                              }),
+                            ),
+                          ] else if (_tab == 'drawing') ...[
+                            const _DrawingInfoCard(),
+                            _DrawingCategoryFilter(
+                              categories: snapshot.drawingCategories,
+                              activeCategory: _drawingCategory,
+                              onSelected: (value) => setState(() {
+                                _drawingCategory = value;
+                              }),
+                            ),
+                            _DrawingToolsGrid(
+                              tools: snapshot.drawingTools,
+                              categories: snapshot.drawingCategories,
+                            ),
+                            const VitSectionHeader(
+                              title: 'Mẹo sử dụng',
+                              accentColor: AppColors.warn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                              variant: VitSectionHeaderVariant.accentBar,
+                            ),
+                            const _TipsCard(),
+                          ] else ...[
+                            for (final signal in snapshot.signalSummaries)
+                              _SignalSummaryCard(signal: signal),
+                          ],
+                          const VitBanner(
+                            variant: VitBannerVariant.info,
+                            icon: Icons.info_outline_rounded,
+                            message:
+                                'Tín hiệu kỹ thuật chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư.',
+                            detail:
+                                'Chỉ báo và công cụ vẽ hỗ trợ phân tích — không thay thế quyết định giao dịch.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -137,10 +153,21 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
   List<TechnicalIndicator> _activeIndicators(
     MarketAdvancedChartsSnapshot snapshot,
   ) {
-    final all = ref.watch(marketControllerProvider).getAdvancedCharts();
+    // Bẫy mới (GD4-F3): cần danh sách KHÔNG lọc theo category để tra cứu
+    // active-indicator chip dù đang lọc category khác — đọc qua provider
+    // "phụ" .value + fallback snapshot đã lọc (mục 5, "2 async song song").
+    final all = ref
+        .watch(
+          marketAdvancedChartsSnapshotProvider((
+            indicatorCategory: 'all',
+            drawingCategory: 'all',
+          )),
+        )
+        .value;
+    final indicators = all?.indicators ?? snapshot.indicators;
     return [
       for (final id in _activeIndicatorIds)
-        all.indicators.firstWhere(
+        indicators.firstWhere(
           (indicator) => indicator.id == id,
           orElse: () => snapshot.indicators.first,
         ),

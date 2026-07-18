@@ -158,12 +158,25 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
-      tradeMarginControllerProvider((
-        pairId: widget.pairId,
-        pairRouteVariant: widget.pairRouteVariant,
-      )),
+    final request = (
+      pairId: widget.pairId,
+      pairRouteVariant: widget.pairRouteVariant,
     );
+    final controllerAsync = ref.watch(tradeMarginControllerProvider(request));
+
+    return controllerAsync.when(
+      loading: () => const VitSkeletonList(),
+      error: (error, stackTrace) => VitErrorState(
+        title: 'Không tải được màn hình ký quỹ',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () => ref.invalidate(tradeMarginControllerProvider(request)),
+      ),
+      data: _buildContent,
+    );
+  }
+
+  Widget _buildContent(TradeMarginController controller) {
     final snapshot = controller.state.snapshot;
     final pair = snapshot.pair;
     final modePositions = controller.positionsForMode(_mode);

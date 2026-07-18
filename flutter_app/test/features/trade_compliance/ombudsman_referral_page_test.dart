@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-114 mock repository exposes ombudsman BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getOmbudsmanReferral();
+  test('SC-114 mock repository exposes ombudsman BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getOmbudsmanReferral();
 
     expect(snapshot.infoTitle, 'Free & Independent');
     expect(snapshot.eligibility.map((item) => item.title), [

@@ -54,21 +54,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeBotAnalyticsRepositoryProvider).getBotFaq();
-    final category = snapshot.categories.firstWhere(
-      (item) => item.id == _categoryId,
-      orElse: () => snapshot.categories.first,
-    );
-    final query = _query.trim().toLowerCase();
-    final items = query.isEmpty
-        ? category.items
-        : category.items
-              .where(
-                (item) =>
-                    item.question.toLowerCase().contains(query) ||
-                    item.answer.toLowerCase().contains(query),
-              )
-              .toList();
+    final snapshotAsync = ref.watch(tradeBotFaqProvider);
     return VitTradeHubScaffold(
       title: 'Trading Bots FAQ',
       subtitle: 'Câu hỏi thường gặp về bot giao dịch',
@@ -82,65 +68,92 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Câu hỏi',
-          primaryValue: '${snapshot.totalFaqs}',
-          secondaryLabel: 'Danh mục',
-          secondaryValue: '${snapshot.categories.length}',
-        ),
-        VitTradeSection(
-          title: 'Tìm kiếm',
-          child: _SearchField(
-            controller: _searchController,
-            onChanged: (value) => setState(() {
-              _query = value;
-              _expandedIndex = null;
-            }),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được câu hỏi thường gặp',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotFaqProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Danh mục',
-          child: _CategoryTabs(
-            categories: snapshot.categories,
-            activeId: _categoryId,
-            onChanged: (id) => setState(() {
-              _categoryId = id;
-              _expandedIndex = null;
-            }),
-          ),
-        ),
-        VitTradeSection(
-          title: '${category.label} (${items.length})',
-          child: items.isEmpty
-              ? const _EmptyFaqs()
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (var i = 0; i < items.length; i++) ...[
-                      VitFaqAccordion(
-                        key: BotFaqPage.questionKey(category.id, i),
-                        question: items[i].question,
-                        answer: items[i].answer,
-                        expanded: _expandedIndex == i,
-                        onTap: () => setState(() {
-                          _expandedIndex = _expandedIndex == i ? null : i;
-                        }),
-                        accentColor: _faqPrimary,
-                        leadingIcon: Icons.help_outline_rounded,
-                        answerBackground: VitFaqAnswerBackground.surface2,
-                      ),
-                      if (i != items.length - 1)
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmCompactInnerGap,
-                        ),
-                    ],
-                  ],
-                ),
-        ),
-        const VitTradeSection(title: 'Hỗ trợ', child: _HelpCard()),
-        const VitBotRiskDisclaimer(),
-      ],
+        ],
+        data: (snapshot) {
+          final category = snapshot.categories.firstWhere(
+            (item) => item.id == _categoryId,
+            orElse: () => snapshot.categories.first,
+          );
+          final query = _query.trim().toLowerCase();
+          final items = query.isEmpty
+              ? category.items
+              : category.items
+                    .where(
+                      (item) =>
+                          item.question.toLowerCase().contains(query) ||
+                          item.answer.toLowerCase().contains(query),
+                    )
+                    .toList();
+          return [
+            VitBotSubpageHero(
+              primaryLabel: 'Câu hỏi',
+              primaryValue: '${snapshot.totalFaqs}',
+              secondaryLabel: 'Danh mục',
+              secondaryValue: '${snapshot.categories.length}',
+            ),
+            VitTradeSection(
+              title: 'Tìm kiếm',
+              child: _SearchField(
+                controller: _searchController,
+                onChanged: (value) => setState(() {
+                  _query = value;
+                  _expandedIndex = null;
+                }),
+              ),
+            ),
+            VitTradeSection(
+              title: 'Danh mục',
+              child: _CategoryTabs(
+                categories: snapshot.categories,
+                activeId: _categoryId,
+                onChanged: (id) => setState(() {
+                  _categoryId = id;
+                  _expandedIndex = null;
+                }),
+              ),
+            ),
+            VitTradeSection(
+              title: '${category.label} (${items.length})',
+              child: items.isEmpty
+                  ? const _EmptyFaqs()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (var i = 0; i < items.length; i++) ...[
+                          VitFaqAccordion(
+                            key: BotFaqPage.questionKey(category.id, i),
+                            question: items[i].question,
+                            answer: items[i].answer,
+                            expanded: _expandedIndex == i,
+                            onTap: () => setState(() {
+                              _expandedIndex = _expandedIndex == i ? null : i;
+                            }),
+                            accentColor: _faqPrimary,
+                            leadingIcon: Icons.help_outline_rounded,
+                            answerBackground: VitFaqAnswerBackground.surface2,
+                          ),
+                          if (i != items.length - 1)
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmCompactInnerGap,
+                            ),
+                        ],
+                      ],
+                    ),
+            ),
+            const VitTradeSection(title: 'Hỗ trợ', child: _HelpCard()),
+            const VitBotRiskDisclaimer(),
+          ];
+        },
+      ),
     );
   }
 }

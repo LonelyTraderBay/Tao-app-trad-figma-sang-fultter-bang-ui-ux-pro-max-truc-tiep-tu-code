@@ -36,9 +36,7 @@ class OmbudsmanReferralPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getOmbudsmanReferral();
+    final async = ref.watch(tradeOmbudsmanReferralProvider);
     return VitTradeHubScaffold(
       title: 'Financial Ombudsman',
       subtitle: 'Independent Dispute Resolution',
@@ -51,74 +49,86 @@ class OmbudsmanReferralPage extends ConsumerWidget {
         fallbackPath: AppRoutePaths.tradeCopyComplaintsHandling,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review ombudsman referral route',
-            message:
-                'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeOmbudsmanReferralProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Referral status',
-          statusPill: const VitStatusPill(
-            label: 'External referral',
-            status: VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Eligibility',
-              value: '${snapshot.eligibility.length} criteria',
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Review',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Review ombudsman referral route',
+              message:
+                  'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
             ),
-            VitTradeComplianceItem(
-              label: 'Contacts',
-              value: '${snapshot.contacts.length} routes',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Overview',
-          child: VitTradeComplianceHero(
-            title: snapshot.infoTitle,
-            description: snapshot.infoDescription,
-            icon: Icons.shield_outlined,
-            accentColor: _ombudsmanGreen,
           ),
-        ),
-        VitTradeSection(
-          title: 'When Can You Refer?',
-          child: _EligibilityCard(items: snapshot.eligibility),
-        ),
-        VitTradeSection(
-          title: 'Contact Information',
-          child: _ContactCard(contacts: snapshot.contacts),
-        ),
-        VitTradeSection(
-          title: 'How It Works',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final step in snapshot.processSteps)
-                _ProcessStepCard(step: step),
-              _VisitButton(snapshot: snapshot),
-              const TradeBodyReviewSection(
-                title: 'Ombudsman body review',
-                message: 'Ombudsman referral body reviewed',
-                detail:
-                    'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
-                primary: 'Eligibility remains above external referral actions.',
-                secondary:
-                    'Contact and process steps stay separated for regulated escalation.',
-                tertiary:
-                    'Visit CTA remains framed as external dispute resolution.',
+          VitTradeComplianceSection(
+            title: 'Referral status',
+            statusPill: const VitStatusPill(
+              label: 'External referral',
+              status: VitStatusPillStatus.warning,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Eligibility',
+                value: '${snapshot.eligibility.length} criteria',
+              ),
+              VitTradeComplianceItem(
+                label: 'Contacts',
+                value: '${snapshot.contacts.length} routes',
               ),
             ],
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'Overview',
+            child: VitTradeComplianceHero(
+              title: snapshot.infoTitle,
+              description: snapshot.infoDescription,
+              icon: Icons.shield_outlined,
+              accentColor: _ombudsmanGreen,
+            ),
+          ),
+          VitTradeSection(
+            title: 'When Can You Refer?',
+            child: _EligibilityCard(items: snapshot.eligibility),
+          ),
+          VitTradeSection(
+            title: 'Contact Information',
+            child: _ContactCard(contacts: snapshot.contacts),
+          ),
+          VitTradeSection(
+            title: 'How It Works',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final step in snapshot.processSteps)
+                  _ProcessStepCard(step: step),
+                _VisitButton(snapshot: snapshot),
+                const TradeBodyReviewSection(
+                  title: 'Ombudsman body review',
+                  message: 'Ombudsman referral body reviewed',
+                  detail:
+                      'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
+                  primary:
+                      'Eligibility remains above external referral actions.',
+                  secondary:
+                      'Contact and process steps stay separated for regulated escalation.',
+                  tertiary:
+                      'Visit CTA remains framed as external dispute resolution.',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

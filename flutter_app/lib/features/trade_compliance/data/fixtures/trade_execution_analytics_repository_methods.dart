@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_regulatory_repository.dart';
 mixin _MockTradeRegulatoryRepositoryExecutionAnalyticsMethods
     on _MockTradeRegulatoryRepositoryBase {
   @override
-  TradeMarketDataAnalyticsSnapshot getMarketDataAnalytics() {
+  Future<TradeMarketDataAnalyticsSnapshot> getMarketDataAnalytics() async {
+    await _simulateNetwork();
     return const TradeMarketDataAnalyticsSnapshot(
       selectedPair: 'BTC/USDT',
       markPrice: 67543.21,
@@ -28,7 +29,8 @@ mixin _MockTradeRegulatoryRepositoryExecutionAnalyticsMethods
   }
 
   @override
-  TradeMarketDataAnalyticsSnapshot getLiveMarketDataAnalytics() {
+  Future<TradeMarketDataAnalyticsSnapshot> getLiveMarketDataAnalytics() async {
+    await _simulateNetwork();
     return const TradeMarketDataAnalyticsSnapshot(
       selectedPair: 'BTC/USDT',
       markPrice: 67543.21,
@@ -53,7 +55,8 @@ mixin _MockTradeRegulatoryRepositoryExecutionAnalyticsMethods
   }
 
   @override
-  TradeArmIntegrationStatusSnapshot getArmIntegrationStatus() {
+  Future<TradeArmIntegrationStatusSnapshot> getArmIntegrationStatus() async {
+    await _simulateNetwork();
     return const TradeArmIntegrationStatusSnapshot(
       connections: _armConnections,
       latencyHistory: _armLatencyHistory,
@@ -70,7 +73,8 @@ mixin _MockTradeRegulatoryRepositoryExecutionAnalyticsMethods
   }
 
   @override
-  TradeBestExecutionReportsSnapshot getBestExecutionReports() {
+  Future<TradeBestExecutionReportsSnapshot> getBestExecutionReports() async {
+    await _simulateNetwork();
     return const TradeBestExecutionReportsSnapshot(
       venues: _bestExecutionVenues,
       archive: _bestExecutionArchive,
@@ -88,7 +92,9 @@ mixin _MockTradeRegulatoryRepositoryExecutionAnalyticsMethods
   }
 
   @override
-  TradeExecutionVenueAnalysisSnapshot getExecutionVenueAnalysis() {
+  Future<TradeExecutionVenueAnalysisSnapshot>
+  getExecutionVenueAnalysis() async {
+    await _simulateNetwork();
     return const TradeExecutionVenueAnalysisSnapshot(
       venues: _executionVenueMetrics,
       costTrends: _executionVenueCostTrends,
@@ -107,7 +113,8 @@ mixin _MockTradeRegulatoryRepositoryExecutionAnalyticsMethods
   }
 
   @override
-  TradeSlippageMonitoringSnapshot getSlippageMonitoring() {
+  Future<TradeSlippageMonitoringSnapshot> getSlippageMonitoring() async {
+    await _simulateNetwork();
     return const TradeSlippageMonitoringSnapshot(
       events: _slippageEvents,
       providers: _slippageProviderStats,

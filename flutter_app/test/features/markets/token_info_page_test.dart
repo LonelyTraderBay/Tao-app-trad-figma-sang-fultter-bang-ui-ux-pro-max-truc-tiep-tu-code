@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-045 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getTokenInfo('btcusdt');
+  test('SC-045 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getTokenInfo('btcusdt');
 
     expect(snapshot.pair.id, 'btcusdt');
     expect(snapshot.fundamentals.symbol, 'BTC');

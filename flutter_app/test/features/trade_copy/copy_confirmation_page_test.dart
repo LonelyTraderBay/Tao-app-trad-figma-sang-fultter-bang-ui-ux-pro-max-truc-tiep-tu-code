@@ -37,18 +37,18 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-073 mock repository exposes copy confirmation BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final notFound = repo.getCopyConfirmation(providerId: 'provider001');
-    final found = repo.getCopyConfirmation(providerId: 'ct001');
-    final blocked = repo.submitCopyConfirmation(
+  test('SC-073 mock repository exposes copy confirmation BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final notFound = await repo.getCopyConfirmation(providerId: 'provider001');
+    final found = await repo.getCopyConfirmation(providerId: 'ct001');
+    final blocked = await repo.submitCopyConfirmation(
       TradeCopyConfirmationRequest(
         providerId: 'ct001',
         configuration: found.configuration,
         acceptedConsentIds: const ['risk'],
       ),
     );
-    final accepted = repo.submitCopyConfirmation(
+    final accepted = await repo.submitCopyConfirmation(
       TradeCopyConfirmationRequest(
         providerId: 'ct001',
         configuration: found.configuration,

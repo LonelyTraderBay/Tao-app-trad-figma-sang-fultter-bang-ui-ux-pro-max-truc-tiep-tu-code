@@ -50,34 +50,38 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-099 mock repository exposes client categorization BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getClientCategorization();
+  test(
+    'SC-099 mock repository exposes client categorization BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getClientCategorization();
 
-    expect(snapshot.defaultTab, 'overview');
-    expect(snapshot.currentCategoryId, 'retail');
-    expect(snapshot.categories.map((category) => category.label), [
-      'Retail Client',
-      'Professional Client',
-      'Eligible Counterparty',
-    ]);
-    expect(snapshot.categories.first.protections.length, 8);
-    expect(snapshot.categories.first.requirements.length, 3);
-    expect(snapshot.history.map((entry) => entry.action), [
-      'categorized',
-      'opt-up-requested',
-    ]);
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.defaultTab, 'overview');
+      expect(snapshot.currentCategoryId, 'retail');
+      expect(snapshot.categories.map((category) => category.label), [
+        'Retail Client',
+        'Professional Client',
+        'Eligible Counterparty',
+      ]);
+      expect(snapshot.categories.first.protections.length, 8);
+      expect(snapshot.categories.first.requirements.length, 3);
+      expect(snapshot.history.map((entry) => entry.action), [
+        'categorized',
+        'opt-up-requested',
+      ]);
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-099 renders client categorization inside Trade shell', (
     tester,

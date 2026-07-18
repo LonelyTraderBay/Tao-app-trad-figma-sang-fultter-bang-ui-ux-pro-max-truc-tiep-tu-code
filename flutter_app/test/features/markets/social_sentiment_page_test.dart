@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-020 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getSocialSentiment();
+  test('SC-020 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getSocialSentiment();
 
     expect(snapshot.global.overallScore, 62);
     expect(snapshot.global.totalMentions24h, 2345678);
@@ -69,7 +69,7 @@ void main() {
       ]),
     );
 
-    final mentions = repo.getSocialSentiment(
+    final mentions = await repo.getSocialSentiment(
       sortBy: MarketSentimentSort.mentions,
     );
     expect(mentions.tokens.first.symbol, 'BTC');

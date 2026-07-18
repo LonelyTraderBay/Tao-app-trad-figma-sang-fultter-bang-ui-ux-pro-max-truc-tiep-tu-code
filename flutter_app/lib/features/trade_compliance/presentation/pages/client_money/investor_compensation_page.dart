@@ -49,9 +49,7 @@ class _InvestorCompensationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getInvestorCompensation();
+    final async = ref.watch(tradeInvestorCompensationProvider);
     return VitTradeHubScaffold(
       title: 'Investor Compensation',
       subtitle: 'FSCS Protection',
@@ -65,72 +63,83 @@ class _InvestorCompensationPageState
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitTradeSection(
-          title: 'Protection',
-          child: _ProtectionCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Details',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
-                title: 'Compensation coverage review',
-                message:
-                    'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',
-                contractId: 'investor-compensation-review',
-              ),
-              _InfoNotice(snapshot: snapshot),
-              VitCard(
-                variant: VitCardVariant.inner,
-                density: VitDensity.compact,
-                child: VitTabBar(
-                  variant: VitTabBarVariant.underline,
-                  activeKey: _tab,
-                  tabs: [
-                    for (final tab in const [
-                      ('overview', 'Overview'),
-                      ('eligibility', 'Eligibility'),
-                      ('claim', 'How to Claim'),
-                    ])
-                      VitTabItem(
-                        key: tab.$1,
-                        label: tab.$2,
-                        widgetKey: InvestorCompensationPage.tabKey(tab.$1),
-                      ),
-                  ],
-                  onChanged: _setTab,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeInvestorCompensationProvider),
+          ),
+        ],
+        data: (snapshot) => [
+          VitTradeSection(
+            title: 'Protection',
+            child: _ProtectionCard(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: 'Details',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  density: VitDensity.compact,
+                  title: 'Compensation coverage review',
+                  message:
+                      'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',
+                  contractId: 'investor-compensation-review',
                 ),
+                _InfoNotice(snapshot: snapshot),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  density: VitDensity.compact,
+                  child: VitTabBar(
+                    variant: VitTabBarVariant.underline,
+                    activeKey: _tab,
+                    tabs: [
+                      for (final tab in const [
+                        ('overview', 'Overview'),
+                        ('eligibility', 'Eligibility'),
+                        ('claim', 'How to Claim'),
+                      ])
+                        VitTabItem(
+                          key: tab.$1,
+                          label: tab.$2,
+                          widgetKey: InvestorCompensationPage.tabKey(tab.$1),
+                        ),
+                    ],
+                    onChanged: _setTab,
+                  ),
+                ),
+                if (_tab == 'overview')
+                  _Overview(snapshot: snapshot)
+                else if (_tab == 'eligibility')
+                  _Eligibility(snapshot: snapshot)
+                else
+                  _ClaimGuide(snapshot: snapshot),
+                const _FaqButton(),
+              ],
+            ),
+          ),
+          const VitTradeComplianceSection(
+            title: 'Coverage review',
+            statusPill: VitStatusPill(
+              label: 'Coverage has limits',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(label: 'Scheme', value: 'FSCS protection'),
+              VitTradeComplianceItem(
+                label: 'Action',
+                value: 'Review eligibility before relying on coverage',
               ),
-              if (_tab == 'overview')
-                _Overview(snapshot: snapshot)
-              else if (_tab == 'eligibility')
-                _Eligibility(snapshot: snapshot)
-              else
-                _ClaimGuide(snapshot: snapshot),
-              const _FaqButton(),
             ],
           ),
-        ),
-        const VitTradeComplianceSection(
-          title: 'Coverage review',
-          statusPill: VitStatusPill(
-            label: 'Coverage has limits',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(label: 'Scheme', value: 'FSCS protection'),
-            VitTradeComplianceItem(
-              label: 'Action',
-              value: 'Review eligibility before relying on coverage',
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 

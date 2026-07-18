@@ -56,10 +56,7 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getProductGovernance();
-    _tab ??= snapshot.defaultTab;
+    final async = ref.watch(tradeProductGovernanceProvider);
     return VitTradeHubScaffold(
       title: 'Product Governance',
       subtitle: 'MiFID II Oversight',
@@ -73,83 +70,97 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
-            title: 'Product governance review',
-            message:
-                'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
-            contractId: 'SC-100 product governance review',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeProductGovernanceProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Notice',
-          child: VitTradeComplianceHero(
-            title: 'All Products Compliant',
-            description:
-                '${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.',
-            icon: Icons.check_circle_outline,
-            accentColor: _govGreen,
-          ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Governance review',
-          statusPill: const VitStatusPill(
-            label: 'Review required',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Products',
-              value: '${snapshot.products.length} tracked',
-            ),
-            VitTradeComplianceItem(
-              label: 'Viewing',
-              value: _governanceSectionLabel(_tab!),
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Products',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _Stats(products: snapshot.products),
-              VitCard(
+        ],
+        data: (snapshot) {
+          _tab ??= snapshot.defaultTab;
+          return [
+            const VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
                 density: VitDensity.compact,
-                padding: AppSpacing.zeroInsets,
-                child: VitTabBar(
-                  variant: VitTabBarVariant.underline,
-                  activeKey: _tab!,
-                  tabs: [
-                    for (final tab in const [
-                      ('products', 'Products'),
-                      ('reviews', 'Reviews'),
-                      ('distribution', 'Distribution'),
-                    ])
-                      VitTabItem(
-                        key: tab.$1,
-                        label: tab.$2,
-                        widgetKey: ProductGovernancePage.tabKey(tab.$1),
-                      ),
-                  ],
-                  onChanged: (id) => setState(() => _tab = id),
-                ),
+                title: 'Product governance review',
+                message:
+                    'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
+                contractId: 'SC-100 product governance review',
               ),
-              if (_tab == 'products')
-                _ProductsTab(products: snapshot.products)
-              else if (_tab == 'reviews')
-                _ReviewsTab(products: snapshot.products)
-              else
-                _DistributionTab(products: snapshot.products),
-            ],
-          ),
-        ),
-      ],
+            ),
+            VitTradeSection(
+              title: 'Notice',
+              child: VitTradeComplianceHero(
+                title: 'All Products Compliant',
+                description:
+                    '${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.',
+                icon: Icons.check_circle_outline,
+                accentColor: _govGreen,
+              ),
+            ),
+            VitTradeComplianceSection(
+              title: 'Governance review',
+              statusPill: const VitStatusPill(
+                label: 'Review required',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: [
+                VitTradeComplianceItem(
+                  label: 'Products',
+                  value: '${snapshot.products.length} tracked',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Viewing',
+                  value: _governanceSectionLabel(_tab!),
+                ),
+              ],
+            ),
+            VitTradeSection(
+              title: 'Products',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Stats(products: snapshot.products),
+                  VitCard(
+                    density: VitDensity.compact,
+                    padding: AppSpacing.zeroInsets,
+                    child: VitTabBar(
+                      variant: VitTabBarVariant.underline,
+                      activeKey: _tab!,
+                      tabs: [
+                        for (final tab in const [
+                          ('products', 'Products'),
+                          ('reviews', 'Reviews'),
+                          ('distribution', 'Distribution'),
+                        ])
+                          VitTabItem(
+                            key: tab.$1,
+                            label: tab.$2,
+                            widgetKey: ProductGovernancePage.tabKey(tab.$1),
+                          ),
+                      ],
+                      onChanged: (id) => setState(() => _tab = id),
+                    ),
+                  ),
+                  if (_tab == 'products')
+                    _ProductsTab(products: snapshot.products)
+                  else if (_tab == 'reviews')
+                    _ReviewsTab(products: snapshot.products)
+                  else
+                    _DistributionTab(products: snapshot.products),
+                ],
+              ),
+            ),
+          ];
+        },
+      ),
     );
   }
 }

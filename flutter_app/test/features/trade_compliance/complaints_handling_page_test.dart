@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-111 mock repository exposes complaints BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getComplaintsHandling();
+  test('SC-111 mock repository exposes complaints BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getComplaintsHandling();
 
     expect(snapshot.activeCount, 1);
     expect(snapshot.resolvedCount, 1);

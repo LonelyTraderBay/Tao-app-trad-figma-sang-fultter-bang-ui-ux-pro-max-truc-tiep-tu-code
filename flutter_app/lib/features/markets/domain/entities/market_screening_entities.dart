@@ -257,6 +257,47 @@ final class MarketScreenerQuery {
       sortDirection: sortDirection ?? this.sortDirection,
     );
   }
+
+  // GD4-F3: value equality required so FutureProvider.family(query) caches
+  // by content instead of instance identity — otherwise every rebuild would
+  // create a brand-new provider element and re-flash the loading state.
+  @override
+  bool operator ==(Object other) {
+    if (other is! MarketScreenerQuery) return false;
+    if (other.searchQuery != searchQuery ||
+        other.categories.length != categories.length) {
+      return false;
+    }
+    for (var i = 0; i < categories.length; i += 1) {
+      if (other.categories[i] != categories[i]) return false;
+    }
+    return other.minPrice == minPrice &&
+        other.maxPrice == maxPrice &&
+        other.minMarketCap == minMarketCap &&
+        other.maxMarketCap == maxMarketCap &&
+        other.minVolume24h == minVolume24h &&
+        other.maxVolume24h == maxVolume24h &&
+        other.minChange24h == minChange24h &&
+        other.maxChange24h == maxChange24h &&
+        other.sortBy == sortBy &&
+        other.sortDirection == sortDirection;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    searchQuery,
+    Object.hashAll(categories),
+    minPrice,
+    maxPrice,
+    minMarketCap,
+    maxMarketCap,
+    minVolume24h,
+    maxVolume24h,
+    minChange24h,
+    maxChange24h,
+    sortBy,
+    sortDirection,
+  );
 }
 
 /// Sort key for screener results: market cap, volume, 24h change, or

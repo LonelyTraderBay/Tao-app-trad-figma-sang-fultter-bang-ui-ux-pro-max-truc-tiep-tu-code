@@ -51,14 +51,8 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeBotsControllerProvider).snapshot;
-    final bots = snapshot.activeBots;
+    final snapshotAsync = ref.watch(tradingBotsSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final runningBots = bots
-        .where((bot) => bot.status == TradeBotStatus.running)
-        .length;
-    final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
-    final profitColor = totalProfit >= 0 ? AppColors.buy : AppColors.sell;
 
     return Stack(
       children: [
@@ -75,49 +69,75 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
             fallbackPath: AppRoutePaths.trade,
             mode: BackNavigationMode.historyThenFallback,
           ),
-          children: [
-            VitTradeHubHero(
-              primaryLabel: 'Đang chạy',
-              primaryValue: '$runningBots',
-              primaryColor: AppColors.buy,
-              secondaryLabel: 'Lãi/lỗ',
-              secondaryValue: _formatSignedMoney(totalProfit),
-              secondaryColor: profitColor,
-            ),
-            VitCtaButton(
-              key: TradingBotsPage.addBotKey,
-              onPressed: () =>
-                  setState(() => _tab = _TradingBotsTab.strategies),
-              height: AppSpacing.inputHeight,
-              leading: const Icon(Icons.add_rounded),
-              child: const Text('Khám phá chiến lược'),
-            ),
-            _BotsTabs(
-              active: _tab,
-              botCount: bots.length,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            if (_tab == _TradingBotsTab.myBots)
-              _MyBotsTab(
-                bots: bots,
-                onToggle: _toggleBot,
-                onDelete: _confirmDeleteBot,
-                onAdd: () => setState(() => _tab = _TradingBotsTab.strategies),
-              )
-            else
-              _StrategiesTab(
-                strategies: snapshot.strategies,
-                onCreate: _openCreateSheet,
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được danh sách bot',
+                message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(tradingBotsSnapshotProvider),
               ),
-            VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              density: VitDensity.compact,
-              title: 'Rủi ro giao dịch tự động',
-              message:
-                  'Bot không đảm bảo lợi nhuận. Hiệu suất quá khứ không đại diện kết quả tương lai.',
-              contractId: snapshot.highRiskContractId,
-            ),
-          ],
+            ],
+            data: (_) {
+              final snapshot = ref.watch(tradeBotsControllerProvider).snapshot;
+              final bots = snapshot.activeBots;
+              final runningBots = bots
+                  .where((bot) => bot.status == TradeBotStatus.running)
+                  .length;
+              final totalProfit = bots.fold(
+                0.0,
+                (sum, bot) => sum + bot.profit,
+              );
+              final profitColor = totalProfit >= 0
+                  ? AppColors.buy
+                  : AppColors.sell;
+              return [
+                VitTradeHubHero(
+                  primaryLabel: 'Đang chạy',
+                  primaryValue: '$runningBots',
+                  primaryColor: AppColors.buy,
+                  secondaryLabel: 'Lãi/lỗ',
+                  secondaryValue: _formatSignedMoney(totalProfit),
+                  secondaryColor: profitColor,
+                ),
+                VitCtaButton(
+                  key: TradingBotsPage.addBotKey,
+                  onPressed: () =>
+                      setState(() => _tab = _TradingBotsTab.strategies),
+                  height: AppSpacing.inputHeight,
+                  leading: const Icon(Icons.add_rounded),
+                  child: const Text('Khám phá chiến lược'),
+                ),
+                _BotsTabs(
+                  active: _tab,
+                  botCount: bots.length,
+                  onChanged: (tab) => setState(() => _tab = tab),
+                ),
+                if (_tab == _TradingBotsTab.myBots)
+                  _MyBotsTab(
+                    bots: bots,
+                    onToggle: _toggleBot,
+                    onDelete: _confirmDeleteBot,
+                    onAdd: () =>
+                        setState(() => _tab = _TradingBotsTab.strategies),
+                  )
+                else
+                  _StrategiesTab(
+                    strategies: snapshot.strategies,
+                    onCreate: _openCreateSheet,
+                  ),
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  density: VitDensity.compact,
+                  title: 'Rủi ro giao dịch tự động',
+                  message:
+                      'Bot không đảm bảo lợi nhuận. Hiệu suất quá khứ không đại diện kết quả tương lai.',
+                  contractId: snapshot.highRiskContractId,
+                ),
+              ];
+            },
+          ),
         ),
         if (_showSuccess)
           Positioned(

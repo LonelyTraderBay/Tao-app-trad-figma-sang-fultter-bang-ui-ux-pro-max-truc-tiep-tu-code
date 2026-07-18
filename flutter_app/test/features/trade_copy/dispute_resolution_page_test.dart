@@ -56,9 +56,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-082 mock repository exposes dispute resolution BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository()
-        .getDisputeResolution();
+  test('SC-082 mock repository exposes dispute resolution BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getDisputeResolution();
 
     expect(snapshot.defaultTabId, 'file');
     expect(snapshot.noticeTitle, 'Fair Dispute Resolution');
@@ -81,8 +82,10 @@ void main() {
       ]),
     );
 
-    final result = const MockTradeCopyTradingRepository()
-        .submitDisputeComplaint(
+    final result =
+        await const MockTradeCopyTradingRepository(
+          loadDelay: Duration.zero,
+        ).submitDisputeComplaint(
           const TradeDisputeComplaintDraft(
             complaintType: 'execution_issue',
             providerId: 'trader-2',

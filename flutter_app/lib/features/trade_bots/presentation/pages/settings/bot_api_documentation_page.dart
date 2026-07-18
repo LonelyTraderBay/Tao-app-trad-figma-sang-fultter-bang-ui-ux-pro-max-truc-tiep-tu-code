@@ -44,25 +44,13 @@ class BotApiDocumentationPage extends ConsumerStatefulWidget {
 
 class _BotApiDocumentationPageState
     extends ConsumerState<BotApiDocumentationPage> {
-  late String _view;
-  late String _language;
+  String? _view;
+  String? _language;
   bool _copied = false;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(tradeBotAnalyticsRepositoryProvider)
-        .getBotApiDocumentation();
-    _view = snapshot.defaultView;
-    _language = snapshot.defaultLanguage;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotApiDocumentation();
+    final snapshotAsync = ref.watch(tradeBotApiDocumentationProvider);
     return VitTradeHubScaffold(
       title: 'API Documentation',
       subtitle: 'Tài liệu API bot cho nhà phát triển',
@@ -76,72 +64,89 @@ class _BotApiDocumentationPageState
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Endpoint',
-          primaryValue: '${snapshot.endpoints.length}',
-          secondaryLabel: 'Sự kiện WS',
-          secondaryValue: '${snapshot.websocketEvents.length}',
-        ),
-        const VitTradeSection(title: 'Tổng quan', child: _IntroCard()),
-        VitTradeSection(
-          title: 'Tài liệu',
-          child: VitTabBar(
-            variant: VitTabBarVariant.segment,
-            activeKey: _view,
-            onChanged: (view) => setState(() => _view = view),
-            tabs: [
-              for (final tab in snapshot.tabs)
-                VitTabItem(
-                  key: tab.id,
-                  label: tab.label,
-                  widgetKey: BotApiDocumentationPage.tabKey(tab.id),
-                ),
-            ],
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được tài liệu API',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotApiDocumentationProvider),
           ),
-        ),
-        VitTradeSection(
-          title: _view == 'endpoints'
-              ? 'Endpoints'
-              : _view == 'websocket'
-              ? 'WebSocket'
-              : 'Examples',
-          child: _view == 'endpoints'
-              ? _EndpointsView(endpoints: snapshot.endpoints)
-              : _view == 'websocket'
-              ? _WebSocketView(
-                  url: snapshot.websocketUrl,
-                  events: snapshot.websocketEvents,
-                )
-              : _ExamplesView(
-                  examples: snapshot.codeExamples,
-                  language: _language,
-                  copied: _copied,
-                  onLanguageChanged: (language) {
-                    setState(() {
-                      _language = language;
-                      _copied = false;
-                    });
-                  },
-                  onCopy: _copy,
-                ),
-        ),
-        VitTradeSection(
-          title: 'Rate Limits',
-          child: _RateLimitsCard(items: snapshot.rateLimits),
-        ),
-        VitTradeSection(
-          title: 'Authentication',
-          child: _AuthCard(header: snapshot.authenticationHeader),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Bot API operational review',
-          message:
-              'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
-          contractId: 'bot-api-documentation-review',
-          statusLabel: 'Read-only documentation',
-        ),
-      ],
+        ],
+        data: (snapshot) {
+          _view ??= snapshot.defaultView;
+          _language ??= snapshot.defaultLanguage;
+          final view = _view!;
+          final language = _language!;
+          return [
+            VitBotSubpageHero(
+              primaryLabel: 'Endpoint',
+              primaryValue: '${snapshot.endpoints.length}',
+              secondaryLabel: 'Sự kiện WS',
+              secondaryValue: '${snapshot.websocketEvents.length}',
+            ),
+            const VitTradeSection(title: 'Tổng quan', child: _IntroCard()),
+            VitTradeSection(
+              title: 'Tài liệu',
+              child: VitTabBar(
+                variant: VitTabBarVariant.segment,
+                activeKey: view,
+                onChanged: (view) => setState(() => _view = view),
+                tabs: [
+                  for (final tab in snapshot.tabs)
+                    VitTabItem(
+                      key: tab.id,
+                      label: tab.label,
+                      widgetKey: BotApiDocumentationPage.tabKey(tab.id),
+                    ),
+                ],
+              ),
+            ),
+            VitTradeSection(
+              title: view == 'endpoints'
+                  ? 'Endpoints'
+                  : view == 'websocket'
+                  ? 'WebSocket'
+                  : 'Examples',
+              child: view == 'endpoints'
+                  ? _EndpointsView(endpoints: snapshot.endpoints)
+                  : view == 'websocket'
+                  ? _WebSocketView(
+                      url: snapshot.websocketUrl,
+                      events: snapshot.websocketEvents,
+                    )
+                  : _ExamplesView(
+                      examples: snapshot.codeExamples,
+                      language: language,
+                      copied: _copied,
+                      onLanguageChanged: (language) {
+                        setState(() {
+                          _language = language;
+                          _copied = false;
+                        });
+                      },
+                      onCopy: _copy,
+                    ),
+            ),
+            VitTradeSection(
+              title: 'Rate Limits',
+              child: _RateLimitsCard(items: snapshot.rateLimits),
+            ),
+            VitTradeSection(
+              title: 'Authentication',
+              child: _AuthCard(header: snapshot.authenticationHeader),
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'Bot API operational review',
+              message:
+                  'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
+              contractId: 'bot-api-documentation-review',
+              statusLabel: 'Read-only documentation',
+            ),
+          ];
+        },
+      ),
     );
   }
 

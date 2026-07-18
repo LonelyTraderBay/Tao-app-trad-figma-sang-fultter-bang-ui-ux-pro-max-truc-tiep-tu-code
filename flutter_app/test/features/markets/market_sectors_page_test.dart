@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-011 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketSectors();
+  test('SC-011 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketSectors();
 
     expect(snapshot.sectors, hasLength(8));
     expect(snapshot.sectors.map((sector) => sector.id), contains('ai'));

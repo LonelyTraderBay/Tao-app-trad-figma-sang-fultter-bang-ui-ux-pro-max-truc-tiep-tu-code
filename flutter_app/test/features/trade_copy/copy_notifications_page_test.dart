@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-068 mock repository exposes copy notifications BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getCopyNotifications();
+  test('SC-068 mock repository exposes copy notifications BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getCopyNotifications();
 
     expect(snapshot.notifications, hasLength(7));
     expect(snapshot.defaultTab, 'all');

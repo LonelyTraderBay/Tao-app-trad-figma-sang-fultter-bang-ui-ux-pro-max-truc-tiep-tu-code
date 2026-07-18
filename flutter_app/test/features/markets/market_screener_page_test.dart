@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-015 mock repository exposes the BE draft query model', () {
-    final repository = const MockMarketRepository();
-    final snapshot = repository.getMarketScreener();
+  test('SC-015 mock repository exposes the BE draft query model', () async {
+    final repository = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repository.getMarketScreener();
 
     expect(snapshot.marketPairs, hasLength(10));
     expect(snapshot.marketPairs.first.id, 'btcusdt');
@@ -62,7 +62,7 @@ void main() {
       ]),
     );
 
-    final gainers = repository.getMarketScreener(
+    final gainers = await repository.getMarketScreener(
       query: const MarketScreenerQuery(
         minChange24h: 3,
         sortBy: MarketScreenerSort.change24h,

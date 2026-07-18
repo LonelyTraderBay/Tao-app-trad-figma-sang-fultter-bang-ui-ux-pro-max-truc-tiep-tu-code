@@ -30,36 +30,47 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-134 mock repository exposes bot API documentation BE draft', () {
-    final snapshot = const MockTradeBotsRepository().getBotApiDocumentation();
+  test(
+    'SC-134 mock repository exposes bot API documentation BE draft',
+    () async {
+      final snapshot = await const MockTradeBotsRepository(
+        loadDelay: Duration.zero,
+      ).getBotApiDocumentation();
 
-    expect(snapshot.tabs.map((item) => item.id), [
-      'endpoints',
-      'websocket',
-      'examples',
-    ]);
-    expect(snapshot.defaultView, 'endpoints');
-    expect(snapshot.defaultLanguage, 'javascript');
-    expect(snapshot.endpoints, hasLength(4));
-    expect(snapshot.endpoints.first.method, 'GET');
-    expect(snapshot.endpoints.first.path, '/api/v1/bots');
-    expect(snapshot.websocketEvents, hasLength(3));
-    expect(snapshot.codeExamples, hasLength(3));
-    expect(snapshot.rateLimits, hasLength(3));
-    expect(snapshot.endpoint, '/api/mobile/trade/trade-bots-api-documentation');
-    expect(snapshot.actionDraft, contains('POST /bots/create'));
-    expect(snapshot.authenticationHeader, 'Authorization: Bearer YOUR_API_KEY');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.tabs.map((item) => item.id), [
+        'endpoints',
+        'websocket',
+        'examples',
+      ]);
+      expect(snapshot.defaultView, 'endpoints');
+      expect(snapshot.defaultLanguage, 'javascript');
+      expect(snapshot.endpoints, hasLength(4));
+      expect(snapshot.endpoints.first.method, 'GET');
+      expect(snapshot.endpoints.first.path, '/api/v1/bots');
+      expect(snapshot.websocketEvents, hasLength(3));
+      expect(snapshot.codeExamples, hasLength(3));
+      expect(snapshot.rateLimits, hasLength(3));
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-bots-api-documentation',
+      );
+      expect(snapshot.actionDraft, contains('POST /bots/create'));
+      expect(
+        snapshot.authenticationHeader,
+        'Authorization: Bearer YOUR_API_KEY',
+      );
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-134 renders API documentation baseline in Trade shell', (
     tester,

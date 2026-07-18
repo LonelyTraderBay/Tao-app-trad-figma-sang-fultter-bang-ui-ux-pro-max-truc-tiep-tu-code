@@ -30,36 +30,40 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-104 mock repository exposes investor compensation BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getInvestorCompensation();
+  test(
+    'SC-104 mock repository exposes investor compensation BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getInvestorCompensation();
 
-    expect(snapshot.coverageLimit, '£85,000');
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/trade/trade-copy-trading-investor-compensation',
-    );
-    expect(snapshot.actionDraft, contains('POST /trade/order-preview'));
-    expect(snapshot.overviewItems.map((item) => item.title), [
-      'Independent Protection',
-      'Free to Claimants',
-      'Fast Payment',
-    ]);
-    expect(snapshot.coverageItems.map((item) => item.label), [
-      'Investments',
-      'Deposits',
-    ]);
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.coverageLimit, '£85,000');
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-copy-trading-investor-compensation',
+      );
+      expect(snapshot.actionDraft, contains('POST /trade/order-preview'));
+      expect(snapshot.overviewItems.map((item) => item.title), [
+        'Independent Protection',
+        'Free to Claimants',
+        'Fast Payment',
+      ]);
+      expect(snapshot.coverageItems.map((item) => item.label), [
+        'Investments',
+        'Deposits',
+      ]);
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-104 renders investor compensation in Trade shell', (
     tester,

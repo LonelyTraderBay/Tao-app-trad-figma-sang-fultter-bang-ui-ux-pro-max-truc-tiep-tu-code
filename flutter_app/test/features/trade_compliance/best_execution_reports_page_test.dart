@@ -31,9 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-096 mock repository exposes best execution BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getBestExecutionReports();
+  test('SC-096 mock repository exposes best execution BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getBestExecutionReports();
 
     expect(snapshot.defaultTab, 'current');
     expect(snapshot.summary.totalOrders, 36630);

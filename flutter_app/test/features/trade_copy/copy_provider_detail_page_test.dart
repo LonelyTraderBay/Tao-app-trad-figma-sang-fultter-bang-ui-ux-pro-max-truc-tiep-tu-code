@@ -37,10 +37,12 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-070 mock repository exposes provider detail BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final notFound = repo.getCopyProviderDetail(providerId: 'provider001');
-    final found = repo.getCopyProviderDetail(providerId: 'ct001');
+  test('SC-070 mock repository exposes provider detail BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final notFound = await repo.getCopyProviderDetail(
+      providerId: 'provider001',
+    );
+    final found = await repo.getCopyProviderDetail(providerId: 'ct001');
 
     expect(notFound.providerId, 'provider001');
     expect(notFound.isNotFound, isTrue);

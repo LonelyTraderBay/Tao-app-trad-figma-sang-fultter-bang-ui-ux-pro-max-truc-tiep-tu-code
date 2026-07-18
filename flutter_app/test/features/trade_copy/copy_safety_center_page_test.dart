@@ -32,9 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-083 mock repository exposes copy safety center BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository()
-        .getCopySafetyCenter();
+  test('SC-083 mock repository exposes copy safety center BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getCopySafetyCenter();
 
     expect(snapshot.defaultTabId, 'verification');
     expect(snapshot.tabs.map((tab) => tab.id), [

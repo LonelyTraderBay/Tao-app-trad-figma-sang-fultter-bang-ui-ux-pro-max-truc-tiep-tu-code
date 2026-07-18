@@ -49,10 +49,7 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeReadModelControllerProvider)
-        .getOrderReceipt();
-    final receipt = snapshot.receipt;
+    final receiptAsync = ref.watch(tradeOrderReceiptProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerSafePadding =
         MediaQuery.paddingOf(context).bottom +
@@ -63,7 +60,6 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
         tradeScrollBottomInset(context, shellRenderMode: mode) +
         _receiptFooterHeight +
         footerSafePadding;
-    final sideLabel = receipt.side == TradeOrderSide.buy ? 'Mua' : 'Bán';
 
     return VitTradeDetailScaffold(
       title: 'Chi tiết lệnh',
@@ -84,20 +80,35 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
         onContinue: () => context.go(AppRoutePaths.tradePair('btcusdt')),
         bottomPadding: footerSafePadding,
       ),
-      children: [
-        VitTradeComplianceHero(
-          title: 'Đặt lệnh thành công!',
-          description: 'Lệnh $sideLabel ${receipt.symbol} đang được xử lý',
-          icon: Icons.check_circle_outline_rounded,
-          accentColor: AppColors.buy,
-        ),
-        _ReceiptCard(receipt: receipt),
-        VitTradeSection(title: 'Lưu ý', child: _WarningNotice()),
-        VitTradeSection(
-          title: 'Hỗ trợ',
-          child: _OrderSupportLink(supportRoute: snapshot.supportRoute),
-        ),
-      ],
+      children: receiptAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được chi tiết lệnh',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeOrderReceiptProvider),
+          ),
+        ],
+        data: (snapshot) {
+          final receipt = snapshot.receipt;
+          final sideLabel = receipt.side == TradeOrderSide.buy ? 'Mua' : 'Bán';
+          return [
+            VitTradeComplianceHero(
+              title: 'Đặt lệnh thành công!',
+              description: 'Lệnh $sideLabel ${receipt.symbol} đang được xử lý',
+              icon: Icons.check_circle_outline_rounded,
+              accentColor: AppColors.buy,
+            ),
+            _ReceiptCard(receipt: receipt),
+            VitTradeSection(title: 'Lưu ý', child: _WarningNotice()),
+            VitTradeSection(
+              title: 'Hỗ trợ',
+              child: _OrderSupportLink(supportRoute: snapshot.supportRoute),
+            ),
+          ];
+        },
+      ),
     );
   }
 }

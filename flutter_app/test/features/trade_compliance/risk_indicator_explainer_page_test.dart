@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-110 mock repository exposes risk indicator BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getRiskIndicatorExplainer();
+  test('SC-110 mock repository exposes risk indicator BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getRiskIndicatorExplainer();
 
     expect(snapshot.productName, 'Mirror Copy Trading');
     expect(snapshot.productSri, 6);

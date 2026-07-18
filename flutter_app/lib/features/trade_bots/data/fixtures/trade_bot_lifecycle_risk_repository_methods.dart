@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_bots_repository.dart';
 mixin _MockTradeBotsRepositoryLifecycleRiskMethods
     on _MockTradeBotsRepositoryBase {
   @override
-  TradeBotsSnapshot getTradingBots() {
+  Future<TradeBotsSnapshot> getTradingBots() async {
+    await _simulateNetwork();
     return const TradeBotsSnapshot(
       trade: _botLifecycleTradeSnapshot,
       strategies: _botStrategies,
@@ -23,7 +24,8 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotTermsSnapshot getBotTermsOfService() {
+  Future<TradeBotTermsSnapshot> getBotTermsOfService() async {
+    await _simulateNetwork();
     return const TradeBotTermsSnapshot(
       infoTitle: 'Legal Agreement Required',
       infoDescription:
@@ -62,7 +64,8 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotRiskDisclosureSnapshot getBotRiskDisclosure() {
+  Future<TradeBotRiskDisclosureSnapshot> getBotRiskDisclosure() async {
+    await _simulateNetwork();
     return const TradeBotRiskDisclosureSnapshot(
       highRiskTitle: 'HIGH RISK WARNING',
       highRiskBody:
@@ -121,7 +124,9 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotSuitabilityAssessmentSnapshot getBotSuitabilityAssessment() {
+  Future<TradeBotSuitabilityAssessmentSnapshot>
+  getBotSuitabilityAssessment() async {
+    await _simulateNetwork();
     return const TradeBotSuitabilityAssessmentSnapshot(
       questions: _botSuitabilityQuestions,
       infoTitle: 'Why we ask:',
@@ -191,7 +196,8 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotRiskDashboardSnapshot getBotRiskDashboard() {
+  Future<TradeBotRiskDashboardSnapshot> getBotRiskDashboard() async {
+    await _simulateNetwork();
     return const TradeBotRiskDashboardSnapshot(
       riskScore: 68,
       riskLabel: 'Medium Risk',
@@ -226,7 +232,8 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotEmergencyStopSnapshot getBotEmergencyStop() {
+  Future<TradeBotEmergencyStopSnapshot> getBotEmergencyStop() async {
+    await _simulateNetwork();
     return const TradeBotEmergencyStopSnapshot(
       warningTitle: 'EMERGENCY STOP',
       warningDescription:
@@ -267,7 +274,8 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotSecuritySettingsSnapshot getBotSecuritySettings() {
+  Future<TradeBotSecuritySettingsSnapshot> getBotSecuritySettings() async {
+    await _simulateNetwork();
     return const TradeBotSecuritySettingsSnapshot(
       twoFaEnabled: true,
       apiKeys: _botSecurityApiKeys,
@@ -293,7 +301,8 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotHistorySnapshot getBotHistory() {
+  Future<TradeBotHistorySnapshot> getBotHistory() async {
+    await _simulateNetwork();
     return const TradeBotHistorySnapshot(
       trades: _botHistoryTrades,
       endpoint: '/api/mobile/trade/trade-bots-history',
@@ -311,7 +320,9 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotPerformanceAnalyticsSnapshot getBotPerformanceAnalytics() {
+  Future<TradeBotPerformanceAnalyticsSnapshot>
+  getBotPerformanceAnalytics() async {
+    await _simulateNetwork();
     return const TradeBotPerformanceAnalyticsSnapshot(
       metrics: TradeBotPerformanceMetrics(
         totalPnl: 199.30,
@@ -355,11 +366,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   TradeBotEmergencyStopResult submitBotEmergencyStop(
     TradeBotEmergencyStopDraft draft,
   ) {
-    final snapshot = getBotEmergencyStop();
     return TradeBotEmergencyStopResult(
       status: draft.confirmed ? 'accepted' : 'rejected',
-      stoppedBotCount: draft.confirmed ? snapshot.bots.length : 0,
-      redirectPath: snapshot.completionPath,
+      stoppedBotCount: draft.confirmed ? _botEmergencyStopBots.length : 0,
+      redirectPath: '/trade/bots',
     );
   }
 

@@ -11,9 +11,11 @@ import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository
 /// file complements that coverage by pinning concrete, hand-verified
 /// values from
 /// `lib/features/trade_copy/data/fixtures/trade_copy_configuration_repository_*.dart`
-/// so a silent fixture edit shows up as a failing assertion. Every method
-/// here is a plain synchronous getter/action — there is no `loadDelay`/
-/// `Future` on this mock (unlike some other feature mocks under ADR-001).
+/// so a silent fixture edit shows up as a failing assertion.
+///
+/// GD4-F3: every method is `Future<T>` — mock simulates network latency via
+/// `loadDelay`; tests pass `Duration.zero` (see
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md).
 ///
 /// Split by behavior group (mirrors the production repository's own
 /// provider-discovery / configuration / lifecycle mixin split): this file
@@ -24,13 +26,15 @@ import 'package:vit_trade_flutter/features/trade_copy/data/trade_copy_repository
 /// `mock_trade_copy_repository_lifecycle_test.dart` for lifecycle/safety
 /// surfaces (including the `tradeCopy` high-risk contract id).
 void main() {
-  const repository = MockTradeCopyTradingRepository();
+  const repository = MockTradeCopyTradingRepository(loadDelay: Duration.zero);
 
   group('MockTradeCopyTradingRepository configuration data smoke test', () {
     test(
       'getCopyConfiguration pins the portfolio totals and default draft',
-      () {
-        final snapshot = repository.getCopyConfiguration(providerId: 'ct001');
+      () async {
+        final snapshot = await repository.getCopyConfiguration(
+          providerId: 'ct001',
+        );
 
         expect(snapshot.providerId, 'ct001');
         expect(snapshot.provider?.id, 'ct001');
@@ -48,8 +52,10 @@ void main() {
 
     test(
       'getCopyConfirmation pins the cooling-off window and consent count',
-      () {
-        final snapshot = repository.getCopyConfirmation(providerId: 'ct001');
+      () async {
+        final snapshot = await repository.getCopyConfirmation(
+          providerId: 'ct001',
+        );
 
         expect(snapshot.providerId, 'ct001');
         expect(snapshot.coolingOffHours, 24);
@@ -60,8 +66,8 @@ void main() {
       },
     );
 
-    test('getCopyPerformance pins the headline return/value figures', () {
-      final snapshot = repository.getCopyPerformance(copyId: 'copy001');
+    test('getCopyPerformance pins the headline return/value figures', () async {
+      final snapshot = await repository.getCopyPerformance(copyId: 'copy001');
 
       expect(snapshot.copyId, 'copy001');
       expect(snapshot.initialCapital, 5000);
@@ -74,34 +80,42 @@ void main() {
       expect(snapshot.metrics, hasLength(4));
     });
 
-    test('getPerformanceAttribution pins the alpha/beta/rSquared figures', () {
-      final snapshot = repository.getPerformanceAttribution(copyId: 'copy001');
+    test(
+      'getPerformanceAttribution pins the alpha/beta/rSquared figures',
+      () async {
+        final snapshot = await repository.getPerformanceAttribution(
+          copyId: 'copy001',
+        );
 
-      expect(snapshot.copyId, 'copy001');
-      expect(snapshot.totalReturnPct, 9.2);
-      expect(snapshot.alphaPct, -4.1);
-      expect(snapshot.beta, 1.15);
-      expect(snapshot.rSquared, .72);
-      expect(snapshot.returns, hasLength(30));
-      expect(snapshot.drawdowns, hasLength(30));
-      expect(snapshot.monteCarloPaths, hasLength(3));
-      expect(snapshot.correlationPoints, hasLength(10));
-    });
+        expect(snapshot.copyId, 'copy001');
+        expect(snapshot.totalReturnPct, 9.2);
+        expect(snapshot.alphaPct, -4.1);
+        expect(snapshot.beta, 1.15);
+        expect(snapshot.rSquared, .72);
+        expect(snapshot.returns, hasLength(30));
+        expect(snapshot.drawdowns, hasLength(30));
+        expect(snapshot.monteCarloPaths, hasLength(3));
+        expect(snapshot.correlationPoints, hasLength(10));
+      },
+    );
 
-    test('getCopyAuditLog pins the tab badge counts and retention years', () {
-      final snapshot = repository.getCopyAuditLog(copyId: 'copy001');
+    test(
+      'getCopyAuditLog pins the tab badge counts and retention years',
+      () async {
+        final snapshot = await repository.getCopyAuditLog(copyId: 'copy001');
 
-      expect(snapshot.copyId, 'copy001');
-      expect(snapshot.tabs, hasLength(5));
-      expect(snapshot.tabs.first.id, 'all');
-      expect(snapshot.tabs.first.badge, 7);
-      expect(snapshot.events, hasLength(7));
-      expect(snapshot.exportFormats, hasLength(3));
-      expect(snapshot.retentionYears, 5);
-    });
+        expect(snapshot.copyId, 'copy001');
+        expect(snapshot.tabs, hasLength(5));
+        expect(snapshot.tabs.first.id, 'all');
+        expect(snapshot.tabs.first.badge, 7);
+        expect(snapshot.events, hasLength(7));
+        expect(snapshot.exportFormats, hasLength(3));
+        expect(snapshot.retentionYears, 5);
+      },
+    );
 
-    test('getPortfolioRiskAnalysis pins the exposure/VaR figures', () {
-      final snapshot = repository.getPortfolioRiskAnalysis();
+    test('getPortfolioRiskAnalysis pins the exposure/VaR figures', () async {
+      final snapshot = await repository.getPortfolioRiskAnalysis();
 
       expect(snapshot.totalExposure, 8000);
       expect(snapshot.var95, -273);
@@ -115,9 +129,11 @@ void main() {
     });
 
     test('previewCopyConfiguration reports ready with no blocking errors for '
-        'a valid draft', () {
-      final found = repository.getCopyConfiguration(providerId: 'ct001');
-      final preview = repository.previewCopyConfiguration(found.defaultDraft);
+        'a valid draft', () async {
+      final found = await repository.getCopyConfiguration(providerId: 'ct001');
+      final preview = await repository.previewCopyConfiguration(
+        found.defaultDraft,
+      );
 
       expect(preview.providerId, 'ct001');
       expect(preview.status, 'ready');
@@ -126,9 +142,9 @@ void main() {
     });
 
     test('submitCopyConfirmation pins the audit trail id format and pending '
-        'cooling-off status', () {
-      final found = repository.getCopyConfirmation(providerId: 'ct001');
-      final result = repository.submitCopyConfirmation(
+        'cooling-off status', () async {
+      final found = await repository.getCopyConfirmation(providerId: 'ct001');
+      final result = await repository.submitCopyConfirmation(
         TradeCopyConfirmationRequest(
           providerId: 'ct001',
           configuration: found.configuration,
@@ -147,8 +163,8 @@ void main() {
 
     test(
       'submitCopyConfirmation blocks when a required consent is missing',
-      () {
-        final result = repository.submitCopyConfirmation(
+      () async {
+        final result = await repository.submitCopyConfirmation(
           const TradeCopyConfirmationRequest(
             providerId: 'ct001',
             configuration: TradeCopyConfigurationDraft(
@@ -175,8 +191,8 @@ void main() {
 
     test(
       'createCopyAuditExport pins the export id format and download url',
-      () {
-        final result = repository.createCopyAuditExport(
+      () async {
+        final result = await repository.createCopyAuditExport(
           const TradeCopyAuditExportRequest(
             copyId: 'copy001',
             format: 'csv',

@@ -51,9 +51,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-019 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getMarketDepth();
+  test('SC-019 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarketDepth();
 
     expect(snapshot.pair.symbol, 'BTC/USDT');
     expect(snapshot.depth.spread.toStringAsFixed(2), '40.53');
@@ -85,7 +85,7 @@ void main() {
       ]),
     );
 
-    final fifteenLevels = repo.getMarketDepth(levels: 15);
+    final fifteenLevels = await repo.getMarketDepth(levels: 15);
     expect(fifteenLevels.depth.bids, hasLength(15));
     expect(fifteenLevels.depth.asks, hasLength(15));
   });

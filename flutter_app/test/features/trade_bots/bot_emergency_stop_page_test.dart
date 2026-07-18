@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-121 mock repository exposes emergency stop BE draft', () {
-    final repo = const MockTradeBotsRepository();
-    final snapshot = repo.getBotEmergencyStop();
+  test('SC-121 mock repository exposes emergency stop BE draft', () async {
+    final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getBotEmergencyStop();
     final result = repo.submitBotEmergencyStop(
       const TradeBotEmergencyStopDraft(
         reasonId: 'crash',

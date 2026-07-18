@@ -3,7 +3,10 @@ part of '../repositories/mock_market_repository.dart';
 mixin _MockMarketRepositoryCalendarDerivativesMethods
     on _MockMarketRepositoryBase {
   @override
-  MarketCalendarSnapshot getMarketCalendar({MarketCalendarQuery? query}) {
+  Future<MarketCalendarSnapshot> getMarketCalendar({
+    MarketCalendarQuery? query,
+  }) async {
+    await _simulateNetwork();
     final appliedQuery = query ?? MarketCalendarQuery.defaults;
     final events = _applyCalendarQuery(_marketEvents, appliedQuery);
 
@@ -53,9 +56,10 @@ mixin _MockMarketRepositoryCalendarDerivativesMethods
   }
 
   @override
-  MarketDerivativesSnapshot getMarketDerivatives({
+  Future<MarketDerivativesSnapshot> getMarketDerivatives({
     MarketDerivativesSort sortBy = MarketDerivativesSort.openInterest,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final sortedPairs = [..._derivativePairs];
     switch (sortBy) {
       case MarketDerivativesSort.openInterest:
@@ -123,10 +127,11 @@ mixin _MockMarketRepositoryCalendarDerivativesMethods
   }
 
   @override
-  MarketDepthSnapshot getMarketDepth({
+  Future<MarketDepthSnapshot> getMarketDepth({
     String pairId = 'btcusdt',
     int levels = 25,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final normalizedLevels = _marketDepthLevels.contains(levels) ? levels : 25;
     final pair = _findMarketPair(pairId);
     final depth = _generateDepthData(pair.price, normalizedLevels);

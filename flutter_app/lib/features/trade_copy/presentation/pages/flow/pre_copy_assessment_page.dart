@@ -44,46 +44,89 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       tradePreCopyAssessmentProvider(widget.providerId),
     );
 
-    if (snapshot.isNotFound) {
-      return const VitPageLayout(
-        variant: VitPageVariant.flush,
+    return snapshotAsync.when(
+      loading: () => VitTradeDetailScaffold(
+        title: 'Đánh giá rủi ro',
         semanticLabel: 'Đánh giá rủi ro trước khi copy',
         semanticIdentifier: 'SC-071',
-        child: SizedBox.expand(),
-      );
-    }
-
-    return VitTradeDetailScaffold(
-      title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
-      semanticLabel: 'Đánh giá rủi ro trước khi copy',
-      semanticIdentifier: 'SC-071',
-      contentKey: PreCopyAssessmentPage.contentKey,
-      shellRenderMode: widget.shellRenderMode,
-      useCopyTradingInset: true,
-      showProductTabs: false,
-      onBack: () => goBackOrFallback(
-        context,
-        fallbackPath: AppRoutePaths.tradeCopyProvider(widget.providerId),
-        mode: BackNavigationMode.historyThenFallback,
+        contentKey: PreCopyAssessmentPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        useCopyTradingInset: true,
+        showProductTabs: false,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyProvider(widget.providerId),
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        children: const [VitSkeletonList()],
       ),
-      children: [
-        _started
-            ? VitTradeSection(
-                title: 'Câu hỏi',
-                child: _QuestionsSummary(snapshot: snapshot),
-              )
-            : VitTradeSection(
-                title: 'Bắt đầu',
-                child: _WelcomeAssessment(
-                  snapshot: snapshot,
-                  onStart: () => setState(() => _started = true),
-                ),
-              ),
-      ],
+      error: (error, stackTrace) => VitTradeDetailScaffold(
+        title: 'Đánh giá rủi ro',
+        semanticLabel: 'Đánh giá rủi ro trước khi copy',
+        semanticIdentifier: 'SC-071',
+        contentKey: PreCopyAssessmentPage.contentKey,
+        shellRenderMode: widget.shellRenderMode,
+        useCopyTradingInset: true,
+        showProductTabs: false,
+        onBack: () => goBackOrFallback(
+          context,
+          fallbackPath: AppRoutePaths.tradeCopyProvider(widget.providerId),
+          mode: BackNavigationMode.historyThenFallback,
+        ),
+        children: [
+          VitErrorState(
+            title: 'Không tải được đánh giá rủi ro',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(
+              tradePreCopyAssessmentProvider(widget.providerId),
+            ),
+          ),
+        ],
+      ),
+      data: (snapshot) {
+        if (snapshot.isNotFound) {
+          return const VitPageLayout(
+            variant: VitPageVariant.flush,
+            semanticLabel: 'Đánh giá rủi ro trước khi copy',
+            semanticIdentifier: 'SC-071',
+            child: SizedBox.expand(),
+          );
+        }
+
+        return VitTradeDetailScaffold(
+          title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
+          semanticLabel: 'Đánh giá rủi ro trước khi copy',
+          semanticIdentifier: 'SC-071',
+          contentKey: PreCopyAssessmentPage.contentKey,
+          shellRenderMode: widget.shellRenderMode,
+          useCopyTradingInset: true,
+          showProductTabs: false,
+          onBack: () => goBackOrFallback(
+            context,
+            fallbackPath: AppRoutePaths.tradeCopyProvider(widget.providerId),
+            mode: BackNavigationMode.historyThenFallback,
+          ),
+          children: [
+            _started
+                ? VitTradeSection(
+                    title: 'Câu hỏi',
+                    child: _QuestionsSummary(snapshot: snapshot),
+                  )
+                : VitTradeSection(
+                    title: 'Bắt đầu',
+                    child: _WelcomeAssessment(
+                      snapshot: snapshot,
+                      onStart: () => setState(() => _started = true),
+                    ),
+                  ),
+          ],
+        );
+      },
     );
   }
 }

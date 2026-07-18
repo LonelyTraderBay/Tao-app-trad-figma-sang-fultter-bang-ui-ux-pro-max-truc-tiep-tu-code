@@ -17,75 +17,99 @@ void main() {
 
   group('MockTradeTerminalRepository smoke test', () {
     group('getters', () {
-      test('getTrade / getOrdersHistory / getOrderReceipt', () {
-        expect(repo.getTrade(), isA<TradeScreenSnapshot>());
-        expect(repo.getTrade(pairId: 'ethusdt'), isA<TradeScreenSnapshot>());
-        expect(repo.getOrdersHistory(), isA<TradeOrdersHistorySnapshot>());
-        expect(repo.getOrderReceipt(), isA<TradeOrderReceiptSnapshot>());
+      test('getTrade / getOrdersHistory / getOrderReceipt', () async {
+        expect(await repo.getTrade(), isA<TradeScreenSnapshot>());
+        expect(
+          await repo.getTrade(pairId: 'ethusdt'),
+          isA<TradeScreenSnapshot>(),
+        );
+        expect(
+          await repo.getOrdersHistory(),
+          isA<TradeOrdersHistorySnapshot>(),
+        );
+        expect(await repo.getOrderReceipt(), isA<TradeOrderReceiptSnapshot>());
       });
 
-      test('getTradeSettings / getTradePositions / getTradeExport', () {
-        expect(repo.getTradeSettings(), isA<TradeSettingsSnapshot>());
-        final positions = repo.getTradePositions();
+      test('getTradeSettings / getTradePositions / getTradeExport', () async {
+        expect(await repo.getTradeSettings(), isA<TradeSettingsSnapshot>());
+        final positions = await repo.getTradePositions();
         expect(positions, isA<TradePositionsSnapshot>());
         expect(positions.positions, hasLength(6));
-        expect(repo.getTradeExport(), isA<TradeExportSnapshot>());
+        expect(await repo.getTradeExport(), isA<TradeExportSnapshot>());
       });
 
       test(
         'getAdvancedChart / getConvert / getFutures / getFuturesLeverage',
-        () {
-          expect(repo.getAdvancedChart(), isA<TradeAdvancedChartSnapshot>());
+        () async {
           expect(
-            repo.getAdvancedChart(pairId: 'ethusdt'),
+            await repo.getAdvancedChart(),
             isA<TradeAdvancedChartSnapshot>(),
           );
-          expect(repo.getConvert(), isA<TradeConvertSnapshot>());
-          final futures = repo.getFutures();
+          expect(
+            await repo.getAdvancedChart(pairId: 'ethusdt'),
+            isA<TradeAdvancedChartSnapshot>(),
+          );
+          expect(await repo.getConvert(), isA<TradeConvertSnapshot>());
+          final futures = await repo.getFutures();
           expect(futures, isA<TradeFuturesSnapshot>());
           expect(futures.positions, hasLength(2));
           expect(
-            repo.getFutures(pairId: 'ethusdt'),
+            await repo.getFutures(pairId: 'ethusdt'),
             isA<TradeFuturesSnapshot>(),
           );
           expect(
-            repo.getFuturesLeverage(),
+            await repo.getFuturesLeverage(),
             isA<TradeFuturesLeverageSnapshot>(),
           );
           expect(
-            repo.getFuturesLeverage(pairId: 'ethusdt'),
+            await repo.getFuturesLeverage(pairId: 'ethusdt'),
             isA<TradeFuturesLeverageSnapshot>(),
           );
         },
       );
 
-      test('getRiskManagement / getExecutionQuality / getAdvancedTools', () {
-        expect(repo.getRiskManagement(), isA<TradeRiskManagementSnapshot>());
-        expect(
-          repo.getExecutionQuality(),
-          isA<TradeExecutionQualitySnapshot>(),
-        );
-        expect(repo.getAdvancedTools(), isA<TradeAdvancedToolsSnapshot>());
-      });
+      test(
+        'getRiskManagement / getExecutionQuality / getAdvancedTools',
+        () async {
+          expect(
+            await repo.getRiskManagement(),
+            isA<TradeRiskManagementSnapshot>(),
+          );
+          expect(
+            await repo.getExecutionQuality(),
+            isA<TradeExecutionQualitySnapshot>(),
+          );
+          expect(
+            await repo.getAdvancedTools(),
+            isA<TradeAdvancedToolsSnapshot>(),
+          );
+        },
+      );
 
       test(
         'getMarginTrading / getMarginTradingHub / getAdvancedTradingDemo / getAdvancedAnalytics',
-        () {
-          expect(repo.getMarginTrading(), isA<TradeMarginTradingSnapshot>());
+        () async {
           expect(
-            repo.getMarginTrading(pairId: 'ethusdt', pairRouteVariant: true),
+            await repo.getMarginTrading(),
             isA<TradeMarginTradingSnapshot>(),
           );
           expect(
-            repo.getMarginTradingHub(),
+            await repo.getMarginTrading(
+              pairId: 'ethusdt',
+              pairRouteVariant: true,
+            ),
+            isA<TradeMarginTradingSnapshot>(),
+          );
+          expect(
+            await repo.getMarginTradingHub(),
             isA<TradeMarginTradingHubSnapshot>(),
           );
           expect(
-            repo.getAdvancedTradingDemo(),
+            await repo.getAdvancedTradingDemo(),
             isA<TradeAdvancedTradingDemoSnapshot>(),
           );
           expect(
-            repo.getAdvancedAnalytics(),
+            await repo.getAdvancedAnalytics(),
             isA<TradeAdvancedAnalyticsSnapshot>(),
           );
         },
@@ -93,15 +117,15 @@ void main() {
     });
 
     group('write / action methods', () {
-      test('patchTradeSettings', () {
-        final settings = repo.getTradeSettings().settings;
-        final result = repo.patchTradeSettings(settings);
+      test('patchTradeSettings', () async {
+        final settings = (await repo.getTradeSettings()).settings;
+        final result = await repo.patchTradeSettings(settings);
         expect(result, isA<TradeSettings>());
         expect(result.defaultOrderType, 'limit');
       });
 
-      test('createTradeExport', () {
-        final result = repo.createTradeExport(
+      test('createTradeExport', () async {
+        final result = await repo.createTradeExport(
           const TradeExportRequest(
             format: 'csv',
             period: '30d',
@@ -111,7 +135,7 @@ void main() {
         expect(result, isA<TradeExportResult>());
       });
 
-      test('previewConvert / submitConvert', () {
+      test('previewConvert / submitConvert', () async {
         const request = TradeConvertRequest(
           fromSymbol: 'USDT',
           toSymbol: 'BTC',
@@ -119,8 +143,8 @@ void main() {
           slippagePct: .5,
           mode: 'market',
         );
-        expect(repo.previewConvert(request), isA<TradeConvertQuote>());
-        expect(repo.submitConvert(request), isA<TradeConvertReceipt>());
+        expect(await repo.previewConvert(request), isA<TradeConvertQuote>());
+        expect(await repo.submitConvert(request), isA<TradeConvertReceipt>());
       });
 
       test('previewFuturesOrder / submitFuturesOrder', () async {
@@ -131,7 +155,10 @@ void main() {
           margin: 500,
           leverage: 10,
         );
-        expect(repo.previewFuturesOrder(draft), isA<TradeFuturesPreview>());
+        expect(
+          await repo.previewFuturesOrder(draft),
+          isA<TradeFuturesPreview>(),
+        );
         expect(
           await repo.submitFuturesOrder(draft),
           isA<TradeFuturesReceipt>(),
@@ -140,7 +167,7 @@ void main() {
 
       test('previewFuturesLeverage / submitFuturesLeverage', () async {
         expect(
-          repo.previewFuturesLeverage(
+          await repo.previewFuturesLeverage(
             const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 10),
           ),
           isA<TradeFuturesLeveragePreview>(),
@@ -153,8 +180,8 @@ void main() {
         );
       });
 
-      test('submitOcoOrder', () {
-        final result = repo.submitOcoOrder(
+      test('submitOcoOrder', () async {
+        final result = await repo.submitOcoOrder(
           const TradeOcoOrderDraft(
             symbol: 'BTC/USDT',
             side: TradeOrderSide.buy,
@@ -168,8 +195,8 @@ void main() {
         expect(result.status, isNotEmpty);
       });
 
-      test('calculatePositionSize', () {
-        final result = repo.calculatePositionSize(
+      test('calculatePositionSize', () async {
+        final result = await repo.calculatePositionSize(
           const TradePositionSizeRequest(
             accountBalance: 50000,
             riskPct: 1,
@@ -181,14 +208,14 @@ void main() {
         expect(result.suggestedAmount, greaterThan(0));
       });
 
-      test('updateSlippageSettings', () {
-        final current = repo.getExecutionQuality().slippageSettings;
-        final result = repo.updateSlippageSettings(current);
+      test('updateSlippageSettings', () async {
+        final current = (await repo.getExecutionQuality()).slippageSettings;
+        final result = await repo.updateSlippageSettings(current);
         expect(result, isA<TradeSlippageSettings>());
       });
 
-      test('amendOrder', () {
-        final result = repo.amendOrder(
+      test('amendOrder', () async {
+        final result = await repo.amendOrder(
           const TradeOrderAmendmentRequest(
             orderId: 'ord001',
             newPrice: 69000,
@@ -199,8 +226,8 @@ void main() {
         expect(result.queuePositionPreserved, isTrue);
       });
 
-      test('submitAdvancedToolAction', () {
-        final result = repo.submitAdvancedToolAction(
+      test('submitAdvancedToolAction', () async {
+        final result = await repo.submitAdvancedToolAction(
           const TradeAdvancedToolActionRequest(
             toolId: 'bulk',
             action: 'cancel',
@@ -218,15 +245,15 @@ void main() {
           price: 67543.21,
           amount: .1,
         );
-        final preview = repo.previewOrder(draft);
+        final preview = await repo.previewOrder(draft);
         expect(preview, isA<TradeOrderPreview>());
         expect(preview.total, closeTo(6754.321, .001));
         final receipt = await repo.submitOrder(draft);
         expect(receipt, isA<TradeOrderReceipt>());
       });
 
-      test('submitOrderAction', () {
-        final result = repo.submitOrderAction(
+      test('submitOrderAction', () async {
+        final result = await repo.submitOrderAction(
           orderId: 'ord-open-001',
           action: 'cancel',
         );

@@ -52,9 +52,7 @@ class _CassReconciliationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getCassReconciliation();
+    final async = ref.watch(tradeCassReconciliationProvider);
     return VitTradeHubScaffold(
       title: 'CASS Reconciliation',
       subtitle: 'Daily Client Money Matching',
@@ -68,68 +66,79 @@ class _CassReconciliationPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       useCopyTradingInset: true,
-      children: [
-        VitTradeComplianceSection(
-          title: 'CASS status',
-          statusPill: VitStatusPill(
-            label: '${snapshot.outstandingCount} outstanding',
-            status: snapshot.outstandingCount == 0
-                ? VitStatusPillStatus.success
-                : VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeCassReconciliationProvider),
           ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Reconciled',
-              value: '${snapshot.reconciledCount}',
+        ],
+        data: (snapshot) => [
+          VitTradeComplianceSection(
+            title: 'CASS status',
+            statusPill: VitStatusPill(
+              label: '${snapshot.outstandingCount} outstanding',
+              status: snapshot.outstandingCount == 0
+                  ? VitStatusPillStatus.success
+                  : VitStatusPillStatus.warning,
+              size: VitStatusPillSize.sm,
             ),
-            VitTradeComplianceItem(
-              label: 'Records',
-              value: '${snapshot.records.length}',
-            ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Reconciliation',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Review CASS reconciliation evidence',
-                message:
-                    'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
-                density: VitDensity.compact,
+            items: [
+              VitTradeComplianceItem(
+                label: 'Reconciled',
+                value: '${snapshot.reconciledCount}',
               ),
-              _SummaryGrid(snapshot: snapshot),
-              VitSegmentedTabBar(
-                tabs: [
-                  for (final tab in const [
-                    ('recent', 'Recent (7 Days)'),
-                    ('history', 'History'),
-                  ])
-                    VitTabItem(
-                      key: tab.$1,
-                      label: tab.$2,
-                      widgetKey: CassReconciliationPage.tabKey(tab.$1),
-                    ),
-                ],
-                activeKey: _tab,
-                onChanged: _setTab,
+              VitTradeComplianceItem(
+                label: 'Records',
+                value: '${snapshot.records.length}',
               ),
-              const VitSectionHeader(
-                title: 'Reconciliation Records',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                variant: VitSectionHeaderVariant.accentBar,
-                accentColor: _cassPrimary,
-              ),
-              for (final record in snapshot.records)
-                _RecordCard(record: record),
-              const _ExportButton(),
             ],
           ),
-        ),
-      ],
+          VitTradeSection(
+            title: 'Reconciliation',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Review CASS reconciliation evidence',
+                  message:
+                      'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
+                  density: VitDensity.compact,
+                ),
+                _SummaryGrid(snapshot: snapshot),
+                VitSegmentedTabBar(
+                  tabs: [
+                    for (final tab in const [
+                      ('recent', 'Recent (7 Days)'),
+                      ('history', 'History'),
+                    ])
+                      VitTabItem(
+                        key: tab.$1,
+                        label: tab.$2,
+                        widgetKey: CassReconciliationPage.tabKey(tab.$1),
+                      ),
+                  ],
+                  activeKey: _tab,
+                  onChanged: _setTab,
+                ),
+                const VitSectionHeader(
+                  title: 'Reconciliation Records',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _cassPrimary,
+                ),
+                for (final record in snapshot.records)
+                  _RecordCard(record: record),
+                const _ExportButton(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

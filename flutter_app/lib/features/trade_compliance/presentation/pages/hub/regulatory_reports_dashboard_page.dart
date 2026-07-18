@@ -62,9 +62,7 @@ class _RegulatoryReportsDashboardPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getRegulatoryReportsDashboard();
+    final async = ref.watch(tradeRegulatoryReportsDashboardProvider);
     return Material(
       color: _dashBackground,
       child: Stack(
@@ -87,100 +85,113 @@ class _RegulatoryReportsDashboardPageState
                 onPressed: () => setState(() => _notice = 'Export queued'),
               ),
             ],
-            children: [
-              VitTradeSection(
-                title: 'KPIs',
-                child: _KpiGrid(totals: snapshot.totals),
-              ),
-              const VitTradeSection(
-                title: 'Review',
-                child: VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Regulatory report review',
-                  message:
-                      'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
-                  contractId: 'regulatory-reports-review',
+            children: async.when(
+              loading: () => const [VitSkeletonList()],
+              error: (error, stackTrace) => [
+                VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(tradeRegulatoryReportsDashboardProvider),
                 ),
-              ),
-              VitTradeComplianceSection(
-                title: 'Report review',
-                statusPill: const VitStatusPill(
-                  label: 'SLA and failures visible',
-                  status: VitStatusPillStatus.warning,
-                  size: VitStatusPillSize.sm,
+              ],
+              data: (snapshot) => [
+                VitTradeSection(
+                  title: 'KPIs',
+                  child: _KpiGrid(totals: snapshot.totals),
                 ),
-                items: [
-                  VitTradeComplianceItem(
-                    label: 'Success rate',
-                    value: '${snapshot.totals.successRate.toStringAsFixed(1)}%',
+                const VitTradeSection(
+                  title: 'Review',
+                  child: VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Regulatory report review',
+                    message:
+                        'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
+                    contractId: 'regulatory-reports-review',
                   ),
-                  VitTradeComplianceItem(
-                    label: 'Failed',
-                    value: '${snapshot.totals.failed}',
+                ),
+                VitTradeComplianceSection(
+                  title: 'Report review',
+                  statusPill: const VitStatusPill(
+                    label: 'SLA and failures visible',
+                    status: VitStatusPillStatus.warning,
+                    size: VitStatusPillSize.sm,
                   ),
-                ],
-              ),
-              VitTradeSection(
-                title: 'Dashboard',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    VitTradeComplianceHero(
-                      title: '100% SLA Compliance (Last 7 Days)',
-                      description:
-                          'All reports submitted within T+1. Zero regulatory '
-                          'breaches. Avg latency: '
-                          '${snapshot.totals.avgLatency.round()}s.',
-                      icon: Icons.check_circle_outline,
-                      accentColor: AppColors.text1,
+                  items: [
+                    VitTradeComplianceItem(
+                      label: 'Success rate',
+                      value:
+                          '${snapshot.totals.successRate.toStringAsFixed(1)}%',
                     ),
-                    _RangeSelector(
-                      ranges: snapshot.timeRanges,
-                      activeId: _range,
-                      onChanged: (id) => setState(() => _range = id),
-                    ),
-                    VitTabBar(
-                      activeKey: _tab,
-                      tabs: [
-                        for (final tab in const [
-                          ('overview', 'Overview'),
-                          ('queue', 'Queue'),
-                          ('compliance', 'Compliance'),
-                          ('exports', 'Exports'),
-                        ])
-                          VitTabItem(
-                            key: tab.$1,
-                            label: tab.$2,
-                            widgetKey: RegulatoryReportsDashboardPage.tabKey(
-                              tab.$1,
-                            ),
-                          ),
-                      ],
-                      onChanged: (id) => setState(() => _tab = id),
-                      variant: VitTabBarVariant.segment,
-                    ),
-                    if (_tab == 'overview')
-                      _OverviewTab(snapshot: snapshot)
-                    else if (_tab == 'queue')
-                      _QueueTab(snapshot: snapshot)
-                    else if (_tab == 'compliance')
-                      _ComplianceTab(totals: snapshot.totals)
-                    else
-                      _ExportsTab(
-                        onNotice: (text) => setState(() => _notice = text),
-                      ),
-                    _QuickActions(
-                      onQueue: () => context.push(
-                        AppRoutePaths.tradeCopyTransactionReporting,
-                      ),
-                      onArmStatus: () => context.push(
-                        AppRoutePaths.tradeCopyArmIntegrationStatus,
-                      ),
+                    VitTradeComplianceItem(
+                      label: 'Failed',
+                      value: '${snapshot.totals.failed}',
                     ),
                   ],
                 ),
-              ),
-            ],
+                VitTradeSection(
+                  title: 'Dashboard',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      VitTradeComplianceHero(
+                        title: '100% SLA Compliance (Last 7 Days)',
+                        description:
+                            'All reports submitted within T+1. Zero regulatory '
+                            'breaches. Avg latency: '
+                            '${snapshot.totals.avgLatency.round()}s.',
+                        icon: Icons.check_circle_outline,
+                        accentColor: AppColors.text1,
+                      ),
+                      _RangeSelector(
+                        ranges: snapshot.timeRanges,
+                        activeId: _range,
+                        onChanged: (id) => setState(() => _range = id),
+                      ),
+                      VitTabBar(
+                        activeKey: _tab,
+                        tabs: [
+                          for (final tab in const [
+                            ('overview', 'Overview'),
+                            ('queue', 'Queue'),
+                            ('compliance', 'Compliance'),
+                            ('exports', 'Exports'),
+                          ])
+                            VitTabItem(
+                              key: tab.$1,
+                              label: tab.$2,
+                              widgetKey: RegulatoryReportsDashboardPage.tabKey(
+                                tab.$1,
+                              ),
+                            ),
+                        ],
+                        onChanged: (id) => setState(() => _tab = id),
+                        variant: VitTabBarVariant.segment,
+                      ),
+                      if (_tab == 'overview')
+                        _OverviewTab(snapshot: snapshot)
+                      else if (_tab == 'queue')
+                        _QueueTab(snapshot: snapshot)
+                      else if (_tab == 'compliance')
+                        _ComplianceTab(totals: snapshot.totals)
+                      else
+                        _ExportsTab(
+                          onNotice: (text) => setState(() => _notice = text),
+                        ),
+                      _QuickActions(
+                        onQueue: () => context.push(
+                          AppRoutePaths.tradeCopyTransactionReporting,
+                        ),
+                        onArmStatus: () => context.push(
+                          AppRoutePaths.tradeCopyArmIntegrationStatus,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           if (_notice != null)
             Positioned(

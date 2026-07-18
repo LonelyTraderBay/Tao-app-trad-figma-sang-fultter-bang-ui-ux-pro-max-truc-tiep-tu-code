@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-021 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getPortfolioTracker();
+  test('SC-021 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getPortfolioTracker();
 
     expect(snapshot.stats.totalValue, 56279.10);
     expect(snapshot.stats.totalPnlPct, 14.53);
@@ -72,7 +72,9 @@ void main() {
       ]),
     );
 
-    final pnlSorted = repo.getPortfolioTracker(sortBy: MarketPortfolioSort.pnl);
+    final pnlSorted = await repo.getPortfolioTracker(
+      sortBy: MarketPortfolioSort.pnl,
+    );
     expect(pnlSorted.holdings.first.symbol, 'SOL');
   });
 

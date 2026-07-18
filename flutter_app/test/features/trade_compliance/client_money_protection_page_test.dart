@@ -31,9 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-102 mock repository exposes client money BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getClientMoneyProtection();
+  test('SC-102 mock repository exposes client money BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getClientMoneyProtection();
 
     expect(snapshot.balance, 45230.50);
     expect(snapshot.trustAccount, 'Barclays UK');

@@ -3,9 +3,9 @@ part of '../repositories/mock_trade_terminal_repository.dart';
 mixin _MockTradeTerminalRepositoryConversionsUtilitiesMethods
     on _MockTradeTerminalRepositoryBase {
   @override
-  TradeExportSnapshot getTradeExport() {
+  Future<TradeExportSnapshot> getTradeExport() async {
     return TradeExportSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       stats: const TradeExportStats(
         totalTrades: 847,
         totalVolume: 2458300,
@@ -29,9 +29,9 @@ mixin _MockTradeTerminalRepositoryConversionsUtilitiesMethods
   }
 
   @override
-  TradeConvertSnapshot getConvert() {
+  Future<TradeConvertSnapshot> getConvert() async {
     return TradeConvertSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       assets: _convertAssets,
       favoritePairs: _convertFavoritePairs,
       history: _convertHistory,
@@ -56,7 +56,10 @@ mixin _MockTradeTerminalRepositoryConversionsUtilitiesMethods
   }
 
   @override
-  TradeExportResult createTradeExport(TradeExportRequest request) {
+  Future<TradeExportResult> createTradeExport(
+    TradeExportRequest request,
+  ) async {
+    await _simulateNetwork();
     return TradeExportResult(
       exportId: 'EXP-TRADE-054',
       format: request.format,
@@ -66,7 +69,8 @@ mixin _MockTradeTerminalRepositoryConversionsUtilitiesMethods
   }
 
   @override
-  TradeConvertQuote previewConvert(TradeConvertRequest request) {
+  Future<TradeConvertQuote> previewConvert(TradeConvertRequest request) async {
+    await _simulateNetwork();
     final fromAsset = _convertAssetBySymbol(request.fromSymbol);
     final toAsset = _convertAssetBySymbol(request.toSymbol);
     final grossRate = fromAsset.priceUsd / toAsset.priceUsd;
@@ -92,10 +96,12 @@ mixin _MockTradeTerminalRepositoryConversionsUtilitiesMethods
   }
 
   @override
-  TradeConvertReceipt submitConvert(TradeConvertRequest request) {
+  Future<TradeConvertReceipt> submitConvert(TradeConvertRequest request) async {
+    // Không gọi `_simulateNetwork()` riêng — `previewConvert()` bên dưới đã
+    // tự mô phỏng độ trễ/lỗi, gọi thêm sẽ cộng dồn delay.
     return TradeConvertReceipt(
       convertId: 'CVT-DEMO-056',
-      quote: previewConvert(request),
+      quote: await previewConvert(request),
       status: 'submitted',
     );
   }

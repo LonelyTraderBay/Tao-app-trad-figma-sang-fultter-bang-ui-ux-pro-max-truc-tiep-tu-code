@@ -34,35 +34,45 @@ final class MockTradeRepository implements TradeRepository {
   );
 
   @override
-  TradeScreenSnapshot getTrade({String pairId = 'btcusdt'}) =>
+  Future<TradeScreenSnapshot> getTrade({String pairId = 'btcusdt'}) =>
       _terminal.getTrade(pairId: pairId);
 
   @override
-  TradeOrdersHistorySnapshot getOrdersHistory() => _terminal.getOrdersHistory();
+  Future<TradeOrdersHistorySnapshot> getOrdersHistory() =>
+      _terminal.getOrdersHistory();
 
   @override
-  TradeOrderReceiptSnapshot getOrderReceipt() => _terminal.getOrderReceipt();
+  Future<TradeOrderReceiptSnapshot> getOrderReceipt() =>
+      _terminal.getOrderReceipt();
 
   @override
-  TradeSettingsSnapshot getTradeSettings() => _terminal.getTradeSettings();
+  Future<TradeSettingsSnapshot> getTradeSettings() =>
+      _terminal.getTradeSettings();
 
   @override
-  TradePositionsSnapshot getTradePositions() => _terminal.getTradePositions();
+  Future<TradePositionsSnapshot> getTradePositions() =>
+      _terminal.getTradePositions();
 
+  // GD4 Cụm F3: trade_terminal made getAdvancedTradingDemo/getAdvancedAnalytics
+  // (and 9 more advanced-tools methods below) Future<T> (ADR-001 read-path
+  // async contract) — this delegate just forwards the Future untouched, no
+  // domain logic changes. Only trade_terminal's own advanced-tools pages
+  // consume these methods; `trade`'s own pages/controllers never call them
+  // directly, so this is a pure signature-forwarding fix.
   @override
-  TradeAdvancedTradingDemoSnapshot getAdvancedTradingDemo() =>
+  Future<TradeAdvancedTradingDemoSnapshot> getAdvancedTradingDemo() =>
       _terminal.getAdvancedTradingDemo();
 
   @override
-  TradeAdvancedAnalyticsSnapshot getAdvancedAnalytics() =>
+  Future<TradeAdvancedAnalyticsSnapshot> getAdvancedAnalytics() =>
       _terminal.getAdvancedAnalytics();
 
   @override
-  TradeSettings patchTradeSettings(TradeSettings settings) =>
+  Future<TradeSettings> patchTradeSettings(TradeSettings settings) =>
       _terminal.patchTradeSettings(settings);
 
   @override
-  TradeOrderPreview previewOrder(TradeOrderDraft draft) =>
+  Future<TradeOrderPreview> previewOrder(TradeOrderDraft draft) =>
       _terminal.previewOrder(draft);
 
   @override
@@ -70,78 +80,81 @@ final class MockTradeRepository implements TradeRepository {
       _terminal.submitOrder(draft);
 
   @override
-  TradeOrderActionResult submitOrderAction({
+  Future<TradeOrderActionResult> submitOrderAction({
     required String orderId,
     required String action,
   }) => _terminal.submitOrderAction(orderId: orderId, action: action);
 
   @override
-  TradeAdvancedChartSnapshot getAdvancedChart({String pairId = 'btcusdt'}) =>
-      _terminal.getAdvancedChart(pairId: pairId);
+  Future<TradeAdvancedChartSnapshot> getAdvancedChart({
+    String pairId = 'btcusdt',
+  }) => _terminal.getAdvancedChart(pairId: pairId);
 
   @override
-  TradeRiskManagementSnapshot getRiskManagement() =>
+  Future<TradeRiskManagementSnapshot> getRiskManagement() =>
       _terminal.getRiskManagement();
 
   @override
-  TradeExecutionQualitySnapshot getExecutionQuality() =>
+  Future<TradeExecutionQualitySnapshot> getExecutionQuality() =>
       _terminal.getExecutionQuality();
 
   @override
-  TradeAdvancedToolsSnapshot getAdvancedTools() => _terminal.getAdvancedTools();
+  Future<TradeAdvancedToolsSnapshot> getAdvancedTools() =>
+      _terminal.getAdvancedTools();
 
   @override
-  TradeOcoOrderResult submitOcoOrder(TradeOcoOrderDraft draft) =>
+  Future<TradeOcoOrderResult> submitOcoOrder(TradeOcoOrderDraft draft) =>
       _terminal.submitOcoOrder(draft);
 
   @override
-  TradePositionSizeResult calculatePositionSize(
+  Future<TradePositionSizeResult> calculatePositionSize(
     TradePositionSizeRequest request,
   ) => _terminal.calculatePositionSize(request);
 
   @override
-  TradeSlippageSettings updateSlippageSettings(
+  Future<TradeSlippageSettings> updateSlippageSettings(
     TradeSlippageSettings settings,
   ) => _terminal.updateSlippageSettings(settings);
 
   @override
-  TradeOrderAmendmentResult amendOrder(TradeOrderAmendmentRequest request) =>
-      _terminal.amendOrder(request);
+  Future<TradeOrderAmendmentResult> amendOrder(
+    TradeOrderAmendmentRequest request,
+  ) => _terminal.amendOrder(request);
 
   @override
-  TradeAdvancedToolActionResult submitAdvancedToolAction(
+  Future<TradeAdvancedToolActionResult> submitAdvancedToolAction(
     TradeAdvancedToolActionRequest request,
   ) => _terminal.submitAdvancedToolAction(request);
 
   @override
-  TradeExportSnapshot getTradeExport() => _terminal.getTradeExport();
+  Future<TradeExportSnapshot> getTradeExport() => _terminal.getTradeExport();
 
   @override
-  TradeConvertSnapshot getConvert() => _terminal.getConvert();
+  Future<TradeConvertSnapshot> getConvert() => _terminal.getConvert();
 
   @override
-  TradeExportResult createTradeExport(TradeExportRequest request) =>
+  Future<TradeExportResult> createTradeExport(TradeExportRequest request) =>
       _terminal.createTradeExport(request);
 
   @override
-  TradeConvertQuote previewConvert(TradeConvertRequest request) =>
+  Future<TradeConvertQuote> previewConvert(TradeConvertRequest request) =>
       _terminal.previewConvert(request);
 
   @override
-  TradeConvertReceipt submitConvert(TradeConvertRequest request) =>
+  Future<TradeConvertReceipt> submitConvert(TradeConvertRequest request) =>
       _terminal.submitConvert(request);
 
   @override
-  TradeFuturesSnapshot getFutures({String pairId = 'btcusdt'}) =>
+  Future<TradeFuturesSnapshot> getFutures({String pairId = 'btcusdt'}) =>
       _terminal.getFutures(pairId: pairId);
 
   @override
-  TradeFuturesLeverageSnapshot getFuturesLeverage({
+  Future<TradeFuturesLeverageSnapshot> getFuturesLeverage({
     String pairId = 'btcusdt',
   }) => _terminal.getFuturesLeverage(pairId: pairId);
 
   @override
-  TradeMarginTradingSnapshot getMarginTrading({
+  Future<TradeMarginTradingSnapshot> getMarginTrading({
     String pairId = 'btcusdt',
     bool pairRouteVariant = false,
   }) => _terminal.getMarginTrading(
@@ -150,12 +163,13 @@ final class MockTradeRepository implements TradeRepository {
   );
 
   @override
-  TradeMarginTradingHubSnapshot getMarginTradingHub() =>
+  Future<TradeMarginTradingHubSnapshot> getMarginTradingHub() =>
       _terminal.getMarginTradingHub();
 
   @override
-  TradeFuturesPreview previewFuturesOrder(TradeFuturesOrderDraft draft) =>
-      _terminal.previewFuturesOrder(draft);
+  Future<TradeFuturesPreview> previewFuturesOrder(
+    TradeFuturesOrderDraft draft,
+  ) => _terminal.previewFuturesOrder(draft);
 
   @override
   Future<TradeFuturesReceipt> submitFuturesOrder(
@@ -163,7 +177,7 @@ final class MockTradeRepository implements TradeRepository {
   ) => _terminal.submitFuturesOrder(draft);
 
   @override
-  TradeFuturesLeveragePreview previewFuturesLeverage(
+  Future<TradeFuturesLeveragePreview> previewFuturesLeverage(
     TradeFuturesLeverageRequest request,
   ) => _terminal.previewFuturesLeverage(request);
 

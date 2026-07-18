@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-023 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getAdvancedCharts();
+  test('SC-023 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getAdvancedCharts();
 
     expect(snapshot.indicators, hasLength(10));
     expect(snapshot.indicators.map((indicator) => indicator.shortName), [
@@ -76,14 +76,14 @@ void main() {
       ]),
     );
 
-    final trend = repo.getAdvancedCharts(indicatorCategory: 'trend');
+    final trend = await repo.getAdvancedCharts(indicatorCategory: 'trend');
     expect(trend.indicators.map((indicator) => indicator.shortName), [
       'SMA',
       'EMA',
       'ICHI',
     ]);
 
-    final lines = repo.getAdvancedCharts(drawingCategory: 'line');
+    final lines = await repo.getAdvancedCharts(drawingCategory: 'line');
     expect(lines.drawingTools.map((tool) => tool.id), [
       'trendline',
       'hline',

@@ -8,10 +8,7 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getPortfolioTracker(sortBy: _sortBy);
-    final overviewHoldings = _overviewHoldings(snapshot.holdings);
+    final portfolioAsync = ref.watch(marketPortfolioSnapshotProvider(_sortBy));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -53,102 +50,129 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        if (_tab == 'overview') ...[
-                          _TotalValueHero(
-                            stats: snapshot.stats,
-                            hidden: _hideBalance,
-                            onToggleHidden: () => setState(() {
-                              _hideBalance = !_hideBalance;
-                            }),
-                          ),
-                          _QuickStats(
-                            stats: snapshot.stats,
-                            hidden: _hideBalance,
-                          ),
-                          _AllocationCard(holdings: overviewHoldings),
-                          const VitSectionHeader(
-                            title: 'Tài sản chính',
-                            accentColor: _marketPrimary,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _TopHoldings(
-                            holdings: overviewHoldings.take(4).toList(),
-                            hidden: _hideBalance,
-                            onTap: (holding) => context.go(
-                              AppRoutePaths.pairDetail('${holding.id}usdt'),
+                      children: portfolioAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được danh mục',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              marketPortfolioSnapshotProvider(_sortBy),
                             ),
-                          ),
-                          _RiskCard(stats: snapshot.stats),
-                        ] else if (_tab == 'assets') ...[
-                          _SortChips(
-                            active: _sortBy,
-                            onSelected: (value) => setState(() {
-                              _sortBy = value;
-                            }),
-                          ),
-                          for (final holding in snapshot.holdings)
-                            _HoldingDetailCard(
-                              key: PortfolioTrackerPage.holdingKey(holding.id),
-                              holding: holding,
-                              hidden: _hideBalance,
-                              onTap: () => context.go(
-                                AppRoutePaths.pairDetail('${holding.id}usdt'),
-                              ),
-                            ),
-                        ] else ...[
-                          Row(
-                            children: [
-                              for (final filter in const [
-                                '24h',
-                                '7d',
-                                '30d',
-                                'Tất cả',
-                              ]) ...[
-                                VitFilterChip(
-                                  label: filter,
-                                  active: _timeFilter == filter,
-                                  onTap: () => setState(() {
-                                    _timeFilter = filter;
-                                  }),
-                                  color: _marketPrimary,
-                                  padding: _portfolioChipPadding,
-                                ),
-                                if (filter != 'Tất cả')
-                                  const SizedBox(width: _portfolioChipGap),
-                              ],
-                            ],
-                          ),
-                          _PerformanceChartCard(
-                            stats: snapshot.stats,
-                            points: snapshot.performance,
-                          ),
-                          const VitSectionHeader(
-                            title: 'Lãi/Lỗ theo tài sản',
-                            accentColor: AppColors.buy,
-                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                            variant: VitSectionHeaderVariant.accentBar,
-                          ),
-                          _PnlBreakdown(
-                            holdings: overviewHoldings
-                                .where((holding) => holding.symbol != 'USDT')
-                                .toList(),
-                            hidden: _hideBalance,
-                          ),
-                          _SummaryStats(
-                            stats: snapshot.stats,
-                            hidden: _hideBalance,
                           ),
                         ],
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message: 'Giá trị danh mục chỉ mang tính tham khảo',
-                          detail:
-                              'PnL và phân bổ dựa trên dữ liệu mock. Không phải khuyến nghị đầu tư.',
-                        ),
-                      ],
+                        data: (snapshot) {
+                          final overviewHoldings = _overviewHoldings(
+                            snapshot.holdings,
+                          );
+                          return [
+                            if (_tab == 'overview') ...[
+                              _TotalValueHero(
+                                stats: snapshot.stats,
+                                hidden: _hideBalance,
+                                onToggleHidden: () => setState(() {
+                                  _hideBalance = !_hideBalance;
+                                }),
+                              ),
+                              _QuickStats(
+                                stats: snapshot.stats,
+                                hidden: _hideBalance,
+                              ),
+                              _AllocationCard(holdings: overviewHoldings),
+                              const VitSectionHeader(
+                                title: 'Tài sản chính',
+                                accentColor: _marketPrimary,
+                                bottomGap:
+                                    AppSpacing.pageRhythmStandardInnerGap,
+                                variant: VitSectionHeaderVariant.accentBar,
+                              ),
+                              _TopHoldings(
+                                holdings: overviewHoldings.take(4).toList(),
+                                hidden: _hideBalance,
+                                onTap: (holding) => context.go(
+                                  AppRoutePaths.pairDetail('${holding.id}usdt'),
+                                ),
+                              ),
+                              _RiskCard(stats: snapshot.stats),
+                            ] else if (_tab == 'assets') ...[
+                              _SortChips(
+                                active: _sortBy,
+                                onSelected: (value) => setState(() {
+                                  _sortBy = value;
+                                }),
+                              ),
+                              for (final holding in snapshot.holdings)
+                                _HoldingDetailCard(
+                                  key: PortfolioTrackerPage.holdingKey(
+                                    holding.id,
+                                  ),
+                                  holding: holding,
+                                  hidden: _hideBalance,
+                                  onTap: () => context.go(
+                                    AppRoutePaths.pairDetail(
+                                      '${holding.id}usdt',
+                                    ),
+                                  ),
+                                ),
+                            ] else ...[
+                              Row(
+                                children: [
+                                  for (final filter in const [
+                                    '24h',
+                                    '7d',
+                                    '30d',
+                                    'Tất cả',
+                                  ]) ...[
+                                    VitFilterChip(
+                                      label: filter,
+                                      active: _timeFilter == filter,
+                                      onTap: () => setState(() {
+                                        _timeFilter = filter;
+                                      }),
+                                      color: _marketPrimary,
+                                      padding: _portfolioChipPadding,
+                                    ),
+                                    if (filter != 'Tất cả')
+                                      const SizedBox(width: _portfolioChipGap),
+                                  ],
+                                ],
+                              ),
+                              _PerformanceChartCard(
+                                stats: snapshot.stats,
+                                points: snapshot.performance,
+                              ),
+                              const VitSectionHeader(
+                                title: 'Lãi/Lỗ theo tài sản',
+                                accentColor: AppColors.buy,
+                                bottomGap:
+                                    AppSpacing.pageRhythmStandardInnerGap,
+                                variant: VitSectionHeaderVariant.accentBar,
+                              ),
+                              _PnlBreakdown(
+                                holdings: overviewHoldings
+                                    .where(
+                                      (holding) => holding.symbol != 'USDT',
+                                    )
+                                    .toList(),
+                                hidden: _hideBalance,
+                              ),
+                              _SummaryStats(
+                                stats: snapshot.stats,
+                                hidden: _hideBalance,
+                              ),
+                            ],
+                            const VitBanner(
+                              variant: VitBannerVariant.info,
+                              icon: Icons.info_outline_rounded,
+                              message:
+                                  'Giá trị danh mục chỉ mang tính tham khảo',
+                              detail:
+                                  'PnL và phân bổ dựa trên dữ liệu mock. Không phải khuyến nghị đầu tư.',
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

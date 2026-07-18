@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-133 mock repository exposes bot tax reporting BE draft', () {
-    final repo = const MockTradeBotsRepository();
-    final snapshot = repo.getBotTaxReporting();
+  test('SC-133 mock repository exposes bot tax reporting BE draft', () async {
+    final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getBotTaxReporting();
     final exportResult = repo.createBotTaxReportExport(
       const TradeBotTaxReportExportRequest(
         year: '2025',

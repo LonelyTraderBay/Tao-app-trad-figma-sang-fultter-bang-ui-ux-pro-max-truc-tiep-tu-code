@@ -56,7 +56,7 @@ class _PortfolioRiskAnalysisPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradePortfolioRiskAnalysisProvider);
+    final snapshotAsync = ref.watch(tradePortfolioRiskAnalysisProvider);
     return VitTradeHubScaffold(
       title: 'Phân tích rủi ro',
       semanticLabel: 'Phân tích rủi ro',
@@ -69,59 +69,73 @@ class _PortfolioRiskAnalysisPageState
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
-          title: 'Tóm tắt',
-          child: _RiskSummaryGrid(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Phân tích',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Xem trước rủi ro danh mục',
-                message:
-                    'Xem lại mức phơi nhiễm, VaR, tương quan, kịch bản stress, giới hạn và bước tái cân bằng trước khi thay đổi phân bổ copy.',
-                contractId: 'SC-078 risk analysis review',
-                density: VitDensity.compact,
-              ),
-              _RiskWarningPanel(alerts: snapshot.riskAlerts),
-              _RiskTabs(
-                tabs: snapshot.tabs,
-                activeId: _activeTab,
-                onChanged: (id) => setState(() => _activeTab = id),
-              ),
-              if (_activeTab == 'exposure')
-                _ExposureTab(snapshot: snapshot)
-              else if (_activeTab == 'correlation')
-                const _PlaceholderPanel(
-                  title: 'Ma trận tương quan provider',
-                  description:
-                      'Correlation >0.8 nghĩa là 2 providers có xu hướng giống nhau.',
-                )
-              else if (_activeTab == 'var')
-                _VarPanel(snapshot: snapshot)
-              else
-                _StressScenarioPanel(scenarios: snapshot.scenarios),
-            ],
-          ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Đánh giá rủi ro',
-          statusPill: VitStatusPill(
-            label: '${snapshot.riskAlerts.length} cảnh báo',
-            status: VitStatusPillStatus.warning,
-            size: VitStatusPillSize.sm,
-          ),
-          items: const [
-            VitTradeComplianceItem(
-              label: 'Khung',
-              value: 'Đánh giá rủi ro danh mục copy',
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được dữ liệu rủi ro danh mục',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(tradePortfolioRiskAnalysisProvider),
             ),
-            VitTradeComplianceItem(
-              label: 'Hành động',
-              value: 'Xem lại trước khi thay đổi phân bổ',
+          ],
+          data: (snapshot) => [
+            VitTradeSection(
+              title: 'Tóm tắt',
+              child: _RiskSummaryGrid(snapshot: snapshot),
+            ),
+            VitTradeSection(
+              title: 'Phân tích',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Xem trước rủi ro danh mục',
+                    message:
+                        'Xem lại mức phơi nhiễm, VaR, tương quan, kịch bản stress, giới hạn và bước tái cân bằng trước khi thay đổi phân bổ copy.',
+                    contractId: 'SC-078 risk analysis review',
+                    density: VitDensity.compact,
+                  ),
+                  _RiskWarningPanel(alerts: snapshot.riskAlerts),
+                  _RiskTabs(
+                    tabs: snapshot.tabs,
+                    activeId: _activeTab,
+                    onChanged: (id) => setState(() => _activeTab = id),
+                  ),
+                  if (_activeTab == 'exposure')
+                    _ExposureTab(snapshot: snapshot)
+                  else if (_activeTab == 'correlation')
+                    const _PlaceholderPanel(
+                      title: 'Ma trận tương quan provider',
+                      description:
+                          'Correlation >0.8 nghĩa là 2 providers có xu hướng giống nhau.',
+                    )
+                  else if (_activeTab == 'var')
+                    _VarPanel(snapshot: snapshot)
+                  else
+                    _StressScenarioPanel(scenarios: snapshot.scenarios),
+                ],
+              ),
+            ),
+            VitTradeComplianceSection(
+              title: 'Đánh giá rủi ro',
+              statusPill: VitStatusPill(
+                label: '${snapshot.riskAlerts.length} cảnh báo',
+                status: VitStatusPillStatus.warning,
+                size: VitStatusPillSize.sm,
+              ),
+              items: const [
+                VitTradeComplianceItem(
+                  label: 'Khung',
+                  value: 'Đánh giá rủi ro danh mục copy',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Hành động',
+                  value: 'Xem lại trước khi thay đổi phân bổ',
+                ),
+              ],
             ),
           ],
         ),

@@ -55,10 +55,7 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeAdvancedToolsControllerProvider)
-        .state
-        .snapshot;
+    final controllerAsync = ref.watch(tradeAdvancedToolsControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     return Stack(
@@ -77,74 +74,93 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
           ),
           showProductTabs: true,
           navigationBuilder: buildTradeProductNavigation,
-          children: [
-            const _IntroCard(),
-            const VitCard(
-              variant: VitCardVariant.inner,
-              density: VitDensity.compact,
-              padding: AppSpacing.cardPaddingCompact,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  VitHighRiskStatePanel(
-                    state: VitHighRiskUiState.riskReview,
-                    title: 'Xem lại công cụ lệnh nâng cao',
-                    message:
-                        'Thang giá, hủy hàng loạt và phím tắt giữ xem trước lệnh, xác nhận, số lệnh bị ảnh hưởng và bước tiếp theo trước khi thực thi.',
-                    contractId: 'advanced-tools-review',
-                    density: VitDensity.compact,
+          children: controllerAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được công cụ nâng cao',
+                message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () =>
+                    ref.invalidate(tradeAdvancedToolsSnapshotProvider),
+              ),
+            ],
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              return [
+                const _IntroCard(),
+                const VitCard(
+                  variant: VitCardVariant.inner,
+                  density: VitDensity.compact,
+                  padding: AppSpacing.cardPaddingCompact,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Xem lại công cụ lệnh nâng cao',
+                        message:
+                            'Thang giá, hủy hàng loạt và phím tắt giữ xem trước lệnh, xác nhận, số lệnh bị ảnh hưởng và bước tiếp theo trước khi thực thi.',
+                        contractId: 'advanced-tools-review',
+                        density: VitDensity.compact,
+                      ),
+                      SizedBox(height: _toolsSpace),
+                      VitStatusPill(
+                        label: 'Xem trước khi gửi lệnh',
+                        status: VitStatusPillStatus.info,
+                        size: VitStatusPillSize.sm,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: _toolsSpace),
-                  VitStatusPill(
-                    label: 'Xem trước khi gửi lệnh',
-                    status: VitStatusPillStatus.info,
-                    size: VitStatusPillSize.sm,
+                ),
+                for (final feature in snapshot.features)
+                  _FeatureCard(
+                    feature: feature,
+                    onTap: () => _onFeatureTap(feature),
                   ),
-                ],
-              ),
-            ),
-            for (final feature in snapshot.features)
-              _FeatureCard(
-                feature: feature,
-                onTap: () => _onFeatureTap(feature),
-              ),
-            const _SpeedCard(),
-            const _BenefitsCard(),
-            _ProgressCard(items: snapshot.statusItems),
-            _ToolsTabs(
-              active: _tab,
-              onChanged: (tab) => setState(() => _tab = tab),
-            ),
-            if (_tab == _ToolsTab.ladder)
-              _ActionTab(
-                description:
-                    'Click any price level on the order book to place instant orders',
-                buttonKey: AdvancedToolsDemoPage.ladderButtonKey,
-                label: 'Open Ladder Trading',
-                icon: Icons.track_changes_rounded,
-                colors: const [AppColors.buy, AppColors.buyDark],
-                onOpen: _openLadderSheet,
-              )
-            else if (_tab == _ToolsTab.bulk)
-              _ActionTab(
-                description: 'Select multiple orders and perform batch actions',
-                buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
-                label: 'Open Bulk Operations',
-                icon: Icons.check_box_rounded,
-                colors: const [AppColors.caution, AppColors.medalBronzeMuted],
-                onOpen: _openBulkSheet,
-              )
-            else
-              _ActionTab(
-                description:
-                    'View all keyboard shortcuts and customize key bindings',
-                buttonKey: AdvancedToolsDemoPage.shortcutsButtonKey,
-                label: 'View Shortcuts Reference',
-                icon: Icons.keyboard_rounded,
-                colors: const [AppColors.accent, AppColors.accentDark],
-                onOpen: _openShortcutsSheet,
-              ),
-          ],
+                const _SpeedCard(),
+                const _BenefitsCard(),
+                _ProgressCard(items: snapshot.statusItems),
+                _ToolsTabs(
+                  active: _tab,
+                  onChanged: (tab) => setState(() => _tab = tab),
+                ),
+                if (_tab == _ToolsTab.ladder)
+                  _ActionTab(
+                    description:
+                        'Click any price level on the order book to place instant orders',
+                    buttonKey: AdvancedToolsDemoPage.ladderButtonKey,
+                    label: 'Open Ladder Trading',
+                    icon: Icons.track_changes_rounded,
+                    colors: const [AppColors.buy, AppColors.buyDark],
+                    onOpen: _openLadderSheet,
+                  )
+                else if (_tab == _ToolsTab.bulk)
+                  _ActionTab(
+                    description:
+                        'Select multiple orders and perform batch actions',
+                    buttonKey: AdvancedToolsDemoPage.bulkButtonKey,
+                    label: 'Open Bulk Operations',
+                    icon: Icons.check_box_rounded,
+                    colors: const [
+                      AppColors.caution,
+                      AppColors.medalBronzeMuted,
+                    ],
+                    onOpen: _openBulkSheet,
+                  )
+                else
+                  _ActionTab(
+                    description:
+                        'View all keyboard shortcuts and customize key bindings',
+                    buttonKey: AdvancedToolsDemoPage.shortcutsButtonKey,
+                    label: 'View Shortcuts Reference',
+                    icon: Icons.keyboard_rounded,
+                    colors: const [AppColors.accent, AppColors.accentDark],
+                    onOpen: _openShortcutsSheet,
+                  ),
+              ];
+            },
+          ),
         ),
         if (_successMessage != null)
           Positioned(
@@ -177,7 +193,8 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
   }
 
   Future<void> _openLadderSheet() async {
-    final controller = ref.read(tradeAdvancedToolsControllerProvider);
+    final controller = ref.read(tradeAdvancedToolsControllerProvider).value;
+    if (controller == null) return;
     final placed = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -186,17 +203,19 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
           _LadderSheet(orders: controller.state.snapshot.ladderOrders),
     );
     if (placed != true || !mounted) return;
-    controller.submitAction(
+    await controller.submitAction(
       const TradeAdvancedToolActionRequest(
         toolId: 'ladder',
         action: 'place-order',
       ),
     );
+    if (!mounted) return;
     setState(() => _successMessage = 'Buy Order Placed · 0.5 BTC');
   }
 
   Future<void> _openBulkSheet() async {
-    final controller = ref.read(tradeAdvancedToolsControllerProvider);
+    final controller = ref.read(tradeAdvancedToolsControllerProvider).value;
+    if (controller == null) return;
     final orderIds = controller.state.snapshot.bulkOrders
         .map((order) => order.id)
         .toList(growable: false);
@@ -208,20 +227,22 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
           _BulkSheet(orders: controller.state.snapshot.bulkOrders),
     );
     if (cancelled != true || !mounted) return;
-    final result = controller.submitAction(
+    final result = await controller.submitAction(
       TradeAdvancedToolActionRequest(
         toolId: 'bulk',
         action: 'cancel',
         orderIds: orderIds,
       ),
     );
+    if (!mounted) return;
     setState(
       () => _successMessage = '${result.affectedCount} orders cancelled',
     );
   }
 
   Future<void> _openShortcutsSheet() async {
-    final controller = ref.read(tradeAdvancedToolsControllerProvider);
+    final controller = ref.read(tradeAdvancedToolsControllerProvider).value;
+    if (controller == null) return;
     final triggered = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -230,12 +251,13 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
           _ShortcutsSheet(shortcuts: controller.state.snapshot.shortcuts),
     );
     if (triggered != true || !mounted) return;
-    controller.submitAction(
+    await controller.submitAction(
       const TradeAdvancedToolActionRequest(
         toolId: 'shortcuts',
         action: 'trigger',
       ),
     );
+    if (!mounted) return;
     setState(() => _successMessage = 'Shortcut triggered · Quick Buy');
   }
 }

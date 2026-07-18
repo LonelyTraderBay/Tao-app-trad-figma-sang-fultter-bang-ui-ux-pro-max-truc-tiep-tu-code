@@ -61,7 +61,20 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeFuturesProvider(widget.pairId));
+    final futuresAsync = ref.watch(tradeFuturesProvider(widget.pairId));
+    return futuresAsync.when(
+      loading: () => const VitSkeletonList(),
+      error: (error, stackTrace) => VitErrorState(
+        title: 'Không tải được màn hình futures',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () => ref.invalidate(tradeFuturesProvider(widget.pairId)),
+      ),
+      data: _buildContent,
+    );
+  }
+
+  Widget _buildContent(TradeFuturesSnapshot snapshot) {
     final orderRequest = _orderRequest;
     final orderState = ref.watch(
       tradeFuturesOrderControllerProvider(orderRequest),

@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-022 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getMarketNews();
+  test('SC-022 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarketNews();
 
     expect(snapshot.news, hasLength(12));
     expect(snapshot.breakingNews, hasLength(1));
@@ -72,10 +72,12 @@ void main() {
       ]),
     );
 
-    final breaking = repo.getMarketNews(category: 'breaking');
+    final breaking = await repo.getMarketNews(category: 'breaking');
     expect(breaking.news.single.id, 'n1');
 
-    final bearish = repo.getMarketNews(sentiment: MarketNewsSentiment.bearish);
+    final bearish = await repo.getMarketNews(
+      sentiment: MarketNewsSentiment.bearish,
+    );
     expect(bearish.news.map((item) => item.id), ['n5', 'n9']);
   });
 

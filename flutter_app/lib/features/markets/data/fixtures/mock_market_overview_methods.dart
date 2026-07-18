@@ -2,7 +2,8 @@ part of '../repositories/mock_market_repository.dart';
 
 mixin _MockMarketRepositoryOverviewMethods on _MockMarketRepositoryBase {
   @override
-  MarketListSnapshot getMarketList() {
+  Future<MarketListSnapshot> getMarketList() async {
+    await _simulateNetwork();
     return MarketListSnapshot(
       marketPairs: _marketPairs,
       watchlist: {
@@ -49,7 +50,8 @@ mixin _MockMarketRepositoryOverviewMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketOverviewSnapshot getMarketOverview() {
+  Future<MarketOverviewSnapshot> getMarketOverview() async {
+    await _simulateNetwork();
     return MarketOverviewSnapshot(
       globalStats: _globalMarketStats,
       marketBreadth: _marketBreadth,
@@ -102,7 +104,8 @@ mixin _MockMarketRepositoryOverviewMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketMoversSnapshot getMarketMovers() {
+  Future<MarketMoversSnapshot> getMarketMovers() async {
+    await _simulateNetwork();
     return MarketMoversSnapshot(
       movers: _marketMovers,
       marketPairs: _marketPairs,
@@ -146,7 +149,8 @@ mixin _MockMarketRepositoryOverviewMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketSectorsSnapshot getMarketSectors() {
+  Future<MarketSectorsSnapshot> getMarketSectors() async {
+    await _simulateNetwork();
     return MarketSectorsSnapshot(
       sectors: _marketSectors,
       marketPairs: _marketPairs,
@@ -187,7 +191,8 @@ mixin _MockMarketRepositoryOverviewMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketWatchlistSnapshot getMarketWatchlist() {
+  Future<MarketWatchlistSnapshot> getMarketWatchlist() async {
+    await _simulateNetwork();
     return MarketWatchlistSnapshot(
       entries: _watchlistEntries,
       marketPairs: _marketPairs,

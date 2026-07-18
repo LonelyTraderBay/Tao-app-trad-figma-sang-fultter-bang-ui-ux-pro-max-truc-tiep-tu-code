@@ -11,27 +11,31 @@
 // not this domain — moved to mock_trade_terminal_repository_test.dart),
 // plus this domain's slice of mock_trade_repository_actions_test.dart
 // (createExPostCostsReportExport).
+//
+// GD4 Cụm F3: repository methods are now Future<T> — every test() below is
+// async and awaits each repo call (loadDelay: Duration.zero to skip the
+// simulated network latency, xem GD4-Async-Playbook.md mục 7).
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/data/trade_compliance_repository.dart';
 
 void main() {
-  const repo = MockTradeRegulatoryRepository();
+  const repo = MockTradeRegulatoryRepository(loadDelay: Duration.zero);
 
   group('MockTradeRegulatoryRepository smoke test', () {
     group('getters', () {
       test(
         'getRegulatoryDisclosures / getMarketDataAnalytics / getLiveMarketDataAnalytics',
-        () {
+        () async {
           expect(
-            repo.getRegulatoryDisclosures(),
+            await repo.getRegulatoryDisclosures(),
             isA<TradeRegulatoryDisclosuresSnapshot>(),
           );
           expect(
-            repo.getMarketDataAnalytics(),
+            await repo.getMarketDataAnalytics(),
             isA<TradeMarketDataAnalyticsSnapshot>(),
           );
           expect(
-            repo.getLiveMarketDataAnalytics(),
+            await repo.getLiveMarketDataAnalytics(),
             isA<TradeMarketDataAnalyticsSnapshot>(),
           );
         },
@@ -39,17 +43,17 @@ void main() {
 
       test(
         'getTransactionReporting / getRegulatoryReportsDashboard / getArmIntegrationStatus',
-        () {
+        () async {
           expect(
-            repo.getTransactionReporting(),
+            await repo.getTransactionReporting(),
             isA<TradeTransactionReportingSnapshot>(),
           );
           expect(
-            repo.getRegulatoryReportsDashboard(),
+            await repo.getRegulatoryReportsDashboard(),
             isA<TradeRegulatoryReportsDashboardSnapshot>(),
           );
           expect(
-            repo.getArmIntegrationStatus(),
+            await repo.getArmIntegrationStatus(),
             isA<TradeArmIntegrationStatusSnapshot>(),
           );
         },
@@ -57,17 +61,17 @@ void main() {
 
       test(
         'getBestExecutionReports / getExecutionVenueAnalysis / getSlippageMonitoring',
-        () {
+        () async {
           expect(
-            repo.getBestExecutionReports(),
+            await repo.getBestExecutionReports(),
             isA<TradeBestExecutionReportsSnapshot>(),
           );
           expect(
-            repo.getExecutionVenueAnalysis(),
+            await repo.getExecutionVenueAnalysis(),
             isA<TradeExecutionVenueAnalysisSnapshot>(),
           );
           expect(
-            repo.getSlippageMonitoring(),
+            await repo.getSlippageMonitoring(),
             isA<TradeSlippageMonitoringSnapshot>(),
           );
         },
@@ -75,21 +79,21 @@ void main() {
 
       test(
         'getClientCategorization / getProductGovernance / getTargetMarketDefinition',
-        () {
+        () async {
           expect(
-            repo.getClientCategorization(),
+            await repo.getClientCategorization(),
             isA<TradeClientCategorizationSnapshot>(),
           );
           expect(
-            repo.getProductGovernance(),
+            await repo.getProductGovernance(),
             isA<TradeProductGovernanceSnapshot>(),
           );
           expect(
-            repo.getTargetMarketDefinition(),
+            await repo.getTargetMarketDefinition(),
             isA<TradeTargetMarketDefinitionSnapshot>(),
           );
           expect(
-            repo.getTargetMarketDefinition(productId: 'prod-2'),
+            await repo.getTargetMarketDefinition(productId: 'prod-2'),
             isA<TradeTargetMarketDefinitionSnapshot>(),
           );
         },
@@ -97,17 +101,17 @@ void main() {
 
       test(
         'getClientMoneyProtection / getCassReconciliation / getInvestorCompensation',
-        () {
+        () async {
           expect(
-            repo.getClientMoneyProtection(),
+            await repo.getClientMoneyProtection(),
             isA<TradeClientMoneyProtectionSnapshot>(),
           );
           expect(
-            repo.getCassReconciliation(),
+            await repo.getCassReconciliation(),
             isA<TradeCassReconciliationSnapshot>(),
           );
           expect(
-            repo.getInvestorCompensation(),
+            await repo.getInvestorCompensation(),
             isA<TradeInvestorCompensationSnapshot>(),
           );
         },
@@ -115,30 +119,36 @@ void main() {
 
       test(
         'getExAnteCosts / getRiyCalculator / getExPostCostsReport / getKidGenerator',
-        () {
-          expect(repo.getExAnteCosts(), isA<TradeExAnteCostsSnapshot>());
-          expect(repo.getRiyCalculator(), isA<TradeRiyCalculatorSnapshot>());
+        () async {
+          expect(await repo.getExAnteCosts(), isA<TradeExAnteCostsSnapshot>());
           expect(
-            repo.getExPostCostsReport(),
+            await repo.getRiyCalculator(),
+            isA<TradeRiyCalculatorSnapshot>(),
+          );
+          expect(
+            await repo.getExPostCostsReport(),
             isA<TradeExPostCostsReportSnapshot>(),
           );
-          expect(repo.getKidGenerator(), isA<TradeKidGeneratorSnapshot>());
+          expect(
+            await repo.getKidGenerator(),
+            isA<TradeKidGeneratorSnapshot>(),
+          );
         },
       );
 
       test(
         'getPerformanceScenarios / getRiskIndicatorExplainer / getComplaintsHandling',
-        () {
+        () async {
           expect(
-            repo.getPerformanceScenarios(),
+            await repo.getPerformanceScenarios(),
             isA<TradePerformanceScenariosSnapshot>(),
           );
           expect(
-            repo.getRiskIndicatorExplainer(),
+            await repo.getRiskIndicatorExplainer(),
             isA<TradeRiskIndicatorSnapshot>(),
           );
           expect(
-            repo.getComplaintsHandling(),
+            await repo.getComplaintsHandling(),
             isA<TradeComplaintsHandlingSnapshot>(),
           );
         },
@@ -146,41 +156,41 @@ void main() {
 
       test(
         'getComplaintSubmission / getComplaintTracking / getOmbudsmanReferral',
-        () {
+        () async {
           expect(
-            repo.getComplaintSubmission(),
+            await repo.getComplaintSubmission(),
             isA<TradeComplaintSubmissionSnapshot>(),
           );
           expect(
-            repo.getComplaintTracking(),
+            await repo.getComplaintTracking(),
             isA<TradeComplaintTrackingSnapshot>(),
           );
           expect(
-            repo.getComplaintTracking(complaintId: 'case-003'),
+            await repo.getComplaintTracking(complaintId: 'case-003'),
             isA<TradeComplaintTrackingSnapshot>(),
           );
           expect(
-            repo.getOmbudsmanReferral(),
+            await repo.getOmbudsmanReferral(),
             isA<TradeOmbudsmanReferralSnapshot>(),
           );
         },
       );
 
-      test('getAuditTrail / getRegulatoryInspectionReady', () {
-        expect(repo.getAuditTrail(), isA<TradeAuditTrailSnapshot>());
+      test('getAuditTrail / getRegulatoryInspectionReady', () async {
+        expect(await repo.getAuditTrail(), isA<TradeAuditTrailSnapshot>());
         expect(
-          repo.getRegulatoryInspectionReady(),
+          await repo.getRegulatoryInspectionReady(),
           isA<TradeRegulatoryInspectionSnapshot>(),
         );
       });
     });
 
     group('write / action methods', () {
-      test('createExPostCostsReportExport', () {
-        final result = repo.createExPostCostsReportExport();
+      test('createExPostCostsReportExport', () async {
+        final result = await repo.createExPostCostsReportExport();
         expect(result, isA<TradeExPostCostsReportExportResult>());
         expect(
-          repo.createExPostCostsReportExport(year: 2024),
+          await repo.createExPostCostsReportExport(year: 2024),
           isA<TradeExPostCostsReportExportResult>(),
         );
       });

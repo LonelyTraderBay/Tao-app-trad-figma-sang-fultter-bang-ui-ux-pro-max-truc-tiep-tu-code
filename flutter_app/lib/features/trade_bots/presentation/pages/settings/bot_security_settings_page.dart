@@ -47,24 +47,13 @@ class BotSecuritySettingsPage extends ConsumerStatefulWidget {
 
 class _BotSecuritySettingsPageState
     extends ConsumerState<BotSecuritySettingsPage> {
-  late bool _twoFaEnabled;
-
-  @override
-  void initState() {
-    super.initState();
-    _twoFaEnabled = ref
-        .read(tradeBotSecuritySettingsControllerProvider)
-        .state
-        .snapshot
-        .twoFaEnabled;
-  }
+  bool? _twoFaEnabled;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeBotSecuritySettingsControllerProvider)
-        .state
-        .snapshot;
+    final controllerAsync = ref.watch(
+      tradeBotSecuritySettingsControllerProvider,
+    );
     return VitTradeHubScaffold(
       title: 'Security Settings',
       subtitle: 'Bảo mật API key và quyền truy cập bot',
@@ -78,81 +67,98 @@ class _BotSecuritySettingsPageState
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: '2FA',
-          primaryValue: _twoFaEnabled ? 'Bật' : 'Tắt',
-          primaryColor: _twoFaEnabled ? _securityGreen : _securityAmber,
-          secondaryLabel: 'API keys',
-          secondaryValue: '${snapshot.apiKeys.length}',
-        ),
-        VitTradeSection(
-          title: 'Two-Factor Authentication',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _TwoFaCard(
-                enabled: _twoFaEnabled,
-                onTap: () => _toggleTwoFa(snapshot),
-              ),
-            ],
+      children: controllerAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được cài đặt bảo mật',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeBotSecuritySettingsSnapshotProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'API Keys',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final key in snapshot.apiKeys) _ApiKeyCard(apiKey: key),
-              _DashedActionButton(
-                key: BotSecuritySettingsPage.createApiKeyKey,
-                label: 'Create New API Key',
-                icon: Icons.add_rounded,
-                onTap: () => _showApiKeySheet(context, snapshot),
+        ],
+        data: (controller) {
+          final snapshot = controller.state.snapshot;
+          _twoFaEnabled ??= snapshot.twoFaEnabled;
+          final twoFaEnabled = _twoFaEnabled!;
+          return [
+            VitBotSubpageHero(
+              primaryLabel: '2FA',
+              primaryValue: twoFaEnabled ? 'Bật' : 'Tắt',
+              primaryColor: twoFaEnabled ? _securityGreen : _securityAmber,
+              secondaryLabel: 'API keys',
+              secondaryValue: '${snapshot.apiKeys.length}',
+            ),
+            VitTradeSection(
+              title: 'Two-Factor Authentication',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _TwoFaCard(
+                    enabled: twoFaEnabled,
+                    onTap: () => _toggleTwoFa(twoFaEnabled),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'IP Whitelist',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (final entry in snapshot.ipWhitelist) _IpCard(entry: entry),
-              _DashedActionButton(
-                key: BotSecuritySettingsPage.addIpKey,
-                label: 'Add IP Address',
-                icon: Icons.add_rounded,
-                onTap: () => _showIpSheet(context),
+            ),
+            VitTradeSection(
+              title: 'API Keys',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final key in snapshot.apiKeys) _ApiKeyCard(apiKey: key),
+                  _DashedActionButton(
+                    key: BotSecuritySettingsPage.createApiKeyKey,
+                    label: 'Create New API Key',
+                    icon: Icons.add_rounded,
+                    onTap: () => _showApiKeySheet(context, snapshot),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Recent Activity',
-          child: _ActivityCard(activities: snapshot.recentActivity),
-        ),
-        VitTradeSection(
-          title: 'Security Tips',
-          child: _SecurityTipsCard(tips: snapshot.securityTips),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Bot security review required',
-          message:
-              '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
-          contractId: 'bot-security-settings-review',
-          statusLabel: 'Sensitive settings',
-          status: VitStatusPillStatus.warning,
-        ),
-      ],
+            ),
+            VitTradeSection(
+              title: 'IP Whitelist',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final entry in snapshot.ipWhitelist)
+                    _IpCard(entry: entry),
+                  _DashedActionButton(
+                    key: BotSecuritySettingsPage.addIpKey,
+                    label: 'Add IP Address',
+                    icon: Icons.add_rounded,
+                    onTap: () => _showIpSheet(context),
+                  ),
+                ],
+              ),
+            ),
+            VitTradeSection(
+              title: 'Recent Activity',
+              child: _ActivityCard(activities: snapshot.recentActivity),
+            ),
+            VitTradeSection(
+              title: 'Security Tips',
+              child: _SecurityTipsCard(tips: snapshot.securityTips),
+            ),
+            const VitBotRiskReviewFooter(
+              title: 'Bot security review required',
+              message:
+                  '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
+              contractId: 'bot-security-settings-review',
+              statusLabel: 'Sensitive settings',
+              status: VitStatusPillStatus.warning,
+            ),
+          ];
+        },
+      ),
     );
   }
 
-  void _toggleTwoFa(TradeBotSecuritySettingsSnapshot snapshot) {
-    setState(() => _twoFaEnabled = !_twoFaEnabled);
-    ref
-        .read(tradeBotSecuritySettingsControllerProvider)
-        .saveTwoFa(_twoFaEnabled);
+  void _toggleTwoFa(bool currentlyEnabled) {
+    final next = !currentlyEnabled;
+    setState(() => _twoFaEnabled = next);
+    ref.read(tradeBotSecuritySettingsControllerProvider).value?.saveTwoFa(next);
   }
 
   void _showApiKeySheet(

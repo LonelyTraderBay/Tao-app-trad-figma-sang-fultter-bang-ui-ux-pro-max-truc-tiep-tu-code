@@ -3,44 +3,50 @@ import 'package:vit_trade_flutter/features/trade_compliance/domain/entities/trad
 /// Data contract for the Trade Compliance feature: cost/disclosure
 /// documents, regulatory disclosures & governance, execution quality
 /// analytics, and disputes/complaints handling.
+///
+/// GD4 Cụm F3: every read method returns `Future<T>` (ADR-001 read idiom) —
+/// see `docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md`.
 abstract interface class TradeRegulatoryRepository {
   // Costs & disclosure documents
-  TradeClientMoneyProtectionSnapshot getClientMoneyProtection();
-  TradeCassReconciliationSnapshot getCassReconciliation();
-  TradeInvestorCompensationSnapshot getInvestorCompensation();
-  TradeExAnteCostsSnapshot getExAnteCosts();
-  TradeRiyCalculatorSnapshot getRiyCalculator();
-  TradeExPostCostsReportSnapshot getExPostCostsReport();
-  TradeKidGeneratorSnapshot getKidGenerator();
-  TradePerformanceScenariosSnapshot getPerformanceScenarios();
-  TradeRiskIndicatorSnapshot getRiskIndicatorExplainer();
-  TradeExPostCostsReportExportResult createExPostCostsReportExport({
+  Future<TradeClientMoneyProtectionSnapshot> getClientMoneyProtection();
+  Future<TradeCassReconciliationSnapshot> getCassReconciliation();
+  Future<TradeInvestorCompensationSnapshot> getInvestorCompensation();
+  Future<TradeExAnteCostsSnapshot> getExAnteCosts();
+  Future<TradeRiyCalculatorSnapshot> getRiyCalculator();
+  Future<TradeExPostCostsReportSnapshot> getExPostCostsReport();
+  Future<TradeKidGeneratorSnapshot> getKidGenerator();
+  Future<TradePerformanceScenariosSnapshot> getPerformanceScenarios();
+  Future<TradeRiskIndicatorSnapshot> getRiskIndicatorExplainer();
+  Future<TradeExPostCostsReportExportResult> createExPostCostsReportExport({
     int year = 2025,
   });
 
   // Regulatory disclosures & governance
-  TradeRegulatoryDisclosuresSnapshot getRegulatoryDisclosures();
-  TradeTransactionReportingSnapshot getTransactionReporting();
-  TradeRegulatoryReportsDashboardSnapshot getRegulatoryReportsDashboard();
-  TradeClientCategorizationSnapshot getClientCategorization();
-  TradeProductGovernanceSnapshot getProductGovernance();
-  TradeTargetMarketDefinitionSnapshot getTargetMarketDefinition({
+  Future<TradeRegulatoryDisclosuresSnapshot> getRegulatoryDisclosures();
+  Future<TradeTransactionReportingSnapshot> getTransactionReporting();
+  Future<TradeRegulatoryReportsDashboardSnapshot>
+  getRegulatoryReportsDashboard();
+  Future<TradeClientCategorizationSnapshot> getClientCategorization();
+  Future<TradeProductGovernanceSnapshot> getProductGovernance();
+  Future<TradeTargetMarketDefinitionSnapshot> getTargetMarketDefinition({
     String productId = 'prod-1',
   });
-  TradeAuditTrailSnapshot getAuditTrail();
-  TradeRegulatoryInspectionSnapshot getRegulatoryInspectionReady();
+  Future<TradeAuditTrailSnapshot> getAuditTrail();
+  Future<TradeRegulatoryInspectionSnapshot> getRegulatoryInspectionReady();
 
   // Execution quality analytics
-  TradeMarketDataAnalyticsSnapshot getMarketDataAnalytics();
-  TradeMarketDataAnalyticsSnapshot getLiveMarketDataAnalytics();
-  TradeArmIntegrationStatusSnapshot getArmIntegrationStatus();
-  TradeBestExecutionReportsSnapshot getBestExecutionReports();
-  TradeExecutionVenueAnalysisSnapshot getExecutionVenueAnalysis();
-  TradeSlippageMonitoringSnapshot getSlippageMonitoring();
+  Future<TradeMarketDataAnalyticsSnapshot> getMarketDataAnalytics();
+  Future<TradeMarketDataAnalyticsSnapshot> getLiveMarketDataAnalytics();
+  Future<TradeArmIntegrationStatusSnapshot> getArmIntegrationStatus();
+  Future<TradeBestExecutionReportsSnapshot> getBestExecutionReports();
+  Future<TradeExecutionVenueAnalysisSnapshot> getExecutionVenueAnalysis();
+  Future<TradeSlippageMonitoringSnapshot> getSlippageMonitoring();
 
   // Disputes & complaints
-  TradeComplaintsHandlingSnapshot getComplaintsHandling();
-  TradeComplaintSubmissionSnapshot getComplaintSubmission();
-  TradeComplaintTrackingSnapshot getComplaintTracking({String? complaintId});
-  TradeOmbudsmanReferralSnapshot getOmbudsmanReferral();
+  Future<TradeComplaintsHandlingSnapshot> getComplaintsHandling();
+  Future<TradeComplaintSubmissionSnapshot> getComplaintSubmission();
+  Future<TradeComplaintTrackingSnapshot> getComplaintTracking({
+    String? complaintId,
+  });
+  Future<TradeOmbudsmanReferralSnapshot> getOmbudsmanReferral();
 }

@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-059 mock repository exposes trading bot BE draft', () {
-    final repo = const MockTradeBotsRepository();
-    final snapshot = repo.getTradingBots();
+  test('SC-059 mock repository exposes trading bot BE draft', () async {
+    final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getTradingBots();
     final action = repo.submitBotAction(
       const TradeBotActionRequest(botId: 'bot1', action: 'pause'),
     );

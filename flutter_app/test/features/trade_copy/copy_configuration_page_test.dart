@@ -39,11 +39,11 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-072 mock repository exposes copy configuration BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final notFound = repo.getCopyConfiguration(providerId: 'provider001');
-    final found = repo.getCopyConfiguration(providerId: 'ct001');
-    final preview = repo.previewCopyConfiguration(found.defaultDraft);
+  test('SC-072 mock repository exposes copy configuration BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final notFound = await repo.getCopyConfiguration(providerId: 'provider001');
+    final found = await repo.getCopyConfiguration(providerId: 'ct001');
+    final preview = await repo.previewCopyConfiguration(found.defaultDraft);
 
     expect(notFound.isNotFound, isTrue);
     expect(found.provider?.name, 'AlphaHunter_VN');

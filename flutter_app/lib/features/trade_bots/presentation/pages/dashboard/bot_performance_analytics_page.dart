@@ -63,9 +63,7 @@ class _BotPerformanceAnalyticsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradingBotsRepositoryProvider)
-        .getBotPerformanceAnalytics();
+    final snapshotAsync = ref.watch(tradeBotPerformanceAnalyticsProvider);
     return VitTradeHubScaffold(
       title: 'Performance Analytics',
       subtitle: 'Phân tích hiệu suất bot theo thời gian',
@@ -79,64 +77,76 @@ class _BotPerformanceAnalyticsPageState
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Lãi/lỗ',
-          primaryValue:
-              '${snapshot.metrics.totalPnl >= 0 ? '+' : ''}\$${snapshot.metrics.totalPnl.toStringAsFixed(0)}',
-          primaryColor: snapshot.metrics.totalPnl >= 0
-              ? _analyticsGreen
-              : _analyticsRed,
-          secondaryLabel: 'Tỷ lệ thắng',
-          secondaryValue: '${snapshot.metrics.winRate.toStringAsFixed(1)}%',
-          secondaryColor: _analyticsGreen,
-        ),
-        VitTradeSection(
-          title: 'Key metrics',
-          child: _KeyMetricsCard(metrics: snapshot.metrics),
-        ),
-        VitTradeSection(
-          title: 'Timeframe',
-          child: _TimeframeTabs(
-            active: _timeframe,
-            onChanged: (timeframe) => setState(() => _timeframe = timeframe),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được phân tích hiệu suất',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(tradeBotPerformanceAnalyticsProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Cumulative PnL',
-          child: _PnlChartCard(points: snapshot.pnlPoints),
-        ),
-        VitTradeSection(
-          title: 'Win/Loss Distribution',
-          child: _WinLossChartCard(points: snapshot.winLossPoints),
-        ),
-        VitTradeSection(
-          title: 'Performance by Strategy',
-          child: _StrategyPerformanceCard(
-            strategies: snapshot.strategyPerformance,
+        ],
+        data: (snapshot) => [
+          VitBotSubpageHero(
+            primaryLabel: 'Lãi/lỗ',
+            primaryValue:
+                '${snapshot.metrics.totalPnl >= 0 ? '+' : ''}\$${snapshot.metrics.totalPnl.toStringAsFixed(0)}',
+            primaryColor: snapshot.metrics.totalPnl >= 0
+                ? _analyticsGreen
+                : _analyticsRed,
+            secondaryLabel: 'Tỷ lệ thắng',
+            secondaryValue: '${snapshot.metrics.winRate.toStringAsFixed(1)}%',
+            secondaryColor: _analyticsGreen,
           ),
-        ),
-        VitTradeSection(
-          title: 'Advanced Metrics',
-          child: _AdvancedMetricsGrid(metrics: snapshot.metrics),
-        ),
-        VitTradeSection(
-          title: 'Trade Duration Distribution',
-          child: _DurationCard(distribution: snapshot.durationDistribution),
-        ),
-        VitTradeSection(
-          title: 'Summary',
-          child: _PerformanceSummaryCard(metrics: snapshot.metrics),
-        ),
-        const VitTradeSection(title: 'Rating', child: _RatingCard()),
-        const VitBotRiskReviewFooter(
-          title: 'Bot analytics review',
-          message:
-              'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
-          contractId: 'bot-performance-analytics-review',
-          statusLabel: 'Risk-aware analytics',
-        ),
-      ],
+          VitTradeSection(
+            title: 'Key metrics',
+            child: _KeyMetricsCard(metrics: snapshot.metrics),
+          ),
+          VitTradeSection(
+            title: 'Timeframe',
+            child: _TimeframeTabs(
+              active: _timeframe,
+              onChanged: (timeframe) => setState(() => _timeframe = timeframe),
+            ),
+          ),
+          VitTradeSection(
+            title: 'Cumulative PnL',
+            child: _PnlChartCard(points: snapshot.pnlPoints),
+          ),
+          VitTradeSection(
+            title: 'Win/Loss Distribution',
+            child: _WinLossChartCard(points: snapshot.winLossPoints),
+          ),
+          VitTradeSection(
+            title: 'Performance by Strategy',
+            child: _StrategyPerformanceCard(
+              strategies: snapshot.strategyPerformance,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Advanced Metrics',
+            child: _AdvancedMetricsGrid(metrics: snapshot.metrics),
+          ),
+          VitTradeSection(
+            title: 'Trade Duration Distribution',
+            child: _DurationCard(distribution: snapshot.durationDistribution),
+          ),
+          VitTradeSection(
+            title: 'Summary',
+            child: _PerformanceSummaryCard(metrics: snapshot.metrics),
+          ),
+          const VitTradeSection(title: 'Rating', child: _RatingCard()),
+          const VitBotRiskReviewFooter(
+            title: 'Bot analytics review',
+            message:
+                'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
+            contractId: 'bot-performance-analytics-review',
+            statusLabel: 'Risk-aware analytics',
+          ),
+        ],
+      ),
     );
   }
 }

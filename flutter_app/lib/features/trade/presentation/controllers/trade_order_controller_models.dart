@@ -62,7 +62,7 @@ final class TradeOrdersHistoryController {
   final TradeOrdersHistoryViewState state;
   final TradeRepository _repository;
 
-  TradeOrderActionResult cancelOrder(String orderId) {
+  Future<TradeOrderActionResult> cancelOrder(String orderId) {
     return _repository.submitOrderAction(orderId: orderId, action: 'cancel');
   }
 

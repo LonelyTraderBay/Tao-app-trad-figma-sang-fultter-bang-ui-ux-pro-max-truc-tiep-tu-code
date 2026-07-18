@@ -16,20 +16,15 @@ import 'package:flutter_test/flutter_test.dart';
 /// `String asset,`) không khớp vì không có `(` ở cuối.
 final _syncMethodPattern = RegExp(r'^\s+(?!Future<|Stream<)\S.*\s[a-z]\w*\(');
 
-/// CHỈ GIẢM — đích 0 ở Cụm F6 (đo thực tế 2026-07-18, sau Cụm F2 GD4).
-/// Method sync còn lại theo file (31 file domain/repositories/ tổng cộng;
-/// auth/home/news/trade/wallet/notifications đã về 0 — 2 đầu đã ở GĐ2,
-/// wallet+notifications vừa xong ở Cụm F2 GD4):
-/// admin=4, arena=27, cross_module/analytics=1, cross_module/smart_alerts=1,
-/// cross_module/tax_report=1, cross_module/unified_portfolio=1, dca=12,
-/// dev_tools=4, discovery=2, earn=68, enterprise_states=1, launchpad=24,
-/// markets=21, onboarding=1, p2p=71, predictions=17, profile=11,
-/// referral=5, rewards=1, support=3, trade_bots/analytics=13,
-/// trade_bots/trading_bots=14, trade_compliance=28, trade_copy=29,
-/// trade_terminal/spot=24, trade_terminal/futures_margin=6.
+/// CHỈ GIẢM — đích 0 ở Cụm F6 (đo thực tế 2026-07-18, sau Cụm F3 GD4
+/// trade_copy — 29 method). Baseline đo lại = actual thật tại thời điểm
+/// đóng Cụm F3 (282), vì các cụm fan-out khác (F4/F5/trade_bots/...) có
+/// thể đang chạy song song trong cùng working tree (không worktree) và đã
+/// tự hạ phần của họ trước hoặc sau — số này phản ánh tổng thật đo được,
+/// không phải suy ra bằng phép trừ thủ công 29 khỏi baseline cũ.
 /// Fan-out: mỗi cụm xong thì trừ đúng số method đã async-hoá khỏi baseline
 /// này (không hạ thấp hơn actual đo được — xem reason message bên dưới).
-const _baseline = 390;
+const _baseline = 263;
 
 List<String> _syncRepositoryMethods() {
   final findings = <String>[];

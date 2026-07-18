@@ -30,9 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-050 mock repository exposes orders history BE draft', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getOrdersHistory();
+  test('SC-050 mock repository exposes orders history BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getOrdersHistory();
 
     expect(snapshot.trade.pairs, hasLength(3));
     expect(snapshot.openOrders, hasLength(4));
@@ -53,7 +53,7 @@ void main() {
       ]),
     );
 
-    final result = repo.submitOrderAction(
+    final result = await repo.submitOrderAction(
       orderId: 'ord-open-001',
       action: 'cancel',
     );
@@ -124,7 +124,9 @@ void main() {
     await pumpOrdersHistory(tester);
 
     await tester.tap(find.byKey(OrdersHistoryPage.cancelFirstOrderKey));
-    await tester.pump();
+    // GD4 Cụm F3: cancelOrder giờ Future<T> (submitOrderAction) — chờ hết
+    // đường ghi thay vì chỉ 1 frame.
+    await tester.pumpAndSettle();
 
     expect(find.byType(OrdersHistoryPage), findsOneWidget);
     expect(find.text('Hủy lệnh'), findsWidgets);

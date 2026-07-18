@@ -30,39 +30,43 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-109 mock repository exposes performance scenarios BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getPerformanceScenarios();
+  test(
+    'SC-109 mock repository exposes performance scenarios BE draft',
+    () async {
+      final snapshot = await const MockTradeRegulatoryRepository(
+        loadDelay: Duration.zero,
+      ).getPerformanceScenarios();
 
-    expect(snapshot.investment, 10000);
-    expect(snapshot.holdingPeriods, [1, 3, 5]);
-    expect(snapshot.defaultHoldingPeriod, 3);
-    expect(snapshot.scenarios.map((scenario) => scenario.label), [
-      'Stress',
-      'Unfavorable',
-      'Moderate',
-      'Favorable',
-    ]);
-    expect(
-      snapshot.scenarios.first.outcomeFor(snapshot.investment, 3).round(),
-      4219,
-    );
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/trade/trade-copy-trading-performance-scenarios',
-    );
-    expect(snapshot.actionDraft, contains('POST /copy-trading/follow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        TradeScreenState.loading,
-        TradeScreenState.empty,
-        TradeScreenState.error,
-        TradeScreenState.offline,
-        TradeScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(snapshot.investment, 10000);
+      expect(snapshot.holdingPeriods, [1, 3, 5]);
+      expect(snapshot.defaultHoldingPeriod, 3);
+      expect(snapshot.scenarios.map((scenario) => scenario.label), [
+        'Stress',
+        'Unfavorable',
+        'Moderate',
+        'Favorable',
+      ]);
+      expect(
+        snapshot.scenarios.first.outcomeFor(snapshot.investment, 3).round(),
+        4219,
+      );
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/trade/trade-copy-trading-performance-scenarios',
+      );
+      expect(snapshot.actionDraft, contains('POST /copy-trading/follow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          TradeScreenState.loading,
+          TradeScreenState.empty,
+          TradeScreenState.error,
+          TradeScreenState.offline,
+          TradeScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-109 renders performance scenarios in Trade shell', (
     tester,

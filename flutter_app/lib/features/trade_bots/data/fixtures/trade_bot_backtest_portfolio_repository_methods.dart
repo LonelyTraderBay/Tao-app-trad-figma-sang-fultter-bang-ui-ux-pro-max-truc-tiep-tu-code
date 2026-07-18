@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_bots_repository.dart';
 mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
     on _MockTradeBotsRepositoryBase {
   @override
-  TradeBotBacktestingSnapshot getBotBacktesting() {
+  Future<TradeBotBacktestingSnapshot> getBotBacktesting() async {
+    await _simulateNetwork();
     return const TradeBotBacktestingSnapshot(
       strategies: _botBacktestStrategies,
       pairs: _botBacktestPairs,
@@ -30,7 +31,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotStrategyCompareSnapshot getBotStrategyCompare() {
+  Future<TradeBotStrategyCompareSnapshot> getBotStrategyCompare() async {
+    await _simulateNetwork();
     return const TradeBotStrategyCompareSnapshot(
       strategies: _botCompareStrategies,
       equityPoints: _botCompareEquityPoints,
@@ -56,7 +58,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotOptimizationSnapshot getBotOptimization() {
+  Future<TradeBotOptimizationSnapshot> getBotOptimization() async {
+    await _simulateNetwork();
     return const TradeBotOptimizationSnapshot(
       targets: _botOptimizationTargets,
       parameterRanges: _botOptimizationRanges,
@@ -80,7 +83,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotPortfolioDashboardSnapshot getBotPortfolioDashboard() {
+  Future<TradeBotPortfolioDashboardSnapshot> getBotPortfolioDashboard() async {
+    await _simulateNetwork();
     return const TradeBotPortfolioDashboardSnapshot(
       summary: _botPortfolioSummary,
       allocations: _botPortfolioAllocations,
@@ -102,7 +106,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotDrawdownAnalyzerSnapshot getBotDrawdownAnalyzer() {
+  Future<TradeBotDrawdownAnalyzerSnapshot> getBotDrawdownAnalyzer() async {
+    await _simulateNetwork();
     return const TradeBotDrawdownAnalyzerSnapshot(
       summary: _botDrawdownSummary,
       underwaterPoints: _botUnderwaterPoints,
@@ -124,7 +129,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotEquityCurveSnapshot getBotEquityCurve() {
+  Future<TradeBotEquityCurveSnapshot> getBotEquityCurve() async {
+    await _simulateNetwork();
     return const TradeBotEquityCurveSnapshot(
       summary: _botEquityCurveSummary,
       equityPoints: _botEquityCurvePoints,
@@ -146,7 +152,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotGuideSnapshot getBotGuide() {
+  Future<TradeBotGuideSnapshot> getBotGuide() async {
+    await _simulateNetwork();
     return const TradeBotGuideSnapshot(
       strategies: _botGuideStrategies,
       bestPractices: _botGuideBestPractices,
@@ -166,7 +173,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotFaqSnapshot getBotFaq() {
+  Future<TradeBotFaqSnapshot> getBotFaq() async {
+    await _simulateNetwork();
     return const TradeBotFaqSnapshot(
       categories: _botFaqCategories,
       endpoint: '/api/mobile/trade/trade-bots-faq',
@@ -184,7 +192,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotTaxReportingSnapshot getBotTaxReporting() {
+  Future<TradeBotTaxReportingSnapshot> getBotTaxReporting() async {
+    await _simulateNetwork();
     return const TradeBotTaxReportingSnapshot(
       taxYears: ['2026', '2025', '2024', '2023'],
       defaultYear: '2025',
@@ -209,7 +218,8 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotApiDocumentationSnapshot getBotApiDocumentation() {
+  Future<TradeBotApiDocumentationSnapshot> getBotApiDocumentation() async {
+    await _simulateNetwork();
     return const TradeBotApiDocumentationSnapshot(
       tabs: [
         TradeBotApiTab(id: 'endpoints', label: 'endpoints'),

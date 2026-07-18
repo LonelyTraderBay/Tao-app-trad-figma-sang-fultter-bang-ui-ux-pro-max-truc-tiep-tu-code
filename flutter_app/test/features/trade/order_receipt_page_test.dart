@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-051 mock repository exposes order receipt BE draft', () {
-    final repo = const MockTradeRepository();
-    final snapshot = repo.getOrderReceipt();
+  test('SC-051 mock repository exposes order receipt BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getOrderReceipt();
     final receipt = snapshot.receipt;
 
     expect(snapshot.trade.pair.symbol, 'BTC/USDT');

@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-065 mock repository exposes copy education BE draft', () {
-    final repo = const MockTradeCopyTradingRepository();
-    final snapshot = repo.getCopyEducation();
+  test('SC-065 mock repository exposes copy education BE draft', () async {
+    final repo = const MockTradeCopyTradingRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getCopyEducation();
 
     expect(snapshot.trade.copyProviders, isNotEmpty);
     expect(snapshot.defaultTab, 'how-it-works');

@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-018 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getMarketDerivatives();
+  test('SC-018 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarketDerivatives();
 
     expect(snapshot.globalStats.totalOpenInterest, 45678901000);
     expect(snapshot.globalStats.totalLiquidations24h, 234567000);
@@ -61,7 +61,7 @@ void main() {
       ]),
     );
 
-    final funding = repo.getMarketDerivatives(
+    final funding = await repo.getMarketDerivatives(
       sortBy: MarketDerivativesSort.funding,
     );
     expect(funding.pairs.first.symbol, 'DOGE/USDT');

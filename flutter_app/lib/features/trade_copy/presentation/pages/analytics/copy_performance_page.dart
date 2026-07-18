@@ -53,9 +53,9 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getCopyPerformance(copyId: widget.copyId);
+    final snapshotAsync = ref.watch(
+      tradeCopyPerformanceProvider(widget.copyId),
+    );
 
     return VitTradeDetailScaffold(
       title: 'Phân tích hiệu suất',
@@ -69,53 +69,67 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Xem lại hiệu suất copy',
-            message:
-                'PnL, phí, drawdown, lịch sử lệnh và chỉ số rủi ro được xem lại trước khi thay đổi phân bổ copy.',
-            contractId: 'copy-performance-${widget.copyId}',
-            density: VitDensity.compact,
-          ),
-        ),
-        VitTradeSection(
-          title: 'Tổng quan',
-          child: _PerformanceSummary(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Phân tích',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _PerformanceTabs(
-                activeTab: _activeTab,
-                onChanged: (value) => setState(() => _activeTab = value),
-              ),
-              if (_activeTab == 'overview')
-                _OverviewTab(snapshot: snapshot)
-              else if (_activeTab == 'trades')
-                _TradesTab(snapshot: snapshot)
-              else if (_activeTab == 'costs')
-                _CostsTab(snapshot: snapshot)
-              else
-                _MetricsTab(snapshot: snapshot),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x2,
-          ),
-          child: Text(
-            'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Chênh lệch so với provider là bình thường.',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: _performanceInfoLineHeight,
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được hiệu suất copy',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(tradeCopyPerformanceProvider(widget.copyId)),
             ),
-          ),
+          ],
+          data: (snapshot) => [
+            VitTradeSection(
+              title: 'Đánh giá rủi ro',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Xem lại hiệu suất copy',
+                message:
+                    'PnL, phí, drawdown, lịch sử lệnh và chỉ số rủi ro được xem lại trước khi thay đổi phân bổ copy.',
+                contractId: 'copy-performance-${widget.copyId}',
+                density: VitDensity.compact,
+              ),
+            ),
+            VitTradeSection(
+              title: 'Tổng quan',
+              child: _PerformanceSummary(snapshot: snapshot),
+            ),
+            VitTradeSection(
+              title: 'Phân tích',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _PerformanceTabs(
+                    activeTab: _activeTab,
+                    onChanged: (value) => setState(() => _activeTab = value),
+                  ),
+                  if (_activeTab == 'overview')
+                    _OverviewTab(snapshot: snapshot)
+                  else if (_activeTab == 'trades')
+                    _TradesTab(snapshot: snapshot)
+                  else if (_activeTab == 'costs')
+                    _CostsTab(snapshot: snapshot)
+                  else
+                    _MetricsTab(snapshot: snapshot),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x2,
+              ),
+              child: Text(
+                'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Chênh lệch so với provider là bình thường.',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  height: _performanceInfoLineHeight,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

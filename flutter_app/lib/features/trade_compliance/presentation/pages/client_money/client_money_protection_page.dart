@@ -48,9 +48,7 @@ class _ClientMoneyProtectionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getClientMoneyProtection();
+    final async = ref.watch(tradeClientMoneyProtectionProvider);
 
     return VitTradeHubScaffold(
       title: 'Client Money Protection',
@@ -65,71 +63,82 @@ class _ClientMoneyProtectionPageState
         fallbackPath: AppRoutePaths.tradeCopyTrading,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        const VitTradeSection(
-          title: 'Protection notice',
-          child: VitTradeComplianceHero(
-            title: 'Your Funds Are Protected',
-            description:
-                'All client money is held in segregated bank accounts and '
-                'reconciled daily per FCA CASS 7 rules.',
-            icon: Icons.shield_outlined,
-            accentColor: AppColors.text1,
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeClientMoneyProtectionProvider),
           ),
-        ),
-        VitTradeSection(
-          title: 'Segregated balance',
-          child: _BalanceCard(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Details',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              VitSegmentedTabBar(
-                tabs: [
-                  for (final tab in const [
-                    ('overview', 'Overview'),
-                    ('reconciliation', 'Reconciliation'),
-                    ('documents', 'Documents'),
-                  ])
-                    VitTabItem(
-                      key: tab.$1,
-                      label: tab.$2,
-                      widgetKey: ClientMoneyProtectionPage.tabKey(tab.$1),
-                    ),
-                ],
-                activeKey: _tab,
-                onChanged: _setTab,
+        ],
+        data: (snapshot) => [
+          const VitTradeSection(
+            title: 'Protection notice',
+            child: VitTradeComplianceHero(
+              title: 'Your Funds Are Protected',
+              description:
+                  'All client money is held in segregated bank accounts and '
+                  'reconciled daily per FCA CASS 7 rules.',
+              icon: Icons.shield_outlined,
+              accentColor: AppColors.text1,
+            ),
+          ),
+          VitTradeSection(
+            title: 'Segregated balance',
+            child: _BalanceCard(snapshot: snapshot),
+          ),
+          VitTradeSection(
+            title: 'Details',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                VitSegmentedTabBar(
+                  tabs: [
+                    for (final tab in const [
+                      ('overview', 'Overview'),
+                      ('reconciliation', 'Reconciliation'),
+                      ('documents', 'Documents'),
+                    ])
+                      VitTabItem(
+                        key: tab.$1,
+                        label: tab.$2,
+                        widgetKey: ClientMoneyProtectionPage.tabKey(tab.$1),
+                      ),
+                  ],
+                  activeKey: _tab,
+                  onChanged: _setTab,
+                ),
+                if (_tab == 'overview')
+                  _Overview(snapshot: snapshot)
+                else if (_tab == 'reconciliation')
+                  const _Reconciliation()
+                else
+                  const _Documents(),
+              ],
+            ),
+          ),
+          VitTradeComplianceSection(
+            title: 'CASS status',
+            statusPill: const VitStatusPill(
+              label: 'CASS review',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Trust account',
+                value: snapshot.trustAccount,
               ),
-              if (_tab == 'overview')
-                _Overview(snapshot: snapshot)
-              else if (_tab == 'reconciliation')
-                const _Reconciliation()
-              else
-                const _Documents(),
+              const VitTradeComplianceItem(
+                label: 'Framework',
+                value: 'FCA CASS 7',
+              ),
             ],
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'CASS status',
-          statusPill: const VitStatusPill(
-            label: 'CASS review',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: [
-            VitTradeComplianceItem(
-              label: 'Trust account',
-              value: snapshot.trustAccount,
-            ),
-            const VitTradeComplianceItem(
-              label: 'Framework',
-              value: 'FCA CASS 7',
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 

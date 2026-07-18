@@ -3,10 +3,11 @@ part of '../repositories/mock_trade_copy_trading_repository.dart';
 mixin _MockTradeCopyTradingRepositoryConfigurationMethods
     on _MockTradeCopyTradingRepositoryBase {
   @override
-  TradeCopyConfigurationSnapshot getCopyConfiguration({
+  Future<TradeCopyConfigurationSnapshot> getCopyConfiguration({
     String providerId = 'provider001',
-  }) {
-    final detail = getCopyProviderDetail(providerId: providerId);
+  }) async {
+    await _simulateNetwork();
+    final detail = await getCopyProviderDetail(providerId: providerId);
     final defaultDraft = TradeCopyConfigurationDraft(
       providerId: providerId,
       copyCapital: 5000,
@@ -42,10 +43,11 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradeCopyConfirmationSnapshot getCopyConfirmation({
+  Future<TradeCopyConfirmationSnapshot> getCopyConfirmation({
     String providerId = 'provider001',
-  }) {
-    final configuration = getCopyConfiguration(providerId: providerId);
+  }) async {
+    await _simulateNetwork();
+    final configuration = await getCopyConfiguration(providerId: providerId);
     return TradeCopyConfirmationSnapshot(
       providerId: providerId,
       provider: configuration.provider,
@@ -76,7 +78,10 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradeCopyPerformanceSnapshot getCopyPerformance({String copyId = 'copy001'}) {
+  Future<TradeCopyPerformanceSnapshot> getCopyPerformance({
+    String copyId = 'copy001',
+  }) async {
+    await _simulateNetwork();
     return TradeCopyPerformanceSnapshot(
       copyId: copyId,
       initialCapital: 5000,
@@ -105,9 +110,10 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradePerformanceAttributionSnapshot getPerformanceAttribution({
+  Future<TradePerformanceAttributionSnapshot> getPerformanceAttribution({
     String copyId = 'copy001',
-  }) {
+  }) async {
+    await _simulateNetwork();
     return TradePerformanceAttributionSnapshot(
       copyId: copyId,
       totalReturnPct: 9.2,
@@ -137,7 +143,10 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradeCopyAuditLogSnapshot getCopyAuditLog({String copyId = 'copy001'}) {
+  Future<TradeCopyAuditLogSnapshot> getCopyAuditLog({
+    String copyId = 'copy001',
+  }) async {
+    await _simulateNetwork();
     int countFor(TradeCopyAuditEventType type) =>
         _copyAuditEvents.where((event) => event.type == type).length;
 
@@ -194,7 +203,8 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradePortfolioRiskAnalysisSnapshot getPortfolioRiskAnalysis() {
+  Future<TradePortfolioRiskAnalysisSnapshot> getPortfolioRiskAnalysis() async {
+    await _simulateNetwork();
     return const TradePortfolioRiskAnalysisSnapshot(
       totalExposure: 8000,
       var95: -273,
@@ -225,10 +235,11 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradeCopyConfigurationPreview previewCopyConfiguration(
+  Future<TradeCopyConfigurationPreview> previewCopyConfiguration(
     TradeCopyConfigurationDraft draft,
-  ) {
-    final detail = getCopyProviderDetail(providerId: draft.providerId);
+  ) async {
+    await _simulateNetwork();
+    final detail = await getCopyProviderDetail(providerId: draft.providerId);
     final validations = _copyConfigurationValidations(draft, detail.provider);
     return TradeCopyConfigurationPreview(
       providerId: draft.providerId,
@@ -245,9 +256,10 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradeCopyConfirmationResult submitCopyConfirmation(
+  Future<TradeCopyConfirmationResult> submitCopyConfirmation(
     TradeCopyConfirmationRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     final accepted = request.acceptedConsentIds.toSet();
     final missingRequiredConsent = _copyConfirmationConsents.any(
       (item) => item.required && !accepted.contains(item.id),
@@ -262,9 +274,10 @@ mixin _MockTradeCopyTradingRepositoryConfigurationMethods
   }
 
   @override
-  TradeCopyAuditExportResult createCopyAuditExport(
+  Future<TradeCopyAuditExportResult> createCopyAuditExport(
     TradeCopyAuditExportRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeCopyAuditExportResult(
       exportId: 'EXP-COPY-AUDIT-077-${request.copyId.toUpperCase()}',
       format: request.format,

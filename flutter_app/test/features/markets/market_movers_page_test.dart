@@ -32,8 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-010 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketMovers();
+  test('SC-010 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketMovers();
     final gainers = snapshot.movers
         .where((mover) => mover.change24h > 0)
         .toList();

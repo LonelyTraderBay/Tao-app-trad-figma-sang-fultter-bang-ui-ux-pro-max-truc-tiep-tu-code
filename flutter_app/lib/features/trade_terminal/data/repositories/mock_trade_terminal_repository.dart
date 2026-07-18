@@ -16,12 +16,29 @@ part '../fixtures/trade_futures_leverage_repository_fixtures.dart';
 
 mixin _MockTradeTerminalRepositoryBase
     implements SpotTradeRepository, TradeFuturesMarginRepository {
-  /// Độ trễ mô phỏng cho các đường ghi async (ADR-001); test truyền
+  /// Độ trễ mô phỏng cho các đường ghi/đọc async (ADR-001); test truyền
   /// `Duration.zero`.
   Duration get loadDelay;
 
-  /// Khi bật, các đường ghi async ném [StateError] để test nhánh lỗi.
+  /// Khi bật, các đường ghi/đọc async ném [StateError] để test nhánh lỗi.
   bool get simulateError;
+
+  /// GD4 Cụm F3: helper dùng chung cho các method đọc async hoá (advanced
+  /// tools + advanced trading demo/analytics) — 3 đường ghi tài chính có sẵn
+  /// từ ERR-35 (`submitOrder`/`submitFuturesOrder`/`submitFuturesLeverage`)
+  /// giữ nguyên pattern cũ, không đổi sang helper này.
+  ///
+  /// BẮT BUỘC guard `loadDelay > Duration.zero` — `Future.delayed(Duration.zero)`
+  /// vẫn là timer thật, không nổ trong `tester.pump()` không-duration (GD4
+  /// playbook bẫy 9.10).
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('trade_terminal_mock_fetch_failed');
+    }
+  }
 }
 
 /// Independent mock implementation of both [SpotTradeRepository] and

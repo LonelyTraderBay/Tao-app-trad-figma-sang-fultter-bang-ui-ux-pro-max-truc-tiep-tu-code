@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/mar
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_heatmap_panels.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_heatmap_summary.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/pair/market_heatmap_treemap.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketHeatmapPage extends ConsumerStatefulWidget {
@@ -43,23 +44,13 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketControllerProvider).getMarketHeatmap();
+    final heatmapAsync = ref.watch(marketHeatmapSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? AppSpacing.x7 + AppSpacing.x6
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
-    final visibleCoins = _visibleCoins(snapshot);
-    final selectedCoin = marketHeatmapFindCoin(snapshot.coins, _selectedCoinId);
-    final totalMarketCap = visibleCoins.fold<double>(
-      0,
-      (sum, coin) => sum + coin.marketCap,
-    );
-    final averageChange = visibleCoins.isEmpty
-        ? 0.0
-        : visibleCoins.fold<double>(0, (sum, coin) => sum + _changeFor(coin)) /
-              visibleCoins.length;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -91,59 +82,89 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        MarketHeatmapSummaryStrip(
-                          totalMarketCap: totalMarketCap,
-                          averageChange: averageChange,
-                          metric: _metric,
-                          count: visibleCoins.length,
-                        ),
-                        MarketHeatmapControls(
-                          metrics: snapshot.metrics,
-                          activeMetric: _metric,
-                          categories: snapshot.screenFilters.categories,
-                          activeCategory: _category,
-                          onMetricSelected: (value) {
-                            setState(() {
-                              _metric = value;
-                              _selectedCoinId = null;
-                            });
-                          },
-                          onCategorySelected: (value) {
-                            setState(() {
-                              _category = value;
-                              _selectedCoinId = null;
-                            });
-                          },
-                        ),
-                        MarketHeatmapTreemap(
-                          coins: visibleCoins,
-                          totalMarketCap: totalMarketCap,
-                          metric: _metric,
-                          selectedCoinId: _selectedCoinId,
-                          onCoinSelected: (coin) {
-                            setState(() {
-                              _selectedCoinId = _selectedCoinId == coin.id
-                                  ? null
-                                  : coin.id;
-                            });
-                          },
-                        ),
-                        const MarketHeatmapLegend(),
-                        if (selectedCoin != null)
-                          MarketHeatmapSelectedCoinCard(
-                            coin: selectedCoin,
-                            onDetail: () => context.go(
-                              AppRoutePaths.pairDetail(
-                                '${selectedCoin.id}usdt',
-                              ),
-                            ),
+                      children: heatmapAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được bản đồ thị trường',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(marketHeatmapSnapshotProvider),
                           ),
-                        MarketHeatmapTrendPanels(
-                          coins: visibleCoins,
-                          metric: _metric,
-                        ),
-                      ],
+                        ],
+                        data: (snapshot) {
+                          final visibleCoins = _visibleCoins(snapshot);
+                          final selectedCoin = marketHeatmapFindCoin(
+                            snapshot.coins,
+                            _selectedCoinId,
+                          );
+                          final totalMarketCap = visibleCoins.fold<double>(
+                            0,
+                            (sum, coin) => sum + coin.marketCap,
+                          );
+                          final averageChange = visibleCoins.isEmpty
+                              ? 0.0
+                              : visibleCoins.fold<double>(
+                                      0,
+                                      (sum, coin) => sum + _changeFor(coin),
+                                    ) /
+                                    visibleCoins.length;
+                          return [
+                            MarketHeatmapSummaryStrip(
+                              totalMarketCap: totalMarketCap,
+                              averageChange: averageChange,
+                              metric: _metric,
+                              count: visibleCoins.length,
+                            ),
+                            MarketHeatmapControls(
+                              metrics: snapshot.metrics,
+                              activeMetric: _metric,
+                              categories: snapshot.screenFilters.categories,
+                              activeCategory: _category,
+                              onMetricSelected: (value) {
+                                setState(() {
+                                  _metric = value;
+                                  _selectedCoinId = null;
+                                });
+                              },
+                              onCategorySelected: (value) {
+                                setState(() {
+                                  _category = value;
+                                  _selectedCoinId = null;
+                                });
+                              },
+                            ),
+                            MarketHeatmapTreemap(
+                              coins: visibleCoins,
+                              totalMarketCap: totalMarketCap,
+                              metric: _metric,
+                              selectedCoinId: _selectedCoinId,
+                              onCoinSelected: (coin) {
+                                setState(() {
+                                  _selectedCoinId = _selectedCoinId == coin.id
+                                      ? null
+                                      : coin.id;
+                                });
+                              },
+                            ),
+                            const MarketHeatmapLegend(),
+                            if (selectedCoin != null)
+                              MarketHeatmapSelectedCoinCard(
+                                coin: selectedCoin,
+                                onDetail: () => context.go(
+                                  AppRoutePaths.pairDetail(
+                                    '${selectedCoin.id}usdt',
+                                  ),
+                                ),
+                              ),
+                            MarketHeatmapTrendPanels(
+                              coins: visibleCoins,
+                              metric: _metric,
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-098 mock repository exposes slippage monitoring BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getSlippageMonitoring();
+  test('SC-098 mock repository exposes slippage monitoring BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getSlippageMonitoring();
 
     expect(snapshot.defaultTab, 'realtime');
     expect(snapshot.lastUpdatedLabel, 'realtime-refresh');

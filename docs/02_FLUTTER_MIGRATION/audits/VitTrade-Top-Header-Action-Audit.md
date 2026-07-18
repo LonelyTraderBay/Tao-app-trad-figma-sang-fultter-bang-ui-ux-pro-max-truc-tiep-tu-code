@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/top_header_action_audit.dart`.
 
 ```text
-vit_header_total=230
+vit_header_total=231
 vit_header_with_custom_trailing=0
 vit_header_with_legacy_action=0
 custom_header_targets=0
@@ -17,7 +17,7 @@ action_groups_over_limit=0
 
 | Classification | Count |
 | --- | ---: |
-| canonical | 216 |
+| canonical | 217 |
 
 ## Action Inventory
 
@@ -125,25 +125,26 @@ action_groups_over_limit=0
 | vit_header | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_risk_analytics_page.dart` | 76 | `_LaunchpadRiskAnalyticsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_staking_page.dart` | 87 | `_LaunchpadStakingPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart` | 151 | `_LaunchpadWebhooksPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart` | 74 | `MarketOverviewPage` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart` | 164 | `_WatchlistPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` | 77 | `_MarketDepthPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/pair/market_heatmap_page.dart` | 71 | `_MarketHeatmapPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/hub/market_overview_page.dart` | 75 | `MarketOverviewPage` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/hub/watchlist_page.dart` | 167 | `_WatchlistPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/pair/market_depth_page.dart` | 162 | `_MarketDepthScaffold` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/pair/market_heatmap_page.dart` | 62 | `_MarketHeatmapPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/pair/pair_detail_page.dart` | 248 | `_PairDetailFallbackScaffold` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/markets/presentation/pages/portfolio/advanced_charts_page_tabs_filters_widgets.dart` | 32 | `_AdvancedChartsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/portfolio/portfolio_tracker_page_overview_widgets.dart` | 29 | `_PortfolioTrackerPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart` | 153 | `_PriceAlertsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/market_news_page.dart` | 79 | `_MarketNewsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/portfolio/portfolio_tracker_page_overview_widgets.dart` | 26 | `_PortfolioTrackerPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart` | 156 | `_PriceAlertsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/market_news_page.dart` | 82 | `_MarketNewsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/markets/presentation/pages/research/social_sentiment_page.dart` | 158 | `_SocialSentimentPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/social_signals_page_tabs_widgets.dart` | 33 | `_SocialSignalsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/token_info_page.dart` | 141 | `_TokenInfoPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/token_unlocks_page_upcoming_widgets.dart` | 31 | `_TokenUnlocksPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/comparison_tool_page.dart` | 94 | `_ComparisonToolPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/derivatives_overview_page.dart` | 64 | `_DerivativesOverviewPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_calendar_page.dart` | 87 | `_MarketCalendarPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_correlations_page.dart` | 96 | `_MarketCorrelationsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/social_signals_page_tabs_widgets.dart` | 47 | `_SocialSignalsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/token_info_page.dart` | 210 | `_TokenInfoScaffold` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/research/token_unlocks_page_upcoming_widgets.dart` | 44 | `_TokenUnlocksPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/comparison_tool_page.dart` | 98 | `_ComparisonToolPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/derivatives_overview_page.dart` | 65 | `_DerivativesOverviewPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_calendar_page.dart` | 85 | `_MarketCalendarPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_correlations_page.dart` | 97 | `_MarketCorrelationsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_movers_page.dart` | 151 | `_MarketMoversPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_screener_page.dart` | 198 | `_MarketScreenerPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_sectors_page.dart` | 84 | `_MarketSectorsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_screener_page.dart` | 199 | `_MarketScreenerPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/markets/presentation/pages/tools/market_sectors_page.dart` | 81 | `_MarketSectorsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/news/presentation/pages/news_page.dart` | 88 | `_NewsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart` | 77 | `_NotificationsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart` | 83 | `P2PAdAnalyticsPage` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |

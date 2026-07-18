@@ -23,6 +23,15 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          // GD4 Cụm F3: previewFuturesOrder giờ Future<T>, watch theo family
+          // key = draft (đổi mỗi keystroke) — loadDelay mặc định 300ms để
+          // lại pending timer mồ côi khi draft cũ bị autoDispose trước khi
+          // Future resolve (xem GD4-Async-Playbook.md mục 9).
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.tradeFutures('btcusdt'),
@@ -35,8 +44,8 @@ void main() {
 
   test('SC-057 mock repository exposes futures BE draft', () async {
     final repo = const MockTradeRepository(loadDelay: Duration.zero);
-    final snapshot = repo.getFutures(pairId: 'btcusdt');
-    final preview = repo.previewFuturesOrder(
+    final snapshot = await repo.getFutures(pairId: 'btcusdt');
+    final preview = await repo.previewFuturesOrder(
       const TradeFuturesOrderDraft(
         pairId: 'btcusdt',
         side: TradeFuturesSide.long,

@@ -2,7 +2,8 @@ part of '../repositories/mock_market_repository.dart';
 
 mixin _MockMarketRepositoryScreeningMethods on _MockMarketRepositoryBase {
   @override
-  MarketHeatmapSnapshot getMarketHeatmap() {
+  Future<MarketHeatmapSnapshot> getMarketHeatmap() async {
+    await _simulateNetwork();
     return MarketHeatmapSnapshot(
       coins: _heatmapCoins,
       marketPairs: _marketPairs,
@@ -40,7 +41,8 @@ mixin _MockMarketRepositoryScreeningMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketAlertsSnapshot getPriceAlerts() {
+  Future<MarketAlertsSnapshot> getPriceAlerts() async {
+    await _simulateNetwork();
     return MarketAlertsSnapshot(
       priceAlerts: _priceAlerts,
       marketPairs: _marketPairs,
@@ -77,7 +79,10 @@ mixin _MockMarketRepositoryScreeningMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketScreenerSnapshot getMarketScreener({MarketScreenerQuery? query}) {
+  Future<MarketScreenerSnapshot> getMarketScreener({
+    MarketScreenerQuery? query,
+  }) async {
+    await _simulateNetwork();
     final appliedQuery = query ?? MarketScreenerQuery.defaults;
     final pairs = _applyScreenerQuery(_marketPairs, appliedQuery);
 
@@ -117,7 +122,8 @@ mixin _MockMarketRepositoryScreeningMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketComparisonSnapshot getMarketComparison() {
+  Future<MarketComparisonSnapshot> getMarketComparison() async {
+    await _simulateNetwork();
     return MarketComparisonSnapshot(
       marketPairs: _marketPairs,
       selectedPairIds: const ['btcusdt', 'ethusdt'],

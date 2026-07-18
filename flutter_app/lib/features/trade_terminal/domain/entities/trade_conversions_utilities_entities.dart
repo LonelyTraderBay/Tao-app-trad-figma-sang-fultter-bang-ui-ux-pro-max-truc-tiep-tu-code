@@ -212,6 +212,26 @@ final class TradeConvertRequest {
   final double amount;
   final double slippagePct;
   final String mode;
+
+  // Value equality (GD4 Cụm F3): `previewConvert` is now `Future<T>`
+  // (ADR-001), watched behind a `FutureProvider.family` keyed on this
+  // request — value equality lets a request rebuilt with the same on-screen
+  // values (e.g. an unrelated rebuild that doesn't change the amount)
+  // resolve to the same cache entry instead of a new one each time (khuôn
+  // PERF-HN1, xem `TradeOrderDraft`/`TradeFuturesOrderDraft`).
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TradeConvertRequest &&
+          other.fromSymbol == fromSymbol &&
+          other.toSymbol == toSymbol &&
+          other.amount == amount &&
+          other.slippagePct == slippagePct &&
+          other.mode == mode);
+
+  @override
+  int get hashCode =>
+      Object.hash(fromSymbol, toSymbol, amount, slippagePct, mode);
 }
 
 /// Quoted conversion rate/fee for a pending convert request, with

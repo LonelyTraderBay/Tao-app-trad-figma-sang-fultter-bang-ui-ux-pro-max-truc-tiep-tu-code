@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-081 mock repository exposes provider governance BE draft', () {
-    final snapshot = const MockTradeCopyTradingRepository()
-        .getProviderGovernance();
+  test('SC-081 mock repository exposes provider governance BE draft', () async {
+    final snapshot = await const MockTradeCopyTradingRepository(
+      loadDelay: Duration.zero,
+    ).getProviderGovernance();
 
     expect(snapshot.defaultTabId, 'modifications');
     expect(snapshot.stats.followers, 245);

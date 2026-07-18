@@ -54,9 +54,7 @@ class _MarketDataAnalyticsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getMarketDataAnalytics();
+    final async = ref.watch(tradeMarketDataAnalyticsProvider);
 
     return VitTradeHubScaffold(
       title: 'Phân tích thị trường',
@@ -70,27 +68,38 @@ class _MarketDataAnalyticsPageState
         fallbackPath: AppRoutePaths.tradeMargin,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitTradeInstrumentHero(
-          symbol: snapshot.selectedPair,
-          priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
-          changePct: snapshot.fundingRate.currentRatePct,
-          highLabel: _formatCompactUsd(snapshot.openInterest.high24h),
-          lowLabel: _formatCompactUsd(snapshot.openInterest.low24h),
-          volumeLabel: _formatCompactUsd(snapshot.openInterest.current),
-        ),
-        _MarketAnalyticsRiskPanel(snapshot: snapshot),
-        _UnderlineTabs(
-          activeId: _tab,
-          onChanged: (id) => setState(() => _tab = id),
-        ),
-        if (_tab == 'market')
-          _MarketDataTab(snapshot: snapshot)
-        else if (_tab == 'liquidations')
-          _LiquidationsTab(snapshot: snapshot)
-        else
-          _SentimentTab(snapshot: snapshot),
-      ],
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeMarketDataAnalyticsProvider),
+          ),
+        ],
+        data: (snapshot) => [
+          VitTradeInstrumentHero(
+            symbol: snapshot.selectedPair,
+            priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
+            changePct: snapshot.fundingRate.currentRatePct,
+            highLabel: _formatCompactUsd(snapshot.openInterest.high24h),
+            lowLabel: _formatCompactUsd(snapshot.openInterest.low24h),
+            volumeLabel: _formatCompactUsd(snapshot.openInterest.current),
+          ),
+          _MarketAnalyticsRiskPanel(snapshot: snapshot),
+          _UnderlineTabs(
+            activeId: _tab,
+            onChanged: (id) => setState(() => _tab = id),
+          ),
+          if (_tab == 'market')
+            _MarketDataTab(snapshot: snapshot)
+          else if (_tab == 'liquidations')
+            _LiquidationsTab(snapshot: snapshot)
+          else
+            _SentimentTab(snapshot: snapshot),
+        ],
+      ),
     );
   }
 }

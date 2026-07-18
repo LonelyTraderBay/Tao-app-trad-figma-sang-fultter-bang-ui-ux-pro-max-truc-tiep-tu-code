@@ -58,6 +58,23 @@ class _TradeHistoryExportPageState
 
   @override
   Widget build(BuildContext context) {
+    // GD4 Cụm F3: `getTradeExport` giờ Future<T> — gate qua `.when()` trước
+    // khi đọc Notifier (mục 6), đảm bảo `.value` bên trong không bao giờ
+    // null trong luồng UI thật.
+    final exportSnapshotAsync = ref.watch(tradeExportSnapshotProvider);
+    return exportSnapshotAsync.when(
+      loading: () => const VitSkeletonList(),
+      error: (error, stackTrace) => VitErrorState(
+        title: 'Không tải được lịch sử xuất giao dịch',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () => ref.invalidate(tradeExportSnapshotProvider),
+      ),
+      data: (_) => _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     final viewState = ref.watch(tradeHistoryExportStateControllerProvider);
     final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();

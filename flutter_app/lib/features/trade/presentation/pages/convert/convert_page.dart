@@ -27,6 +27,21 @@ part '../../widgets/convert/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;
 
+// GD4 Cụm F3: `previewConvert` giờ Future<T> — quote đọc theo 1 request tạm
+// thời (mỗi keystroke đổi amount), fallback rỗng chỉ chạm tới ở frame đầu
+// tiên trước khi provider resolve (mục 5, "2 async song song trên 1 trang").
+const _emptyConvertQuote = TradeConvertQuote(
+  fromSymbol: '',
+  toSymbol: '',
+  fromAmount: 0,
+  toAmount: 0,
+  feeUsd: 0,
+  rate: 0,
+  quoteLabel: '',
+  validSeconds: 0,
+  canSubmit: false,
+);
+
 bool _convertSnapshotIsOffline(TradeConvertSnapshot snapshot) {
   return snapshot.lastUpdatedLabel.toLowerCase().contains('offline');
 }
@@ -63,17 +78,12 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
   final _amountController = TextEditingController();
   static const _ConvertMode _mode = _ConvertMode.market;
   static const double _slippage = .5;
-  late String _fromSymbol;
-  late String _toSymbol;
+  // GD4 Cụm F3: `getConvert` giờ Future<T> — `initState()` không thể await,
+  // nên seed lười trong nhánh `data:` của `.when()` (chỉ seed lần đầu qua
+  // `??=`, xem `_buildContent`).
+  String? _fromSymbol;
+  String? _toSymbol;
   TradeConvertReceipt? _receipt;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(tradeReadModelControllerProvider).getConvert();
-    _fromSymbol = snapshot.fromAsset.symbol;
-    _toSymbol = snapshot.toAsset.symbol;
-  }
 
   @override
   void dispose() {
@@ -83,9 +93,24 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(tradeReadModelControllerProvider).getConvert();
-    final fromAsset = _asset(snapshot, _fromSymbol);
-    final toAsset = _asset(snapshot, _toSymbol);
+    final snapshotAsync = ref.watch(tradeConvertSnapshotProvider);
+    return snapshotAsync.when(
+      loading: () => const VitSkeletonList(),
+      error: (error, stackTrace) => VitErrorState(
+        title: 'Không tải được màn hình Convert',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () => ref.invalidate(tradeConvertSnapshotProvider),
+      ),
+      data: _buildContent,
+    );
+  }
+
+  Widget _buildContent(TradeConvertSnapshot snapshot) {
+    _fromSymbol ??= snapshot.fromAsset.symbol;
+    _toSymbol ??= snapshot.toAsset.symbol;
+    final fromAsset = _asset(snapshot, _fromSymbol!);
+    final toAsset = _asset(snapshot, _toSymbol!);
     final amount = double.tryParse(_amountController.text) ?? 0;
     final request = TradeConvertRequest(
       fromSymbol: fromAsset.symbol,
@@ -94,9 +119,12 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
       slippagePct: _slippage,
       mode: _mode.name,
     );
-    final quote = ref
-        .watch(tradeReadModelControllerProvider)
-        .previewConvert(request);
+    // Quote là async PHỤ (mục 5) — trang đã chặn toàn bộ qua
+    // `tradeConvertSnapshotProvider.when()` ở `build()`; không lồng thêm
+    // `.when()` thứ hai ở đây (tránh 2 lớp skeleton chồng nhau).
+    final quote =
+        ref.watch(tradeConvertQuoteProvider(request)).value ??
+        _emptyConvertQuote;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final isOffline = _convertSnapshotIsOffline(snapshot);
     final hasError = _convertSnapshotHasError(snapshot);
@@ -223,8 +251,10 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
       builder: (_) => ConvertAssetSheet(
         side: side,
         assets: assets,
-        selectedSymbol: side == 'from' ? _fromSymbol : _toSymbol,
-        excludedSymbol: side == 'from' ? _toSymbol : _fromSymbol,
+        // Non-null: `_showAssetPicker` chỉ được gọi từ cây widget của
+        // `_buildContent`, tại đó `_fromSymbol`/`_toSymbol` đã seed.
+        selectedSymbol: (side == 'from' ? _fromSymbol : _toSymbol)!,
+        excludedSymbol: (side == 'from' ? _toSymbol : _fromSymbol)!,
         optionKeyBuilder: ConvertPage.assetOptionKey,
       ),
     );
@@ -271,20 +301,21 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
       ],
     );
     if (!confirmed || !mounted) return;
-    _submit(request);
+    await _submit(request);
   }
 
-  void _submit(TradeConvertRequest request) {
+  Future<void> _submit(TradeConvertRequest request) async {
     if (request.amount <= 0) return;
-    setState(() {
-      _receipt = ref
-          .read(tradeReadModelControllerProvider)
-          .submitConvert(request);
-    });
+    final receipt = await ref
+        .read(tradeReadModelControllerProvider)
+        .submitConvert(request);
+    if (!mounted) return;
+    setState(() => _receipt = receipt);
+    if (!mounted) return;
     showVitNoticeSheet(
       context: context,
       title: 'Đã gửi chuyển đổi',
-      message: 'Đã tạo ${_receipt!.convertId}',
+      message: 'Đã tạo ${receipt.convertId}',
       variant: VitBannerVariant.success,
     );
   }

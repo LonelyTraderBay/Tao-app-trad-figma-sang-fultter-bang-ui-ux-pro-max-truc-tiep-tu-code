@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_regulatory_repository.dart';
 mixin _MockTradeRegulatoryRepositoryCostsMethods
     on _MockTradeRegulatoryRepositoryBase {
   @override
-  TradeClientMoneyProtectionSnapshot getClientMoneyProtection() {
+  Future<TradeClientMoneyProtectionSnapshot> getClientMoneyProtection() async {
+    await _simulateNetwork();
     return const TradeClientMoneyProtectionSnapshot(
       balance: 45230.50,
       trustAccount: 'Barclays UK',
@@ -32,7 +33,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeCassReconciliationSnapshot getCassReconciliation() {
+  Future<TradeCassReconciliationSnapshot> getCassReconciliation() async {
+    await _simulateNetwork();
     return const TradeCassReconciliationSnapshot(
       reconciledCount: 3,
       resolvedCount: 1,
@@ -53,7 +55,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeInvestorCompensationSnapshot getInvestorCompensation() {
+  Future<TradeInvestorCompensationSnapshot> getInvestorCompensation() async {
+    await _simulateNetwork();
     return const TradeInvestorCompensationSnapshot(
       coverageLimit: '£85,000',
       summary:
@@ -93,7 +96,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeExAnteCostsSnapshot getExAnteCosts() {
+  Future<TradeExAnteCostsSnapshot> getExAnteCosts() async {
+    await _simulateNetwork();
     return const TradeExAnteCostsSnapshot(
       investmentAmount: 10000,
       holdingPeriodYears: 3,
@@ -113,7 +117,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeRiyCalculatorSnapshot getRiyCalculator() {
+  Future<TradeRiyCalculatorSnapshot> getRiyCalculator() async {
+    await _simulateNetwork();
     return const TradeRiyCalculatorSnapshot(
       investmentAmount: 10000,
       expectedReturnPct: 8,
@@ -134,7 +139,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeExPostCostsReportSnapshot getExPostCostsReport() {
+  Future<TradeExPostCostsReportSnapshot> getExPostCostsReport() async {
+    await _simulateNetwork();
     return const TradeExPostCostsReportSnapshot(
       reports: _exPostCostReports,
       endpoint: '/api/mobile/trade/trade-copy-trading-ex-post-costs-report',
@@ -153,7 +159,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeKidGeneratorSnapshot getKidGenerator() {
+  Future<TradeKidGeneratorSnapshot> getKidGenerator() async {
+    await _simulateNetwork();
     return const TradeKidGeneratorSnapshot(
       document: TradeKidDocument(
         title: 'Mirror Copy Trading - KID',
@@ -179,7 +186,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradePerformanceScenariosSnapshot getPerformanceScenarios() {
+  Future<TradePerformanceScenariosSnapshot> getPerformanceScenarios() async {
+    await _simulateNetwork();
     return const TradePerformanceScenariosSnapshot(
       investment: 10000,
       holdingPeriods: [1, 3, 5],
@@ -200,7 +208,8 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeRiskIndicatorSnapshot getRiskIndicatorExplainer() {
+  Future<TradeRiskIndicatorSnapshot> getRiskIndicatorExplainer() async {
+    await _simulateNetwork();
     return const TradeRiskIndicatorSnapshot(
       productName: 'Mirror Copy Trading',
       productSri: 6,
@@ -222,9 +231,10 @@ mixin _MockTradeRegulatoryRepositoryCostsMethods
   }
 
   @override
-  TradeExPostCostsReportExportResult createExPostCostsReportExport({
+  Future<TradeExPostCostsReportExportResult> createExPostCostsReportExport({
     int year = 2025,
-  }) {
+  }) async {
+    await _simulateNetwork();
     return TradeExPostCostsReportExportResult(
       status: 'ready',
       year: year,

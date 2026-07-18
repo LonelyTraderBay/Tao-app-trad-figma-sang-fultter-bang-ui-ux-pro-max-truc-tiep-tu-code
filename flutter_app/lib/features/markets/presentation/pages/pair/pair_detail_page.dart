@@ -14,7 +14,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
@@ -72,16 +72,39 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getPairDetail(widget.pairId);
-    final pair = snapshot.pair;
+    final pairDetailAsync = ref.watch(
+      marketPairDetailSnapshotProvider(widget.pairId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? _pairFramedScrollClearance
             : _pairNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
+
+    // GD4-F3 (mục 5, biến thể 2): _PairHeader cần cả MarketPair (không chỉ
+    // tiêu đề chuỗi) nên bọc toàn bộ return trong .when() — loading/error
+    // dùng VitHeader tối giản với fallback từ pairId route param.
+    return pairDetailAsync.when(
+      loading: () => _PairDetailFallbackScaffold(pairId: widget.pairId),
+      error: (error, stackTrace) => _PairDetailFallbackScaffold(
+        pairId: widget.pairId,
+        error: true,
+        onRetry: () =>
+            ref.invalidate(marketPairDetailSnapshotProvider(widget.pairId)),
+      ),
+      data: (snapshot) =>
+          _buildContent(context, snapshot, mode, scrollEndClearance),
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    MarketPairDetailSnapshot snapshot,
+    ShellRenderMode mode,
+    double scrollEndClearance,
+  ) {
+    final pair = snapshot.pair;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -188,6 +211,64 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                     ],
                   ),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Khung tối giản cho nhánh `loading:`/`error:` của [PairDetailPage] — tiêu
+/// đề thật (`pair.symbol`) chỉ có sau khi snapshot resolve, nên dùng
+/// [VitHeader] với fallback từ `pairId` route param thay vì [_PairHeader]
+/// (đòi hỏi [MarketPair] đầy đủ). Mục 5, biến thể 2 của GD4-Async-Playbook.
+class _PairDetailFallbackScaffold extends StatelessWidget {
+  const _PairDetailFallbackScaffold({
+    required this.pairId,
+    this.error = false,
+    this.onRetry,
+  });
+
+  final String pairId;
+  final bool error;
+  final VoidCallback? onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'Chi tiết cặp giao dịch',
+      semanticIdentifier: 'SC-044',
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            VitHeader(
+              title: pairId.toUpperCase(),
+              showBack: true,
+              onBack: () => goBackOrFallback(
+                context,
+                fallbackPath: AppRoutePaths.markets,
+                mode: BackNavigationMode.historyThenFallback,
+              ),
+            ),
+            Expanded(
+              child: VitPageContent(
+                rhythm: VitPageRhythm.compact,
+                padding: VitContentPadding.compact,
+                density: VitDensity.compact,
+                children: error
+                    ? [
+                        VitErrorState(
+                          title: 'Không tải được cặp giao dịch',
+                          message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                          actionLabel: 'Thử lại',
+                          onAction: onRetry,
+                        ),
+                      ]
+                    : const [VitSkeletonList()],
               ),
             ),
           ],

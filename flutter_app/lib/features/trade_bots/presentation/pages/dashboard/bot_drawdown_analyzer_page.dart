@@ -38,9 +38,7 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(tradeBotAnalyticsRepositoryProvider)
-        .getBotDrawdownAnalyzer();
+    final snapshotAsync = ref.watch(tradeBotDrawdownAnalyzerProvider);
     return VitTradeHubScaffold(
       title: 'Drawdown Analyzer',
       subtitle: 'Phân tích độ sụt giảm vốn bot',
@@ -54,43 +52,54 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
         fallbackPath: AppRoutePaths.tradeBots,
         mode: BackNavigationMode.historyThenFallback,
       ),
-      children: [
-        VitBotSubpageHero(
-          primaryLabel: 'Sụt tối đa',
-          primaryValue:
-              '-${snapshot.summary.maxDrawdownPct.toStringAsFixed(1)}%',
-          primaryColor: _drawdownRed,
-          secondaryLabel: 'Ngày sụt',
-          secondaryValue: '${snapshot.summary.drawdownDays}',
-          secondaryColor: _drawdownAmber,
-        ),
-        VitTradeSection(
-          title: 'Metrics',
-          child: _MetricGrid(summary: snapshot.summary),
-        ),
-        VitTradeSection(
-          title: 'Underwater Equity',
-          child: _UnderwaterCard(points: snapshot.underwaterPoints),
-        ),
-        VitTradeSection(
-          title: 'Drawdown Duration Distribution',
-          child: _DurationCard(buckets: snapshot.durationBuckets),
-        ),
-        VitTradeSection(
-          title: 'Major Drawdown Events',
-          child: _EventsList(events: snapshot.events),
-        ),
-        VitTradeSection(
-          title: 'Analysis',
-          child: _AnalysisCard(insights: snapshot.insights),
-        ),
-        const VitBotRiskReviewFooter(
-          title: 'Drawdown review state',
-          message:
-              'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
-          contractId: 'bot-drawdown-review',
-        ),
-      ],
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được phân tích sụt giảm',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeBotDrawdownAnalyzerProvider),
+          ),
+        ],
+        data: (snapshot) => [
+          VitBotSubpageHero(
+            primaryLabel: 'Sụt tối đa',
+            primaryValue:
+                '-${snapshot.summary.maxDrawdownPct.toStringAsFixed(1)}%',
+            primaryColor: _drawdownRed,
+            secondaryLabel: 'Ngày sụt',
+            secondaryValue: '${snapshot.summary.drawdownDays}',
+            secondaryColor: _drawdownAmber,
+          ),
+          VitTradeSection(
+            title: 'Metrics',
+            child: _MetricGrid(summary: snapshot.summary),
+          ),
+          VitTradeSection(
+            title: 'Underwater Equity',
+            child: _UnderwaterCard(points: snapshot.underwaterPoints),
+          ),
+          VitTradeSection(
+            title: 'Drawdown Duration Distribution',
+            child: _DurationCard(buckets: snapshot.durationBuckets),
+          ),
+          VitTradeSection(
+            title: 'Major Drawdown Events',
+            child: _EventsList(events: snapshot.events),
+          ),
+          VitTradeSection(
+            title: 'Analysis',
+            child: _AnalysisCard(insights: snapshot.insights),
+          ),
+          const VitBotRiskReviewFooter(
+            title: 'Drawdown review state',
+            message:
+                'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
+            contractId: 'bot-drawdown-review',
+          ),
+        ],
+      ),
     );
   }
 }

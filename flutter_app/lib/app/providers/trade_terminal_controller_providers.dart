@@ -13,27 +13,78 @@ final tradeReadModelControllerProvider = Provider<SpotTradeRepository>((ref) {
   return ref.watch(spotTradeRepositoryProvider);
 });
 
+// GD4 Cụm F3: getRiskManagement/getAdvancedTools/getAdvancedChart/
+// getAdvancedTradingDemo/getAdvancedAnalytics/getExecutionQuality are now
+// Future<T> (ADR-001 read-path async contract) — each direct-in-build()
+// repo call from a page becomes its own intermediate FutureProvider
+// (playbook mục 3, bước A+B gộp vì contract đã đổi cùng lúc).
+
+final tradeRiskManagementSnapshotProvider =
+    FutureProvider<TradeRiskManagementSnapshot>(
+      (ref) => ref.watch(tradeReadModelControllerProvider).getRiskManagement(),
+    );
+
+/// STATE-S25 pattern (mục 4): `Provider<AsyncValue<XController>>` thay vì
+/// `FutureProvider<XController>` — `.whenData()` map đồng bộ, consumer vẫn
+/// gọi `.when()` giống các snapshot provider khác.
 final tradeRiskManagementControllerProvider =
-    Provider<TradeRiskManagementController>((ref) {
-      final repository = ref.watch(spotTradeRepositoryProvider);
-      return TradeRiskManagementController(
-        repository: repository,
-        state: TradeRiskManagementViewState(
-          snapshot: repository.getRiskManagement(),
-        ),
-      );
+    Provider<AsyncValue<TradeRiskManagementController>>((ref) {
+      final repository = ref.watch(tradeReadModelControllerProvider);
+      return ref
+          .watch(tradeRiskManagementSnapshotProvider)
+          .whenData(
+            (snapshot) => TradeRiskManagementController(
+              repository: repository,
+              state: TradeRiskManagementViewState(snapshot: snapshot),
+            ),
+          );
     });
 
+final tradeAdvancedToolsSnapshotProvider =
+    FutureProvider<TradeAdvancedToolsSnapshot>(
+      (ref) => ref.watch(tradeReadModelControllerProvider).getAdvancedTools(),
+    );
+
 final tradeAdvancedToolsControllerProvider =
-    Provider<TradeAdvancedToolsController>((ref) {
-      final repository = ref.watch(spotTradeRepositoryProvider);
-      return TradeAdvancedToolsController(
-        repository: repository,
-        state: TradeAdvancedToolsViewState(
-          snapshot: repository.getAdvancedTools(),
-        ),
-      );
+    Provider<AsyncValue<TradeAdvancedToolsController>>((ref) {
+      final repository = ref.watch(tradeReadModelControllerProvider);
+      return ref
+          .watch(tradeAdvancedToolsSnapshotProvider)
+          .whenData(
+            (snapshot) => TradeAdvancedToolsController(
+              repository: repository,
+              state: TradeAdvancedToolsViewState(snapshot: snapshot),
+            ),
+          );
     });
+
+/// family theo `pairId` (khuôn `advancedChartStateControllerProvider`);
+/// autoDispose vì mỗi phiên xem biểu đồ nâng cao là tạm thời — provider mới
+/// dựng riêng cho GD4, không có semantics cũ nào cần giữ.
+final tradeAdvancedChartSnapshotProvider = FutureProvider.autoDispose
+    .family<TradeAdvancedChartSnapshot, String>(
+      (ref, pairId) => ref
+          .watch(tradeReadModelControllerProvider)
+          .getAdvancedChart(pairId: pairId),
+    );
+
+final tradeAdvancedTradingDemoSnapshotProvider =
+    FutureProvider<TradeAdvancedTradingDemoSnapshot>(
+      (ref) =>
+          ref.watch(tradeReadModelControllerProvider).getAdvancedTradingDemo(),
+    );
+
+final tradeAdvancedAnalyticsSnapshotProvider =
+    FutureProvider<TradeAdvancedAnalyticsSnapshot>(
+      (ref) =>
+          ref.watch(tradeReadModelControllerProvider).getAdvancedAnalytics(),
+    );
+
+final tradeExecutionQualitySnapshotProvider =
+    FutureProvider<TradeExecutionQualitySnapshot>(
+      (ref) =>
+          ref.watch(tradeReadModelControllerProvider).getExecutionQuality(),
+    );
 
 /// STATE-S23: view-state bất biến của Biểu đồ nâng cao — danh sách chỉ báo
 /// sống ở Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
@@ -60,6 +111,12 @@ final class AdvancedChartViewState {
 /// STATE-S23 (khuôn MarketWatchlistStateController), family theo `pairId`
 /// (khuôn tradeLeverageControllerProvider) — mỗi cặp có bộ chỉ báo bật/tắt
 /// riêng; autoDispose vì mỗi phiên xem biểu đồ nâng cao là tạm thời.
+///
+/// GD4 Cụm F3: `getAdvancedChart` giờ là `Future<T>` — Notifier này có
+/// mutation cục bộ (`toggleIndicator`) nên GIỮ Notifier sync (mục 6 Biến
+/// thể A), seed từ `AsyncValue.value` + fallback rỗng (page tự gate qua
+/// `tradeAdvancedChartSnapshotProvider.when()` trước khi build() này chạy
+/// trong luồng UI thật — xem `advanced_chart_page.dart`).
 final class AdvancedChartStateController
     extends Notifier<AdvancedChartViewState> {
   AdvancedChartStateController(this.pairId);
@@ -68,9 +125,11 @@ final class AdvancedChartStateController
 
   @override
   AdvancedChartViewState build() {
-    final repository = ref.watch(tradeReadModelControllerProvider);
+    final snapshot = ref
+        .watch(tradeAdvancedChartSnapshotProvider(pairId))
+        .value;
     return AdvancedChartViewState.fromIndicators(
-      repository.getAdvancedChart(pairId: pairId).indicators,
+      snapshot?.indicators ?? const [],
     );
   }
 

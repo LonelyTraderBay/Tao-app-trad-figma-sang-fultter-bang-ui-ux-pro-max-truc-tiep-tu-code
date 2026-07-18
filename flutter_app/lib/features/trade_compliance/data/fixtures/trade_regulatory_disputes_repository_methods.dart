@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_regulatory_repository.dart';
 mixin _MockTradeRegulatoryRepositoryDisputesMethods
     on _MockTradeRegulatoryRepositoryBase {
   @override
-  TradeComplaintsHandlingSnapshot getComplaintsHandling() {
+  Future<TradeComplaintsHandlingSnapshot> getComplaintsHandling() async {
+    await _simulateNetwork();
     return const TradeComplaintsHandlingSnapshot(
       activeCount: 1,
       resolvedCount: 1,
@@ -35,7 +36,8 @@ mixin _MockTradeRegulatoryRepositoryDisputesMethods
   }
 
   @override
-  TradeComplaintSubmissionSnapshot getComplaintSubmission() {
+  Future<TradeComplaintSubmissionSnapshot> getComplaintSubmission() async {
+    await _simulateNetwork();
     return const TradeComplaintSubmissionSnapshot(
       processTitle: 'Complaint Process',
       processDescription:
@@ -76,7 +78,10 @@ mixin _MockTradeRegulatoryRepositoryDisputesMethods
   }
 
   @override
-  TradeComplaintTrackingSnapshot getComplaintTracking({String? complaintId}) {
+  Future<TradeComplaintTrackingSnapshot> getComplaintTracking({
+    String? complaintId,
+  }) async {
+    await _simulateNetwork();
     return TradeComplaintTrackingSnapshot(
       complaintId: complaintId ?? 'undefined',
       statusLabel: 'Under Review',
@@ -103,7 +108,8 @@ mixin _MockTradeRegulatoryRepositoryDisputesMethods
   }
 
   @override
-  TradeOmbudsmanReferralSnapshot getOmbudsmanReferral() {
+  Future<TradeOmbudsmanReferralSnapshot> getOmbudsmanReferral() async {
+    await _simulateNetwork();
     return const TradeOmbudsmanReferralSnapshot(
       infoTitle: 'Free & Independent',
       infoDescription:

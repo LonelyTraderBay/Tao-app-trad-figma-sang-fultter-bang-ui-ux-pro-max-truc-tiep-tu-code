@@ -46,10 +46,7 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeRegulatoryRepositoryProvider)
-        .getAuditTrail();
-    final entries = _filteredEntries(snapshot.entries);
+    final async = ref.watch(tradeAuditTrailProvider);
 
     return VitTradeHubScaffold(
       title: 'Audit Trail',
@@ -66,62 +63,76 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
       headerActions: const [
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
-      children: [
-        const VitTradeSection(
-          title: 'Review',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review audit trail export',
-            message:
-                'Confirm record scope, retention limits, client identifiers, and next steps before exporting audit evidence.',
+      children: async.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được dữ liệu',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(tradeAuditTrailProvider),
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Record status',
-          statusPill: VitStatusPill(
-            label: '${entries.length} shown',
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.sm,
-          ),
-          items: const [
-            VitTradeComplianceItem(
-              label: 'Framework',
-              value: 'MiFID II record-keeping',
+        ],
+        data: (snapshot) {
+          final entries = _filteredEntries(snapshot.entries);
+          return [
+            const VitTradeSection(
+              title: 'Review',
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review audit trail export',
+                message:
+                    'Confirm record scope, retention limits, client identifiers, and next steps before exporting audit evidence.',
+              ),
             ),
-            VitTradeComplianceItem(
-              label: 'Export',
-              value: 'Review scope before export',
+            VitTradeComplianceSection(
+              title: 'Record status',
+              statusPill: VitStatusPill(
+                label: '${entries.length} shown',
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
+              items: const [
+                VitTradeComplianceItem(
+                  label: 'Framework',
+                  value: 'MiFID II record-keeping',
+                ),
+                VitTradeComplianceItem(
+                  label: 'Export',
+                  value: 'Review scope before export',
+                ),
+              ],
             ),
-          ],
-        ),
-        VitTradeSection(
-          title: 'Audit Log',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              VitTradeComplianceHero(
-                key: const Key('sc115_audit_trail_notice'),
-                title: snapshot.noticeTitle,
-                description: snapshot.noticeDescription,
-                icon: Icons.description_outlined,
-                accentColor: AppColors.text1,
+            VitTradeSection(
+              title: 'Audit Log',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  VitTradeComplianceHero(
+                    key: const Key('sc115_audit_trail_notice'),
+                    title: snapshot.noticeTitle,
+                    description: snapshot.noticeDescription,
+                    icon: Icons.description_outlined,
+                    accentColor: AppColors.text1,
+                  ),
+                  _StatsRow(stats: snapshot.stats),
+                  _SearchAndFilter(
+                    placeholder: snapshot.searchPlaceholder,
+                    onChanged: (value) => setState(() => _query = value),
+                  ),
+                  _AuditTabs(
+                    tabs: snapshot.tabs,
+                    activeId: _activeTab,
+                    onChanged: (id) => setState(() => _activeTab = id),
+                  ),
+                  for (final entry in entries) _AuditEntryCard(entry: entry),
+                  _ExportActions(formats: snapshot.exportFormats),
+                ],
               ),
-              _StatsRow(stats: snapshot.stats),
-              _SearchAndFilter(
-                placeholder: snapshot.searchPlaceholder,
-                onChanged: (value) => setState(() => _query = value),
-              ),
-              _AuditTabs(
-                tabs: snapshot.tabs,
-                activeId: _activeTab,
-                onChanged: (id) => setState(() => _activeTab = id),
-              ),
-              for (final entry in entries) _AuditEntryCard(entry: entry),
-              _ExportActions(formats: snapshot.exportFormats),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ];
+        },
+      ),
     );
   }
 

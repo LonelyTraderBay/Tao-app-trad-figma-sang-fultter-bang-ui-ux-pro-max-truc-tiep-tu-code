@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_terminal_repository.dart';
 mixin _MockTradeTerminalRepositoryCoreSpotMethods
     on _MockTradeTerminalRepositoryBase {
   @override
-  TradeScreenSnapshot getTrade({String pairId = 'btcusdt'}) {
+  Future<TradeScreenSnapshot> getTrade({String pairId = 'btcusdt'}) async {
+    await _simulateNetwork();
     final pair = _pairs.firstWhere(
       (pair) => pair.id == pairId,
       orElse: () => _pairs.first,
@@ -31,9 +32,11 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeOrdersHistorySnapshot getOrdersHistory() {
+  Future<TradeOrdersHistorySnapshot> getOrdersHistory() async {
+    // Không gọi `_simulateNetwork()` riêng ở đây — `getTrade()` bên dưới đã
+    // tự mô phỏng độ trễ/lỗi, gọi thêm sẽ cộng dồn delay.
     return TradeOrdersHistorySnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       openOrders: _historyOpenOrders,
       historyOrders: _historyOrders,
       lastUpdatedLabel: 'realtime-refresh',
@@ -50,9 +53,9 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeOrderReceiptSnapshot getOrderReceipt() {
+  Future<TradeOrderReceiptSnapshot> getOrderReceipt() async {
     return TradeOrderReceiptSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       receipt: const TradeOrderReceiptDetails(
         orderId: 'ORD-98EH1ZT2',
         symbol: 'BTC/USDT',
@@ -91,9 +94,9 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeSettingsSnapshot getTradeSettings() {
+  Future<TradeSettingsSnapshot> getTradeSettings() async {
     return TradeSettingsSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       settings: _defaultTradeSettings,
       lastUpdatedLabel: 'success',
       supportedStates: const [
@@ -109,9 +112,9 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradePositionsSnapshot getTradePositions() {
+  Future<TradePositionsSnapshot> getTradePositions() async {
     return TradePositionsSnapshot(
-      trade: getTrade(),
+      trade: await getTrade(),
       positions: _dashboardPositions,
       lastUpdatedLabel: 'realtime-refresh',
       supportedStates: const [
@@ -125,7 +128,8 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeAdvancedTradingDemoSnapshot getAdvancedTradingDemo() {
+  Future<TradeAdvancedTradingDemoSnapshot> getAdvancedTradingDemo() async {
+    await _simulateNetwork();
     return const TradeAdvancedTradingDemoSnapshot(
       position: _advancedDemoPosition,
       positionActions: _advancedDemoPositionActions,
@@ -148,7 +152,8 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeAdvancedAnalyticsSnapshot getAdvancedAnalytics() {
+  Future<TradeAdvancedAnalyticsSnapshot> getAdvancedAnalytics() async {
+    await _simulateNetwork();
     return const TradeAdvancedAnalyticsSnapshot(
       stats: _advancedAnalyticsStats,
       signals: _advancedAnalyticsSignals,
@@ -169,12 +174,14 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeSettings patchTradeSettings(TradeSettings settings) {
+  Future<TradeSettings> patchTradeSettings(TradeSettings settings) async {
+    await _simulateNetwork();
     return settings;
   }
 
   @override
-  TradeOrderPreview previewOrder(TradeOrderDraft draft) {
+  Future<TradeOrderPreview> previewOrder(TradeOrderDraft draft) async {
+    await _simulateNetwork();
     final total = draft.price * draft.amount;
     const feeRate = .00085;
     final fee = total * feeRate;
@@ -194,16 +201,17 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
     }
     return TradeOrderReceipt(
       orderId: 'ORD-DEMO-048',
-      preview: previewOrder(draft),
+      preview: await previewOrder(draft),
       status: 'submitted',
     );
   }
 
   @override
-  TradeOrderActionResult submitOrderAction({
+  Future<TradeOrderActionResult> submitOrderAction({
     required String orderId,
     required String action,
-  }) {
+  }) async {
+    await _simulateNetwork();
     return TradeOrderActionResult(
       orderId: orderId,
       action: action,

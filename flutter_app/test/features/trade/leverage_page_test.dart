@@ -21,6 +21,15 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          // GD4 Cụm F3: previewFuturesLeverage giờ Future<T>, setLeverage
+          // watch theo family key = request (đổi mỗi lần kéo slider/preset)
+          // — loadDelay mặc định 300ms để lại pending timer mồ côi (xem
+          // GD4-Async-Playbook.md mục 9).
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.tradeFuturesLeverage('btcusdt'),
@@ -33,11 +42,11 @@ void main() {
 
   test('SC-058 mock repository exposes leverage BE draft', () async {
     final repo = const MockTradeRepository(loadDelay: Duration.zero);
-    final snapshot = repo.getFuturesLeverage(pairId: 'btcusdt');
-    final preview = repo.previewFuturesLeverage(
+    final snapshot = await repo.getFuturesLeverage(pairId: 'btcusdt');
+    final preview = await repo.previewFuturesLeverage(
       const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 10),
     );
-    final highRiskPreview = repo.previewFuturesLeverage(
+    final highRiskPreview = await repo.previewFuturesLeverage(
       const TradeFuturesLeverageRequest(pairId: 'btcusdt', leverage: 100),
     );
     final receipt = await repo.submitFuturesLeverage(
@@ -96,6 +105,11 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.tradeFuturesLeverage('btcusdt'),

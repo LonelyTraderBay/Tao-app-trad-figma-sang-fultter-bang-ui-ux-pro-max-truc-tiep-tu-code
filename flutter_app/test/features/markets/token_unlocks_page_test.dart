@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-024 mock repository exposes the BE draft read model', () {
-    final repo = const MockMarketRepository();
-    final snapshot = repo.getTokenUnlocks();
+  test('SC-024 mock repository exposes the BE draft read model', () async {
+    final repo = const MockMarketRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getTokenUnlocks();
 
     expect(snapshot.unlocks.map((unlock) => unlock.id), [
       'u3',
@@ -80,10 +80,12 @@ void main() {
       ]),
     );
 
-    final valueSorted = repo.getTokenUnlocks(sortBy: MarketUnlockSort.value);
+    final valueSorted = await repo.getTokenUnlocks(
+      sortBy: MarketUnlockSort.value,
+    );
     expect(valueSorted.unlocks.first.symbol, 'TIA');
 
-    final highImpact = repo.getTokenUnlocks(
+    final highImpact = await repo.getTokenUnlocks(
       impactFilter: MarketUnlockImpact.high,
     );
     expect(highImpact.unlocks.map((unlock) => unlock.symbol), [

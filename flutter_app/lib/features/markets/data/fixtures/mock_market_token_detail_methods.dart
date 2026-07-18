@@ -2,7 +2,8 @@ part of '../repositories/mock_market_repository.dart';
 
 mixin _MockMarketRepositoryTokenDetailMethods on _MockMarketRepositoryBase {
   @override
-  MarketPairDetailSnapshot getPairDetail(String pairId) {
+  Future<MarketPairDetailSnapshot> getPairDetail(String pairId) async {
+    await _simulateNetwork();
     final pair = _findMarketPair(pairId);
     return MarketPairDetailSnapshot(
       pair: pair,
@@ -52,7 +53,8 @@ mixin _MockMarketRepositoryTokenDetailMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketTokenInfoSnapshot getTokenInfo(String pairId) {
+  Future<MarketTokenInfoSnapshot> getTokenInfo(String pairId) async {
+    await _simulateNetwork();
     final pair = _findMarketPair(pairId);
     final fundamentals = _tokenFundamentals[pair.id] ?? _btcFundamentals;
     return MarketTokenInfoSnapshot(
@@ -99,10 +101,11 @@ mixin _MockMarketRepositoryTokenDetailMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketAdvancedChartsSnapshot getAdvancedCharts({
+  Future<MarketAdvancedChartsSnapshot> getAdvancedCharts({
     String indicatorCategory = 'all',
     String drawingCategory = 'all',
-  }) {
+  }) async {
+    await _simulateNetwork();
     final indicators = indicatorCategory == 'all'
         ? _advancedChartIndicators
         : [
@@ -168,10 +171,11 @@ mixin _MockMarketRepositoryTokenDetailMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketTokenUnlocksSnapshot getTokenUnlocks({
+  Future<MarketTokenUnlocksSnapshot> getTokenUnlocks({
     MarketUnlockSort sortBy = MarketUnlockSort.nearest,
     MarketUnlockImpact? impactFilter,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final unlocks = [
       for (final unlock in _tokenUnlocks)
         if (impactFilter == null || unlock.impactLevel == impactFilter) unlock,

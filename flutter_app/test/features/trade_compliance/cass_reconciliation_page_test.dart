@@ -30,9 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-103 mock repository exposes CASS BE draft', () {
-    final snapshot = const MockTradeRegulatoryRepository()
-        .getCassReconciliation();
+  test('SC-103 mock repository exposes CASS BE draft', () async {
+    final snapshot = await const MockTradeRegulatoryRepository(
+      loadDelay: Duration.zero,
+    ).getCassReconciliation();
 
     expect(snapshot.reconciledCount, 3);
     expect(snapshot.resolvedCount, 1);

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/features/trade/data/providers/trade_repository_provider.dart';
+import 'package:vit_trade_flutter/features/trade/data/repositories/mock_trade_repository.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_page.dart';
 
@@ -56,6 +58,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         observers: [observer],
+        // GĐ4-F3 (bẫy playbook §9.16): preview provider giờ là
+        // autoDispose.family async — mock delay mặc định 300ms để lại
+        // orphaned timer khi member cũ bị dispose giữa chừng.
+        overrides: [
+          tradeRepositoryProvider.overrideWithValue(
+            const MockTradeRepository(loadDelay: Duration.zero),
+          ),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.trade),
         ),
@@ -65,8 +75,11 @@ void main() {
 
     // Trang mount lần đầu đã watch tradeOrderControllerProvider với
     // amount mặc định (ô trống -> 0.0) — đây là baseline hợp lệ, không
-    // phải churn do gõ phím.
+    // phải churn do gõ phím. GĐ4-F3: controller GHI giờ seed từ snapshot
+    // ASYNC — khi future resolve trong settle đầu, build() re-seed đúng
+    // MỘT lần (didUpdateProvider +1); tính vào baseline, không phải churn.
     final baseline = observer.addCount;
+    final baselineUpdates = observer.updateCount;
 
     await tester.enterText(TradePage.amountFieldKey.finder, '0');
     await tester.pump();
@@ -96,12 +109,12 @@ void main() {
     // `state = ...` trên tradeOrderControllerProvider — updateCount phải
     // bằng 0.
     expect(
-      observer.updateCount,
+      observer.updateCount - baselineUpdates,
       0,
       reason:
           'Gõ số lượng không được phép trigger didUpdateProvider trên '
           'tradeOrderControllerProvider (không mutation nào chạy khi chỉ '
-          'gõ phím).',
+          'gõ phím; lần re-seed async lúc mount đã nằm trong baseline).',
     );
   });
 }

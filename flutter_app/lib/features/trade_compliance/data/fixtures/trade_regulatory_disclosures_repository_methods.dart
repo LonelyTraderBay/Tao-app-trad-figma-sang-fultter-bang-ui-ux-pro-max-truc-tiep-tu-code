@@ -3,7 +3,8 @@ part of '../repositories/mock_trade_regulatory_repository.dart';
 mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
     on _MockTradeRegulatoryRepositoryBase {
   @override
-  TradeRegulatoryDisclosuresSnapshot getRegulatoryDisclosures() {
+  Future<TradeRegulatoryDisclosuresSnapshot> getRegulatoryDisclosures() async {
+    await _simulateNetwork();
     return const TradeRegulatoryDisclosuresSnapshot(
       trade: _regulatoryDisclosuresTradeSnapshot,
       tabs: _regulatoryTabs,
@@ -33,7 +34,8 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeTransactionReportingSnapshot getTransactionReporting() {
+  Future<TradeTransactionReportingSnapshot> getTransactionReporting() async {
+    await _simulateNetwork();
     return const TradeTransactionReportingSnapshot(
       reports: _transactionReports,
       stats: _transactionReportingStats,
@@ -50,7 +52,9 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeRegulatoryReportsDashboardSnapshot getRegulatoryReportsDashboard() {
+  Future<TradeRegulatoryReportsDashboardSnapshot>
+  getRegulatoryReportsDashboard() async {
+    await _simulateNetwork();
     return const TradeRegulatoryReportsDashboardSnapshot(
       dailyStats: _regulatoryDailyStats,
       providers: _regulatoryArmProviders,
@@ -71,7 +75,8 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeClientCategorizationSnapshot getClientCategorization() {
+  Future<TradeClientCategorizationSnapshot> getClientCategorization() async {
+    await _simulateNetwork();
     return const TradeClientCategorizationSnapshot(
       categories: _clientCategorizationCategories,
       history: _clientCategorizationHistory,
@@ -88,7 +93,8 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeProductGovernanceSnapshot getProductGovernance() {
+  Future<TradeProductGovernanceSnapshot> getProductGovernance() async {
+    await _simulateNetwork();
     return const TradeProductGovernanceSnapshot(
       products: _productGovernanceProducts,
       defaultTab: 'products',
@@ -104,9 +110,10 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeTargetMarketDefinitionSnapshot getTargetMarketDefinition({
+  Future<TradeTargetMarketDefinitionSnapshot> getTargetMarketDefinition({
     String productId = 'prod-1',
-  }) {
+  }) async {
+    await _simulateNetwork();
     final product = _productGovernanceProducts.firstWhere(
       (item) => item.id == productId,
       orElse: () => _productGovernanceProducts.first,
@@ -130,7 +137,8 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeAuditTrailSnapshot getAuditTrail() {
+  Future<TradeAuditTrailSnapshot> getAuditTrail() async {
+    await _simulateNetwork();
     return const TradeAuditTrailSnapshot(
       noticeTitle: 'Complete Record-Keeping',
       noticeDescription:
@@ -156,7 +164,9 @@ mixin _MockTradeRegulatoryRepositoryDisclosuresMethods
   }
 
   @override
-  TradeRegulatoryInspectionSnapshot getRegulatoryInspectionReady() {
+  Future<TradeRegulatoryInspectionSnapshot>
+  getRegulatoryInspectionReady() async {
+    await _simulateNetwork();
     return const TradeRegulatoryInspectionSnapshot(
       complianceScore: 97,
       scoreLabel: 'Overall Compliance Score',

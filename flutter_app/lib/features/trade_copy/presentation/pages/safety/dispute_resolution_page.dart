@@ -82,9 +82,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(tradeCopyTradingRepositoryProvider)
-        .getDisputeResolution();
+    final snapshotAsync = ref.watch(tradeDisputeResolutionProvider);
     return VitTradeHubScaffold(
       title: 'Dispute Resolution',
       semanticLabel: 'Giải quyết khiếu nại',
@@ -97,67 +95,80 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        if (_activeTabId == 'file')
-          _FileComplaintTab(
-            snapshot: snapshot,
-            selectedType: _selectedType,
-            selectedProviderId: _selectedProviderId,
-            subjectController: _subjectController,
-            descriptionController: _descriptionController,
-            evidenceAttached: _evidenceAttached,
-            canSubmit: _canSubmit,
-            onTypeChanged: (value) => setState(() => _selectedType = value),
-            onProviderChanged: (value) =>
-                setState(() => _selectedProviderId = value),
-            onUpload: () => setState(() => _evidenceAttached = true),
-            onSubmit: _handleSubmit,
-          )
-        else
-          VitTradeSection(
-            title: 'Cases',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _DisputeTabs(
-                  tabs: snapshot.tabs,
-                  activeId: _activeTabId,
-                  onChanged: (id) => setState(() => _activeTabId = id),
-                ),
-                _CasesTab(
-                  activeTabId: _activeTabId,
-                  snapshot: snapshot,
-                  lastResult: _lastResult,
-                ),
-              ],
+        ...snapshotAsync.when(
+          loading: () => const [VitSkeletonList()],
+          error: (error, stackTrace) => [
+            VitErrorState(
+              title: 'Không tải được dữ liệu khiếu nại',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(tradeDisputeResolutionProvider),
             ),
-          ),
-        if (_activeTabId != 'file')
-          VitTradeComplianceSection(
-            title: 'Dispute process',
-            statusPill: const VitStatusPill(
-              label: 'Regulated intake',
-              status: VitStatusPillStatus.info,
-              size: VitStatusPillSize.sm,
-            ),
-            items: [
-              VitTradeComplianceItem(
-                label: 'Providers',
-                value: '${snapshot.providers.length} available',
+          ],
+          data: (snapshot) => [
+            if (_activeTabId == 'file')
+              _FileComplaintTab(
+                snapshot: snapshot,
+                selectedType: _selectedType,
+                selectedProviderId: _selectedProviderId,
+                subjectController: _subjectController,
+                descriptionController: _descriptionController,
+                evidenceAttached: _evidenceAttached,
+                canSubmit: _canSubmit,
+                onTypeChanged: (value) => setState(() => _selectedType = value),
+                onProviderChanged: (value) =>
+                    setState(() => _selectedProviderId = value),
+                onUpload: () => setState(() => _evidenceAttached = true),
+                onSubmit: _handleSubmit,
+              )
+            else
+              VitTradeSection(
+                title: 'Cases',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _DisputeTabs(
+                      tabs: snapshot.tabs,
+                      activeId: _activeTabId,
+                      onChanged: (id) => setState(() => _activeTabId = id),
+                    ),
+                    _CasesTab(
+                      activeTabId: _activeTabId,
+                      snapshot: snapshot,
+                      lastResult: _lastResult,
+                    ),
+                  ],
+                ),
               ),
-              const VitTradeComplianceItem(
-                label: 'Framework',
-                value: 'Copy-trading dispute intake',
+            if (_activeTabId != 'file')
+              VitTradeComplianceSection(
+                title: 'Dispute process',
+                statusPill: const VitStatusPill(
+                  label: 'Regulated intake',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Providers',
+                    value: '${snapshot.providers.length} available',
+                  ),
+                  const VitTradeComplianceItem(
+                    label: 'Framework',
+                    value: 'Copy-trading dispute intake',
+                  ),
+                ],
               ),
-            ],
-          ),
+          ],
+        ),
       ],
     );
   }
 
-  void _handleSubmit() {
+  Future<void> _handleSubmit() async {
     if (!_canSubmit) return;
 
-    final result = ref
+    final result = await ref
         .read(tradeCopyTradingRepositoryProvider)
         .submitDisputeComplaint(
           TradeDisputeComplaintDraft(
@@ -170,6 +181,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
                 : const [],
           ),
         );
+    if (!mounted) return;
 
     setState(() {
       _lastResult = result;

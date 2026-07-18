@@ -12,26 +12,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 
 void main() {
-  const repo = MockTradeBotsRepository();
+  const repo = MockTradeBotsRepository(loadDelay: Duration.zero);
 
   group('MockTradeBotsRepository smoke test', () {
     group('getters', () {
-      test('getTradingBots', () {
-        final bots = repo.getTradingBots();
+      test('getTradingBots', () async {
+        final bots = await repo.getTradingBots();
         expect(bots, isA<TradeBotsSnapshot>());
         expect(bots.activeBots, hasLength(3));
       });
 
       test(
         'getBotTermsOfService / getBotRiskDisclosure / getBotSuitabilityAssessment',
-        () {
-          expect(repo.getBotTermsOfService(), isA<TradeBotTermsSnapshot>());
+        () async {
           expect(
-            repo.getBotRiskDisclosure(),
+            await repo.getBotTermsOfService(),
+            isA<TradeBotTermsSnapshot>(),
+          );
+          expect(
+            await repo.getBotRiskDisclosure(),
             isA<TradeBotRiskDisclosureSnapshot>(),
           );
           expect(
-            repo.getBotSuitabilityAssessment(),
+            await repo.getBotSuitabilityAssessment(),
             isA<TradeBotSuitabilityAssessmentSnapshot>(),
           );
         },
@@ -39,17 +42,17 @@ void main() {
 
       test(
         'getBotRiskDashboard / getBotEmergencyStop / getBotSecuritySettings',
-        () {
+        () async {
           expect(
-            repo.getBotRiskDashboard(),
+            await repo.getBotRiskDashboard(),
             isA<TradeBotRiskDashboardSnapshot>(),
           );
           expect(
-            repo.getBotEmergencyStop(),
+            await repo.getBotEmergencyStop(),
             isA<TradeBotEmergencyStopSnapshot>(),
           );
           expect(
-            repo.getBotSecuritySettings(),
+            await repo.getBotSecuritySettings(),
             isA<TradeBotSecuritySettingsSnapshot>(),
           );
         },
@@ -57,31 +60,34 @@ void main() {
 
       test(
         'getBotHistory / getBotPerformanceAnalytics / getBotBacktesting',
-        () {
-          final history = repo.getBotHistory();
+        () async {
+          final history = await repo.getBotHistory();
           expect(history, isA<TradeBotHistorySnapshot>());
           expect(history.trades, hasLength(7));
           expect(
-            repo.getBotPerformanceAnalytics(),
+            await repo.getBotPerformanceAnalytics(),
             isA<TradeBotPerformanceAnalyticsSnapshot>(),
           );
-          expect(repo.getBotBacktesting(), isA<TradeBotBacktestingSnapshot>());
+          expect(
+            await repo.getBotBacktesting(),
+            isA<TradeBotBacktestingSnapshot>(),
+          );
         },
       );
 
       test(
         'getBotStrategyCompare / getBotOptimization / getBotPortfolioDashboard',
-        () {
+        () async {
           expect(
-            repo.getBotStrategyCompare(),
+            await repo.getBotStrategyCompare(),
             isA<TradeBotStrategyCompareSnapshot>(),
           );
           expect(
-            repo.getBotOptimization(),
+            await repo.getBotOptimization(),
             isA<TradeBotOptimizationSnapshot>(),
           );
           expect(
-            repo.getBotPortfolioDashboard(),
+            await repo.getBotPortfolioDashboard(),
             isA<TradeBotPortfolioDashboardSnapshot>(),
           );
         },
@@ -89,21 +95,27 @@ void main() {
 
       test(
         'getBotDrawdownAnalyzer / getBotEquityCurve / getBotGuide / getBotFaq',
-        () {
+        () async {
           expect(
-            repo.getBotDrawdownAnalyzer(),
+            await repo.getBotDrawdownAnalyzer(),
             isA<TradeBotDrawdownAnalyzerSnapshot>(),
           );
-          expect(repo.getBotEquityCurve(), isA<TradeBotEquityCurveSnapshot>());
-          expect(repo.getBotGuide(), isA<TradeBotGuideSnapshot>());
-          expect(repo.getBotFaq(), isA<TradeBotFaqSnapshot>());
+          expect(
+            await repo.getBotEquityCurve(),
+            isA<TradeBotEquityCurveSnapshot>(),
+          );
+          expect(await repo.getBotGuide(), isA<TradeBotGuideSnapshot>());
+          expect(await repo.getBotFaq(), isA<TradeBotFaqSnapshot>());
         },
       );
 
-      test('getBotTaxReporting / getBotApiDocumentation', () {
-        expect(repo.getBotTaxReporting(), isA<TradeBotTaxReportingSnapshot>());
+      test('getBotTaxReporting / getBotApiDocumentation', () async {
         expect(
-          repo.getBotApiDocumentation(),
+          await repo.getBotTaxReporting(),
+          isA<TradeBotTaxReportingSnapshot>(),
+        );
+        expect(
+          await repo.getBotApiDocumentation(),
           isA<TradeBotApiDocumentationSnapshot>(),
         );
       });

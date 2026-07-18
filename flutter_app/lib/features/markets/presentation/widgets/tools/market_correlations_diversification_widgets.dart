@@ -167,13 +167,16 @@ class _DiversificationMetrics extends StatelessWidget {
   }
 }
 
-class _TimeframeScoreCard extends StatelessWidget {
-  const _TimeframeScoreCard({required this.repo});
+/// Bẫy mới (GD4-F3): cần 3 snapshot song song (d7/d30/d90) NGOÀI cái đã
+/// gate trang (mục 5) — mỗi timeframe đọc qua provider "phụ" `.value` +
+/// fallback null (dash) thay vì lồng 3 tầng `.when()`.
+class _TimeframeScoreCard extends ConsumerWidget {
+  const _TimeframeScoreCard({required this.sortOrder});
 
-  final MarketRepository repo;
+  final CorrelationSortOrder sortOrder;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const timeframes = [
       MarketCorrelationTimeframe.d7,
       MarketCorrelationTimeframe.d30,
@@ -188,9 +191,15 @@ class _TimeframeScoreCard extends StatelessWidget {
               padding: MarketsSpacingTokens.marketCorrelationsScoreRowPadding,
               child: _TimeframeScoreRow(
                 label: _timeframeLabel(timeframe),
-                score: repo
-                    .getMarketCorrelations(timeframe: timeframe)
-                    .diversificationScore,
+                score: ref
+                    .watch(
+                      marketCorrelationsSnapshotProvider((
+                        timeframe: timeframe,
+                        sortOrder: sortOrder,
+                      )),
+                    )
+                    .value
+                    ?.diversificationScore,
               ),
             ),
         ],
@@ -203,11 +212,17 @@ class _TimeframeScoreRow extends StatelessWidget {
   const _TimeframeScoreRow({required this.label, required this.score});
 
   final String label;
-  final DiversificationScoreDraft score;
+
+  /// `null` khi provider "phụ" của timeframe này chưa resolve (xem
+  /// [_TimeframeScoreCard]) — render dash thay vì chặn cả card.
+  final DiversificationScoreDraft? score;
 
   @override
   Widget build(BuildContext context) {
-    final color = _scoreColor(score.score);
+    final resolvedScore = score;
+    final color = resolvedScore == null
+        ? AppColors.text3
+        : _scoreColor(resolvedScore.score);
     return Row(
       children: [
         SizedBox(
@@ -222,7 +237,7 @@ class _TimeframeScoreRow extends StatelessWidget {
             borderRadius: AppRadii.smRadius,
             child: LinearProgressIndicator(
               minHeight: _corrScoreBarHeight,
-              value: score.score / 100,
+              value: resolvedScore == null ? 0 : resolvedScore.score / 100,
               backgroundColor: AppColors.surface2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
@@ -232,7 +247,7 @@ class _TimeframeScoreRow extends StatelessWidget {
         SizedBox(
           width: MarketsSpacingTokens.marketCorrelationsScoreValueWidth,
           child: Text(
-            '${score.score}',
+            resolvedScore == null ? '—' : '${resolvedScore.score}',
             textAlign: TextAlign.right,
             style: AppTextStyles.caption.copyWith(
               color: color,

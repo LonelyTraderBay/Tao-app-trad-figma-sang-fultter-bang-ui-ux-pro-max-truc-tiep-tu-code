@@ -32,8 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-013 mock repository exposes the BE draft read model', () {
-    final snapshot = const MockMarketRepository().getMarketHeatmap();
+  test('SC-013 mock repository exposes the BE draft read model', () async {
+    final snapshot = await const MockMarketRepository(
+      loadDelay: Duration.zero,
+    ).getMarketHeatmap();
 
     expect(snapshot.coins, hasLength(20));
     expect(

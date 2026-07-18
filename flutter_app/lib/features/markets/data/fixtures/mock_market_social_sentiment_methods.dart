@@ -2,9 +2,10 @@ part of '../repositories/mock_market_repository.dart';
 
 mixin _MockMarketRepositorySocialSentimentMethods on _MockMarketRepositoryBase {
   @override
-  MarketSocialSentimentSnapshot getSocialSentiment({
+  Future<MarketSocialSentimentSnapshot> getSocialSentiment({
     MarketSentimentSort sortBy = MarketSentimentSort.sentiment,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final sortedTokens = [..._socialSentimentTokens];
     switch (sortBy) {
       case MarketSentimentSort.sentiment:
@@ -80,10 +81,11 @@ mixin _MockMarketRepositorySocialSentimentMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketSocialSignalsSnapshot getSocialSignals({
+  Future<MarketSocialSignalsSnapshot> getSocialSignals({
     TradingSignalStatus? statusFilter,
     TradingSignalCategory? categoryFilter,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final signals = [
       for (final signal in _tradingSignals)
         if ((statusFilter == null || signal.status == statusFilter) &&
@@ -163,10 +165,11 @@ mixin _MockMarketRepositorySocialSentimentMethods on _MockMarketRepositoryBase {
   }
 
   @override
-  MarketCorrelationsSnapshot getMarketCorrelations({
+  Future<MarketCorrelationsSnapshot> getMarketCorrelations({
     MarketCorrelationTimeframe timeframe = MarketCorrelationTimeframe.d7,
     CorrelationSortOrder sortOrder = CorrelationSortOrder.high,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final pairs = _correlationPairs();
     pairs.sort((a, b) {
       final aValue = _correlationValue(a, timeframe);

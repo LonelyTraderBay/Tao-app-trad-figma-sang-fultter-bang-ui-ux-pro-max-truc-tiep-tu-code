@@ -48,9 +48,9 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(marketControllerProvider)
-        .getMarketDepth(pairId: widget.pairId, levels: _levels);
+    final depthAsync = ref.watch(
+      marketDepthSnapshotProvider((pairId: widget.pairId, levels: _levels)),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -67,6 +67,91 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
       ],
     );
 
+    // GD4-F3 (mục 5, biến thể 2): tiêu đề phụ thuộc snapshot.pair.baseAsset
+    // (không suy ra được từ pairId route param) — bọc toàn bộ return trong
+    // .when(), fallback title dùng pairId viết hoa cho loading/error.
+    return depthAsync.when(
+      loading: () => _MarketDepthScaffold(
+        title: 'Độ sâu ${widget.pairId.toUpperCase()}',
+        onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
+        tab: _tab,
+        onTabChanged: (value) => setState(() => _tab = value),
+        scrollEndClearance: scrollEndClearance,
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => _MarketDepthScaffold(
+        title: 'Độ sâu ${widget.pairId.toUpperCase()}',
+        onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
+        tab: _tab,
+        onTabChanged: (value) => setState(() => _tab = value),
+        scrollEndClearance: scrollEndClearance,
+        children: [
+          VitErrorState(
+            title: 'Không tải được độ sâu thị trường',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(
+              marketDepthSnapshotProvider((
+                pairId: widget.pairId,
+                levels: _levels,
+              )),
+            ),
+          ),
+        ],
+      ),
+      data: (snapshot) => _MarketDepthScaffold(
+        title: 'Độ sâu ${snapshot.pair.baseAsset}',
+        onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
+        tab: _tab,
+        onTabChanged: (value) => setState(() => _tab = value),
+        scrollEndClearance: scrollEndClearance,
+        children: [
+          MarketDepthPairSummary(pair: snapshot.pair),
+          if (_tab == 'depth')
+            MarketDepthChartView(
+              snapshot: snapshot,
+              levels: _levels,
+              onLevelSelected: (level) => setState(() => _levels = level),
+            )
+          else if (_tab == 'orderBook')
+            MarketDepthOrderBookView(snapshot: snapshot)
+          else
+            MarketDepthWhaleAlertsView(snapshot: snapshot),
+          const VitBanner(
+            variant: VitBannerVariant.info,
+            icon: Icons.info_outline_rounded,
+            message: 'Dữ liệu depth chỉ mang tính tham khảo',
+            detail:
+                'Không phải tín hiệu giao dịch. Giá và sổ lệnh có thể trễ so với thị trường thực.',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Khung trang chung cho 3 nhánh `.when()` của [MarketDepthPage] — tiêu đề
+/// phụ thuộc snapshot nên cả 3 nhánh dựng scaffold đầy đủ riêng (mục 5,
+/// biến thể 2 của GD4-Async-Playbook).
+class _MarketDepthScaffold extends StatelessWidget {
+  const _MarketDepthScaffold({
+    required this.title,
+    required this.onBack,
+    required this.tab,
+    required this.onTabChanged,
+    required this.scrollEndClearance,
+    required this.children,
+  });
+
+  final String title;
+  final VoidCallback onBack;
+  final String tab;
+  final ValueChanged<String> onTabChanged;
+  final double scrollEndClearance;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'Độ sâu thị trường',
@@ -75,19 +160,15 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Độ sâu ${snapshot.pair.baseAsset}',
+            title: title,
             subtitle: 'Sổ lệnh · Markets',
             showBack: true,
-            onBack: () =>
-                goBackOrFallback(context, fallbackPath: resolvedBackPath),
+            onBack: onBack,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              MarketDepthTabs(
-                activeTab: _tab,
-                onChanged: (value) => setState(() => _tab = value),
-              ),
+              MarketDepthTabs(activeTab: tab, onChanged: onTabChanged),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -102,27 +183,7 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
                       rhythm: VitPageRhythm.flush,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        MarketDepthPairSummary(pair: snapshot.pair),
-                        if (_tab == 'depth')
-                          MarketDepthChartView(
-                            snapshot: snapshot,
-                            levels: _levels,
-                            onLevelSelected: (level) =>
-                                setState(() => _levels = level),
-                          )
-                        else if (_tab == 'orderBook')
-                          MarketDepthOrderBookView(snapshot: snapshot)
-                        else
-                          MarketDepthWhaleAlertsView(snapshot: snapshot),
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.info_outline_rounded,
-                          message: 'Dữ liệu depth chỉ mang tính tham khảo',
-                          detail:
-                              'Không phải tín hiệu giao dịch. Giá và sổ lệnh có thể trễ so với thị trường thực.',
-                        ),
-                      ],
+                      children: children,
                     ),
                   ),
                 ),

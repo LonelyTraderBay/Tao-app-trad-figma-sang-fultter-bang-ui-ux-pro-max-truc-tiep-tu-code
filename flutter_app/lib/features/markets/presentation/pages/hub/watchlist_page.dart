@@ -144,6 +144,9 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
 
   @override
   Widget build(BuildContext context) {
+    // GD4-F3: trang gate qua marketWatchlistSnapshotProvider.when() (mục
+    // 5+6) trước khi đọc marketWatchlistStateControllerProvider.
+    final watchlistAsync = ref.watch(marketWatchlistSnapshotProvider);
     final viewState = ref.watch(marketWatchlistStateControllerProvider);
     final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -190,50 +193,62 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        items.isEmpty
-                            ? _EmptyWatchlist(
-                                searchActive: _searchController.text
-                                    .trim()
-                                    .isNotEmpty,
-                                onAddPair: () =>
-                                    context.go(AppRoutePaths.markets),
-                              )
-                            : Column(
-                                children: [
-                                  for (var i = 0; i < items.length; i++)
-                                    _WatchlistCard(
-                                      item: items[i],
-                                      onPairTap: () => context.go(
-                                        AppRoutePaths.pairDetail(
-                                          items[i].pair.id,
+                      children: watchlistAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được danh sách theo dõi',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(marketWatchlistSnapshotProvider),
+                          ),
+                        ],
+                        data: (_) => [
+                          items.isEmpty
+                              ? _EmptyWatchlist(
+                                  searchActive: _searchController.text
+                                      .trim()
+                                      .isNotEmpty,
+                                  onAddPair: () =>
+                                      context.go(AppRoutePaths.markets),
+                                )
+                              : Column(
+                                  children: [
+                                    for (var i = 0; i < items.length; i++)
+                                      _WatchlistCard(
+                                        item: items[i],
+                                        onPairTap: () => context.go(
+                                          AppRoutePaths.pairDetail(
+                                            items[i].pair.id,
+                                          ),
                                         ),
-                                      ),
-                                      onTradeTap: () => context.go(
-                                        AppRoutePaths.tradePair(
-                                          items[i].pair.id,
+                                        onTradeTap: () => context.go(
+                                          AppRoutePaths.tradePair(
+                                            items[i].pair.id,
+                                          ),
                                         ),
+                                        onNoteTap: () =>
+                                            _editNote(items[i].entry),
+                                        onRemoveTap: () =>
+                                            _removeEntry(items[i].entry.id),
                                       ),
-                                      onNoteTap: () =>
-                                          _editNote(items[i].entry),
-                                      onRemoveTap: () =>
-                                          _removeEntry(items[i].entry.id),
-                                    ),
-                                ],
-                              ),
-                        const MarketBodyReviewSection(
-                          title: 'Watchlist state review',
-                          message: 'Watchlist data reviewed',
-                          detail:
-                              'Search, add, note, remove, empty, and refresh states remain visible for tracked pairs.',
-                          primary:
-                              'Toolbar search and add-pair actions stay above watched assets.',
-                          secondary:
-                              'Note editing and remove actions preserve the selected pair context.',
-                          tertiary:
-                              'Empty watchlist recovery stays visible before market navigation.',
-                        ),
-                      ],
+                                  ],
+                                ),
+                          const MarketBodyReviewSection(
+                            title: 'Watchlist state review',
+                            message: 'Watchlist data reviewed',
+                            detail:
+                                'Search, add, note, remove, empty, and refresh states remain visible for tracked pairs.',
+                            primary:
+                                'Toolbar search and add-pair actions stay above watched assets.',
+                            secondary:
+                                'Note editing and remove actions preserve the selected pair context.',
+                            tertiary:
+                                'Empty watchlist recovery stays visible before market navigation.',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
