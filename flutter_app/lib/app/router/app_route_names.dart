@@ -730,4 +730,10 @@ final class AppRouteNames {
       TradeComplianceRouteNames.sc415TargetMarketDefinitionDetail;
   static const String sc416ComplaintTrackingDetail =
       TradeComplianceRouteNames.sc416ComplaintTrackingDetail;
+
+  // ==== SYSTEM GATE (GĐ4-F1 kill-switch) ====
+  static const String sc417MaintenanceGate =
+      UtilityRouteNames.sc417MaintenanceGate;
+  static const String sc418ForceUpdateGate =
+      UtilityRouteNames.sc418ForceUpdateGate;
 }

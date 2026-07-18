@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/top_header_action_audit.dart`.
 
 ```text
-vit_header_total=228
+vit_header_total=230
 vit_header_with_custom_trailing=0
 vit_header_with_legacy_action=0
 custom_header_targets=0
@@ -218,7 +218,7 @@ action_groups_over_limit=0
 | vit_header | `flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart` | 79 | `_EditProfilePageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/profile/presentation/pages/kyc_page.dart` | 71 | `_KYCPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` | 113 | `_SecurityPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
-| vit_header | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` | 65 | `_SettingsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
+| vit_header | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` | 68 | `_SettingsPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart` | 73 | `_SubAccountPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/profile/presentation/pages/vip_page.dart` | 79 | `_VIPPageState` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |
 | vit_header | `flutter_app/lib/features/referral/presentation/pages/referral_friend_detail_page.dart` | 35 | `ReferralFriendDetailPage` | `showBack` `-` | `Icons.chevron_left_rounded` | canonical | back / `Icons.chevron_left_rounded` | no | Back action is present. |

@@ -679,6 +679,10 @@ final class AppRoutePaths {
 
   // ==== ONBOARDING ====
   static const String onboarding = AuthRoutePaths.onboarding;
+
+  // ==== SYSTEM GATE (GĐ4-F1 kill-switch) ====
+  static const String maintenanceGate = UtilityRoutePaths.maintenanceGate;
+  static const String forceUpdateGate = UtilityRoutePaths.forceUpdateGate;
 }
 
 const String _initialRouteFromEnvironment = String.fromEnvironment(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/core/storage/key_value_store.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/onboarding/data/onboarding_repository.dart';
 import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow.dart';
@@ -10,7 +11,10 @@ import 'package:vit_trade_flutter/features/trade/presentation/pages/hub/trade_pa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpOnboarding(WidgetTester tester) async {
+  Future<void> pumpOnboarding(
+    WidgetTester tester, {
+    KeyValueStore? store,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -18,6 +22,9 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (store != null) keyValueStoreProvider.overrideWithValue(store),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.onboarding,
@@ -94,6 +101,19 @@ void main() {
 
     expect(find.byType(HomePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
+  });
+
+  testWidgets('SC-397 GĐ4-F1 skip persists onboarding-seen flag', (
+    tester,
+  ) async {
+    final store = InMemoryKeyValueStore();
+    await pumpOnboarding(tester, store: store);
+
+    expect(store.getBool(KeyValueStoreKeys.onboardingSeen), isNull);
+    await tester.tap(find.byKey(OnboardingFlow.skipButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(store.getBool(KeyValueStoreKeys.onboardingSeen), isTrue);
   });
 
   testWidgets('SC-397 selected trade goal navigates to trade pair route', (

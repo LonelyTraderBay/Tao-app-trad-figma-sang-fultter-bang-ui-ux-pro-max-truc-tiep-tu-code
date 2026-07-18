@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -103,7 +104,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 context.go(AppRoutePaths.profilePredictions),
             onOpenArena: () => context.go(AppRoutePaths.profileArena),
             onOpenActivity: () => context.go(AppRoutePaths.profileActivity),
-            onLogout: () => context.go(AppRoutePaths.authLogin),
+            onLogout: () async {
+              await ref.read(authSessionControllerProvider.notifier).logout();
+              if (context.mounted) context.go(AppRoutePaths.authLogin);
+            },
           ),
         ),
       ),

@@ -84,7 +84,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     try {
       await ref
-          .read(authControllerProvider)
+          .read(authSessionControllerProvider.notifier)
           .login(identifier: identifier, password: password, demo: demo);
       if (mounted) context.go(AppRoutePaths.home);
     } catch (error) {

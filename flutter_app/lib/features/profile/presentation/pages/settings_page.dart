@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/core/storage/key_value_store.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -152,11 +155,19 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   void _initializeFrom(ProfileSettingsSnapshot snapshot) {
     if (_initialized) return;
-    _selectedCurrency = snapshot.selectedCurrency;
-    _selectedLanguageId = snapshot.selectedLanguageId;
+    final store = ref.read(keyValueStoreProvider);
+    _selectedCurrency =
+        store.getString(KeyValueStoreKeys.settingsCurrency) ??
+        snapshot.selectedCurrency;
+    _selectedLanguageId =
+        store.getString(KeyValueStoreKeys.settingsLanguage) ??
+        snapshot.selectedLanguageId;
     _toggles = {
       for (final item in [...snapshot.tradeSecurity, ...snapshot.notifications])
-        if (item.enabled != null) item.id: item.enabled!,
+        if (item.enabled != null)
+          item.id:
+              store.getBool(KeyValueStoreKeys.settingsTogglePrefix + item.id) ??
+              item.enabled!,
     };
     _initialized = true;
   }
@@ -164,16 +175,34 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   void _setCurrency(String currency) {
     HapticFeedback.selectionClick();
     setState(() => _selectedCurrency = currency);
+    // persist GĐ4-F1: giữ đơn vị tiền hiển thị qua phiên.
+    unawaited(
+      ref
+          .read(keyValueStoreProvider)
+          .setString(KeyValueStoreKeys.settingsCurrency, currency),
+    );
   }
 
   void _setLanguage(String id) {
     HapticFeedback.selectionClick();
     setState(() => _selectedLanguageId = id);
+    // persist GĐ4-F1: giữ ngôn ngữ đã chọn qua phiên.
+    unawaited(
+      ref
+          .read(keyValueStoreProvider)
+          .setString(KeyValueStoreKeys.settingsLanguage, id),
+    );
   }
 
   void _setToggle(String id, bool value) {
     HapticFeedback.selectionClick();
     setState(() => _toggles = {..._toggles, id: value});
+    // persist GĐ4-F1: giữ trạng thái toggle qua phiên.
+    unawaited(
+      ref
+          .read(keyValueStoreProvider)
+          .setBool(KeyValueStoreKeys.settingsTogglePrefix + id, value),
+    );
   }
 
   void _close() {

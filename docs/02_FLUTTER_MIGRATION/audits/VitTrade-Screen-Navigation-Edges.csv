@@ -1,7 +1,7 @@
 module,source_file,line,source_unit,trigger_hint,kind,target_expression,normalized_target,target_screen,notes
 app,flutter_app/lib/app/router/internal_surface_gate.dart,96,internal_surface_gate.dart,Restricted surface | Internal surface restricted,context.go,AppRoutePaths.home,/home,HomePage (/home),
 app,flutter_app/lib/app/router/route_error_page.dart,29,route_error_page.dart,Về trang chủ | Không tìm thấy trang,context.go,AppRoutePaths.home,/home,HomePage (/home),
-app,flutter_app/lib/app/router/route_groups/root_routes.dart,34,root_routes.dart,,context.go,destination.routePath,,,dynamic_route_expression
+app,flutter_app/lib/app/router/route_groups/root_routes.dart,55,root_routes.dart,,context.go,destination.routePath,,,dynamic_route_expression
 core,flutter_app/lib/core/navigation/back_navigation.dart,25,back_navigation.dart,,context.go,safeFallback,,,dynamic_route_expression
 core,flutter_app/lib/core/navigation/back_navigation.dart,31,back_navigation.dart,,context.go,safeFallback,,,dynamic_route_expression
 core,flutter_app/lib/core/navigation/back_navigation.dart,28,back_navigation.dart,,context.pop,,,,back_or_close_modal
@@ -303,6 +303,8 @@ earn,flutter_app/lib/features/earn/presentation/widgets/staking/staking_transact
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,73,enterprise_states_page.dart,Thư viện trạng thái giao diện dùng chung,context.go,snapshot.backRoute,,,dynamic_route_expression
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,113,enterprise_states_page.dart,,context.go,snapshot.marketRoute,,,dynamic_route_expression
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,114,enterprise_states_page.dart,,context.go,snapshot.kycRoute,,,dynamic_route_expression
+enterprise_states,flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart,61,force_update_gate_page.dart,Cần cập nhật phiên bản mới,context.go,AppRoutePaths.home,/home,HomePage (/home),
+enterprise_states,flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart,57,maintenance_gate_page.dart,Hệ thống đang bảo trì,context.go,AppRoutePaths.home,/home,HomePage (/home),
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,39,enterprise_states_references.dart,Mở Markets | Preview only | MarketListPage | Loading · Empty · Error · Offline,context.go,snapshot.marketRoute,,,dynamic_route_expression
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,74,enterprise_states_references.dart,Đăng nhập lại | Đi tới KYC | Session Expired Modal | Phiên đăng nhập đã hết hạn,context.go,snapshot.loginRoute,,,dynamic_route_expression
 enterprise_states,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,82,enterprise_states_references.dart,Đăng nhập lại | Đi tới KYC | Thiết lập 2FA | Session Expired Modal,context.go,snapshot.kycRoute,,,dynamic_route_expression
@@ -406,8 +408,8 @@ news,flutter_app/lib/features/news/presentation/widgets/news_page_common.dart,13
 notifications,flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart,81,notifications_page.dart,Thông báo,context.go,snapshot.backRoute,,,dynamic_route_expression
 notifications,flutter_app/lib/features/notifications/presentation/pages/notifications_page.dart,223,notifications_page.dart,,context.go,path,,,dynamic_route_expression
 onboarding,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_state.dart,89,onboarding_flow_state.dart,Về trang chủ | Thử lại | Chưa có nội dung onboarding | Không tải được onboarding,context.go,snapshot.homeRoute,,,dynamic_route_expression
-onboarding,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_state.dart,313,onboarding_flow_state.dart,,context.go,snapshot.homeRoute,,,dynamic_route_expression
-onboarding,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_state.dart,326,onboarding_flow_state.dart,,context.go,route,,,dynamic_route_expression
+onboarding,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_state.dart,314,onboarding_flow_state.dart,,context.go,snapshot.homeRoute,,,dynamic_route_expression
+onboarding,flutter_app/lib/features/onboarding/presentation/pages/onboarding_flow_state.dart,329,onboarding_flow_state.dart,,context.go,route,,,dynamic_route_expression
 p2p,flutter_app/lib/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart,87,p2p_ad_analytics_page.dart,Phân tích quảng cáo | Phân tích · P2P | Phân tích quảng cáo P2P,context.go,AppRoutePaths.p2p,/p2p,P2PHomePage (/p2p),
 p2p,flutter_app/lib/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart,82,p2p_ad_detail_page.dart,Chi tiết quảng cáo | Quảng cáo · P2P | Chi tiết quảng cáo P2P,context.go,AppRoutePaths.p2p,/p2p,P2PHomePage (/p2p),
 p2p,flutter_app/lib/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart,131,p2p_ad_detail_page.dart,P2P order preview review | Mua ${ad.asset},context.go,"AppRoutePaths.p2pOrder( snapshot.targetOrderId, )",/p2p/order/<snapshot.targetOrderId>,P2POrderPage (/p2p/order/:orderId),
@@ -644,15 +646,15 @@ profile,flutter_app/lib/features/profile/presentation/pages/device_management_pa
 profile,flutter_app/lib/features/profile/presentation/pages/device_management_page.dart,259,device_management_page.dart,,context.pop,,,,back_or_close_modal
 profile,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,184,edit_profile_page.dart,,context.go,AppRoutePaths.profile,/profile,ProfilePage (/profile),
 profile,flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart,181,edit_profile_page.dart,,context.pop,,,,back_or_close_modal
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,94,profile_page.dart,T\u00E0i kho\u1EA3n,context.go,AppRoutePaths.profileEdit,/profile/edit,EditProfilePage (/profile/edit),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,101,profile_page.dart,,context.go,AppRoutePaths.profileVip,/profile/vip,VIPPage (/profile/vip),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,103,profile_page.dart,,context.go,AppRoutePaths.profilePredictions,/profile/predictions,PredictionsPortfolioPage (/profile/predictions),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,104,profile_page.dart,,context.go,AppRoutePaths.profileArena,/profile/arena,MyArenaPage (/profile/arena),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,105,profile_page.dart,,context.go,AppRoutePaths.profileActivity,/profile/activity,ActivityLogPage (/profile/activity),
-profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,106,profile_page.dart,,context.go,AppRoutePaths.authLogin,/auth/login,AuthRouteShell (/auth/login),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,95,profile_page.dart,T\u00E0i kho\u1EA3n,context.go,AppRoutePaths.profileEdit,/profile/edit,EditProfilePage (/profile/edit),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,102,profile_page.dart,,context.go,AppRoutePaths.profileVip,/profile/vip,VIPPage (/profile/vip),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,104,profile_page.dart,,context.go,AppRoutePaths.profilePredictions,/profile/predictions,PredictionsPortfolioPage (/profile/predictions),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,105,profile_page.dart,,context.go,AppRoutePaths.profileArena,/profile/arena,MyArenaPage (/profile/arena),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,106,profile_page.dart,,context.go,AppRoutePaths.profileActivity,/profile/activity,ActivityLogPage (/profile/activity),
+profile,flutter_app/lib/features/profile/presentation/pages/profile_page.dart,109,profile_page.dart,,context.go,AppRoutePaths.authLogin,/auth/login,AuthRouteShell (/auth/login),
 profile,flutter_app/lib/features/profile/presentation/pages/security_page.dart,161,security_page.dart,Mã chống lừa đảo | Xác nhận mã chống lừa đảo,context.go,item.route!,,,dynamic_route_expression
-profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,184,settings_page.dart,,context.go,AppRoutePaths.profile,/profile,ProfilePage (/profile),
-profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,181,settings_page.dart,,context.pop,,,,back_or_close_modal
+profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,213,settings_page.dart,,context.go,AppRoutePaths.profile,/profile,ProfilePage (/profile),
+profile,flutter_app/lib/features/profile/presentation/pages/settings_page.dart,210,settings_page.dart,,context.pop,,,,back_or_close_modal
 profile,flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart,125,sub_account_page.dart,,context.go,AppRoutePaths.profile,/profile,ProfilePage (/profile),
 profile,flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart,122,sub_account_page.dart,,context.pop,,,,back_or_close_modal
 profile,flutter_app/lib/features/profile/presentation/pages/vip_page.dart,116,vip_page.dart,,context.go,AppRoutePaths.tradePair('btcusdt'),/trade/btcusdt,TradePage (/trade/:pairId),

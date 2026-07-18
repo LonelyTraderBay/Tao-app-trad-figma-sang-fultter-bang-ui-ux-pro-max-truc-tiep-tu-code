@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vit_trade_flutter/core/storage/key_value_store.dart';
 import 'package:vit_trade_flutter/features/markets/data/providers/market_repository_provider.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/tools/comparison_tool_common.dart'
@@ -236,13 +239,21 @@ final class MarketListViewState {
     required this.visiblePairs,
   });
 
-  factory MarketListViewState.fromSnapshot(MarketListSnapshot snapshot) {
+  /// [favoriteIdsOverride] ghi đè yêu thích seed từ `snapshot.watchlist` —
+  /// dùng khi đã có watchlist persist trong [KeyValueStore] (GĐ4-F1); `null`
+  /// giữ hành vi cũ (seed từ snapshot).
+  factory MarketListViewState.fromSnapshot(
+    MarketListSnapshot snapshot, {
+    Set<String>? favoriteIdsOverride,
+  }) {
     return MarketListViewState._recomputed(
       snapshot: snapshot,
       query: '',
       category: snapshot.screenFilters.defaultCategory,
       sort: snapshot.screenFilters.defaultSort,
-      favoriteIds: Set<String>.unmodifiable(snapshot.watchlist),
+      favoriteIds: Set<String>.unmodifiable(
+        favoriteIdsOverride ?? snapshot.watchlist,
+      ),
     );
   }
 
@@ -327,8 +338,15 @@ final class MarketListViewState {
 final class MarketListStateController extends Notifier<MarketListViewState> {
   @override
   MarketListViewState build() {
+    // persist GĐ4-F1: watchlist yêu thích ghi đè seed từ repo nếu đã lưu.
+    final storedFavorites = ref
+        .read(keyValueStoreProvider)
+        .getStringList(KeyValueStoreKeys.marketWatchlistFavorites);
     return MarketListViewState.fromSnapshot(
       ref.watch(marketControllerProvider).getMarketList(),
+      favoriteIdsOverride: storedFavorites == null
+          ? null
+          : Set<String>.of(storedFavorites),
     );
   }
 
@@ -351,6 +369,15 @@ final class MarketListStateController extends Notifier<MarketListViewState> {
     final next = Set<String>.of(state.favoriteIds);
     if (!next.remove(id)) next.add(id);
     state = state.copyWithFilters(favoriteIds: Set.unmodifiable(next));
+    // persist GĐ4-F1: ghi lại watchlist yêu thích để giữ qua phiên.
+    unawaited(
+      ref
+          .read(keyValueStoreProvider)
+          .setStringList(
+            KeyValueStoreKeys.marketWatchlistFavorites,
+            next.toList()..sort(),
+          ),
+    );
   }
 
   /// Xóa bộ lọc: đưa query/category/sort về mặc định. Giữ nguyên

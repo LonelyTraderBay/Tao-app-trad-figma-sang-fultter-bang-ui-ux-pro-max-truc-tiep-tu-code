@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/top_header_visual_archetype_audit.dart`.
 
 ```text
-total_routed_screens=413
+total_routed_screens=415
 strict_visual_issues=0
 screen_level_mismatches=0
 uses_vit_top_chrome=63
@@ -37,7 +37,7 @@ hard_coded_offline_banner=0
 
 | Screen level | Routes |
 | --- | ---: |
-| L2_detail | 179 |
+| L2_detail | 181 |
 | L2_utilityDetail | 70 |
 | L3_transactionFlow | 56 |
 | L2_entityDetail | 38 |
@@ -56,7 +56,7 @@ hard_coded_offline_banner=0
 
 | Archetype | Routes |
 | --- | ---: |
-| detail | 392 |
+| detail | 394 |
 | rootModule | 11 |
 | instrument | 6 |
 | fullscreenTool | 2 |
@@ -212,6 +212,8 @@ hard_coded_offline_banner=0
 | earn | `AppRoutePaths.earnVotingProposalRoute` | `StakingVotingPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_detail | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/earn/presentation/pages/staking/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_detail | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/earn/presentation/pages/staking/staking_webhooks_page.dart` |
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | content | state_driven | offlineNoCache | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
+| enterprise_states | `AppRoutePaths.forceUpdateGate` | `ForceUpdateGatePage` | fixed_vit_header | vit_header_default_title_only | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart` |
+| enterprise_states | `AppRoutePaths.maintenanceGate` | `MaintenanceGatePage` | fixed_vit_header | vit_header_default_title_only | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart` |
 | home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | rootBrand | L0_homeRoot | rootBrand | no | no | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 3 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_abi_diff_page.dart` |

@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.da
 import 'package:vit_trade_flutter/features/auth/presentation/pages/register_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/two_fa_setup_page.dart';
+import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/force_update_gate_page.dart';
+import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/maintenance_gate_page.dart';
 import 'package:vit_trade_flutter/features/onboarding/presentation/pages/onboarding_flow.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 
@@ -63,6 +65,19 @@ List<RouteBase> topLevelRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.onboarding,
       name: AppRouteNames.sc397Onboarding,
       builder: (_, _) => const OnboardingFlow(),
+    ),
+    // GĐ4-F1 kill-switch: 2 trang gate toàn cục, ngoài shell — redirect từ
+    // root_routes.dart khi AppConfig.maintenanceMode / forceUpdateRequired
+    // bật.
+    GoRoute(
+      path: AppRoutePaths.maintenanceGate,
+      name: AppRouteNames.sc417MaintenanceGate,
+      builder: (_, _) => const MaintenanceGatePage(),
+    ),
+    GoRoute(
+      path: AppRoutePaths.forceUpdateGate,
+      name: AppRouteNames.sc418ForceUpdateGate,
+      builder: (_, _) => const ForceUpdateGatePage(),
     ),
   ];
 }
