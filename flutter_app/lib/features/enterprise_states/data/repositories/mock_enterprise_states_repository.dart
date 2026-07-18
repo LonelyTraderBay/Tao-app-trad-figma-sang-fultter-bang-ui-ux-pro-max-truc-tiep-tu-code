@@ -3,10 +3,26 @@ import 'package:vit_trade_flutter/features/enterprise_states/domain/repositories
 
 final class MockEnterpriseStatesRepository
     implements EnterpriseStatesRepository {
-  const MockEnterpriseStatesRepository();
+  const MockEnterpriseStatesRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('enterprise_states_mock_fetch_failed');
+    }
+  }
 
   @override
-  EnterpriseStatesSnapshot getReference() {
+  Future<EnterpriseStatesSnapshot> getReference() async {
+    await _simulateNetwork();
     return const EnterpriseStatesSnapshot(
       endpoint: '/api/mobile/enterprise-states/enterprise-states',
       actionDraft: 'read-only or local navigation action',

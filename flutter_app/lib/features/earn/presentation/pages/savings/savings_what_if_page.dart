@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -142,7 +144,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() => _tab = tab);
                         },
                       ),
@@ -221,15 +223,15 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
         customMultiplier: multiplier,
         customVolatility: volatility,
         onScenarioChanged: (id) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _selectedScenario = id);
         },
         onCustomMultiplierChanged: (value) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _customMultiplier = value);
         },
         onCustomVolatilityChanged: (value) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _customVolatility = value);
         },
       ),
@@ -251,7 +253,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
   }
 
   void _runScenario(SavingsWhatIfSnapshot snapshot) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() {
       _hasRun = true;
       _tab = 'results';
@@ -260,7 +262,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
   }
 
   void _resetScenario() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _hasRun = false;
       _tab = 'scenarios';

@@ -28,8 +28,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-326 mock repository exposes performance monitor BE draft', () {
-    final snapshot = const MockPerformanceMonitorRepository()
+  test('SC-326 mock repository exposes performance monitor BE draft', () async {
+    final snapshot = await const MockPerformanceMonitorRepository()
         .getPerformanceMonitor();
 
     expect(snapshot.endpoint, '/api/mobile/dev/dev-performance-monitor');

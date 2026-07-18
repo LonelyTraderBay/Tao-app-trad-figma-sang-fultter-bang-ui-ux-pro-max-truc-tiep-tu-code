@@ -28,8 +28,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-399 mock repository exposes design system BE draft', () {
-    final snapshot = const MockDesignSystemRepository().getDesignSystem();
+  test('SC-399 mock repository exposes design system BE draft', () async {
+    final snapshot = await const MockDesignSystemRepository().getDesignSystem();
 
     expect(snapshot.endpoint, '/api/mobile/dev/dev-design-system');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

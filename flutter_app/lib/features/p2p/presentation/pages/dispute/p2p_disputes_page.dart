@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -340,7 +342,7 @@ class _DisputeListTile extends StatelessWidget {
     return VitCard(
       key: P2PDisputesPage.disputeKey(dispute.id),
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.p2pDisputeDetail(dispute.id));
       },
       padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,

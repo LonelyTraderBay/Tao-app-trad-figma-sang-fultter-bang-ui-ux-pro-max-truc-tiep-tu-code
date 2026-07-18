@@ -88,45 +88,54 @@ void main() {
       },
     );
 
-    test('submitBotAction / createTradingBot pin the returned status', () {
-      final action = repo.submitBotAction(
-        const TradeBotActionRequest(botId: 'bot1', action: 'pause'),
-      );
-      expect(action.status, 'accepted');
+    test(
+      'submitBotAction / createTradingBot pin the returned status',
+      () async {
+        final action = await repo.submitBotAction(
+          const TradeBotActionRequest(botId: 'bot1', action: 'pause'),
+        );
+        expect(action.status, 'accepted');
 
-      final created = repo.createTradingBot(
-        const TradeBotCreateRequest(
-          strategyId: 'dca',
-          params: {'pair': 'BTC/USDT'},
-        ),
-      );
-      expect(created.botId, 'BOT-DEMO-059');
-      expect(created.status, 'created');
-    });
+        final created = await repo.createTradingBot(
+          const TradeBotCreateRequest(
+            strategyId: 'dca',
+            params: {'pair': 'BTC/USDT'},
+          ),
+        );
+        expect(created.botId, 'BOT-DEMO-059');
+        expect(created.status, 'created');
+      },
+    );
 
-    test('submitBotEmergencyStop pins the stopped bot count and redirect', () {
-      final result = repo.submitBotEmergencyStop(
-        const TradeBotEmergencyStopDraft(
-          reasonId: 'crash',
-          closePositions: true,
-          confirmed: true,
-        ),
-      );
-      expect(result.status, 'accepted');
-      expect(result.stoppedBotCount, 3);
-      expect(result.redirectPath, '/trade/bots');
-    });
+    test(
+      'submitBotEmergencyStop pins the stopped bot count and redirect',
+      () async {
+        final result = await repo.submitBotEmergencyStop(
+          const TradeBotEmergencyStopDraft(
+            reasonId: 'crash',
+            closePositions: true,
+            confirmed: true,
+          ),
+        );
+        expect(result.status, 'accepted');
+        expect(result.stoppedBotCount, 3);
+        expect(result.redirectPath, '/trade/bots');
+      },
+    );
 
-    test('patchBotSecuritySettings echoes the requested twoFaEnabled', () {
-      final result = repo.patchBotSecuritySettings(
-        const TradeBotSecuritySettingsDraft(twoFaEnabled: false),
-      );
-      expect(result.status, 'saved');
-      expect(result.twoFaEnabled, isFalse);
-    });
+    test(
+      'patchBotSecuritySettings echoes the requested twoFaEnabled',
+      () async {
+        final result = await repo.patchBotSecuritySettings(
+          const TradeBotSecuritySettingsDraft(twoFaEnabled: false),
+        );
+        expect(result.status, 'saved');
+        expect(result.twoFaEnabled, isFalse);
+      },
+    );
 
-    test('createBotHistoryExport pins the generated download url', () {
-      final export = repo.createBotHistoryExport(
+    test('createBotHistoryExport pins the generated download url', () async {
+      final export = await repo.createBotHistoryExport(
         const TradeBotHistoryExportRequest(format: 'csv'),
       );
       expect(export.status, 'ready');

@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-182 mock repository exposes A/B tests BE draft', () {
-    final snapshot = const MockAdminRepository().getAbTests();
+  test('SC-182 mock repository exposes A/B tests BE draft', () async {
+    final snapshot = await const MockAdminRepository().getAbTests();
 
     expect(snapshot.endpoint, '/api/mobile/admin/admin-abtests');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

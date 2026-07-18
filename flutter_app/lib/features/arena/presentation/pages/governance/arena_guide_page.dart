@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -167,7 +169,7 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
           _ShowMoreTipsButton(
             remaining: snapshot.proTips.length - 5,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _showAllTips = true);
             },
           ),
@@ -202,27 +204,27 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
   }
 
   void _setTab(_GuideTab tab) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _tab = tab);
   }
 
   void _setMode(_GuideMode mode) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _mode = mode);
   }
 
   void _toggleTip(int index) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _expandedTip = _expandedTip == index ? null : index);
   }
 
   void _toggleFaq(int index) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _expandedFaq = _expandedFaq == index ? null : index);
   }
 
   void _openPrimary(BuildContext context) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     context.go(
       _mode == _GuideMode.create
           ? AppRoutePaths.arenaStudio
@@ -231,7 +233,7 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
   }
 
   void _close() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     goBackOrFallback(
       context,
       fallbackPath: AppRoutePaths.arena,

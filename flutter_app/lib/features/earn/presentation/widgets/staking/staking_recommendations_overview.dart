@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -125,7 +127,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.riskAssessmentRoute);
             },
             child: const Text('Cập nhật Profile'),

@@ -4,13 +4,15 @@ import 'package:vit_trade_flutter/features/profile/presentation/controllers/prof
 
 void main() {
   group('ProfileController', () {
-    test('exposes profile snapshots through repository contract', () {
-      final controller = const ProfileController(MockProfileRepository());
+    test('exposes profile snapshots through repository contract', () async {
+      final controller = const ProfileController(
+        MockProfileRepository(loadDelay: Duration.zero),
+      );
 
-      final profile = controller.getProfile();
-      final security = controller.getSecurity();
-      final vip = controller.getVip();
-      final subAccounts = controller.getSubAccounts();
+      final profile = await controller.getProfile();
+      final security = await controller.getSecurity();
+      final vip = await controller.getVip();
+      final subAccounts = await controller.getSubAccounts();
 
       expect(profile.endpoint, '/api/mobile/profile/profile');
       expect(profile.user.id, 'USR001');

@@ -133,8 +133,8 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
     );
   }
 
-  void _handleStart() {
-    final result = ref
+  Future<void> _handleStart() async {
+    final result = await ref
         .read(tradeBotAnalyticsRepositoryProvider)
         .runBotOptimization(
           TradeBotOptimizationRequest(
@@ -143,6 +143,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
             gridRangePct: _gridRange,
           ),
         );
+    if (!mounted) return;
     setState(() => _lastResult = result);
   }
 }

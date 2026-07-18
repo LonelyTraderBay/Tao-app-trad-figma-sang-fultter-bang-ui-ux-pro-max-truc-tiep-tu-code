@@ -10,7 +10,7 @@ final class OnboardingController implements OnboardingRepository {
   final OnboardingRepository _repository;
 
   @override
-  OnboardingSnapshot getFlow() {
+  Future<OnboardingSnapshot> getFlow() {
     return _repository.getFlow();
   }
 }

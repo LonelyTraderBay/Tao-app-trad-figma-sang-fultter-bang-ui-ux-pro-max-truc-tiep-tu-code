@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -46,8 +47,7 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(adminAnalyticsControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(adminAnalyticsControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -70,25 +70,41 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         children: [
-          AdminDashboardStateContent(
-            status: controller.state.status,
-            title: 'Analytics dashboard',
-            message: controller.state.message,
-            children: [
-              _Controls(
-                ranges: snapshot.ranges,
-                activeRange: _activeRange,
-                onRangeChanged: (range) {
-                  setState(() => _activeRange = range);
-                },
+          ...controllerAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Analytics dashboard',
+                message: 'Không tải được dữ liệu.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(adminAnalyticsSnapshotProvider),
               ),
-              _KeyMetrics(snapshot: snapshot),
-              _EventVolumeCard(stats: snapshot.dailyStats),
-              _TopEventsCard(events: snapshot.topEvents),
-              _DistributionCard(events: snapshot.topEvents),
-              _RecentEventsCard(events: snapshot.recentEvents),
-              _QueueSummaryCard(text: snapshot.queueSummary),
             ],
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              return [
+                AdminDashboardStateContent(
+                  status: controller.state.status,
+                  title: 'Analytics dashboard',
+                  message: controller.state.message,
+                  children: [
+                    _Controls(
+                      ranges: snapshot.ranges,
+                      activeRange: _activeRange,
+                      onRangeChanged: (range) {
+                        setState(() => _activeRange = range);
+                      },
+                    ),
+                    _KeyMetrics(snapshot: snapshot),
+                    _EventVolumeCard(stats: snapshot.dailyStats),
+                    _TopEventsCard(events: snapshot.topEvents),
+                    _DistributionCard(events: snapshot.topEvents),
+                    _RecentEventsCard(events: snapshot.recentEvents),
+                    _QueueSummaryCard(text: snapshot.queueSummary),
+                  ],
+                ),
+              ];
+            },
           ),
         ],
       ),

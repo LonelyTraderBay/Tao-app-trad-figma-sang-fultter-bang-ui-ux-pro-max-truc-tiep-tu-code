@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -93,10 +95,12 @@ void main() {
             builder: (context) {
               return ElevatedButton(
                 onPressed: () {
-                  showVitNoticeSheet(
-                    context: context,
-                    title: 'Margin trading',
-                    message: 'Your position has been updated.',
+                  unawaited(
+                    showVitNoticeSheet(
+                      context: context,
+                      title: 'Margin trading',
+                      message: 'Your position has been updated.',
+                    ),
                   );
                 },
                 child: const Text('Open notice'),

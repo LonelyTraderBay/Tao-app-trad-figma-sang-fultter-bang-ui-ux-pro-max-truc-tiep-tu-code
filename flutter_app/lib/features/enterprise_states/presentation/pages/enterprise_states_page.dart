@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/enterprise_states_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -50,7 +53,7 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(enterpriseStatesControllerProvider).reference();
+    final snapshotAsync = ref.watch(enterpriseStatesSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -64,68 +67,95 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
       semanticIdentifier: 'SC-320',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            backKey: EnterpriseStatesPage.backKey,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: '02 – Enterprise UI States',
+              subtitle: 'UI-only · Không redesign · Match 100% style hiện tại',
+              showBack: true,
+              backKey: EnterpriseStatesPage.backKey,
+              onBack: () => context.go(AppRoutePaths.home),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EnterpriseStatesSpacingTokens
-                    .enterpriseStatesContentPadding,
-                child: _SectionTabs(
-                  tabs: snapshot.tabs,
-                  active: _section,
-                  onChanged: (section) {
-                    HapticFeedback.selectionClick();
-                    setState(() => _section = section);
-                  },
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: '02 – Enterprise UI States',
+              subtitle: 'UI-only · Không redesign · Match 100% style hiện tại',
+              showBack: true,
+              backKey: EnterpriseStatesPage.backKey,
+              onBack: () => context.go(AppRoutePaths.home),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(enterpriseStatesSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              backKey: EnterpriseStatesPage.backKey,
+              onBack: () => context.go(snapshot.backRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EnterpriseStatesSpacingTokens
+                      .enterpriseStatesContentPadding,
+                  child: _SectionTabs(
+                    tabs: snapshot.tabs,
+                    active: _section,
+                    onChanged: (section) {
+                      unawaited(HapticFeedback.selectionClick());
+                      setState(() => _section = section);
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: EnterpriseStatesPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding:
-                        EnterpriseStatesSpacingTokens.enterpriseStatesScrollPadding(
-                          bottomInset,
-                        ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      children: [
-                        switch (_section) {
-                          EnterpriseStateSection.stateKit => _StateKitSection(
-                            snapshot: snapshot,
-                            activeState: _preview,
-                            onStateChanged: (state) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _preview = state);
-                            },
-                            onMarkets: () => context.go(snapshot.marketRoute),
-                            onKyc: () => context.go(snapshot.kycRoute),
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: EnterpriseStatesPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding:
+                          EnterpriseStatesSpacingTokens.enterpriseStatesScrollPadding(
+                            bottomInset,
                           ),
-                          EnterpriseStateSection.applied => _AppliedSection(
-                            snapshot: snapshot,
-                          ),
-                          EnterpriseStateSection.security => _SecuritySection(
-                            snapshot: snapshot,
-                          ),
-                        },
-                      ],
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        children: [
+                          switch (_section) {
+                            EnterpriseStateSection.stateKit => _StateKitSection(
+                              snapshot: snapshot,
+                              activeState: _preview,
+                              onStateChanged: (state) {
+                                unawaited(HapticFeedback.selectionClick());
+                                setState(() => _preview = state);
+                              },
+                              onMarkets: () => context.go(snapshot.marketRoute),
+                              onKyc: () => context.go(snapshot.kycRoute),
+                            ),
+                            EnterpriseStateSection.applied => _AppliedSection(
+                              snapshot: snapshot,
+                            ),
+                            EnterpriseStateSection.security => _SecuritySection(
+                              snapshot: snapshot,
+                            ),
+                          },
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

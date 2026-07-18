@@ -66,7 +66,7 @@ class _ChatComposer extends StatelessWidget {
                         icon: Icons.image_outlined,
                         tooltip: 'Attach payment proof image',
                         onPressed: () {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -242,7 +244,7 @@ class _ComplianceRow extends StatelessWidget {
       color: AppColors.transparent,
       child: InkWell(
         onTap: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           context.go(item.route);
         },
         child: Padding(

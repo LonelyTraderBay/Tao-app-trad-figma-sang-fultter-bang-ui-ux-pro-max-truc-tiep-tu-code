@@ -18,35 +18,73 @@ export 'package:vit_trade_flutter/features/cross_module/presentation/controllers
 export 'package:vit_trade_flutter/features/cross_module/presentation/controllers/tax_report_controller.dart';
 export 'package:vit_trade_flutter/features/cross_module/presentation/controllers/unified_portfolio_controller.dart';
 
-final crossModuleAnalyticsControllerProvider =
-    Provider<CrossModuleAnalyticsController>((ref) {
-      final snapshot = ref
+final crossModuleAnalyticsSnapshotProvider =
+    FutureProvider<CrossModuleAnalyticsSnapshot>(
+      (ref) => ref
           .watch(analytics_data.crossModuleAnalyticsRepositoryProvider)
-          .getAnalytics();
-      return CrossModuleAnalyticsController(
-        state: CrossModuleAnalyticsViewState(snapshot: snapshot),
-      );
+          .getAnalytics(),
+    );
+
+final smartAlertsSnapshotProvider = FutureProvider<SmartAlertsSnapshot>(
+  (ref) => ref.watch(alerts_data.smartAlertsRepositoryProvider).getCenter(),
+);
+
+final taxReportSnapshotProvider = FutureProvider<TaxReportSnapshot>(
+  (ref) => ref.watch(tax_data.taxReportRepositoryProvider).getCenter(),
+);
+
+final unifiedPortfolioSnapshotProvider =
+    FutureProvider<UnifiedPortfolioSnapshot>(
+      (ref) => ref
+          .watch(portfolio_data.unifiedPortfolioRepositoryProvider)
+          .getDashboard(),
+    );
+
+// STATE-S25 khuôn (xem GD4-Async-Playbook.md mục 4 "Controller wrapper
+// thuần đọc"): 4 controller dưới đây không có mutation nội bộ — chỉ bọc
+// AsyncValue quanh phần SEED từ snapshot đọc; consumer widget tự `.when()`
+// loading/error/data.
+
+final crossModuleAnalyticsControllerProvider =
+    Provider<AsyncValue<CrossModuleAnalyticsController>>((ref) {
+      return ref
+          .watch(crossModuleAnalyticsSnapshotProvider)
+          .whenData(
+            (snapshot) => CrossModuleAnalyticsController(
+              state: CrossModuleAnalyticsViewState(snapshot: snapshot),
+            ),
+          );
     });
 
-final smartAlertsControllerProvider = Provider<SmartAlertsController>((ref) {
-  final snapshot = ref
-      .watch(alerts_data.smartAlertsRepositoryProvider)
-      .getCenter();
-  return SmartAlertsController(state: SmartAlertsViewState(snapshot: snapshot));
+final smartAlertsControllerProvider =
+    Provider<AsyncValue<SmartAlertsController>>((ref) {
+      return ref
+          .watch(smartAlertsSnapshotProvider)
+          .whenData(
+            (snapshot) => SmartAlertsController(
+              state: SmartAlertsViewState(snapshot: snapshot),
+            ),
+          );
+    });
+
+final taxReportControllerProvider = Provider<AsyncValue<TaxReportController>>((
+  ref,
+) {
+  return ref
+      .watch(taxReportSnapshotProvider)
+      .whenData(
+        (snapshot) =>
+            TaxReportController(state: TaxReportViewState(snapshot: snapshot)),
+      );
 });
 
-final taxReportControllerProvider = Provider<TaxReportController>((ref) {
-  final snapshot = ref.watch(tax_data.taxReportRepositoryProvider).getCenter();
-  return TaxReportController(state: TaxReportViewState(snapshot: snapshot));
-});
-
-final unifiedPortfolioControllerProvider = Provider<UnifiedPortfolioController>(
-  (ref) {
-    final snapshot = ref
-        .watch(portfolio_data.unifiedPortfolioRepositoryProvider)
-        .getDashboard();
-    return UnifiedPortfolioController(
-      state: UnifiedPortfolioViewState(snapshot: snapshot),
-    );
-  },
-);
+final unifiedPortfolioControllerProvider =
+    Provider<AsyncValue<UnifiedPortfolioController>>((ref) {
+      return ref
+          .watch(unifiedPortfolioSnapshotProvider)
+          .whenData(
+            (snapshot) => UnifiedPortfolioController(
+              state: UnifiedPortfolioViewState(snapshot: snapshot),
+            ),
+          );
+    });

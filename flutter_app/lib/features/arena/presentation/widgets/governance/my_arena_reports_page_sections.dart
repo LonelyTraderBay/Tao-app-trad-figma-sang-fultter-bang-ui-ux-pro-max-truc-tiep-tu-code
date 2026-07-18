@@ -159,7 +159,7 @@ class _ReportRow extends StatelessWidget {
         children: [
           VitCard(
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(AppRoutePaths.arenaReportCase(report.id));
             },
             variant: VitCardVariant.ghost,

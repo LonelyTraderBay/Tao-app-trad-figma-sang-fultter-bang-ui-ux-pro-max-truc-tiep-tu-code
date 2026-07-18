@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -200,7 +202,7 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
   }
 
   void _setFilter(String filterId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _activeFilterId = filterId;
       _expandedId = null;
@@ -208,7 +210,7 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
   }
 
   void _toggleExpanded(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _expandedId = _expandedId == id ? null : id;
     });

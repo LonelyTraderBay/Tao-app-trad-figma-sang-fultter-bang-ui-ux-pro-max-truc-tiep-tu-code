@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -187,7 +189,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
 
   Future<void> _addProof(String type) async {
     if (_isUploading || _proofs.length >= 3) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _isUploading = true);
     await Future<void>.delayed(const Duration(milliseconds: 260));
     if (!mounted) return;
@@ -198,13 +200,13 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
   }
 
   void _removeProof(int index) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _proofs.removeAt(index));
   }
 
   Future<void> _confirm(BuildContext context, P2POrderProofDraft order) async {
     if (_proofs.isEmpty || _isSubmitting) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _isSubmitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 320));
     if (!context.mounted) return;
@@ -212,7 +214,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     goBackOrFallback(
       context,
       fallbackPath: AppRoutePaths.p2pOrder(widget.orderId),

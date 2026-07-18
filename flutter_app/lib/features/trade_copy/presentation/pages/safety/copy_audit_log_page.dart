@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -203,73 +205,81 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
   }
 
   void _showExportSheet(TradeCopyAuditLogSnapshot snapshot) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.bg,
-      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .5),
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopLargeRadius,
-      ),
-      builder: (sheetContext) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: TradeSpacingTokens.copyAuditSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const VitSheetHandle(),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                Text(
-                  'Export Audit Log',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                    height: _auditSheetTitleLineHeight,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.bg,
+        barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .5),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopLargeRadius,
+        ),
+        builder: (sheetContext) {
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: TradeSpacingTokens.copyAuditSheetPadding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitSheetHandle(),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
                   ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Chọn định dạng export',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                for (final format in snapshot.exportFormats) ...[
-                  _ExportFormatButton(
-                    key: CopyAuditLogPage.exportFormatKey(format.id),
-                    format: format,
-                    onTap: () async {
-                      await ref
-                          .read(tradeCopyTradingRepositoryProvider)
-                          .createCopyAuditExport(
-                            TradeCopyAuditExportRequest(
-                              copyId: snapshot.copyId,
-                              format: format.id,
-                              filterId: _activeFilter,
-                              searchQuery: _searchController.text,
-                            ),
-                          );
-                      if (!sheetContext.mounted) return;
-                      Navigator.of(sheetContext).pop();
-                    },
-                  ),
-                  if (format != snapshot.exportFormats.last)
-                    const SizedBox(
-                      height: AppSpacing.pageRhythmStandardInnerGap,
+                  Text(
+                    'Export Audit Log',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      fontWeight: AppTextStyles.bold,
+                      height: _auditSheetTitleLineHeight,
                     ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    'Chọn định dạng export',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  for (final format in snapshot.exportFormats) ...[
+                    _ExportFormatButton(
+                      key: CopyAuditLogPage.exportFormatKey(format.id),
+                      format: format,
+                      onTap: () async {
+                        await ref
+                            .read(tradeCopyTradingRepositoryProvider)
+                            .createCopyAuditExport(
+                              TradeCopyAuditExportRequest(
+                                copyId: snapshot.copyId,
+                                format: format.id,
+                                filterId: _activeFilter,
+                                searchQuery: _searchController.text,
+                              ),
+                            );
+                        if (!sheetContext.mounted) return;
+                        Navigator.of(sheetContext).pop();
+                      },
+                    ),
+                    if (format != snapshot.exportFormats.last)
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
+                  ],
+                  const SizedBox(height: AppSpacing.rowPy),
+                  VitCtaButton(
+                    onPressed: () => Navigator.of(sheetContext).pop(),
+                    variant: VitCtaButtonVariant.secondary,
+                    height: AppSpacing.searchBarCompactHeight,
+                    child: const Text('Hủy'),
+                  ),
                 ],
-                const SizedBox(height: AppSpacing.rowPy),
-                VitCtaButton(
-                  onPressed: () => Navigator.of(sheetContext).pop(),
-                  variant: VitCtaButtonVariant.secondary,
-                  height: AppSpacing.searchBarCompactHeight,
-                  child: const Text('Hủy'),
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

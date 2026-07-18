@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,55 +195,63 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
   }
 
   void _copy(String value) {
-    HapticFeedback.selectionClick();
-    Clipboard.setData(ClipboardData(text: value));
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(Clipboard.setData(ClipboardData(text: value)));
     setState(() => _copiedLink = true);
   }
 
   void _showShareSheet(BuildContext context, ReferralHomeSnapshot snapshot) {
-    HapticFeedback.selectionClick();
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: AppSpacing.cardPaddingCompact,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Chia sẻ lời mời',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: AppSpacing.cardPaddingCompact,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Chia sẻ lời mời',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-                Text(
-                  'Mã ${snapshot.referralCode} · Bạn nhận ${_formatUsd(snapshot.currentTier.kycBonus)} + ${snapshot.currentTier.commissionPercent}%',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                _SharePreview(link: snapshot.referralLink),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                VitCtaButton(
-                  onPressed: () {
-                    _copy(snapshot.referralLink);
-                    Navigator.of(context).pop();
-                  },
-                  leading: const Icon(Icons.copy_rounded),
-                  child: const Text('Sao chép lời mời'),
-                ),
-              ],
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                  Text(
+                    'Mã ${snapshot.referralCode} · Bạn nhận ${_formatUsd(snapshot.currentTier.kycBonus)} + ${snapshot.currentTier.commissionPercent}%',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  _SharePreview(link: snapshot.referralLink),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  VitCtaButton(
+                    onPressed: () {
+                      _copy(snapshot.referralLink);
+                      Navigator.of(context).pop();
+                    },
+                    leading: const Icon(Icons.copy_rounded),
+                    child: const Text('Sao chép lời mời'),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

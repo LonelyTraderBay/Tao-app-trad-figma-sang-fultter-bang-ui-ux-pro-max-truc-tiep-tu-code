@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -158,31 +160,40 @@ class _BotSecuritySettingsPageState
   void _toggleTwoFa(bool currentlyEnabled) {
     final next = !currentlyEnabled;
     setState(() => _twoFaEnabled = next);
-    ref.read(tradeBotSecuritySettingsControllerProvider).value?.saveTwoFa(next);
+    unawaited(
+      ref
+          .read(tradeBotSecuritySettingsControllerProvider)
+          .value
+          ?.saveTwoFa(next),
+    );
   }
 
   void _showApiKeySheet(
     BuildContext context,
     TradeBotSecuritySettingsSnapshot snapshot,
   ) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: _securityPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopLargeRadius,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: _securityPanel,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopLargeRadius,
+        ),
+        builder: (context) => _ApiKeySheet(snapshot: snapshot),
       ),
-      builder: (context) => _ApiKeySheet(snapshot: snapshot),
     );
   }
 
   void _showIpSheet(BuildContext context) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: _securityPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopLargeRadius,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: _securityPanel,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopLargeRadius,
+        ),
+        builder: (context) => const _IpSheet(),
       ),
-      builder: (context) => const _IpSheet(),
     );
   }
 }

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/cross_module_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart';
@@ -12,6 +15,7 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/uni
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_overview.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
   const UnifiedPortfolioDashboard({super.key, this.shellRenderMode});
@@ -35,8 +39,7 @@ class _UnifiedPortfolioDashboardState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(unifiedPortfolioControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(unifiedPortfolioControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -44,35 +47,65 @@ class _UnifiedPortfolioDashboardState
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
-    return CrossModuleTabbedPageShell(
-      semanticLabel: 'Danh mục đầu tư hợp nhất',
-      semanticIdentifier: 'SC-321',
-      contentKey: UnifiedPortfolioDashboard.contentKey,
-      title: snapshot.title,
-      onBack: () => context.go(snapshot.backRoute),
-      scrollEndClearance: bottomInset,
-      tabs: UnifiedPortfolioTabs(
-        tabs: snapshot.tabs,
-        active: _activeTab,
-        tabKey: UnifiedPortfolioDashboard.tabKey,
-        onChanged: _changeTab,
+    return controllerAsync.when(
+      loading: () => CrossModuleTabbedPageShell(
+        semanticLabel: 'Danh mục đầu tư hợp nhất',
+        semanticIdentifier: 'SC-321',
+        contentKey: UnifiedPortfolioDashboard.contentKey,
+        title: 'Unified Portfolio',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: bottomInset,
+        tabs: const SizedBox.shrink(),
+        body: const VitSkeletonList(),
       ),
-      body: _activeTab == UnifiedPortfolioTab.overview
-          ? UnifiedPortfolioOverview(
-              snapshot: snapshot,
-              refreshKey: UnifiedPortfolioDashboard.refreshKey,
-              moduleKey: UnifiedPortfolioDashboard.moduleKey,
-              onRefresh: () => HapticFeedback.lightImpact(),
-              onOpenRoute: (route) => context.go(route),
-            )
-          : _activeTab == UnifiedPortfolioTab.analysis
-          ? UnifiedPortfolioAnalysis(snapshot: snapshot)
-          : UnifiedPortfolioHistory(snapshot: snapshot),
+      error: (error, stackTrace) => CrossModuleTabbedPageShell(
+        semanticLabel: 'Danh mục đầu tư hợp nhất',
+        semanticIdentifier: 'SC-321',
+        contentKey: UnifiedPortfolioDashboard.contentKey,
+        title: 'Unified Portfolio',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: bottomInset,
+        tabs: const SizedBox.shrink(),
+        body: VitErrorState(
+          title: 'Unified Portfolio',
+          message: 'Không tải được dữ liệu.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(unifiedPortfolioSnapshotProvider),
+        ),
+      ),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        return CrossModuleTabbedPageShell(
+          semanticLabel: 'Danh mục đầu tư hợp nhất',
+          semanticIdentifier: 'SC-321',
+          contentKey: UnifiedPortfolioDashboard.contentKey,
+          title: snapshot.title,
+          onBack: () => context.go(snapshot.backRoute),
+          scrollEndClearance: bottomInset,
+          tabs: UnifiedPortfolioTabs(
+            tabs: snapshot.tabs,
+            active: _activeTab,
+            tabKey: UnifiedPortfolioDashboard.tabKey,
+            onChanged: _changeTab,
+          ),
+          body: _activeTab == UnifiedPortfolioTab.overview
+              ? UnifiedPortfolioOverview(
+                  snapshot: snapshot,
+                  refreshKey: UnifiedPortfolioDashboard.refreshKey,
+                  moduleKey: UnifiedPortfolioDashboard.moduleKey,
+                  onRefresh: () => HapticFeedback.lightImpact(),
+                  onOpenRoute: (route) => context.go(route),
+                )
+              : _activeTab == UnifiedPortfolioTab.analysis
+              ? UnifiedPortfolioAnalysis(snapshot: snapshot)
+              : UnifiedPortfolioHistory(snapshot: snapshot),
+        );
+      },
     );
   }
 
   void _changeTab(UnifiedPortfolioTab tab) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _activeTab = tab);
   }
 }

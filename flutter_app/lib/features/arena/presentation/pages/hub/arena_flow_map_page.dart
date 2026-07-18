@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -165,7 +167,7 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
                               items: snapshot.qaItems,
                               checkedIds: _checkedQa,
                               onToggle: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   if (!_checkedQa.add(id)) {
                                     _checkedQa.remove(id);
@@ -173,7 +175,7 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
                                 });
                               },
                               onCheckAll: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _checkedQa
                                     ..clear()
@@ -199,17 +201,17 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
   }
 
   void _toggle(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _expandedSection = _expandedSection == id ? '' : id);
   }
 
   void _go(BuildContext context, String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(route);
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

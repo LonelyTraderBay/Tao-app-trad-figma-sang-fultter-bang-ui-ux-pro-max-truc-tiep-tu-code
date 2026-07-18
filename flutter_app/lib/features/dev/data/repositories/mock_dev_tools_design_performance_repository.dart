@@ -1,10 +1,12 @@
 part of 'mock_dev_tools_repository.dart';
 
-final class MockDesignSystemRepository implements DesignSystemRepository {
-  const MockDesignSystemRepository();
+final class MockDesignSystemRepository extends _MockDevToolsRepositoryBase
+    implements DesignSystemRepository {
+  const MockDesignSystemRepository({super.simulateError, super.loadDelay});
 
   @override
-  DesignSystemSnapshot getDesignSystem() {
+  Future<DesignSystemSnapshot> getDesignSystem() async {
+    await _simulateNetwork();
     return const DesignSystemSnapshot(
       endpoint: '/api/mobile/dev/dev-design-system',
       actionDraft: 'read-only or local navigation action',
@@ -137,12 +139,16 @@ final class MockDesignSystemRepository implements DesignSystemRepository {
   }
 }
 
-final class MockPerformanceMonitorRepository
+final class MockPerformanceMonitorRepository extends _MockDevToolsRepositoryBase
     implements PerformanceMonitorRepository {
-  const MockPerformanceMonitorRepository();
+  const MockPerformanceMonitorRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  PerformanceMonitorSnapshot getPerformanceMonitor() {
+  Future<PerformanceMonitorSnapshot> getPerformanceMonitor() async {
+    await _simulateNetwork();
     return const PerformanceMonitorSnapshot(
       endpoint: '/api/mobile/dev/dev-performance-monitor',
       actionDraft: 'read-only or local navigation action',

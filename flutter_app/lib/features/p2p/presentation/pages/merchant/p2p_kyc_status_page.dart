@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,7 +99,7 @@ class P2PKycStatusPage extends ConsumerWidget {
                     color: AppModuleAccents.p2p,
                     backgroundColor: AppColors.surface2,
                     onRefresh: () async {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       await Future<void>.delayed(
                         const Duration(milliseconds: 120),
                       );

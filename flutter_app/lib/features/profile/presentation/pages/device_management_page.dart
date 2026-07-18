@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,8 +60,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getDeviceManagement();
-    _initializeFrom(snapshot);
+    final snapshotAsync = ref.watch(profileDeviceManagementSnapshotProvider);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
@@ -70,8 +71,6 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                   AppSpacing.x6
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
-    final currentDevice = _currentDevice;
-    final otherDevices = _otherDevices;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -101,63 +100,84 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,
-                    children: [
-                      _SecuritySummaryCard(
-                        totalDevices: _devices.length,
-                        trustedCount: _trustedCount,
-                        untrustedCount: _untrustedCount,
-                        activeCount: _activeCount,
-                      ),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title:
-                            'R\u00E0 so\u00E1t phi\u00EAn thi\u1EBFt b\u1ECB',
-                        message:
-                            'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
-                        contractId:
-                            'Thi\u1EBFt b\u1ECB tin c\u1EADy: $_trustedCount/${_devices.length}',
-                        density: VitDensity.compact,
-                      ),
-                      if (currentDevice != null) ...[
-                        const _SectionHeader(
-                          label: 'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
-                        ),
-                        _DeviceCard(
-                          device: currentDevice,
-                          showActions: false,
-                          onToggleTrust: () {},
-                          onLogout: () {},
-                        ),
-                      ] else
-                        const VitEmptyState(
+                    children: snapshotAsync.when(
+                      loading: () => const [VitSkeletonList()],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
                           title:
-                              'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
-                          message:
-                              'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
-                          icon: Icons.devices_other_outlined,
-                        ),
-                      _OtherDevicesHeader(
-                        count: otherDevices.length,
-                        onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
-                      ),
-                      if (otherDevices.isEmpty)
-                        const VitEmptyState(
-                          title:
-                              'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB kh\u00E1c',
-                          message:
-                              'C\u00E1c phi\u00EAn \u0111\u0103ng nh\u1EADp ph\u1EE5 s\u1EBD xu\u1EA5t hi\u1EC7n t\u1EA1i \u0111\u00E2y.',
-                          icon: Icons.phone_android_outlined,
-                        )
-                      else ...[
-                        for (final device in otherDevices)
-                          _DeviceCard(
-                            device: device,
-                            showActions: true,
-                            onToggleTrust: () => _toggleTrust(device.id),
-                            onLogout: () => _logoutDevice(device.id),
+                              'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u',
+                          message: 'Vui l\u00F2ng th\u1EED l\u1EA1i.',
+                          actionLabel: 'Th\u1EED l\u1EA1i',
+                          onAction: () => ref.invalidate(
+                            profileDeviceManagementSnapshotProvider,
                           ),
+                        ),
                       ],
-                    ],
+                      data: (snapshot) {
+                        _initializeFrom(snapshot);
+                        final currentDevice = _currentDevice;
+                        final otherDevices = _otherDevices;
+                        return [
+                          _SecuritySummaryCard(
+                            totalDevices: _devices.length,
+                            trustedCount: _trustedCount,
+                            untrustedCount: _untrustedCount,
+                            activeCount: _activeCount,
+                          ),
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title:
+                                'R\u00E0 so\u00E1t phi\u00EAn thi\u1EBFt b\u1ECB',
+                            message:
+                                'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
+                            contractId:
+                                'Thi\u1EBFt b\u1ECB tin c\u1EADy: $_trustedCount/${_devices.length}',
+                            density: VitDensity.compact,
+                          ),
+                          if (currentDevice != null) ...[
+                            const _SectionHeader(
+                              label: 'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
+                            ),
+                            _DeviceCard(
+                              device: currentDevice,
+                              showActions: false,
+                              onToggleTrust: () {},
+                              onLogout: () {},
+                            ),
+                          ] else
+                            const VitEmptyState(
+                              title:
+                                  'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
+                              message:
+                                  'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+                              icon: Icons.devices_other_outlined,
+                            ),
+                          _OtherDevicesHeader(
+                            count: otherDevices.length,
+                            onLogoutAll: otherDevices.isEmpty
+                                ? null
+                                : _logoutAll,
+                          ),
+                          if (otherDevices.isEmpty)
+                            const VitEmptyState(
+                              title:
+                                  'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB kh\u00E1c',
+                              message:
+                                  'C\u00E1c phi\u00EAn \u0111\u0103ng nh\u1EADp ph\u1EE5 s\u1EBD xu\u1EA5t hi\u1EC7n t\u1EA1i \u0111\u00E2y.',
+                              icon: Icons.phone_android_outlined,
+                            )
+                          else ...[
+                            for (final device in otherDevices)
+                              _DeviceCard(
+                                device: device,
+                                showActions: true,
+                                onToggleTrust: () => _toggleTrust(device.id),
+                                onLogout: () => _logoutDevice(device.id),
+                              ),
+                          ],
+                        ];
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -190,7 +210,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
   }
 
   void _toggleTrust(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _devices = [
         for (final device in _devices)
@@ -231,7 +251,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
     );
     if (!mounted || !confirmed) return;
 
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _devices = _devices.where((device) => device.id != id).toList();
     });
@@ -248,7 +268,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
     );
     if (!mounted || confirmed != true) return;
 
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _devices = _devices.where((device) => device.isCurrent).toList();
     });

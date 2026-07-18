@@ -61,7 +61,7 @@ class _NoQueryState extends StatelessWidget {
                   _TrendingChip(
                     query: query,
                     onTap: () {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       onQuerySelected(query.label);
                     },
                   ),
@@ -115,7 +115,7 @@ class _ModuleCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.moduleKey(module.id),
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(module.route);
       },
       padding: LaunchpadSpacingTokens.discoveryCardPadding,

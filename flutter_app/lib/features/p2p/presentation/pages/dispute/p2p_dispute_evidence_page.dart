@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,7 +132,7 @@ class _P2PDisputeEvidencePageState
                               key: P2PDisputeEvidencePage.submitKey,
                               onPressed: controller.canSubmit(_uploaded)
                                   ? () {
-                                      HapticFeedback.mediumImpact();
+                                      unawaited(HapticFeedback.mediumImpact());
                                       final preview = controller.submitPreview(
                                         _uploaded,
                                       );
@@ -165,7 +167,7 @@ class _P2PDisputeEvidencePageState
   }
 
   void _markUploaded(String id) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _uploaded.add(id));
   }
 }

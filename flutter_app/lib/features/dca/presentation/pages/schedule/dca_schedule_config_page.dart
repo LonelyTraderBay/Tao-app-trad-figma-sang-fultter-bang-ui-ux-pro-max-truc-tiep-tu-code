@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -192,7 +194,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
             _EnableCard(
               enabled: _enabled,
               onChanged: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _enabled = value);
               },
             ),
@@ -232,17 +234,17 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
   Color get _strategyAccent => _accentForStrategy(_strategy);
 
   void _setStrategy(DcaScheduleStrategy strategy) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _strategy = strategy);
   }
 
   void _setTimePreference(DcaScheduleTimePreference preference) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _timePreference = preference);
   }
 
   void _save() {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     context.go(AppRoutePaths.dcaScheduleAnalytics);
   }
 

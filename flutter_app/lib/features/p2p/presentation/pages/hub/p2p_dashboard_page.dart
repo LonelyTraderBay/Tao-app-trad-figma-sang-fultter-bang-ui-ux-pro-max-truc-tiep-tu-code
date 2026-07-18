@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -136,7 +137,7 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
                           _DashboardFilterRow(
                             snapshot: snapshot,
                             onChanged: (id) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _timeFilter = id);
                             },
                           ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -149,7 +151,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                             years: snapshot.years,
                             selectedYear: _selectedYear,
                             onChanged: (year) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _selectedYear = year);
                             },
                           ),
@@ -157,7 +159,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                             jurisdictions: snapshot.jurisdictions,
                             selectedCode: _jurisdiction,
                             onChanged: (code) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _jurisdiction = code);
                             },
                           ),
@@ -167,7 +169,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                           VitCtaButton(
                             key: P2PTaxReportingPage.detailCtaKey,
                             onPressed: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(snapshot.detailRoute);
                             },
                             child: const Text('View Detailed Tax Report'),

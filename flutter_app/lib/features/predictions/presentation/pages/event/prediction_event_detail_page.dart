@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -98,7 +100,7 @@ class _PredictionEventDetailPageState
   }
 
   void _showComingSoon() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Tìm hiểu rủi ro sẽ sớm ra mắt')),
     );
@@ -117,7 +119,7 @@ class _PredictionEventDetailPageState
           amountText: _amount,
         );
     if (!mounted || receiptId == null) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(AppRoutePaths.marketsPredictionReceipt(receiptId));
   }
 

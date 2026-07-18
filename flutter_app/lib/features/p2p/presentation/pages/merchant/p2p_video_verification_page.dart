@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,7 +83,7 @@ class _P2PVideoVerificationPageState
             selectedSlotId: _selectedSlotId,
             onSelected: (slot) {
               if (!slot.available) return;
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _selectedSlotId = slot.id);
             },
           ),
@@ -90,7 +92,7 @@ class _P2PVideoVerificationPageState
             onPressed: _selectedSlotId == null
                 ? null
                 : () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     context.go(snapshot.statusRoute);
                   },
             trailing: const Icon(Icons.chevron_right_rounded),

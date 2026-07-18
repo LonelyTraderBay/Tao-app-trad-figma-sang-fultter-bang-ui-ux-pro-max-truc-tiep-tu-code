@@ -4,16 +4,13 @@ import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots
 /// running-bot management, risk dashboard, emergency stop, and security
 /// settings.
 ///
-/// GD4-F3: every READ method is `Future<T>` (ADR-001's read idiom — see
-/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md). Mock
-/// implementations simulate network latency via `loadDelay`; production
-/// implementations will be real network calls with the same signature.
-/// Write/mutation methods (submit/patch/create) stay synchronous — the
-/// full write-path error idiom (ADR-001 §"đường ghi tài chính") is a
-/// separate, later migration (ADR-001's "hệ quả / nợ còn lại": "các đường
-/// ghi phụ ... vẫn đồng bộ — migrate dần khi chạm tới"), and
-/// [TradeBotsController]'s optimistic local mutations depend on these
-/// resolving synchronously (see
+/// GD4-F6: mọi method — kể cả method GHI (submit/patch/create) — giờ đều
+/// là `Future<T>` (ADR-001's read idiom mở rộng sang đường ghi phụ, xem
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md bẫy 19).
+/// Mock implementations simulate network latency via `loadDelay`;
+/// production implementations will be real network calls with the same
+/// signature. [TradeBotsController]'s optimistic local mutations now
+/// `await` these calls (see
 /// `presentation/controllers/trade_bots_controller_models.dart` /
 /// `app/providers/trade_bots_controller_providers.dart`).
 abstract interface class TradingBotsRepository {
@@ -26,15 +23,15 @@ abstract interface class TradingBotsRepository {
   Future<TradeBotSecuritySettingsSnapshot> getBotSecuritySettings();
   Future<TradeBotHistorySnapshot> getBotHistory();
   Future<TradeBotPerformanceAnalyticsSnapshot> getBotPerformanceAnalytics();
-  TradeBotActionResult submitBotAction(TradeBotActionRequest request);
-  TradeBotEmergencyStopResult submitBotEmergencyStop(
+  Future<TradeBotActionResult> submitBotAction(TradeBotActionRequest request);
+  Future<TradeBotEmergencyStopResult> submitBotEmergencyStop(
     TradeBotEmergencyStopDraft draft,
   );
-  TradeBotSecuritySettingsResult patchBotSecuritySettings(
+  Future<TradeBotSecuritySettingsResult> patchBotSecuritySettings(
     TradeBotSecuritySettingsDraft draft,
   );
-  TradeBotHistoryExportResult createBotHistoryExport(
+  Future<TradeBotHistoryExportResult> createBotHistoryExport(
     TradeBotHistoryExportRequest request,
   );
-  TradeBotCreateResult createTradingBot(TradeBotCreateRequest request);
+  Future<TradeBotCreateResult> createTradingBot(TradeBotCreateRequest request);
 }

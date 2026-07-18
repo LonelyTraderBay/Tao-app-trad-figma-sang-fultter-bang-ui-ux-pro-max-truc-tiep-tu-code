@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -152,7 +154,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                   options: snapshot.strategyOptions,
                   active: viewState.strategy,
                   onChanged: (strategy) {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     ref
                         .read(
                           dcaRebalanceConfigStateControllerProvider.notifier,
@@ -176,7 +178,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                     options: snapshot.frequencyOptions,
                     active: viewState.frequency,
                     onChanged: (frequency) {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       ref
                           .read(
                             dcaRebalanceConfigStateControllerProvider.notifier,
@@ -189,14 +191,14 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                   minTradeAmountUsd: viewState.minTradeAmountUsd,
                   autoExecute: _autoExecute,
                   onToggleExpanded: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _showAdvanced = !_showAdvanced);
                   },
                   onMinTradeChanged: (value) => ref
                       .read(dcaRebalanceConfigStateControllerProvider.notifier)
                       .setMinTradeAmount(value),
                   onAutoExecuteChanged: (value) {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _autoExecute = value);
                   },
                 ),
@@ -244,12 +246,12 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
       (_totalPercent(targets) - 100).abs() < 0.01;
 
   void _addTarget() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref.read(dcaRebalanceConfigStateControllerProvider.notifier).addTarget();
   }
 
   void _removeTarget(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(dcaRebalanceConfigStateControllerProvider.notifier)
         .removeTarget(id);
@@ -270,17 +272,17 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
   void _openPreview() {
     final targets = ref.read(dcaRebalanceConfigStateControllerProvider).targets;
     if (!_isValidTotal(targets)) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _showPreview = true);
   }
 
   void _closePreview() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _showPreview = false);
   }
 
   void _saveConfig() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(AppRoutePaths.dcaRebalanceDashboard);
   }
 

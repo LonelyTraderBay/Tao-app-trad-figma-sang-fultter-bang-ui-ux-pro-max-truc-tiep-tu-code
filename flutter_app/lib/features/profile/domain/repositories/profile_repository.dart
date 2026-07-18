@@ -4,15 +4,15 @@ import 'package:vit_trade_flutter/features/profile/domain/entities/profile_entit
 /// account, security, KYC, settings, activity, API keys, VIP, devices, and
 /// sub-accounts screens.
 abstract interface class ProfileRepository {
-  ProfileSnapshot getProfile();
-  ProfileEditSnapshot getEditProfile();
-  ProfileSecuritySnapshot getSecurity();
-  ProfileKycSnapshot getKyc();
-  ProfileSettingsSnapshot getSettings();
-  ProfileActivitySnapshot getActivity();
-  ProfileApiKeyCreateSnapshot getApiKeyCreate();
-  ProfileApiManagementSnapshot getApiManagement();
-  ProfileVipSnapshot getVip();
-  ProfileDeviceManagementSnapshot getDeviceManagement();
-  ProfileSubAccountsSnapshot getSubAccounts();
+  Future<ProfileSnapshot> getProfile();
+  Future<ProfileEditSnapshot> getEditProfile();
+  Future<ProfileSecuritySnapshot> getSecurity();
+  Future<ProfileKycSnapshot> getKyc();
+  Future<ProfileSettingsSnapshot> getSettings();
+  Future<ProfileActivitySnapshot> getActivity();
+  Future<ProfileApiKeyCreateSnapshot> getApiKeyCreate();
+  Future<ProfileApiManagementSnapshot> getApiManagement();
+  Future<ProfileVipSnapshot> getVip();
+  Future<ProfileDeviceManagementSnapshot> getDeviceManagement();
+  Future<ProfileSubAccountsSnapshot> getSubAccounts();
 }

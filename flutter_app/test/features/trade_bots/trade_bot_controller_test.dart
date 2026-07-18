@@ -24,18 +24,14 @@ void main() {
         emergencyController.validationMessage(reasonId: null, confirmed: true),
         'Select an emergency-stop reason before confirmation.',
       );
-      expect(
-        emergencyController
-            .submit(
-              const TradeBotEmergencyStopDraft(
-                reasonId: 'drawdown',
-                closePositions: true,
-                confirmed: true,
-              ),
-            )
-            .status,
-        isNotEmpty,
+      final emergencyResult = await emergencyController.submit(
+        const TradeBotEmergencyStopDraft(
+          reasonId: 'drawdown',
+          closePositions: true,
+          confirmed: true,
+        ),
       );
+      expect(emergencyResult.status, isNotEmpty);
 
       final securityController = TradeBotSecuritySettingsController(
         repository: repository,
@@ -45,7 +41,8 @@ void main() {
       );
 
       expect(securityController.saveValidationMessage(), isNull);
-      expect(securityController.saveTwoFa(true).twoFaEnabled, isTrue);
+      final securityResult = await securityController.saveTwoFa(true);
+      expect(securityResult.twoFaEnabled, isTrue);
 
       final suitability = await repository.getBotSuitabilityAssessment();
       final answers = {
@@ -87,7 +84,7 @@ void main() {
       );
 
       final notifier = container.read(tradeBotsControllerProvider.notifier);
-      final actionResult = notifier.submitAction(
+      final actionResult = await notifier.submitAction(
         botId: botId,
         action: 'toggle',
       );
@@ -101,7 +98,7 @@ void main() {
         isNot(originalStatus),
       );
 
-      notifier.submitAction(botId: botId, action: 'delete');
+      await notifier.submitAction(botId: botId, action: 'delete');
       final afterDelete = container.read(tradeBotsControllerProvider);
       expect(
         afterDelete.snapshot.activeBots.any((bot) => bot.id == botId),
@@ -117,17 +114,13 @@ void main() {
         ),
         isNull,
       );
-      expect(
-        notifier
-            .createBot(
-              const TradeBotCreateRequest(
-                strategyId: 'grid',
-                params: {'pair': 'BTC/USDT'},
-              ),
-            )
-            .strategyId,
-        'grid',
+      final createResult = await notifier.createBot(
+        const TradeBotCreateRequest(
+          strategyId: 'grid',
+          params: {'pair': 'BTC/USDT'},
+        ),
       );
+      expect(createResult.strategyId, 'grid');
     },
   );
 }

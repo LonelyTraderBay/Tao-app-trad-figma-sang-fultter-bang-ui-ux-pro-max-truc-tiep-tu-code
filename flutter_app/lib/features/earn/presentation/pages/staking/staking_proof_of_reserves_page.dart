@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -140,7 +142,7 @@ class _StakingProofOfReservesPageState
                           _ReserveTabs(
                             active: _tab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -168,7 +170,7 @@ class _StakingProofOfReservesPageState
   }
 
   Future<void> _openVerifySheet(StakingProofOfReservesSnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

@@ -181,7 +181,7 @@ class _LedgerRow extends StatelessWidget {
       child: VitCard(
         key: ArenaPointsLedgerPage.entryKey(entry.id),
         onTap: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           context.go(AppRoutePaths.arenaLedgerEntry(entry.id));
         },
         variant: VitCardVariant.ghost,

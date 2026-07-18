@@ -214,7 +214,7 @@ class _Tabs extends StatelessWidget {
       ],
       activeKey: active.name,
       onChanged: (key) {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         onChanged(_ChallengeTab.values.byName(key));
       },
     );

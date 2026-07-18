@@ -33,7 +33,7 @@ void main() {
   test('SC-127 mock repository exposes optimization BE draft', () async {
     final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
     final snapshot = await repo.getBotOptimization();
-    final result = repo.runBotOptimization(
+    final result = await repo.runBotOptimization(
       const TradeBotOptimizationRequest(
         targetId: 'sharpe',
         gridCount: 25,

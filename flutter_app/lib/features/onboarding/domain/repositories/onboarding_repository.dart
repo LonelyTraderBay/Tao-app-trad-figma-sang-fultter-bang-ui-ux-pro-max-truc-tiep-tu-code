@@ -2,5 +2,5 @@ import 'package:vit_trade_flutter/features/onboarding/domain/entities/onboarding
 
 /// Data source contract for the Onboarding feature.
 abstract interface class OnboardingRepository {
-  OnboardingSnapshot getFlow();
+  Future<OnboardingSnapshot> getFlow();
 }

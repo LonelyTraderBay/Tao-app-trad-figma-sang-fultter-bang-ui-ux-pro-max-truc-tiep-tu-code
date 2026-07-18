@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -177,7 +179,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                     selected: _asset,
                     keyBuilder: P2PCreateAdPage.assetKey,
                     onSelected: (value) {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       setState(() => _asset = value);
                     },
                   ),
@@ -190,7 +192,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                     selected: _currency,
                     keyBuilder: P2PCreateAdPage.currencyKey,
                     onSelected: (value) {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       setState(() => _currency = value);
                     },
                   ),
@@ -212,7 +214,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                 _PriceTypePicker(
                   value: _priceType,
                   onChanged: (value) {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _priceType = value);
                   },
                 ),
@@ -308,7 +310,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
               values: snapshot.paymentWindows,
               selected: _paymentWindow,
               onSelected: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _paymentWindow = value);
               },
             ),
@@ -318,7 +320,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
               selected: _tradingHours,
               keyBuilder: (value) => Key('sc226_hours_$value'),
               onSelected: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _tradingHours = value);
               },
             ),
@@ -328,11 +330,11 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
               minTradesController: _minTradesController,
               minDaysController: _minDaysController,
               onKycChanged: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _requireKyc = value);
               },
               onLevelChanged: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _requiredKycLevel = value);
               },
             ),
@@ -425,7 +427,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
   }
 
   void _togglePayment(String payment) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     // GD4 bẫy 15: repo trong event handler — đọc lười qua `.value` (đã có
     // sẵn vì nút này chỉ render trong nhánh data:).
     final snapshot = ref.read(p2pCreateAdProvider).value;

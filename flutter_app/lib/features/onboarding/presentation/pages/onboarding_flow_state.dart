@@ -17,7 +17,17 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(onboardingControllerProvider).getFlow();
+    // Biến thể B (GD4-Async-Playbook.md mục 6): OnboardingSnapshot đã có
+    // trục screenState riêng (loading/empty/error/offline/ready/...) —
+    // map AsyncValue sang screenState thay vì bọc .when() ở trang.
+    final snapshot = ref
+        .watch(onboardingSnapshotProvider)
+        .when(
+          data: (value) => value,
+          loading: () => _placeholder(OnboardingScreenState.loading),
+          error: (error, stackTrace) =>
+              _placeholder(OnboardingScreenState.error),
+        );
     final blocking = _isBlockingState(snapshot.screenState);
 
     return VitPageLayout(
@@ -157,7 +167,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         modules: snapshot.modules,
         currentIndex: _moduleIndex,
         onSelect: (index) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _moduleIndex = index);
         },
       ),
@@ -167,7 +177,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         separationRules: snapshot.separationRules,
         expandedBoundaryId: _expandedBoundaryId,
         onToggle: (id) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             _expandedBoundaryId = _expandedBoundaryId == id ? null : id;
           });
@@ -183,7 +193,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         goals: snapshot.goals,
         selectedGoals: _selectedGoals,
         onToggle: (goal) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             if (_selectedGoals.contains(goal)) {
               _selectedGoals.remove(goal);
@@ -286,7 +296,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   }
 
   void _advance(OnboardingSnapshot snapshot) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (_step == OnboardingStepDraft.modules &&
         _moduleIndex < snapshot.modules.length - 1) {
       setState(() => _moduleIndex += 1);
@@ -300,8 +310,9 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   }
 
   void _goBack() {
-    HapticFeedback.selectionClick();
-    final snapshot = ref.read(onboardingControllerProvider).getFlow();
+    unawaited(HapticFeedback.selectionClick());
+    final snapshot = ref.read(onboardingSnapshotProvider).value;
+    if (snapshot == null) return;
     final currentIndex = snapshot.steps.indexOf(_step);
     if (currentIndex > 0) {
       setState(() => _step = snapshot.steps[currentIndex - 1]);
@@ -309,7 +320,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   }
 
   void _skip(OnboardingSnapshot snapshot) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _markOnboardingSeen();
     context.go(snapshot.homeRoute);
   }
@@ -324,7 +335,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   }
 
   void _openRoute(String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _markOnboardingSeen();
     context.go(route);
   }
@@ -337,4 +348,37 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
           .setBool(KeyValueStoreKeys.onboardingSeen, true),
     );
   }
+}
+
+/// Placeholder snapshot for the loading/error branches of
+/// [onboardingSnapshotProvider] (Biến thể B, GD4-Async-Playbook.md mục 6) —
+/// only [OnboardingSnapshot.screenState]/backRoute/homeRoute matter here
+/// since `_buildBlockingShell` never reads the other fields for these two
+/// states.
+OnboardingSnapshot _placeholder(OnboardingScreenState state) {
+  return OnboardingSnapshot(
+    endpoint: '',
+    actionDraft: '',
+    supportedStates: const [],
+    contractNotes: '',
+    backRoute: AppRoutePaths.profile,
+    homeRoute: AppRoutePaths.home,
+    steps: const [],
+    welcome: const OnboardingWelcomeDraft(
+      skipLabel: '',
+      title: '',
+      subtitle: '',
+      features: [],
+      ctaLabel: '',
+      helperText: '',
+    ),
+    modules: const [],
+    boundaries: const [],
+    separationRules: const [],
+    trustPillars: const [],
+    commitments: const [],
+    goals: const [],
+    recommendations: const {},
+    screenState: state,
+  );
 }

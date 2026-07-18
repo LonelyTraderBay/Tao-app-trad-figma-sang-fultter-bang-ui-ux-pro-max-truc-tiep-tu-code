@@ -85,7 +85,7 @@ class _ApiKeyCard extends StatelessWidget {
                 Expanded(
                   child: _RegenerateButton(
                     onTap: () {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Tạo lại Secret sẽ sớm ra mắt'),

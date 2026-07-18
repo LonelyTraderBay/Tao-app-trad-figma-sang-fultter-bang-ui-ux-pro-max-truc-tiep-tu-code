@@ -185,7 +185,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
     });
   }
 
-  void _generate() {
+  Future<void> _generate() async {
     final reportIds = _selectedReportIds;
     final year = _selectedYear;
     final costBasisMethod = _costBasisMethod;
@@ -197,7 +197,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
       return;
     }
     setState(() => _generating = true);
-    ref
+    await ref
         .read(tradeBotAnalyticsRepositoryProvider)
         .createBotTaxReportExport(
           TradeBotTaxReportExportRequest(
@@ -206,6 +206,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
             costBasisMethod: costBasisMethod,
           ),
         );
+    if (!mounted) return;
     setState(() => _generating = false);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -229,38 +231,40 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     if (overflowActions.isEmpty) return;
 
     final rootContext = context;
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.bg,
-      barrierColor: AppColors.modalScrim,
-      builder: (sheetContext) {
-        return VitSheetPanel(
-          key: WalletPage.moreActionsSheetKey,
-          title: 'Th\u00EAm thao t\u00E1c',
-          child: VitActionTileGrid(
-            density: VitDensity.compact,
-            crossAxisSpacing: AppSpacing.x3,
-            mainAxisSpacing: AppSpacing.x3,
-            physics: const ClampingScrollPhysics(),
-            itemCount: overflowActions.length,
-            itemBuilder: (context, index, density) {
-              final action = overflowActions[index];
-              return VitServiceTile(
-                key: WalletPage.actionKey(action.id),
-                density: density,
-                icon: _walletOverflowActionIcon(action.iconKey),
-                label: action.label,
-                accentColor: Color(action.colorHex),
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  rootContext.go(action.route);
-                },
-              );
-            },
-          ),
-        );
-      },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        barrierColor: AppColors.modalScrim,
+        builder: (sheetContext) {
+          return VitSheetPanel(
+            key: WalletPage.moreActionsSheetKey,
+            title: 'Th\u00EAm thao t\u00E1c',
+            child: VitActionTileGrid(
+              density: VitDensity.compact,
+              crossAxisSpacing: AppSpacing.x3,
+              mainAxisSpacing: AppSpacing.x3,
+              physics: const ClampingScrollPhysics(),
+              itemCount: overflowActions.length,
+              itemBuilder: (context, index, density) {
+                final action = overflowActions[index];
+                return VitServiceTile(
+                  key: WalletPage.actionKey(action.id),
+                  density: density,
+                  icon: _walletOverflowActionIcon(action.iconKey),
+                  label: action.label,
+                  accentColor: Color(action.colorHex),
+                  onTap: () {
+                    Navigator.of(sheetContext).pop();
+                    rootContext.go(action.route);
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

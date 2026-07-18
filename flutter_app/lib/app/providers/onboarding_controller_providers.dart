@@ -9,6 +9,13 @@ final onboardingControllerProvider = Provider<OnboardingController>((ref) {
   return OnboardingController(ref.watch(onboardingRepositoryProvider));
 });
 
+// GD4-F6 (bẫy 29 "controller forwarder mỏng"): OnboardingController chỉ
+// forward tới repository — giữ Provider<OnboardingController> SYNC, thêm
+// FutureProvider snapshot gọi xuyên qua controller.
+final onboardingSnapshotProvider = FutureProvider<OnboardingSnapshot>(
+  (ref) => ref.watch(onboardingControllerProvider).getFlow(),
+);
+
 /// GĐ4-F1: cờ user đã đi qua (hoặc bỏ qua) onboarding lần đầu — đọc-lúc-dựng
 /// cho router/nhánh khởi động dùng sau (ví dụ quyết định route ban đầu).
 /// KHÔNG reactive theo write (`OnboardingFlow` ghi cờ trực tiếp qua

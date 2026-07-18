@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -134,7 +136,7 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
                               setState(() => _query = query);
                             },
                             onFilter: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _showFilters = !_showFilters);
                             },
                             onExport: _export,
@@ -145,11 +147,11 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
                               typeFilter: _typeFilter,
                               statusFilter: _statusFilter,
                               onTypeChanged: (filter) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _typeFilter = filter);
                               },
                               onStatusChanged: (filter) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _statusFilter = filter);
                               },
                               onClear: _clearFilters,
@@ -172,7 +174,7 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
                           _TransactionList(
                             transactions: transactions,
                             onTap: (tx) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _selected = tx);
                             },
                           ),
@@ -214,7 +216,7 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
   }
 
   void _clearFilters() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _searchController.clear();
     setState(() {
       _query = '';
@@ -225,7 +227,7 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
   }
 
   void _export() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Xuất lịch sử staking CSV sẽ sớm ra mắt')),
     );

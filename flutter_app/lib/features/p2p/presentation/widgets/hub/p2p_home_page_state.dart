@@ -154,18 +154,18 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                               selectedAsset: _asset,
                               selectedFiat: _fiat,
                               onAsset: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _asset = value);
                               },
                               onFiat: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _fiat = value);
                               },
                             ),
                             _TradeTabs(
                               active: _tradeType,
                               onChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _tradeType = value);
                               },
                             ),
@@ -176,7 +176,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                               variant: VitSearchBarVariant.compact,
                               filterActive: _filtersOpen,
                               onFilterTap: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _filtersOpen = !_filtersOpen);
                               },
                               onChanged: (value) =>

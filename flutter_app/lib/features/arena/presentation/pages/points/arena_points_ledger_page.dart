@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,7 +123,7 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
                               filters: snapshot.filters,
                               activeFilter: _activeFilter,
                               onChanged: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _activeFilter = id);
                               },
                             ),
@@ -143,7 +145,7 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
                             VitCommunityRulesLink(
                               key: ArenaPointsLedgerPage.communityRulesKey,
                               onTap: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 context.go(AppRoutePaths.arenaSafety);
                               },
                             ),
@@ -183,7 +185,7 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

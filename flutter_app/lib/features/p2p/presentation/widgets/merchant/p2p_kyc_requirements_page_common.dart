@@ -154,7 +154,7 @@ class _KycSupportCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 VitCtaButton(
                   onPressed: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     context.go(snapshot.supportRoute);
                   },
                   variant: VitCtaButtonVariant.ghost,

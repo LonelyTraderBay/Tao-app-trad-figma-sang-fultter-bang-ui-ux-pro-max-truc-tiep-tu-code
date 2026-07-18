@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -201,7 +203,9 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                                     title: 'Xem tất cả báo cáo',
                                     accentColor: AppColors.text3,
                                     onTap: () {
-                                      HapticFeedback.selectionClick();
+                                      unawaited(
+                                        HapticFeedback.selectionClick(),
+                                      );
                                       context.go(AppRoutePaths.arenaMyReports);
                                     },
                                   ),
@@ -234,7 +238,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
   }
 
   void _markAppealSubmitted() {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _appealSubmitted = true);
   }
 
@@ -244,7 +248,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
   ) {
     final challengeId = reportCase.relatedChallengeId;
     if (challengeId == null) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(AppRoutePaths.arenaChallenge(challengeId));
   }
 
@@ -252,7 +256,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
     BuildContext context,
     ArenaReportCaseDraft reportCase,
   ) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     if (reportCase.status == ArenaReportCaseStatus.actionTaken &&
         reportCase.relatedChallengeId != null) {
       _openChallenge(context, reportCase);
@@ -266,7 +270,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

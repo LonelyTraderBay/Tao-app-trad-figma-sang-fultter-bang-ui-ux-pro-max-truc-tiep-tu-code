@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,7 +85,7 @@ class _P2PSuspiciousActivityPageState
           shellRenderMode: widget.shellRenderMode,
           onBack: () => context.go(snapshot.parentRoute),
           onRefresh: () async {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             await Future<void>.delayed(const Duration(milliseconds: 120));
           },
           children: [
@@ -113,7 +115,7 @@ class _P2PSuspiciousActivityPageState
   }
 
   void _markReviewed(String alertId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(p2pSuspiciousActivityStateControllerProvider.notifier)
         .markReviewed(alertId);

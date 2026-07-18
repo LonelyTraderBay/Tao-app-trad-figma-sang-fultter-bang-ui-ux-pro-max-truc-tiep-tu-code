@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +13,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 void _showComingSoon(BuildContext context, String message) {
-  HapticFeedback.selectionClick();
+  unawaited(HapticFeedback.selectionClick());
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 

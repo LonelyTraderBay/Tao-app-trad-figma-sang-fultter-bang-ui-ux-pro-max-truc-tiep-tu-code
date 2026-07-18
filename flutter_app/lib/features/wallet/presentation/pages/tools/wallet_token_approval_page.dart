@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -157,10 +159,12 @@ class _WalletTokenApprovalPageState
     WalletTokenApproval? approval,
   ) {
     final preview = controller.revokePreview(approval);
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: walletTokenApprovalPanel,
-      builder: (context) => WalletTokenRevokeSheet(preview: preview),
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: walletTokenApprovalPanel,
+        builder: (context) => WalletTokenRevokeSheet(preview: preview),
+      ),
     );
   }
 

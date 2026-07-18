@@ -32,8 +32,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-157 mock repository exposes edit profile BE draft', () {
-    final snapshot = const MockProfileRepository().getEditProfile();
+  test('SC-157 mock repository exposes edit profile BE draft', () async {
+    final snapshot = await const MockProfileRepository().getEditProfile();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-edit');
     expect(snapshot.actionDraft, 'PATCH /user/settings');

@@ -6,11 +6,11 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/smart_al
 /// [MockSmartAlertsRepository.getCenter] and asserts the call succeeds
 /// without throwing and returns a plausible, non-empty result.
 void main() {
-  const repository = MockSmartAlertsRepository();
+  const repository = MockSmartAlertsRepository(loadDelay: Duration.zero);
 
   group('MockSmartAlertsRepository smoke test', () {
-    test('getCenter returns a populated snapshot', () {
-      final snapshot = repository.getCenter();
+    test('getCenter returns a populated snapshot', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot, isA<SmartAlertsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -26,8 +26,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getCenter derived stats can be computed without throwing', () {
-      final snapshot = repository.getCenter();
+    test('getCenter derived stats can be computed without throwing', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot.activeCount, greaterThan(0));
       expect(snapshot.totalTriggers, greaterThan(0));

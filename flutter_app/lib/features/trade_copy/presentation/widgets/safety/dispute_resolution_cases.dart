@@ -228,11 +228,13 @@ class _DisputeCaseCard extends StatelessWidget {
   }
 
   void _escalate(BuildContext context) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: 'Escalate to Senior Support',
-      message: 'Chuyển lên hỗ trợ cấp cao sẽ sớm ra mắt',
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Escalate to Senior Support',
+        message: 'Chuyển lên hỗ trợ cấp cao sẽ sớm ra mắt',
+      ),
     );
   }
 }

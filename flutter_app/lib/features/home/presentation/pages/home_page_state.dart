@@ -15,7 +15,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   void _go(String path) {
-    context.push(path);
+    unawaited(context.push(path));
   }
 
   void _showMoreProducts(List<HomeQuickAction> actions, VitDensity density) {
@@ -23,21 +23,23 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     if (actions.isEmpty) return;
 
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.bg,
-      barrierColor: AppColors.modalScrim,
-      builder: (sheetContext) {
-        return HomeMoreProductsSheet(
-          actions: actions,
-          onNavigate: (path) {
-            Navigator.of(sheetContext).pop();
-            rootContext.push(path);
-          },
-          density: density,
-        );
-      },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        barrierColor: AppColors.modalScrim,
+        builder: (sheetContext) {
+          return HomeMoreProductsSheet(
+            actions: actions,
+            onNavigate: (path) {
+              Navigator.of(sheetContext).pop();
+              unawaited(rootContext.push(path));
+            },
+            density: density,
+          );
+        },
+      ),
     );
   }
 

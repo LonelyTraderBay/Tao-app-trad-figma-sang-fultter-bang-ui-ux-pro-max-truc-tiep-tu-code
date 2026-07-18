@@ -254,7 +254,7 @@ class _AuditReportCard extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Tải báo cáo (PDF) sẽ sớm ra mắt'),

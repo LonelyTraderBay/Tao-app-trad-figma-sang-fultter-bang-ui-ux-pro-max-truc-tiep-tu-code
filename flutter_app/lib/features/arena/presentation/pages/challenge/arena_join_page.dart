@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -173,22 +175,22 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
   }
 
   void _toggleRules() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _readRules = !_readRules);
   }
 
   void _togglePoints() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _understandPoints = !_understandPoints);
   }
 
   void _confirmJoin() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(AppRoutePaths.arenaChallenge(widget.challengeId));
   }
 
   void _decline() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _close();
   }
 

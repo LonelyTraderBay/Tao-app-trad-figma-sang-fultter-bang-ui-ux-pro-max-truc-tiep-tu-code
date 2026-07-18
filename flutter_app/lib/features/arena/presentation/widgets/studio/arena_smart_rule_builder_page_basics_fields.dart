@@ -320,7 +320,7 @@ class _ChallengeTypeTile extends StatelessWidget {
       radius: VitCardRadius.standard,
       padding: ArenaSpacingTokens.arenaSmartRuleTilePadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         onTap();
       },
       child: Row(

@@ -59,7 +59,7 @@ class _QuickLinks extends StatelessWidget {
             variant: VitCtaButtonVariant.warning,
             height: AppSpacing.buttonCompact,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.riskAssessmentRoute);
             },
             leading: const Icon(Icons.shield_outlined),
@@ -73,7 +73,7 @@ class _QuickLinks extends StatelessWidget {
             variant: VitCtaButtonVariant.success,
             height: AppSpacing.buttonCompact,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.savingsRoute);
             },
             leading: const Icon(Icons.savings_outlined),

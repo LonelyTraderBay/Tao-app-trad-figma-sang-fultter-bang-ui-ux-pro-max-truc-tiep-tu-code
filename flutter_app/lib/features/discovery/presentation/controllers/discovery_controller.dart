@@ -9,11 +9,11 @@ final class DiscoveryController {
 
   final DiscoveryRepository _repository;
 
-  UnifiedSearchSnapshot unifiedSearch({String query = ''}) {
+  Future<UnifiedSearchSnapshot> unifiedSearch({String query = ''}) {
     return _repository.getUnifiedSearch(query: query);
   }
 
-  TopicHubSnapshot topicHub({
+  Future<TopicHubSnapshot> topicHub({
     String topicId = 'crypto',
     bool detailEndpoint = false,
   }) {

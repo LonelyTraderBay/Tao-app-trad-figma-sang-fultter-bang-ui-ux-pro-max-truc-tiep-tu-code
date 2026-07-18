@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -153,7 +155,7 @@ class _P2PNotificationsSettingsPageState
   }
 
   void _toggleChannel(String settingId, String channelId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       final enabled = _enabledChannels.putIfAbsent(settingId, () => {});
       if (enabled.contains(channelId)) {

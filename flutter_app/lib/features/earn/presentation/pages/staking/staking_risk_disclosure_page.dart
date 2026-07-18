@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -143,7 +145,7 @@ class _StakingRiskDisclosurePageState
                             tabs: snapshot.tabs,
                             active: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeTab = tab);
                             },
                           ),
@@ -154,7 +156,7 @@ class _StakingRiskDisclosurePageState
                               snapshot: snapshot,
                               expandedRisk: _expandedRisk,
                               onToggle: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _expandedRisk = _expandedRisk == id
                                       ? null

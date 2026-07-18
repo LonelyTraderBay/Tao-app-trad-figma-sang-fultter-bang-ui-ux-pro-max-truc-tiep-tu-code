@@ -19,7 +19,7 @@ class _RelatedReports extends StatelessWidget {
             child: VitCard(
               key: ArenaReportCasePage.relatedReportKey(report.id),
               onTap: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 context.go(AppRoutePaths.arenaReportCase(report.id));
               },
               density: VitDensity.compact,

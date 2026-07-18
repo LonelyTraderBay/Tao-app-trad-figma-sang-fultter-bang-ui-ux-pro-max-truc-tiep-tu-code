@@ -10,11 +10,11 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/unified_
 /// test/features/cross_module/mock_unified_portfolio_repository_test.dart
 /// only asserts the shape of (greaterThan(0)/hasLength).
 void main() {
-  const repository = MockUnifiedPortfolioRepository();
+  const repository = MockUnifiedPortfolioRepository(loadDelay: Duration.zero);
 
   group('MockUnifiedPortfolioRepository smoke test', () {
-    test('getDashboard pins the endpoint and module/history fixture', () {
-      final snapshot = repository.getDashboard();
+    test('getDashboard pins the endpoint and module/history fixture', () async {
+      final snapshot = await repository.getDashboard();
 
       expect(snapshot, isA<UnifiedPortfolioSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/cross-module/unified-portfolio');
@@ -32,8 +32,8 @@ void main() {
       expect(snapshot.history.last.label, 'Now');
     });
 
-    test('getDashboard pins the derived aggregate stats', () {
-      final snapshot = repository.getDashboard();
+    test('getDashboard pins the derived aggregate stats', () async {
+      final snapshot = await repository.getDashboard();
 
       expect(snapshot.financialModules, hasLength(5));
       expect(snapshot.totalValue, 102380);
@@ -42,8 +42,8 @@ void main() {
       expect(snapshot.activeModules, 6);
     });
 
-    test('getDashboard keeps the Arena module points-only', () {
-      final snapshot = repository.getDashboard();
+    test('getDashboard keeps the Arena module points-only', () async {
+      final snapshot = await repository.getDashboard();
       final arenaModule = snapshot.modules.firstWhere(
         (module) => module.id == UnifiedPortfolioModuleId.arena,
       );

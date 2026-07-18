@@ -67,7 +67,7 @@ class _DcaOverviewCardPreviewState extends State<_DcaOverviewCardPreview> {
                 _HeaderRow(
                   balanceHidden: _balanceHidden,
                   onToggle: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _balanceHidden = !_balanceHidden);
                   },
                 ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,7 +123,7 @@ class _MissingPositionState extends StatelessWidget {
             fullWidth: false,
             height: EarnSpacingTokens.savingsFlowHeroHeight,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.backRoute);
             },
             child: const Text('Quay lại'),

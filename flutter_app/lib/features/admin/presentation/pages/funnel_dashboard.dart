@@ -38,23 +38,11 @@ class FunnelDashboard extends ConsumerStatefulWidget {
 }
 
 class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
-  late String _selectedFunnelId;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedFunnelId = ref
-        .read(adminFunnelsControllerProvider)
-        .state
-        .snapshot
-        .selectedFunnelId;
-  }
+  String? _selectedFunnelId;
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(adminFunnelsControllerProvider);
-    final snapshot = controller.state.snapshot;
-    final selectedFunnel = controller.selectedFunnel(_selectedFunnelId);
+    final controllerAsync = ref.watch(adminFunnelsControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -77,29 +65,50 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
         rhythm: VitPageRhythm.standard,
         gap: VitContentGap.tight,
         children: [
-          AdminDashboardStateContent(
-            status: controller.state.status,
-            title: 'Funnel dashboard',
-            message: controller.state.message,
-            gap: AppSpacing.x4,
-            children: [
-              _FunnelSelector(
-                funnels: snapshot.funnels,
-                selectedFunnelId: _selectedFunnelId,
-                onChanged: (id) => setState(() => _selectedFunnelId = id),
+          ...controllerAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Funnel dashboard',
+                message: 'Không tải được dữ liệu.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(adminFunnelsSnapshotProvider),
               ),
-              _MetricsGrid(snapshot: snapshot),
-              _WaterfallCard(funnel: selectedFunnel),
-              _DropoutChartCard(funnel: selectedFunnel),
-              _StepDetailsCard(funnel: selectedFunnel),
-              if (snapshot.totalSessions == 0)
-                const AdminInlineEmptyState(
-                  icon: Icons.filter_alt_outlined,
-                  title: 'Chưa có dữ liệu funnel',
-                  message:
-                      'Dữ liệu sẽ xuất hiện khi có người dùng đi qua funnel',
-                ),
             ],
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              _selectedFunnelId ??= snapshot.selectedFunnelId;
+              final selectedFunnelId = _selectedFunnelId!;
+              final selectedFunnel = controller.selectedFunnel(
+                selectedFunnelId,
+              );
+              return [
+                AdminDashboardStateContent(
+                  status: controller.state.status,
+                  title: 'Funnel dashboard',
+                  message: controller.state.message,
+                  gap: AppSpacing.x4,
+                  children: [
+                    _FunnelSelector(
+                      funnels: snapshot.funnels,
+                      selectedFunnelId: selectedFunnelId,
+                      onChanged: (id) => setState(() => _selectedFunnelId = id),
+                    ),
+                    _MetricsGrid(snapshot: snapshot),
+                    _WaterfallCard(funnel: selectedFunnel),
+                    _DropoutChartCard(funnel: selectedFunnel),
+                    _StepDetailsCard(funnel: selectedFunnel),
+                    if (snapshot.totalSessions == 0)
+                      const AdminInlineEmptyState(
+                        icon: Icons.filter_alt_outlined,
+                        title: 'Chưa có dữ liệu funnel',
+                        message:
+                            'Dữ liệu sẽ xuất hiện khi có người dùng đi qua funnel',
+                      ),
+                  ],
+                ),
+              ];
+            },
           ),
         ],
       ),

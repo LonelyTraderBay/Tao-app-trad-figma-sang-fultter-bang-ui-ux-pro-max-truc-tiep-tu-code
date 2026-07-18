@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -101,7 +103,7 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
                 type: VitHeaderActionType.filter,
                 tooltip: 'Bộ lọc',
                 onPressed: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   setState(() => _activeTab = _LaunchpadTab.active);
                 },
               ),

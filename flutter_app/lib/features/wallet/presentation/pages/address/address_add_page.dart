@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -191,19 +193,21 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
       selectedAsset: _asset,
       whitelist: _whitelist,
     );
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      builder: (context) => AddressConfirmPreviewSheet(
-        preview: preview,
-        onConfirm: () {
-          final router = GoRouter.of(this.context);
-          Navigator.of(context).pop();
-          setState(() => _saved = true);
-          Future<void>.delayed(const Duration(milliseconds: 900), () {
-            if (mounted) router.go(AppRoutePaths.walletAddressBook);
-          });
-        },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        builder: (context) => AddressConfirmPreviewSheet(
+          preview: preview,
+          onConfirm: () {
+            final router = GoRouter.of(this.context);
+            Navigator.of(context).pop();
+            setState(() => _saved = true);
+            Future<void>.delayed(const Duration(milliseconds: 900), () {
+              if (mounted) router.go(AppRoutePaths.walletAddressBook);
+            });
+          },
+        ),
       ),
     );
   }

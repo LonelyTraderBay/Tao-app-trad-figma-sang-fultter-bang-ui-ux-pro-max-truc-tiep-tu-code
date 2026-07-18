@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -151,7 +153,7 @@ class _BotApiDocumentationPageState
   }
 
   void _copy(String text) {
-    Clipboard.setData(ClipboardData(text: text));
+    unawaited(Clipboard.setData(ClipboardData(text: text)));
     setState(() => _copied = true);
   }
 }

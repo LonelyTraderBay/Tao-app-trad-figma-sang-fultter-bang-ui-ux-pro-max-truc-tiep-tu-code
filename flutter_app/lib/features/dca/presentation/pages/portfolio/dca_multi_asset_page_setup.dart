@@ -112,7 +112,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
         controller: _budgetController,
         frequency: _frequency,
         onFrequencyChanged: (frequency) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _frequency = frequency);
         },
       ),
@@ -139,7 +139,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
         enabled: _rebalanceEnabled,
         controller: _thresholdController,
         onToggle: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _rebalanceEnabled = !_rebalanceEnabled);
         },
       ),

@@ -9,5 +9,5 @@ final class EnterpriseStatesController {
 
   final EnterpriseStatesRepository _repository;
 
-  EnterpriseStatesSnapshot reference() => _repository.getReference();
+  Future<EnterpriseStatesSnapshot> reference() => _repository.getReference();
 }

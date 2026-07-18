@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,7 +140,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
     StakingEmergencyActionsController controller,
     StakingEmergencyActionDraft action,
   ) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final sheet = controller.sheetForAction(action);
     if (sheet == null) return;
     final sheetKey = action.id == 'pause' ? pauseSheetKey : withdrawSheetKey;
@@ -151,75 +153,81 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
     Key sheetKey,
   ) {
     final navInset = DeviceMetrics.nativeBottomChrome;
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      barrierColor: AppColors.bg.withValues(alpha: 0.72),
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (sheetContext) {
-        final color = _toneColor(sheet.tone);
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: EarnSpacingTokens.earnSheetPadding(navInset),
-            child: Column(
-              key: sheetKey,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(sheet.title, style: AppTextStyles.sectionTitle),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                VitCard(
-                  variant: VitCardVariant.inner,
-                  borderColor: color.withValues(alpha: 0.28),
-                  padding: EarnSpacingTokens.earnCardPaddingX4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        sheet.body,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text2,
-                          height: AppTextStyles.caption.height,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        barrierColor: AppColors.bg.withValues(alpha: 0.72),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (sheetContext) {
+          final color = _toneColor(sheet.tone);
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: EarnSpacingTokens.earnSheetPadding(navInset),
+              child: Column(
+                key: sheetKey,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(sheet.title, style: AppTextStyles.sectionTitle),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  VitCard(
+                    variant: VitCardVariant.inner,
+                    borderColor: color.withValues(alpha: 0.28),
+                    padding: EarnSpacingTokens.earnCardPaddingX4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          sheet.body,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text2,
+                            height: AppTextStyles.caption.height,
+                          ),
                         ),
-                      ),
-                      if (sheet.bullets.isNotEmpty) ...[
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        for (final bullet in sheet.bullets)
-                          Padding(
-                            padding: EarnSpacingTokens.earnBottomPaddingX1,
-                            child: Text(
-                              '- $bullet',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
-                                height: AppTextStyles.micro.height,
+                        if (sheet.bullets.isNotEmpty) ...[
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
+                          for (final bullet in sheet.bullets)
+                            Padding(
+                              padding: EarnSpacingTokens.earnBottomPaddingX1,
+                              child: Text(
+                                '- $bullet',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text3,
+                                  height: AppTextStyles.micro.height,
+                                ),
                               ),
                             ),
-                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                VitCtaButton(
-                  variant: sheet.tone == 'danger'
-                      ? VitCtaButtonVariant.destructive
-                      : VitCtaButtonVariant.warning,
-                  height: AppSpacing.buttonStandard,
-                  onPressed: () {
-                    Navigator.of(sheetContext).pop();
-                  },
-                  child: Text(sheet.confirmLabel),
-                ),
-              ],
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  VitCtaButton(
+                    variant: sheet.tone == 'danger'
+                        ? VitCtaButtonVariant.destructive
+                        : VitCtaButtonVariant.warning,
+                    height: AppSpacing.buttonStandard,
+                    onPressed: () {
+                      Navigator.of(sheetContext).pop();
+                    },
+                    child: Text(sheet.confirmLabel),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

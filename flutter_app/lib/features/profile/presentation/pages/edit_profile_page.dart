@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,32 +41,23 @@ class EditProfilePage extends ConsumerStatefulWidget {
 }
 
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _phoneController;
+  TextEditingController? _nameController;
+  TextEditingController? _emailController;
+  TextEditingController? _phoneController;
   bool _saving = false;
   bool _cameraSelected = false;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(profileControllerProvider).getEditProfile();
-    _nameController = TextEditingController(text: snapshot.user.fullName);
-    _emailController = TextEditingController(text: snapshot.user.email);
-    _phoneController = TextEditingController(text: snapshot.user.phone);
-  }
-
-  @override
   void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
+    _nameController?.dispose();
+    _emailController?.dispose();
+    _phoneController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getEditProfile();
+    final snapshotAsync = ref.watch(profileEditSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -96,77 +89,104 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
           padding: VitContentPadding.none,
           density: VitDensity.compact,
           fullBleed: true,
-          children: [
-            VitCard(
-              density: VitDensity.compact,
-              child: _AvatarEditor(
-                initial: snapshot.user.fullName.substring(0, 1),
-                selected: _cameraSelected,
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  setState(() => _cameraSelected = !_cameraSelected);
-                },
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title:
+                    'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u',
+                message: 'Vui l\u00F2ng th\u1EED l\u1EA1i.',
+                actionLabel: 'Th\u1EED l\u1EA1i',
+                onAction: () => ref.invalidate(profileEditSnapshotProvider),
               ),
-            ),
-            VitCard(
-              density: VitDensity.compact,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _EditProfileField(
-                    label: 'H\u1ECC V\u00C0 T\u00CAN',
-                    controller: _nameController,
-                    keyValue: EditProfilePage.fullNameFieldKey,
-                    onChanged: (_) => setState(() {}),
+            ],
+            data: (snapshot) {
+              _nameController ??= TextEditingController(
+                text: snapshot.user.fullName,
+              );
+              _emailController ??= TextEditingController(
+                text: snapshot.user.email,
+              );
+              _phoneController ??= TextEditingController(
+                text: snapshot.user.phone,
+              );
+              final nameController = _nameController!;
+              final emailController = _emailController!;
+              final phoneController = _phoneController!;
+              return [
+                VitCard(
+                  density: VitDensity.compact,
+                  child: _AvatarEditor(
+                    initial: snapshot.user.fullName.substring(0, 1),
+                    selected: _cameraSelected,
+                    onTap: () {
+                      unawaited(HapticFeedback.selectionClick());
+                      setState(() => _cameraSelected = !_cameraSelected);
+                    },
                   ),
-                  _EditProfileField(
-                    label: 'EMAIL',
-                    controller: _emailController,
-                    readOnly: true,
-                    note: 'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
-                    muted: true,
-                  ),
-                  _EditProfileField(
-                    label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
-                    controller: _phoneController,
-                    keyValue: EditProfilePage.phoneFieldKey,
-                    keyboardType: TextInputType.phone,
-                    onChanged: (_) => setState(() {}),
-                  ),
-                ],
-              ),
-            ),
-            KeyedSubtree(
-              key: EditProfilePage.saveKey,
-              child: VitCtaButton(
-                variant: VitCtaButtonVariant.auth,
-                density: VitDensity.compact,
-                loading: _saving,
-                onPressed: _canSave ? _save : null,
-                leading: const Icon(Icons.save_rounded),
-                child: Text(
-                  _saving
-                      ? '\u0110ang l\u01B0u...'
-                      : 'L\u01B0u thay \u0111\u1ED5i',
                 ),
-              ),
-            ),
-            const VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'X\u00E1c nh\u1EADn thay \u0111\u1ED5i h\u1ED3 s\u01A1',
-              message:
-                  'Ki\u1EC3m tra h\u1ECD t\u00EAn, s\u1ED1 \u0111i\u1EC7n tho\u1EA1i v\u00E0 \u1EA3nh \u0111\u1EA1i di\u1EC7n tr\u01B0\u1EDBc khi l\u01B0u.',
-              density: VitDensity.compact,
-            ),
-          ],
+                VitCard(
+                  density: VitDensity.compact,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _EditProfileField(
+                        label: 'H\u1ECC V\u00C0 T\u00CAN',
+                        controller: nameController,
+                        keyValue: EditProfilePage.fullNameFieldKey,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      _EditProfileField(
+                        label: 'EMAIL',
+                        controller: emailController,
+                        readOnly: true,
+                        note: 'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
+                        muted: true,
+                      ),
+                      _EditProfileField(
+                        label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
+                        controller: phoneController,
+                        keyValue: EditProfilePage.phoneFieldKey,
+                        keyboardType: TextInputType.phone,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                    ],
+                  ),
+                ),
+                KeyedSubtree(
+                  key: EditProfilePage.saveKey,
+                  child: VitCtaButton(
+                    variant: VitCtaButtonVariant.auth,
+                    density: VitDensity.compact,
+                    loading: _saving,
+                    onPressed: _canSave ? _save : null,
+                    leading: const Icon(Icons.save_rounded),
+                    child: Text(
+                      _saving
+                          ? '\u0110ang l\u01B0u...'
+                          : 'L\u01B0u thay \u0111\u1ED5i',
+                    ),
+                  ),
+                ),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title:
+                      'X\u00E1c nh\u1EADn thay \u0111\u1ED5i h\u1ED3 s\u01A1',
+                  message:
+                      'Ki\u1EC3m tra h\u1ECD t\u00EAn, s\u1ED1 \u0111i\u1EC7n tho\u1EA1i v\u00E0 \u1EA3nh \u0111\u1EA1i di\u1EC7n tr\u01B0\u1EDBc khi l\u01B0u.',
+                  density: VitDensity.compact,
+                ),
+              ];
+            },
+          ),
         ),
       ),
     );
   }
 
   bool get _canSave =>
-      _nameController.text.trim().isNotEmpty &&
-      _phoneController.text.trim().isNotEmpty &&
+      (_nameController?.text.trim().isNotEmpty ?? false) &&
+      (_phoneController?.text.trim().isNotEmpty ?? false) &&
       !_saving;
 
   Future<void> _save() async {

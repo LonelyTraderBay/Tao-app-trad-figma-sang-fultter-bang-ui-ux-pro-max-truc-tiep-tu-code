@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,7 +99,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getSecurity();
+    final snapshotAsync = ref.watch(profileSecuritySnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -125,34 +127,46 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
           padding: VitContentPadding.none,
           density: VitDensity.compact,
           fullBleed: true,
-          children: [
-            _ScoreCard(snapshot: snapshot),
-            if (snapshot.highRiskContractId != null)
-              VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
                 title:
-                    'R\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
-                message:
-                    'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc c\u00E1c thao t\u00E1c nh\u1EA1y c\u1EA3m.',
-                contractId: snapshot.highRiskContractId,
-                density: VitDensity.compact,
+                    'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u',
+                message: 'Vui l\u00F2ng th\u1EED l\u1EA1i.',
+                actionLabel: 'Th\u1EED l\u1EA1i',
+                onAction: () => ref.invalidate(profileSecuritySnapshotProvider),
               ),
-            _SecurityList(items: snapshot.items, onItemTap: _handleItemTap),
-            if (_showDevices) ...[_DeviceList(devices: snapshot.devices)],
-            _AntiPhishingCard(
-              controller: _antiPhishingController,
-              saving: _saving,
-              onSave: _saveAntiPhishingCode,
-            ),
-            _SecuritySupportCard(supportRoute: snapshot.supportRoute),
-          ],
+            ],
+            data: (snapshot) => [
+              _ScoreCard(snapshot: snapshot),
+              if (snapshot.highRiskContractId != null)
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title:
+                      'R\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
+                  message:
+                      'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc c\u00E1c thao t\u00E1c nh\u1EA1y c\u1EA3m.',
+                  contractId: snapshot.highRiskContractId,
+                  density: VitDensity.compact,
+                ),
+              _SecurityList(items: snapshot.items, onItemTap: _handleItemTap),
+              if (_showDevices) ...[_DeviceList(devices: snapshot.devices)],
+              _AntiPhishingCard(
+                controller: _antiPhishingController,
+                saving: _saving,
+                onSave: _saveAntiPhishingCode,
+              ),
+              _SecuritySupportCard(supportRoute: snapshot.supportRoute),
+            ],
+          ),
         ),
       ),
     );
   }
 
   void _handleItemTap(ProfileSecurityItem item) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (item.id == 'devices') {
       setState(() => _showDevices = !_showDevices);
       return;
@@ -177,7 +191,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
     );
     if (!mounted || !confirmed) return;
 
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _saving = true);
     await Future<void>.delayed(const Duration(milliseconds: 280));
     if (!mounted) return;

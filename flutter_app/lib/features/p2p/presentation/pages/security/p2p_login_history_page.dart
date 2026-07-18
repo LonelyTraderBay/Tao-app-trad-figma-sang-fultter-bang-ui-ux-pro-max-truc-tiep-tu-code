@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -127,7 +129,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                       color: AppModuleAccents.p2p,
                       backgroundColor: AppColors.surface2,
                       onRefresh: () async {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         await Future<void>.delayed(
                           const Duration(milliseconds: 120),
                         );
@@ -155,7 +157,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                                 key: P2PLoginHistoryPage.filtersKey,
                                 selected: _filter,
                                 onChanged: (value) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _filter = value;
                                     _expandedEventId = null;
@@ -238,7 +240,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
   }
 
   void _toggleExpanded(String eventId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _expandedEventId = _expandedEventId == eventId ? null : eventId;
     });

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -117,18 +119,20 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                   snapshot: snapshot,
                   showFullAddress: _showFullAddress,
                   onReveal: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _showFullAddress = !_showFullAddress);
                   },
                   onCopy: () {
-                    HapticFeedback.selectionClick();
-                    Clipboard.setData(
-                      ClipboardData(text: snapshot.escrowAddress),
+                    unawaited(HapticFeedback.selectionClick());
+                    unawaited(
+                      Clipboard.setData(
+                        ClipboardData(text: snapshot.escrowAddress),
+                      ),
                     );
                     setState(() => _feedback = 'Đã copy địa chỉ escrow');
                   },
                   onExplorer: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _feedback = 'Đã mở Blockchain Explorer');
                   },
                 ),

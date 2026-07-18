@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -34,7 +36,8 @@ class _VitSkeletonState extends State<VitSkeleton>
     _controller = AnimationController(
       duration: const Duration(milliseconds: 900),
       vsync: this,
-    )..repeat(reverse: true);
+    );
+    unawaited(_controller.repeat(reverse: true));
     _color = ColorTween(
       begin: AppColors.surface2,
       end: AppColors.surface3,

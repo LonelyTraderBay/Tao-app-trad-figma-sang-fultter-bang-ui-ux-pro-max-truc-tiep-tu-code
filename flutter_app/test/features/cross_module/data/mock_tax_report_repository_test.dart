@@ -9,12 +9,12 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/tax_repo
 /// which test/features/cross_module/mock_tax_report_repository_test.dart
 /// only asserts the shape of (greaterThan(0)/hasLength).
 void main() {
-  const repository = MockTaxReportRepository();
+  const repository = MockTaxReportRepository(loadDelay: Duration.zero);
 
   group('MockTaxReportRepository smoke test', () {
     test('getCenter pins the endpoint and activity/report/jurisdiction '
-        'fixture', () {
-      final snapshot = repository.getCenter();
+        'fixture', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot, isA<TaxReportSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/cross-module/tax-reports');
@@ -37,8 +37,8 @@ void main() {
       expect(snapshot.jurisdictions.first.id, 'us');
     });
 
-    test('getCenter pins the derived aggregate stats', () {
-      final snapshot = repository.getCenter();
+    test('getCenter pins the derived aggregate stats', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot.taxableActivities, hasLength(4));
       expect(snapshot.totalGainLoss, 5955);

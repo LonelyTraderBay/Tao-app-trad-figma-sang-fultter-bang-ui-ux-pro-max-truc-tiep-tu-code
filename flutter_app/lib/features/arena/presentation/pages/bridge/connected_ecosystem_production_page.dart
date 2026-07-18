@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -122,7 +124,7 @@ class _ConnectedEcosystemProductionPageState
                           _SectionTabs(
                             active: _activeSection,
                             onChanged: (section) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeSection = section);
                             },
                           ),
@@ -131,7 +133,7 @@ class _ConnectedEcosystemProductionPageState
                             snapshot: snapshot,
                             activeHandoffBoard: _activeHandoffBoard,
                             onHandoffBoardChanged: (board) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeHandoffBoard = board);
                             },
                             onRoute: (route) => _go(context, route),
@@ -151,12 +153,12 @@ class _ConnectedEcosystemProductionPageState
   }
 
   void _go(BuildContext context, String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(_resolveConnectedRoute(route));
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

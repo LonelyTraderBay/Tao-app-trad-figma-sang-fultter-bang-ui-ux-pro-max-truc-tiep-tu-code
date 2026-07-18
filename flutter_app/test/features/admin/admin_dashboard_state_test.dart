@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 void main() {
-  const repository = MockAdminRepository();
+  const repository = MockAdminRepository(loadDelay: Duration.zero);
 
   Future<void> pumpAdminWidget(WidgetTester tester, Widget child) async {
     tester.view.devicePixelRatio = 1;
@@ -22,15 +22,18 @@ void main() {
   }
 
   testWidgets('SC-180 renders admin loading skeleton state', (tester) async {
+    final snapshot = await repository.getHome();
     await pumpAdminWidget(
       tester,
       ProviderScope(
         overrides: [
           adminHomeControllerProvider.overrideWithValue(
-            AdminHomeController(
-              state: AdminHomeViewState(
-                snapshot: repository.getHome(),
-                status: AdminDashboardLoadStatus.loading,
+            AsyncData(
+              AdminHomeController(
+                state: AdminHomeViewState(
+                  snapshot: snapshot,
+                  status: AdminDashboardLoadStatus.loading,
+                ),
               ),
             ),
           ),
@@ -45,16 +48,19 @@ void main() {
   });
 
   testWidgets('SC-181 renders analytics offline cached state', (tester) async {
+    final snapshot = await repository.getAnalytics();
     await pumpAdminWidget(
       tester,
       ProviderScope(
         overrides: [
           adminAnalyticsControllerProvider.overrideWithValue(
-            AdminAnalyticsController(
-              state: AdminAnalyticsViewState(
-                snapshot: repository.getAnalytics(),
-                status: AdminDashboardLoadStatus.offline,
-                message: 'Last cached analytics snapshot remains visible.',
+            AsyncData(
+              AdminAnalyticsController(
+                state: AdminAnalyticsViewState(
+                  snapshot: snapshot,
+                  status: AdminDashboardLoadStatus.offline,
+                  message: 'Last cached analytics snapshot remains visible.',
+                ),
               ),
             ),
           ),
@@ -72,15 +78,18 @@ void main() {
   });
 
   testWidgets('SC-183 renders funnel empty state', (tester) async {
+    final snapshot = await repository.getFunnels();
     await pumpAdminWidget(
       tester,
       ProviderScope(
         overrides: [
           adminFunnelsControllerProvider.overrideWithValue(
-            AdminFunnelsController(
-              state: AdminFunnelsViewState(
-                snapshot: repository.getFunnels(),
-                status: AdminDashboardLoadStatus.empty,
+            AsyncData(
+              AdminFunnelsController(
+                state: AdminFunnelsViewState(
+                  snapshot: snapshot,
+                  status: AdminDashboardLoadStatus.empty,
+                ),
               ),
             ),
           ),
@@ -97,16 +106,19 @@ void main() {
   });
 
   testWidgets('SC-182 renders A/B test error state', (tester) async {
+    final snapshot = await repository.getAbTests();
     await pumpAdminWidget(
       tester,
       ProviderScope(
         overrides: [
           adminAbTestsControllerProvider.overrideWithValue(
-            AdminAbTestsController(
-              state: AdminAbTestsViewState(
-                snapshot: repository.getAbTests(),
-                status: AdminDashboardLoadStatus.error,
-                message: 'Experiment data is unavailable.',
+            AsyncData(
+              AdminAbTestsController(
+                state: AdminAbTestsViewState(
+                  snapshot: snapshot,
+                  status: AdminDashboardLoadStatus.error,
+                  message: 'Experiment data is unavailable.',
+                ),
               ),
             ),
           ),

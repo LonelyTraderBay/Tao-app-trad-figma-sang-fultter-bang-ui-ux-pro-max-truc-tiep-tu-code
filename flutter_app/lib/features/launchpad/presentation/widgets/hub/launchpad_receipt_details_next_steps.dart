@@ -124,8 +124,10 @@ class _ReceiptDetailsCard extends StatelessWidget {
                 radius: VitCardRadius.standard,
                 padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: subscription.txHash));
-                  HapticFeedback.selectionClick();
+                  unawaited(
+                    Clipboard.setData(ClipboardData(text: subscription.txHash)),
+                  );
+                  unawaited(HapticFeedback.selectionClick());
                 },
                 child: Row(
                   children: [

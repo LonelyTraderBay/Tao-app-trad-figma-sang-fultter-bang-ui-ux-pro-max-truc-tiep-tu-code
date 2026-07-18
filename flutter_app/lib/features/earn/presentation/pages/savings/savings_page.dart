@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,7 +140,7 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
                             activeTab: _tab,
                             positionCount: snapshot.positions.length,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -146,7 +148,7 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
                             _SavingsFilters(
                               activeFilter: _filter,
                               onChanged: (filter) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _filter = filter);
                               },
                             ),

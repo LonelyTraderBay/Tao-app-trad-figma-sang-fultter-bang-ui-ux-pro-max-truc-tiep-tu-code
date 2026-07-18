@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -165,15 +167,17 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
   void _handleRun(TradeBotBacktestingSnapshot snapshot) {
     final capital =
         double.tryParse(_capitalController.text) ?? snapshot.defaultCapital;
-    ref
-        .read(tradeBotAnalyticsRepositoryProvider)
-        .runBotBacktest(
-          TradeBotBacktestRequest(
-            strategyId: _selectedStrategy,
-            pair: _selectedPair,
-            dateRangeId: _selectedRange,
-            initialCapital: capital,
+    unawaited(
+      ref
+          .read(tradeBotAnalyticsRepositoryProvider)
+          .runBotBacktest(
+            TradeBotBacktestRequest(
+              strategyId: _selectedStrategy,
+              pair: _selectedPair,
+              dateRangeId: _selectedRange,
+              initialCapital: capital,
+            ),
           ),
-        );
+    );
   }
 }

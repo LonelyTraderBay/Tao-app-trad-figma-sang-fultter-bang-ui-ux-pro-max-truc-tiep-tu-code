@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -122,7 +124,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                     key: P2PBlacklistPage.addKey,
                     type: VitHeaderActionType.add,
                     onPressed: () {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       context.go(snapshot.addRoute);
                     },
                   ),
@@ -136,7 +138,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                       color: AppModuleAccents.p2p,
                       backgroundColor: AppColors.surface2,
                       onRefresh: () async {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         await Future<void>.delayed(
                           const Duration(milliseconds: 120),
                         );
@@ -182,7 +184,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                                 entries: entries,
                                 activeId: _filterId,
                                 onChanged: (id) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _filterId = id;
                                     _expandedId = null;
@@ -209,7 +211,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                                   entries: filtered,
                                   expandedId: _expandedId,
                                   onToggle: (id) {
-                                    HapticFeedback.selectionClick();
+                                    unawaited(HapticFeedback.selectionClick());
                                     setState(() {
                                       _expandedId = _expandedId == id
                                           ? null
@@ -217,7 +219,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                                     });
                                   },
                                   onUnblock: (id) {
-                                    HapticFeedback.mediumImpact();
+                                    unawaited(HapticFeedback.mediumImpact());
                                     setState(() {
                                       _removedIds.add(id);
                                       if (_expandedId == id) _expandedId = null;

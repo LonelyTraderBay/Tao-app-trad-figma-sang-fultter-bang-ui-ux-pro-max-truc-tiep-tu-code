@@ -48,7 +48,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
               tooltip: 'Thông báo claim P2P',
               active: notificationsEnabled,
               onPressed: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() {
                   _notificationsEnabled = !notificationsEnabled;
                   _feedback = !notificationsEnabled
@@ -66,7 +66,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
               active: _section,
               claim: claim,
               onChanged: (section) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _section = section);
               },
             ),
@@ -74,7 +74,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
             _NotificationsCard(
               enabled: notificationsEnabled,
               onChanged: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() {
                   _notificationsEnabled = value;
                   _feedback = value
@@ -88,7 +88,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
               icon: Icons.open_in_new_rounded,
               title: 'Xem đơn hàng gốc',
               onTap: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 context.go(snapshot.orderRoute);
               },
             ),
@@ -97,7 +97,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
               icon: Icons.help_outline_rounded,
               title: 'Liên hệ hỗ trợ',
               onTap: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 context.go(snapshot.supportRoute);
               },
             ),
@@ -109,7 +109,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                 density: VitDensity.compact,
                 leading: const Icon(Icons.download_rounded),
                 onPressed: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   setState(
                     () => _feedback = 'Đã chuẩn bị biên lai ${claim.claimCode}',
                   );

@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-166 mock repository exposes sub-account BE draft', () {
-    final snapshot = const MockProfileRepository().getSubAccounts();
+  test('SC-166 mock repository exposes sub-account BE draft', () async {
+    final snapshot = await const MockProfileRepository().getSubAccounts();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-sub-accounts');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

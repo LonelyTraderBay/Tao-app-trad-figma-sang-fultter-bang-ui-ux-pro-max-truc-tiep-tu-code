@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -188,7 +190,7 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
   }
 
   void _escalate(P2PDisputeLevelDraft nextLevel) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() {
       _currentLevel = nextLevel.level;
       _localMessages.add(
@@ -206,7 +208,7 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
   void _sendMessage() {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _localMessages.add(
         P2PDisputeSupportMessageDraft(

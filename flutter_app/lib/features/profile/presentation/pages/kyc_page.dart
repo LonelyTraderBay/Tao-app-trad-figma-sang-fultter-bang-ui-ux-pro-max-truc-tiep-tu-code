@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +51,7 @@ class _KYCPageState extends ConsumerState<KYCPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getKyc();
+    final snapshotAsync = ref.watch(profileKycSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -89,50 +91,63 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,
-                    children: [
-                      _KycStatusCard(snapshot: snapshot),
-                      VitHighRiskStatePanel(
-                        state: _submitting
-                            ? VitHighRiskUiState.submitting
-                            : VitHighRiskUiState.riskReview,
-                        title: _submitting
-                            ? '\u0110ang g\u1EEDi h\u1ED3 s\u01A1 x\u00E1c minh'
-                            : 'R\u00E0 so\u00E1t x\u00E1c minh danh t\u00EDnh',
-                        message:
-                            'Ki\u1EC3m tra c\u1EA5p KYC, gi\u1EDBi h\u1EA1n giao d\u1ECBch v\u00E0 t\u00EDnh n\u0103ng m\u1EDF kho\u00E1 tr\u01B0\u1EDBc khi n\u1ED9p.',
-                        contractId:
-                            'C\u1EA5p hi\u1EC7n t\u1EA1i: ${snapshot.currentLevel}',
-                        density: VitDensity.compact,
-                      ),
-                      if (snapshot.levels.isEmpty)
-                        const VitEmptyState(
-                          title: 'Ch\u01B0a c\u00F3 c\u1EA5p KYC',
-                          message:
-                              'C\u00E1c c\u1EA5p x\u00E1c minh s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
-                          icon: Icons.verified_user_outlined,
-                        )
-                      else ...[
-                        for (final level in snapshot.levels)
-                          _KycLevelCard(
-                            level: level,
-                            done: snapshot.currentLevel >= level.level,
-                            expanded: _expandedLevel == level.level,
-                            currentLevel: snapshot.currentLevel,
-                            submitting: _submitting,
-                            onTap: () {
-                              HapticFeedback.selectionClick();
-                              setState(
-                                () => _expandedLevel =
-                                    _expandedLevel == level.level
-                                    ? null
-                                    : level.level,
-                              );
-                            },
-                            onStart: () => _startVerification(level.level),
-                          ),
+                    children: snapshotAsync.when(
+                      loading: () => const [VitSkeletonList()],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
+                          title:
+                              'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u',
+                          message: 'Vui l\u00F2ng th\u1EED l\u1EA1i.',
+                          actionLabel: 'Th\u1EED l\u1EA1i',
+                          onAction: () =>
+                              ref.invalidate(profileKycSnapshotProvider),
+                        ),
                       ],
-                      const _PrivacyCard(),
-                    ],
+                      data: (snapshot) => [
+                        _KycStatusCard(snapshot: snapshot),
+                        VitHighRiskStatePanel(
+                          state: _submitting
+                              ? VitHighRiskUiState.submitting
+                              : VitHighRiskUiState.riskReview,
+                          title: _submitting
+                              ? '\u0110ang g\u1EEDi h\u1ED3 s\u01A1 x\u00E1c minh'
+                              : 'R\u00E0 so\u00E1t x\u00E1c minh danh t\u00EDnh',
+                          message:
+                              'Ki\u1EC3m tra c\u1EA5p KYC, gi\u1EDBi h\u1EA1n giao d\u1ECBch v\u00E0 t\u00EDnh n\u0103ng m\u1EDF kho\u00E1 tr\u01B0\u1EDBc khi n\u1ED9p.',
+                          contractId:
+                              'C\u1EA5p hi\u1EC7n t\u1EA1i: ${snapshot.currentLevel}',
+                          density: VitDensity.compact,
+                        ),
+                        if (snapshot.levels.isEmpty)
+                          const VitEmptyState(
+                            title: 'Ch\u01B0a c\u00F3 c\u1EA5p KYC',
+                            message:
+                                'C\u00E1c c\u1EA5p x\u00E1c minh s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+                            icon: Icons.verified_user_outlined,
+                          )
+                        else ...[
+                          for (final level in snapshot.levels)
+                            _KycLevelCard(
+                              level: level,
+                              done: snapshot.currentLevel >= level.level,
+                              expanded: _expandedLevel == level.level,
+                              currentLevel: snapshot.currentLevel,
+                              submitting: _submitting,
+                              onTap: () {
+                                unawaited(HapticFeedback.selectionClick());
+                                setState(
+                                  () => _expandedLevel =
+                                      _expandedLevel == level.level
+                                      ? null
+                                      : level.level,
+                                );
+                              },
+                              onStart: () => _startVerification(level.level),
+                            ),
+                        ],
+                        const _PrivacyCard(),
+                      ],
+                    ),
                   ),
                 ),
               ),

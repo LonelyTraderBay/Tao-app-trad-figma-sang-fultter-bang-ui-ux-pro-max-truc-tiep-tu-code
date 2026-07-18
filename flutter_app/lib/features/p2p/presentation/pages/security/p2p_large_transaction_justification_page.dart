@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -153,7 +155,7 @@ class _P2PLargeTransactionJustificationPageState
                             purposes: snapshot.purposes,
                             selectedPurpose: _purpose,
                             onSelected: (purpose) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _purpose = purpose);
                             },
                           ),
@@ -180,7 +182,7 @@ class _P2PLargeTransactionJustificationPageState
                             key: P2PLargeTransactionJustificationPage.ctaKey,
                             onPressed: canSubmit
                                 ? () {
-                                    HapticFeedback.mediumImpact();
+                                    unawaited(HapticFeedback.mediumImpact());
                                     context.go(snapshot.successRoute);
                                   }
                                 : null,

@@ -3,9 +3,9 @@ import 'package:vit_trade_flutter/features/discovery/domain/entities/discovery_e
 /// Data source contract for the Discovery feature: unified search and
 /// topic hub screens.
 abstract interface class DiscoveryRepository {
-  UnifiedSearchSnapshot getUnifiedSearch({String query = ''});
+  Future<UnifiedSearchSnapshot> getUnifiedSearch({String query = ''});
 
-  TopicHubSnapshot getTopicHub({
+  Future<TopicHubSnapshot> getTopicHub({
     String topicId = 'crypto',
     bool detailEndpoint = false,
   });

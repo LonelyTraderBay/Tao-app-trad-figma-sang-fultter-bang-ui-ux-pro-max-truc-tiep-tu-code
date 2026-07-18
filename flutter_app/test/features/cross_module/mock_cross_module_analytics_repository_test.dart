@@ -6,11 +6,13 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/cross_mo
 /// [MockCrossModuleAnalyticsRepository.getAnalytics] and asserts the call
 /// succeeds without throwing and returns a plausible, non-empty result.
 void main() {
-  const repository = MockCrossModuleAnalyticsRepository();
+  const repository = MockCrossModuleAnalyticsRepository(
+    loadDelay: Duration.zero,
+  );
 
   group('MockCrossModuleAnalyticsRepository smoke test', () {
-    test('getAnalytics returns a populated snapshot', () {
-      final snapshot = repository.getAnalytics();
+    test('getAnalytics returns a populated snapshot', () async {
+      final snapshot = await repository.getAnalytics();
 
       expect(snapshot, isA<CrossModuleAnalyticsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -24,15 +26,18 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getAnalytics derived stats can be computed without throwing', () {
-      final snapshot = repository.getAnalytics();
+    test(
+      'getAnalytics derived stats can be computed without throwing',
+      () async {
+        final snapshot = await repository.getAnalytics();
 
-      expect(snapshot.averageRoi, greaterThan(0));
-      expect(snapshot.totalTrades, greaterThan(0));
-      expect(snapshot.totalVolume, greaterThan(0));
-      expect(snapshot.averageWinRate, greaterThan(0));
-      expect(snapshot.bestRoiModule.name, isNotEmpty);
-      expect(snapshot.mostActiveModule.name, isNotEmpty);
-    });
+        expect(snapshot.averageRoi, greaterThan(0));
+        expect(snapshot.totalTrades, greaterThan(0));
+        expect(snapshot.totalVolume, greaterThan(0));
+        expect(snapshot.averageWinRate, greaterThan(0));
+        expect(snapshot.bestRoiModule.name, isNotEmpty);
+        expect(snapshot.mostActiveModule.name, isNotEmpty);
+      },
+    );
   });
 }

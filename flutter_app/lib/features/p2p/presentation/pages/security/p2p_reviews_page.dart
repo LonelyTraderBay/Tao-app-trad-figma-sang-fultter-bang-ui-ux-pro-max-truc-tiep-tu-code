@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -101,7 +103,7 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
                               variant: VitTabBarVariant.segment,
                               activeKey: _tab.name,
                               onChanged: (key) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _tab = _tabFromKey(key));
                               },
                               tabs: const [

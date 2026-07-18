@@ -164,11 +164,13 @@ class _ExportButton extends StatelessWidget {
     return VitCtaButton(
       key: CassReconciliationPage.exportKey,
       onPressed: () {
-        HapticFeedback.selectionClick();
-        showVitNoticeSheet(
-          context: context,
-          title: 'Sắp ra mắt',
-          message: 'Xuất báo cáo đối chiếu CASS sẽ sớm ra mắt',
+        unawaited(HapticFeedback.selectionClick());
+        unawaited(
+          showVitNoticeSheet(
+            context: context,
+            title: 'Sắp ra mắt',
+            message: 'Xuất báo cáo đối chiếu CASS sẽ sớm ra mắt',
+          ),
         );
       },
       variant: VitCtaButtonVariant.secondary,

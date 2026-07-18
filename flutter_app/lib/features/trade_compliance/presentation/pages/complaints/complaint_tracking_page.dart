@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -406,7 +408,7 @@ class _TrackingActionButton extends StatelessWidget {
       onPressed: () {
         final routePath = action.routePath;
         if (routePath == null) return;
-        context.push(routePath);
+        unawaited(context.push(routePath));
       },
       variant: VitCtaButtonVariant.secondary,
       height: _trackingActionHeight,

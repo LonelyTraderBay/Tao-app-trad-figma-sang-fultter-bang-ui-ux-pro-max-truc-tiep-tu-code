@@ -9,10 +9,10 @@ import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entitie
 /// correctly-typed result.
 void main() {
   group('MockRouteCheckerRepository smoke test', () {
-    const repository = MockRouteCheckerRepository();
+    const repository = MockRouteCheckerRepository(loadDelay: Duration.zero);
 
-    test('getRouteChecker returns a populated snapshot', () {
-      final snapshot = repository.getRouteChecker();
+    test('getRouteChecker returns a populated snapshot', () async {
+      final snapshot = await repository.getRouteChecker();
 
       expect(snapshot, isA<RouteCheckerSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/dev/dev-route-checker');
@@ -27,10 +27,12 @@ void main() {
   });
 
   group('MockPerformanceMonitorRepository smoke test', () {
-    const repository = MockPerformanceMonitorRepository();
+    const repository = MockPerformanceMonitorRepository(
+      loadDelay: Duration.zero,
+    );
 
-    test('getPerformanceMonitor returns a populated snapshot', () {
-      final snapshot = repository.getPerformanceMonitor();
+    test('getPerformanceMonitor returns a populated snapshot', () async {
+      final snapshot = await repository.getPerformanceMonitor();
 
       expect(snapshot, isA<PerformanceMonitorSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/dev/dev-performance-monitor');
@@ -48,10 +50,12 @@ void main() {
   });
 
   group('MockMissingScreensShowcaseRepository smoke test', () {
-    const repository = MockMissingScreensShowcaseRepository();
+    const repository = MockMissingScreensShowcaseRepository(
+      loadDelay: Duration.zero,
+    );
 
-    test('getShowcase returns a populated snapshot', () {
-      final snapshot = repository.getShowcase();
+    test('getShowcase returns a populated snapshot', () async {
+      final snapshot = await repository.getShowcase();
 
       expect(snapshot, isA<MissingScreensShowcaseSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/dev/dev-showcase');
@@ -67,10 +71,10 @@ void main() {
   });
 
   group('MockDesignSystemRepository smoke test', () {
-    const repository = MockDesignSystemRepository();
+    const repository = MockDesignSystemRepository(loadDelay: Duration.zero);
 
-    test('getDesignSystem returns a populated snapshot', () {
-      final snapshot = repository.getDesignSystem();
+    test('getDesignSystem returns a populated snapshot', () async {
+      final snapshot = await repository.getDesignSystem();
 
       expect(snapshot, isA<DesignSystemSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/dev/dev-design-system');

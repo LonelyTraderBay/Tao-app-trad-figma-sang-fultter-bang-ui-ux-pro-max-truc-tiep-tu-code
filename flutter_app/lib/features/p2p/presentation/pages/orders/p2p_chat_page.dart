@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -96,7 +98,7 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
                     subtitle: snapshot.e2eSubtitle,
                     onOpen: () => context.go(AppRoutePaths.p2pE2EInfo),
                     onClose: () {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       setState(() => _showE2EBanner = false);
                     },
                   ),
@@ -146,7 +148,7 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
                     'Tôi đã chuyển khoản 5.070.000 VND qua Vietcombank. Nội dung: VITTA P2P001',
                   ),
                   onQuickReply: (reply) {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     _controller.text = reply;
                     _controller.selection = TextSelection.fromPosition(
                       TextPosition(offset: reply.length),
@@ -167,7 +169,7 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
   void _sendText(String raw) {
     final text = raw.trim();
     if (text.isEmpty) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _extraMessages.add(
         P2PChatMessageDraft(

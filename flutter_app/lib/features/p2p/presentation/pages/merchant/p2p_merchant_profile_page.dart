@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,7 +110,7 @@ class _P2PMerchantProfilePageState
             variant: VitTabBarVariant.segment,
             activeKey: _tab.name,
             onChanged: (key) {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _tab = _tabFromKey(key));
             },
             tabs: [
@@ -142,7 +144,7 @@ class _P2PMerchantProfilePageState
   }
 
   void _toggleFollow() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _following = !_following);
   }
 
@@ -150,7 +152,7 @@ class _P2PMerchantProfilePageState
     BuildContext context,
     P2PMerchantProfileSnapshot snapshot,
   ) async {
-    HapticFeedback.lightImpact();
+    unawaited(HapticFeedback.lightImpact());
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
@@ -191,7 +193,7 @@ class _P2PMerchantProfilePageState
     );
 
     if (!context.mounted || confirmed != true) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     context.go(snapshot.blacklistAddRoute);
   }
 }

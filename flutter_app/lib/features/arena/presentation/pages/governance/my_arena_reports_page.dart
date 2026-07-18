@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,7 +110,7 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
                               filters: snapshot.filters,
                               activeFilter: _activeFilter,
                               onChanged: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _activeFilter = id);
                               },
                             ),
@@ -175,7 +177,7 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

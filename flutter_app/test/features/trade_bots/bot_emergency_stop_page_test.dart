@@ -35,7 +35,7 @@ void main() {
   test('SC-121 mock repository exposes emergency stop BE draft', () async {
     final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
     final snapshot = await repo.getBotEmergencyStop();
-    final result = repo.submitBotEmergencyStop(
+    final result = await repo.submitBotEmergencyStop(
       const TradeBotEmergencyStopDraft(
         reasonId: 'crash',
         closePositions: true,

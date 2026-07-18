@@ -27,8 +27,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-323 mock repository exposes smart alerts BE draft', () {
-    final snapshot = const MockSmartAlertsRepository().getCenter();
+  test('SC-323 mock repository exposes smart alerts BE draft', () async {
+    final snapshot = await const MockSmartAlertsRepository().getCenter();
 
     expect(snapshot.endpoint, '/api/mobile/cross-module/smart-alerts');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

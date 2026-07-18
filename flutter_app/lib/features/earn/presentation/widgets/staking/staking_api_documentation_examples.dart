@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -196,7 +198,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                   VitCtaButton(
                     height: AppSpacing.ctaHeight,
                     onPressed: () {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Lấy Sandbox API Key sẽ sớm ra mắt'),

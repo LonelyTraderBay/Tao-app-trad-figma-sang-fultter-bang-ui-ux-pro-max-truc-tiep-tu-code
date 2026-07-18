@@ -1,6 +1,6 @@
 # ADR-001 — Idiom lỗi async cho đường ghi tài chính
 
-- **Trạng thái:** Đã chốt (GĐ2 · ERR-35, 2026-07-17)
+- **Trạng thái:** Đã chốt (GĐ2 · ERR-35, 2026-07-17) — ĐÃ PHỦ TOÀN BỘ (GĐ4-F6, 2026-07-18: 422/422 method contract Future<T>, guardrail async_contract ratchet = 0, lint unawaited_futures + discarded_futures bật toàn repo)
 - **Phạm vi:** mọi controller có mutation/async trên đường ghi tài chính (trade spot/futures/leverage, predictions, và các flow high-risk về sau)
 - **Implementation tham chiếu:** `TradeOrderController` (`flutter_app/lib/features/trade/presentation/controllers/trade_order_controller_models.dart`)
 

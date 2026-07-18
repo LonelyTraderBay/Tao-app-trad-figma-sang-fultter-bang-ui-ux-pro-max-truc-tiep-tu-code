@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,11 +55,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getActivity();
-    final logs = _filteredLogs(snapshot.logs);
-    final suspiciousCount = snapshot.logs
-        .where((log) => log.status == 'suspicious')
-        .length;
+    final snapshotAsync = ref.watch(profileActivitySnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -88,19 +86,37 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.compact,
           density: VitDensity.compact,
-          children: [
-            if (suspiciousCount > 0) _SuspiciousBanner(count: suspiciousCount),
-            _ActivityFilterRow(
-              filters: snapshot.filters,
-              activeFilter: _activeFilter,
-              onChanged: _setFilter,
-            ),
-            if (logs.isEmpty)
-              const _EmptyActivity()
-            else
-              for (final log in logs) _ActivityCard(log: log),
-            const _ActivityFooter(),
-          ],
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Không tải được dữ liệu',
+                message: 'Vui lòng thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(profileActivitySnapshotProvider),
+              ),
+            ],
+            data: (snapshot) {
+              final logs = _filteredLogs(snapshot.logs);
+              final suspiciousCount = snapshot.logs
+                  .where((log) => log.status == 'suspicious')
+                  .length;
+              return [
+                if (suspiciousCount > 0)
+                  _SuspiciousBanner(count: suspiciousCount),
+                _ActivityFilterRow(
+                  filters: snapshot.filters,
+                  activeFilter: _activeFilter,
+                  onChanged: _setFilter,
+                ),
+                if (logs.isEmpty)
+                  const _EmptyActivity()
+                else
+                  for (final log in logs) _ActivityCard(log: log),
+                const _ActivityFooter(),
+              ];
+            },
+          ),
         ),
       ),
     );
@@ -121,7 +137,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
   }
 
   void _setFilter(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _activeFilter = id);
   }
 

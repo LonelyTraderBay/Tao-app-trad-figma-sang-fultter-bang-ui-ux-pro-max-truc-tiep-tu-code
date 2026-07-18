@@ -262,7 +262,7 @@ class _ShareReceiptButton extends StatelessWidget {
     return VitCtaButton(
       key: PredictionOrderReceiptPage.shareKey,
       onPressed: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Chia sẻ chi tiết lệnh sẽ sớm ra mắt')),
         );

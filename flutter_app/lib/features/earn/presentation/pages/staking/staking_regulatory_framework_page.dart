@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -128,7 +130,7 @@ class _StakingRegulatoryFrameworkPageState
                               ],
                               activeKey: _activeTab!,
                               onChanged: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _activeTab = id);
                               },
                             ),
@@ -157,7 +159,7 @@ class _StakingRegulatoryFrameworkPageState
   }
 
   Future<void> _openLicenseSheet(StakingLicenseDraft license) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

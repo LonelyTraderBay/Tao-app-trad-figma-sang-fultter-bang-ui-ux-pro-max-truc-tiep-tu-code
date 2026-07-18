@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -104,7 +106,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                 VitHeaderActionItem(
                   type: VitHeaderActionType.settings,
                   onPressed: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     context.go(snapshot.settingsRoute);
                   },
                 ),
@@ -136,14 +138,14 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                           _SecurityFeatures(
                             features: snapshot.features,
                             onOpen: (route) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(route);
                             },
                           ),
                           _QuickActions(
                             actions: snapshot.quickActions,
                             onOpen: (route) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(route);
                             },
                           ),
@@ -160,7 +162,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                             variant: VitCardVariant.inner,
                             padding: AppSpacing.zeroInsets,
                             onTap: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(snapshot.loginHistoryRoute);
                             },
                             child: Padding(
@@ -332,7 +334,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                             body:
                                 'Kiểm tra thiết bị gần đây trước khi bật whitelist P2P nghiêm ngặt hơn.',
                             onTap: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(trustedDevicesRoute);
                             },
                           ),
@@ -346,7 +348,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                             body:
                                 'Giữ tin nhắn thanh toán và escrow dễ nhận biết trước khi đổi quy tắc whitelist.',
                             onTap: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(antiPhishingRoute);
                             },
                           ),
@@ -356,7 +358,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           VitCtaButton(
                             density: VitDensity.compact,
                             onPressed: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               context.go(AppRoutePaths.p2pSecurityCenter);
                             },
                             child: const Text('Quay lại Trung tâm bảo mật'),

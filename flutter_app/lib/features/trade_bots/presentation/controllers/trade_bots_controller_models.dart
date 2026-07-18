@@ -56,7 +56,7 @@ final class TradeBotEmergencyStopController {
     return null;
   }
 
-  TradeBotEmergencyStopResult submit(TradeBotEmergencyStopDraft draft) {
+  Future<TradeBotEmergencyStopResult> submit(TradeBotEmergencyStopDraft draft) {
     return _repository.submitBotEmergencyStop(draft);
   }
 }
@@ -82,7 +82,7 @@ final class TradeBotSecuritySettingsController {
   final TradeBotSecuritySettingsViewState state;
   final TradingBotsRepository _repository;
 
-  TradeBotSecuritySettingsResult saveTwoFa(bool enabled) {
+  Future<TradeBotSecuritySettingsResult> saveTwoFa(bool enabled) {
     return _repository.patchBotSecuritySettings(
       TradeBotSecuritySettingsDraft(twoFaEnabled: enabled),
     );

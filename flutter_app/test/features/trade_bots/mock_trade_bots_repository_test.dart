@@ -122,8 +122,8 @@ void main() {
     });
 
     group('write / action methods', () {
-      test('createBotTaxReportExport', () {
-        final result = repo.createBotTaxReportExport(
+      test('createBotTaxReportExport', () async {
+        final result = await repo.createBotTaxReportExport(
           const TradeBotTaxReportExportRequest(
             year: '2025',
             reportTypeIds: ['irs-8949', 'turbotax'],
@@ -133,12 +133,12 @@ void main() {
         expect(result, isA<TradeBotTaxReportExportResult>());
       });
 
-      test('submitBotAction / createTradingBot', () {
-        final action = repo.submitBotAction(
+      test('submitBotAction / createTradingBot', () async {
+        final action = await repo.submitBotAction(
           const TradeBotActionRequest(botId: 'bot1', action: 'pause'),
         );
         expect(action, isA<TradeBotActionResult>());
-        final created = repo.createTradingBot(
+        final created = await repo.createTradingBot(
           const TradeBotCreateRequest(
             strategyId: 'dca',
             params: {'pair': 'BTC/USDT'},
@@ -147,8 +147,8 @@ void main() {
         expect(created, isA<TradeBotCreateResult>());
       });
 
-      test('submitBotEmergencyStop', () {
-        final result = repo.submitBotEmergencyStop(
+      test('submitBotEmergencyStop', () async {
+        final result = await repo.submitBotEmergencyStop(
           const TradeBotEmergencyStopDraft(
             reasonId: 'crash',
             closePositions: true,
@@ -158,23 +158,23 @@ void main() {
         expect(result, isA<TradeBotEmergencyStopResult>());
       });
 
-      test('patchBotSecuritySettings', () {
-        final result = repo.patchBotSecuritySettings(
+      test('patchBotSecuritySettings', () async {
+        final result = await repo.patchBotSecuritySettings(
           const TradeBotSecuritySettingsDraft(twoFaEnabled: false),
         );
         expect(result, isA<TradeBotSecuritySettingsResult>());
         expect(result.status, 'saved');
       });
 
-      test('createBotHistoryExport', () {
-        final export = repo.createBotHistoryExport(
+      test('createBotHistoryExport', () async {
+        final export = await repo.createBotHistoryExport(
           const TradeBotHistoryExportRequest(format: 'csv'),
         );
         expect(export, isA<TradeBotHistoryExportResult>());
       });
 
-      test('runBotBacktest', () {
-        final result = repo.runBotBacktest(
+      test('runBotBacktest', () async {
+        final result = await repo.runBotBacktest(
           const TradeBotBacktestRequest(
             strategyId: 'grid',
             pair: 'BTC/USDT',
@@ -185,8 +185,8 @@ void main() {
         expect(result, isA<TradeBotBacktestResult>());
       });
 
-      test('runBotOptimization', () {
-        final result = repo.runBotOptimization(
+      test('runBotOptimization', () async {
+        final result = await repo.runBotOptimization(
           const TradeBotOptimizationRequest(
             targetId: 'sharpe',
             gridCount: 25,

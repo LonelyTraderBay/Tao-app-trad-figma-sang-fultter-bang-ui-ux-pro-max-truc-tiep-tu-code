@@ -201,6 +201,8 @@ final class _StatStyle {
 }
 
 void _showComingSoon(BuildContext context, String title, String message) {
-  HapticFeedback.selectionClick();
-  showVitNoticeSheet(context: context, title: title, message: message);
+  unawaited(HapticFeedback.selectionClick());
+  unawaited(
+    showVitNoticeSheet(context: context, title: title, message: message),
+  );
 }

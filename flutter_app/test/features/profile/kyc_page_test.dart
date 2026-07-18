@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-159 mock repository exposes KYC BE draft', () {
-    final snapshot = const MockProfileRepository().getKyc();
+  test('SC-159 mock repository exposes KYC BE draft', () async {
+    final snapshot = await const MockProfileRepository().getKyc();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-kyc');
     expect(snapshot.actionDraft, 'POST /kyc/submission-step');

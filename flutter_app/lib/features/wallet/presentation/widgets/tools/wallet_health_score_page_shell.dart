@@ -107,54 +107,56 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
   }
 
   void _showRecommendationSheet(WalletHealthRecommendation recommendation) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: _healthPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return VitSheetPanel(
-          title: recommendation.actionLabel,
-          child: VitPageContent(
-            padding: VitContentPadding.none,
-            gap: VitContentGap.tight,
-            density: VitDensity.compact,
-            children: [
-              VitStatusPill(
-                label: '${recommendation.impact} impact advisory',
-                status: VitStatusPillStatus.warning,
-                size: VitStatusPillSize.sm,
-              ),
-              Text(
-                recommendation.description,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: 1.45,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: _healthPanel,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return VitSheetPanel(
+            title: recommendation.actionLabel,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              gap: VitContentGap.tight,
+              density: VitDensity.compact,
+              children: [
+                VitStatusPill(
+                  label: '${recommendation.impact} impact advisory',
+                  status: VitStatusPillStatus.warning,
+                  size: VitStatusPillSize.sm,
                 ),
-              ),
-              Text(
-                'This is an advisory health signal, not financial advice. Review account settings and live risk before taking action.',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: 1.32,
-                ),
-              ),
-              VitCtaButton(
-                key: WalletHealthScorePage.sheetCloseKey,
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  'Close',
+                Text(
+                  recommendation.description,
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
+                    color: AppColors.text2,
+                    height: 1.45,
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+                Text(
+                  'This is an advisory health signal, not financial advice. Review account settings and live risk before taking action.',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: 1.32,
+                  ),
+                ),
+                VitCtaButton(
+                  key: WalletHealthScorePage.sheetCloseKey,
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Close',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

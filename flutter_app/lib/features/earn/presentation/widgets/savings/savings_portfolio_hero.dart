@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -308,7 +310,7 @@ class _HeroAction extends StatelessWidget {
       density: VitDensity.compact,
       padding: EarnSpacingTokens.earnHorizontalPaddingX2,
       onPressed: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         onTap();
       },
       leading: Icon(icon),

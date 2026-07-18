@@ -397,7 +397,7 @@ class _ClaimCard extends StatelessWidget {
       radius: VitCardRadius.standard,
       padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.p2pClaim(claim.id));
       },
       child: Column(

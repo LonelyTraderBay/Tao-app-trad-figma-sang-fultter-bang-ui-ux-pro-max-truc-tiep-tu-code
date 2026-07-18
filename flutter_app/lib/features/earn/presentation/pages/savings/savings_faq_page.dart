@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -125,7 +127,7 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
                             activeId: _activeCategoryId,
                             counts: _categoryCounts(snapshot.items),
                             onChanged: (id) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeCategoryId = id);
                             },
                           ),
@@ -149,7 +151,7 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
                               items: filtered,
                               expandedIds: _expandedIds,
                               onToggle: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   if (!_expandedIds.add(id)) {
                                     _expandedIds.remove(id);

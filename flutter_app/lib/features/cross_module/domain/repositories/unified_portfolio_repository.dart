@@ -3,5 +3,5 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/unified_
 /// Data source contract for the unified (cross-module) portfolio
 /// dashboard.
 abstract interface class UnifiedPortfolioRepository {
-  UnifiedPortfolioSnapshot getDashboard();
+  Future<UnifiedPortfolioSnapshot> getDashboard();
 }

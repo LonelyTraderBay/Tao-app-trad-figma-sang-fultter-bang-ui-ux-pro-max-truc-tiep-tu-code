@@ -143,7 +143,7 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
       _returnToFutures();
       return;
     }
-    showVitNoticeSheet(
+    await showVitNoticeSheet(
       context: context,
       title: 'Điều chỉnh đòn bẩy thất bại',
       message:

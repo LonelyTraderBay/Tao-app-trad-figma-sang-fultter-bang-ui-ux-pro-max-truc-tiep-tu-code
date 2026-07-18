@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-181 mock repository exposes analytics BE draft', () {
-    final snapshot = const MockAdminRepository().getAnalytics();
+  test('SC-181 mock repository exposes analytics BE draft', () async {
+    final snapshot = await const MockAdminRepository().getAnalytics();
 
     expect(snapshot.endpoint, '/api/mobile/admin/admin-analytics');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

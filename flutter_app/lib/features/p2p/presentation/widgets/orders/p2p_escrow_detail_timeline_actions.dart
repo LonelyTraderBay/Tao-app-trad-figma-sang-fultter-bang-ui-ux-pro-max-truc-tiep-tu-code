@@ -159,7 +159,7 @@ class _OrderLink extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: P2PSpacingTokens.p2pEscrowDetailCardPadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.p2pOrder(orderId));
       },
       child: Row(

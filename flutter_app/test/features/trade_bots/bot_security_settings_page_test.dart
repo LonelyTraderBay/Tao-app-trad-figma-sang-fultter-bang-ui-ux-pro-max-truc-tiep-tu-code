@@ -35,7 +35,7 @@ void main() {
     () async {
       final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
       final snapshot = await repo.getBotSecuritySettings();
-      final result = repo.patchBotSecuritySettings(
+      final result = await repo.patchBotSecuritySettings(
         const TradeBotSecuritySettingsDraft(twoFaEnabled: false),
       );
 

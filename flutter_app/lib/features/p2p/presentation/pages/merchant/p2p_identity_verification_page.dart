@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,7 +132,7 @@ class _P2PIdentityVerificationPageState
                               _DocumentTypePicker(
                                 documents: snapshot.documentTypes,
                                 onSelected: (document) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _selectedTypeId = document.id);
                                 },
                               )
@@ -141,24 +143,26 @@ class _P2PIdentityVerificationPageState
                                 frontUploaded: _frontUploaded,
                                 backUploaded: _backUploaded,
                                 onFrontUpload: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _frontUploaded = true);
                                 },
                                 onBackUpload: _frontUploaded
                                     ? () {
-                                        HapticFeedback.selectionClick();
+                                        unawaited(
+                                          HapticFeedback.selectionClick(),
+                                        );
                                         setState(() => _backUploaded = true);
                                       }
                                     : null,
                                 onFrontRemove: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _frontUploaded = false;
                                     _backUploaded = false;
                                   });
                                 },
                                 onBackRemove: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _backUploaded = false);
                                 },
                               ),
@@ -167,7 +171,9 @@ class _P2PIdentityVerificationPageState
                                 key: P2PIdentityVerificationPage.submitKey,
                                 onPressed: _frontUploaded && _backUploaded
                                     ? () {
-                                        HapticFeedback.selectionClick();
+                                        unawaited(
+                                          HapticFeedback.selectionClick(),
+                                        );
                                         context.go(snapshot.nextRoute);
                                       }
                                     : null,

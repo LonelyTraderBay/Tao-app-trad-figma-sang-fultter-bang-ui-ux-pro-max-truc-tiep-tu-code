@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -220,7 +222,7 @@ class _LaunchpadNotifSoundPageState
   }
 
   void _markChanged(VoidCallback update) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       update();
       _hasChanges = true;
@@ -253,12 +255,12 @@ class _LaunchpadNotifSoundPageState
   }
 
   void _previewSound(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _playingPreviewId = id);
   }
 
   void _save() {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() {
       _hasChanges = false;
       _saved = true;

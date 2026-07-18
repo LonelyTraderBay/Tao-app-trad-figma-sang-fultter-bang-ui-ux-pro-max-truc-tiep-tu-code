@@ -3,10 +3,26 @@ import 'package:vit_trade_flutter/features/cross_module/domain/repositories/cros
 
 final class MockCrossModuleAnalyticsRepository
     implements CrossModuleAnalyticsRepository {
-  const MockCrossModuleAnalyticsRepository();
+  const MockCrossModuleAnalyticsRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('cross_module_analytics_mock_fetch_failed');
+    }
+  }
 
   @override
-  CrossModuleAnalyticsSnapshot getAnalytics() {
+  Future<CrossModuleAnalyticsSnapshot> getAnalytics() async {
+    await _simulateNetwork();
     return const CrossModuleAnalyticsSnapshot(
       endpoint: '/api/mobile/cross-module/cross-module-analytics',
       actionDraft: 'read-only or local navigation action',

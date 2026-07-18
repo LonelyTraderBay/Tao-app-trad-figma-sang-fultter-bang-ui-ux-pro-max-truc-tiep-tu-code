@@ -200,11 +200,13 @@ class _ReportTab extends StatelessWidget {
   }
 
   void _submitReport(BuildContext context) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: 'Submit Report',
-      message: 'Gửi báo cáo sẽ sớm ra mắt',
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Submit Report',
+        message: 'Gửi báo cáo sẽ sớm ra mắt',
+      ),
     );
   }
 }

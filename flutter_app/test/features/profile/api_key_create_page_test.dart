@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-162 mock repository exposes API key create BE draft', () {
-    final snapshot = const MockProfileRepository().getApiKeyCreate();
+  test('SC-162 mock repository exposes API key create BE draft', () async {
+    final snapshot = await const MockProfileRepository().getApiKeyCreate();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-api-create');
     expect(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -192,7 +194,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
 
   void _setFilter(_NotificationFilter filter) {
     if (_filter == filter) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _filter = filter);
   }
 
@@ -205,17 +207,17 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
   }
 
   void _markAllRead() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref.read(notificationsStateProvider.notifier).markAllRead();
   }
 
   void _deleteNotification(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref.read(notificationsStateProvider.notifier).deleteNotification(id);
   }
 
   void _openNotification(AppNotificationDraft notification) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (!notification.isRead) {
       ref.read(notificationsStateProvider.notifier).markRead(notification.id);
     }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -59,7 +61,7 @@ class CopyTradingSmallButton extends StatelessWidget {
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary15),
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         onTap();
       },
       child: Text(

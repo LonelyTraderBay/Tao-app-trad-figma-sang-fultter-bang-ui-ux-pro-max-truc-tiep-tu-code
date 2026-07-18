@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -399,7 +401,7 @@ class _StartSavingsCard extends StatelessWidget {
           VitCtaButton(
             key: SavingsGuideKeys.startButton,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.savingsRoute);
             },
             trailing: const Icon(Icons.arrow_forward_rounded),

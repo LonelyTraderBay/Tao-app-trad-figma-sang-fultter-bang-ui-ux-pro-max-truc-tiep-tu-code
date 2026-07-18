@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,7 +132,7 @@ class _StakingAuditReportsPageState
                               ],
                               activeKey: _activeTab!,
                               onChanged: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _activeTab = id;
                                   _feedback = null;
@@ -175,17 +177,17 @@ class _StakingAuditReportsPageState
   }
 
   void _downloadReport(StakingAuditReportDraft report) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _feedback = 'Preparing ${report.title} PDF export');
   }
 
   void _viewReport(StakingAuditReportDraft report) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _feedback = 'Opening ${report.title}');
   }
 
   void _openBugBounty() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _feedback = 'Opening Immunefi bug bounty program');
   }
 }

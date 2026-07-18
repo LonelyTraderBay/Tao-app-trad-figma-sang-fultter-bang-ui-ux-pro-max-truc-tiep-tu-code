@@ -123,7 +123,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
         onNameChanged: () => setState(() {}),
         onDescriptionChanged: () => setState(() {}),
         onTypeChanged: (value) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _businessType = value);
         },
       ),
@@ -142,7 +142,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
         reviewNotice: snapshot.reviewNotice,
         agreementAccepted: _agreementAccepted,
         onToggleAgreement: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _agreementAccepted = !_agreementAccepted);
         },
       ),
@@ -166,18 +166,18 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
 
   void _next() {
     if (_step >= _steps.length - 1) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _step += 1);
   }
 
   void _previous() {
     if (_step <= 0) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _step -= 1);
   }
 
   void _toggleDocument(P2PMerchantDocumentDraft document) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_uploadedDocuments.contains(document.id)) {
         _uploadedDocuments.remove(document.id);
@@ -189,7 +189,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
 
   Future<void> _submit(P2PMerchantApplySnapshot snapshot) async {
     if (!_canProceed(snapshot) || _submitting) return;
-    HapticFeedback.lightImpact();
+    unawaited(HapticFeedback.lightImpact());
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 320));
     if (!mounted) return;

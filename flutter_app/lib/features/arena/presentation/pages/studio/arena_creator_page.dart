@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -140,7 +142,7 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                             activeKey: _activeTab.name,
                             variant: VitTabBarVariant.segment,
                             onChanged: (key) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeTab = _tabFromKey(key));
                             },
                           ),

@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-164 mock repository exposes VIP BE draft', () {
-    final snapshot = const MockProfileRepository().getVip();
+  test('SC-164 mock repository exposes VIP BE draft', () async {
+    final snapshot = await const MockProfileRepository().getVip();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-vip');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

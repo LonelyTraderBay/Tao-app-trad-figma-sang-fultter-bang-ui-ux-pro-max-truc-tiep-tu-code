@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -394,7 +396,7 @@ class _ArenaGovernanceGatePageState
   }
 
   void _setPrivacy(String value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _privacy = value;
       _statusLabel = null;
@@ -402,22 +404,22 @@ class _ArenaGovernanceGatePageState
   }
 
   void _selectDomain(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _domainId = id);
   }
 
   void _selectChallengeType(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _challengeTypeId = id);
   }
 
   void _showGuidance() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _statusLabel = 'Public room cần checklist đầy đủ');
   }
 
   void _applySuggestion(ArenaGovernanceSuggestionDraft suggestion) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (suggestion.id == 'closest_guess') {
         _challengeTypeId = 'closest_guess';
@@ -434,12 +436,12 @@ class _ArenaGovernanceGatePageState
   }
 
   void _saveDraft() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _statusLabel = 'Đã lưu nháp');
   }
 
   void _continue() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final result = _governanceResult();
     setState(() {
       _statusLabel = result.canProceed

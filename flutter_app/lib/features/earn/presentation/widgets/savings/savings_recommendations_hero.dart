@@ -123,7 +123,7 @@ class _ProfileCard extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.riskAssessmentRoute);
             },
             child: Text(

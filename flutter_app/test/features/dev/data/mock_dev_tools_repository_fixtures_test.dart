@@ -14,18 +14,18 @@ import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entitie
 /// `lib/features/dev/data/providers/dev_tools_repository_provider.dart`).
 void main() {
   group('MockRouteCheckerRepository fixture pins', () {
-    const repository = MockRouteCheckerRepository();
+    const repository = MockRouteCheckerRepository(loadDelay: Duration.zero);
 
-    test('routes total matches the subtitle claim of 43 routes', () {
-      final snapshot = repository.getRouteChecker();
+    test('routes total matches the subtitle claim of 43 routes', () async {
+      final snapshot = await repository.getRouteChecker();
 
       expect(snapshot.subtitle, contains('43 routes'));
       expect(snapshot.routes, hasLength(43));
       expect(snapshot.totalRoutes, 43);
     });
 
-    test('first and last route pin path, name, and phase', () {
-      final routes = repository.getRouteChecker().routes;
+    test('first and last route pin path, name, and phase', () async {
+      final routes = (await repository.getRouteChecker()).routes;
 
       expect(routes.first.path, '/earn/staking/terms');
       expect(routes.first.name, 'Terms of Service');
@@ -37,30 +37,36 @@ void main() {
   });
 
   group('MockPerformanceMonitorRepository fixture pins', () {
-    const repository = MockPerformanceMonitorRepository();
+    const repository = MockPerformanceMonitorRepository(
+      loadDelay: Duration.zero,
+    );
 
-    test('summaryMetrics pin FCP, LCP, and Load Time headline values', () {
-      final metrics = repository.getPerformanceMonitor().summaryMetrics;
+    test(
+      'summaryMetrics pin FCP, LCP, and Load Time headline values',
+      () async {
+        final metrics =
+            (await repository.getPerformanceMonitor()).summaryMetrics;
 
-      expect(metrics[0].label, 'FCP');
-      expect(metrics[0].value, '6244ms');
-      expect(metrics[0].tone, PerformanceScoreTone.poor);
-      expect(metrics[1].label, 'LCP');
-      expect(metrics[1].value, '0ms');
-      expect(metrics[2].label, 'Load Time');
-      expect(metrics[2].value, '0.00s');
-    });
+        expect(metrics[0].label, 'FCP');
+        expect(metrics[0].value, '6244ms');
+        expect(metrics[0].tone, PerformanceScoreTone.poor);
+        expect(metrics[1].label, 'LCP');
+        expect(metrics[1].value, '0ms');
+        expect(metrics[2].label, 'Load Time');
+        expect(metrics[2].value, '0.00s');
+      },
+    );
 
-    test('memory usage pins the used/limit/percent labels', () {
-      final memory = repository.getPerformanceMonitor().memory;
+    test('memory usage pins the used/limit/percent labels', () async {
+      final memory = (await repository.getPerformanceMonitor()).memory;
 
       expect(memory.usedLabel, '87.5 MB');
       expect(memory.limitLabel, 'of 3586 MB limit');
       expect(memory.percentLabel, '2.4%');
     });
 
-    test('lazyChunks and resources pin the reference counts', () {
-      final snapshot = repository.getPerformanceMonitor();
+    test('lazyChunks and resources pin the reference counts', () async {
+      final snapshot = await repository.getPerformanceMonitor();
 
       expect(snapshot.lazyChunks, hasLength(3));
       expect(snapshot.resources, hasLength(10));
@@ -75,10 +81,12 @@ void main() {
   });
 
   group('MockMissingScreensShowcaseRepository fixture pins', () {
-    const repository = MockMissingScreensShowcaseRepository();
+    const repository = MockMissingScreensShowcaseRepository(
+      loadDelay: Duration.zero,
+    );
 
-    test('tabs and newScreens pin ids and label counts', () {
-      final snapshot = repository.getShowcase();
+    test('tabs and newScreens pin ids and label counts', () async {
+      final snapshot = await repository.getShowcase();
 
       expect(snapshot.tabs, hasLength(2));
       expect(snapshot.tabs[0].id, 'new');
@@ -97,8 +105,8 @@ void main() {
       expect(snapshot.newScreens.first.route, '/auth/reset-password');
     });
 
-    test('v2Pages and flowConnections pin the reference counts', () {
-      final snapshot = repository.getShowcase();
+    test('v2Pages and flowConnections pin the reference counts', () async {
+      final snapshot = await repository.getShowcase();
 
       expect(snapshot.v2Pages, hasLength(4));
       expect(snapshot.flowConnections, hasLength(7));
@@ -107,10 +115,10 @@ void main() {
   });
 
   group('MockDesignSystemRepository fixture pins', () {
-    const repository = MockDesignSystemRepository();
+    const repository = MockDesignSystemRepository(loadDelay: Duration.zero);
 
-    test('tokens and swatches pin design-token values', () {
-      final snapshot = repository.getDesignSystem();
+    test('tokens and swatches pin design-token values', () async {
+      final snapshot = await repository.getDesignSystem();
 
       expect(snapshot.tokens, hasLength(9));
       expect(snapshot.tokens.first.label, '--input-height');
@@ -123,15 +131,18 @@ void main() {
       expect(primarySwatch.value, '#E58A00');
     });
 
-    test('ctaDemos and footer copy pin the reference counts and text', () {
-      final snapshot = repository.getDesignSystem();
+    test(
+      'ctaDemos and footer copy pin the reference counts and text',
+      () async {
+        final snapshot = await repository.getDesignSystem();
 
-      expect(snapshot.ctaDemos, hasLength(6));
-      expect(snapshot.inputDemos, hasLength(4));
-      expect(
-        snapshot.footerTitle,
-        'VitTrade Design System v2.4 — iPhone 16 Pro Max (440×956pt)',
-      );
-    });
+        expect(snapshot.ctaDemos, hasLength(6));
+        expect(snapshot.inputDemos, hasLength(4));
+        expect(
+          snapshot.footerTitle,
+          'VitTrade Design System v2.4 — iPhone 16 Pro Max (440×956pt)',
+        );
+      },
+    );
   });
 }

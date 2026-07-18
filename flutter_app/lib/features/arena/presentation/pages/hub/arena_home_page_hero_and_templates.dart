@@ -222,10 +222,12 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
   void _scrollToTemplates() {
     final context = _templatesAnchorKey.currentContext;
     if (context == null) return;
-    Scrollable.ensureVisible(
-      context,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOut,
+    unawaited(
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -118,7 +120,7 @@ class _SavingsNotificationsPageState
                     active: _activeTab!,
                     unreadCount: unreadCount,
                     onChanged: (tab) {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       setState(() => _activeTab = tab);
                     },
                   ),
@@ -163,7 +165,7 @@ class _SavingsNotificationsPageState
   }
 
   void _markRead(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _history = [
         for (final notification in _history!)
@@ -175,7 +177,7 @@ class _SavingsNotificationsPageState
   }
 
   void _markAllRead() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _history = [
         for (final notification in _history!) notification.copyWith(read: true),
@@ -184,12 +186,12 @@ class _SavingsNotificationsPageState
   }
 
   void _clearAll() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _history = const []);
   }
 
   void _toggleSetting(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _settings = [
         for (final setting in _settings!)

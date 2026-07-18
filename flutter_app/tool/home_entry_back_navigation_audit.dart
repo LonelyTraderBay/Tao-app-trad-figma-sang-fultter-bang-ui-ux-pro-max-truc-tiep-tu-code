@@ -442,7 +442,10 @@ const _homeEntryContractRules = [
     id: 'HEB-C01',
     area: 'Home outbound',
     file: 'lib/features/home/presentation/pages/home_page_state.dart',
-    requiredSnippets: ['context.push(path);'],
+    // GĐ4-F6: lint unawaited_futures bọc push thành
+    // `unawaited(context.push(path));` — matcher nhận cả 2 dạng cũ/mới
+    // (bài học audit-tool-text-matchers: đổi call site phải grep tool/).
+    requiredSnippets: ['context.push(path)'],
     forbiddenSnippets: ['context.go(path);'],
     notes: 'Home feature/product entries preserve route history.',
   ),

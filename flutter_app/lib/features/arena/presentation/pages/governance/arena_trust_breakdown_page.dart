@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -127,7 +129,7 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;
@@ -296,7 +298,7 @@ class _CreatorProfileLink extends StatelessWidget {
     return VitCard(
       key: ArenaTrustBreakdownPage.creatorLinkKey,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.arenaCreator(creator.id));
       },
       padding: ArenaSpacingTokens.arenaTrustCardPadding,
@@ -359,7 +361,7 @@ class _SafetyLink extends StatelessWidget {
     return VitCard(
       key: ArenaTrustBreakdownPage.safetyLinkKey,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.arenaSafety);
       },
       padding: ArenaSpacingTokens.arenaTrustCardPadding,

@@ -34,8 +34,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-320 mock repository exposes enterprise states BE draft', () {
-    final snapshot = const MockEnterpriseStatesRepository().getReference();
+  test('SC-320 mock repository exposes enterprise states BE draft', () async {
+    final snapshot = await const MockEnterpriseStatesRepository()
+        .getReference();
 
     expect(
       snapshot.endpoint,
@@ -66,7 +67,14 @@ void main() {
   testWidgets('SC-320 renders enterprise state kit baseline structure', (
     tester,
   ) async {
-    final snapshot = const MockEnterpriseStatesRepository().getReference();
+    // loadDelay: Duration.zero — gọi trực tiếp Mock*.get() bên trong
+    // testWidgets() (khác với test() thường) chạy trong FakeAsync zone;
+    // delay mặc định 300ms cần tester.pump(duration) để đẩy fake clock,
+    // và lệnh gọi NÀY đứng TRƯỚC pumpEnterpriseStates nên không có pump
+    // nào đẩy nó cả — treo vô thời hạn nếu không ép loadDelay: 0.
+    final snapshot = await const MockEnterpriseStatesRepository(
+      loadDelay: Duration.zero,
+    ).getReference();
     await pumpEnterpriseStates(tester);
 
     expect(find.byType(EnterpriseStatesPage), findsOneWidget);

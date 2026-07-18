@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -169,19 +171,19 @@ class _ArenaUniversalPresetLibraryPageState
   }
 
   void _selectSection(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _activeSection = id);
   }
 
   void _toggleDomain(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _expandedDomainId = _expandedDomainId == id ? null : id;
     });
   }
 
   void _selectSuggestionDomain(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _suggestionDomainId = id;
       _selectedSuggestion = null;
@@ -189,17 +191,17 @@ class _ArenaUniversalPresetLibraryPageState
   }
 
   void _selectSuggestion(String text) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _selectedSuggestion = text);
   }
 
   void _selectDemo(int index) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _activeDemoIndex = index);
   }
 
   void _selectTitle(String title) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _selectedTitle = title);
   }
 

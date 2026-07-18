@@ -31,7 +31,7 @@ void main() {
   test('SC-125 mock repository exposes backtesting BE draft', () async {
     final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
     final snapshot = await repo.getBotBacktesting();
-    final result = repo.runBotBacktest(
+    final result = await repo.runBotBacktest(
       const TradeBotBacktestRequest(
         strategyId: 'grid',
         pair: 'BTC/USDT',

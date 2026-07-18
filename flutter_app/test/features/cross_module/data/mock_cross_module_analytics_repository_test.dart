@@ -10,11 +10,13 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/cross_mo
 /// test/features/cross_module/mock_cross_module_analytics_repository_test.dart
 /// only asserts the shape of (greaterThan(0)/hasLength).
 void main() {
-  const repository = MockCrossModuleAnalyticsRepository();
+  const repository = MockCrossModuleAnalyticsRepository(
+    loadDelay: Duration.zero,
+  );
 
   group('MockCrossModuleAnalyticsRepository smoke test', () {
-    test('getAnalytics pins the endpoint, tabs and module fixture', () {
-      final snapshot = repository.getAnalytics();
+    test('getAnalytics pins the endpoint, tabs and module fixture', () async {
+      final snapshot = await repository.getAnalytics();
 
       expect(snapshot, isA<CrossModuleAnalyticsSnapshot>());
       expect(
@@ -34,8 +36,8 @@ void main() {
       expect(snapshot.monthlyPerformance.first.month, 'Jan');
     });
 
-    test('getAnalytics pins the derived aggregate stats', () {
-      final snapshot = repository.getAnalytics();
+    test('getAnalytics pins the derived aggregate stats', () async {
+      final snapshot = await repository.getAnalytics();
 
       expect(snapshot.averageRoi, 10.45);
       expect(snapshot.totalTrades, 372);

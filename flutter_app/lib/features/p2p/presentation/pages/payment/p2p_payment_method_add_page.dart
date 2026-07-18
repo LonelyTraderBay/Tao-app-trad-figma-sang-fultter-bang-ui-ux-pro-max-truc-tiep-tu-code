@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,7 +138,7 @@ class _P2PPaymentMethodAddPageState
               options: options,
               selected: _selectedMethod,
               onSelected: (value) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _selectedMethod = value);
               },
             ),
@@ -206,7 +208,7 @@ class _P2PPaymentMethodAddPageState
 
   void _changeType(P2PPaymentAddType type) {
     if (_type == type) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _type = type;
       _selectedMethod = null;

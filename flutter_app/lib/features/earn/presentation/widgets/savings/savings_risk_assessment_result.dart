@@ -106,7 +106,7 @@ class _ResultView extends StatelessWidget {
         VitCtaButton(
           key: SavingsRiskAssessmentPage.recommendationsButtonKey,
           onPressed: () {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             context.go(snapshot.recommendationsRoute);
           },
           trailing: const Icon(Icons.arrow_forward_rounded),
@@ -120,7 +120,7 @@ class _ResultView extends StatelessWidget {
                 variant: VitCtaButtonVariant.secondary,
                 height: AppSpacing.buttonCompact,
                 onPressed: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   context.go(snapshot.savingsRoute);
                 },
                 leading: const Icon(Icons.savings_outlined),

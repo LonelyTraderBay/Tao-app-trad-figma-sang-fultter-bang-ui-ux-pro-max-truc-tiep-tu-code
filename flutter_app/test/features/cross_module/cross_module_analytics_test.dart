@@ -29,33 +29,37 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-322 mock repository exposes cross-module analytics BE draft', () {
-    final snapshot = const MockCrossModuleAnalyticsRepository().getAnalytics();
+  test(
+    'SC-322 mock repository exposes cross-module analytics BE draft',
+    () async {
+      final snapshot = await const MockCrossModuleAnalyticsRepository()
+          .getAnalytics();
 
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/cross-module/cross-module-analytics',
-    );
-    expect(snapshot.actionDraft, 'read-only or local navigation action');
-    expect(snapshot.title, 'Cross-Module Analytics');
-    expect(snapshot.backRoute, AppRoutePaths.home);
-    expect(snapshot.averageRoi.toStringAsFixed(1), '10.4');
-    expect(snapshot.totalTrades, 372);
-    expect(snapshot.totalVolume, 281690);
-    expect(snapshot.bestRoiModule.name, 'Prediction Markets');
-    expect(snapshot.mostActiveModule.name, 'Spot Trading');
-    expect(snapshot.contractNotes, contains('Open Arena is points-only'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        CrossModuleAnalyticsScreenState.loading,
-        CrossModuleAnalyticsScreenState.empty,
-        CrossModuleAnalyticsScreenState.error,
-        CrossModuleAnalyticsScreenState.offline,
-        CrossModuleAnalyticsScreenState.realtimeRefresh,
-      ]),
-    );
-  });
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/cross-module/cross-module-analytics',
+      );
+      expect(snapshot.actionDraft, 'read-only or local navigation action');
+      expect(snapshot.title, 'Cross-Module Analytics');
+      expect(snapshot.backRoute, AppRoutePaths.home);
+      expect(snapshot.averageRoi.toStringAsFixed(1), '10.4');
+      expect(snapshot.totalTrades, 372);
+      expect(snapshot.totalVolume, 281690);
+      expect(snapshot.bestRoiModule.name, 'Prediction Markets');
+      expect(snapshot.mostActiveModule.name, 'Spot Trading');
+      expect(snapshot.contractNotes, contains('Open Arena is points-only'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          CrossModuleAnalyticsScreenState.loading,
+          CrossModuleAnalyticsScreenState.empty,
+          CrossModuleAnalyticsScreenState.error,
+          CrossModuleAnalyticsScreenState.offline,
+          CrossModuleAnalyticsScreenState.realtimeRefresh,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-322 renders performance analytics baseline', (tester) async {
     await pumpAnalytics(tester);

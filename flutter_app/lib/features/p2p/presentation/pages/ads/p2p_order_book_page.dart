@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -127,7 +128,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                             snapshot: snapshot,
                             selectedAsset: _selectedAsset,
                             onChanged: (asset) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _selectedAsset = asset);
                             },
                           ),
@@ -167,7 +168,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
 
   Future<void> _refresh() async {
     if (_isRefreshing) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _isRefreshing = true);
     await Future<void>.delayed(const Duration(milliseconds: 600));
     if (!mounted) return;

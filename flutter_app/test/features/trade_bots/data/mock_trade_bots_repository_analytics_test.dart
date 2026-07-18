@@ -92,22 +92,25 @@ void main() {
       },
     );
 
-    test('runBotBacktest pins the queued status, report id and progress', () {
-      final result = repo.runBotBacktest(
-        const TradeBotBacktestRequest(
-          strategyId: 'grid',
-          pair: 'BTC/USDT',
-          dateRangeId: '6m',
-          initialCapital: 1000,
-        ),
-      );
-      expect(result.status, 'queued');
-      expect(result.reportId, 'BOT-BACKTEST-125');
-      expect(result.progress, 0);
-    });
+    test(
+      'runBotBacktest pins the queued status, report id and progress',
+      () async {
+        final result = await repo.runBotBacktest(
+          const TradeBotBacktestRequest(
+            strategyId: 'grid',
+            pair: 'BTC/USDT',
+            dateRangeId: '6m',
+            initialCapital: 1000,
+          ),
+        );
+        expect(result.status, 'queued');
+        expect(result.reportId, 'BOT-BACKTEST-125');
+        expect(result.progress, 0);
+      },
+    );
 
-    test('runBotOptimization pins the queued status, job id and eta', () {
-      final result = repo.runBotOptimization(
+    test('runBotOptimization pins the queued status, job id and eta', () async {
+      final result = await repo.runBotOptimization(
         const TradeBotOptimizationRequest(
           targetId: 'sharpe',
           gridCount: 25,
@@ -119,8 +122,8 @@ void main() {
       expect(result.estimatedMinutes, 3);
     });
 
-    test('createBotTaxReportExport pins the generated export id', () {
-      final result = repo.createBotTaxReportExport(
+    test('createBotTaxReportExport pins the generated export id', () async {
+      final result = await repo.createBotTaxReportExport(
         const TradeBotTaxReportExportRequest(
           year: '2025',
           reportTypeIds: ['irs-8949', 'turbotax'],

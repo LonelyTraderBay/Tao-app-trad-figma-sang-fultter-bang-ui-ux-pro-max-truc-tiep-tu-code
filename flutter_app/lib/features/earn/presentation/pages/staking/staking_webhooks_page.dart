@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -128,12 +130,14 @@ class StakingWebhooksPage extends ConsumerWidget {
     BuildContext context,
     StakingWebhooksSnapshot snapshot,
   ) {
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.transparent,
-      builder: (context) =>
-          _SheetFrame(child: _CreateWebhookSheet(snapshot: snapshot)),
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.transparent,
+        builder: (context) =>
+            _SheetFrame(child: _CreateWebhookSheet(snapshot: snapshot)),
+      ),
     );
   }
 }
@@ -256,7 +260,7 @@ class _WebhookCard extends StatelessWidget {
                 variant: VitIconButtonVariant.danger,
                 size: VitIconButtonSize.sm,
                 onPressed: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Xóa webhook sẽ sớm ra mắt')),
                   );

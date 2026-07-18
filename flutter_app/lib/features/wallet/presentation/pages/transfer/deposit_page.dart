@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -183,33 +185,36 @@ class _DepositPageState extends ConsumerState<DepositPage> {
   }
 
   void _openNetworkPicker(List<WalletDepositNetwork> networks) {
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return VitSheetPanel(
-          title: 'Chọn mạng lưới',
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: networks.length,
-            separatorBuilder: (_, _) => const SizedBox(height: _depositTinyGap),
-            itemBuilder: (context, index) {
-              final network = networks[index];
-              return _NetworkOption(
-                network: network,
-                selected:
-                    network.id == _selectedNetworkId ||
-                    (_selectedNetworkId == null &&
-                        network.id == networks.first.id),
-                onTap: () {
-                  setState(() => _selectedNetworkId = network.id);
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
-        );
-      },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return VitSheetPanel(
+            title: 'Chọn mạng lưới',
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: networks.length,
+              separatorBuilder: (_, _) =>
+                  const SizedBox(height: _depositTinyGap),
+              itemBuilder: (context, index) {
+                final network = networks[index];
+                return _NetworkOption(
+                  network: network,
+                  selected:
+                      network.id == _selectedNetworkId ||
+                      (_selectedNetworkId == null &&
+                          network.id == networks.first.id),
+                  onTap: () {
+                    setState(() => _selectedNetworkId = network.id);
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

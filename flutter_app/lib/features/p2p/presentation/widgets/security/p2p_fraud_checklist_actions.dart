@@ -259,7 +259,7 @@ class _EmergencyButton extends StatelessWidget {
       background: ColoredBox(color: color.withValues(alpha: .08)),
       padding: P2PSpacingTokens.p2pFraudInnerPadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(action.route);
       },
       clip: true,

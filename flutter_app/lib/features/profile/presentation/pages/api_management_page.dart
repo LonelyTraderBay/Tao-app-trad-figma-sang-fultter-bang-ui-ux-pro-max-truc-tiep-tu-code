@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,8 +61,7 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getApiManagement();
-    _initializeFrom(snapshot);
+    final snapshotAsync = ref.watch(profileApiManagementSnapshotProvider);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
@@ -108,36 +109,54 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,
-                    children: [
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'R\u00E0 so\u00E1t quy\u1EC1n truy c\u1EADp API',
-                        message:
-                            'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
-                        contractId:
-                            'Key \u0111ang b\u1EADt: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
-                        density: VitDensity.compact,
-                      ),
-                      if (_keys.isEmpty)
-                        const VitEmptyState(
-                          title: 'Ch\u01B0a c\u00F3 API key',
-                          message:
-                              'T\u1EA1o key m\u1EDBi v\u00E0 ch\u1EC9 c\u1EA5p quy\u1EC1n th\u1EADt s\u1EF1 c\u1EA7n.',
-                          icon: Icons.key_off_outlined,
-                        )
-                      else
-                        for (final apiKey in _keys)
-                          _ApiKeyCard(
-                            apiKey: apiKey,
-                            showSecret: _showSecretId == apiKey.id,
-                            copiedId: _copiedId,
-                            onToggle: () => _toggleKey(apiKey.id),
-                            onReveal: () => _toggleSecret(apiKey.id),
-                            onCopy: _copyText,
-                            onDelete: () => _confirmDelete(apiKey),
+                    children: snapshotAsync.when(
+                      loading: () => const [VitSkeletonList()],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
+                          title:
+                              'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u',
+                          message: 'Vui l\u00F2ng th\u1EED l\u1EA1i.',
+                          actionLabel: 'Th\u1EED l\u1EA1i',
+                          onAction: () => ref.invalidate(
+                            profileApiManagementSnapshotProvider,
                           ),
-                      const _ApiDocsCard(),
-                    ],
+                        ),
+                      ],
+                      data: (snapshot) {
+                        _initializeFrom(snapshot);
+                        return [
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title:
+                                'R\u00E0 so\u00E1t quy\u1EC1n truy c\u1EADp API',
+                            message:
+                                'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
+                            contractId:
+                                'Key \u0111ang b\u1EADt: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
+                            density: VitDensity.compact,
+                          ),
+                          if (_keys.isEmpty)
+                            const VitEmptyState(
+                              title: 'Ch\u01B0a c\u00F3 API key',
+                              message:
+                                  'T\u1EA1o key m\u1EDBi v\u00E0 ch\u1EC9 c\u1EA5p quy\u1EC1n th\u1EADt s\u1EF1 c\u1EA7n.',
+                              icon: Icons.key_off_outlined,
+                            )
+                          else
+                            for (final apiKey in _keys)
+                              _ApiKeyCard(
+                                apiKey: apiKey,
+                                showSecret: _showSecretId == apiKey.id,
+                                copiedId: _copiedId,
+                                onToggle: () => _toggleKey(apiKey.id),
+                                onReveal: () => _toggleSecret(apiKey.id),
+                                onCopy: _copyText,
+                                onDelete: () => _confirmDelete(apiKey),
+                              ),
+                          const _ApiDocsCard(),
+                        ];
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -155,12 +174,12 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
   }
 
   void _createApiKey() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(AppRoutePaths.profileApiCreate);
   }
 
   void _toggleKey(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _keys = [
         for (final apiKey in _keys)
@@ -173,19 +192,19 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
   }
 
   void _toggleSecret(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _showSecretId = _showSecretId == id ? null : id);
   }
 
   Future<void> _copyText(String id, String value) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await Clipboard.setData(ClipboardData(text: value));
     if (!mounted) return;
     setState(() => _copiedId = id);
   }
 
   Future<void> _confirmDelete(ProfileApiKey apiKey) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {

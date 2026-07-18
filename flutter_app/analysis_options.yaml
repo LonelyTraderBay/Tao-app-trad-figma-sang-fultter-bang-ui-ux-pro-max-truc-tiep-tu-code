@@ -26,10 +26,9 @@ linter:
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: true
     prefer_const_literals_to_create_immutables: true
-    # unawaited_futures / discarded_futures: deliberately NOT enabled yet.
-    # Enabling them today surfaces ~723 sites (669 discarded_futures + 54
-    # unawaited_futures) that each need a real judgment call (await vs.
-    # unawaited()), not a mechanical fix — see ERR-35 in
-    # docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv,
-    # which establishes the app's async-error idiom. Enable these two rules
-    # as part of that batch, once the idiom exists to fix violations against.
+    # GĐ4-F6: bật sau khi TOÀN BỘ 422 method contract đã Future<T> (điều
+    # kiện CI-D1 đặt ra từ GĐ0 — "bật cùng đợt idiom async"). Mọi Future bị
+    # vứt giờ phải chọn rõ: await (đường dữ liệu) hoặc unawaited() (side
+    # effect fire-and-forget có chủ đích, vd persist KeyValueStore).
+    unawaited_futures: true
+    discarded_futures: true

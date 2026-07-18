@@ -16,7 +16,7 @@ policy_violations=0
 
 | Kind | Scope | File | Line | Allowed | Issue | Notes |
 | --- | --- | --- | ---: | --- | --- | --- |
-| search_action | module_search | `lib/features/discovery/presentation/pages/topic_hub_page.dart` | 103 | yes | - | Module/discovery search action is allowlisted. |
+| search_action | module_search | `lib/features/discovery/presentation/pages/topic_hub_page.dart` | 177 | yes | - | Module/discovery search action is allowlisted. |
 | search_action | global_search | `lib/features/home/presentation/widgets/home_header.dart` | 23 | yes | - | Home global command search. |
 | notification_action | global_notification | `lib/features/home/presentation/widgets/home_header.dart` | 28 | yes | - | Home global notification inbox action. |
 | notification_action | context_notification | `lib/features/launchpad/presentation/pages/claim/launchpad_claim_receipt_page.dart` | 160 | yes | - | Context notification action must not masquerade as global inbox. |

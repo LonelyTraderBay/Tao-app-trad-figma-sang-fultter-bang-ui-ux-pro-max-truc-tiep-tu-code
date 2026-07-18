@@ -54,7 +54,7 @@ class _Controls extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context, String message) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));

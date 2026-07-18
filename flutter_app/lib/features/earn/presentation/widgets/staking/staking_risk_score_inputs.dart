@@ -163,35 +163,37 @@ class _RiskDropdown extends StatelessWidget {
   }
 
   void _showOptions(BuildContext context) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      barrierColor: AppColors.bg.withValues(alpha: 0.72),
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: EarnSpacingTokens.earnSheetContentPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (final option in options)
-                  _RiskOptionRow(
-                    option: option,
-                    selected: option.value == value,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      onChanged(option.value);
-                    },
-                  ),
-              ],
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        barrierColor: AppColors.bg.withValues(alpha: 0.72),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: EarnSpacingTokens.earnSheetContentPadding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final option in options)
+                    _RiskOptionRow(
+                      option: option,
+                      selected: option.value == value,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        onChanged(option.value);
+                      },
+                    ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

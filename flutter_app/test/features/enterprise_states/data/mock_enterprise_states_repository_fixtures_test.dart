@@ -10,11 +10,11 @@ import 'package:vit_trade_flutter/features/enterprise_states/data/enterprise_sta
 /// so a silent content regression in the mock data fails a test instead of
 /// only a visual diff.
 void main() {
-  const repository = MockEnterpriseStatesRepository();
+  const repository = MockEnterpriseStatesRepository(loadDelay: Duration.zero);
 
   group('MockEnterpriseStatesRepository fixture pins', () {
-    test('tabs pin section order and labels', () {
-      final tabs = repository.getReference().tabs;
+    test('tabs pin section order and labels', () async {
+      final tabs = (await repository.getReference()).tabs;
 
       expect(tabs, hasLength(3));
       expect(tabs[0].section, EnterpriseStateSection.stateKit);
@@ -25,8 +25,8 @@ void main() {
       expect(tabs[2].label, 'C — Security');
     });
 
-    test('previewStates pin every state, label, and description', () {
-      final previewStates = repository.getReference().previewStates;
+    test('previewStates pin every state, label, and description', () async {
+      final previewStates = (await repository.getReference()).previewStates;
 
       expect(previewStates, hasLength(5));
       expect(previewStates[0].state, EnterprisePreviewState.loading);
@@ -49,8 +49,8 @@ void main() {
       expect(previewStates[4].description, 'Cần KYC để tiếp tục');
     });
 
-    test('banners pin kind, title, and optional detail', () {
-      final banners = repository.getReference().banners;
+    test('banners pin kind, title, and optional detail', () async {
+      final banners = (await repository.getReference()).banners;
 
       expect(banners, hasLength(3));
       expect(banners[0].kind, EnterpriseBannerKind.info);
@@ -67,8 +67,8 @@ void main() {
       expect(banners[2].detail, isNull);
     });
 
-    test('resolved CTA routes pin the exact handoff destinations', () {
-      final snapshot = repository.getReference();
+    test('resolved CTA routes pin the exact handoff destinations', () async {
+      final snapshot = await repository.getReference();
 
       expect(snapshot.marketRoute, '/markets');
       expect(snapshot.kycRoute, '/profile/kyc');

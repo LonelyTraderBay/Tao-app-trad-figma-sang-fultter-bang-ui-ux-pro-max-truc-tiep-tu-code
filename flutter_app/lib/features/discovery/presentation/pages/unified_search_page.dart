@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,9 +62,9 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(discoveryControllerProvider)
-        .unifiedSearch(query: _searchController.text);
+    final snapshotAsync = ref.watch(
+      unifiedSearchSnapshotProvider(_searchController.text),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -78,7 +80,7 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
+            title: 'Tìm kiếm',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.home),
           ),
@@ -87,43 +89,68 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
             children: [
               _SearchBand(
                 controller: _searchController,
-                hint: snapshot.searchHint,
+                hint: 'Tìm sự kiện, mode, room, creator, coin...',
                 onChanged: () => setState(() {}),
               ),
-              if (snapshot.showOfflineBanner)
-                Padding(
-                  key: UnifiedSearchPage.offlineKey,
-                  padding: LaunchpadSpacingTokens.discoveryOfflineBannerPadding,
-                  child: VitOfflineBanner(
-                    message: snapshot.staleMessage,
-                    detail: snapshot.staleDetail,
-                  ),
-                ),
               Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: UnifiedSearchPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding:
-                        LaunchpadSpacingTokens.discoveryContentScrollPadding(
-                          scrollEndClearance,
-                        ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.compact,
-                      padding: VitContentPadding.none,
-                      gap: VitContentGap.tight,
-                      fullBleed: true,
-                      children: _unifiedSearchPageChildren(
-                        snapshot: snapshot,
-                        onQuerySelected: (value) => setState(() {
-                          _searchController.text = value;
-                        }),
-                        onRetry: () => setState(() {}),
-                      ),
+                child: snapshotAsync.when(
+                  loading: () =>
+                      const VitSkeletonList(key: UnifiedSearchPage.loadingKey),
+                  error: (error, stackTrace) => VitErrorState(
+                    key: UnifiedSearchPage.errorKey,
+                    title: 'Không tải được dữ liệu khám phá',
+                    message: 'Vui lòng thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () => ref.invalidate(
+                      unifiedSearchSnapshotProvider(_searchController.text),
                     ),
+                  ),
+                  data: (snapshot) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (snapshot.showOfflineBanner)
+                        Padding(
+                          key: UnifiedSearchPage.offlineKey,
+                          padding: LaunchpadSpacingTokens
+                              .discoveryOfflineBannerPadding,
+                          child: VitOfflineBanner(
+                            message: snapshot.staleMessage,
+                            detail: snapshot.staleDetail,
+                          ),
+                        ),
+                      Expanded(
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(
+                            context,
+                          ).copyWith(scrollbars: false),
+                          child: SingleChildScrollView(
+                            key: UnifiedSearchPage.contentKey,
+                            physics: const ClampingScrollPhysics(),
+                            padding:
+                                LaunchpadSpacingTokens.discoveryContentScrollPadding(
+                                  scrollEndClearance,
+                                ),
+                            child: VitPageContent(
+                              rhythm: VitPageRhythm.compact,
+                              padding: VitContentPadding.none,
+                              gap: VitContentGap.tight,
+                              fullBleed: true,
+                              children: _unifiedSearchPageChildren(
+                                snapshot: snapshot,
+                                onQuerySelected: (value) => setState(() {
+                                  _searchController.text = value;
+                                }),
+                                onRetry: () => ref.invalidate(
+                                  unifiedSearchSnapshotProvider(
+                                    _searchController.text,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

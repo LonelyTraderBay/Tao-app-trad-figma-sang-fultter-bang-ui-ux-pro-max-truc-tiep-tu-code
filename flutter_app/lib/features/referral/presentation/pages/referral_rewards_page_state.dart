@@ -79,7 +79,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             filters: snapshot.filters,
                             active: snapshot.filter,
                             onChanged: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _filter = value);
                             },
                           ),
@@ -87,7 +87,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             options: snapshot.sortOptions,
                             active: snapshot.sort,
                             onChanged: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _sort = value);
                             },
                           ),
@@ -114,57 +114,65 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     BuildContext context,
     ReferralRewardsSnapshot snapshot,
   ) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: ReferralSpacingTokens.referralSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Xuất báo cáo hoa hồng',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: ReferralSpacingTokens.referralSheetPadding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Xuất báo cáo hoa hồng',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-                Text(
-                  '${snapshot.records.length} bản ghi · ${_formatUsd(snapshot.totalCommission)} tổng',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                Wrap(
-                  spacing: AppSpacing.x3,
-                  runSpacing: AppSpacing.x3,
-                  children: [
-                    for (final range in snapshot.exportRanges)
-                      VitAccentPill(
-                        label: range.label,
-                        accentColor: AppColors.text2,
-                        size: VitStatusPillSize.sm,
-                        semanticStatus: VitStatusPillStatus.neutral,
-                      ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                VitCtaButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  leading: const Icon(Icons.download_rounded),
-                  child: const Text('Tải xuống CSV'),
-                ),
-              ],
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                  Text(
+                    '${snapshot.records.length} bản ghi · ${_formatUsd(snapshot.totalCommission)} tổng',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  Wrap(
+                    spacing: AppSpacing.x3,
+                    runSpacing: AppSpacing.x3,
+                    children: [
+                      for (final range in snapshot.exportRanges)
+                        VitAccentPill(
+                          label: range.label,
+                          accentColor: AppColors.text2,
+                          size: VitStatusPillSize.sm,
+                          semanticStatus: VitStatusPillStatus.neutral,
+                        ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  VitCtaButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    leading: const Icon(Icons.download_rounded),
+                    child: const Text('Tải xuống CSV'),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -173,46 +181,54 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     ReferralRewardsSnapshot snapshot,
     ReferralRewardRecordDraft record,
   ) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: ReferralSpacingTokens.referralSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Báo lỗi hoa hồng',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: ReferralSpacingTokens.referralSheetPadding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Báo lỗi hoa hồng',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-                _SheetRecord(record: record),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                for (final type in snapshot.disputeTypes) ...[
-                  _DisputeTypeRow(type: type),
-                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                  _SheetRecord(record: record),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  for (final type in snapshot.disputeTypes) ...[
+                    _DisputeTypeRow(type: type),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
+                  ],
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  VitCtaButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    variant: VitCtaButtonVariant.warning,
+                    leading: const Icon(Icons.send_rounded),
+                    child: const Text('Gửi báo lỗi'),
+                  ),
                 ],
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                VitCtaButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  variant: VitCtaButtonVariant.warning,
-                  leading: const Icon(Icons.send_rounded),
-                  child: const Text('Gửi báo lỗi'),
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -220,35 +236,39 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     BuildContext context,
     ReferralRewardsSnapshot snapshot,
   ) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: ReferralSpacingTokens.referralSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Lịch sử báo lỗi',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: ReferralSpacingTokens.referralSheetPadding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Lịch sử báo lỗi',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-                for (final dispute in snapshot.disputes)
-                  _DisputeHistoryCard(dispute: dispute),
-              ],
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
+                  for (final dispute in snapshot.disputes)
+                    _DisputeHistoryCard(dispute: dispute),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

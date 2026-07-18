@@ -26,7 +26,7 @@ class _LinkedRow extends StatelessWidget {
           ),
           VitCard(
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               onTap();
             },
             variant: VitCardVariant.ghost,

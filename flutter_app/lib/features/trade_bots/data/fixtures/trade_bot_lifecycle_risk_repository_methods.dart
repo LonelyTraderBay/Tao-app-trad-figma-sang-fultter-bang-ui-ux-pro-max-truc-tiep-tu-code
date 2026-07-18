@@ -354,7 +354,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotActionResult submitBotAction(TradeBotActionRequest request) {
+  Future<TradeBotActionResult> submitBotAction(
+    TradeBotActionRequest request,
+  ) async {
+    await _simulateNetwork();
     return TradeBotActionResult(
       botId: request.botId,
       action: request.action,
@@ -363,9 +366,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotEmergencyStopResult submitBotEmergencyStop(
+  Future<TradeBotEmergencyStopResult> submitBotEmergencyStop(
     TradeBotEmergencyStopDraft draft,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeBotEmergencyStopResult(
       status: draft.confirmed ? 'accepted' : 'rejected',
       stoppedBotCount: draft.confirmed ? _botEmergencyStopBots.length : 0,
@@ -374,9 +378,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotSecuritySettingsResult patchBotSecuritySettings(
+  Future<TradeBotSecuritySettingsResult> patchBotSecuritySettings(
     TradeBotSecuritySettingsDraft draft,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeBotSecuritySettingsResult(
       status: 'saved',
       twoFaEnabled: draft.twoFaEnabled,
@@ -384,9 +389,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotHistoryExportResult createBotHistoryExport(
+  Future<TradeBotHistoryExportResult> createBotHistoryExport(
     TradeBotHistoryExportRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeBotHistoryExportResult(
       status: 'ready',
       downloadUrl: '/exports/BOT-HISTORY-123.${request.format}',
@@ -394,7 +400,10 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
   }
 
   @override
-  TradeBotCreateResult createTradingBot(TradeBotCreateRequest request) {
+  Future<TradeBotCreateResult> createTradingBot(
+    TradeBotCreateRequest request,
+  ) async {
+    await _simulateNetwork();
     return TradeBotCreateResult(
       botId: 'BOT-DEMO-059',
       strategyId: request.strategyId,

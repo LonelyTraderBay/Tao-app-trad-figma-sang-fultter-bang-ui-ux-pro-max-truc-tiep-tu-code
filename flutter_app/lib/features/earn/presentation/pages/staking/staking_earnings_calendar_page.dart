@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -135,7 +137,7 @@ class _StakingEarningsCalendarPageState
                             tabs: snapshot.tabs,
                             active: _tab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -177,12 +179,12 @@ class _StakingEarningsCalendarPageState
   }
 
   void _toggleNotifications() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _notificationsEnabled = !_notificationsEnabled);
   }
 
   void _exportCalendar() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (Scaffold.maybeOf(context) == null) return;
     final messenger = ScaffoldMessenger.maybeOf(context);
     if (messenger == null) return;
@@ -192,14 +194,14 @@ class _StakingEarningsCalendarPageState
   }
 
   void _previousMonth() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _visibleMonth = DateTime(_visibleMonth!.year, _visibleMonth!.month - 1);
     });
   }
 
   void _nextMonth() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _visibleMonth = DateTime(_visibleMonth!.year, _visibleMonth!.month + 1);
     });

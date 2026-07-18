@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -150,7 +152,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                               background: AppColors.sell10,
                               borderColor: AppColors.sell20,
                               onTap: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 context.go(snapshot.blacklistAddRoute);
                               },
                             ),
@@ -163,7 +165,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                               background: AppColors.surface2,
                               borderColor: AppColors.borderSolid,
                               onTap: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 context.go(snapshot.merchantProfileRoute);
                               },
                             ),
@@ -231,17 +233,17 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
   }
 
   void _selectReason(String reasonId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _selectedReasonId = reasonId);
   }
 
   Future<void> _submit(P2PReportMerchantSnapshot snapshot) async {
     if (_selectedReasonId.isEmpty || _submitting) return;
-    HapticFeedback.lightImpact();
+    unawaited(HapticFeedback.lightImpact());
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 280));
     if (!mounted) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     context.go(snapshot.merchantProfileRoute);
   }
 

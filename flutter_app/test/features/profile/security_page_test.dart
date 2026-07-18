@@ -35,8 +35,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-158 mock repository exposes security BE draft', () {
-    final snapshot = const MockProfileRepository().getSecurity();
+  test('SC-158 mock repository exposes security BE draft', () async {
+    final snapshot = await const MockProfileRepository().getSecurity();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-security');
     expect(

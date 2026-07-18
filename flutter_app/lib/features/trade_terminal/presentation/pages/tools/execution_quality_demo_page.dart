@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -134,16 +136,16 @@ class _ExecutionQualityDemoPageState
   void _onFeatureTap(TradeExecutionFeature feature) {
     if (feature.id == 'execution') {
       setState(() => _tab = ExecutionQualityTab.execution);
-      _openExecutionSheet();
+      unawaited(_openExecutionSheet());
       return;
     }
     if (feature.id == 'amendment') {
       setState(() => _tab = ExecutionQualityTab.amendment);
-      _openAmendmentSheet();
+      unawaited(_openAmendmentSheet());
       return;
     }
     setState(() => _tab = ExecutionQualityTab.slippage);
-    _openSlippageSheet();
+    unawaited(_openSlippageSheet());
   }
 
   Future<void> _openSlippageSheet() async {

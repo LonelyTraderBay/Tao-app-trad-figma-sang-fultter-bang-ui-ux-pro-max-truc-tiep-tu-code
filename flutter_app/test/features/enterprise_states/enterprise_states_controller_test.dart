@@ -4,12 +4,12 @@ import 'package:vit_trade_flutter/features/enterprise_states/presentation/contro
 
 void main() {
   group('EnterpriseStatesController', () {
-    test('exposes reference snapshot through repository contract', () {
+    test('exposes reference snapshot through repository contract', () async {
       final controller = const EnterpriseStatesController(
-        MockEnterpriseStatesRepository(),
+        MockEnterpriseStatesRepository(loadDelay: Duration.zero),
       );
 
-      final snapshot = controller.reference();
+      final snapshot = await controller.reference();
 
       expect(
         snapshot.endpoint,

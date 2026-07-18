@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -125,7 +127,7 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
                   assets: snapshot.assets,
                   selectedAsset: selectedAsset,
                   onChanged: (asset) {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() => _asset = asset);
                   },
                 ),

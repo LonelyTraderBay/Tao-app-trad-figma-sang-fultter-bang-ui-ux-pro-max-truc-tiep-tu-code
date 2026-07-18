@@ -38,8 +38,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-321 mock repository exposes unified portfolio BE draft', () {
-    final snapshot = const MockUnifiedPortfolioRepository().getDashboard();
+  test('SC-321 mock repository exposes unified portfolio BE draft', () async {
+    final snapshot = await const MockUnifiedPortfolioRepository()
+        .getDashboard();
 
     expect(snapshot.endpoint, '/api/mobile/cross-module/unified-portfolio');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

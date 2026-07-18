@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -137,7 +139,7 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
                               key: StakingAnalyticsPage.calculatorKey,
                               compound: _compound,
                               onToggleCompound: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _compound = !_compound);
                               },
                             ),
@@ -146,7 +148,7 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
                             tabs: snapshot.tabs,
                             activeTab: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -178,12 +180,12 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
   }
 
   void _toggleCalculator() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _showCalculator = !_showCalculator);
   }
 
   void _exportReport() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Xuất báo cáo CSV/PDF sẽ sớm ra mắt')),
     );

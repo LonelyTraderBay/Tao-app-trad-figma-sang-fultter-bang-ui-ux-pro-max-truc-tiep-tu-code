@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -176,7 +178,7 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
   }
 
   void _refresh() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _isRefreshing = true);
     Future<void>.delayed(const Duration(milliseconds: 250), () {
       if (mounted) setState(() => _isRefreshing = false);
@@ -184,7 +186,7 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
   }
 
   void _exportReport() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Xuất báo cáo CSV/PDF sẽ sớm ra mắt')),
     );

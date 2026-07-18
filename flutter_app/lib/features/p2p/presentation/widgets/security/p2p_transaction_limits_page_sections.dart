@@ -158,7 +158,7 @@ class _CurrentUsage extends StatelessWidget {
             VitCtaButton(
               key: P2PTransactionLimitsPage.trackerLinkKey,
               onPressed: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 context.go(snapshot.trackerRoute);
               },
               variant: VitCtaButtonVariant.ghost,

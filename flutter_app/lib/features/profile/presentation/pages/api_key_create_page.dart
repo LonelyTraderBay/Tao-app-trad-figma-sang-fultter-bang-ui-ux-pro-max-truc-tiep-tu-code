@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,7 +72,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getApiKeyCreate();
+    final snapshotAsync = ref.watch(profileApiKeyCreateSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -82,11 +84,63 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
-    return switch (_step) {
-      _ApiCreateStep.confirm => _buildConfirm(snapshot, scrollClearance),
-      _ApiCreateStep.result => _buildResult(snapshot, scrollClearance),
-      _ => _buildForm(snapshot, scrollClearance),
-    };
+    return snapshotAsync.when(
+      loading: () =>
+          _buildLoadingOrError(scrollClearance, const VitSkeletonList()),
+      error: (error, stackTrace) => _buildLoadingOrError(
+        scrollClearance,
+        VitErrorState(
+          title: 'Không tải được dữ liệu',
+          message: 'Vui lòng thử lại.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(profileApiKeyCreateSnapshotProvider),
+        ),
+      ),
+      data: (snapshot) => switch (_step) {
+        _ApiCreateStep.confirm => _buildConfirm(snapshot, scrollClearance),
+        _ApiCreateStep.result => _buildResult(snapshot, scrollClearance),
+        _ => _buildForm(snapshot, scrollClearance),
+      },
+    );
+  }
+
+  Widget _buildLoadingOrError(double scrollClearance, Widget body) {
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'Tạo API Key mới',
+      semanticIdentifier: 'SC-162',
+      child: Material(
+        color: _apiBackground,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Tạo API Key mới',
+            subtitle: 'API · Profile',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: ProfileSpacingTokens.profileApiCreateScrollPadding(
+                    scrollClearance,
+                  ),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.none,
+                    density: VitDensity.compact,
+                    fullBleed: true,
+                    children: [body],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildForm(
@@ -147,7 +201,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
                         options: snapshot.expiryOptions,
                         selected: _expiry,
                         onSelect: (id) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() => _expiry = id);
                         },
                       ),
@@ -258,7 +312,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
 
   void _togglePermission(String id) {
     if (id == 'read') return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       final next = {..._permissions};
       if (next.contains(id)) {
@@ -274,7 +328,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
     final ip = _ipController.text.trim();
     if (ip.isEmpty) return;
     if (!_ips.contains(ip)) {
-      HapticFeedback.selectionClick();
+      unawaited(HapticFeedback.selectionClick());
       setState(() => _ips.add(ip));
     }
     _ipController.clear();

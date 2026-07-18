@@ -2,10 +2,24 @@ import 'package:vit_trade_flutter/features/admin/domain/entities/admin_entities.
 import 'package:vit_trade_flutter/features/admin/domain/repositories/admin_repository.dart';
 
 final class MockAdminRepository implements AdminRepository {
-  const MockAdminRepository();
+  const MockAdminRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('admin_mock_fetch_failed');
+  }
 
   @override
-  AdminHomeSnapshot getHome() {
+  Future<AdminHomeSnapshot> getHome() async {
+    await _simulateNetwork();
     return const AdminHomeSnapshot(
       endpoint: '/api/mobile/admin/admin',
       actionDraft: 'read-only or local navigation action',
@@ -102,7 +116,8 @@ final class MockAdminRepository implements AdminRepository {
   }
 
   @override
-  AdminAnalyticsSnapshot getAnalytics() {
+  Future<AdminAnalyticsSnapshot> getAnalytics() async {
+    await _simulateNetwork();
     return const AdminAnalyticsSnapshot(
       endpoint: '/api/mobile/admin/admin-analytics',
       actionDraft: 'read-only or local navigation action',
@@ -158,7 +173,8 @@ final class MockAdminRepository implements AdminRepository {
   }
 
   @override
-  AdminAbTestsSnapshot getAbTests() {
+  Future<AdminAbTestsSnapshot> getAbTests() async {
+    await _simulateNetwork();
     return const AdminAbTestsSnapshot(
       endpoint: '/api/mobile/admin/admin-abtests',
       actionDraft: 'read-only or local navigation action',
@@ -354,7 +370,8 @@ final class MockAdminRepository implements AdminRepository {
   }
 
   @override
-  AdminFunnelsSnapshot getFunnels() {
+  Future<AdminFunnelsSnapshot> getFunnels() async {
+    await _simulateNetwork();
     return const AdminFunnelsSnapshot(
       endpoint: '/api/mobile/admin/admin-funnels',
       actionDraft: 'read-only or local navigation action',

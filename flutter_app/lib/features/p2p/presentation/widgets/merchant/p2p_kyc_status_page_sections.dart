@@ -332,7 +332,7 @@ class _StepActionButton extends StatelessWidget {
     return VitCtaButton(
       key: P2PKycStatusPage.actionKey(step.id),
       onPressed: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(step.actionRoute!);
       },
       fullWidth: false,

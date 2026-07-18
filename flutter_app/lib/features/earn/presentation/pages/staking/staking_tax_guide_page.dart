@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -125,7 +127,7 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
                             tabs: snapshot.tabs,
                             active: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeTab = tab);
                             },
                           ),
@@ -136,7 +138,7 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
                               snapshot: snapshot,
                               selectedId: _selectedJurisdiction,
                               onChanged: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _selectedJurisdiction = id);
                               },
                             )

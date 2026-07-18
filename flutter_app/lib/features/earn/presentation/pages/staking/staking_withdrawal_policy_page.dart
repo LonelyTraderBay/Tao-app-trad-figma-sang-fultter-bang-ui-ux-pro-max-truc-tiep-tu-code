@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -179,7 +181,7 @@ class _StakingWithdrawalPolicyPageState
                             tabs: snapshot.tabs,
                             active: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeTab = tab);
                             },
                           ),
@@ -206,7 +208,7 @@ class _StakingWithdrawalPolicyPageState
   }
 
   Future<void> _openCalculator(StakingWithdrawalPolicySnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

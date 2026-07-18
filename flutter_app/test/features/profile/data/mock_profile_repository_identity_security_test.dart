@@ -21,11 +21,11 @@ import 'package:vit_trade_flutter/features/profile/data/repositories/mock_profil
 /// `mock_profile_repository_settings_api_vip_test.dart` for
 /// settings/API-key/VIP/sub-account surfaces.
 void main() {
-  const repository = MockProfileRepository();
+  const repository = MockProfileRepository(loadDelay: Duration.zero);
 
   group('MockProfileRepository identity/security data smoke test', () {
-    test('getProfile pins the user identity and menu section count', () {
-      final snapshot = repository.getProfile();
+    test('getProfile pins the user identity and menu section count', () async {
+      final snapshot = await repository.getProfile();
 
       expect(snapshot.endpoint, '/api/mobile/profile/profile');
       expect(snapshot.user.id, 'USR001');
@@ -41,8 +41,8 @@ void main() {
       expect(snapshot.sections.first.items, hasLength(8));
     });
 
-    test('getEditProfile pins the same user identity for edit', () {
-      final snapshot = repository.getEditProfile();
+    test('getEditProfile pins the same user identity for edit', () async {
+      final snapshot = await repository.getEditProfile();
 
       expect(snapshot.endpoint, '/api/mobile/profile/profile-edit');
       expect(snapshot.user.id, 'USR001');
@@ -50,8 +50,8 @@ void main() {
     });
 
     test('getSecurity pins the score and the profile_security_review '
-        'high-risk contract id', () {
-      final snapshot = repository.getSecurity();
+        'high-risk contract id', () async {
+      final snapshot = await repository.getSecurity();
 
       expect(snapshot.endpoint, '/api/mobile/profile/profile-security');
       expect(snapshot.score, 3);
@@ -68,8 +68,8 @@ void main() {
       expect(snapshot.highRiskContractId, 'profile_security_review');
     });
 
-    test('getKyc pins the current level and level count', () {
-      final snapshot = repository.getKyc();
+    test('getKyc pins the current level and level count', () async {
+      final snapshot = await repository.getKyc();
 
       expect(snapshot.endpoint, '/api/mobile/profile/profile-kyc');
       expect(snapshot.currentLevel, 2);
@@ -78,35 +78,41 @@ void main() {
       expect(snapshot.levels.last.level, 2);
     });
 
-    test('getActivity pins the filter and log counts with a known entry', () {
-      final snapshot = repository.getActivity();
+    test(
+      'getActivity pins the filter and log counts with a known entry',
+      () async {
+        final snapshot = await repository.getActivity();
 
-      expect(snapshot.endpoint, '/api/mobile/profile/profile-activity');
-      expect(snapshot.filters, hasLength(3));
-      expect(snapshot.logs, hasLength(7));
-      expect(snapshot.logs.first.id, 'act001');
-      expect(snapshot.logs.first.type, 'login');
-      expect(snapshot.logs.first.status, 'success');
-      expect(
-        snapshot.logs.where((log) => log.status == 'suspicious'),
-        hasLength(1),
-      );
-    });
+        expect(snapshot.endpoint, '/api/mobile/profile/profile-activity');
+        expect(snapshot.filters, hasLength(3));
+        expect(snapshot.logs, hasLength(7));
+        expect(snapshot.logs.first.id, 'act001');
+        expect(snapshot.logs.first.type, 'login');
+        expect(snapshot.logs.first.status, 'success');
+        expect(
+          snapshot.logs.where((log) => log.status == 'suspicious'),
+          hasLength(1),
+        );
+      },
+    );
 
-    test('getDeviceManagement pins the trusted/untrusted device split', () {
-      final snapshot = repository.getDeviceManagement();
+    test(
+      'getDeviceManagement pins the trusted/untrusted device split',
+      () async {
+        final snapshot = await repository.getDeviceManagement();
 
-      expect(snapshot.endpoint, '/api/mobile/profile/profile-devices');
-      expect(snapshot.devices, hasLength(4));
-      expect(snapshot.currentDevice?.id, 'dev001');
-      expect(
-        snapshot.devices.where((device) => device.isTrusted),
-        hasLength(3),
-      );
-      expect(
-        snapshot.devices.where((device) => !device.isTrusted),
-        hasLength(1),
-      );
-    });
+        expect(snapshot.endpoint, '/api/mobile/profile/profile-devices');
+        expect(snapshot.devices, hasLength(4));
+        expect(snapshot.currentDevice?.id, 'dev001');
+        expect(
+          snapshot.devices.where((device) => device.isTrusted),
+          hasLength(3),
+        );
+        expect(
+          snapshot.devices.where((device) => !device.isTrusted),
+          hasLength(1),
+        );
+      },
+    );
   });
 }

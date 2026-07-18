@@ -180,22 +180,22 @@ class _DCAPageState extends ConsumerState<DCAPage> {
   }
 
   void _go(String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(route);
   }
 
   void _openCreateSheet() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _createSheetOpen = true);
   }
 
   void _closeCreateSheet() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _createSheetOpen = false);
   }
 
   void _showPausedState() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _activeTab = _DcaTab.plans);
   }
 
