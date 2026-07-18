@@ -93,7 +93,7 @@ class _ApiKeyCard extends StatelessWidget {
                   ],
                 ),
               ),
-              VitAccentIconBox(
+              const VitAccentIconBox(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
                 iconSize: PredictionsSpacingTokens.predictionDataIconBubbleIcon,
@@ -108,8 +108,8 @@ class _ApiKeyCard extends StatelessWidget {
             ),
             child: Material(
               color: AppColors.bg,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: AppColors.border),
+              shape: const RoundedRectangleBorder(
+                side: BorderSide(color: AppColors.border),
                 borderRadius: AppRadii.mdRadius,
               ),
               child: Padding(
@@ -264,7 +264,7 @@ class _WebhookCard extends StatelessWidget {
               const SizedBox(
                 width: PredictionsSpacingTokens.predictionDataWebhookActionGap,
               ),
-              VitAccentIconBox(
+              const VitAccentIconBox(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
                 iconSize: PredictionsSpacingTokens.predictionDataIconBubbleIcon,

@@ -248,7 +248,11 @@ List<VisualHeaderRouteEntry> _collectVisualHeaderRouteEntries(
           .whereType<File>()
           .where((file) => file.path.endsWith('.dart'))
           .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+        ..sort(
+          (a, b) => a.path
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
+        );
 
   for (final file in files) {
     final text = file.readAsStringSync();
@@ -288,7 +292,7 @@ List<VisualHeaderRouteEntry> _collectVisualHeaderRouteEntries(
   entries.sort((a, b) {
     final featureCompare = a.feature.compareTo(b.feature);
     if (featureCompare != 0) return featureCompare;
-    return a.path.compareTo(b.path);
+    return a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/'));
   });
 
   return entries;
@@ -783,7 +787,11 @@ final class _PageIndex {
             .whereType<File>()
             .where((file) => file.path.endsWith('.dart'))
             .toList()
-          ..sort((a, b) => a.path.compareTo(b.path));
+          ..sort(
+            (a, b) => a.path
+                .replaceAll(r'\', '/')
+                .compareTo(b.path.replaceAll(r'\', '/')),
+          );
 
     for (final file in files) {
       final source = file.readAsStringSync();

@@ -93,19 +93,19 @@ void main() {
     test('averageUptime on an empty validator list is NaN, not a thrown error '
         '(documents an existing edge case — 0/0 division, not exercised by '
         'production data today)', () {
-      final snapshot = StakingValidatorHealthMonitorSnapshot(
+      final snapshot = const StakingValidatorHealthMonitorSnapshot(
         endpoint: '/api/staking/validators',
         actionDraft: 'draft',
         title: 'Validator health',
         backRoute: '/earn/staking',
-        validators: const [],
-        uptimeHistory: const [],
+        validators: [],
+        uptimeHistory: [],
         actionTitle: 'title',
         actionBody: 'body',
         actionLabel: 'label',
         footerNote: 'note',
         contractNotes: 'notes',
-        supportedStates: const {EarnScreenState.empty},
+        supportedStates: {EarnScreenState.empty},
       );
 
       expect(snapshot.healthyCount, 0);

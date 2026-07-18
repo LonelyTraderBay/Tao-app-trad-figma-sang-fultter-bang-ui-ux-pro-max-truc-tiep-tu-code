@@ -13,17 +13,17 @@ class _NextPurchaseRow extends StatelessWidget {
       density: VitDensity.compact,
       child: Row(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: AppSpacing.buttonCompact - AppSpacing.formFieldLabelGap,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.smRadius,
-                  side: const BorderSide(color: AppColors.primary20),
+                  side: BorderSide(color: AppColors.primary20),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.schedule_rounded,
                 color: AppColors.primary,
                 size: AppSpacing.iconMd,

@@ -55,3 +55,56 @@ final arenaChallengeDetailControllerProvider =
         ),
       );
     });
+
+/// STATE-S23: view-state bất biến của Người đã chặn Open Arena — users sống
+/// ở Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
+final class ArenaBlockedUsersViewState {
+  const ArenaBlockedUsersViewState({
+    required this.snapshot,
+    required this.users,
+  });
+
+  factory ArenaBlockedUsersViewState.fromSnapshot(
+    ArenaBlockedUsersSnapshot snapshot,
+  ) {
+    return ArenaBlockedUsersViewState(
+      snapshot: snapshot,
+      users: List.unmodifiable(snapshot.users),
+    );
+  }
+
+  final ArenaBlockedUsersSnapshot snapshot;
+  final List<ArenaBlockedUserDraft> users;
+
+  ArenaBlockedUsersViewState copyWith({List<ArenaBlockedUserDraft>? users}) {
+    return ArenaBlockedUsersViewState(
+      snapshot: snapshot,
+      users: users == null ? this.users : List.unmodifiable(users),
+    );
+  }
+}
+
+/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — danh sách
+/// chặn giữ nguyên khi điều hướng đi/về trong phiên.
+final class ArenaBlockedUsersStateController
+    extends Notifier<ArenaBlockedUsersViewState> {
+  @override
+  ArenaBlockedUsersViewState build() {
+    return ArenaBlockedUsersViewState.fromSnapshot(
+      ref.watch(arenaReadModelControllerProvider).getArenaBlockedUsers(),
+    );
+  }
+
+  void unblockUser(String id) {
+    state = state.copyWith(
+      users: state.users.where((user) => user.id != id).toList(growable: false),
+    );
+  }
+}
+
+final arenaBlockedUsersStateControllerProvider =
+    NotifierProvider<
+      ArenaBlockedUsersStateController,
+      ArenaBlockedUsersViewState
+    >(ArenaBlockedUsersStateController.new);

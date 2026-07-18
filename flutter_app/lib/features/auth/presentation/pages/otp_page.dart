@@ -240,11 +240,11 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                 child: VitPageContent(
                   rhythm: VitPageRhythm.form,
                   children: [
-                    Align(
+                    const Align(
                       alignment: Alignment.center,
                       child: AuthHeroIconBox(
                         dimension: AuthSpacingTokens.authHeroIconBoxMd,
-                        shape: const RoundedRectangleBorder(
+                        shape: RoundedRectangleBorder(
                           borderRadius: AppRadii.cardLargeRadius,
                           side: BorderSide(
                             color: _authPrimary30,
@@ -252,7 +252,7 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                           ),
                         ),
                         fillColor: _authPrimary10,
-                        child: const Icon(
+                        child: Icon(
                           Icons.gpp_good_outlined,
                           color: _authPrimary,
                           size: AuthSpacingTokens.authHeroIconLg,

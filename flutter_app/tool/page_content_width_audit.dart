@@ -180,7 +180,7 @@ List<PageContentWidthFinding> _scanPresentationPages(
   findings.sort((a, b) {
     final p = a.priority.compareTo(b.priority);
     if (p != 0) return p;
-    return a.path.compareTo(b.path);
+    return a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/'));
   });
   return findings;
 }

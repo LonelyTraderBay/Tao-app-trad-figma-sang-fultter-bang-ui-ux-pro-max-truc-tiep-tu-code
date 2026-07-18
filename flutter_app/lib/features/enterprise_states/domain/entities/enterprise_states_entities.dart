@@ -1,11 +1,19 @@
+/// UI states the enterprise states screen itself can render.
 enum EnterpriseStatesScreenState { loading, empty, error, offline }
 
+/// Tab section within the enterprise states screen (state kit gallery,
+/// applied examples, or security notes).
 enum EnterpriseStateSection { stateKit, applied, security }
 
+/// A previewable screen state shown in the state-kit gallery (loading,
+/// empty, error, offline, or access-gated).
 enum EnterprisePreviewState { loading, empty, error, offline, gate }
 
+/// Visual severity of an [EnterpriseBannerDraft].
 enum EnterpriseBannerKind { info, warning, error }
 
+/// Data contract for the enterprise states screen: its tabs, state-kit
+/// previews, and banners.
 final class EnterpriseStatesSnapshot {
   const EnterpriseStatesSnapshot({
     required this.endpoint,
@@ -40,6 +48,7 @@ final class EnterpriseStatesSnapshot {
   final Set<EnterpriseStatesScreenState> supportedStates;
 }
 
+/// A single tab entry in the enterprise states screen's tab bar.
 final class EnterpriseTabDraft {
   const EnterpriseTabDraft({required this.section, required this.label});
 
@@ -47,6 +56,8 @@ final class EnterpriseTabDraft {
   final String label;
 }
 
+/// A single state-kit gallery entry pairing an [EnterprisePreviewState]
+/// with its label and description.
 final class EnterprisePreviewStateDraft {
   const EnterprisePreviewStateDraft({
     required this.state,
@@ -59,6 +70,8 @@ final class EnterprisePreviewStateDraft {
   final String description;
 }
 
+/// A single banner (info/warning/error) shown on the enterprise states
+/// screen.
 final class EnterpriseBannerDraft {
   const EnterpriseBannerDraft({
     required this.kind,

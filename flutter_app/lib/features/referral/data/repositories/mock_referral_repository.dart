@@ -56,7 +56,7 @@ final class MockReferralRepository implements ReferralRepository {
               '${_formatUsd(_completedRewardTotal)} tổng tích luỹ · ${_formatUsd(_pendingRewardTotal)} đang chờ',
           route: '/referral/rewards',
         ),
-        ReferralDetailLinkDraft(
+        const ReferralDetailLinkDraft(
           id: 'rules',
           title: 'Bảng hạng & Điều khoản',
           subtitle: 'Hạng hiện tại: Bạc (Silver)',
@@ -252,7 +252,7 @@ final class MockReferralRepository implements ReferralRepository {
 
   @override
   ReferralRulesSnapshot getRules() {
-    return ReferralRulesSnapshot(
+    return const ReferralRulesSnapshot(
       endpoint: '/api/mobile/referral/referral-rules',
       actionDraft: 'read-only or local navigation action',
       title: 'Quy tắc chương trình',
@@ -267,7 +267,7 @@ final class MockReferralRepository implements ReferralRepository {
       currentTierIndex: 1,
       contractNotes:
           'Referral rules is a read-only reference surface. Backend should return tier, reward, term, FAQ, disclaimer, and screen state data.',
-      supportedStates: const {
+      supportedStates: {
         ReferralScreenState.loading,
         ReferralScreenState.empty,
         ReferralScreenState.error,

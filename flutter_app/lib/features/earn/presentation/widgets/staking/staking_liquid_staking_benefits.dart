@@ -33,9 +33,9 @@ class _BenefitsGrid extends StatelessWidget {
                 children: [
                   Material(
                     color: AppColors.primary12,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: AppRadii.lgRadius,
-                      side: const BorderSide(color: AppColors.primary30),
+                      side: BorderSide(color: AppColors.primary30),
                     ),
                     child: SizedBox(
                       width: AppSpacing.ctaHeight,

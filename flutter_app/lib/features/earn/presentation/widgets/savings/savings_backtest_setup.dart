@@ -54,12 +54,12 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        DecoratedBox(
-          decoration: const ShapeDecoration(
+        const DecoratedBox(
+          decoration: ShapeDecoration(
             color: AppColors.primary,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
           ),
-          child: const SizedBox(
+          child: SizedBox(
             width: EarnSpacingTokens.savingsBacktestSectionMarkerWidth,
             height: EarnSpacingTokens.savingsBacktestSectionMarkerHeight,
           ),

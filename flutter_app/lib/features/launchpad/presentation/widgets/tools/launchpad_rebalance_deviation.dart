@@ -107,7 +107,7 @@ class _DeviationBar extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.swatchRadius,
                 ),
               ),

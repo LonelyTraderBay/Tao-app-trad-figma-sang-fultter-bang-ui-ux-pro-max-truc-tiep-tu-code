@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 
+/// Color/tone treatment of a [VitBanner].
 enum VitBannerVariant { info, warning, error, success }
 
 /// Shows [title]/[message] as a [VitBanner] inside the shared bottom sheet
@@ -46,6 +47,8 @@ Future<void> showVitNoticeSheet({
   );
 }
 
+/// [VitBanner] preconfigured for the offline/reconnecting state, swapping
+/// icon and message automatically based on [reconnecting].
 class VitOfflineBanner extends StatelessWidget {
   const VitOfflineBanner({
     super.key,
@@ -71,6 +74,8 @@ class VitOfflineBanner extends StatelessWidget {
   }
 }
 
+/// General-purpose tone-colored inline banner: icon, optional title,
+/// message, detail line, optional action slot, and dismiss button.
 class VitBanner extends StatelessWidget {
   const VitBanner({
     super.key,

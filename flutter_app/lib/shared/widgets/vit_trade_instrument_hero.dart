@@ -9,8 +9,12 @@ import 'package:vit_trade_flutter/shared/widgets/vit_hero_glow.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_metric_delta_pill.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Sizing density of a [VitTradeInstrumentHero]: full hero surface or a
+/// compact standard-card variant.
 enum VitTradeInstrumentHeroDensity { standard, compact }
 
+/// Hero card for a trade instrument: symbol, large price, change-delta
+/// pill, and optional high/low/volume metric cells.
 class VitTradeInstrumentHero extends StatelessWidget {
   const VitTradeInstrumentHero({
     super.key,

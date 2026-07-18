@@ -59,7 +59,7 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
       lines: [
         VitTradeConfirmLine(label: 'Cặp', value: widget.snapshot.pair.symbol),
         VitTradeConfirmLine(label: 'Hướng', value: sideLabel),
-        VitTradeConfirmLine(label: 'Chế độ', value: 'Cross'),
+        const VitTradeConfirmLine(label: 'Chế độ', value: 'Cross'),
         VitTradeConfirmLine(label: 'Đòn bẩy', value: '${widget.leverage}x'),
         VitTradeConfirmLine(label: 'Số lượng', value: amount),
         VitTradeConfirmLine(

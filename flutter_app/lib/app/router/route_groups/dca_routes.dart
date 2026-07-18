@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/dca/presentation/pages/hub/dca_page.dart';
@@ -89,7 +90,7 @@ List<RouteBase> dcaRoutes(ShellRenderMode shellRenderMode) {
       path: '/dca/rebalance/:configId/history',
       name: AppRouteNames.sc409DcaRebalanceHistory,
       builder: (_, state) => DCARebalanceDashboard(
-        configId: state.pathParameters['configId'] ?? 'config001',
+        configId: requireRouteParam(state, 'configId'),
         shellRenderMode: shellRenderMode,
       ),
     ),

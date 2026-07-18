@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Data for the DCA component demo/showcase screen: header copy plus the
+/// list of demo [scenarios] and the featured [mobilePreview].
 class DcaOverviewDemoSnapshot {
   const DcaOverviewDemoSnapshot({
     required this.endpoint,
@@ -28,6 +30,7 @@ class DcaOverviewDemoSnapshot {
   final DcaOverviewDemoScenario mobilePreview;
 }
 
+/// One named demo scenario (data + sparkline) shown on the DCA demo screen.
 class DcaOverviewDemoScenario {
   const DcaOverviewDemoScenario({
     required this.id,
@@ -46,6 +49,7 @@ class DcaOverviewDemoScenario {
   final bool showActions;
 }
 
+/// Portfolio value/P&L/plan-count data backing one [DcaOverviewDemoScenario].
 class DcaOverviewDemoData {
   const DcaOverviewDemoData({
     required this.currentValueVnd,
@@ -79,6 +83,8 @@ class DcaOverviewDemoData {
   bool get isProfit => profitLossVnd >= 0;
 }
 
+/// Data for the DCA dashboard/home screen: portfolio [overview], sparkline,
+/// tool shortcuts, active [plans], and history chart.
 class DcaDashboardSnapshot {
   const DcaDashboardSnapshot({
     required this.endpoint,
@@ -103,6 +109,8 @@ class DcaDashboardSnapshot {
   final List<DcaHistoryPoint> history;
 }
 
+/// Portfolio-level summary (value, P&L, plan counts, next execution) shown
+/// on the DCA dashboard.
 class DcaOverview {
   const DcaOverview({
     required this.currentValueVnd,
@@ -134,10 +142,13 @@ class DcaOverview {
   }
 }
 
+/// Leading icon choice for a [DcaTool] shortcut card.
 enum DcaToolIcon { target, activity, sliders, clock }
 
+/// Accent color choice for a [DcaTool] shortcut card.
 enum DcaToolAccent { purple, primary, success, warning }
 
+/// One DCA tool shortcut (title/route/icon/accent) shown on the dashboard.
 class DcaTool {
   const DcaTool({
     required this.title,
@@ -154,6 +165,8 @@ class DcaTool {
   final DcaToolAccent accent;
 }
 
+/// One active/paused/error DCA plan (coin, frequency, amount, holdings,
+/// P&L) shown on the dashboard.
 class DcaPlan {
   const DcaPlan({
     required this.id,
@@ -180,6 +193,8 @@ class DcaPlan {
   final double profitLossPercent;
 }
 
+/// One daily portfolio-value/invested data point in the dashboard's
+/// history chart.
 class DcaHistoryPoint {
   const DcaHistoryPoint({
     required this.day,

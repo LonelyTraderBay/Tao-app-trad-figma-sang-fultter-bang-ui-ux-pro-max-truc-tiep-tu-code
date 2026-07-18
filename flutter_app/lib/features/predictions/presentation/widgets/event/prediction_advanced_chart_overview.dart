@@ -153,16 +153,20 @@ class _ProbabilityChartCard extends StatelessWidget {
             children: [
               SizedBox(
                 height: AppSpacing.x7 * 6,
-                child: CustomPaint(
-                  painter: _ProbabilityPainter(
-                    points: snapshot.priceHistory,
-                    support: snapshot.supportLevel,
-                    resistance: snapshot.resistanceLevel,
-                    showMA7: showMA7,
-                    showMA25: showMA25,
-                    showBB: showBB,
+                // PERF-HN5: isolate the heavy chart painter into its own
+                // compositor layer.
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    painter: _ProbabilityPainter(
+                      points: snapshot.priceHistory,
+                      support: snapshot.supportLevel,
+                      resistance: snapshot.resistanceLevel,
+                      showMA7: showMA7,
+                      showMA25: showMA25,
+                      showBB: showBB,
+                    ),
+                    child: const SizedBox.expand(),
                   ),
-                  child: const SizedBox.expand(),
                 ),
               ),
             ],
@@ -198,9 +202,13 @@ class _VolumeChartCard extends StatelessWidget {
             children: [
               SizedBox(
                 height: AppSpacing.x7 * 3,
-                child: CustomPaint(
-                  painter: _VolumePainter(points: snapshot.priceHistory),
-                  child: const SizedBox.expand(),
+                // PERF-HN5: isolate the heavy chart painter into its own
+                // compositor layer.
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    painter: _VolumePainter(points: snapshot.priceHistory),
+                    child: const SizedBox.expand(),
+                  ),
                 ),
               ),
             ],

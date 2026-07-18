@@ -37,11 +37,11 @@ class _BridgeTimeline extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Stack(
             children: [
-              Positioned(
+              const Positioned(
                 left: 15,
                 top: AppSpacing.x3,
                 bottom: AppSpacing.x3,
-                child: const SizedBox(
+                child: SizedBox(
                   width: LaunchpadSpacingTokens.launchpadDividerWidth,
                   child: ColoredBox(color: AppColors.borderSolid),
                 ),

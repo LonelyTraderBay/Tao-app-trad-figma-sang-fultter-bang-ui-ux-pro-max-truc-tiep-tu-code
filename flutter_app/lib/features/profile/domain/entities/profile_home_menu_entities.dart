@@ -1,5 +1,7 @@
 part of 'profile_entities.dart';
 
+/// One API key (permissions, IP whitelist, usage) shown on the API key
+/// management screen.
 final class ProfileApiKey {
   const ProfileApiKey({
     required this.id,
@@ -44,6 +46,7 @@ final class ProfileApiKey {
   }
 }
 
+/// One selectable API scope/permission on the API key creation screen.
 final class ProfileApiPermission {
   const ProfileApiPermission({
     required this.id,
@@ -62,6 +65,7 @@ final class ProfileApiPermission {
   final bool required;
 }
 
+/// One selectable API key expiry duration on the API key creation screen.
 final class ProfileApiExpiryOption {
   const ProfileApiExpiryOption({
     required this.id,
@@ -74,6 +78,8 @@ final class ProfileApiExpiryOption {
   final String description;
 }
 
+/// One security checklist/navigation row (e.g. 2FA) on the security
+/// screen.
 final class ProfileSecurityItem {
   const ProfileSecurityItem({
     required this.id,
@@ -96,6 +102,7 @@ final class ProfileSecurityItem {
   final bool danger;
 }
 
+/// One logged-in device entry shown on the security screen's device list.
 final class ProfileDevice {
   const ProfileDevice({
     required this.id,
@@ -114,6 +121,8 @@ final class ProfileDevice {
   final bool isCurrent;
 }
 
+/// VIP-tier progress summary (current/next label, volume, progress
+/// fraction) shown on the profile home screen.
 final class ProfileVipProgress {
   const ProfileVipProgress({
     required this.label,
@@ -128,6 +137,8 @@ final class ProfileVipProgress {
   final double progress;
 }
 
+/// Prediction Markets activity summary (positions, open orders, P&L)
+/// shown as a card on the profile home screen.
 final class ProfilePredictionBlock {
   const ProfilePredictionBlock({
     required this.positions,
@@ -140,6 +151,8 @@ final class ProfilePredictionBlock {
   final String pnlLabel;
 }
 
+/// Points-only Arena activity summary (points, rooms, creator score)
+/// shown as a card on the profile home screen.
 final class ProfileArenaBlock {
   const ProfileArenaBlock({
     required this.pointsLabel,
@@ -152,6 +165,8 @@ final class ProfileArenaBlock {
   final String creatorScoreLabel;
 }
 
+/// One product quick-access shortcut (label/route/state) on the profile
+/// home screen.
 final class ProfileProductShortcut {
   const ProfileProductShortcut({
     required this.id,
@@ -170,6 +185,7 @@ final class ProfileProductShortcut {
   final int accentHex;
 }
 
+/// One labeled group of [ProfileMenuItem]s on the profile home menu.
 final class ProfileMenuSection {
   const ProfileMenuSection({
     required this.id,
@@ -184,6 +200,8 @@ final class ProfileMenuSection {
   final List<ProfileMenuItem> items;
 }
 
+/// One navigable row (label/route/icon/optional subtitle) inside a
+/// [ProfileMenuSection].
 final class ProfileMenuItem {
   const ProfileMenuItem({
     required this.id,

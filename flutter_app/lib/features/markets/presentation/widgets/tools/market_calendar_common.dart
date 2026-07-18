@@ -72,11 +72,14 @@ String marketCalendarFormatEventDate(String dateIso) {
   return '${date.day} ${months[date.month - 1]}';
 }
 
+// Giờ hiển thị theo múi giờ máy người dùng — nhất quán với cách trang nhóm
+// sự kiện theo ngày local (grid tháng + list đều .toLocal()); vì vậy KHÔNG
+// gắn nhãn múi giờ (nhãn 'UTC' cũ sai: số là giờ local nhưng dán mác UTC).
 String marketCalendarFormatEventTime(String dateIso) {
   final date = DateTime.parse(dateIso).toLocal();
   final hour = date.hour.toString().padLeft(2, '0');
   final minute = date.minute.toString().padLeft(2, '0');
-  return '$hour:$minute UTC';
+  return '$hour:$minute';
 }
 
 String marketCalendarRelativeLabel(String dateIso) {

@@ -98,15 +98,15 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: RewardsHubPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị phần thưởng đã lưu gần nhất.',
                   ),
@@ -155,7 +155,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                         RewardsScreenState.offline
                             when snapshot.tasks.isEmpty =>
                           [
-                            VitEmptyState(
+                            const VitEmptyState(
                               key: RewardsHubPage.offlineKey,
                               icon: Icons.wifi_off_rounded,
                               title: 'Đang ngoại tuyến',

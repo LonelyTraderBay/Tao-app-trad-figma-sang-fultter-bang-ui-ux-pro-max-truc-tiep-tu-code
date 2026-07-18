@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/t
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
 
 part '../../widgets/hub/active_copies_overview.dart';
 part '../../widgets/hub/active_copies_card.dart';

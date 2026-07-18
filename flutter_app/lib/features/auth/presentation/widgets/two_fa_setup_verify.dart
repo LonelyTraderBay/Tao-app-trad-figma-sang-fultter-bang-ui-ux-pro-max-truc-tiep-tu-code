@@ -41,7 +41,7 @@ class _VerifyStep extends StatelessWidget {
         children: [
           const _ShieldHero(),
           const Padding(padding: AuthSpacingTokens.authTwoFaHeroTopPadding),
-          Text(
+          const Text(
             'Bước 2: Xác minh mã',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,

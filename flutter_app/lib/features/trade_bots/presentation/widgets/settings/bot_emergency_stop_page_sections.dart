@@ -17,14 +17,14 @@ class _WarningBanner extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
-          VitCard(
+          const VitCard(
             width: AppSpacing.x6,
             height: AppSpacing.x6,
             alignment: Alignment.center,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.large,
             borderColor: _stopRed,
-            child: const Icon(Icons.priority_high_rounded, color: _stopRed),
+            child: Icon(Icons.priority_high_rounded, color: _stopRed),
           ),
           const SizedBox(width: TradeSpacingTokens.tradeBotContentGap),
           Expanded(

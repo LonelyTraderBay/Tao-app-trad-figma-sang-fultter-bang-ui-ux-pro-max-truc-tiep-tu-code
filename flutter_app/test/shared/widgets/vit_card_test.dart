@@ -85,11 +85,11 @@ void main() {
 
     await tester.pumpWidget(
       _wrap(
-        VitCard(
+        const VitCard(
           height: cardHeight,
           contentAlign: VitCardContentAlign.center,
           padding: AppSpacing.cardTilePadding,
-          child: const SizedBox(height: contentHeight, width: double.infinity),
+          child: SizedBox(height: contentHeight, width: double.infinity),
         ),
       ),
     );

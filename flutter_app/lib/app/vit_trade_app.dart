@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -49,15 +50,27 @@ class _VitTradeMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: const _VitTradeScrollBehavior(),
       routerConfig: routerConfig,
+      // I18N-2 (DEC-i18n Nhánh A — vi-VN-only): copy sản phẩm là tiếng Việt
+      // inline; các widget hệ thống của Material/Cupertino (date picker,
+      // tooltip, paste menu...) cũng phải nói tiếng Việt qua delegates.
+      // Độc lập với I18N-1 — kể cả vi-VN-only vẫn cần khai báo này.
+      locale: const Locale('vi'),
+      supportedLocales: const [Locale('vi')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       // A11Y-2/3: caps OS-level font-scaling boosts at 1.3x so large system
       // text sizes cannot overflow the fixed-height chrome/card layouts
-      // throughout the app, while still letting low-vision users scale text
-      // up from the 1.0 baseline.
-      builder: (context, child) => MediaQuery.withClampedTextScaling(
-        minScaleFactor: 1.0,
-        maxScaleFactor: 1.3,
-        child: child!,
-      ),
+      // throughout the app. KHÔNG đặt minScaleFactor (giữ mặc định 0):
+      // sàn 1.0 từng làm _ClampedTextScaler.clamp của framework gộp khoảng
+      // với clamp con maxScaleFactor <= 1.0 (vd. _DatePickerHeader trong
+      // showDatePicker) thành min == max và nổ assert `maxScale > minScale`
+      // ở chế độ debug; chữ thu nhỏ dưới 1.0 không gây overflow nên sàn
+      // không bảo vệ layout nào cả.
+      builder: (context, child) =>
+          MediaQuery.withClampedTextScaling(maxScaleFactor: 1.3, child: child!),
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,

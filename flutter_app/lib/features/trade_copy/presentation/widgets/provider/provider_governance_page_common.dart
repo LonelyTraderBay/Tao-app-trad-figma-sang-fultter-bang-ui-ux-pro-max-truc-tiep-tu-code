@@ -21,7 +21,10 @@ class _MessagePanel extends StatelessWidget {
               density: VitDensity.compact,
               fullBleed: true,
               children: [
-                Text('Broadcast Message', style: AppTextStyles.baseMedium),
+                const Text(
+                  'Broadcast Message',
+                  style: AppTextStyles.baseMedium,
+                ),
                 Text(
                   'Send announcement to all followers',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),

@@ -41,7 +41,7 @@ class _ProtectionTab extends StatelessWidget {
       fullBleed: true,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Investor Protection Scheme',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
@@ -79,7 +79,7 @@ class _RestrictionsTab extends StatelessWidget {
       fullBleed: true,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Jurisdictional Restrictions',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
@@ -109,7 +109,7 @@ class _LiabilityTab extends StatelessWidget {
       fullBleed: true,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Liability Limitations',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
@@ -149,7 +149,7 @@ class _ContactTab extends StatelessWidget {
       fullBleed: true,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Regulatory Contact Information',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
@@ -160,7 +160,7 @@ class _ContactTab extends StatelessWidget {
             contact: contact,
             onTap: () => onNotice('${contact.title} would open externally.'),
           ),
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Whistleblower Protection',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
@@ -171,7 +171,7 @@ class _ContactTab extends StatelessWidget {
           color: _legalGreen,
           tint: _legalGreen.withValues(alpha: .13),
         ),
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Terms & Privacy',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,

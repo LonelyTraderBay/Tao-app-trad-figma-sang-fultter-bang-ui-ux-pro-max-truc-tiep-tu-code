@@ -66,7 +66,13 @@ const _moduleBaselines = <String, int>{
   'referral': 0,
   'shared': 0,
   'support': 3,
-  'trade': 17,
+  // DEBT-89 (2026-07-18): trade_spacing_tokens.dart tách 3 khu — 9/17 entry
+  // của 'trade' di cư sang module mới 'trade_bots'; baseline hạ theo đúng
+  // ratchet (tổng họ trade vẫn 17, không tăng).
+  'trade': 8,
+  'trade_bots': 9,
+  'trade_compliance': 0,
+  'trade_copy': 0,
   'wallet': 46,
 };
 
@@ -178,7 +184,11 @@ List<DuplicationEntry> _collectEntries(Directory appRoot, String repoRoot) {
           .whereType<File>()
           .where((file) => file.path.endsWith('_spacing_tokens.dart'))
           .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+        ..sort(
+          (a, b) => a.path
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
+        );
 
   for (final file in files) {
     final fileName = file.uri.pathSegments.last;

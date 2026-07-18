@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_module_components.dart';
 
+/// Builds one tile at [index] inside a [VitActionTileGrid], given the
+/// resolved tile [VitServiceTileDensity].
 typedef VitActionTileBuilder =
     Widget Function(
       BuildContext context,
@@ -11,6 +13,8 @@ typedef VitActionTileBuilder =
       VitServiceTileDensity density,
     );
 
+/// Fixed-column, non-scrolling grid of action tiles built via
+/// [VitActionTileBuilder], with density- and count-driven sizing.
 class VitActionTileGrid extends StatelessWidget {
   const VitActionTileGrid({
     super.key,

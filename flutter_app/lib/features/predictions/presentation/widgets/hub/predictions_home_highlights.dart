@@ -30,7 +30,7 @@ class _PredictionsHero extends StatelessWidget {
                   valueColor: AppColors.text1,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
                 child: ColoredBox(color: AppColors.border),
@@ -218,7 +218,7 @@ class _ArenaBridgeCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    PredictionSmallBadge(
+                    const PredictionSmallBadge(
                       label: 'Arena Points only',
                       color: AppColors.text3,
                       background: AppColors.surface2,
@@ -279,7 +279,7 @@ class _HighlightIconBox extends StatelessWidget {
       dimension: VitDensity.compact.controlHeight - AppSpacing.x2,
       child: Material(
         color: background,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         child: Icon(icon, color: color, size: iconSize),
       ),
     );

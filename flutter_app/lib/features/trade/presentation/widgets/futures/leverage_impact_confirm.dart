@@ -132,16 +132,34 @@ class _ImpactRow extends StatelessWidget {
 }
 
 class _WarningCard extends StatelessWidget {
-  const _WarningCard({required this.preview});
+  const _WarningCard({
+    required this.preview,
+    required this.status,
+    this.errorMessage,
+  });
 
   final TradeFuturesLeveragePreview preview;
+  final TradeHighRiskFlowStatus status;
+  final String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
-      state: VitHighRiskUiState.riskReview,
-      title: 'Leverage risk review',
-      message: preview.warningText,
+      state: status.uiState,
+      title: switch (status.uiState) {
+        VitHighRiskUiState.submitting => 'Đang điều chỉnh đòn bẩy',
+        VitHighRiskUiState.success => 'Đã điều chỉnh đòn bẩy',
+        VitHighRiskUiState.error => 'Điều chỉnh đòn bẩy thất bại',
+        VitHighRiskUiState.offline => 'Mất kết nối',
+        _ => 'Leverage risk review',
+      },
+      message: switch (status.uiState) {
+        VitHighRiskUiState.submitting =>
+          'Đang gửi yêu cầu điều chỉnh. Vui lòng chờ trong giây lát.',
+        VitHighRiskUiState.error || VitHighRiskUiState.offline =>
+          errorMessage ?? 'Không điều chỉnh được đòn bẩy. Vui lòng thử lại.',
+        _ => preview.warningText,
+      },
       contractId: 'SC-058 ${preview.leverage}x',
       density: VitDensity.compact,
     );
@@ -218,22 +236,28 @@ class _RiskTipsCard extends StatelessWidget {
 }
 
 class _ConfirmButton extends StatelessWidget {
-  const _ConfirmButton({required this.leverage, required this.onPressed});
+  const _ConfirmButton({
+    required this.leverage,
+    required this.submitting,
+    required this.onPressed,
+  });
 
   final int leverage;
+  final bool submitting;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: LeveragePage.confirmKey,
-      onPressed: onPressed,
+      onPressed: submitting ? null : onPressed,
+      loading: submitting,
       height: AppSpacing.searchBarCompactHeight,
       variant: leverage > 20
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.primary,
       child: Text(
-        'Xác nhận đòn bẩy ${leverage}x',
+        submitting ? 'Đang điều chỉnh…' : 'Xác nhận đòn bẩy ${leverage}x',
         style: AppTextStyles.baseMedium.copyWith(
           color: AppColors.onAccent,
           fontWeight: AppTextStyles.bold,

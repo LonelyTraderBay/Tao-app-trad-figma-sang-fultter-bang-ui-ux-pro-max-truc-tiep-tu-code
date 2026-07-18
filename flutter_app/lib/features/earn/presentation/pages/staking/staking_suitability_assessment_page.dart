@@ -130,7 +130,7 @@ class _StakingSuitabilityAssessmentPageState
                               current: _step,
                               total: snapshot.questions.length,
                             ),
-                            VitHighRiskStatePanel(
+                            const VitHighRiskStatePanel(
                               density: VitDensity.compact,
                               state: VitHighRiskUiState.riskReview,
                               title: 'Đánh giá phù hợp sản phẩm',

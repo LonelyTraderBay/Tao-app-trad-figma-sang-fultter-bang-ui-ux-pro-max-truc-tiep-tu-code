@@ -105,12 +105,12 @@ class P2PKycStatusPage extends ConsumerWidget {
                           _StatusTimeline(steps: snapshot.steps),
                           const SizedBox(height: _p2pKycSectionGap),
                           _SupportCard(snapshot: snapshot),
-                          VitPageContent(
+                          const VitPageContent(
                             rhythm: VitPageRhythm.form,
                             padding: VitContentPadding.none,
                             fullBleed: true,
                             customGap: P2PSpacingTokens.p2pKycContentGap,
-                            children: const [
+                            children: [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'KYC status state review',

@@ -27,13 +27,13 @@ class _ArticleSheet extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
+                const Padding(
                   padding: NewsSpacingTokens.newsSheetHandleMargin,
                   child: SizedBox(
                     width: NewsSpacingTokens.newsSheetHandleWidth,
                     height: NewsSpacingTokens.newsSheetHandleHeight,
                     child: DecoratedBox(
-                      decoration: const ShapeDecoration(
+                      decoration: ShapeDecoration(
                         color: AppColors.borderSolid,
                         shape: RoundedRectangleBorder(
                           borderRadius: AppRadii.pillRadius,

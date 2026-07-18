@@ -47,7 +47,7 @@ class _OverallRiskCard extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: color.withValues(alpha: .12),
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: AppRadii.cardRadius,
                     ),
                   ),

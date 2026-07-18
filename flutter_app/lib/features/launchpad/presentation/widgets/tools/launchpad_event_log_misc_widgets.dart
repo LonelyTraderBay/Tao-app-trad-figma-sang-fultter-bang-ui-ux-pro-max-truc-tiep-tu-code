@@ -109,7 +109,7 @@ class _LevelBadge extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: level.color.withValues(alpha: .16),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
         padding: LaunchpadSpacingTokens.launchpadTinyChipPadding,

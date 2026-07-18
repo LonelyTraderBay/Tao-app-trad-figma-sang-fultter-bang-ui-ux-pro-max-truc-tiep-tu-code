@@ -386,7 +386,7 @@ class _StartSavingsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Sẵn sàng bắt đầu?', style: AppTextStyles.baseMedium),
+          const Text('Sẵn sàng bắt đầu?', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             'Khám phá các sản phẩm tiết kiệm đang có lãi suất hấp dẫn.',

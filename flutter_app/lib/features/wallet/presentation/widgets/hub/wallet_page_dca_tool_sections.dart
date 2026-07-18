@@ -23,7 +23,7 @@ class WalletDcaCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _IconCircle(
+              const _IconCircle(
                 icon: Icons.sync_alt_rounded,
                 color: _walletPurple,
                 size: _walletDcaIcon,
@@ -100,7 +100,7 @@ class WalletDcaCard extends StatelessWidget {
           const SizedBox(height: _walletDcaGap),
           Row(
             children: [
-              _IconCircle(
+              const _IconCircle(
                 icon: Icons.schedule_rounded,
                 color: _walletAmber,
                 size: _walletDcaStatIcon,

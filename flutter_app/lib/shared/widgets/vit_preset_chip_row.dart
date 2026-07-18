@@ -6,6 +6,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 
+/// One selectable preset entry (value + label) rendered as a
+/// [VitChoicePill] inside a [VitPresetChipRow].
 class VitPresetChipItem<T> {
   const VitPresetChipItem({
     required this.value,

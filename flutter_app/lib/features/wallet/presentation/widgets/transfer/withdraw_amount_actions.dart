@@ -134,7 +134,7 @@ class WithdrawPreviewBlockedNotice extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.info_outline_rounded,
             color: withdrawAmber,
             size: AppSpacing.iconMd,

@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// Options and suggestions for the smart challenge-rule builder wizard.
 final class ArenaSmartRulesSnapshot {
   const ArenaSmartRulesSnapshot({
     required this.endpoint,
@@ -38,6 +39,7 @@ final class ArenaSmartRulesSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single selectable option in the smart rule builder.
 final class ArenaSmartOptionDraft {
   const ArenaSmartOptionDraft({
     required this.id,
@@ -50,6 +52,7 @@ final class ArenaSmartOptionDraft {
   final String description;
 }
 
+/// Preset rule templates and demo flows for the rule preset library screen.
 final class ArenaPresetLibrarySnapshot {
   const ArenaPresetLibrarySnapshot({
     required this.endpoint,
@@ -74,6 +77,7 @@ final class ArenaPresetLibrarySnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single selectable section in the preset library.
 final class ArenaPresetSectionDraft {
   const ArenaPresetSectionDraft({required this.id, required this.label});
 
@@ -81,6 +85,7 @@ final class ArenaPresetSectionDraft {
   final String label;
 }
 
+/// A single domain-specific pack of preset rule options.
 final class ArenaDomainPackDraft {
   const ArenaDomainPackDraft({
     required this.id,
@@ -97,6 +102,7 @@ final class ArenaDomainPackDraft {
   final List<String> examples;
 }
 
+/// A single suggested rule phrase in the preset library.
 final class ArenaPresetSuggestionDraft {
   const ArenaPresetSuggestionDraft({required this.text, required this.type});
 
@@ -104,6 +110,7 @@ final class ArenaPresetSuggestionDraft {
   final String type;
 }
 
+/// A single grouped dropdown of preset options.
 final class ArenaPresetDropdownGroupDraft {
   const ArenaPresetDropdownGroupDraft({
     required this.label,
@@ -116,6 +123,7 @@ final class ArenaPresetDropdownGroupDraft {
   final bool disabled;
 }
 
+/// A single worked example showing how a preset generates a rule.
 final class ArenaPresetDemoFlowDraft {
   const ArenaPresetDemoFlowDraft({
     required this.domainId,
@@ -132,6 +140,7 @@ final class ArenaPresetDemoFlowDraft {
   final String generatedRule;
 }
 
+/// Options and suggestions for the challenge governance/rules wizard.
 final class ArenaGovernanceSnapshot {
   const ArenaGovernanceSnapshot({
     required this.endpoint,
@@ -174,6 +183,7 @@ final class ArenaGovernanceSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single selectable privacy option for a challenge.
 final class ArenaPrivacyOptionDraft {
   const ArenaPrivacyOptionDraft({
     required this.id,
@@ -186,6 +196,7 @@ final class ArenaPrivacyOptionDraft {
   final String description;
 }
 
+/// A single suggested governance action in the rules wizard.
 final class ArenaGovernanceSuggestionDraft {
   const ArenaGovernanceSuggestionDraft({
     required this.id,

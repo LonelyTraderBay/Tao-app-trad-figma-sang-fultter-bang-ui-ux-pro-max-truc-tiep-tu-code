@@ -1,11 +1,17 @@
+/// UI state a Support screen snapshot supports rendering.
 enum SupportScreenState { loading, empty, error, offline, ready }
 
+/// Lifecycle status of a [SupportTicketDraft].
 enum SupportTicketStatus { open, inProgress, resolved, closed }
 
+/// Urgency level of a [SupportTicketDraft].
 enum SupportTicketPriority { low, medium, high, urgent }
 
+/// Topic category of a [SupportTicketDraft].
 enum SupportTicketCategory { technical, trading, deposit, withdraw, kyc, other }
 
+/// Data for the support hub screen: contact info, the user's [tickets],
+/// and quick [faqItems].
 final class SupportHubSnapshot {
   const SupportHubSnapshot({
     required this.endpoint,
@@ -40,6 +46,7 @@ final class SupportHubSnapshot {
   final Set<SupportScreenState> supportedStates;
 }
 
+/// One support ticket (category, status, priority) and its message thread.
 final class SupportTicketDraft {
   const SupportTicketDraft({
     required this.id,
@@ -64,6 +71,7 @@ final class SupportTicketDraft {
   final List<SupportMessageDraft> messages;
 }
 
+/// One message in a [SupportTicketDraft]'s thread.
 final class SupportMessageDraft {
   const SupportMessageDraft({
     required this.id,
@@ -78,6 +86,7 @@ final class SupportMessageDraft {
   final String time;
 }
 
+/// One question/answer FAQ entry on the support hub screen.
 final class SupportFaqDraft {
   const SupportFaqDraft({required this.question, required this.answer});
 
@@ -85,6 +94,8 @@ final class SupportFaqDraft {
   final String answer;
 }
 
+/// Data for the help center screen: browsable [categories] and their
+/// [articles].
 final class HelpCenterSnapshot {
   const HelpCenterSnapshot({
     required this.endpoint,
@@ -121,6 +132,7 @@ final class HelpCenterSnapshot {
   final Set<SupportScreenState> supportedStates;
 }
 
+/// One help-article category with its article count.
 final class HelpCategoryDraft {
   const HelpCategoryDraft({
     required this.id,
@@ -133,6 +145,8 @@ final class HelpCategoryDraft {
   final int count;
 }
 
+/// One help center article (summary, view count) within a
+/// [HelpCategoryDraft].
 final class HelpArticleDraft {
   const HelpArticleDraft({
     required this.id,
@@ -149,6 +163,7 @@ final class HelpArticleDraft {
   final int views;
 }
 
+/// Category of an [AnnouncementDraft].
 enum AnnouncementType {
   promotion,
   newFeature,
@@ -158,6 +173,7 @@ enum AnnouncementType {
   general,
 }
 
+/// Data for the announcements screen: filterable [announcements].
 final class AnnouncementsSnapshot {
   const AnnouncementsSnapshot({
     required this.endpoint,
@@ -184,6 +200,7 @@ final class AnnouncementsSnapshot {
   final Set<SupportScreenState> supportedStates;
 }
 
+/// One selectable [AnnouncementType] filter on the announcements screen.
 final class AnnouncementFilterDraft {
   const AnnouncementFilterDraft({
     required this.id,
@@ -196,6 +213,8 @@ final class AnnouncementFilterDraft {
   final AnnouncementType? type;
 }
 
+/// One announcement entry (title, content, publish date, pin state, tags)
+/// on the announcements screen.
 final class AnnouncementDraft {
   const AnnouncementDraft({
     required this.id,

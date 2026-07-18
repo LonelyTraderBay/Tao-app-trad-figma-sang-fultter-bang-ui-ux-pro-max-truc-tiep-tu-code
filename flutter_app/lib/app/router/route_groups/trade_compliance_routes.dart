@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/pages/client_money/arm_integration_status_page.dart';
@@ -97,7 +98,7 @@ List<RouteBase> tradeComplianceRoutes(ShellRenderMode shellRenderMode) {
       path: '${AppRoutePaths.tradeCopyTargetMarketDefinition}/:productId',
       name: AppRouteNames.sc415TargetMarketDefinitionDetail,
       builder: (_, state) => TargetMarketDefinitionPage(
-        productId: state.pathParameters['productId'] ?? 'prod-1',
+        productId: requireRouteParam(state, 'productId'),
         shellRenderMode: shellRenderMode,
       ),
     ),

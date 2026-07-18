@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// Read-model for the Market Events Calendar screen (upcoming events,
+/// stats, active filters).
 final class MarketCalendarSnapshot {
   const MarketCalendarSnapshot({
     required this.events,
@@ -26,6 +28,8 @@ final class MarketCalendarSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Derivatives Market screen (global stats, derivative
+/// pairs, liquidation history).
 final class MarketDerivativesSnapshot {
   const MarketDerivativesSnapshot({
     required this.globalStats,
@@ -54,6 +58,7 @@ final class MarketDerivativesSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Market Depth (order book) screen for a single pair.
 final class MarketDepthSnapshot {
   const MarketDepthSnapshot({
     required this.pair,
@@ -82,6 +87,7 @@ final class MarketDepthSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Category of a market calendar event (unlock, upgrade, halving, etc.).
 enum MarketCalendarEventType {
   unlock,
   upgrade,
@@ -94,8 +100,10 @@ enum MarketCalendarEventType {
   report,
 }
 
+/// Expected market impact of a calendar event: high, medium, or low.
 enum MarketCalendarImpact { high, medium, low }
 
+/// Active type/impact filter applied to the market calendar list.
 final class MarketCalendarQuery {
   const MarketCalendarQuery({this.type, this.impact});
 
@@ -117,6 +125,7 @@ final class MarketCalendarQuery {
   }
 }
 
+/// Aggregate calendar stats (upcoming/high-impact/this-week counts).
 final class MarketCalendarStats {
   const MarketCalendarStats({
     required this.upcoming,
@@ -129,6 +138,7 @@ final class MarketCalendarStats {
   final int thisWeek;
 }
 
+/// A single market calendar event (title, type, date, impact).
 final class MarketCalendarEvent {
   const MarketCalendarEvent({
     required this.id,
@@ -153,6 +163,8 @@ final class MarketCalendarEvent {
   final String? source;
 }
 
+/// Aggregate global derivatives stats (open interest, volume,
+/// liquidations, funding, fear/greed).
 final class DerivativesGlobalStats {
   const DerivativesGlobalStats({
     required this.totalOpenInterest,
@@ -179,6 +191,8 @@ final class DerivativesGlobalStats {
   final int fearGreedDerivatives;
 }
 
+/// A single derivatives (perpetual/futures) market row with funding,
+/// open interest, and liquidation stats.
 final class DerivativePair {
   const DerivativePair({
     required this.id,
@@ -221,6 +235,7 @@ final class DerivativePair {
   double get totalLiquidations24h => longLiquidations24h + shortLiquidations24h;
 }
 
+/// One time bucket's long/short liquidation volume.
 final class LiquidationPoint {
   const LiquidationPoint({
     required this.time,
@@ -233,8 +248,11 @@ final class LiquidationPoint {
   final double short;
 }
 
+/// Sort key for the derivatives market list: open interest, volume,
+/// funding, or change.
 enum MarketDerivativesSort { openInterest, volume, funding, change }
 
+/// Bid/ask order book levels for the depth screen, with derived spread.
 final class MarketDepthData {
   const MarketDepthData({
     required this.bids,
@@ -263,6 +281,7 @@ final class MarketDepthData {
   }
 }
 
+/// A single price/quantity/cumulative row of the market depth chart.
 final class MarketDepthLevel {
   const MarketDepthLevel({
     required this.price,
@@ -275,6 +294,7 @@ final class MarketDepthLevel {
   final double cumulative;
 }
 
+/// A single large ("whale") order shown on the market depth screen.
 final class MarketWhaleOrder {
   const MarketWhaleOrder({
     required this.id,
@@ -293,4 +313,5 @@ final class MarketWhaleOrder {
   final String timeAgo;
 }
 
+/// Side of a market order: buy or sell.
 enum MarketOrderSide { buy, sell }

@@ -210,7 +210,7 @@ class _P2PPaymentMethodAddPageState
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surface,
         surfaceTintColor: AppColors.surface,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         title: Text(
           preview.confirmTitle,
           style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),

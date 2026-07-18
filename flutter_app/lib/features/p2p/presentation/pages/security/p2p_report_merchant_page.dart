@@ -141,7 +141,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            VitModuleSectionHeader(
+                            const VitModuleSectionHeader(
                               title: 'Báo cáo vi phạm',
                               accentColor: AppModuleAccents.p2p,
                               bottomGap: AppSpacing.pageRhythmStandardInnerGap,

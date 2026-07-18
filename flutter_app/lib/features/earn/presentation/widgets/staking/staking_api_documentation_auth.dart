@@ -49,7 +49,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'API Key Authentication',
                               style: AppTextStyles.baseMedium,
                             ),

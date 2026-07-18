@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// Read-model for the Advanced Charts screen (indicators, drawing tools,
+/// technical signal summaries).
 final class MarketAdvancedChartsSnapshot {
   const MarketAdvancedChartsSnapshot({
     required this.indicators,
@@ -36,6 +38,8 @@ final class MarketAdvancedChartsSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Token Unlocks screen (upcoming unlock schedule,
+/// impact/category filters).
 final class MarketTokenUnlocksSnapshot {
   const MarketTokenUnlocksSnapshot({
     required this.unlocks,
@@ -72,6 +76,8 @@ final class MarketTokenUnlocksSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for a single pair's Market Detail screen (order book depth,
+/// recent trades).
 final class MarketPairDetailSnapshot {
   const MarketPairDetailSnapshot({
     required this.pair,
@@ -101,6 +107,8 @@ final class MarketPairDetailSnapshot {
       chartSeries[pair.id] ?? pair.sparklineData;
 }
 
+/// Read-model for the Token Info screen (project fundamentals for a
+/// single pair).
 final class MarketTokenInfoSnapshot {
   const MarketTokenInfoSnapshot({
     required this.pair,
@@ -125,6 +133,8 @@ final class MarketTokenInfoSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// A selectable category tab (id, label, accent color) for indicators or
+/// drawing tools.
 final class AdvancedChartCategory {
   const AdvancedChartCategory({
     required this.id,
@@ -137,6 +147,8 @@ final class AdvancedChartCategory {
   final AccentTone color;
 }
 
+/// A single technical chart indicator (e.g. RSI, MACD) with its tunable
+/// parameters.
 final class TechnicalIndicator {
   const TechnicalIndicator({
     required this.id,
@@ -157,6 +169,8 @@ final class TechnicalIndicator {
   final List<TechnicalIndicatorParam> params;
 }
 
+/// A single tunable parameter (label + default value) for a technical
+/// indicator.
 final class TechnicalIndicatorParam {
   const TechnicalIndicatorParam({required this.label, required this.value});
 
@@ -164,6 +178,7 @@ final class TechnicalIndicatorParam {
   final int value;
 }
 
+/// A selectable charting drawing tool (e.g. trendline, Fibonacci).
 final class AdvancedDrawingTool {
   const AdvancedDrawingTool({
     required this.id,
@@ -178,6 +193,9 @@ final class AdvancedDrawingTool {
   final String categoryId;
 }
 
+/// Aggregated technical-analysis signal summary (moving average and
+/// oscillator consensus, buy/sell/neutral counts, pivot points) for a
+/// pair/timeframe.
 final class TechSignalSummaryDraft {
   const TechSignalSummaryDraft({
     required this.pair,
@@ -202,6 +220,7 @@ final class TechSignalSummaryDraft {
   final List<TechPivotPointDraft> pivotPoints;
 }
 
+/// A single labelled pivot-point price level.
 final class TechPivotPointDraft {
   const TechPivotPointDraft({required this.label, required this.value});
 
@@ -209,8 +228,12 @@ final class TechPivotPointDraft {
   final double value;
 }
 
+/// Aggregated technical-analysis signal strength: strong buy, buy,
+/// neutral, sell, or strong sell.
 enum TechSignal { strongBuy, buy, neutral, sell, strongSell }
 
+/// A single upcoming token unlock event (amount, USD value, dilution %,
+/// vesting schedule).
 final class TokenUnlockDraft {
   const TokenUnlockDraft({
     required this.id,
@@ -255,6 +278,8 @@ final class TokenUnlockDraft {
   final List<TokenVestingEventDraft> vestingSchedule;
 }
 
+/// One scheduled vesting event (date, percentage released) in a token
+/// unlock's vesting schedule.
 final class TokenVestingEventDraft {
   const TokenVestingEventDraft({
     required this.date,
@@ -267,6 +292,7 @@ final class TokenVestingEventDraft {
   final String label;
 }
 
+/// Display label/color for a token-unlock impact-level badge.
 final class UnlockImpactConfig {
   const UnlockImpactConfig({required this.label, required this.color});
 
@@ -274,6 +300,7 @@ final class UnlockImpactConfig {
   final AccentTone color;
 }
 
+/// Display label/color for a token-unlock category badge.
 final class UnlockCategoryConfig {
   const UnlockCategoryConfig({required this.label, required this.color});
 
@@ -281,14 +308,21 @@ final class UnlockCategoryConfig {
   final AccentTone color;
 }
 
+/// Sort key for the token unlocks list: nearest date, value, or impact.
 enum MarketUnlockSort { nearest, value, impact }
 
+/// Market impact severity of a token unlock: high, medium, or low.
 enum MarketUnlockImpact { high, medium, low }
 
+/// Recipient category of a token unlock: team, investor, ecosystem,
+/// community, or foundation.
 enum MarketUnlockCategory { team, investor, ecosystem, community, foundation }
 
+/// Vesting release pattern of a token unlock: cliff, linear, or
+/// milestone-based.
 enum MarketUnlockVestingType { cliff, linear, milestone }
 
+/// A single recent trade print shown on the pair detail screen.
 final class MarketRecentTrade {
   const MarketRecentTrade({
     required this.id,
@@ -305,6 +339,8 @@ final class MarketRecentTrade {
   final MarketOrderSide side;
 }
 
+/// A token's project fundamentals (supply, links, on-chain metrics,
+/// distribution, contract addresses) shown on the Token Info screen.
 final class TokenFundamentalsDraft {
   const TokenFundamentalsDraft({
     required this.id,
@@ -365,6 +401,8 @@ final class TokenFundamentalsDraft {
   final List<ContractAddressDraft> contractAddresses;
 }
 
+/// A single labelled supply-distribution slice (e.g. team, public) with
+/// its percentage and display color.
 final class SupplyDistributionDraft {
   const SupplyDistributionDraft({
     required this.label,
@@ -377,6 +415,7 @@ final class SupplyDistributionDraft {
   final AccentTone color;
 }
 
+/// A single deployed contract address for a token on a given network.
 final class ContractAddressDraft {
   const ContractAddressDraft({required this.network, required this.address});
 

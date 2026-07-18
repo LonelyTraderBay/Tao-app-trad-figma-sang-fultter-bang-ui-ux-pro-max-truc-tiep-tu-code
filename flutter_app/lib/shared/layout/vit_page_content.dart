@@ -6,8 +6,10 @@ import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
+/// Top padding preset for [VitPageContent].
 enum VitContentPadding { compact, defaultPadding, relaxed, none }
 
+/// Vertical gap preset between [VitPageContent]/[VitPageSection] children.
 enum VitContentGap { tight, defaultGap, relaxed, loose }
 
 double _resolveContentGap({
@@ -29,6 +31,8 @@ double _resolveContentGap({
   }
 }
 
+/// Standard page body column: horizontal content padding plus a
+/// consistently gapped, optionally growing/full-bleed list of [children].
 class VitPageContent extends StatelessWidget {
   const VitPageContent({
     super.key,
@@ -89,6 +93,8 @@ class VitPageContent extends StatelessWidget {
   }
 }
 
+/// A labeled sub-section inside [VitPageContent]: an optional
+/// [VitSectionHeader] (with icon/action) followed by gapped [children].
 class VitPageSection extends StatelessWidget {
   const VitPageSection({
     super.key,

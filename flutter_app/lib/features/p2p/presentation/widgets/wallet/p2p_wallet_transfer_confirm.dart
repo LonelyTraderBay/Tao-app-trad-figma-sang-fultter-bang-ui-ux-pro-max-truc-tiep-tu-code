@@ -43,7 +43,10 @@ class _ConfirmTransferView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: _p2pTransferMajorGap),
-              Text('Kiểm tra thông tin', style: AppTextStyles.sectionTitle),
+              const Text(
+                'Kiểm tra thông tin',
+                style: AppTextStyles.sectionTitle,
+              ),
               const SizedBox(height: AppSpacing.x1),
               Text(
                 'Đảm bảo thông tin chính xác trước khi xác nhận',

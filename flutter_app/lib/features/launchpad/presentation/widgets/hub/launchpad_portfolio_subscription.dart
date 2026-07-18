@@ -235,7 +235,7 @@ class _VestingProgress extends StatelessWidget {
                     0.0,
                     1.0,
                   ),
-                  child: ColoredBox(color: AppModuleAccents.launchpad),
+                  child: const ColoredBox(color: AppModuleAccents.launchpad),
                 ),
               ],
             ),

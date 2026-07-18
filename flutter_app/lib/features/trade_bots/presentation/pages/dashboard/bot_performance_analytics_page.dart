@@ -13,9 +13,9 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
 part '../../widgets/dashboard/bot_performance_charts_strategy.dart';
 part '../../widgets/dashboard/bot_performance_metrics_summary.dart';
@@ -128,7 +128,7 @@ class _BotPerformanceAnalyticsPageState
           title: 'Summary',
           child: _PerformanceSummaryCard(metrics: snapshot.metrics),
         ),
-        VitTradeSection(title: 'Rating', child: const _RatingCard()),
+        const VitTradeSection(title: 'Rating', child: _RatingCard()),
         const VitBotRiskReviewFooter(
           title: 'Bot analytics review',
           message:

@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_blocked_users_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/governance/arena_safety_center_page.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/studio/arena_creator_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpBlockedUsers(WidgetTester tester) async {
+  Future<GoRouter> pumpBlockedUsers(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    final router = createAppRouter(initialLocation: AppRoutePaths.arenaBlocked);
     await tester.pumpWidget(
-      ProviderScope(
-        child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.arenaBlocked,
-          ),
-        ),
-      ),
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
     );
     await tester.pumpAndSettle();
+    return router;
   }
 
   test('SC-203 mock repository exposes blocked users BE draft', () {
@@ -112,6 +110,33 @@ void main() {
 
     expect(find.byKey(ArenaBlockedUsersPage.emptyKey), findsOneWidget);
     expect(find.text('Chưa chặn ai'), findsOneWidget);
+  });
+
+  testWidgets('SC-203 round-trip: unblock state persists via Notifier', (
+    tester,
+  ) async {
+    final router = await pumpBlockedUsers(tester);
+
+    await tester.tap(find.byKey(ArenaBlockedUsersPage.unblockKey('blk001')));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(ArenaBlockedUsersPage.confirmUnblockKey('blk001')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('SpamBot_X'), findsNothing);
+    expect(find.text('1 người đã bị chặn'), findsOneWidget);
+
+    // STATE-S23 round-trip: điều hướng đi rồi quay lại — mutation giữ nguyên
+    // (state sống ở Notifier, không phải late List của trang).
+    router.go(AppRoutePaths.arenaSafety);
+    await tester.pumpAndSettle();
+    expect(find.byType(ArenaSafetyCenterPage), findsOneWidget);
+
+    router.go(AppRoutePaths.arenaBlocked);
+    await tester.pumpAndSettle();
+    expect(find.text('SpamBot_X'), findsNothing);
+    expect(find.text('1 người đã bị chặn'), findsOneWidget);
   });
 
   testWidgets('SC-203 view profile uses Arena creator route', (tester) async {

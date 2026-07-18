@@ -1,3 +1,5 @@
+/// Thrown when a trade remote repository is required but mock data is
+/// disabled and the production backend has not been configured yet.
 final class TradeBackendContractMissingException implements Exception {
   const TradeBackendContractMissingException();
 

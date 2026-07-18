@@ -4,13 +4,13 @@ mixin _MockTradeBotsRepositoryLifecycleRiskMethods
     on _MockTradeBotsRepositoryBase {
   @override
   TradeBotsSnapshot getTradingBots() {
-    return TradeBotsSnapshot(
+    return const TradeBotsSnapshot(
       trade: _botLifecycleTradeSnapshot,
       strategies: _botStrategies,
       activeBots: _activeBots,
       lastUpdatedLabel: 'realtime-refresh',
       highRiskContractId: HighRiskFlowContractIds.tradeBots,
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,

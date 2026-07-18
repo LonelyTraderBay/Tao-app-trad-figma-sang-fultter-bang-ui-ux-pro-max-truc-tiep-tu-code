@@ -48,7 +48,9 @@ class StakingLegendDot extends StatelessWidget {
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xsRadius,
+              ),
             ),
           ),
         ),

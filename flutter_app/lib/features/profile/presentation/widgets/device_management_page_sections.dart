@@ -24,7 +24,7 @@ class _SecuritySummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: ProfileSpacingTokens.profileDevicesSummaryIconBox,
                 height: ProfileSpacingTokens.profileDevicesSummaryIconBox,
                 child: Material(
@@ -32,7 +32,7 @@ class _SecuritySummaryCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadii.lgRadius,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.shield_outlined,
                     color: _devicesPrimary,
                     size: ProfileSpacingTokens.profileDevicesSummaryIcon,
@@ -119,7 +119,7 @@ class _SummaryStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: _devicesPanel3.withValues(alpha: .82),
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       child: Padding(
         padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Column(
@@ -226,7 +226,7 @@ class _DeviceCard extends StatelessWidget {
                 height: ProfileSpacingTokens.profileDevicesIconBox,
                 child: Material(
                   color: accent.withValues(alpha: .14),
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.lgRadius,
                   ),
                   child: Icon(

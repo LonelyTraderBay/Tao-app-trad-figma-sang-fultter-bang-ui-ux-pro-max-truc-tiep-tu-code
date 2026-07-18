@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Row of animated page-indicator dots for a carousel/banner, with the
+/// active dot widened and an optional tap-to-navigate callback per dot.
 class VitCarouselDots extends StatelessWidget {
   const VitCarouselDots({
     super.key,

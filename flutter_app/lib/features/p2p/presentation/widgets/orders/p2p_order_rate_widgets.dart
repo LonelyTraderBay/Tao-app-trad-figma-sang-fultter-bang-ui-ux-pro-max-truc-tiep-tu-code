@@ -287,10 +287,10 @@ class _SuccessView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Material(
+            const Material(
               color: AppColors.buy15,
               borderRadius: AppRadii.cardLargeRadius,
-              child: const SizedBox(
+              child: SizedBox(
                 width: P2PSpacingTokens.p2pOrderRatingSuccessIconBox,
                 height: P2PSpacingTokens.p2pOrderRatingSuccessIconBox,
                 child: Center(

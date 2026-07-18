@@ -63,8 +63,9 @@ class LaunchpadMultisigPage extends ConsumerStatefulWidget {
 }
 
 class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
+  // STATE-S23: transactions sống ở LaunchpadMultisigStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
   late String _selectedSafeAddress;
-  late List<LaunchpadMultisigTxDraft> _transactions;
   var _activeTab = _MultisigTab.queue;
   String? _expandedTxId;
   String? _copiedField;
@@ -73,14 +74,16 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(launchpadControllerProvider).getMultisig();
-    _selectedSafeAddress = snapshot.defaultSafeAddress;
-    _transactions = List.of(snapshot.transactions);
+    _selectedSafeAddress = ref
+        .read(launchpadControllerProvider)
+        .getMultisig()
+        .defaultSafeAddress;
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getMultisig();
+    final viewState = ref.watch(launchpadMultisigStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -92,8 +95,11 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
       (safe) => safe.address == _selectedSafeAddress,
       orElse: () => snapshot.safes.first,
     );
-    final queueTxs = _queueTxs(selectedSafe.address);
-    final historyTxs = _historyTxs(selectedSafe.address);
+    final queueTxs = _queueTxs(viewState.transactions, selectedSafe.address);
+    final historyTxs = _historyTxs(
+      viewState.transactions,
+      selectedSafe.address,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -210,8 +216,10 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
                   safe: selectedSafe,
                   onClose: () => setState(() => _showCreate = false),
                   onCreate: (tx) {
+                    ref
+                        .read(launchpadMultisigStateControllerProvider.notifier)
+                        .createTx(tx);
                     setState(() {
-                      _transactions = [tx, ..._transactions];
                       _expandedTxId = tx.id;
                       _showCreate = false;
                     });
@@ -224,8 +232,11 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
     );
   }
 
-  List<LaunchpadMultisigTxDraft> _queueTxs(String safeAddress) {
-    return _transactions
+  List<LaunchpadMultisigTxDraft> _queueTxs(
+    List<LaunchpadMultisigTxDraft> transactions,
+    String safeAddress,
+  ) {
+    return transactions
         .where(
           (tx) =>
               tx.safeAddress == safeAddress &&
@@ -239,8 +250,11 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
         .toList();
   }
 
-  List<LaunchpadMultisigTxDraft> _historyTxs(String safeAddress) {
-    return _transactions
+  List<LaunchpadMultisigTxDraft> _historyTxs(
+    List<LaunchpadMultisigTxDraft> transactions,
+    String safeAddress,
+  ) {
+    return transactions
         .where(
           (tx) =>
               tx.safeAddress == safeAddress &&
@@ -263,48 +277,10 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
   }
 
   void _signTx(String id) {
-    setState(() {
-      _transactions = [
-        for (final tx in _transactions)
-          if (tx.id != id) tx else _signedTransaction(tx),
-      ];
-    });
+    ref.read(launchpadMultisigStateControllerProvider.notifier).signTx(id);
   }
 
   void _executeTx(String id) {
-    setState(() {
-      _transactions = [
-        for (final tx in _transactions)
-          tx.id == id
-              ? tx.copyWith(
-                  status: LaunchpadMultisigTxStatus.executed,
-                  executedAt: '07/03/2026 10:15',
-                  executeTxHash: '0xExec...313',
-                )
-              : tx,
-      ];
-    });
+    ref.read(launchpadMultisigStateControllerProvider.notifier).executeTx(id);
   }
-}
-
-LaunchpadMultisigTxDraft _signedTransaction(LaunchpadMultisigTxDraft tx) {
-  var changed = false;
-  final signers = [
-    for (final signer in tx.signers)
-      if (!changed && !signer.signed)
-        (() {
-          changed = true;
-          return signer.copyWith(signed: true, signedAt: '07/03/2026 10:10');
-        })()
-      else
-        signer,
-  ];
-  final signedCount = signers.where((signer) => signer.signed).length;
-  return tx.copyWith(
-    signers: signers,
-    signedCount: signedCount,
-    status: signedCount >= tx.threshold
-        ? LaunchpadMultisigTxStatus.ready
-        : LaunchpadMultisigTxStatus.pendingSignatures,
-  );
 }

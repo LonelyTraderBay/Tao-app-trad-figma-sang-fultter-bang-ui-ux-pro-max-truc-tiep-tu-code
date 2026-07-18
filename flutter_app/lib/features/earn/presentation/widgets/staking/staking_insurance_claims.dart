@@ -14,7 +14,7 @@ class _ClaimsTab extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: Text('Claim History', style: AppTextStyles.baseMedium),
             ),
             VitCtaButton(

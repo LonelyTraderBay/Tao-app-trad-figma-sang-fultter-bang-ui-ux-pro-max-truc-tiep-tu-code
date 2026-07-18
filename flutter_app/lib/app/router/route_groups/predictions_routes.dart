@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart';
@@ -44,7 +45,7 @@ List<RouteBase> predictionRoutes(ShellRenderMode shellRenderMode) {
       path: '/markets/predictions/event/:eventId',
       name: AppRouteNames.sc030PredictionEventDetail,
       builder: (_, state) => PredictionEventDetailPage(
-        eventId: state.pathParameters['eventId'] ?? 'pred-1',
+        eventId: requireRouteParam(state, 'eventId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -76,7 +77,7 @@ List<RouteBase> predictionRoutes(ShellRenderMode shellRenderMode) {
       path: '/markets/predictions/receipt/:receiptId',
       name: AppRouteNames.sc035PredictionOrderReceipt,
       builder: (_, state) => PredictionOrderReceiptPage(
-        receiptId: state.pathParameters['receiptId'] ?? 'p2p001',
+        receiptId: requireRouteParam(state, 'receiptId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -113,6 +114,7 @@ List<RouteBase> predictionRoutes(ShellRenderMode shellRenderMode) {
       path: '/markets/predictions/advanced-chart/:eventId',
       name: AppRouteNames.sc041PredictionAdvancedChart,
       builder: (_, state) => PredictionAdvancedChartPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         eventId: state.pathParameters['eventId'] ?? 'btcusdt',
         shellRenderMode: shellRenderMode,
       ),
@@ -127,7 +129,7 @@ List<RouteBase> predictionRoutes(ShellRenderMode shellRenderMode) {
       path: '/markets/predictions/tournament/:tournamentId',
       name: AppRouteNames.sc414PredictionTournamentDetail,
       builder: (_, state) => PredictionTournamentDetailPage(
-        tournamentId: state.pathParameters['tournamentId'] ?? 'tour1',
+        tournamentId: requireRouteParam(state, 'tournamentId'),
         shellRenderMode: shellRenderMode,
       ),
     ),

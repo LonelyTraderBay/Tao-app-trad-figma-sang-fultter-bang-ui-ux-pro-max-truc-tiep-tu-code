@@ -169,10 +169,10 @@ class _SourceHero extends StatelessWidget {
               shape: const RoundedRectangleBorder(
                 borderRadius: AppRadii.lgRadius,
               ),
-              child: SizedBox(
+              child: const SizedBox(
                 width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
                 height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
-                child: const Icon(
+                child: Icon(
                   Icons.attach_money_rounded,
                   color: AppColors.onAccent,
                   size: AppSpacing.iconMd,

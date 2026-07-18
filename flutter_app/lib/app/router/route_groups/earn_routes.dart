@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
@@ -306,7 +307,7 @@ List<RouteBase> earnRoutes(ShellRenderMode shellRenderMode) {
       path: AppRoutePaths.earnVotingProposalRoute,
       name: AppRouteNames.sc390StakingVotingDetail,
       builder: (_, state) => StakingVotingPage(
-        proposalId: state.pathParameters['proposalId'] ?? 'prop001',
+        proposalId: requireRouteParam(state, 'proposalId'),
         shellRenderMode: shellRenderMode,
       ),
     ),

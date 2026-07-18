@@ -163,9 +163,9 @@ class _CancelHero extends StatelessWidget {
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: AppSpacing.buttonCompact,
-            child: const Material(
+            child: Material(
               color: AppColors.sell10,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
               child: Icon(

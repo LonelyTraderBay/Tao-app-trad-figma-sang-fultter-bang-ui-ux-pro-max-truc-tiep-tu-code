@@ -56,7 +56,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: EdgeInsetsDirectional.all(AppSpacing.zero),
+              padding: const EdgeInsetsDirectional.all(AppSpacing.zero),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -132,7 +132,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Sandbox Environment',
                               style: AppTextStyles.baseMedium,
                             ),

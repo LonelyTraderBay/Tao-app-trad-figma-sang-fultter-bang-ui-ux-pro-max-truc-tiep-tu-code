@@ -23,19 +23,19 @@ class _EmergencyTab extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: _stakingWithdrawalEmergencyIconBox,
                         height: _stakingWithdrawalEmergencyIconBox,
                         child: Material(
                           color: AppColors.sell10,
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadii.cardRadius,
-                            side: const BorderSide(
+                            side: BorderSide(
                               color: AppColors.sell20,
                               width: _stakingWithdrawalBorderWidth,
                             ),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.emergency_rounded,
                             color: AppColors.sell,
                           ),

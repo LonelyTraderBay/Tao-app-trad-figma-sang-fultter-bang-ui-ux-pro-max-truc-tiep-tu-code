@@ -316,7 +316,10 @@ class _DoNotDisturbCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Chế độ Không làm phiền', style: AppTextStyles.baseMedium),
+                const Text(
+                  'Chế độ Không làm phiền',
+                  style: AppTextStyles.baseMedium,
+                ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(
                   'Tắt tất cả thông báo từ 22:00-07:00 (trừ High priority)',

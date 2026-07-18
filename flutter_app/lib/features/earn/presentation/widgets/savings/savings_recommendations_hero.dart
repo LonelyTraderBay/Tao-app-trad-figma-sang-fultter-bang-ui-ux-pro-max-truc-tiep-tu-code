@@ -8,9 +8,9 @@ class _HeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.accent08,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardLargeRadius,
           side: BorderSide(
             color: AppColors.accent20,
@@ -68,7 +68,7 @@ class _ProfileCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text('Hồ sơ của bạn', style: AppTextStyles.baseMedium),
               ),
               if (profile.hasCompletedAssessment)

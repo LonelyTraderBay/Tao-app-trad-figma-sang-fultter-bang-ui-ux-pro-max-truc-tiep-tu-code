@@ -14,7 +14,7 @@ class _EventCalendarTabBar extends StatelessWidget {
     return PredictionEnumTabBar<_CalendarTab>(
       activeTab: activeTab,
       onChanged: onChanged,
-      items: [
+      items: const [
         (
           PredictionEventCalendarPage.calendarTabKey,
           _CalendarTab.calendar,

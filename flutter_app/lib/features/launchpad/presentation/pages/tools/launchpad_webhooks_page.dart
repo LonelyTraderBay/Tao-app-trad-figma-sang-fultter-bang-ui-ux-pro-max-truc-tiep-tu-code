@@ -115,30 +115,27 @@ class LaunchpadWebhooksPage extends ConsumerStatefulWidget {
 }
 
 class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
-  late List<LaunchpadWebhookSubscriptionDraft> _subscriptions;
+  // STATE-S23: subscriptions sống ở LaunchpadWebhooksStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
   var _activeTab = _WebhookTab.subscriptions;
   var _showCreateSheet = false;
   String? _expandedId;
   String? _copiedField;
 
   @override
-  void initState() {
-    super.initState();
-    _subscriptions = List.of(
-      ref.read(launchpadControllerProvider).getWebhooks().subscriptions,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getWebhooks();
+    final viewState = ref.watch(launchpadWebhooksStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
         : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
-    final stats = _WebhookStats.from(_subscriptions, snapshot.deliveries);
+    final stats = _WebhookStats.from(
+      viewState.subscriptions,
+      snapshot.deliveries,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -214,7 +211,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                                     setState(() => _showCreateSheet = true),
                               ),
                               _SubscriptionsSection(
-                                subscriptions: _subscriptions,
+                                subscriptions: viewState.subscriptions,
                                 eventTypes: snapshot.eventTypes,
                                 expandedId: _expandedId,
                                 copiedField: _copiedField,
@@ -268,36 +265,25 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
   }
 
   void _toggleStatus(String id) {
-    setState(() {
-      _subscriptions = [
-        for (final subscription in _subscriptions)
-          if (subscription.id == id)
-            subscription.copyWith(
-              status: subscription.status == LaunchpadWebhookStatus.active
-                  ? LaunchpadWebhookStatus.paused
-                  : LaunchpadWebhookStatus.active,
-            )
-          else
-            subscription,
-      ];
-    });
+    ref
+        .read(launchpadWebhooksStateControllerProvider.notifier)
+        .toggleStatus(id);
   }
 
   void _deleteSubscription(String id) {
-    setState(() {
-      _subscriptions = [
-        for (final subscription in _subscriptions)
-          if (subscription.id != id) subscription,
-      ];
-      if (_expandedId == id) {
-        _expandedId = null;
-      }
-    });
+    ref
+        .read(launchpadWebhooksStateControllerProvider.notifier)
+        .deleteSubscription(id);
+    if (_expandedId == id) {
+      setState(() => _expandedId = null);
+    }
   }
 
   void _createSubscription(LaunchpadWebhookSubscriptionDraft subscription) {
+    ref
+        .read(launchpadWebhooksStateControllerProvider.notifier)
+        .createSubscription(subscription);
     setState(() {
-      _subscriptions = [..._subscriptions, subscription];
       _showCreateSheet = false;
       _expandedId = subscription.id;
     });

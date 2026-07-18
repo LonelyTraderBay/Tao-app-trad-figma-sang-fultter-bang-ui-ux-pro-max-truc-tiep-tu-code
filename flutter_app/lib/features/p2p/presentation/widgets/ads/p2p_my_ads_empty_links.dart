@@ -97,7 +97,9 @@ class _QuickLinkTile extends StatelessWidget {
         children: [
           Material(
             color: color.withValues(alpha: .10),
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
             clipBehavior: Clip.antiAlias,
             child: SizedBox.square(
               dimension: _p2pMyAdsQuickIconBox,

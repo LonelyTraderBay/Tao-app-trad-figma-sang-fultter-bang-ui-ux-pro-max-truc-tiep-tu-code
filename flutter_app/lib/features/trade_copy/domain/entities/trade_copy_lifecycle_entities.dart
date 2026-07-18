@@ -1,7 +1,10 @@
 part of 'trade_copy_entities.dart';
 
+/// Risk tier of a copy-trading provider: low, medium, or high.
 enum TradeCopyRiskLevel { low, medium, high }
 
+/// Read-model for the Copy Trading discovery screen (available traders,
+/// aggregate AUM, risk warning/disclaimer copy).
 final class TradeCopyTradingSnapshot {
   const TradeCopyTradingSnapshot({
     required this.trade,
@@ -32,8 +35,12 @@ final class TradeCopyTradingSnapshot {
   final String? highRiskContractId;
 }
 
+/// Compliance verdict for a copy-trading card variant: pass, warn, or
+/// fail.
 enum TradeCopyCardCompliance { pass, warn, fail }
 
+/// Read-model for the internal Copy Card design-review demo screen
+/// (metrics, variants, compliance issues, recommendation).
 final class TradeCopyCardDemoSnapshot {
   const TradeCopyCardDemoSnapshot({
     required this.endpoint,
@@ -68,6 +75,8 @@ final class TradeCopyCardDemoSnapshot {
   final String contractNotes;
 }
 
+/// Aggregate trader/copier/AUM metrics shown on the copy card demo
+/// screen.
 final class TradeCopyCardMetrics {
   const TradeCopyCardMetrics({
     required this.traders,
@@ -84,6 +93,7 @@ final class TradeCopyCardMetrics {
   final String lastUpdated;
 }
 
+/// A single candidate copy-card design variant under review.
 final class TradeCopyCardVariantDraft {
   const TradeCopyCardVariantDraft({
     required this.id,
@@ -100,6 +110,8 @@ final class TradeCopyCardVariantDraft {
   final List<String> notes;
 }
 
+/// A single compliance issue compared across the original design and its
+/// candidate variants.
 final class TradeCopyCardIssue {
   const TradeCopyCardIssue({
     required this.category,
@@ -118,6 +130,8 @@ final class TradeCopyCardIssue {
   final TradeCopyCardCompliance variantC;
 }
 
+/// A titled block of body text used in the copy card demo's notes/
+/// guidelines sections.
 final class TradeCopyCardTextBlock {
   const TradeCopyCardTextBlock({required this.title, required this.body});
 
@@ -125,6 +139,8 @@ final class TradeCopyCardTextBlock {
   final String body;
 }
 
+/// Read-model for the Copy Trading Education screen (intro, step-by-step
+/// guide, copy-mode explainers, concept glossary).
 final class TradeCopyEducationSnapshot {
   const TradeCopyEducationSnapshot({
     required this.trade,
@@ -151,6 +167,7 @@ final class TradeCopyEducationSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A selectable tab on the Copy Trading Education screen.
 final class TradeCopyEducationTab {
   const TradeCopyEducationTab({required this.id, required this.label});
 
@@ -158,6 +175,7 @@ final class TradeCopyEducationTab {
   final String label;
 }
 
+/// A single numbered step in the "how copy trading works" walkthrough.
 final class TradeCopyEducationStep {
   const TradeCopyEducationStep({
     required this.number,
@@ -172,6 +190,8 @@ final class TradeCopyEducationStep {
   final String description;
 }
 
+/// An explainer for one copy mode (pros/cons) shown on the education
+/// screen.
 final class TradeCopyModeGuide {
   const TradeCopyModeGuide({
     required this.title,
@@ -188,6 +208,7 @@ final class TradeCopyModeGuide {
   final int colorHex;
 }
 
+/// A single glossary entry (term + definition) on the education screen.
 final class TradeCopyConceptGuide {
   const TradeCopyConceptGuide({
     required this.term,
@@ -200,12 +221,19 @@ final class TradeCopyConceptGuide {
   final String iconName;
 }
 
+/// Lifecycle status of an active copy subscription: active, cooling off,
+/// paused, or stopped.
 enum TradeActiveCopyStatus { active, coolingOff, paused, stopped }
 
+/// Copy mode of an active copy subscription: mirror, fixed, or smart.
 enum TradeActiveCopyMode { mirror, fixed, smart }
 
+/// Default copy mode configured in copy settings: mirror, fixed, or
+/// smart.
 enum TradeCopySettingsMode { mirror, fixed, smart }
 
+/// Read-model for the Active Copies screen (portfolio summary, tabs,
+/// individual active copy subscriptions).
 final class TradeActiveCopiesSnapshot {
   const TradeActiveCopiesSnapshot({
     required this.trade,
@@ -226,6 +254,8 @@ final class TradeActiveCopiesSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// Aggregate capital/value/PnL summary across all active copy
+/// subscriptions.
 final class TradeActiveCopyPortfolio {
   const TradeActiveCopyPortfolio({
     required this.totalCapital,
@@ -244,6 +274,8 @@ final class TradeActiveCopyPortfolio {
   final int totalCopies;
 }
 
+/// A selectable filter tab on the Active Copies screen, with an optional
+/// count badge.
 final class TradeActiveCopiesTab {
   const TradeActiveCopiesTab({
     required this.id,
@@ -256,6 +288,8 @@ final class TradeActiveCopiesTab {
   final int? badge;
 }
 
+/// A single active copy-trading subscription (provider, capital, PnL,
+/// status, recent trades, performance history).
 final class TradeActiveCopy {
   const TradeActiveCopy({
     required this.id,
@@ -302,6 +336,7 @@ final class TradeActiveCopy {
   final List<TradeCopyPerformancePoint> performanceHistory;
 }
 
+/// A single recent trade executed within an active copy subscription.
 final class TradeCopyRecentTrade {
   const TradeCopyRecentTrade({
     required this.id,
@@ -322,6 +357,8 @@ final class TradeCopyRecentTrade {
   final String timestamp;
 }
 
+/// One timestamped equity value on an active copy's performance history
+/// chart.
 final class TradeCopyPerformancePoint {
   const TradeCopyPerformancePoint({
     required this.timestamp,
@@ -332,6 +369,7 @@ final class TradeCopyPerformancePoint {
   final double value;
 }
 
+/// Read-model for the Copy Trading Settings screen.
 final class TradeCopySettingsSnapshot {
   const TradeCopySettingsSnapshot({
     required this.trade,
@@ -346,6 +384,8 @@ final class TradeCopySettingsSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// User's global copy-trading preferences (defaults, portfolio limits,
+/// circuit breaker, notifications, emergency contact).
 final class TradeCopySettings {
   const TradeCopySettings({
     required this.defaultCopyMode,
@@ -429,6 +469,7 @@ final class TradeCopySettings {
   }
 }
 
+/// Result of saving updated copy-trading settings.
 final class TradeCopySettingsSaveResult {
   const TradeCopySettingsSaveResult({
     required this.status,
@@ -439,10 +480,14 @@ final class TradeCopySettingsSaveResult {
   final TradeCopySettings settings;
 }
 
+/// Category of a copy-trading notification: trade, risk, update, or
+/// system.
 enum TradeCopyNotificationType { trade, risk, update, system }
 
+/// Severity of a copy-trading notification: info, warning, or critical.
 enum TradeCopyNotificationSeverity { info, warning, critical }
 
+/// Read-model for the Copy Trading Notifications screen.
 final class TradeCopyNotificationsSnapshot {
   const TradeCopyNotificationsSnapshot({
     required this.trade,
@@ -461,6 +506,8 @@ final class TradeCopyNotificationsSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A selectable filter tab on the Copy Trading Notifications screen, with
+/// an optional unread-count badge.
 final class TradeCopyNotificationTab {
   const TradeCopyNotificationTab({
     required this.id,
@@ -473,6 +520,8 @@ final class TradeCopyNotificationTab {
   final int? badge;
 }
 
+/// A single copy-trading notification (type, severity, optional linked
+/// provider/copy/trade context).
 final class TradeCopyNotification {
   const TradeCopyNotification({
     required this.id,
@@ -526,6 +575,8 @@ final class TradeCopyNotification {
   }
 }
 
+/// A single stress-test scenario (name, impact, probability) used in
+/// portfolio risk analysis.
 final class TradeStressScenario {
   const TradeStressScenario({
     required this.name,
@@ -540,6 +591,8 @@ final class TradeStressScenario {
   final int colorHex;
 }
 
+/// Read-model for the Copy Trading Safety Education screen (scam types,
+/// red flags, verification tiers, report reasons).
 final class TradeSafetyEducationSnapshot {
   const TradeSafetyEducationSnapshot({
     required this.trade,
@@ -568,6 +621,7 @@ final class TradeSafetyEducationSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A selectable tab on the Safety Education screen.
 final class TradeSafetyTab {
   const TradeSafetyTab({required this.id, required this.label});
 
@@ -575,6 +629,7 @@ final class TradeSafetyTab {
   final String label;
 }
 
+/// A single documented scam pattern (examples, how to avoid).
 final class TradeSafetyScamType {
   const TradeSafetyScamType({
     required this.id,
@@ -591,6 +646,7 @@ final class TradeSafetyScamType {
   final List<String> howToAvoid;
 }
 
+/// A single documented red-flag warning sign to watch for in a provider.
 final class TradeSafetyRedFlag {
   const TradeSafetyRedFlag({
     required this.id,
@@ -607,6 +663,7 @@ final class TradeSafetyRedFlag {
   final String explanation;
 }
 
+/// A single provider verification tier and its requirements.
 final class TradeSafetyVerificationTier {
   const TradeSafetyVerificationTier({
     required this.tier,
@@ -619,6 +676,8 @@ final class TradeSafetyVerificationTier {
   final List<String> requirements;
 }
 
+/// Read-model for the Dispute Resolution screen (complaint types,
+/// providers, active/resolved dispute cases).
 final class TradeDisputeResolutionSnapshot {
   const TradeDisputeResolutionSnapshot({
     required this.trade,
@@ -647,6 +706,8 @@ final class TradeDisputeResolutionSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A selectable tab on the Dispute Resolution screen, with an optional
+/// count badge.
 final class TradeDisputeTab {
   const TradeDisputeTab({
     required this.id,
@@ -659,6 +720,7 @@ final class TradeDisputeTab {
   final int? badgeCount;
 }
 
+/// A selectable complaint type option on the dispute submission form.
 final class TradeComplaintTypeOption {
   const TradeComplaintTypeOption({
     required this.value,
@@ -671,6 +733,7 @@ final class TradeComplaintTypeOption {
   final String description;
 }
 
+/// A selectable provider option on the dispute submission form.
 final class TradeDisputeProviderOption {
   const TradeDisputeProviderOption({required this.id, required this.name});
 
@@ -678,6 +741,7 @@ final class TradeDisputeProviderOption {
   final String name;
 }
 
+/// A single filed dispute case against a copy-trading provider.
 final class TradeDisputeCase {
   const TradeDisputeCase({
     required this.id,
@@ -706,6 +770,7 @@ final class TradeDisputeCase {
   final String? outcome;
 }
 
+/// Mutable draft form state for filing a new dispute complaint.
 final class TradeDisputeComplaintDraft {
   const TradeDisputeComplaintDraft({
     required this.complaintType,
@@ -722,6 +787,7 @@ final class TradeDisputeComplaintDraft {
   final List<String> evidenceNames;
 }
 
+/// Result of submitting a dispute complaint.
 final class TradeDisputeSubmissionResult {
   const TradeDisputeSubmissionResult({
     required this.caseId,
@@ -734,6 +800,8 @@ final class TradeDisputeSubmissionResult {
   final String message;
 }
 
+/// Read-model for the Copy Trading Safety Center screen (verification
+/// tiers, trust metrics, prohibited behaviors, reporting, safety tools).
 final class TradeCopySafetyCenterSnapshot {
   const TradeCopySafetyCenterSnapshot({
     required this.trade,
@@ -772,6 +840,7 @@ final class TradeCopySafetyCenterSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A selectable tab on the Copy Trading Safety Center screen.
 final class TradeCopySafetyCenterTab {
   const TradeCopySafetyCenterTab({required this.id, required this.label});
 
@@ -779,6 +848,7 @@ final class TradeCopySafetyCenterTab {
   final String label;
 }
 
+/// A single provider verification tier's requirements and benefits.
 final class TradeCopyVerificationTier {
   const TradeCopyVerificationTier({
     required this.tier,
@@ -793,6 +863,8 @@ final class TradeCopyVerificationTier {
   final int colorHex;
 }
 
+/// A single trust metric explainer (what it measures, good/bad ranges,
+/// why it matters).
 final class TradeCopyTrustMetric {
   const TradeCopyTrustMetric({
     required this.name,
@@ -809,6 +881,7 @@ final class TradeCopyTrustMetric {
   final String whyMatters;
 }
 
+/// A single numbered step in the "how to report a provider" flow.
 final class TradeCopyReportingStep {
   const TradeCopyReportingStep({
     required this.title,
@@ -819,6 +892,8 @@ final class TradeCopyReportingStep {
   final String description;
 }
 
+/// A single safety tool (e.g. circuit breaker) linked from the Safety
+/// Center screen.
 final class TradeCopySafetyTool {
   const TradeCopySafetyTool({
     required this.id,
@@ -835,6 +910,7 @@ final class TradeCopySafetyTool {
   final String? routePath;
 }
 
+/// A single historical enforcement action taken against a provider.
 final class TradeCopyEnforcementAction {
   const TradeCopyEnforcementAction({
     required this.id,
@@ -851,6 +927,7 @@ final class TradeCopyEnforcementAction {
   final String reason;
 }
 
+/// Request to run a provider-level action (e.g. report, block).
 final class TradeCopyActionRequest {
   const TradeCopyActionRequest({
     required this.providerId,
@@ -861,6 +938,7 @@ final class TradeCopyActionRequest {
   final String action;
 }
 
+/// Result of a provider-level action.
 final class TradeCopyActionResult {
   const TradeCopyActionResult({
     required this.providerId,

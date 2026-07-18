@@ -12,7 +12,7 @@ class _MarketMakerTabBar extends StatelessWidget {
       activeTab: activeTab,
       onChanged: onChanged,
       showBottomBorder: true,
-      items: [
+      items: const [
         (
           PredictionMarketMakerPage.provideTabKey,
           _MarketMakerTab.provide,

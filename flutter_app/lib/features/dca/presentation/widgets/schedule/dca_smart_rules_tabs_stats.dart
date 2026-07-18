@@ -48,17 +48,17 @@ class _StatsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: DcaSpacingTokens.dcaSmartStatsIconBox,
                 height: DcaSpacingTokens.dcaSmartStatsIconBox,
                 child: DecoratedBox(
-                  decoration: const ShapeDecoration(
+                  decoration: ShapeDecoration(
                     color: AppColors.accent10,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.inputRadius,
                     ),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.bolt_rounded,
                     color: AppColors.accent,
                     size: DcaSpacingTokens.dcaSmartStatsIcon,
@@ -70,7 +70,10 @@ class _StatsCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Smart Rules', style: AppTextStyles.sectionTitleXs),
+                    const Text(
+                      'Smart Rules',
+                      style: AppTextStyles.sectionTitleXs,
+                    ),
                     Text(
                       'Tối ưu mua theo điều kiện thị trường',
                       style: AppTextStyles.caption.copyWith(

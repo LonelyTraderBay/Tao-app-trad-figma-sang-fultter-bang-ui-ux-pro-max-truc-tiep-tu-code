@@ -252,10 +252,10 @@ class _ValidatorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             Row(
               children: [
-                Expanded(child: _SmallButton(label: 'View Details')),
+                const Expanded(child: _SmallButton(label: 'View Details')),
                 if (validator.status == 'warning') ...[
                   const SizedBox(width: AppSpacing.x2),
-                  Expanded(
+                  const Expanded(
                     child: _SmallButton(
                       label: 'Rebalance Stake',
                       color: AppColors.sell,

@@ -2,7 +2,11 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/t
     show TradeHighRiskFlowStatus, TradeHighRiskFlowStatusX;
 
 import 'package:vit_trade_flutter/features/trade/domain/entities/trade_entities.dart';
-import 'package:vit_trade_flutter/features/trade/domain/repositories/trade_repository.dart';
+
+typedef TradeFuturesOrderControllerRequest = ({
+  String pairId,
+  TradeFuturesOrderDraft draft,
+});
 
 final class TradeLeverageViewState {
   const TradeLeverageViewState({
@@ -11,6 +15,7 @@ final class TradeLeverageViewState {
     required this.preview,
     this.status = TradeHighRiskFlowStatus.ready,
     this.errorMessage,
+    this.receipt,
   });
 
   final TradeFuturesLeverageSnapshot snapshot;
@@ -18,44 +23,25 @@ final class TradeLeverageViewState {
   final TradeFuturesLeveragePreview preview;
   final TradeHighRiskFlowStatus status;
   final String? errorMessage;
-}
+  final TradeFuturesLeverageReceipt? receipt;
 
-final class TradeLeverageController {
-  const TradeLeverageController({
-    required this.state,
-    required TradeRepository repository,
-  }) : _repository = repository;
-
-  final TradeLeverageViewState state;
-  final TradeRepository _repository;
-
-  static int sanitize(int leverage) => leverage.clamp(1, 100).toInt();
-
-  int sanitizeLeverage(int leverage) => sanitize(leverage);
-
-  bool get canSubmit => validationMessage() == null;
-
-  String? validationMessage() {
-    if (state.status == TradeHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before changing leverage.';
-    }
-    if (state.status.isBusy) {
-      return 'Leverage confirmation is already in progress.';
-    }
-    if (state.request.pairId.trim().isEmpty) {
-      return 'Select a futures pair before preview.';
-    }
-    if (state.request.leverage < 1 || state.request.leverage > 100) {
-      return 'Leverage must stay between 1x and 100x.';
-    }
-    if (state.request.exampleMargin <= 0) {
-      return 'Enter a valid margin example before preview.';
-    }
-    return null;
-  }
-
-  TradeFuturesLeverageReceipt submit() {
-    return _repository.submitFuturesLeverage(state.request);
+  /// `errorMessage` cố ý không giữ giá trị cũ khi không truyền (xem
+  /// [TradeOrderViewState.copyWith]).
+  TradeLeverageViewState copyWith({
+    TradeFuturesLeverageRequest? request,
+    TradeFuturesLeveragePreview? preview,
+    TradeHighRiskFlowStatus? status,
+    String? errorMessage,
+    TradeFuturesLeverageReceipt? receipt,
+  }) {
+    return TradeLeverageViewState(
+      snapshot: snapshot,
+      request: request ?? this.request,
+      preview: preview ?? this.preview,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+      receipt: receipt ?? this.receipt,
+    );
   }
 }
 
@@ -119,6 +105,7 @@ final class TradeFuturesOrderViewState {
     required this.preview,
     this.status = TradeHighRiskFlowStatus.ready,
     this.errorMessage,
+    this.receipt,
   });
 
   final TradeFuturesSnapshot snapshot;
@@ -126,51 +113,22 @@ final class TradeFuturesOrderViewState {
   final TradeFuturesPreview preview;
   final TradeHighRiskFlowStatus status;
   final String? errorMessage;
-}
+  final TradeFuturesReceipt? receipt;
 
-final class TradeFuturesOrderController {
-  const TradeFuturesOrderController({
-    required this.state,
-    required TradeRepository repository,
-  }) : _repository = repository;
-
-  final TradeFuturesOrderViewState state;
-  final TradeRepository _repository;
-
-  bool get canSubmit => validationMessage() == null;
-
-  String? validationMessage() {
-    if (state.status == TradeHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before previewing this futures order.';
-    }
-    if (state.status.isBusy) {
-      return 'Futures confirmation is already in progress.';
-    }
-    if (state.draft.pairId.trim().isEmpty) {
-      return 'Select a futures pair before preview.';
-    }
-    if (state.draft.margin <= 0) {
-      return 'Enter a valid margin amount before preview.';
-    }
-    if (state.draft.leverage < 1 || state.draft.leverage > 100) {
-      return 'Leverage must stay between 1x and 100x.';
-    }
-    final availableMargin =
-        state.snapshot.accountBalance - state.snapshot.usedMargin;
-    if (state.draft.margin > availableMargin) {
-      return 'Margin exceeds available futures balance.';
-    }
-    if (state.draft.type == TradeFuturesOrderType.limit &&
-        (state.draft.limitPrice == null || state.draft.limitPrice! <= 0)) {
-      return 'Enter a valid limit price before preview.';
-    }
-    if (!state.preview.canOpen) {
-      return 'Resolve futures risk checks before confirmation.';
-    }
-    return null;
-  }
-
-  TradeFuturesReceipt submit() {
-    return _repository.submitFuturesOrder(state.draft);
+  /// `errorMessage` cố ý không giữ giá trị cũ khi không truyền (xem
+  /// [TradeOrderViewState.copyWith]).
+  TradeFuturesOrderViewState copyWith({
+    TradeHighRiskFlowStatus? status,
+    String? errorMessage,
+    TradeFuturesReceipt? receipt,
+  }) {
+    return TradeFuturesOrderViewState(
+      snapshot: snapshot,
+      draft: draft,
+      preview: preview,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+      receipt: receipt ?? this.receipt,
+    );
   }
 }

@@ -15,11 +15,11 @@ class _EmailStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
+        const Align(
           alignment: Alignment.center,
           child: AuthHeroIconBox(
             dimension: AuthSpacingTokens.authHeroIconBoxSm,
-            shape: const RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.cardRadius,
               side: BorderSide(
                 color: _authPrimary30,
@@ -27,7 +27,7 @@ class _EmailStep extends StatelessWidget {
               ),
             ),
             fillColor: _authPrimary10,
-            child: const Center(
+            child: Center(
               child: CustomPaint(
                 size: Size(
                   AuthSpacingTokens.authHeroPainterSize,
@@ -39,7 +39,7 @@ class _EmailStep extends StatelessWidget {
           ),
         ),
         const Padding(padding: AuthSpacingTokens.authTopGapX5),
-        Text(
+        const Text(
           'Đặt lại mật khẩu',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
@@ -119,7 +119,7 @@ class _OtpStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
+        const Text(
           'Nhập mã OTP',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
@@ -235,7 +235,7 @@ class _ResetStep extends StatelessWidget {
 
     return Column(
       children: [
-        Text(
+        const Text(
           'Mật khẩu mới',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
@@ -302,17 +302,17 @@ class _SuccessStep extends StatelessWidget {
       padding: AuthSpacingTokens.authStateVerticalPadding,
       child: Column(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: AuthSpacingTokens.authStateIconBox,
             child: Material(
               color: AppColors.buy15,
-              shape: const CircleBorder(
+              shape: CircleBorder(
                 side: BorderSide(
                   color: AppColors.buy20,
                   width: AppSpacing.hairlineStroke,
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
                 size: AuthSpacingTokens.authStateIconLg,
@@ -320,7 +320,7 @@ class _SuccessStep extends StatelessWidget {
             ),
           ),
           const Padding(padding: AuthSpacingTokens.authTopGapX6),
-          Text(
+          const Text(
             'Thành công!',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,

@@ -61,7 +61,7 @@ const _topics = [
 ];
 
 final _modules = [
-  DiscoveryModuleDraft(
+  const DiscoveryModuleDraft(
     id: 'predictions',
     title: 'Prediction Markets',
     subtitle: 'Thị trường dự đoán · Vị thế thực · USDT',
@@ -69,7 +69,7 @@ final _modules = [
     iconKey: 'prediction',
     kind: DiscoveryModuleKind.prediction,
   ),
-  DiscoveryModuleDraft(
+  const DiscoveryModuleDraft(
     id: 'arena',
     title: 'Open Arena',
     subtitle: 'Creator modes · Thách đấu · Arena Points only',
@@ -77,7 +77,7 @@ final _modules = [
     iconKey: 'arena',
     kind: DiscoveryModuleKind.arena,
   ),
-  DiscoveryModuleDraft(
+  const DiscoveryModuleDraft(
     id: 'topics',
     title: 'Topic Hub',
     subtitle: 'Khám phá theo chủ đề · Crypto, Sports, Macro...',
@@ -88,7 +88,7 @@ final _modules = [
 ];
 
 final _predictionEvents = [
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-1',
     title: 'Bitcoin ETF approval trước Q2?',
     category: 'Crypto',
@@ -96,7 +96,7 @@ final _predictionEvents = [
     chance: 64,
     volumeLabel: r'$2.4M',
     route: '/markets/predictions/event/pred-1',
-    searchTerms: const [
+    searchTerms: [
       'Bitcoin ETF approval trước Q2?',
       'bitcoin',
       'btc',
@@ -104,7 +104,7 @@ final _predictionEvents = [
       'etf',
     ],
   ),
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-2',
     title: 'Fed rate cut trong kỳ họp tới?',
     category: 'Macro',
@@ -112,12 +112,12 @@ final _predictionEvents = [
     chance: 57,
     volumeLabel: r'$860K',
     route: '/markets/predictions/event/pred-2',
-    searchTerms: const ['Fed rate cut', 'fed', 'rate', 'macro'],
+    searchTerms: ['Fed rate cut', 'fed', 'rate', 'macro'],
   ),
 ];
 
 final _arenaModes = [
-  DiscoveryArenaModeDraft(
+  const DiscoveryArenaModeDraft(
     id: 'mode001',
     title: 'Altcoin Battle',
     description: 'Creator mode dự đoán token outperform trong 24h.',
@@ -125,7 +125,7 @@ final _arenaModes = [
     cloneCount: 248,
     fairPlay: true,
     route: '/arena/mode/mode001',
-    searchTerms: const [
+    searchTerms: [
       'Altcoin Battle',
       'arena',
       'challenge',
@@ -137,7 +137,7 @@ final _arenaModes = [
 ];
 
 final _arenaRooms = [
-  DiscoveryArenaRoomDraft(
+  const DiscoveryArenaRoomDraft(
     id: 'ch003',
     title: 'BTC direction challenge',
     format: '1v1 · 24h',
@@ -146,7 +146,7 @@ final _arenaRooms = [
     slotsTotal: 24,
     creatorName: 'MacroCreator',
     route: '/arena/challenge/ch003',
-    searchTerms: const [
+    searchTerms: [
       'BTC direction challenge',
       'arena',
       'challenge',
@@ -158,7 +158,7 @@ final _arenaRooms = [
 ];
 
 final _creators = [
-  DiscoveryCreatorDraft(
+  const DiscoveryCreatorDraft(
     id: 'cr001',
     name: 'Minh Arena',
     initials: 'MA',
@@ -166,12 +166,12 @@ final _creators = [
     modesCreated: 14,
     fairPlayBadge: true,
     route: '/arena/creator/cr001',
-    searchTerms: const ['Minh Arena', 'creator', 'arena', 'mode'],
+    searchTerms: ['Minh Arena', 'creator', 'arena', 'mode'],
   ),
 ];
 
 final _tradingPairs = [
-  DiscoveryTradingPairDraft(
+  const DiscoveryTradingPairDraft(
     id: 'btcusdt',
     symbol: 'BTC/USDT',
     baseAsset: 'BTC',
@@ -179,9 +179,9 @@ final _tradingPairs = [
     priceLabel: r'$67,420.00',
     change24h: 2.14,
     route: '/pair/btcusdt',
-    searchTerms: const ['BTC/USDT', 'btc', 'bitcoin', 'usdt', 'spot'],
+    searchTerms: ['BTC/USDT', 'btc', 'bitcoin', 'usdt', 'spot'],
   ),
-  DiscoveryTradingPairDraft(
+  const DiscoveryTradingPairDraft(
     id: 'ethusdt',
     symbol: 'ETH/USDT',
     baseAsset: 'ETH',
@@ -189,12 +189,12 @@ final _tradingPairs = [
     priceLabel: r'$3,280.50',
     change24h: -0.82,
     route: '/pair/ethusdt',
-    searchTerms: const ['ETH/USDT', 'eth', 'ethereum', 'price', 'spot'],
+    searchTerms: ['ETH/USDT', 'eth', 'ethereum', 'price', 'spot'],
   ),
 ];
 
 final _cryptoTopicPredictions = [
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-1',
     title: 'Bitcoin reaches \$150K before July 2026?',
     category: 'Crypto',
@@ -202,10 +202,10 @@ final _cryptoTopicPredictions = [
     chance: 34,
     volumeLabel: r'$2.5M',
     route: '/markets/predictions/event/pred-1',
-    searchTerms: const ['bitcoin', 'crypto', 'btc'],
+    searchTerms: ['bitcoin', 'crypto', 'btc'],
     isTrending: true,
   ),
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-crypto-2',
     title: 'Ethereum ETF approved in Q2 2026?',
     category: 'Crypto',
@@ -213,10 +213,10 @@ final _cryptoTopicPredictions = [
     chance: 72,
     volumeLabel: r'$1.8M',
     route: '/markets/predictions/event/pred-crypto-2',
-    searchTerms: const ['ethereum', 'crypto', 'eth'],
+    searchTerms: ['ethereum', 'crypto', 'eth'],
     isTrending: true,
   ),
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-crypto-3',
     title: 'Solana price above \$500 by March 2026?',
     category: 'Crypto',
@@ -224,9 +224,9 @@ final _cryptoTopicPredictions = [
     chance: 22,
     volumeLabel: r'$1.1M',
     route: '/markets/predictions/event/pred-crypto-3',
-    searchTerms: const ['solana', 'crypto', 'sol'],
+    searchTerms: ['solana', 'crypto', 'sol'],
   ),
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-crypto-4',
     title: 'Crypto total market cap reaches \$5T in 2026?',
     category: 'Crypto',
@@ -234,10 +234,10 @@ final _cryptoTopicPredictions = [
     chance: 45,
     volumeLabel: r'$2.1M',
     route: '/markets/predictions/event/pred-crypto-4',
-    searchTerms: const ['crypto', 'market cap'],
+    searchTerms: ['crypto', 'market cap'],
     isTrending: true,
   ),
-  DiscoveryPredictionEventDraft(
+  const DiscoveryPredictionEventDraft(
     id: 'pred-crypto-5',
     title: 'Bitcoin dominance stays above 50%?',
     category: 'Crypto',
@@ -245,12 +245,12 @@ final _cryptoTopicPredictions = [
     chance: 49,
     volumeLabel: r'$940K',
     route: '/markets/predictions/event/pred-crypto-5',
-    searchTerms: const ['bitcoin', 'dominance'],
+    searchTerms: ['bitcoin', 'dominance'],
   ),
 ];
 
 final _cryptoTopicRooms = [
-  DiscoveryArenaRoomDraft(
+  const DiscoveryArenaRoomDraft(
     id: 'ch003',
     title: 'BTC \$70K? — Tuần 9',
     format: 'Crypto',
@@ -259,10 +259,10 @@ final _cryptoTopicRooms = [
     slotsTotal: 50,
     creatorName: 'CryptoMaster_VN',
     route: '/arena/challenge/ch003',
-    searchTerms: const ['btc', 'bitcoin', 'crypto'],
+    searchTerms: ['btc', 'bitcoin', 'crypto'],
     statusLabel: 'Chờ',
   ),
-  DiscoveryArenaRoomDraft(
+  const DiscoveryArenaRoomDraft(
     id: 'ch004',
     title: 'Altcoin Battle — SOL vs AVAX vs MATIC vs DOT',
     format: 'Crypto',
@@ -271,13 +271,13 @@ final _cryptoTopicRooms = [
     slotsTotal: 40,
     creatorName: 'ArenaKing',
     route: '/arena/challenge/ch004',
-    searchTerms: const ['altcoin', 'crypto', 'sol', 'avax'],
+    searchTerms: ['altcoin', 'crypto', 'sol', 'avax'],
     statusLabel: 'Live',
   ),
 ];
 
 final _cryptoTopicModes = [
-  DiscoveryArenaModeDraft(
+  const DiscoveryArenaModeDraft(
     id: 'mode001',
     title: 'BTC Weekly Predict',
     description: 'Weekly Bitcoin direction challenge using Arena Points.',
@@ -285,9 +285,9 @@ final _cryptoTopicModes = [
     cloneCount: 234,
     fairPlay: true,
     route: '/arena/mode/mode001',
-    searchTerms: const ['btc', 'bitcoin', 'weekly', 'crypto'],
+    searchTerms: ['btc', 'bitcoin', 'weekly', 'crypto'],
   ),
-  DiscoveryArenaModeDraft(
+  const DiscoveryArenaModeDraft(
     id: 'mode002',
     title: 'Altcoin Battle Royale',
     description: 'Compare four altcoins in a points-only challenge format.',
@@ -295,12 +295,12 @@ final _cryptoTopicModes = [
     cloneCount: 156,
     fairPlay: true,
     route: '/arena/mode/mode002',
-    searchTerms: const ['altcoin', 'battle', 'crypto'],
+    searchTerms: ['altcoin', 'battle', 'crypto'],
   ),
 ];
 
 final _cryptoTopicCreators = [
-  DiscoveryCreatorDraft(
+  const DiscoveryCreatorDraft(
     id: 'cr001',
     name: 'CryptoMaster_VN',
     initials: 'CM',
@@ -308,9 +308,9 @@ final _cryptoTopicCreators = [
     modesCreated: 8,
     fairPlayBadge: true,
     route: '/arena/creator/cr001',
-    searchTerms: const ['CryptoMaster_VN', 'crypto', 'creator'],
+    searchTerms: ['CryptoMaster_VN', 'crypto', 'creator'],
   ),
-  DiscoveryCreatorDraft(
+  const DiscoveryCreatorDraft(
     id: 'cr002',
     name: 'ArenaKing',
     initials: 'AK',
@@ -318,7 +318,7 @@ final _cryptoTopicCreators = [
     modesCreated: 11,
     fairPlayBadge: true,
     route: '/arena/creator/cr002',
-    searchTerms: const ['ArenaKing', 'arena', 'creator'],
+    searchTerms: ['ArenaKing', 'arena', 'creator'],
   ),
 ];
 

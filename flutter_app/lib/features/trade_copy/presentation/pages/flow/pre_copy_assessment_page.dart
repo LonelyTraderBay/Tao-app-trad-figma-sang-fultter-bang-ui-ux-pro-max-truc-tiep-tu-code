@@ -13,10 +13,10 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_copy_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_copy/presentation/widgets/hub/copy_trading_list.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/features/trade_copy/domain/entities/trade_copy_entities.dart';
 
 const _assessmentPrimary = AppColors.primary;
 
@@ -100,14 +100,14 @@ class _WelcomeAssessment extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        CopyTradingRiskWarningCard(
+        const CopyTradingRiskWarningCard(
           title: 'Đánh giá bắt buộc trước khi copy',
           message:
               'Copy trading không đảm bảo lợi nhuận. Quá khứ không báo hiệu tương lai.',
           contractId: 'sc071-pre-copy-risk',
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        _NoticeCard(
+        const _NoticeCard(
           title: 'Đánh giá bắt buộc (MiFID II)',
           text:
               'Chúng tôi cần đánh giá sự phù hợp của Copy Trading với kiến thức, kinh nghiệm và mục tiêu đầu tư của bạn.',
@@ -194,7 +194,7 @@ class _QuestionsSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitHighRiskStatePanel(
+        const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Xác nhận kết quả phù hợp',
           message:

@@ -39,8 +39,8 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: AppSpacing.x1),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(child: _PermissionChip('Read Only')),
               SizedBox(width: AppSpacing.x2),
               Expanded(child: _PermissionChip('Trade + Read')),

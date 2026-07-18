@@ -59,15 +59,15 @@ class _SelfieHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: _p2pSelfieHeroIconBox,
             child: Material(
               color: AppColors.primary15,
-              shape: const RoundedRectangleBorder(
+              shape: RoundedRectangleBorder(
                 borderRadius: AppRadii.lgRadius,
                 side: BorderSide(color: AppColors.primary20),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.photo_camera_outlined,
                 color: AppModuleAccents.p2p,
                 size: AppSpacing.iconMd,

@@ -198,10 +198,10 @@ class _LargeTransactionHero extends StatelessWidget {
               shape: const RoundedRectangleBorder(
                 borderRadius: AppRadii.lgRadius,
               ),
-              child: SizedBox(
+              child: const SizedBox(
                 width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
                 height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
-                child: const Icon(
+                child: Icon(
                   Icons.error_outline_rounded,
                   color: AppColors.warn,
                   size: AppSpacing.iconMd,

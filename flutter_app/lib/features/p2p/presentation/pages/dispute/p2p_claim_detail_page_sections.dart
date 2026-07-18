@@ -54,7 +54,7 @@ class _MiniStatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
@@ -299,13 +299,13 @@ class _UploadEvidenceCard extends StatelessWidget {
       padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             width: _p2pClaimIconBoxExtent,
             height: _p2pClaimIconBoxExtent,
             child: Material(
               color: AppColors.primary12,
               borderRadius: AppRadii.lgRadius,
-              child: const Icon(
+              child: Icon(
                 Icons.upload_file_rounded,
                 color: AppModuleAccents.p2p,
                 size: AppSpacing.iconMd,

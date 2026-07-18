@@ -2,29 +2,18 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// Feature-level import/export edges (2026-07-16, A-Plus roadmap ARCH-A2)
-/// that make up the trade family's known, not-yet-fixed circular
-/// dependency: the trade_core<->{trade_terminal,trade_bots,trade_compliance,
-/// trade_copy} entity-export cycle, and the trade<->trade_terminal widget
-/// cross-import cycle. ARCH-A1 removes these; remove the matching entry
-/// here (and ratchet `_maxTradeCoreSiblingExports` down) as each is fixed —
-/// do not add a NEW pair here for a cycle this test did not already know
-/// about.
-const _allowedCycleEdges = <(String, String)>{
-  ('trade', 'trade_core'),
-  ('trade', 'trade_terminal'),
-  ('trade_terminal', 'trade'),
-  ('trade_terminal', 'trade_core'),
-  ('trade_terminal', 'trade_bots'),
-  ('trade_terminal', 'trade_copy'),
-  ('trade_core', 'trade_terminal'),
-  ('trade_core', 'trade_bots'),
-  ('trade_core', 'trade_compliance'),
-  ('trade_core', 'trade_copy'),
-  ('trade_bots', 'trade_core'),
-  ('trade_compliance', 'trade_core'),
-  ('trade_copy', 'trade_core'),
-};
+/// Feature-level import/export edges allowlist.
+///
+/// ARCH-A1 (2026-07-17, A-Plus roadmap GĐ2) removed the trade family's two
+/// known circular dependencies: the trade_core<->{trade_terminal,trade_bots,
+/// trade_compliance,trade_copy} entity-export cycle (barrel exports in
+/// `trade_controller.dart` / `trade_read_model.dart` trimmed back to
+/// trade_core's own entities), and the trade<->trade_terminal widget
+/// cross-import cycle (the `trade_product_navigation.dart`
+/// contract+factory merged into trade_core; the `trade`-owned duplicate
+/// deleted). The allowlist is empty on purpose — do not add a pair here to
+/// paper over a new circular dependency; fix the cycle instead.
+const _allowedCycleEdges = <(String, String)>{};
 
 final _importRe = RegExp(
   r"^(?:import|export)\s+'package:vit_trade_flutter/features/([a-zA-Z0-9_]+)/",
@@ -106,14 +95,13 @@ void main() {
   });
 
   test('trade_core does not gain new sibling import/export edges '
-      '(ARCH-A1 removes the existing 4)', () {
-    // Baseline: trade_core -> {trade_terminal, trade_bots,
-    // trade_compliance, trade_copy}, all pre-existing entity re-exports
-    // from trade_controller.dart / trade_read_model.dart. This is a
-    // ratchet, not a hard ban, because ARCH-A1 (removing these) is a
-    // separate, larger GD2 task — this guardrail's job is to stop the
-    // count from growing while that fix is pending.
-    const maxTradeCoreSiblingEdges = 4;
+      '(ARCH-A1 hoàn tất 2026-07-17: gỡ 4 cạnh trade_core->sibling cũ, '
+      'ratchet về 0)', () {
+    // ARCH-A1 removed the last entity re-exports from trade_controller.dart
+    // / trade_read_model.dart (trade_core -> trade_terminal/trade_bots/
+    // trade_compliance/trade_copy). trade_core is a leaf that siblings
+    // depend on, never the reverse — this is now a hard ban, not a ratchet.
+    const maxTradeCoreSiblingEdges = 0;
 
     final edges = _buildFeatureGraph();
     final siblingEdges = (edges['trade_core'] ?? const <String>{})

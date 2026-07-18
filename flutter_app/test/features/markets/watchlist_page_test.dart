@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
@@ -15,22 +16,20 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpWatchlist(WidgetTester tester) async {
+  Future<GoRouter> pumpWatchlist(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    final router = createAppRouter(
+      initialLocation: AppRoutePaths.marketsWatchlist,
+    );
     await tester.pumpWidget(
-      ProviderScope(
-        child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.marketsWatchlist,
-          ),
-        ),
-      ),
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
     );
     await tester.pumpAndSettle();
+    return router;
   }
 
   test('SC-012 mock repository exposes the BE draft read model', () {
@@ -120,11 +119,22 @@ void main() {
   testWidgets('SC-012 removes a pair from local watchlist state', (
     tester,
   ) async {
-    await pumpWatchlist(tester);
+    final router = await pumpWatchlist(tester);
 
     await tester.tap(find.byKey(WatchlistPage.removeKey('watch-btc')));
     await tester.pump();
 
+    expect(find.byKey(WatchlistPage.cardKey('btcusdt')), findsNothing);
+    expect(find.text('2 cặp đang theo dõi'), findsOneWidget);
+
+    // STATE-S23 round-trip: điều hướng đi rồi quay lại — mutation giữ nguyên
+    // (state sống ở Notifier, không phải late List của trang).
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+    expect(find.byType(MarketListPage), findsOneWidget);
+
+    router.go(AppRoutePaths.marketsWatchlist);
+    await tester.pumpAndSettle();
     expect(find.byKey(WatchlistPage.cardKey('btcusdt')), findsNothing);
     expect(find.text('2 cặp đang theo dõi'), findsOneWidget);
   });

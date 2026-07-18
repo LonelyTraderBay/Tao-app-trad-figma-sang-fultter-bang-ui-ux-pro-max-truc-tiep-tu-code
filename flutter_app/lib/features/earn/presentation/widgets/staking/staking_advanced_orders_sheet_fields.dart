@@ -55,7 +55,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text('Create Order', style: AppTextStyles.sectionTitle),
               ),
               VitIconButton(
@@ -119,9 +119,9 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _FieldGroup(
+          const _FieldGroup(
             label: 'Amount',
-            child: const _InputPreview(hint: '0.00', suffix: 'Max'),
+            child: _InputPreview(hint: '0.00', suffix: 'Max'),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(

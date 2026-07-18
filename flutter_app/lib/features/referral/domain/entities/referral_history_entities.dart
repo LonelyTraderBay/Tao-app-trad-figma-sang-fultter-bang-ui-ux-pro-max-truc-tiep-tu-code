@@ -1,11 +1,16 @@
 part of 'referral_entities.dart';
 
+/// Status filter applied to the referral history/friends list.
 enum ReferralFriendFilter { all, activeTrader, kycDone, pendingKyc }
 
+/// Sort order applied to the referral history/friends list.
 enum ReferralHistorySort { date, commission, volume }
 
+/// Onboarding/activity status of a [ReferralFriendDraft].
 enum ReferralFriendStatus { pendingKyc, kycDone, activeTrader, inactive }
 
+/// Data for the referral history screen: filtered/sorted [friends] plus
+/// aggregate [stats].
 final class ReferralHistorySnapshot {
   const ReferralHistorySnapshot({
     required this.endpoint,
@@ -42,6 +47,8 @@ final class ReferralHistorySnapshot {
   final Set<ReferralScreenState> supportedStates;
 }
 
+/// Aggregate friend counts (total/KYC-completed/active) shown on the
+/// referral history screen.
 final class ReferralStatsDraft {
   const ReferralStatsDraft({
     required this.totalFriends,
@@ -54,6 +61,8 @@ final class ReferralStatsDraft {
   final int activeFriends;
 }
 
+/// One selectable [ReferralFriendFilter] entry with its label and match
+/// count.
 final class ReferralFilterDraft {
   const ReferralFilterDraft({
     required this.filter,
@@ -66,6 +75,7 @@ final class ReferralFilterDraft {
   final int count;
 }
 
+/// One selectable [ReferralHistorySort] entry with its display label.
 final class ReferralSortDraft {
   const ReferralSortDraft({required this.sort, required this.label});
 
@@ -73,6 +83,8 @@ final class ReferralSortDraft {
   final String label;
 }
 
+/// One referred friend entry (status, commission, volume, trade dates)
+/// shown on the referral history screen.
 final class ReferralFriendDraft {
   const ReferralFriendDraft({
     required this.id,

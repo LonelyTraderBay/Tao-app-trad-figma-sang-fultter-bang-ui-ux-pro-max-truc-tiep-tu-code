@@ -1,5 +1,6 @@
 part of 'arena_entities.dart';
 
+/// A creator's public profile: trust metrics, modes, and rooms for the creator profile screen.
 final class ArenaCreatorProfileSnapshot {
   const ArenaCreatorProfileSnapshot({
     required this.endpoint,
@@ -26,6 +27,7 @@ final class ArenaCreatorProfileSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A creator's identity and reputation stats shown on their profile.
 final class ArenaCreatorProfileDraft {
   const ArenaCreatorProfileDraft({
     required this.id,
@@ -52,6 +54,7 @@ final class ArenaCreatorProfileDraft {
   final String bio;
 }
 
+/// A single trust metric row on a creator's profile.
 final class ArenaCreatorTrustMetricDraft {
   const ArenaCreatorTrustMetricDraft({
     required this.label,
@@ -64,6 +67,7 @@ final class ArenaCreatorTrustMetricDraft {
   final ArenaCreatorTrustMetricKind kind;
 }
 
+/// Category of trust metric shown for a creator.
 enum ArenaCreatorTrustMetricKind {
   fairPlay,
   disputeRate,
@@ -71,6 +75,7 @@ enum ArenaCreatorTrustMetricKind {
   communityRating,
 }
 
+/// Ranking data for the Arena leaderboard screen.
 final class ArenaLeaderboardSnapshot {
   const ArenaLeaderboardSnapshot({
     required this.endpoint,
@@ -97,6 +102,7 @@ final class ArenaLeaderboardSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// The current user's own rank and points summary on the leaderboard.
 final class ArenaLeaderboardMyRankDraft {
   const ArenaLeaderboardMyRankDraft({
     required this.rank,
@@ -109,6 +115,7 @@ final class ArenaLeaderboardMyRankDraft {
   final String summary;
 }
 
+/// A single selectable metric or season filter on the leaderboard.
 final class ArenaLeaderboardFilterDraft {
   const ArenaLeaderboardFilterDraft({
     required this.id,
@@ -121,6 +128,7 @@ final class ArenaLeaderboardFilterDraft {
   final ArenaLeaderboardIconKind icon;
 }
 
+/// A single ranked entry on the Arena leaderboard.
 final class ArenaLeaderboardEntryDraft {
   const ArenaLeaderboardEntryDraft({
     required this.rank,
@@ -143,6 +151,7 @@ final class ArenaLeaderboardEntryDraft {
   final bool rising;
 }
 
+/// Icon shown next to a leaderboard entry or filter.
 enum ArenaLeaderboardIconKind {
   trophy,
   shield,
@@ -158,6 +167,7 @@ enum ArenaLeaderboardIconKind {
   team,
 }
 
+/// Explainer content describing what a verified challenge guarantees.
 final class VerifiedChallengesSnapshot {
   const VerifiedChallengesSnapshot({
     required this.endpoint,
@@ -180,6 +190,7 @@ final class VerifiedChallengesSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single guarantee feature listed on the verified challenges screen.
 final class VerifiedChallengeFeatureDraft {
   const VerifiedChallengeFeatureDraft({
     required this.label,
@@ -190,8 +201,10 @@ final class VerifiedChallengeFeatureDraft {
   final VerifiedChallengeFeatureKind kind;
 }
 
+/// Category of guarantee a verified challenge provides.
 enum VerifiedChallengeFeatureKind { oracle, escrow, leaderboard, trust }
 
+/// A user's blocked-user list for the Arena blocked users screen.
 final class ArenaBlockedUsersSnapshot {
   const ArenaBlockedUsersSnapshot({
     required this.endpoint,
@@ -216,6 +229,7 @@ final class ArenaBlockedUsersSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single blocked user entry.
 final class ArenaBlockedUserDraft {
   const ArenaBlockedUserDraft({
     required this.id,
@@ -232,8 +246,10 @@ final class ArenaBlockedUserDraft {
   final ArenaBlockedUserSource source;
 }
 
+/// How a user came to be blocked.
 enum ArenaBlockedUserSource { manual, reportOutcome, system }
 
+/// Detailed trust metric breakdown for a single creator or entity.
 final class ArenaTrustBreakdownSnapshot {
   const ArenaTrustBreakdownSnapshot({
     required this.endpoint,

@@ -9,20 +9,20 @@ class _HoldersContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
-            const SizedBox(
+            SizedBox(
               width: PredictionsSpacingTokens
                   .predictionDetailHolderRankColumnWidth,
               child: _OrderBookLabel('#'),
             ),
-            const Expanded(child: _OrderBookLabel('TRADER')),
-            const SizedBox(
+            Expanded(child: _OrderBookLabel('TRADER')),
+            SizedBox(
               width: PredictionsSpacingTokens
                   .predictionDetailHolderSideColumnWidth,
               child: _OrderBookLabel('SIDE', alignEnd: true),
             ),
-            const SizedBox(
+            SizedBox(
               width: PredictionsSpacingTokens
                   .predictionDetailHolderSharesColumnWidth,
               child: _OrderBookLabel('SHARES', alignEnd: true),
@@ -115,10 +115,10 @@ class _ActivityContent extends StatelessWidget {
                 PredictionsSpacingTokens.predictionDetailActivityRowPadding,
             child: Row(
               children: [
-                Material(
+                const Material(
                   color: AppColors.surface2,
                   borderRadius: AppRadii.smRadius,
-                  child: const SizedBox.square(
+                  child: SizedBox.square(
                     dimension: PredictionsSpacingTokens
                         .predictionDetailActivityIconBox,
                     child: Icon(

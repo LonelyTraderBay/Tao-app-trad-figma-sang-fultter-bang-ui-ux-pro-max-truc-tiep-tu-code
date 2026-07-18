@@ -1,0 +1,84 @@
+# CI-D6 (DEC-ios: Android-only): release theo tag.
+#
+# Quy trình phát hành (xem CHANGELOG.md):
+#   1. Bump `version:` trong flutter_app/pubspec.yaml (x.y.z+build).
+#   2. Cập nhật CHANGELOG.md, merge vào main qua PR (CI xanh).
+#   3. Tag: git tag v<x.y.z> && git push origin v<x.y.z> — workflow này chạy.
+#
+# Yêu cầu signing (repo Settings > Secrets and variables > Actions):
+#   VITTRADE_KEYSTORE_BASE64   — file keystore .jks mã hóa base64
+#   VITTRADE_KEYSTORE_PASSWORD, VITTRADE_KEY_ALIAS, VITTRADE_KEY_PASSWORD
+# Thiếu secret → signing guard trong android/app/build.gradle.kts chặn với
+# thông báo rõ ràng (fail-closed, không bao giờ phát hành bản chưa ký).
+#
+# Job iOS: HOÃN theo DEC-ios (2026-07-17) — bổ sung khi có Apple developer
+# account; khi mở lại, thêm job macos-latest build ipa + ký qua match/fastlane.
+name: Release Android
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  release-android:
+    name: Build signed AAB (flavor prod)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Java
+        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # file(storeFile) trong android/app/build.gradle.kts resolve tương đối
+      # với module app — giải mã keystore vào android/app/.
+      - name: Decode release keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.VITTRADE_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo 'VITTRADE_KEYSTORE_BASE64 chua duoc cau hinh trong repo secrets.'
+            echo 'Signing guard cua Gradle se chan buoc build ben duoi (fail-closed).'
+          else
+            printf '%s' "$KEYSTORE_BASE64" | base64 -d > android/app/release-keystore.jks
+          fi
+
+      - name: Build release AAB (flavor prod)
+        env:
+          VITTRADE_KEYSTORE_PATH: release-keystore.jks
+          VITTRADE_KEYSTORE_PASSWORD: ${{ secrets.VITTRADE_KEYSTORE_PASSWORD }}
+          VITTRADE_KEY_ALIAS: ${{ secrets.VITTRADE_KEY_ALIAS }}
+          VITTRADE_KEY_PASSWORD: ${{ secrets.VITTRADE_KEY_PASSWORD }}
+        run: >
+          flutter build appbundle
+          --release
+          --flavor prod
+          --dart-define=APP_ENV=production
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: vittrade-release-aab
+          path: flutter_app/build/app/outputs/bundle/prodRelease/app-prod-release.aab
+          if-no-files-found: error

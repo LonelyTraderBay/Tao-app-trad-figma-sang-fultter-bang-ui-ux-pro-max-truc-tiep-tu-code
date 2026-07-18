@@ -52,9 +52,9 @@ class _CertificateHero extends StatelessWidget {
         padding: P2PSpacingTokens.p2pInsuranceCertificateHeroPadding,
         child: Column(
           children: [
-            SizedBox.square(
+            const SizedBox.square(
               dimension: _p2pInsuranceHeroIconBox,
-              child: const Material(
+              child: Material(
                 color: AppColors.portfolioBtnGhost,
                 shape: CircleBorder(
                   side: BorderSide(color: AppColors.portfolioBtnGhostBorder),

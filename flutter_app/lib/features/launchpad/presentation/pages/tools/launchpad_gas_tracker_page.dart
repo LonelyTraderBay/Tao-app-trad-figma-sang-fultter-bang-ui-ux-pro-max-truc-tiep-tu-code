@@ -73,7 +73,8 @@ class LaunchpadGasTrackerPage extends ConsumerStatefulWidget {
 
 class _LaunchpadGasTrackerPageState
     extends ConsumerState<LaunchpadGasTrackerPage> {
-  late List<LaunchpadGasAlertDraft> _alerts;
+  // STATE-S23: alerts sống ở LaunchpadGasTrackerStateController (một nguồn
+  // sự thật) — hết `late List` seed từ ref.read + setState.
   var _activeTab = _GasTab.prices;
   var _selectedChain = 'Ethereum';
   var _showAddAlert = false;
@@ -81,14 +82,18 @@ class _LaunchpadGasTrackerPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(launchpadControllerProvider).getGasTracker();
-    _alerts = List.of(snapshot.alerts);
-    _selectedChain = snapshot.prices.first.chain;
+    _selectedChain = ref
+        .read(launchpadControllerProvider)
+        .getGasTracker()
+        .prices
+        .first
+        .chain;
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getGasTracker();
+    final viewState = ref.watch(launchpadGasTrackerStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final selectedGas = snapshot.prices.firstWhere(
       (price) => price.chain == _selectedChain,
       orElse: () => snapshot.prices.first,
@@ -170,7 +175,7 @@ class _LaunchpadGasTrackerPageState
                                 estimates: snapshot.estimates,
                               ),
                               _GasTab.alerts => _AlertsTab(
-                                alerts: _alerts,
+                                alerts: viewState.alerts,
                                 onAdd: () =>
                                     setState(() => _showAddAlert = true),
                                 onToggle: _toggleAlert,
@@ -200,31 +205,22 @@ class _LaunchpadGasTrackerPageState
   }
 
   void _toggleAlert(String id) {
-    setState(() {
-      _alerts = [
-        for (final alert in _alerts)
-          if (alert.id == id)
-            alert.copyWith(enabled: !alert.enabled)
-          else
-            alert,
-      ];
-    });
+    ref
+        .read(launchpadGasTrackerStateControllerProvider.notifier)
+        .toggleAlert(id);
   }
 
   void _deleteAlert(String id) {
-    setState(() {
-      _alerts = [
-        for (final alert in _alerts)
-          if (alert.id != id) alert,
-      ];
-    });
+    ref
+        .read(launchpadGasTrackerStateControllerProvider.notifier)
+        .deleteAlert(id);
   }
 
   void _addAlert(LaunchpadGasAlertDraft alert) {
-    setState(() {
-      _alerts = [..._alerts, alert];
-      _showAddAlert = false;
-    });
+    ref
+        .read(launchpadGasTrackerStateControllerProvider.notifier)
+        .addAlert(alert);
+    setState(() => _showAddAlert = false);
   }
 }
 

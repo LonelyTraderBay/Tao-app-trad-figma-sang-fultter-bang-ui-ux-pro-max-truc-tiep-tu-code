@@ -232,7 +232,10 @@ class _ActionTakenCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _ToneIcon(icon: Icons.shield_outlined, color: AppColors.buy),
+                const _ToneIcon(
+                  icon: Icons.shield_outlined,
+                  color: AppColors.buy,
+                ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Column(

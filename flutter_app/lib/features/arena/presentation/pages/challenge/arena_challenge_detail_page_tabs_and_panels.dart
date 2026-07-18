@@ -83,7 +83,7 @@ class _CreatorCard extends StatelessWidget {
       padding: _challengeCardPadding,
       child: Row(
         children: [
-          VitAccentIconBox(
+          const VitAccentIconBox(
             icon: Icons.workspace_premium_outlined,
             color: AppColors.primary,
             iconSize: _challengeIconBubbleIcon,
@@ -155,7 +155,7 @@ class _SafetyLinkCard extends StatelessWidget {
       padding: _challengeCardPadding,
       child: Row(
         children: [
-          VitAccentIconBox(
+          const VitAccentIconBox(
             icon: Icons.health_and_safety_outlined,
             color: AppColors.buy,
             iconSize: _challengeIconBubbleIcon,
@@ -288,7 +288,7 @@ class _EvidencePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _InfoCard(
+    return const _InfoCard(
       icon: Icons.camera_alt_outlined,
       title: 'Bằng chứng',
       text:

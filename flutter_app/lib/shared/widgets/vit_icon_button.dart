@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+/// Color treatment of a [VitIconButton].
 enum VitIconButtonVariant {
   defaultAction,
   ghost,
@@ -14,8 +15,11 @@ enum VitIconButtonVariant {
   transparent,
 }
 
+/// Size preset of a [VitIconButton].
 enum VitIconButtonSize { sm, md, lg }
 
+/// Icon (optionally + label) button with variant/size-driven styling, a
+/// tap-target-safe minimum size, and a loading spinner state.
 class VitIconButton extends StatelessWidget {
   const VitIconButton({
     super.key,

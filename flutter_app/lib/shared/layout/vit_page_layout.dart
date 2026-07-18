@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 
+/// Bottom-padding treatment for [VitPageLayout]: `defaultPage` reserves
+/// loose bottom spacing, `flush` removes it (e.g. for sticky-footer pages).
 enum VitPageVariant { defaultPage, flush }
 
+/// Full-page [Scaffold] wrapper: app background, semantics label/identifier,
+/// and variant-driven bottom padding around [child].
 class VitPageLayout extends StatelessWidget {
   const VitPageLayout({
     super.key,
@@ -68,6 +72,8 @@ class VitPageLayout extends StatelessWidget {
   }
 }
 
+/// Bottom-pinned footer surface with a top divider and standard padding,
+/// typically holding a primary CTA below scrollable page content.
 class VitStickyFooter extends StatelessWidget {
   const VitStickyFooter({
     super.key,

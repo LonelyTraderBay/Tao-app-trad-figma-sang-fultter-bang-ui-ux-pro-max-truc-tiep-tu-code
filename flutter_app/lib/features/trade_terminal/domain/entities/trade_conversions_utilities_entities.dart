@@ -1,5 +1,7 @@
 part of 'trade_terminal_entities.dart';
 
+/// Read-model for the Trade Export screen (available formats, periods, and
+/// fields to include).
 final class TradeExportSnapshot {
   const TradeExportSnapshot({
     required this.trade,
@@ -20,6 +22,8 @@ final class TradeExportSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// Aggregate trade stats (count, volume, fees, net PnL) shown on the
+/// export screen.
 final class TradeExportStats {
   const TradeExportStats({
     required this.totalTrades,
@@ -34,6 +38,7 @@ final class TradeExportStats {
   final double netPnl;
 }
 
+/// A selectable export file format (e.g. CSV, PDF).
 final class TradeExportFormat {
   const TradeExportFormat({
     required this.id,
@@ -46,6 +51,7 @@ final class TradeExportFormat {
   final String description;
 }
 
+/// A selectable export date-range period.
 final class TradeExportPeriod {
   const TradeExportPeriod({required this.id, required this.label});
 
@@ -53,6 +59,7 @@ final class TradeExportPeriod {
   final String label;
 }
 
+/// A toggleable field/section to include in the export.
 final class TradeExportInclude {
   const TradeExportInclude({
     required this.id,
@@ -73,6 +80,7 @@ final class TradeExportInclude {
   }
 }
 
+/// Request to generate a trade export for a given format/period/fields.
 final class TradeExportRequest {
   const TradeExportRequest({
     required this.format,
@@ -85,6 +93,7 @@ final class TradeExportRequest {
   final List<String> includeIds;
 }
 
+/// Result of generating a trade export, including its download URL.
 final class TradeExportResult {
   const TradeExportResult({
     required this.exportId,
@@ -99,6 +108,8 @@ final class TradeExportResult {
   final String downloadUrl;
 }
 
+/// Read-model for the Convert (asset swap) screen: available assets,
+/// favorites, history, and the current quote inputs.
 final class TradeConvertSnapshot {
   const TradeConvertSnapshot({
     required this.trade,
@@ -131,6 +142,7 @@ final class TradeConvertSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// An asset available for conversion, with its balance and USD price.
 final class TradeConvertAsset {
   const TradeConvertAsset({
     required this.symbol,
@@ -147,6 +159,7 @@ final class TradeConvertAsset {
   final int colorHex;
 }
 
+/// A user's saved favorite from/to conversion pair.
 final class TradeConvertFavoritePair {
   const TradeConvertFavoritePair({
     required this.fromSymbol,
@@ -159,6 +172,7 @@ final class TradeConvertFavoritePair {
   String get label => '$fromSymbol/$toSymbol';
 }
 
+/// A completed conversion record shown in convert history.
 final class TradeConvertHistoryRecord {
   const TradeConvertHistoryRecord({
     required this.id,
@@ -183,6 +197,7 @@ final class TradeConvertHistoryRecord {
   final String status;
 }
 
+/// Request to convert one asset amount into another.
 final class TradeConvertRequest {
   const TradeConvertRequest({
     required this.fromSymbol,
@@ -199,6 +214,8 @@ final class TradeConvertRequest {
   final String mode;
 }
 
+/// Quoted conversion rate/fee for a pending convert request, with
+/// validity window — financial write path, see ADR-001.
 final class TradeConvertQuote {
   const TradeConvertQuote({
     required this.fromSymbol,
@@ -223,6 +240,8 @@ final class TradeConvertQuote {
   final bool canSubmit;
 }
 
+/// Receipt returned after submitting a conversion — financial write path,
+/// see ADR-001.
 final class TradeConvertReceipt {
   const TradeConvertReceipt({
     required this.convertId,

@@ -18,10 +18,10 @@ class HomeLoadingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(
+    return const VitPageContent(
       padding: VitContentPadding.compact,
       rhythm: VitPageRhythm.compact,
-      children: const [
+      children: [
         HomePortfolioSkeleton(),
         HomeNextActionSkeleton(),
         HomeProductsSkeleton(),
@@ -57,10 +57,10 @@ class HomePortfolioSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return const VitCard(
       radius: VitCardRadius.large,
       padding: SharedSpacingTokens.homeCardPaddingDefault,
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitSkeleton(
@@ -85,11 +85,11 @@ class HomeNextActionSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: const EdgeInsetsDirectional.all(
+    return const VitCard(
+      padding: EdgeInsetsDirectional.all(
         SharedSpacingTokens.homeNextActionCardPadding,
       ),
-      child: const Row(
+      child: Row(
         children: [
           VitSkeleton(
             width: SharedSpacingTokens.homeNextActionIconContainer,
@@ -141,9 +141,9 @@ class HomeRecentProductsSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       height: SharedSpacingTokens.homeRecentProductHeight,
-      child: const Row(
+      child: Row(
         children: [
           Expanded(
             child: VitSkeleton(

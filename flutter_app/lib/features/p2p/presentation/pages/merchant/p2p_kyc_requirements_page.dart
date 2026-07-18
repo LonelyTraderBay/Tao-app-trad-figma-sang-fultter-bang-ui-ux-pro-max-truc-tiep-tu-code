@@ -113,11 +113,11 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                           height: AppSpacing.pageRhythmStandardInnerGap,
                         ),
                         _KycSupportCard(snapshot: snapshot),
-                        VitPageContent(
+                        const VitPageContent(
                           rhythm: VitPageRhythm.form,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
-                          children: const [
+                          children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'KYC requirement state review',

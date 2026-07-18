@@ -1,7 +1,10 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Which strategy performed better in a DCA-vs-lump-sum comparison.
 enum DcaPerformanceWinner { dca, lumpSum }
 
+/// Data for the DCA vs. lump-sum performance comparison screen: monthly
+/// [comparison] series plus derived metrics/scenarios/radar breakdown.
 class DcaPerformanceCompareSnapshot {
   const DcaPerformanceCompareSnapshot({
     required this.endpoint,
@@ -58,6 +61,7 @@ class DcaPerformanceCompareSnapshot {
   }
 }
 
+/// One monthly DCA-vs-lump-sum value data point in the comparison chart.
 class DcaPerformancePoint {
   const DcaPerformancePoint({
     required this.month,
@@ -72,6 +76,7 @@ class DcaPerformancePoint {
   final int priceUsd;
 }
 
+/// One labeled DCA-vs-lump-sum metric row with a declared [winner].
 class DcaComparisonMetric {
   const DcaComparisonMetric({
     required this.label,
@@ -86,6 +91,8 @@ class DcaComparisonMetric {
   final DcaPerformanceWinner winner;
 }
 
+/// One named market-volatility scenario comparing DCA vs. lump-sum
+/// advantage.
 class DcaVolatilityScenario {
   const DcaVolatilityScenario({
     required this.name,
@@ -102,6 +109,7 @@ class DcaVolatilityScenario {
   final int lumpSumAdvantage;
 }
 
+/// One metric's DCA-vs-lump-sum score pair for the comparison radar chart.
 class DcaRadarMetric {
   const DcaRadarMetric({
     required this.metric,

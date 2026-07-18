@@ -12,13 +12,13 @@ class _TypeSelector extends StatelessWidget {
       selected: value,
       onChanged: onChanged,
       height: _p2pPaymentAddTypeExtent,
-      options: [
+      options: const [
         VitSegmentedChoiceOption(
           key: P2PPaymentMethodAddPage.bankTypeKey,
           value: P2PPaymentAddType.bank,
           label: 'Ngân hàng',
           accentColor: AppModuleAccents.p2p,
-          leading: const Icon(Icons.account_balance_rounded),
+          leading: Icon(Icons.account_balance_rounded),
           semanticLabel: 'Chọn ngân hàng',
         ),
         VitSegmentedChoiceOption(
@@ -26,7 +26,7 @@ class _TypeSelector extends StatelessWidget {
           value: P2PPaymentAddType.ewallet,
           label: 'Ví điện tử',
           accentColor: AppModuleAccents.p2p,
-          leading: const Icon(Icons.phone_iphone_rounded),
+          leading: Icon(Icons.phone_iphone_rounded),
           semanticLabel: 'Chọn ví điện tử',
         ),
       ],

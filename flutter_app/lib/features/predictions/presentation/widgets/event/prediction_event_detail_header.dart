@@ -33,7 +33,7 @@ class _EventHeader extends StatelessWidget {
                 background: AppColors.surface2,
               ),
             if (event.status == PredictionEventStatus.resolved)
-              _TinyBadge(
+              const _TinyBadge(
                 label: 'RESOLVED',
                 color: AppColors.text3,
                 background: AppColors.surface2,

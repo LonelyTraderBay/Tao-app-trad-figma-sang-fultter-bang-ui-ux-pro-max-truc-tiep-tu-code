@@ -6,6 +6,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Small centered pill used as the drag-handle indicator at the top of a
+/// bottom sheet.
 class VitSheetHandle extends StatelessWidget {
   const VitSheetHandle({
     super.key,
@@ -38,6 +40,8 @@ class VitSheetHandle extends StatelessWidget {
   }
 }
 
+/// Standard bottom sheet body chrome: drag handle, title, and a
+/// height-clamped, flexible content area for [child].
 class VitSheetPanel extends StatelessWidget {
   const VitSheetPanel({
     super.key,
@@ -82,6 +86,8 @@ class VitSheetPanel extends StatelessWidget {
   }
 }
 
+/// Rounded-top colored surface (padding + top corner radius) used as a
+/// bottom sheet's outer container.
 class VitSheetSurface extends StatelessWidget {
   const VitSheetSurface({
     super.key,

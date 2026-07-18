@@ -128,10 +128,10 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                         const SizedBox(
                           height: AppSpacing.pageRhythmCompactInnerGap,
                         ),
-                        Wrap(
+                        const Wrap(
                           spacing: AppSpacing.x2,
                           runSpacing: AppSpacing.x2,
-                          children: const [
+                          children: [
                             StakingCustodySmallPill(
                               label: 'Regulated',
                               color: AppColors.buy,

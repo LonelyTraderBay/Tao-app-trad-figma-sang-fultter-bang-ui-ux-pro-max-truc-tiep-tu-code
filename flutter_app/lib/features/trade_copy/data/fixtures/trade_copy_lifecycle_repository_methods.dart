@@ -222,7 +222,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
 
   @override
   TradeCopyEducationSnapshot getCopyEducation() {
-    return TradeCopyEducationSnapshot(
+    return const TradeCopyEducationSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: _copyEducationTabs,
       defaultTab: 'how-it-works',
@@ -233,7 +233,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
       copyModes: _copyModeGuides,
       concepts: _copyConceptGuides,
       lastUpdatedLabel: '2 mins ago',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -245,9 +245,9 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
 
   @override
   TradeActiveCopiesSnapshot getActiveCopies() {
-    return TradeActiveCopiesSnapshot(
+    return const TradeActiveCopiesSnapshot(
       trade: _copyLifecycleTradeSnapshot,
-      portfolio: const TradeActiveCopyPortfolio(
+      portfolio: TradeActiveCopyPortfolio(
         totalCapital: 10000,
         totalValue: 10500,
         totalPnl: 500,
@@ -255,7 +255,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
         activeCopies: 2,
         totalCopies: 3,
       ),
-      tabs: const [
+      tabs: [
         TradeActiveCopiesTab(id: 'all', label: 'Tất cả', badge: 3),
         TradeActiveCopiesTab(id: 'active', label: 'Đang chạy', badge: 2),
         TradeActiveCopiesTab(id: 'paused', label: 'Tạm dừng'),
@@ -264,7 +264,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
       defaultTab: 'all',
       copies: _activeCopies,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -276,11 +276,11 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
 
   @override
   TradeCopySettingsSnapshot getCopySettings() {
-    return TradeCopySettingsSnapshot(
+    return const TradeCopySettingsSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       settings: _defaultCopySettings,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -375,7 +375,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
 
   @override
   TradeSafetyEducationSnapshot getSafetyEducation() {
-    return TradeSafetyEducationSnapshot(
+    return const TradeSafetyEducationSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: _safetyEducationTabs,
       defaultTabId: 'scams',
@@ -387,7 +387,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
       verificationTiers: _safetyVerificationTiers,
       reportReasons: _safetyReportReasons,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -399,9 +399,9 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
 
   @override
   TradeDisputeResolutionSnapshot getDisputeResolution() {
-    return TradeDisputeResolutionSnapshot(
+    return const TradeDisputeResolutionSnapshot(
       trade: _copyLifecycleTradeSnapshot,
-      tabs: const [
+      tabs: [
         TradeDisputeTab(id: 'file', label: 'File Complaint'),
         TradeDisputeTab(id: 'active', label: 'Active Cases', badgeCount: 1),
         TradeDisputeTab(id: 'history', label: 'History', badgeCount: 1),
@@ -415,7 +415,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
       activeCases: _activeDisputeCases,
       resolvedCases: _resolvedDisputeCases,
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -427,7 +427,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
 
   @override
   TradeCopySafetyCenterSnapshot getCopySafetyCenter() {
-    return TradeCopySafetyCenterSnapshot(
+    return const TradeCopySafetyCenterSnapshot(
       trade: _copyLifecycleTradeSnapshot,
       tabs: _copySafetyCenterTabs,
       defaultTabId: 'verification',
@@ -445,7 +445,7 @@ mixin _MockTradeCopyTradingRepositoryLifecycleMethods
       warningText:
           'Important: Verification badges confirm identity and track record, but DO NOT guarantee future performance. Always check risk metrics before copying.',
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,

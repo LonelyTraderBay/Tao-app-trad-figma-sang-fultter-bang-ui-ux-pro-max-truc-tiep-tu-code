@@ -15,7 +15,7 @@ class _CreateTxCard extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          VitAccentIconBox(
+          const VitAccentIconBox(
             icon: Icons.add_rounded,
             color: AppModuleAccents.launchpad,
             iconSize: LaunchpadSpacingTokens.launchpadBox40 * .45,

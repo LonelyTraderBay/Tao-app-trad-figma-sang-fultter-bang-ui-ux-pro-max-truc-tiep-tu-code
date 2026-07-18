@@ -102,15 +102,15 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                 }),
               ),
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: NewsPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị tin tức đã lưu gần nhất.',
                   ),

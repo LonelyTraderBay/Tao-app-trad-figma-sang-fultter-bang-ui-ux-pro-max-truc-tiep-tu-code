@@ -26,12 +26,12 @@ class MaturitySummary extends StatelessWidget {
       padding: savingsPortfolioCardPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: const ShapeDecoration(
+          const DecoratedBox(
+            decoration: ShapeDecoration(
               color: AppColors.warn10,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
-            child: const SizedBox(
+            child: SizedBox(
               width: AppSpacing.x7,
               height: AppSpacing.x7,
               child: Icon(

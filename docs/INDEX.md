@@ -1,5 +1,7 @@
 # VitTrade Docs Index
 
+**Last Updated:** 2026-07-18 (DOC-D4/D5: hệ ADR + trường Last Updated)
+
 Load docs **on demand** — do not paste large audit output into chat. Shared rules:
 [AI_PROMPT_SHELL.md](01_AI_RULES/AI_PROMPT_SHELL.md).
 
@@ -102,6 +104,7 @@ mechanism.
 | File | When |
 | --- | --- |
 | [VitTrade-Enterprise-Architecture-Report.md](05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md) | Architecture reference |
+| [decisions/README.md](05_ARCHITECTURE/decisions/README.md) | Architecture Decision Records (ADR) — vì sao một quyết định kiến trúc được chốt |
 
 ## Screen references (on demand)
 

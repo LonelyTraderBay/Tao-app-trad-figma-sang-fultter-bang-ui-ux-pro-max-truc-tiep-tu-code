@@ -75,14 +75,14 @@ class _RulesContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _InfoBlock(
+        const _InfoBlock(
           icon: Icons.menu_book_rounded,
           title: 'Description',
           text:
               'This market will resolve to "Yes" if bitcoin reaches \$150K before July 2026 before the end date. Otherwise, it resolves to "No".',
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-        _InfoBox(
+        const _InfoBox(
           icon: Icons.verified_user_outlined,
           title: 'Resolution Source',
           text: 'CoinGecko & CoinMarketCap (average)',

@@ -15,12 +15,12 @@ class _EscrowStatusHero extends StatelessWidget {
       padding: P2PSpacingTokens.p2pEscrowDetailHeroPadding,
       child: Column(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: AppSpacing.x7,
             child: Material(
               color: AppColors.warn15,
               borderRadius: AppRadii.lgRadius,
-              child: const Icon(
+              child: Icon(
                 Icons.lock_outline_rounded,
                 color: AppModuleAccents.p2p,
                 size: AppSpacing.iconMd,

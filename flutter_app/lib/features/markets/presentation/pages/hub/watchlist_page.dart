@@ -57,15 +57,9 @@ class WatchlistPage extends ConsumerStatefulWidget {
 
 class _WatchlistPageState extends ConsumerState<WatchlistPage> {
   final _searchController = TextEditingController();
-  late List<MarketWatchlistEntry> _entries;
 
-  @override
-  void initState() {
-    super.initState();
-    _entries = [
-      ...ref.read(marketControllerProvider).getMarketWatchlist().entries,
-    ];
-  }
+  // STATE-S23: entries sống ở MarketWatchlistStateController (một nguồn sự
+  // thật) — hết `late List` seed từ ref.read + setState.
 
   @override
   void dispose() {
@@ -73,10 +67,13 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
     super.dispose();
   }
 
-  List<_WatchlistItem> _filteredItems(MarketWatchlistSnapshot snapshot) {
+  List<_WatchlistItem> _filteredItems(
+    MarketWatchlistSnapshot snapshot,
+    List<MarketWatchlistEntry> entries,
+  ) {
     final query = _searchController.text.trim().toLowerCase();
     final items = <_WatchlistItem>[];
-    for (final entry in _entries) {
+    for (final entry in entries) {
       final pair = _findPair(snapshot.marketPairs, entry.pairId);
       if (pair == null) continue;
       if (query.isNotEmpty &&
@@ -90,9 +87,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
   }
 
   void _removeEntry(String id) {
-    setState(() {
-      _entries = _entries.where((entry) => entry.id != id).toList();
-    });
+    ref.read(marketWatchlistStateControllerProvider.notifier).removeEntry(id);
   }
 
   Future<void> _editNote(MarketWatchlistEntry entry) async {
@@ -142,31 +137,22 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
     if (note == null) return;
 
     final trimmed = note.trim();
-    setState(() {
-      _entries = [
-        for (final current in _entries)
-          if (current.id == entry.id)
-            MarketWatchlistEntry(
-              id: current.id,
-              pairId: current.pairId,
-              note: trimmed.isEmpty ? null : trimmed,
-            )
-          else
-            current,
-      ];
-    });
+    ref
+        .read(marketWatchlistStateControllerProvider.notifier)
+        .setNote(entry.id, trimmed.isEmpty ? null : trimmed);
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketControllerProvider).getMarketWatchlist();
+    final viewState = ref.watch(marketWatchlistStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
             ? _watchlistFramedScrollClearance
             : _watchlistNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final items = _filteredItems(snapshot);
+    final items = _filteredItems(snapshot, viewState.entries);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -187,7 +173,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
             children: [
               _WatchlistToolbar(
                 controller: _searchController,
-                count: _entries.length,
+                count: viewState.entries.length,
                 onChanged: (_) => setState(() {}),
                 onClear: () => setState(() {}),
                 onAddPair: () => context.go(AppRoutePaths.markets),

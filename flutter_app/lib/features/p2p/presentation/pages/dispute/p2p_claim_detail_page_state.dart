@@ -153,7 +153,7 @@ class _ClaimHeroCard extends StatelessWidget {
             value: claim.orderId,
             valueColor: AppModuleAccents.p2p,
             density: VitDensity.compact,
-            trailing: Icon(
+            trailing: const Icon(
               Icons.open_in_new_rounded,
               color: AppModuleAccents.p2p,
               size: P2PSpacingTokens.p2pClaimInlineIcon,
@@ -305,8 +305,8 @@ class _ClaimBenchmarksCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(
                 child: _MiniStatTile(
                   label: 'Tỷ lệ duyệt chung',

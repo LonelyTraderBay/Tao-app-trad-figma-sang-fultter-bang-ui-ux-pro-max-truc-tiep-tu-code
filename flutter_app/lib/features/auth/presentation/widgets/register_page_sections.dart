@@ -63,14 +63,14 @@ class _AgreementRow extends StatelessWidget {
                             color: _authPrimary,
                           ),
                         ),
-                        TextSpan(text: ' và '),
+                        const TextSpan(text: ' và '),
                         TextSpan(
                           text: 'Chính sách bảo mật',
                           style: AppTextStyles.caption.copyWith(
                             color: _authPrimary,
                           ),
                         ),
-                        TextSpan(text: ' của VitTrade.'),
+                        const TextSpan(text: ' của VitTrade.'),
                       ],
                     ),
                     style: AppTextStyles.caption.copyWith(

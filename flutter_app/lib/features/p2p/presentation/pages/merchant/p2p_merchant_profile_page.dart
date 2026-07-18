@@ -131,7 +131,9 @@ class _P2PMerchantProfilePageState
         return AlertDialog(
           backgroundColor: AppColors.surface,
           surfaceTintColor: AppColors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
           title: Text(
             'Chặn ${snapshot.merchant.name}?',
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),

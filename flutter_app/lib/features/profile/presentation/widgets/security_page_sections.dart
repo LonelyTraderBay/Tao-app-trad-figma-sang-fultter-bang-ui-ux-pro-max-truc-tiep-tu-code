@@ -47,7 +47,7 @@ class _ScoreCard extends StatelessWidget {
                       color: i < snapshot.score
                           ? scoreColor
                           : AppColors.surface3,
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.pillRadius,
                       ),
                     ),
@@ -278,7 +278,7 @@ class _DeviceRow extends StatelessWidget {
                         const SizedBox(
                           width: ProfileSpacingTokens.securityStatusGap,
                         ),
-                        VitAccentPill(
+                        const VitAccentPill(
                           label: 'Hi\u1EC7n t\u1EA1i',
                           accentColor: _securityGreen,
                         ),

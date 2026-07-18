@@ -226,8 +226,10 @@ const List<ProfileApiKey> _apiManagementKeys = [
   ProfileApiKey(
     id: 'key1',
     name: 'Trading Bot Alpha',
-    key: 'vt_live_4x7j9mKpQr2LwNvSbEuF8yTcZdHgXkAm',
-    secret: 'sk_live_J8mK3pRtYxWvCqBnZ5hGfD2sLuNaE9cT',
+    // SEC-S41: chuỗi ví dụ có marker rõ ràng — KHÔNG dùng chuỗi entropy cao
+    // "trông như thật" trong fixture (secret scanner sẽ chặn).
+    key: 'vt_live_VI_DU_KHONG_THAT_bot_alpha_01',
+    secret: 'sk_live_VI_DU_KHONG_THAT_bot_alpha_02',
     permissions: ['read', 'trade'],
     ipWhitelist: ['192.168.1.100', '10.0.0.5'],
     createdAt: '10/01/2026',
@@ -239,8 +241,8 @@ const List<ProfileApiKey> _apiManagementKeys = [
   ProfileApiKey(
     id: 'key2',
     name: 'Portfolio Tracker',
-    key: 'vt_live_9nRdBsWkMpL3xTaEjQzYcV7hGfC2uNm',
-    secret: 'sk_live_C4yBfNrKxZpD8wTqLuMaV2jEsGcH7iR',
+    key: 'vt_live_VI_DU_KHONG_THAT_portfolio_01',
+    secret: 'sk_live_VI_DU_KHONG_THAT_portfolio_02',
     permissions: ['read'],
     ipWhitelist: [],
     createdAt: '05/02/2026',
@@ -252,8 +254,8 @@ const List<ProfileApiKey> _apiManagementKeys = [
   ProfileApiKey(
     id: 'key3',
     name: 'Test Key (C\u0169)',
-    key: 'vt_live_2hFcPqLsAkX6rBnJmWdYvT8eGzNuCjQ',
-    secret: 'sk_live_X6jNzQpMsRvKcT3bGaHwF9yLuB2dEiC',
+    key: 'vt_live_VI_DU_KHONG_THAT_test_cu_01',
+    secret: 'sk_live_VI_DU_KHONG_THAT_test_cu_02',
     permissions: ['read', 'trade', 'withdraw'],
     ipWhitelist: [],
     createdAt: '01/12/2025',

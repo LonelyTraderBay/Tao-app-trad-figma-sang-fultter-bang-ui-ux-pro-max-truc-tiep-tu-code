@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/features/referral/presentation/controllers/ref
 void main() {
   group('ReferralController', () {
     test('exposes referral snapshots through repository contract', () {
-      final controller = ReferralController(const MockReferralRepository());
+      final controller = const ReferralController(MockReferralRepository());
 
       final home = controller.getHome();
       final filtered = controller.getHistory(

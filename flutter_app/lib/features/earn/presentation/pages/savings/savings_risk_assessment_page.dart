@@ -107,7 +107,7 @@ class _SavingsRiskAssessmentPageState
                                 currentQuestion: _currentQuestion,
                                 totalQuestions: snapshot.questions.length,
                               ),
-                              VitHighRiskStatePanel(
+                              const VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Risk assessment in review',
                                 message:

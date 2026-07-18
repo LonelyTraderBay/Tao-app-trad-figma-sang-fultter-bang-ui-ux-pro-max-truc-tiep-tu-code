@@ -5,7 +5,7 @@ class _DisputeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitBanner(
+    return const VitBanner(
       variant: VitBannerVariant.info,
       icon: Icons.chat_bubble_outline_rounded,
       message: 'Hoa hồng không chính xác?',
@@ -210,4 +210,4 @@ class _ReferralRewardChartPainter extends CustomPainter {
   }
 }
 
-String _formatUsd(double value) => formatUsd(value);
+String _formatUsd(double value) => VitFormat.usd(value);

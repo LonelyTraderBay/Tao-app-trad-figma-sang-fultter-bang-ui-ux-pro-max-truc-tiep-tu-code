@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+/// Top-level app chrome: hosts the page [child] plus the status bar and
+/// scroll-aware auto-hiding [VitBottomNav].
 class VitAppShell extends StatefulWidget {
   const VitAppShell({
     super.key,

@@ -15,7 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_terminal_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/hub/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_product_navigation.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_trade_analytics_hero.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
@@ -111,7 +111,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
           _TradeJournalTab(snapshot: snapshot)
         else
           _PositionSizingTab(snapshot: snapshot),
-        VitTradeSection(title: 'Model info', child: _ModelInfoCard()),
+        const VitTradeSection(title: 'Model info', child: _ModelInfoCard()),
         VitTradeSection(
           title: 'Features',
           child: _FeaturesCard(features: snapshot.features),

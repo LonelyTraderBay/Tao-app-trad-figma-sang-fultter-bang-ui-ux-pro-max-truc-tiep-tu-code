@@ -36,7 +36,10 @@ class _ArenaCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
-              VitAccentPill(label: 'Points only', accentColor: _profileAmber),
+              const VitAccentPill(
+                label: 'Points only',
+                accentColor: _profileAmber,
+              ),
             ],
           ),
           SizedBox(height: VitDensity.compact.verticalSpace),

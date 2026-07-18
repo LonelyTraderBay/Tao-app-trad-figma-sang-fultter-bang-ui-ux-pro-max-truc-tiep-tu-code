@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
@@ -9,22 +10,20 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/security/p2p_s
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpTwoFactorSettings(WidgetTester tester) async {
+  Future<GoRouter> pumpTwoFactorSettings(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    final router = createAppRouter(
+      initialLocation: AppRoutePaths.p2pSecurity2fa,
+    );
     await tester.pumpWidget(
-      ProviderScope(
-        child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.p2pSecurity2fa,
-          ),
-        ),
-      ),
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
     );
     await tester.pumpAndSettle();
+    return router;
   }
 
   test('SC-254 mock repository exposes 2FA settings BE draft', () {
@@ -148,5 +147,32 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(P2PSecurityCenterPage), findsOneWidget);
+  });
+
+  testWidgets('SC-254 round-trip: enabling authenticator method survives '
+      'navigating away and back (state lives in the Notifier)', (tester) async {
+    final router = await pumpTwoFactorSettings(tester);
+
+    await tester.tap(
+      find.byKey(P2P2FASettingsPage.methodSwitchKey('2fa_authenticator')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(P2P2FASettingsPage.dialogConfirmKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('2FA đã bật (3 phương thức)'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+    expect(find.byType(P2PSecurityCenterPage), findsOneWidget);
+
+    router.go(AppRoutePaths.p2pSecurity2fa);
+    await tester.pumpAndSettle();
+
+    expect(find.text('2FA đã bật (3 phương thức)'), findsOneWidget);
+    expect(
+      find.text('Cần setup Authenticator App trước khi sử dụng'),
+      findsNothing,
+    );
   });
 }

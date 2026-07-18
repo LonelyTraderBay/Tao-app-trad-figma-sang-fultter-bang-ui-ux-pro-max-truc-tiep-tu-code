@@ -1,9 +1,13 @@
 part of 'trade_terminal_entities.dart';
 
+/// Directional side of a futures position: long or short.
 enum TradeFuturesSide { long, short }
 
+/// Order execution style for futures orders: market or limit.
 enum TradeFuturesOrderType { market, limit }
 
+/// Read-model for the Futures trading screen (positions, leverage
+/// options, mark/index price, funding rate).
 final class TradeFuturesSnapshot {
   const TradeFuturesSnapshot({
     required this.trade,
@@ -34,6 +38,8 @@ final class TradeFuturesSnapshot {
   final String? highRiskContractId;
 }
 
+/// A single open futures position (leverage, entry/mark/liquidation price,
+/// PnL, ROE).
 final class TradeFuturesPosition {
   const TradeFuturesPosition({
     required this.id,
@@ -64,6 +70,10 @@ final class TradeFuturesPosition {
   final double roe;
 }
 
+/// In-progress futures order form contract with value equality: a
+/// `TradeFuturesOrderDraft` rebuilt from the same on-screen values resolves
+/// to the same Provider.family cache entry instead of a new one each time.
+/// See PERF-HN1, docs/02_FLUTTER_MIGRATION/a-plus-roadmap/A-Plus-Task-Manifest.csv.
 final class TradeFuturesOrderDraft {
   const TradeFuturesOrderDraft({
     required this.pairId,
@@ -115,6 +125,8 @@ final class TradeFuturesOrderDraft {
   );
 }
 
+/// Computed cost/liquidation preview for a futures order draft before
+/// submission — financial write path, see ADR-001.
 final class TradeFuturesPreview {
   const TradeFuturesPreview({
     required this.positionSize,
@@ -131,6 +143,8 @@ final class TradeFuturesPreview {
   final bool canOpen;
 }
 
+/// Receipt returned after submitting a futures order — financial write
+/// path, see ADR-001.
 final class TradeFuturesReceipt {
   const TradeFuturesReceipt({
     required this.orderId,
@@ -143,6 +157,7 @@ final class TradeFuturesReceipt {
   final String status;
 }
 
+/// Read-model for the Futures Leverage adjustment screen.
 final class TradeFuturesLeverageSnapshot {
   const TradeFuturesLeverageSnapshot({
     required this.futures,
@@ -163,6 +178,7 @@ final class TradeFuturesLeverageSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// Request to preview/adjust the leverage for a given pair.
 final class TradeFuturesLeverageRequest {
   const TradeFuturesLeverageRequest({
     required this.pairId,
@@ -175,6 +191,8 @@ final class TradeFuturesLeverageRequest {
   final double exampleMargin;
 }
 
+/// Computed risk preview (liquidation distance, fee, projected PnL) for a
+/// candidate leverage value before it is applied.
 final class TradeFuturesLeveragePreview {
   const TradeFuturesLeveragePreview({
     required this.leverage,
@@ -203,6 +221,8 @@ final class TradeFuturesLeveragePreview {
   final bool showRiskTips;
 }
 
+/// Receipt returned after submitting a leverage adjustment — financial
+/// write path, see ADR-001.
 final class TradeFuturesLeverageReceipt {
   const TradeFuturesLeverageReceipt({
     required this.adjustmentId,
@@ -217,6 +237,8 @@ final class TradeFuturesLeverageReceipt {
   final String status;
 }
 
+/// Read-model for the Margin Trading screen (account, positions, order
+/// draft, and regulatory disclosures).
 final class TradeMarginTradingSnapshot {
   const TradeMarginTradingSnapshot({
     required this.trade,
@@ -261,6 +283,7 @@ final class TradeMarginTradingSnapshot {
   final String? highRiskContractId;
 }
 
+/// Margin account equity/margin/PnL summary.
 final class TradeMarginAccount {
   const TradeMarginAccount({
     required this.totalEquity,
@@ -277,6 +300,8 @@ final class TradeMarginAccount {
   final double marginLevel;
 }
 
+/// A single open margin position (leverage, entry/mark price, PnL,
+/// liquidation price, margin ratio).
 final class TradeMarginPosition {
   const TradeMarginPosition({
     required this.id,
@@ -309,6 +334,8 @@ final class TradeMarginPosition {
   final double marginRatio;
 }
 
+/// A selectable tab (id + label) used across the margin trading screen's
+/// mode/content tab strips.
 final class TradeMarginTab {
   const TradeMarginTab({required this.id, required this.label});
 
@@ -316,6 +343,8 @@ final class TradeMarginTab {
   final String label;
 }
 
+/// Regulatory client-category disclosure (e.g. retail/professional) with
+/// its trading limits.
 final class TradeMarginClientCategory {
   const TradeMarginClientCategory({
     required this.title,
@@ -330,6 +359,7 @@ final class TradeMarginClientCategory {
   final List<String> limits;
 }
 
+/// Mark/last/index reference prices used for margin position valuation.
 final class TradeMarginReferencePrices {
   const TradeMarginReferencePrices({
     required this.markPrice,
@@ -342,6 +372,8 @@ final class TradeMarginReferencePrices {
   final double indexPrice;
 }
 
+/// Draft form state for a margin order (selected type, price, amount,
+/// fee rate, estimated liquidation price).
 final class TradeMarginOrderDraft {
   const TradeMarginOrderDraft({
     required this.orderTypes,
@@ -360,6 +392,8 @@ final class TradeMarginOrderDraft {
   final String liquidationPriceLabel;
 }
 
+/// Margin risk warning block (title plus bullet items) shown before order
+/// submission.
 final class TradeMarginRiskWarning {
   const TradeMarginRiskWarning({required this.title, required this.items});
 
@@ -367,6 +401,8 @@ final class TradeMarginRiskWarning {
   final List<String> items;
 }
 
+/// Negative-balance-protection safety disclosure shown on the margin
+/// trading screen.
 final class TradeMarginSafetyDisclosure {
   const TradeMarginSafetyDisclosure({
     required this.title,
@@ -379,6 +415,8 @@ final class TradeMarginSafetyDisclosure {
   final String footer;
 }
 
+/// Best-execution regulatory disclosure shown on the margin trading
+/// screen.
 final class TradeMarginBestExecutionDisclosure {
   const TradeMarginBestExecutionDisclosure({
     required this.title,
@@ -393,6 +431,8 @@ final class TradeMarginBestExecutionDisclosure {
   final String actionLabel;
 }
 
+/// Read-model for the Margin Trading hub landing screen (entry stats,
+/// menu items, features, compliance blurb).
 final class TradeMarginTradingHubSnapshot {
   const TradeMarginTradingHubSnapshot({
     required this.stats,
@@ -411,6 +451,7 @@ final class TradeMarginTradingHubSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single headline stat shown on the margin trading hub.
 final class TradeMarginHubStat {
   const TradeMarginHubStat({
     required this.label,
@@ -423,6 +464,7 @@ final class TradeMarginHubStat {
   final int colorHex;
 }
 
+/// A navigable menu entry on the margin trading hub.
 final class TradeMarginHubMenuItem {
   const TradeMarginHubMenuItem({
     required this.id,
@@ -444,6 +486,7 @@ final class TradeMarginHubMenuItem {
   final String targetPath;
 }
 
+/// A single feature callout card on the margin trading hub.
 final class TradeMarginHubFeature {
   const TradeMarginHubFeature({
     required this.id,
@@ -458,6 +501,7 @@ final class TradeMarginHubFeature {
   final List<String> items;
 }
 
+/// Regulatory compliance summary shown on the margin trading hub.
 final class TradeMarginHubCompliance {
   const TradeMarginHubCompliance({
     required this.title,

@@ -8,10 +8,16 @@ import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 
 export 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 
+/// Layout shape of a [VitHeader]: left-aligned page title, centered
+/// standard title, or a fully custom [VitHeader.child].
 enum VitHeaderVariant { page, standard, custom }
 
+/// The single trailing quick-action a [VitHeader] can show via
+/// [VitHeader.action] (superseded by [VitHeader.actions] for multiple items).
 enum VitHeaderAction { none, bell, search, more }
 
+/// Shared top-of-page header: optional back button, title/subtitle, and up
+/// to three trailing [VitHeaderActionItem]s.
 class VitHeader extends StatelessWidget {
   const VitHeader({
     super.key,

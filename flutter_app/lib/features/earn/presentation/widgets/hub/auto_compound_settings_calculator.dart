@@ -35,7 +35,7 @@ class _CalculatorPreview extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: _CalculatorStat(
@@ -45,7 +45,7 @@ class _CalculatorPreview extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.x3),
+                  SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: _CalculatorStat(
                       label: 'Compound hàng ngày',

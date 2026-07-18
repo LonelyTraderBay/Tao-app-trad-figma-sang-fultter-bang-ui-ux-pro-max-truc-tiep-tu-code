@@ -142,7 +142,7 @@ class _TimelineBar extends StatelessWidget {
         Expanded(
           child: Stack(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: _timelineBarHeight,
                 child: Material(
                   color: AppColors.surface3,

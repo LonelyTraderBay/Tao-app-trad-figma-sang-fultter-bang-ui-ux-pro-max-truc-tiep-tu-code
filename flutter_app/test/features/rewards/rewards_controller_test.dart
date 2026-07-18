@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/features/rewards/presentation/controllers/rewa
 void main() {
   group('RewardsController', () {
     test('exposes rewards hub through repository contract', () {
-      final controller = RewardsController(const MockRewardsRepository());
+      final controller = const RewardsController(MockRewardsRepository());
 
       final snapshot = controller.getHub();
 

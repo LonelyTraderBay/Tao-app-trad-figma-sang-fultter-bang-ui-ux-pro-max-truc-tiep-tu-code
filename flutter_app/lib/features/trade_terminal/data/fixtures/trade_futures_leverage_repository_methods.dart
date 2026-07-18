@@ -128,7 +128,13 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
   }
 
   @override
-  TradeFuturesReceipt submitFuturesOrder(TradeFuturesOrderDraft draft) {
+  Future<TradeFuturesReceipt> submitFuturesOrder(
+    TradeFuturesOrderDraft draft,
+  ) async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('trade_futures_submit_failed');
+    }
     return TradeFuturesReceipt(
       orderId: 'FUT-DEMO-057',
       preview: previewFuturesOrder(draft),
@@ -160,9 +166,13 @@ mixin _MockTradeTerminalRepositoryFuturesLeverageMethods
   }
 
   @override
-  TradeFuturesLeverageReceipt submitFuturesLeverage(
+  Future<TradeFuturesLeverageReceipt> submitFuturesLeverage(
     TradeFuturesLeverageRequest request,
-  ) {
+  ) async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('trade_leverage_submit_failed');
+    }
     return TradeFuturesLeverageReceipt(
       adjustmentId: 'LEV-DEMO-058',
       pairId: request.pairId,

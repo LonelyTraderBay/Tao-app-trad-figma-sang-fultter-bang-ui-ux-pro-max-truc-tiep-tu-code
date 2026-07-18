@@ -1,5 +1,6 @@
 part of 'predictions_entities.dart';
 
+/// Which metric the Prediction Markets leaderboard is ranked/sorted by.
 enum PredictionLeaderboardMetric { pnl, volume }
 
 String _monthLabel(DateTime date) {

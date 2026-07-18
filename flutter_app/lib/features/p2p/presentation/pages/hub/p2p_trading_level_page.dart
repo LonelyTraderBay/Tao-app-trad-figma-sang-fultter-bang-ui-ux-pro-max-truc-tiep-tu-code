@@ -81,7 +81,7 @@ class P2PTradingLevelPage extends ConsumerWidget {
                         if (snapshot.userLevel.currentLevel <
                             snapshot.levels.length)
                           _NextLevelProgress(snapshot: snapshot),
-                        VitModuleSectionHeader(
+                        const VitModuleSectionHeader(
                           title: 'Tất cả cấp độ',
                           accentColor: AppModuleAccents.p2p,
                           bottomGap: AppSpacing.pageRhythmStandardInnerGap,

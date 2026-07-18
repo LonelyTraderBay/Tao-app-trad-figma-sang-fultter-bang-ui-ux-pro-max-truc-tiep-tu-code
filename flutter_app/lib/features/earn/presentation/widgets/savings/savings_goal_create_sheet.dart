@@ -24,7 +24,7 @@ class _CreateGoalSheet extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 'Tạo mục tiêu mới',
                 style: AppTextStyles.sectionTitle,
@@ -70,8 +70,11 @@ class _CreateGoalSheet extends StatelessWidget {
                 label: 'Thời gian',
                 value: '${selected.suggestedMonths} tháng',
               ),
-              _SheetMetric(label: 'Sản phẩm liên kết', value: 'USDT Linh hoạt'),
-              _SheetMetric(
+              const _SheetMetric(
+                label: 'Sản phẩm liên kết',
+                value: 'USDT Linh hoạt',
+              ),
+              const _SheetMetric(
                 label: 'Milestone rewards',
                 value: '4 mốc',
                 color: AppColors.warn,

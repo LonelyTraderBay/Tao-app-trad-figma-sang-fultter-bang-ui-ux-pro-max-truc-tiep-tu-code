@@ -8,8 +8,11 @@ import 'package:vit_trade_flutter/shared/widgets/vit_carousel_dots.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Padding density of a [VitAnnouncementBanner]: `standard` or `compact`.
 enum VitAnnouncementBannerVariant { standard, compact }
 
+/// Dismissible icon + message banner with optional carousel dots, used for
+/// promo/announcement callouts (e.g. on the home page).
 class VitAnnouncementBanner extends StatelessWidget {
   const VitAnnouncementBanner({
     super.key,

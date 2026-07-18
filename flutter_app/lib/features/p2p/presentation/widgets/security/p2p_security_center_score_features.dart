@@ -79,7 +79,10 @@ class _SecurityScoreCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Điểm bảo mật', style: AppTextStyles.sectionTitle),
+                    const Text(
+                      'Điểm bảo mật',
+                      style: AppTextStyles.sectionTitle,
+                    ),
                     const SizedBox(
                       height: AppSpacing.pageRhythmCompactInnerGap,
                     ),

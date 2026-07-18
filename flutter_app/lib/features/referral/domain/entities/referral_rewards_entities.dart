@@ -1,13 +1,19 @@
 part of 'referral_entities.dart';
 
+/// Type filter applied to the referral rewards list.
 enum ReferralRewardFilter { all, kycBonus, tradeCommission }
 
+/// Sort order applied to the referral rewards list.
 enum ReferralRewardSort { date, amount }
 
+/// Category of a [ReferralRewardRecordDraft].
 enum ReferralRewardType { kycBonus, tradeCommission }
 
+/// Settlement status of a [ReferralRewardRecordDraft].
 enum ReferralRewardStatus { completed, pending }
 
+/// Data for the referral rewards screen: commission totals, chart series,
+/// filtered/sorted [records], export ranges, and disputes.
 final class ReferralRewardsSnapshot {
   const ReferralRewardsSnapshot({
     required this.endpoint,
@@ -64,6 +70,7 @@ final class ReferralRewardsSnapshot {
   final Set<ReferralScreenState> supportedStates;
 }
 
+/// One monthly commission data point in the referral rewards chart.
 final class ReferralChartPointDraft {
   const ReferralChartPointDraft({
     required this.month,
@@ -74,6 +81,7 @@ final class ReferralChartPointDraft {
   final double commission;
 }
 
+/// One selectable [ReferralRewardFilter] entry with its display label.
 final class ReferralRewardFilterDraft {
   const ReferralRewardFilterDraft({required this.filter, required this.label});
 
@@ -81,6 +89,7 @@ final class ReferralRewardFilterDraft {
   final String label;
 }
 
+/// One selectable [ReferralRewardSort] entry with its display label.
 final class ReferralRewardSortDraft {
   const ReferralRewardSortDraft({required this.sort, required this.label});
 
@@ -88,6 +97,8 @@ final class ReferralRewardSortDraft {
   final String label;
 }
 
+/// One reward/commission record (friend, type, amount, status) on the
+/// referral rewards screen.
 final class ReferralRewardRecordDraft {
   const ReferralRewardRecordDraft({
     required this.id,
@@ -112,6 +123,7 @@ final class ReferralRewardRecordDraft {
   final ReferralRewardStatus status;
 }
 
+/// One selectable date-range option for exporting referral reward records.
 final class ReferralExportRangeDraft {
   const ReferralExportRangeDraft({required this.id, required this.label});
 
@@ -119,6 +131,7 @@ final class ReferralExportRangeDraft {
   final String label;
 }
 
+/// One selectable dispute-category option for filing a reward dispute.
 final class ReferralDisputeTypeDraft {
   const ReferralDisputeTypeDraft({
     required this.id,
@@ -131,6 +144,8 @@ final class ReferralDisputeTypeDraft {
   final String description;
 }
 
+/// One filed reward dispute (status, resolution) shown on the referral
+/// rewards screen.
 final class ReferralDisputeDraft {
   const ReferralDisputeDraft({
     required this.id,

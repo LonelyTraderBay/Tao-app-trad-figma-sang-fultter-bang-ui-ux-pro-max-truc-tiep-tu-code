@@ -1,9 +1,14 @@
+/// UI/connectivity state a Discovery screen snapshot supports rendering.
 enum DiscoveryScreenState { onlineLive, loading, empty, error, offline }
 
+/// The product surface a [DiscoveryModuleDraft] links to.
 enum DiscoveryModuleKind { prediction, arena, topic }
 
+/// The kind of item one unified search result represents.
 enum DiscoveryResultKind { prediction, arenaMode, arenaRoom, creator, spot }
 
+/// Data for the unified search screen: trending queries, module
+/// shortcuts, and query-matched [results] across product surfaces.
 final class UnifiedSearchSnapshot {
   const UnifiedSearchSnapshot({
     required this.endpoint,
@@ -62,6 +67,8 @@ final class UnifiedSearchSnapshot {
   }
 }
 
+/// Grouped unified-search matches (predictions, Arena modes/rooms,
+/// creators, trading pairs) with a derived total count.
 final class DiscoverySearchResults {
   const DiscoverySearchResults({
     required this.predictions,
@@ -87,6 +94,8 @@ final class DiscoverySearchResults {
   bool get isEmpty => totalCount == 0;
 }
 
+/// Data for one topic's discovery hub screen: the [selectedTopic] plus
+/// its related predictions, Arena rooms/modes, and creators.
 final class TopicHubSnapshot {
   const TopicHubSnapshot({
     required this.endpoint,
@@ -157,6 +166,7 @@ final class TopicHubSnapshot {
   }
 }
 
+/// One trending search suggestion shown on the unified search screen.
 final class DiscoveryTrendingQueryDraft {
   const DiscoveryTrendingQueryDraft({
     required this.label,
@@ -167,6 +177,8 @@ final class DiscoveryTrendingQueryDraft {
   final String iconKey;
 }
 
+/// One module shortcut card (title/route/icon/kind) on the unified search
+/// screen.
 final class DiscoveryModuleDraft {
   const DiscoveryModuleDraft({
     required this.id,
@@ -185,6 +197,8 @@ final class DiscoveryModuleDraft {
   final DiscoveryModuleKind kind;
 }
 
+/// One selectable topic entry (label, summary, icon) on the discovery
+/// topic hub.
 final class DiscoveryTopicDraft {
   const DiscoveryTopicDraft({
     required this.id,
@@ -199,6 +213,7 @@ final class DiscoveryTopicDraft {
   final String iconKey;
 }
 
+/// One prediction event result surfaced by discovery search/topic hub.
 final class DiscoveryPredictionEventDraft {
   const DiscoveryPredictionEventDraft({
     required this.id,
@@ -223,6 +238,8 @@ final class DiscoveryPredictionEventDraft {
   final bool isTrending;
 }
 
+/// One points-only Arena mode result surfaced by discovery search/topic
+/// hub.
 final class DiscoveryArenaModeDraft {
   const DiscoveryArenaModeDraft({
     required this.id,
@@ -245,6 +262,8 @@ final class DiscoveryArenaModeDraft {
   final List<String> searchTerms;
 }
 
+/// One points-only Arena room result surfaced by discovery search/topic
+/// hub, with a derived slot-fill percent.
 final class DiscoveryArenaRoomDraft {
   const DiscoveryArenaRoomDraft({
     required this.id,
@@ -273,6 +292,7 @@ final class DiscoveryArenaRoomDraft {
   int get fillPercent => ((slotsFilled / slotsTotal) * 100).round();
 }
 
+/// One Arena mode creator result surfaced by discovery search/topic hub.
 final class DiscoveryCreatorDraft {
   const DiscoveryCreatorDraft({
     required this.id,
@@ -295,6 +315,7 @@ final class DiscoveryCreatorDraft {
   final List<String> searchTerms;
 }
 
+/// One spot trading pair result surfaced by discovery search/topic hub.
 final class DiscoveryTradingPairDraft {
   const DiscoveryTradingPairDraft({
     required this.id,

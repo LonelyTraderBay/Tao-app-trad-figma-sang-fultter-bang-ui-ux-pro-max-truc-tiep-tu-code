@@ -113,6 +113,62 @@ void main() {
       expect(buildGradle, contains('throw GradleException'));
       expect(buildGradle, contains('Release signing is required'));
     });
+
+    // DOC-D5 (A-Plus GĐ3): contract top-level phải có Last Updated hiện hành
+    // (cảnh báo staleness — không khóa cứng theo ngày build; ngưỡng rộng để
+    // chỉ báo động khi doc thực sự bị bỏ quên).
+    test('contract top-level có Last Updated và không quá cũ', () {
+      const stalenessThresholdDays = 90;
+      const docs = [
+        '../AGENTS.md',
+        '../docs/INDEX.md',
+        '../docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md',
+      ];
+      final pattern = RegExp(
+        r'\*\*Last Updated:\*\*\s*(\d{4})-(\d{2})-(\d{2})',
+      );
+      final now = DateTime.now();
+      final problems = <String>[];
+
+      for (final path in docs) {
+        final match = pattern.firstMatch(_read(path));
+        if (match == null) {
+          problems.add('$path: thiếu dòng "**Last Updated:** YYYY-MM-DD"');
+          continue;
+        }
+        final updated = DateTime(
+          int.parse(match.group(1)!),
+          int.parse(match.group(2)!),
+          int.parse(match.group(3)!),
+        );
+        final ageDays = now.difference(updated).inDays;
+        if (ageDays > stalenessThresholdDays) {
+          problems.add(
+            '$path: Last Updated $ageDays ngày trước (> '
+            '$stalenessThresholdDays) — rà lại nội dung rồi cập nhật ngày.',
+          );
+        }
+      }
+
+      expect(
+        problems,
+        isEmpty,
+        reason:
+            'Contract top-level cần Last Updated hiện hành để người/agent '
+            'biết độ tươi của quy tắc: ${problems.join('; ')}',
+      );
+    });
+
+    // DOC-D6 (A-Plus GĐ3): file governance ở root repo phải tồn tại.
+    test('file governance root tồn tại (CONTRIBUTING/SECURITY/LICENSE)', () {
+      const files = ['../CONTRIBUTING.md', '../SECURITY.md', '../LICENSE'];
+      final missing = files.where((path) => !File(path).existsSync()).toList();
+      expect(
+        missing,
+        isEmpty,
+        reason: 'Thiếu file governance ở root repo: $missing',
+      );
+    });
   });
 }
 

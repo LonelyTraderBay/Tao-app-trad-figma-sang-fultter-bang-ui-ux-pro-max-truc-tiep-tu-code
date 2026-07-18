@@ -182,7 +182,7 @@ class _LiveRoomsSection extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
+            const Expanded(
               child: VitModuleSectionHeader(
                 title: 'Phòng đang mở',
                 accentColor: AppColors.warn,
@@ -388,18 +388,18 @@ class _CreatorCard extends StatelessWidget {
       density: VitDensity.compact,
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             width: ArenaSpacingTokens.arenaHomeCreatorAvatar,
             height: ArenaSpacingTokens.arenaHomeCreatorAvatar,
             child: DecoratedBox(
-              decoration: const ShapeDecoration(
+              decoration: ShapeDecoration(
                 color: AppColors.surface2,
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.cardRadius,
                   side: BorderSide(color: AppColors.cardBorder),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.person_rounded,
                 color: AppColors.warn,
                 size: ArenaSpacingTokens.arenaHomeCreatorIcon,
@@ -463,7 +463,7 @@ class _PredictionBridge extends StatelessWidget {
       density: VitDensity.compact,
       child: Row(
         children: [
-          _ActionIcon(
+          const _ActionIcon(
             icon: Icons.track_changes_rounded,
             color: AppColors.accent,
           ),

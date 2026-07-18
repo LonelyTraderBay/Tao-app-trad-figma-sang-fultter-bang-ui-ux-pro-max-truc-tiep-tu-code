@@ -211,7 +211,7 @@ final class HighRiskFlowBindings {
         HighRiskFlowScreenBinding(
           stage: HighRiskFlowStage.submittedState,
           routePath: '/trade/positions',
-          screenName: 'PositionsPage',
+          screenName: 'PositionDashboardPage',
           repositoryMethod: 'getTradePositions',
           snapshotType: 'TradePositionsSnapshot',
           stateKey: 'margin_order_submitted',
@@ -219,7 +219,7 @@ final class HighRiskFlowBindings {
         HighRiskFlowScreenBinding(
           stage: HighRiskFlowStage.receiptOrStatusDetail,
           routePath: '/trade/positions',
-          screenName: 'PositionsPage',
+          screenName: 'PositionDashboardPage',
           repositoryMethod: 'getTradePositions',
           snapshotType: 'TradePositionsSnapshot',
           stateKey: 'position_status_detail',
@@ -396,7 +396,7 @@ final class HighRiskFlowBindings {
         HighRiskFlowScreenBinding(
           stage: HighRiskFlowStage.supportOrRecovery,
           routePath: '/trade/copy-dispute-resolution',
-          screenName: 'CopyDisputeResolutionPage',
+          screenName: 'DisputeResolutionPage',
           repositoryMethod: 'getDisputeResolution',
           snapshotType: 'TradeDisputeResolutionSnapshot',
           stateKey: 'copy_dispute_recovery',
@@ -469,7 +469,7 @@ final class HighRiskFlowBindings {
         HighRiskFlowScreenBinding(
           stage: HighRiskFlowStage.manageOrHistory,
           routePath: '/wallet/history',
-          screenName: 'WalletHistoryPage',
+          screenName: 'TransactionHistoryPage',
           repositoryMethod: 'getTransactionHistory',
           snapshotType: 'WalletTransactionHistorySnapshot',
           stateKey: 'wallet_history',
@@ -493,7 +493,7 @@ final class HighRiskFlowBindings {
         HighRiskFlowScreenBinding(
           stage: HighRiskFlowStage.entry,
           routePath: '/p2p',
-          screenName: 'P2PPage',
+          screenName: 'P2PHomePage',
           repositoryMethod: 'getHome',
           snapshotType: 'P2PHomeSnapshot',
           stateKey: 'p2p_hub',
@@ -790,7 +790,7 @@ final class HighRiskFlowBindings {
         HighRiskFlowScreenBinding(
           stage: HighRiskFlowStage.manageOrHistory,
           routePath: '/markets/predictions/portfolio',
-          screenName: 'PredictionPortfolioPage',
+          screenName: 'PredictionsPortfolioPage',
           repositoryMethod: 'getPortfolio',
           snapshotType: 'PredictionPortfolioSnapshot',
           stateKey: 'prediction_portfolio_history',

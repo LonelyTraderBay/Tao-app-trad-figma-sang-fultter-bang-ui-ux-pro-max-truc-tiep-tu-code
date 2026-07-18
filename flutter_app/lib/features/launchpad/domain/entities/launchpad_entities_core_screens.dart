@@ -1,5 +1,6 @@
 part of 'launchpad_entities.dart';
 
+/// UI loading/data state shared by Launchpad screen snapshots.
 enum LaunchpadScreenState {
   loading,
   empty,
@@ -9,12 +10,16 @@ enum LaunchpadScreenState {
   success,
 }
 
+/// Sale phase of a launchpad project.
 enum LaunchpadProjectStatus { upcoming, active, ended }
 
+/// Fundraising/sale format of a launchpad project.
 enum LaunchpadProjectType { ido, ieo, launchpool }
 
+/// Outcome of a project's third-party security audit.
 enum LaunchpadAuditStatus { passed, pending, issues }
 
+/// Lifecycle status of a user's subscription to a launchpad sale.
 enum LaunchpadSubscriptionStatus {
   pending,
   allocated,
@@ -23,6 +28,7 @@ enum LaunchpadSubscriptionStatus {
   refunded,
 }
 
+/// Data for the Launchpad home screen: projects and available tools.
 final class LaunchpadHomeSnapshot {
   const LaunchpadHomeSnapshot({
     required this.endpoint,
@@ -55,6 +61,7 @@ final class LaunchpadHomeSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single launchpad project as listed across home, detail, and portfolio screens.
 final class LaunchpadProjectDraft {
   const LaunchpadProjectDraft({
     required this.id,
@@ -107,6 +114,7 @@ final class LaunchpadProjectDraft {
   final int? roi;
 }
 
+/// Full detail of a single launchpad project and its related routes.
 final class LaunchpadDetailSnapshot {
   const LaunchpadDetailSnapshot({
     required this.endpoint,
@@ -137,6 +145,7 @@ final class LaunchpadDetailSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single advanced or risk tool shortcut listed on the Launchpad home screen.
 final class LaunchpadToolDraft {
   const LaunchpadToolDraft({
     required this.id,
@@ -155,6 +164,7 @@ final class LaunchpadToolDraft {
   final AccentTone accent;
 }
 
+/// A user's launchpad subscriptions for the portfolio screen.
 final class LaunchpadPortfolioSnapshot {
   const LaunchpadPortfolioSnapshot({
     required this.endpoint,
@@ -181,6 +191,7 @@ final class LaunchpadPortfolioSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single subscription to a launchpad sale and its allocation/vesting status.
 final class LaunchpadSubscriptionDraft {
   const LaunchpadSubscriptionDraft({
     required this.id,
@@ -217,6 +228,7 @@ final class LaunchpadSubscriptionDraft {
   final String txHash;
 }
 
+/// Receipt detail for a single launchpad subscription.
 final class LaunchpadReceiptSnapshot {
   const LaunchpadReceiptSnapshot({
     required this.endpoint,
@@ -243,6 +255,7 @@ final class LaunchpadReceiptSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Historical performance summary across past launchpad projects.
 final class LaunchpadPerformanceSnapshot {
   const LaunchpadPerformanceSnapshot({
     required this.endpoint,
@@ -269,6 +282,7 @@ final class LaunchpadPerformanceSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Aggregate performance metrics across past launchpad projects.
 final class LaunchpadPerformanceSummaryDraft {
   const LaunchpadPerformanceSummaryDraft({
     required this.averageRoiAth,
@@ -295,6 +309,7 @@ final class LaunchpadPerformanceSummaryDraft {
   final int worstProjectRoi;
 }
 
+/// A single past project's launch and current price performance.
 final class LaunchpadHistoricalProjectDraft {
   const LaunchpadHistoricalProjectDraft({
     required this.id,
@@ -327,6 +342,7 @@ final class LaunchpadHistoricalProjectDraft {
   final AccentTone accent;
 }
 
+/// A single month's aggregate performance point in the performance chart.
 final class LaunchpadPerformancePointDraft {
   const LaunchpadPerformancePointDraft({
     required this.month,
@@ -339,10 +355,13 @@ final class LaunchpadPerformancePointDraft {
   final int volume;
 }
 
+/// Lifecycle status of a staking pool.
 enum LaunchpoolPoolStatus { upcoming, active, ended }
 
+/// Lifecycle status of a user's staking position.
 enum LaunchpadStakePositionStatus { active, cooldown, unlocked, withdrawn }
 
+/// Staking pools and a user's positions for the staking screen.
 final class LaunchpadStakingSnapshot {
   const LaunchpadStakingSnapshot({
     required this.endpoint,
@@ -382,6 +401,7 @@ final class LaunchpadStakingSnapshot {
       pools.where((pool) => pool.status == LaunchpoolPoolStatus.active).length;
 }
 
+/// A single staking pool and its capacity/reward terms.
 final class LaunchpoolPoolDraft {
   const LaunchpoolPoolDraft({
     required this.id,
@@ -439,6 +459,7 @@ final class LaunchpoolPoolDraft {
   }
 }
 
+/// A single stake-amount tier granting a bonus APY.
 final class LaunchpadStakingTierDraft {
   const LaunchpadStakingTierDraft({
     required this.minStake,
@@ -453,6 +474,7 @@ final class LaunchpadStakingTierDraft {
   final AccentTone accent;
 }
 
+/// A single user staking position and its pending rewards.
 final class LaunchpadStakePositionDraft {
   const LaunchpadStakePositionDraft({
     required this.id,
@@ -487,10 +509,13 @@ final class LaunchpadStakePositionDraft {
   final LaunchpadStakePositionStatus status;
 }
 
+/// Lock/claim status of a single vesting tranche.
 enum LaunchpadVestingEntryStatus { claimed, claimable, unlocking, locked }
 
+/// Confirmation status of a past reward claim.
 enum LaunchpadClaimHistoryStatus { confirmed, pending }
 
+/// Full reward-claim receipt for a single staking position.
 final class LaunchpadClaimReceiptSnapshot {
   const LaunchpadClaimReceiptSnapshot({
     required this.endpoint,

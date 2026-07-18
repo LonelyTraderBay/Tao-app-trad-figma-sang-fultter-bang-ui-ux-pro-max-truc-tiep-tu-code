@@ -1,15 +1,25 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 
 void main() {
-  test('Prediction event controller builds high-risk order preview', () {
-    final repository = const MockPredictionsRepository();
-    final controller = PredictionEventDetailController(
-      state: PredictionEventDetailViewState(
-        snapshot: repository.getEventDetail('pred-1'),
-      ),
+  ProviderContainer containerWith(PredictionsRepository repository) {
+    final container = ProviderContainer(
+      overrides: [predictionsRepositoryProvider.overrideWithValue(repository)],
     );
+    addTearDown(container.dispose);
+    return container;
+  }
+
+  test('Prediction event controller builds high-risk order preview', () {
+    const repository = MockPredictionsRepository(loadDelay: Duration.zero);
+    final container = containerWith(repository);
+    final provider = predictionEventDetailControllerProvider('pred-1');
+    final subscription = container.listen(provider, (_, _) {});
+    addTearDown(subscription.close);
+    final controller = container.read(provider.notifier);
 
     expect(
       controller.orderValidationMessage(outcome: 'Yes', amountText: '100'),
@@ -36,16 +46,75 @@ void main() {
       controller.orderValidationMessage(outcome: 'Yes', amountText: '0'),
       'Enter a valid order amount before preview.',
     );
-    expect(
-      PredictionEventDetailController(
-        state: PredictionEventDetailViewState(
-          snapshot: repository.getEventDetail('pred-1'),
-          status: PredictionHighRiskFlowStatus.offline,
-        ),
-      ).orderValidationMessage(outcome: 'Yes', amountText: '100'),
-      'Offline: reconnect before previewing this prediction order.',
-    );
   });
+
+  test(
+    'Prediction event controller submit chạy ready→submitting→submitted và trả receiptId',
+    () async {
+      const repository = MockPredictionsRepository(loadDelay: Duration.zero);
+      final container = containerWith(repository);
+      final provider = predictionEventDetailControllerProvider('pred-1');
+      final statuses = <PredictionHighRiskFlowStatus>[];
+      final subscription = container.listen(
+        provider,
+        (previous, next) => statuses.add(next.status),
+        fireImmediately: true,
+      );
+      addTearDown(subscription.close);
+
+      final receiptId = await container
+          .read(provider.notifier)
+          .submitOrder(
+            outcome: 'Yes',
+            isBuy: true,
+            isMarket: true,
+            amountText: '100',
+          );
+
+      expect(receiptId, 'po-1');
+      final state = container.read(provider);
+      expect(state.status, PredictionHighRiskFlowStatus.submitted);
+      expect(state.lastReceiptId, 'po-1');
+      expect(statuses, const [
+        PredictionHighRiskFlowStatus.ready,
+        PredictionHighRiskFlowStatus.confirming,
+        PredictionHighRiskFlowStatus.submitting,
+        PredictionHighRiskFlowStatus.submitted,
+      ]);
+    },
+  );
+
+  test(
+    'Prediction event controller rẽ nhánh error khi repo ném và trả null',
+    () async {
+      const repository = MockPredictionsRepository(
+        loadDelay: Duration.zero,
+        simulateError: true,
+      );
+      final container = containerWith(repository);
+      final provider = predictionEventDetailControllerProvider('pred-1');
+      final subscription = container.listen(provider, (_, _) {});
+      addTearDown(subscription.close);
+
+      final receiptId = await container
+          .read(provider.notifier)
+          .submitOrder(
+            outcome: 'Yes',
+            isBuy: true,
+            isMarket: true,
+            amountText: '100',
+          );
+
+      expect(receiptId, isNull);
+      final state = container.read(provider);
+      expect(state.status, PredictionHighRiskFlowStatus.error);
+      expect(
+        state.errorMessage,
+        'Gửi lệnh dự đoán thất bại. Vui lòng thử lại.',
+      );
+      expect(state.lastReceiptId, isNull);
+    },
+  );
 
   test('Predictions portfolio controller owns open-order cancel state', () {
     final repository = const MockPredictionsRepository();

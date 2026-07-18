@@ -36,18 +36,15 @@ class P2PSuspiciousActivityPage extends ConsumerStatefulWidget {
 
 class _P2PSuspiciousActivityPageState
     extends ConsumerState<P2PSuspiciousActivityPage> {
-  late List<P2PSuspiciousAlertDraft> _alerts;
-
-  @override
-  void initState() {
-    super.initState();
-    _alerts = List.of(ref.read(p2pSuspiciousActivityProvider).alerts);
-  }
+  // STATE-S23: alerts sống ở P2PSuspiciousActivityStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pSuspiciousActivityProvider);
-    final unreviewedCount = _alerts.where((alert) => !alert.reviewed).length;
+    final viewState = ref.watch(p2pSuspiciousActivityStateControllerProvider);
+    final snapshot = viewState.snapshot;
+    final alerts = viewState.alerts;
+    final unreviewedCount = alerts.where((alert) => !alert.reviewed).length;
 
     return VitP2PFlowScaffold(
       title: 'Hoạt động đáng ngờ',
@@ -65,10 +62,10 @@ class _P2PSuspiciousActivityPageState
           unreviewedCount: unreviewedCount,
           subtitle: snapshot.summarySubtitle,
         ),
-        if (_alerts.isEmpty)
+        if (alerts.isEmpty)
           _EmptyState(snapshot: snapshot)
         else
-          _AlertList(alerts: _alerts, onDismiss: _markReviewed),
+          _AlertList(alerts: alerts, onDismiss: _markReviewed),
         const VitCard(
           variant: VitCardVariant.inner,
           padding: P2PSpacingTokens.p2pComplianceCompactCardPadding,
@@ -86,12 +83,9 @@ class _P2PSuspiciousActivityPageState
 
   void _markReviewed(String alertId) {
     HapticFeedback.selectionClick();
-    setState(() {
-      _alerts = [
-        for (final alert in _alerts)
-          if (alert.id == alertId) alert.copyWith(reviewed: true) else alert,
-      ];
-    });
+    ref
+        .read(p2pSuspiciousActivityStateControllerProvider.notifier)
+        .markReviewed(alertId);
   }
 }
 

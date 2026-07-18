@@ -118,6 +118,54 @@ void main() {
     expect(find.bySemanticsLabel('Bỏ yêu thích BNB'), findsOneWidget);
   });
 
+  testWidgets('PERF-HN4 typing a query filters visiblePairs in the notifier', (
+    tester,
+  ) async {
+    await pumpMarkets(tester);
+
+    expect(find.byKey(const Key('sc008_pair_btcusdt')), findsOneWidget);
+    expect(find.byKey(const Key('sc008_pair_ethusdt')), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'eth');
+    await tester.pump();
+
+    expect(find.byKey(const Key('sc008_pair_ethusdt')), findsOneWidget);
+    expect(find.byKey(const Key('sc008_pair_btcusdt')), findsNothing);
+  });
+
+  testWidgets('PERF-HN4 favorite toggle survives a shell navigation round-trip '
+      '(NotifierProvider is not autoDispose)', (tester) async {
+    await pumpMarkets(tester);
+
+    expect(find.bySemanticsLabel('Thêm vào yêu thích BNB'), findsOneWidget);
+    await tester.tap(find.bySemanticsLabel('Thêm vào yêu thích BNB'));
+    await tester.pump();
+    expect(find.bySemanticsLabel('Bỏ yêu thích BNB'), findsOneWidget);
+
+    // Điều hướng sang tab khác rồi quay lại: ShellRoute dispose hẳn
+    // MarketListPage (không phải IndexedStack) — favoriteIds phải sống
+    // sót vì marketListStateControllerProvider không autoDispose.
+    await tester.tap(
+      find.descendant(
+        of: find.byType(VitBottomNav),
+        matching: find.byIcon(Icons.home_rounded),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(MarketListPage), findsNothing);
+
+    await tester.tap(
+      find.descendant(
+        of: find.byType(VitBottomNav),
+        matching: find.byIcon(Icons.bar_chart_rounded),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(MarketListPage), findsOneWidget);
+    expect(find.bySemanticsLabel('Bỏ yêu thích BNB'), findsOneWidget);
+  });
+
   testWidgets('SC-008 wires visible market navigation edges', (tester) async {
     await pumpMarkets(tester);
 

@@ -11,7 +11,7 @@ class _TicketsPanel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _CreateTicketButton(onTap: HapticFeedback.selectionClick),
+        const _CreateTicketButton(onTap: HapticFeedback.selectionClick),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         if (activeTickets.isNotEmpty) ...[
           _TicketSection(

@@ -7,8 +7,10 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
+/// Sizing density for [VitServiceTile] and related module tile components.
 enum VitServiceTileDensity { compact, standard }
 
+/// Icon/padding/label metrics for a [VitServiceTileDensity].
 extension VitServiceTileDensitySpacing on VitServiceTileDensity {
   double get iconContainer {
     return switch (this) {
@@ -48,6 +50,8 @@ extension VitServiceTileDensitySpacing on VitServiceTileDensity {
   }
 }
 
+/// Square module/service entry tile: accent icon, label, and optional
+/// corner badge/risk-disclosure badge.
 class VitServiceTile extends StatelessWidget {
   const VitServiceTile({
     super.key,
@@ -282,6 +286,8 @@ class VitServiceTile extends StatelessWidget {
   }
 }
 
+/// Large hero surface (rounded, accent-tinted border) for a module's
+/// top-of-page highlight card.
 class VitModuleHeroCard extends StatelessWidget {
   const VitModuleHeroCard({
     super.key,
@@ -314,6 +320,8 @@ class VitModuleHeroCard extends StatelessWidget {
   }
 }
 
+/// Inner card showing one label/value metric with an accent-colored bar and
+/// optional trailing widget.
 class VitMetricCard extends StatelessWidget {
   const VitMetricCard({
     super.key,
@@ -346,7 +354,9 @@ class VitMetricCard extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accentColor,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
               ),
             ),
           ),
@@ -390,6 +400,8 @@ class VitMetricCard extends StatelessWidget {
   }
 }
 
+/// Module page section header: accent bar, bold title, and an optional
+/// trailing text action.
 class VitModuleSectionHeader extends StatelessWidget {
   const VitModuleSectionHeader({
     super.key,
@@ -429,7 +441,9 @@ class VitModuleSectionHeader extends StatelessWidget {
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: accentColor,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xsRadius,
+              ),
             ),
           ),
         ),

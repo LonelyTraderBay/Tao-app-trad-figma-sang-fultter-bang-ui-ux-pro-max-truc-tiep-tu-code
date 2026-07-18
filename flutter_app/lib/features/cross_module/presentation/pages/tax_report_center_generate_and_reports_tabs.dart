@@ -373,7 +373,7 @@ class _ReportCard extends StatelessWidget {
                   ],
                 ),
               ),
-              CrossModuleIconAction(
+              const CrossModuleIconAction(
                 icon: Icons.file_download_outlined,
                 color: AppColors.primary,
                 background: AppColors.primary12,

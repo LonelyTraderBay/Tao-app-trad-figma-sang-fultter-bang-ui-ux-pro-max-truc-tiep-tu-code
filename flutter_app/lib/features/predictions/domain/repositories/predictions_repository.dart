@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 
+/// Data source contract for the Prediction Markets feature: read snapshots
+/// for every prediction screen and submit orders.
 abstract interface class PredictionsRepository {
   PredictionHomeSnapshot getHome({
     PredictionFilterTab filter = PredictionFilterTab.trending,
@@ -31,6 +33,16 @@ abstract interface class PredictionsRepository {
   PredictionGlobalActivitySnapshot getGlobalActivity({double minAmount = 0});
 
   PredictionOrderReceiptSnapshot getOrderReceipt(String receiptId);
+
+  /// Đường ghi tài chính là async theo ADR-001 — trả về `receiptId` để view
+  /// điều hướng trang biên lai (biên lai tự load qua [getOrderReceipt]).
+  Future<String> submitOrder({
+    required String eventId,
+    required String outcome,
+    required bool isBuy,
+    required bool isMarket,
+    required double amount,
+  });
 
   PredictionRiskCalculatorSnapshot getRiskCalculator();
 

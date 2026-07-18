@@ -11,12 +11,28 @@ part '../fixtures/mock_predictions_repository_fixtures_tournaments_integrations_
 part '../fixtures/mock_predictions_repository_fixtures_leaderboard_and_activity.dart';
 part '../fixtures/mock_predictions_repository_fixtures_home_receipts_rewards.dart';
 
-mixin _MockPredictionsRepositoryBase implements PredictionsRepository {}
+mixin _MockPredictionsRepositoryBase implements PredictionsRepository {
+  /// Độ trễ mô phỏng cho đường ghi async (ADR-001); test truyền
+  /// `Duration.zero`.
+  Duration get loadDelay;
+
+  /// Khi bật, đường ghi async ném [StateError] để test nhánh lỗi.
+  bool get simulateError;
+}
 
 final class MockPredictionsRepository
     with
         _MockPredictionsRepositoryBase,
         _MockPredictionsRepositoryMethodsPart01,
         _MockPredictionsRepositoryMethodsPart02 {
-  const MockPredictionsRepository();
+  const MockPredictionsRepository({
+    this.loadDelay = const Duration(milliseconds: 300),
+    this.simulateError = false,
+  });
+
+  @override
+  final Duration loadDelay;
+
+  @override
+  final bool simulateError;
 }

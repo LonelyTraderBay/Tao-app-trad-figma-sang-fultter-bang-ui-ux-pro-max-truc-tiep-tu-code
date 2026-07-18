@@ -150,7 +150,7 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                           },
                         ),
                         _RecentTransactions(snapshot: snapshot),
-                        VitHighRiskStatePanel(
+                        const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'P2P wallet state review',
                           message:

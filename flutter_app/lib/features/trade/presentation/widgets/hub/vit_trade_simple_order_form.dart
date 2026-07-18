@@ -30,6 +30,9 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
     required this.onPct,
     required this.onChanged,
     required this.onConfirmedSubmit,
+    this.submitting = false,
+    this.onPreviewOpened,
+    this.onPreviewDismissed,
     this.buyKey,
     this.sellKey,
     this.amountFieldKey,
@@ -48,6 +51,16 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
   final ValueChanged<int> onPct;
   final VoidCallback onChanged;
   final VoidCallback onConfirmedSubmit;
+
+  /// Máy trạng thái đang confirming/submitting — CTA khóa + spinner.
+  final bool submitting;
+
+  /// `ready → preview` khi sheet 'Xem lại lệnh' mở (ADR-001).
+  final VoidCallback? onPreviewOpened;
+
+  /// `preview → ready` khi đóng sheet mà không xác nhận.
+  final VoidCallback? onPreviewDismissed;
+
   final Key? buyKey;
   final Key? sellKey;
   final Key? amountFieldKey;
@@ -55,12 +68,14 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
   final Key Function(int pct)? pctKeyBuilder;
 
   String get _submitLabel {
+    if (submitting) return 'Đang gửi lệnh…';
     if (!canSubmit) return 'Nhập số lượng để tiếp tục';
     return side == TradeOrderSide.buy ? 'Xác nhận MUA' : 'Đặt lệnh BÁN';
   }
 
   Future<void> _openConfirm(BuildContext context) async {
-    if (!canSubmit) return;
+    if (!canSubmit || submitting) return;
+    onPreviewOpened?.call();
     final sideLabel = side == TradeOrderSide.buy ? 'MUA' : 'BÁN';
     final confirmed = await showVitTradeConfirmSheet(
       context: context,
@@ -86,8 +101,11 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
         ),
       ],
     );
-    if (confirmed && context.mounted) {
+    if (!context.mounted) return;
+    if (confirmed) {
       onConfirmedSubmit();
+    } else {
+      onPreviewDismissed?.call();
     }
   }
 
@@ -160,7 +178,10 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCtaButton(
           key: submitKey,
-          onPressed: canSubmit ? () => _openConfirm(context) : null,
+          onPressed: canSubmit && !submitting
+              ? () => _openConfirm(context)
+              : null,
+          loading: submitting,
           density: VitDensity.compact,
           variant: side == TradeOrderSide.buy
               ? VitCtaButtonVariant.success

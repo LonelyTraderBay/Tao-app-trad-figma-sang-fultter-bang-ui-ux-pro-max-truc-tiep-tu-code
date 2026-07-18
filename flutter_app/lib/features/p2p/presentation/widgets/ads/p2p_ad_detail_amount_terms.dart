@@ -196,9 +196,9 @@ class _InputShell extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonCompact),
       child: Material(
         color: AppColors.surface2,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: AppRadii.inputRadius,
-          side: const BorderSide(color: AppColors.accent20),
+          side: BorderSide(color: AppColors.accent20),
         ),
         child: Padding(
           padding: P2PSpacingTokens.p2pAdDetailInputPadding,
@@ -239,9 +239,9 @@ class _RequirementCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.accent08,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
-        side: const BorderSide(color: AppColors.accent20),
+        side: BorderSide(color: AppColors.accent20),
       ),
       child: Padding(
         padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
@@ -328,9 +328,9 @@ class _EscrowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.buy10,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
-        side: const BorderSide(color: AppColors.buy20),
+        side: BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
         padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,

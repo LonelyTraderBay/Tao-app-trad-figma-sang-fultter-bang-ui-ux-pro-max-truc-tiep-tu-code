@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 
+/// The header layout shape [VitTopChrome] renders: detail header, root
+/// brand/module header, instrument header, or a fullscreen/auth passthrough.
 enum VitTopChromeType {
   detail,
   rootBrand,
@@ -13,6 +15,8 @@ enum VitTopChromeType {
   authOnboarding,
 }
 
+/// Unified top-of-screen chrome covering the detail/root/instrument header
+/// shapes, driven by [VitTopChromeType].
 class VitTopChrome extends StatelessWidget {
   const VitTopChrome({
     super.key,

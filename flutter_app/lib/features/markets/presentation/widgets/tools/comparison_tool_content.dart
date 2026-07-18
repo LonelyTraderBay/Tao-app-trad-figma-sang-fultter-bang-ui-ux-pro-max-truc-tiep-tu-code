@@ -95,10 +95,10 @@ class ComparisonMetricSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Material(
+            const Material(
               color: comparisonToolAccent,
               borderRadius: AppRadii.xsRadius,
-              child: const SizedBox(
+              child: SizedBox(
                 width: AppSpacing.serviceTileAccentBarThickness,
                 height: AppSpacing.serviceTileSectionBarHeight,
               ),

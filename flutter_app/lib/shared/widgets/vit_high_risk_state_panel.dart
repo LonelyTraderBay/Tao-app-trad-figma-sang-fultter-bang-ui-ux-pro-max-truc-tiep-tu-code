@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
+/// UI state rendered by [VitHighRiskStatePanel] for high-risk (contract-like)
+/// flows: from initial loading through submitting to success/error/offline.
 enum VitHighRiskUiState {
   loading,
   empty,
@@ -20,6 +22,9 @@ enum VitHighRiskUiState {
   riskReview,
 }
 
+/// Single entry point rendering the correct panel (loading/empty/error/
+/// offline/submitting/success/riskReview) for a high-risk flow's
+/// [VitHighRiskUiState], with a consistent contract-id-aware semantics label.
 class VitHighRiskStatePanel extends StatelessWidget {
   const VitHighRiskStatePanel({
     super.key,
@@ -138,7 +143,7 @@ class _LoadingPanel extends StatelessWidget {
       border: AppColors.borderSolid,
       density: density,
       trailing: ConstrainedBox(
-        constraints: BoxConstraints.tightFor(
+        constraints: const BoxConstraints.tightFor(
           width:
               AppSpacing.buttonStandard +
               AppSpacing.buttonCompact +

@@ -126,7 +126,7 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
 
   @override
   TradeAdvancedTradingDemoSnapshot getAdvancedTradingDemo() {
-    return TradeAdvancedTradingDemoSnapshot(
+    return const TradeAdvancedTradingDemoSnapshot(
       position: _advancedDemoPosition,
       positionActions: _advancedDemoPositionActions,
       orderTypes: _advancedDemoOrderTypes,
@@ -137,7 +137,7 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
       defaultTab: 'position',
       defaultPositionMode: 'one-way',
       lastUpdatedLabel: 'realtime-refresh',
-      supportedStates: const [
+      supportedStates: [
         TradeScreenState.loading,
         TradeScreenState.empty,
         TradeScreenState.error,
@@ -187,7 +187,11 @@ mixin _MockTradeTerminalRepositoryCoreSpotMethods
   }
 
   @override
-  TradeOrderReceipt submitOrder(TradeOrderDraft draft) {
+  Future<TradeOrderReceipt> submitOrder(TradeOrderDraft draft) async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('trade_submit_failed');
+    }
     return TradeOrderReceipt(
       orderId: 'ORD-DEMO-048',
       preview: previewOrder(draft),

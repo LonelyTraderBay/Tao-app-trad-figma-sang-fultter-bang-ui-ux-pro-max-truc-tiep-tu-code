@@ -12,7 +12,7 @@ void main() {
           AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5;
 
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: Center(
               child: SizedBox(

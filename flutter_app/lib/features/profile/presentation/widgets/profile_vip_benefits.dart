@@ -248,13 +248,13 @@ class _UpgradeCta extends StatelessWidget {
       padding: ProfileSpacingTokens.profileVipUpgradePadding,
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: ProfileSpacingTokens.profileVipUpgradeIconBox,
             height: ProfileSpacingTokens.profileVipUpgradeIconBox,
             child: Material(
               color: AppColors.primary12,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-              child: const Icon(
+              child: Icon(
                 Icons.workspace_premium_outlined,
                 color: _vipAccent,
                 size: ProfileSpacingTokens.profileVipUpgradeIcon,

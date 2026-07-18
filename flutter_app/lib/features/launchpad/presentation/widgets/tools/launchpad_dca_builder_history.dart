@@ -97,8 +97,8 @@ class _ExecutionBars extends StatelessWidget {
                           ? 0
                           : (execution.tokens / maxTokens).clamp(.2, 1),
                       alignment: Alignment.bottomCenter,
-                      child: DecoratedBox(
-                        decoration: const ShapeDecoration(
+                      child: const DecoratedBox(
+                        decoration: ShapeDecoration(
                           color: AppColors.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadii.smRadius,

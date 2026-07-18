@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// Read-model for the Market Heatmap screen (coins, available heatmap
+/// metrics).
 final class MarketHeatmapSnapshot {
   const MarketHeatmapSnapshot({
     required this.coins,
@@ -24,6 +26,7 @@ final class MarketHeatmapSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Price Alerts screen (user's configured alerts).
 final class MarketAlertsSnapshot {
   const MarketAlertsSnapshot({
     required this.priceAlerts,
@@ -46,6 +49,8 @@ final class MarketAlertsSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Market Screener screen (saved presets, applied
+/// filter query).
 final class MarketScreenerSnapshot {
   const MarketScreenerSnapshot({
     required this.marketPairs,
@@ -70,6 +75,8 @@ final class MarketScreenerSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Market Comparison screen (selected pairs, popular
+/// suggestions, comparison metrics).
 final class MarketComparisonSnapshot {
   const MarketComparisonSnapshot({
     required this.marketPairs,
@@ -96,6 +103,8 @@ final class MarketComparisonSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// A single coin cell (price, change, market cap, category) on the
+/// heatmap grid.
 final class HeatmapCoin {
   const HeatmapCoin({
     required this.id,
@@ -120,6 +129,8 @@ final class HeatmapCoin {
   final String category;
 }
 
+/// A single configured price alert (target price, condition, trigger
+/// state).
 final class MarketPriceAlert {
   const MarketPriceAlert({
     required this.id,
@@ -144,8 +155,10 @@ final class MarketPriceAlert {
   final String? triggeredAt;
 }
 
+/// Trigger condition for a price alert: above or below the target price.
 enum MarketAlertCondition { above, below }
 
+/// A named, reusable screener filter preset.
 final class MarketScreenerPreset {
   const MarketScreenerPreset({
     required this.id,
@@ -162,6 +175,8 @@ final class MarketScreenerPreset {
   final MarketScreenerQuery query;
 }
 
+/// Active screener filter/sort query (search text, category, price/cap/
+/// volume/change ranges).
 final class MarketScreenerQuery {
   const MarketScreenerQuery({
     this.searchQuery = '',
@@ -244,10 +259,15 @@ final class MarketScreenerQuery {
   }
 }
 
+/// Sort key for screener results: market cap, volume, 24h change, or
+/// price.
 enum MarketScreenerSort { marketCap, volume, change24h, price }
 
+/// Sort direction: ascending or descending.
 enum MarketSortDirection { asc, desc }
 
+/// A single comparison metric row (key, label, display format, optional
+/// best/worst highlight) on the comparison screen.
 final class MarketComparisonMetric {
   const MarketComparisonMetric({
     required this.key,
@@ -262,6 +282,10 @@ final class MarketComparisonMetric {
   final MarketComparisonHighlight? highlight;
 }
 
+/// Display format for a comparison metric value: price, compact, percent,
+/// or raw.
 enum MarketComparisonMetricFormat { price, compact, percent, raw }
 
+/// Which side of a comparison metric to visually highlight: the high or
+/// the low value.
 enum MarketComparisonHighlight { high, low }

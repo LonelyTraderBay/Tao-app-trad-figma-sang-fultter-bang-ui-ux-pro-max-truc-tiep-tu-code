@@ -63,17 +63,17 @@ class _JoinContextCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox.square(
+              const SizedBox.square(
                 dimension: ArenaSpacingTokens.arenaJoinCreatorAvatar,
                 child: DecoratedBox(
-                  decoration: const ShapeDecoration(
+                  decoration: ShapeDecoration(
                     color: AppColors.surface2,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.smRadius,
                       side: BorderSide(color: AppColors.border),
                     ),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Icon(
                       Icons.workspace_premium_rounded,
                       color: _arenaAccent,

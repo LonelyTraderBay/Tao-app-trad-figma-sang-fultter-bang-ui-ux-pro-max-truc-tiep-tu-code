@@ -211,7 +211,10 @@ class _ExportTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Important Tax Notice', style: AppTextStyles.caption),
+                    const Text(
+                      'Important Tax Notice',
+                      style: AppTextStyles.caption,
+                    ),
                     const SizedBox(
                       height: AppSpacing.pageRhythmCompactInnerGap,
                     ),

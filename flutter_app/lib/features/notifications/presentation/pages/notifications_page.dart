@@ -85,15 +85,15 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
             children: [
               _NotificationFilterBand(filter: _filter, onChanged: _setFilter),
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: NotificationsPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị thông báo đã lưu gần nhất.',
                   ),

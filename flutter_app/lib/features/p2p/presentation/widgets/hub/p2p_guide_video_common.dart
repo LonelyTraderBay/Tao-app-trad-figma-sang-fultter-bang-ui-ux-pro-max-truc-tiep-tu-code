@@ -10,7 +10,7 @@ class _VideoTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Video hướng dẫn', style: AppTextStyles.baseMedium),
+        const Text('Video hướng dẫn', style: AppTextStyles.baseMedium),
         const SizedBox(height: AppSpacing.x1),
         Text(
           '${snapshot.videos.length} video',

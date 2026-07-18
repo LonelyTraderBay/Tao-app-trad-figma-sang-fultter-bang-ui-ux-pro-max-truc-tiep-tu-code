@@ -91,7 +91,9 @@ class _PreventionCard extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.buy.withValues(alpha: 0.12),
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                ),
               ),
               child: const Center(
                 child: Icon(Icons.shield_outlined, color: AppColors.buy),

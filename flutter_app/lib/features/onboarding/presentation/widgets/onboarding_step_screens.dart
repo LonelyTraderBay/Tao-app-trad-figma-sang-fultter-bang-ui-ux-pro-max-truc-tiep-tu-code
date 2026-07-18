@@ -73,7 +73,7 @@ class _ModulesStep extends StatelessWidget {
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
-        _StepHeading(
+        const _StepHeading(
           title: 'Khám phá 5 modules',
           subtitle: 'Mỗi module phục vụ một nhu cầu khác nhau',
         ),
@@ -137,7 +137,7 @@ class _BoundariesStep extends StatelessWidget {
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
-        _StepHeading(
+        const _StepHeading(
           title: 'Ranh giới rõ ràng',
           subtitle: 'Hiểu sự khác biệt giữa các module để sử dụng an toàn',
         ),
@@ -201,7 +201,7 @@ class _TrustStep extends StatelessWidget {
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
-        _StepHeading(
+        const _StepHeading(
           title: 'An toàn là ưu tiên số 1',
           subtitle: 'Nền tảng được xây dựng với nguyên tắc Trust-first',
         ),
@@ -256,7 +256,7 @@ class _GoalsStep extends StatelessWidget {
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
-        _StepHeading(
+        const _StepHeading(
           title: 'Bạn muốn làm gì?',
           subtitle: 'Chọn một hoặc nhiều mục tiêu để cá nhân hóa trải nghiệm',
         ),
@@ -322,7 +322,7 @@ class _CompleteStep extends StatelessWidget {
         ),
         Column(
           children: [
-            Text(
+            const Text(
               'Sẵn sàng!',
               textAlign: TextAlign.center,
               style: AppTextStyles.pageTitle,

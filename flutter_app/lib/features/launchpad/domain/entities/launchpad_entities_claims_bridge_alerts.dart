@@ -1,5 +1,6 @@
 part of 'launchpad_entities.dart';
 
+/// Full reward-claim summary for a single staking position, including vesting schedule and history.
 final class LaunchpadRewardClaimReceiptDraft {
   const LaunchpadRewardClaimReceiptDraft({
     required this.id,
@@ -62,6 +63,7 @@ final class LaunchpadRewardClaimReceiptDraft {
       .fold(0, (sum, entry) => sum + entry.amount);
 }
 
+/// A single vesting tranche of a staking position's rewards.
 final class LaunchpadRewardVestingEntryDraft {
   const LaunchpadRewardVestingEntryDraft({
     required this.id,
@@ -86,6 +88,7 @@ final class LaunchpadRewardVestingEntryDraft {
   final String? txHash;
 }
 
+/// A single past reward-claim transaction record.
 final class LaunchpadClaimHistoryEntryDraft {
   const LaunchpadClaimHistoryEntryDraft({
     required this.id,
@@ -110,6 +113,7 @@ final class LaunchpadClaimHistoryEntryDraft {
   final String gasUsed;
 }
 
+/// Claimable positions and totals for the batch-claim screen.
 final class LaunchpadBatchClaimSnapshot {
   const LaunchpadBatchClaimSnapshot({
     required this.endpoint,
@@ -134,6 +138,7 @@ final class LaunchpadBatchClaimSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single staking position eligible for a batch reward claim.
 final class LaunchpadBatchClaimPositionDraft {
   const LaunchpadBatchClaimPositionDraft({
     required this.positionId,
@@ -170,6 +175,7 @@ final class LaunchpadBatchClaimPositionDraft {
   final double apy;
 }
 
+/// Aggregate totals and gas savings for a batch reward claim.
 final class LaunchpadBatchClaimSummaryDraft {
   const LaunchpadBatchClaimSummaryDraft({
     required this.totalClaimable,
@@ -190,6 +196,7 @@ final class LaunchpadBatchClaimSummaryDraft {
   final List<String> chains;
 }
 
+/// Bridge route options for moving funds into an IDO project's network.
 final class LaunchpadIdoBridgeSnapshot {
   const LaunchpadIdoBridgeSnapshot({
     required this.endpoint,
@@ -220,6 +227,7 @@ final class LaunchpadIdoBridgeSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single source network selectable for a cross-chain bridge.
 final class LaunchpadBridgeNetworkDraft {
   const LaunchpadBridgeNetworkDraft({
     required this.id,
@@ -244,6 +252,7 @@ final class LaunchpadBridgeNetworkDraft {
   final String averageTime;
 }
 
+/// A single swap route option with its output, fee, and hops.
 final class LaunchpadSwapRouteDraft {
   const LaunchpadSwapRouteDraft({
     required this.id,
@@ -268,6 +277,7 @@ final class LaunchpadSwapRouteDraft {
   final List<LaunchpadSwapHopDraft> hops;
 }
 
+/// A single hop (DEX/chain pair) within a swap route.
 final class LaunchpadSwapHopDraft {
   const LaunchpadSwapHopDraft({
     required this.fromToken,
@@ -284,6 +294,7 @@ final class LaunchpadSwapHopDraft {
   final double rate;
 }
 
+/// Side-by-side comparison of bridge route options for a transfer.
 final class LaunchpadBridgeCompareSnapshot {
   const LaunchpadBridgeCompareSnapshot({
     required this.endpoint,
@@ -308,6 +319,7 @@ final class LaunchpadBridgeCompareSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single bridge-route comparison request and its best results.
 final class LaunchpadBridgeComparisonDraft {
   const LaunchpadBridgeComparisonDraft({
     required this.id,
@@ -338,6 +350,7 @@ final class LaunchpadBridgeComparisonDraft {
   final String bestSecurity;
 }
 
+/// A single bridge route option compared by output, fee, speed, and security.
 final class LaunchpadBridgeRouteOptionDraft {
   const LaunchpadBridgeRouteOptionDraft({
     required this.id,
@@ -394,6 +407,7 @@ final class LaunchpadBridgeRouteOptionDraft {
   final List<String> warnings;
 }
 
+/// A single selectable sort order for bridge route comparisons.
 final class LaunchpadBridgeSortOptionDraft {
   const LaunchpadBridgeSortOptionDraft({
     required this.value,
@@ -406,6 +420,7 @@ final class LaunchpadBridgeSortOptionDraft {
   final String iconKey;
 }
 
+/// Notification sound preferences for the notification sound settings screen.
 final class LaunchpadNotifSoundSnapshot {
   const LaunchpadNotifSoundSnapshot({
     required this.endpoint,
@@ -440,6 +455,7 @@ final class LaunchpadNotifSoundSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single notification category and its assigned sound/volume.
 final class LaunchpadNotifSoundCategoryDraft {
   const LaunchpadNotifSoundCategoryDraft({
     required this.id,
@@ -462,6 +478,7 @@ final class LaunchpadNotifSoundCategoryDraft {
   final int volume;
 }
 
+/// A single selectable notification sound option.
 final class LaunchpadSoundTypeDraft {
   const LaunchpadSoundTypeDraft({required this.value, required this.label});
 
@@ -469,8 +486,10 @@ final class LaunchpadSoundTypeDraft {
   final String label;
 }
 
+/// Severity/category of an event log entry.
 enum LaunchpadEventLogLevel { info, success, warning, error, debug, tx }
 
+/// Chronological event log for the event log screen.
 final class LaunchpadEventLogSnapshot {
   const LaunchpadEventLogSnapshot({
     required this.endpoint,
@@ -493,6 +512,7 @@ final class LaunchpadEventLogSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single event log entry, optionally linked to a transaction.
 final class LaunchpadEventLogEntryDraft {
   const LaunchpadEventLogEntryDraft({
     required this.id,
@@ -523,6 +543,7 @@ final class LaunchpadEventLogEntryDraft {
   final List<String> tags;
 }
 
+/// A single selectable export format for the event log.
 final class LaunchpadEventLogExportFormatDraft {
   const LaunchpadEventLogExportFormatDraft({
     required this.value,
@@ -535,6 +556,8 @@ final class LaunchpadEventLogExportFormatDraft {
   final String iconKey;
 }
 
+/// Category of change detected for a single ABI entry.
 enum LaunchpadAbiChangeType { added, removed, modified, unchanged }
 
+/// Risk severity assigned to a detected ABI change.
 enum LaunchpadAbiRiskLevel { none, low, medium, high, critical }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/address/address_add_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/address/address_book_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/hub/wallet_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -13,22 +15,20 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpAddressBook(
+  Future<GoRouter> pumpAddressBook(
     WidgetTester tester, {
     VitFirstViewport viewport = VitFirstViewport.qaPhone,
   }) async {
     configureFirstViewport(tester, viewport);
 
+    final router = createAppRouter(
+      initialLocation: AppRoutePaths.walletAddressBook,
+    );
     await tester.pumpWidget(
-      ProviderScope(
-        child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.walletAddressBook,
-          ),
-        ),
-      ),
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
     );
     await tester.pumpAndSettle();
+    return router;
   }
 
   test('SC-144 mock repository exposes address book BE draft', () {
@@ -131,4 +131,31 @@ void main() {
 
     expect(find.text('Ví lạnh cá nhân'), findsNothing);
   });
+
+  testWidgets(
+    'SC-144 round-trip: deleting a saved address survives navigating away '
+    'and back (state lives in the Notifier)',
+    (tester) async {
+      final router = await pumpAddressBook(tester);
+
+      await tester.ensureVisible(
+        find.byKey(AddressBookPage.deleteKey('addr1')),
+      );
+      await tester.tap(find.byKey(AddressBookPage.deleteKey('addr1')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Xóa'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Ví lạnh cá nhân'), findsNothing);
+
+      router.go(AppRoutePaths.wallet);
+      await tester.pumpAndSettle();
+      expect(find.byType(WalletPage), findsOneWidget);
+
+      router.go(AppRoutePaths.walletAddressBook);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Ví lạnh cá nhân'), findsNothing);
+    },
+  );
 }

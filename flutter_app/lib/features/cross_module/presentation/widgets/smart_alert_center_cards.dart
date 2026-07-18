@@ -57,14 +57,14 @@ class _SmartAlertCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              CrossModuleIconAction(
+              const CrossModuleIconAction(
                 icon: Icons.edit_outlined,
                 color: AppColors.text3,
                 background: AppColors.surface2,
                 onTap: HapticFeedback.selectionClick,
               ),
               const SizedBox(width: AppSpacing.x2),
-              CrossModuleIconAction(
+              const CrossModuleIconAction(
                 icon: Icons.delete_outline_rounded,
                 color: AppColors.sell,
                 background: AppColors.sell10,
@@ -191,11 +191,11 @@ class _CreateAlertButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
+    return const VitCtaButton(
       key: SmartAlertCenter.createButtonKey,
       onPressed: HapticFeedback.selectionClick,
-      leading: const Icon(Icons.add_rounded),
-      child: const Text('Create Alert'),
+      leading: Icon(Icons.add_rounded),
+      child: Text('Create Alert'),
     );
   }
 }

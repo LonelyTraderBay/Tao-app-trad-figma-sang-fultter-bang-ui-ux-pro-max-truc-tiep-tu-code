@@ -17,8 +17,14 @@ void main() {
       );
       addTearDown(container.dispose);
 
+      // STATE-S25: đọc lúc snapshot còn loading KHÔNG ném StateError —
+      // provider trả AsyncValue.loading thay vì requireValue nổ ngay.
+      final whileLoading = container.read(homeControllerProvider);
+      expect(whileLoading.isLoading, isTrue);
+      expect(whileLoading.hasValue, isFalse);
+
       await container.read(homeSnapshotProvider.future);
-      final controller = container.read(homeControllerProvider);
+      final controller = container.read(homeControllerProvider).requireValue;
       final snapshot = controller.state.snapshot;
       final quickActions = snapshot.quickActions;
 

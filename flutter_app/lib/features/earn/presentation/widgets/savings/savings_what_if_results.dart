@@ -27,7 +27,7 @@ class _ResultsTab extends StatelessWidget {
       key: SavingsWhatIfPage.resultsKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Kết quả mô phỏng',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: AppModuleAccents.earn,
@@ -213,9 +213,9 @@ class _ComparisonChart extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               VitLegendItem(color: AppColors.primary, label: 'Baseline'),
               SizedBox(width: AppSpacing.x4),
               VitLegendItem(color: AppColors.buy, label: 'Kịch bản'),

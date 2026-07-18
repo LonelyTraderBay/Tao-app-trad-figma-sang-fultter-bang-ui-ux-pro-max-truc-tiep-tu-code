@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
@@ -13,22 +14,20 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpCompare(WidgetTester tester) async {
+  Future<GoRouter> pumpCompare(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    final router = createAppRouter(
+      initialLocation: AppRoutePaths.marketsCompare,
+    );
     await tester.pumpWidget(
-      ProviderScope(
-        child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.marketsCompare,
-          ),
-        ),
-      ),
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
     );
     await tester.pumpAndSettle();
+    return router;
   }
 
   test('SC-016 mock repository exposes the BE draft read model', () {
@@ -110,6 +109,28 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(ComparisonToolPage.tokenKey('ethusdt')), findsNothing);
+  });
+
+  testWidgets('SC-016 selected token state persists across a navigation '
+      'round-trip', (tester) async {
+    final router = await pumpCompare(tester);
+
+    await tester.tap(find.byKey(ComparisonToolPage.addTokenKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ComparisonToolPage.pickerTokenKey('solusdt')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(ComparisonToolPage.tokenKey('solusdt')), findsOneWidget);
+
+    // STATE-S23 round-trip: điều hướng đi rồi quay lại — mutation giữ nguyên
+    // (state sống ở Notifier, không phải late List của trang).
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+    expect(find.byType(MarketListPage), findsOneWidget);
+
+    router.go(AppRoutePaths.marketsCompare);
+    await tester.pumpAndSettle();
+    expect(find.byKey(ComparisonToolPage.tokenKey('solusdt')), findsOneWidget);
   });
 
   testWidgets('SC-016 first viewport reaches compare actions', (tester) async {

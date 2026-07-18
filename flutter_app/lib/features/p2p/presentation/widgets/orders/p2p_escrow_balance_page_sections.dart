@@ -18,15 +18,15 @@ class _EscrowHeroCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox.square(
+              const SizedBox.square(
                 dimension: _p2pEscrowBalanceIconBox,
                 child: Material(
                   color: AppColors.warn15,
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadii.smRadius,
-                    side: const BorderSide(color: AppColors.warningBorder),
+                    side: BorderSide(color: AppColors.warningBorder),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.lock_outline_rounded,
                     color: AppModuleAccents.p2p,
                     size: AppSpacing.iconMd,

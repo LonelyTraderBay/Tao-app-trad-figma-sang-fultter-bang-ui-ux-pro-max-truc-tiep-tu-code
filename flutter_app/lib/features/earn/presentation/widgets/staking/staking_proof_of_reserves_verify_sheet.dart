@@ -50,7 +50,7 @@ class _VerifySheetState extends State<_VerifySheet> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        _SheetTitle(title: 'Verify Your Balance'),
+        const _SheetTitle(title: 'Verify Your Balance'),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
@@ -93,7 +93,7 @@ class _VerifySheetState extends State<_VerifySheet> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        _SheetTitle(title: 'Verify Your Balance'),
+        const _SheetTitle(title: 'Verify Your Balance'),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           key: StakingProofOfReservesPage.proofResultKey,
@@ -108,7 +108,10 @@ class _VerifySheetState extends State<_VerifySheet> {
                 size: AppSpacing.x7,
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              Text('Verification Successful', style: AppTextStyles.baseMedium),
+              const Text(
+                'Verification Successful',
+                style: AppTextStyles.baseMedium,
+              ),
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               Text(
                 'Your balance of ${proof.balance.toStringAsFixed(2)} ETH is included in the Proof of Reserves Merkle tree.',
@@ -119,7 +122,7 @@ class _VerifySheetState extends State<_VerifySheet> {
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        Text('Merkle Proof', style: AppTextStyles.caption),
+        const Text('Merkle Proof', style: AppTextStyles.caption),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         _HashCard(label: 'Leaf Hash', value: proof.leaf),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),

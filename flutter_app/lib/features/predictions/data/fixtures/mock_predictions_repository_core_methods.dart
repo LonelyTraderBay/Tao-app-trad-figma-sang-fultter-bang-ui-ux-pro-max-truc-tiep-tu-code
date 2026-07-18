@@ -32,6 +32,9 @@ mixin _MockPredictionsRepositoryMethodsPart01
 
     return PredictionHomeSnapshot(
       events: events,
+      // PERF-HN3: cap 8 (đồng bộ _visibleLimit của markets) tính một lần
+      // tại đây — trang hub không bao giờ dựng quá 8 event card.
+      visibleEvents: List<PredictionEventDraft>.unmodifiable(events.take(8)),
       categories: _predictionCategories,
       positions: _predictionPositions,
       orders: _predictionOrders,
@@ -496,6 +499,22 @@ mixin _MockPredictionsRepositoryMethodsPart01
         PredictionScreenState.realtimeRefresh,
       },
     );
+  }
+
+  @override
+  Future<String> submitOrder({
+    required String eventId,
+    required String outcome,
+    required bool isBuy,
+    required bool isMarket,
+    required double amount,
+  }) async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('prediction_submit_failed');
+    }
+    // Mock trả về biên lai fixture có thật để trang receipt resolve đầy đủ.
+    return 'po-1';
   }
 
   @override

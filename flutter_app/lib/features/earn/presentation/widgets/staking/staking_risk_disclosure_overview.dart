@@ -14,9 +14,9 @@ class _WarningBanner extends StatelessWidget {
       ),
       child: Material(
         color: AppColors.sell10,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: AppRadii.cardLargeRadius,
-          side: const BorderSide(
+          side: BorderSide(
             color: AppColors.sell20,
             width: _stakingRiskBorderWidth,
           ),

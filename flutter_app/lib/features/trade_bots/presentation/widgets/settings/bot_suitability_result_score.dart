@@ -52,13 +52,13 @@ class _ResultView extends StatelessWidget {
           percent: percent,
           color: color,
         ),
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Category Breakdown',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.plain,
         ),
         _CategoryBreakdown(snapshot: snapshot, answers: answers),
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Recommendations',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.plain,

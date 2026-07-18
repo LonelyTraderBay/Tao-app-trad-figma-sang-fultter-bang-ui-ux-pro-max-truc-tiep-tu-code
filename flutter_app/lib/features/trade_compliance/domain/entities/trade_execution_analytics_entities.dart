@@ -1,5 +1,7 @@
 part of 'trade_compliance_entities.dart';
 
+/// Read-model for the Market Data Analytics screen (open interest,
+/// long/short ratio, funding, liquidations, sentiment for a pair).
 final class TradeMarketDataAnalyticsSnapshot {
   const TradeMarketDataAnalyticsSnapshot({
     required this.selectedPair,
@@ -32,6 +34,7 @@ final class TradeMarketDataAnalyticsSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Current open-interest value plus 24h change and range.
 final class TradeMarketOpenInterest {
   const TradeMarketOpenInterest({
     required this.current,
@@ -48,6 +51,7 @@ final class TradeMarketOpenInterest {
   final double low24h;
 }
 
+/// Aggregate long vs. short account/volume ratio for a pair.
 final class TradeMarketLongShortRatio {
   const TradeMarketLongShortRatio({
     required this.longPct,
@@ -68,6 +72,7 @@ final class TradeMarketLongShortRatio {
   double get ratio => longPct / shortPct;
 }
 
+/// Long/short positioning of top traders, plus its 24h change.
 final class TradeTopTraderPositions {
   const TradeTopTraderPositions({
     required this.longPct,
@@ -80,6 +85,7 @@ final class TradeTopTraderPositions {
   final double change24h;
 }
 
+/// Current/average funding rate plus recent rate history.
 final class TradeFundingRateHistory {
   const TradeFundingRateHistory({
     required this.currentRatePct,
@@ -96,6 +102,7 @@ final class TradeFundingRateHistory {
   final List<double> historyPct;
 }
 
+/// Aggregate liquidation stats across 24h/7d/30d windows.
 final class TradeLiquidationStats {
   const TradeLiquidationStats({
     required this.total24h,
@@ -122,6 +129,7 @@ final class TradeLiquidationStats {
   final int count30d;
 }
 
+/// A single price-level liquidation cluster (heatmap intensity).
 final class TradeLiquidationCluster {
   const TradeLiquidationCluster({
     required this.price,
@@ -138,6 +146,7 @@ final class TradeLiquidationCluster {
   final int intensity;
 }
 
+/// A single recent liquidation event (pair, side, size, price, exchange).
 final class TradeRecentLiquidation {
   const TradeRecentLiquidation({
     required this.id,
@@ -158,6 +167,8 @@ final class TradeRecentLiquidation {
   final String exchange;
 }
 
+/// Aggregate market sentiment (overall label, score, component
+/// breakdown, actionable implications).
 final class TradeMarketSentiment {
   const TradeMarketSentiment({
     required this.overall,
@@ -172,6 +183,8 @@ final class TradeMarketSentiment {
   final List<TradeSentimentImplication> implications;
 }
 
+/// A single weighted component contributing to the overall sentiment
+/// score.
 final class TradeSentimentComponent {
   const TradeSentimentComponent({
     required this.label,
@@ -186,6 +199,7 @@ final class TradeSentimentComponent {
   final String description;
 }
 
+/// A single "if this condition, then this action" sentiment implication.
 final class TradeSentimentImplication {
   const TradeSentimentImplication({
     required this.condition,
@@ -198,6 +212,8 @@ final class TradeSentimentImplication {
   final int colorHex;
 }
 
+/// Read-model for the ARM (Approved Reporting Mechanism) Integration
+/// Status screen (connections, latency history, SLA metrics).
 final class TradeArmIntegrationStatusSnapshot {
   const TradeArmIntegrationStatusSnapshot({
     required this.connections,
@@ -214,6 +230,8 @@ final class TradeArmIntegrationStatusSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single ARM provider connection (region, uptime, latency, cert
+/// expiry).
 final class TradeArmConnection {
   const TradeArmConnection({
     required this.id,
@@ -242,6 +260,7 @@ final class TradeArmConnection {
   final String certExpiry;
 }
 
+/// One time bucket's per-provider ARM connection latency.
 final class TradeArmLatencyPoint {
   const TradeArmLatencyPoint({
     required this.time,
@@ -256,6 +275,8 @@ final class TradeArmLatencyPoint {
   final int bloomberg;
 }
 
+/// Aggregate ARM service-level metrics (uptime, average latency,
+/// failover readiness).
 final class TradeArmSlaMetrics {
   const TradeArmSlaMetrics({
     required this.uptime,
@@ -268,6 +289,8 @@ final class TradeArmSlaMetrics {
   final int failoverReadiness;
 }
 
+/// Read-model for the Best Execution Reports screen (per-venue ranking,
+/// quarterly archive, summary).
 final class TradeBestExecutionReportsSnapshot {
   const TradeBestExecutionReportsSnapshot({
     required this.venues,
@@ -286,6 +309,8 @@ final class TradeBestExecutionReportsSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single venue's best-execution ranking (fill rate, speed, cost,
+/// score).
 final class TradeExecutionVenue {
   const TradeExecutionVenue({
     required this.rank,
@@ -310,6 +335,7 @@ final class TradeExecutionVenue {
   final double score;
 }
 
+/// A single archived quarterly best-execution report entry.
 final class TradeQuarterlyReport {
   const TradeQuarterlyReport({
     required this.id,
@@ -332,6 +358,8 @@ final class TradeQuarterlyReport {
   final String status;
 }
 
+/// Aggregate best-execution summary (total orders, value, average
+/// score).
 final class TradeBestExecutionSummary {
   const TradeBestExecutionSummary({
     required this.totalOrders,
@@ -344,6 +372,8 @@ final class TradeBestExecutionSummary {
   final double avgScore;
 }
 
+/// Read-model for the Execution Venue Analysis screen (per-venue cost/
+/// speed metrics, cost trends, summary).
 final class TradeExecutionVenueAnalysisSnapshot {
   const TradeExecutionVenueAnalysisSnapshot({
     required this.venues,
@@ -364,6 +394,7 @@ final class TradeExecutionVenueAnalysisSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single venue's detailed cost/latency/reliability metrics.
 final class TradeExecutionVenueAnalysisMetric {
   const TradeExecutionVenueAnalysisMetric({
     required this.venue,
@@ -394,6 +425,7 @@ final class TradeExecutionVenueAnalysisMetric {
   final double reliability;
 }
 
+/// One month's per-venue execution cost trend.
 final class TradeExecutionVenueCostTrend {
   const TradeExecutionVenueCostTrend({
     required this.month,
@@ -408,6 +440,8 @@ final class TradeExecutionVenueCostTrend {
   final double kraken;
 }
 
+/// Aggregate execution venue analysis summary (venue count, average
+/// cost/fill time).
 final class TradeExecutionVenueAnalysisSummary {
   const TradeExecutionVenueAnalysisSummary({
     required this.totalVenues,
@@ -420,6 +454,8 @@ final class TradeExecutionVenueAnalysisSummary {
   final double avgFillTime;
 }
 
+/// Read-model for the Slippage Monitoring screen (events, per-provider
+/// stats, history, summary).
 final class TradeSlippageMonitoringSnapshot {
   const TradeSlippageMonitoringSnapshot({
     required this.events,
@@ -440,6 +476,8 @@ final class TradeSlippageMonitoringSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single flagged slippage event (expected vs. executed price,
+/// severity).
 final class TradeSlippageEvent {
   const TradeSlippageEvent({
     required this.id,
@@ -470,6 +508,7 @@ final class TradeSlippageEvent {
   final String severity;
 }
 
+/// A single provider's aggregate slippage stats.
 final class TradeSlippageProviderStats {
   const TradeSlippageProviderStats({
     required this.provider,
@@ -490,6 +529,7 @@ final class TradeSlippageProviderStats {
   final double totalImpact;
 }
 
+/// One date's average/max slippage.
 final class TradeSlippageHistoryPoint {
   const TradeSlippageHistoryPoint({
     required this.date,
@@ -502,6 +542,8 @@ final class TradeSlippageHistoryPoint {
   final double max;
 }
 
+/// Aggregate slippage summary bucketed by severity (normal/warning/
+/// critical).
 final class TradeSlippageSummary {
   const TradeSlippageSummary({
     required this.total,

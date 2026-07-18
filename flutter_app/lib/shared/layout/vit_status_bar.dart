@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 
+/// Mock OS status bar (time, signal, wifi, battery) shown above the
+/// [VitPhoneFrame] content in visual QA render mode.
 class VitStatusBar extends StatelessWidget {
   const VitStatusBar({super.key, this.time});
 

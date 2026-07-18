@@ -216,7 +216,9 @@ class _ProfileProductTile extends StatelessWidget {
           height: ProfileSpacingTokens.profileProductIconBox,
           child: Material(
             color: accent.withValues(alpha: .12),
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.cardRadius,
+            ),
             child: Icon(
               profileIconFor(shortcut.iconKey),
               color: accent,
@@ -267,7 +269,9 @@ class _MenuRow extends StatelessWidget {
             height: ProfileSpacingTokens.profileMenuIconBox,
             child: Material(
               color: accent.withValues(alpha: .12),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+              ),
               child: Icon(
                 profileIconFor(item.iconKey),
                 color: accent,

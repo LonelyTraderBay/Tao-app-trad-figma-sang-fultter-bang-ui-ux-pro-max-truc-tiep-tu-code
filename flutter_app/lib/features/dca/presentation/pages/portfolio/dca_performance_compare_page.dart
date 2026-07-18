@@ -171,9 +171,9 @@ class _DCAPerformanceComparePageState
   List<Widget> _buildAnalysis(DcaPerformanceCompareSnapshot snapshot) {
     return [
       _RadarCard(metrics: snapshot.radar),
-      Row(
+      const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Expanded(child: _ProsConsCard.dca()),
           SizedBox(width: AppSpacing.x3),
           Expanded(child: _ProsConsCard.lumpSum()),

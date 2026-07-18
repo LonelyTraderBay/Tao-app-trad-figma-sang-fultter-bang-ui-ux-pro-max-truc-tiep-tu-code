@@ -28,47 +28,47 @@ void main() {
   }
 
   final cases = [
-    _BackCase(
+    const _BackCase(
       id: 'SC-139 withdraw',
       path: AppRoutePaths.walletWithdraw,
       expectedParent: WalletPage,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-143 address add',
       path: AppRoutePaths.walletAddressBookAdd,
       expectedParent: AddressBookPage,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-150 token approval',
       path: AppRoutePaths.walletTokenApproval,
       expectedParent: WalletPage,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-232 P2P payment add',
       path: AppRoutePaths.p2pPaymentMethodAdd,
       expectedParent: P2PPaymentMethodsPage,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-261 P2P wallet transfer',
       path: AppRoutePaths.p2pWalletTransfer,
       expectedParent: P2PWalletPage,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-036 prediction risk calculator',
       path: AppRoutePaths.marketsPredictionsRiskCalculator,
       expectedParent: PredictionsHomePage,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-181 admin analytics',
       path: AppRoutePaths.adminAnalytics,
       expectedParent: AdminHome,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-182 admin A/B tests',
       path: AppRoutePaths.adminAbtests,
       expectedParent: AdminHome,
     ),
-    _BackCase(
+    const _BackCase(
       id: 'SC-183 admin funnels',
       path: AppRoutePaths.adminFunnels,
       expectedParent: AdminHome,

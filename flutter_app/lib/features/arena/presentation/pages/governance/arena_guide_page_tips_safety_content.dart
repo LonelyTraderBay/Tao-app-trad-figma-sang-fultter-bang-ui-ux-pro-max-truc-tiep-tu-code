@@ -199,9 +199,9 @@ class _ImpactLegend extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(width: AppSpacing.x3),
-        _LegendDot(label: 'Cao', color: AppColors.sell),
+        const _LegendDot(label: 'Cao', color: AppColors.sell),
         const SizedBox(width: AppSpacing.x3),
-        _LegendDot(label: 'Trung bình', color: AppColors.warn),
+        const _LegendDot(label: 'Trung bình', color: AppColors.warn),
       ],
     );
   }
@@ -392,10 +392,10 @@ class _PointsOnlyBanner extends StatelessWidget {
       padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: ArenaSpacingTokens.arenaGuideFeatureIconBox,
             height: ArenaSpacingTokens.arenaGuideFeatureIconBox,
-            child: const DecoratedBox(
+            child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.accent12,
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),

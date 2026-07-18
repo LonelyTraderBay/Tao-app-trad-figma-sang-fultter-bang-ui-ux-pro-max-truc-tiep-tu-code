@@ -153,7 +153,7 @@ class _ArenaModeCard extends StatelessWidget {
       padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Row(
         children: [
-          VitAccentIconBox(
+          const VitAccentIconBox(
             icon: Icons.bolt_rounded,
             color: AppModuleAccents.arena,
           ),
@@ -265,7 +265,7 @@ class _CreateRoomCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              VitAccentIconBox(
+              const VitAccentIconBox(
                 icon: Icons.bolt_rounded,
                 color: AppModuleAccents.arena,
               ),

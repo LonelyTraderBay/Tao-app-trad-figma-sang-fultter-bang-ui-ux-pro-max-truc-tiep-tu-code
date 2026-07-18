@@ -383,7 +383,7 @@ class _EmptyCard extends StatelessWidget {
             selected: true,
             onTap: onAction,
             accentColor: _arenaAccent,
-            leading: Icon(
+            leading: const Icon(
               Icons.add_rounded,
               color: _arenaAccent,
               size: ArenaSpacingTokens.myArenaAccentPillIcon,
@@ -410,7 +410,7 @@ class _ActionIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Icon(
           icon,

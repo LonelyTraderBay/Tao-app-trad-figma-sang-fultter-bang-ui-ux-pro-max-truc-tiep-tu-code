@@ -263,7 +263,7 @@ class _HistoryStep extends StatelessWidget {
             ],
           ),
         ),
-        VitInfoCallout(
+        const VitInfoCallout(
           message: 'Tất cả tiêu chí đánh giá đều đạt yêu cầu.',
           icon: Icons.check_circle_rounded,
           accentColor: AppColors.buy,

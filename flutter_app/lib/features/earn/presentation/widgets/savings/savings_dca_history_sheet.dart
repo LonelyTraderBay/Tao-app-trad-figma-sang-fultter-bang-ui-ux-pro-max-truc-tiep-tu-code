@@ -109,7 +109,7 @@ class _CreatePlanSheet extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('Tạo kế hoạch DCA', style: AppTextStyles.baseMedium),
+                const Text('Tạo kế hoạch DCA', style: AppTextStyles.baseMedium),
                 const SizedBox(width: AppSpacing.x2),
                 VitIconButton(
                   icon: Icons.close_rounded,

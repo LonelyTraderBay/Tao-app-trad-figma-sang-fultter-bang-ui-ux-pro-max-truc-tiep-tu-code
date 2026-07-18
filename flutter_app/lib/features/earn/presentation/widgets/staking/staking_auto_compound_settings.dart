@@ -181,7 +181,7 @@ class _GasOptimizationTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Tối ưu Gas Fee', style: AppTextStyles.baseMedium),
+                const Text('Tối ưu Gas Fee', style: AppTextStyles.baseMedium),
                 Text(
                   'Chỉ compound khi gas fee thấp (tiết kiệm ~30-50%)',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

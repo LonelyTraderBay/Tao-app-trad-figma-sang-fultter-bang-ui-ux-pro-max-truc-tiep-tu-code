@@ -112,8 +112,8 @@ class _BestTimeCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(
                 child: _BestTimeMetric(
                   label: 'Historical low',

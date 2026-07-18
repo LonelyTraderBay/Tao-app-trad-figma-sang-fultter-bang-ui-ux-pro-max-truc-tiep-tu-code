@@ -51,29 +51,23 @@ class SavingsNotificationPreferencesPage extends ConsumerStatefulWidget {
 class _SavingsNotificationPreferencesPageState
     extends ConsumerState<SavingsNotificationPreferencesPage> {
   String? _tab;
-  bool? _masterEnabled;
-  late List<SavingsNotificationAlertDraft> _alerts;
-  late List<SavingsDeliveryChannelDraft> _channels;
 
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(savingsNotificationPreferencesRepositoryProvider)
-        .getPreferences();
-    _alerts = snapshot.alerts;
-    _channels = snapshot.channels;
-  }
+  // STATE-S23: masterEnabled/alerts/channels sống ở
+  // SavingsNotificationPreferencesStateController (một nguồn sự thật) — hết
+  // `late List` seed từ ref.read + setState.
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(savingsNotificationPreferencesRepositoryProvider)
-        .getPreferences();
+    final viewState = ref.watch(
+      savingsNotificationPreferencesStateControllerProvider,
+    );
+    final snapshot = viewState.snapshot;
     final activeTab = _tab ?? snapshot.defaultTab;
-    final masterEnabled = _masterEnabled ?? snapshot.masterEnabled;
-    final enabledAlerts = _alerts.where((item) => item.enabled).length;
-    final enabledChannels = _channels.where((item) => item.enabled).length;
+    final masterEnabled = viewState.masterEnabled;
+    final enabledAlerts = viewState.alerts.where((item) => item.enabled).length;
+    final enabledChannels = viewState.channels
+        .where((item) => item.enabled)
+        .length;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -131,38 +125,27 @@ class _SavingsNotificationPreferencesPageState
                         child: SavingsNotificationMasterSummaryCard(
                           masterEnabled: masterEnabled,
                           enabledAlerts: enabledAlerts,
-                          totalAlerts: _alerts.length,
+                          totalAlerts: viewState.alerts.length,
                           onChanged: (value) {
                             HapticFeedback.selectionClick();
-                            setState(() {
-                              _masterEnabled = value;
-                              if (!value) {
-                                _alerts = [
-                                  for (final alert in _alerts)
-                                    SavingsNotificationAlertDraft(
-                                      id: alert.id,
-                                      title: alert.title,
-                                      description: alert.description,
-                                      iconKey: alert.iconKey,
-                                      enabled: false,
-                                      category: alert.category,
-                                      severity: alert.severity,
-                                    ),
-                                ];
-                              }
-                            });
+                            ref
+                                .read(
+                                  savingsNotificationPreferencesStateControllerProvider
+                                      .notifier,
+                                )
+                                .setMasterEnabled(value);
                           },
                         ),
                       ),
                       SavingsNotificationQuickStats(
                         enabledChannels: enabledChannels,
-                        totalChannels: _channels.length,
+                        totalChannels: viewState.channels.length,
                         digestFrequency: snapshot.digestFrequency,
                         quietHours: snapshot.quietHours,
                       ),
                       if (activeTab == 'events')
                         SavingsNotificationEventsTab(
-                          alerts: _alerts,
+                          alerts: viewState.alerts,
                           masterEnabled: masterEnabled,
                           onToggle: _toggleAlert,
                         )
@@ -172,7 +155,7 @@ class _SavingsNotificationPreferencesPageState
                         )
                       else
                         SavingsNotificationDeliveryTab(
-                          channels: _channels,
+                          channels: viewState.channels,
                           digestFrequency: snapshot.digestFrequency,
                           quietHours: snapshot.quietHours,
                           onToggle: _toggleChannel,
@@ -191,40 +174,15 @@ class _SavingsNotificationPreferencesPageState
 
   void _toggleAlert(String id) {
     HapticFeedback.selectionClick();
-    setState(() {
-      _alerts = [
-        for (final alert in _alerts)
-          alert.id == id
-              ? SavingsNotificationAlertDraft(
-                  id: alert.id,
-                  title: alert.title,
-                  description: alert.description,
-                  iconKey: alert.iconKey,
-                  enabled: !alert.enabled,
-                  category: alert.category,
-                  severity: alert.severity,
-                )
-              : alert,
-      ];
-    });
+    ref
+        .read(savingsNotificationPreferencesStateControllerProvider.notifier)
+        .toggleAlert(id);
   }
 
   void _toggleChannel(String id) {
     HapticFeedback.selectionClick();
-    setState(() {
-      _channels = [
-        for (final channel in _channels)
-          channel.id == id && !channel.locked
-              ? SavingsDeliveryChannelDraft(
-                  id: channel.id,
-                  label: channel.label,
-                  detail: channel.detail,
-                  iconKey: channel.iconKey,
-                  enabled: !channel.enabled,
-                  locked: channel.locked,
-                )
-              : channel,
-      ];
-    });
+    ref
+        .read(savingsNotificationPreferencesStateControllerProvider.notifier)
+        .toggleChannel(id);
   }
 }

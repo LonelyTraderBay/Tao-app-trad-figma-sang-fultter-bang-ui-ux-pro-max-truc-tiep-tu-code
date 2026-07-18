@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/address/address_add_page.dart';
@@ -46,6 +47,7 @@ List<RouteBase> walletRoutes(ShellRenderMode shellRenderMode) {
       path: '${AppRoutePaths.walletDeposit}/:asset',
       name: AppRouteNames.sc138DepositUsdt,
       builder: (_, state) => DepositPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         asset: state.pathParameters['asset'] ?? 'USDT',
         assetScoped: true,
         shellRenderMode: shellRenderMode,
@@ -60,6 +62,7 @@ List<RouteBase> walletRoutes(ShellRenderMode shellRenderMode) {
       path: '${AppRoutePaths.walletWithdraw}/:asset',
       name: AppRouteNames.sc140WithdrawUsdt,
       builder: (_, state) => WithdrawPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         asset: state.pathParameters['asset'] ?? 'USDT',
         assetScoped: true,
         shellRenderMode: shellRenderMode,
@@ -69,7 +72,7 @@ List<RouteBase> walletRoutes(ShellRenderMode shellRenderMode) {
       path: '/wallet/transaction/:txId',
       name: AppRouteNames.sc141TransactionDetail,
       builder: (_, state) => TransactionDetailPage(
-        transactionId: state.pathParameters['txId'] ?? 'tx001',
+        transactionId: requireRouteParam(state, 'txId'),
         shellRenderMode: shellRenderMode,
       ),
     ),
@@ -103,6 +106,7 @@ List<RouteBase> walletRoutes(ShellRenderMode shellRenderMode) {
       path: '/wallet/asset/:assetId',
       name: AppRouteNames.sc147AssetDetail,
       builder: (_, state) => AssetDetailPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         assetId: state.pathParameters['assetId'] ?? 'btc',
         shellRenderMode: shellRenderMode,
       ),

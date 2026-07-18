@@ -178,6 +178,21 @@ void main(List<String> args) {
     } else if (_normalizeLineEndings(csvFile.readAsStringSync()) !=
         _normalizeLineEndings(csv)) {
       failures.add('Token consistency CSV artifact is stale.');
+      // In dòng khác biệt đầu tiên để log CI tự chỉ chỗ (khỏi đoán cross-OS).
+      final oldLines = _normalizeLineEndings(
+        csvFile.readAsStringSync(),
+      ).split('\n');
+      final newLines = _normalizeLineEndings(csv).split('\n');
+      for (var i = 0; i < oldLines.length || i < newLines.length; i++) {
+        final oldLine = i < oldLines.length ? oldLines[i] : '<missing>';
+        final newLine = i < newLines.length ? newLines[i] : '<missing>';
+        if (oldLine != newLine) {
+          failures.add('First CSV diff at line ${i + 1}:');
+          failures.add('  committed: $oldLine');
+          failures.add('  generated: $newLine');
+          break;
+        }
+      }
     }
     failures.addAll(_collectP0ModuleGateFailures(metrics));
     failures.addAll(_collectStrictTypographyGateFailures(appRoot, repoRoot));
@@ -284,7 +299,16 @@ List<TokenAuditFileMetric> _collectMetrics(Directory appRoot, String repoRoot) {
   reports.sort((a, b) {
     final scopeCompare = a.scope.compareTo(b.scope);
     if (scopeCompare != 0) return scopeCompare;
-    return a.path.compareTo(b.path);
+    final pathCompare = a.path
+        .replaceAll(r'\', '/')
+        .compareTo(b.path.replaceAll(r'\', '/'));
+    if (pathCompare != 0) return pathCompare;
+    // Tiebreak BẮT BUỘC: cùng widget path xuất hiện 2 row (bundle theo page
+    // và bundle rỗng) — List.sort của Dart KHÔNG stable nên thiếu khóa phụ
+    // thì thứ tự tie trôi theo thứ tự listSync của từng OS.
+    return a.bundle
+        .replaceAll(r'\', '/')
+        .compareTo(b.bundle.replaceAll(r'\', '/'));
   });
   return reports;
 }
@@ -300,7 +324,11 @@ List<File> _collectRootPages(Directory appRoot) {
           .whereType<File>()
           .where((file) => _isAuditedRootPage(file, appRoot))
           .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+        ..sort(
+          (a, b) => a.path
+              .replaceAll(r'\', '/')
+              .compareTo(b.path.replaceAll(r'\', '/')),
+        );
 
   final visited = <String>{};
   for (final file in candidates) {
@@ -338,7 +366,10 @@ List<File> _collectFeatureWidgets(Directory appRoot) {
             !file.path.contains('.g.dart'),
       )
       .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+    ..sort(
+      (a, b) =>
+          a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/')),
+    );
 }
 
 List<File> _collectSharedFiles(Directory appRoot, String folder) {
@@ -349,7 +380,10 @@ List<File> _collectSharedFiles(Directory appRoot, String folder) {
       .whereType<File>()
       .where((file) => file.path.endsWith('.dart'))
       .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+    ..sort(
+      (a, b) =>
+          a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/')),
+    );
 }
 
 List<File> _collectBundleFiles(File rootPageFile) {
@@ -371,11 +405,14 @@ List<File> _collectBundleFiles(File rootPageFile) {
     }
   }
 
-  files.sort((a, b) => a.path.compareTo(b.path));
+  files.sort(
+    (a, b) =>
+        a.path.replaceAll(r'\', '/').compareTo(b.path.replaceAll(r'\', '/')),
+  );
   return files;
 }
 
-TokenAuditFileMetric _emptyBundleMetric() => TokenAuditFileMetric(
+TokenAuditFileMetric _emptyBundleMetric() => const TokenAuditFileMetric(
   scope: 'bundle',
   bundle: '',
   path: '',

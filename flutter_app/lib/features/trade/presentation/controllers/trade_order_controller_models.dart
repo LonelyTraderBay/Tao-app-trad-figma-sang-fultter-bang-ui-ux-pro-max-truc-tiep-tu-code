@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/t
 import 'package:vit_trade_flutter/features/trade/domain/entities/trade_entities.dart';
 import 'package:vit_trade_flutter/features/trade/domain/repositories/trade_repository.dart';
 
+typedef TradeOrderControllerRequest = ({String pairId, TradeOrderDraft draft});
+
 final class TradeOrderViewState {
   const TradeOrderViewState({
     required this.snapshot,
@@ -11,6 +13,7 @@ final class TradeOrderViewState {
     required this.preview,
     this.status = TradeHighRiskFlowStatus.ready,
     this.errorMessage,
+    this.receipt,
   });
 
   final TradeScreenSnapshot snapshot;
@@ -18,48 +21,23 @@ final class TradeOrderViewState {
   final TradeOrderPreview preview;
   final TradeHighRiskFlowStatus status;
   final String? errorMessage;
-}
+  final TradeOrderReceipt? receipt;
 
-final class TradeOrderController {
-  const TradeOrderController({
-    required this.state,
-    required TradeRepository repository,
-  }) : _repository = repository;
-
-  final TradeOrderViewState state;
-  final TradeRepository _repository;
-
-  bool get canSubmit => validationMessage() == null;
-
-  String? validationMessage() {
-    if (state.status == TradeHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before previewing this order.';
-    }
-    if (state.status.isBusy) {
-      return 'Confirmation is already in progress.';
-    }
-    if (state.draft.pairId.trim().isEmpty) {
-      return 'Select a trading pair before preview.';
-    }
-    if (state.draft.amount <= 0) {
-      return 'Enter a valid order amount before preview.';
-    }
-    if (state.draft.price <= 0) {
-      return 'Enter a valid order price before preview.';
-    }
-    if (state.draft.side == TradeOrderSide.buy &&
-        state.preview.total > state.snapshot.balances.usdtAvailable) {
-      return 'Order total exceeds available quote balance.';
-    }
-    if (state.draft.side == TradeOrderSide.sell &&
-        state.draft.amount > state.snapshot.balances.baseAvailable) {
-      return 'Order amount exceeds available base balance.';
-    }
-    return null;
-  }
-
-  TradeOrderReceipt submit() {
-    return _repository.submitOrder(state.draft);
+  /// `errorMessage` cố ý KHÔNG giữ giá trị cũ khi không truyền — mỗi
+  /// transition mới xóa lỗi của lượt trước (retry sạch).
+  TradeOrderViewState copyWith({
+    TradeHighRiskFlowStatus? status,
+    String? errorMessage,
+    TradeOrderReceipt? receipt,
+  }) {
+    return TradeOrderViewState(
+      snapshot: snapshot,
+      draft: draft,
+      preview: preview,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+      receipt: receipt ?? this.receipt,
+    );
   }
 }
 

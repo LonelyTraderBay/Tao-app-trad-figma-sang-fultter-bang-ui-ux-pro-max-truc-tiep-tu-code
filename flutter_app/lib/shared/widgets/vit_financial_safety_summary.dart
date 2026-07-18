@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 
+/// One label/value row rendered by [VitFinancialSafetySummary].
 class VitFinancialSafetyItem {
   const VitFinancialSafetyItem({
     required this.label,
@@ -21,6 +22,8 @@ class VitFinancialSafetyItem {
   final Color? valueColor;
 }
 
+/// Financial preview/confirm card: title, optional contract id, a list of
+/// [VitFinancialSafetyItem] rows, and an optional footer note.
 class VitFinancialSafetySummary extends StatelessWidget {
   const VitFinancialSafetySummary({
     super.key,

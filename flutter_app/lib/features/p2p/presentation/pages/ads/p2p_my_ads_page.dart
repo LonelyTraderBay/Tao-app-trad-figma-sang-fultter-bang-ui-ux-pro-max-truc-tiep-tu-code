@@ -186,7 +186,9 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
         return AlertDialog(
           backgroundColor: AppColors.surface,
           surfaceTintColor: AppColors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
           title: Text(
             'Xóa quảng cáo này?',
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),

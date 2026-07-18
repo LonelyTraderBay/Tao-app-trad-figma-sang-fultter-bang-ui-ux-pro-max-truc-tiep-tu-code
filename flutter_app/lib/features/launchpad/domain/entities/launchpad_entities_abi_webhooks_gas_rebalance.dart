@@ -1,5 +1,6 @@
 part of 'launchpad_entities.dart';
 
+/// Diff of a contract's ABI before/after an upgrade, for the ABI diff screen.
 final class LaunchpadAbiDiffSnapshot {
   const LaunchpadAbiDiffSnapshot({
     required this.endpoint,
@@ -22,6 +23,7 @@ final class LaunchpadAbiDiffSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Summary of what changed between two contract implementations.
 final class LaunchpadAbiDiffResultDraft {
   const LaunchpadAbiDiffResultDraft({
     required this.contractAddress,
@@ -66,6 +68,7 @@ final class LaunchpadAbiDiffResultDraft {
   final List<LaunchpadAbiDiffEntryDraft> entries;
 }
 
+/// A single added/removed/modified function or event in an ABI diff.
 final class LaunchpadAbiDiffEntryDraft {
   const LaunchpadAbiDiffEntryDraft({
     required this.name,
@@ -94,6 +97,7 @@ final class LaunchpadAbiDiffEntryDraft {
   final String? riskNote;
 }
 
+/// A user's saved wallet addresses for the address book screen.
 final class LaunchpadAddressBookSnapshot {
   const LaunchpadAddressBookSnapshot({
     required this.endpoint,
@@ -116,6 +120,7 @@ final class LaunchpadAddressBookSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single saved wallet address entry in the address book.
 final class LaunchpadWalletAddressDraft {
   const LaunchpadWalletAddressDraft({
     required this.id,
@@ -171,6 +176,7 @@ final class LaunchpadWalletAddressDraft {
   }
 }
 
+/// Webhook subscriptions and delivery history for the webhooks screen.
 final class LaunchpadWebhooksSnapshot {
   const LaunchpadWebhooksSnapshot({
     required this.endpoint,
@@ -197,12 +203,16 @@ final class LaunchpadWebhooksSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Operational status of a webhook subscription.
 enum LaunchpadWebhookStatus { active, paused, error, pending }
 
+/// Delivery outcome of a single webhook event.
 enum LaunchpadWebhookDeliveryStatus { delivered, failed, retrying, pending }
 
+/// Retry strategy used when a webhook delivery fails.
 enum LaunchpadWebhookRetryPolicy { none, linear, exponential }
 
+/// A single selectable event type a webhook can subscribe to.
 final class LaunchpadWebhookEventDraft {
   const LaunchpadWebhookEventDraft({
     required this.type,
@@ -217,6 +227,7 @@ final class LaunchpadWebhookEventDraft {
   final AccentTone accent;
 }
 
+/// A single field filter narrowing which events trigger a webhook.
 final class LaunchpadWebhookFilterDraft {
   const LaunchpadWebhookFilterDraft({
     required this.field,
@@ -229,6 +240,7 @@ final class LaunchpadWebhookFilterDraft {
   final String value;
 }
 
+/// A single configured webhook subscription and its delivery stats.
 final class LaunchpadWebhookSubscriptionDraft {
   const LaunchpadWebhookSubscriptionDraft({
     required this.id,
@@ -293,6 +305,7 @@ final class LaunchpadWebhookSubscriptionDraft {
   }
 }
 
+/// A single webhook delivery attempt and its outcome.
 final class LaunchpadWebhookDeliveryDraft {
   const LaunchpadWebhookDeliveryDraft({
     required this.id,
@@ -321,6 +334,7 @@ final class LaunchpadWebhookDeliveryDraft {
   final int retryCount;
 }
 
+/// Gas prices, estimates, and alerts across chains for the gas tracker screen.
 final class LaunchpadGasTrackerSnapshot {
   const LaunchpadGasTrackerSnapshot({
     required this.endpoint,
@@ -347,10 +361,13 @@ final class LaunchpadGasTrackerSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Direction gas prices are trending.
 enum LaunchpadGasTrend { up, down, stable }
 
+/// Whether a gas alert triggers above or below its threshold.
 enum LaunchpadGasAlertDirection { above, below }
 
+/// Current gas price tiers for a single chain.
 final class LaunchpadGasPriceDraft {
   const LaunchpadGasPriceDraft({
     required this.chain,
@@ -383,6 +400,7 @@ final class LaunchpadGasPriceDraft {
   final double change24h;
 }
 
+/// Estimated gas cost for a single on-chain operation across chains.
 final class LaunchpadGasEstimateDraft {
   const LaunchpadGasEstimateDraft({
     required this.operation,
@@ -395,6 +413,7 @@ final class LaunchpadGasEstimateDraft {
   final List<LaunchpadGasEstimateCostDraft> costs;
 }
 
+/// Estimated cost of one operation on a single chain at each speed tier.
 final class LaunchpadGasEstimateCostDraft {
   const LaunchpadGasEstimateCostDraft({
     required this.chain,
@@ -409,6 +428,7 @@ final class LaunchpadGasEstimateCostDraft {
   final String fast;
 }
 
+/// A single configured gas-price alert and its trigger threshold.
 final class LaunchpadGasAlertDraft {
   const LaunchpadGasAlertDraft({
     required this.id,
@@ -447,6 +467,7 @@ final class LaunchpadGasAlertDraft {
   }
 }
 
+/// Portfolio assets and target-allocation strategies for the rebalance screen.
 final class LaunchpadRebalanceSnapshot {
   const LaunchpadRebalanceSnapshot({
     required this.endpoint,
@@ -471,10 +492,13 @@ final class LaunchpadRebalanceSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// Risk profile of a rebalancing strategy.
 enum LaunchpadRebalanceRisk { conservative, moderate, aggressive }
 
+/// Action a rebalance recommends for a single asset.
 enum LaunchpadRebalanceAction { buy, sell, hold }
 
+/// A single portfolio asset's current vs. target allocation.
 final class LaunchpadRebalanceAssetDraft {
   const LaunchpadRebalanceAssetDraft({
     required this.id,
@@ -519,6 +543,7 @@ final class LaunchpadRebalanceAssetDraft {
   }
 }
 
+/// A single selectable rebalancing strategy and its target allocations.
 final class LaunchpadRebalanceStrategyDraft {
   const LaunchpadRebalanceStrategyDraft({
     required this.id,
@@ -537,6 +562,7 @@ final class LaunchpadRebalanceStrategyDraft {
   final List<LaunchpadRebalanceTargetDraft> targets;
 }
 
+/// Target allocation percentage for a single asset in a rebalance strategy.
 final class LaunchpadRebalanceTargetDraft {
   const LaunchpadRebalanceTargetDraft({
     required this.symbol,

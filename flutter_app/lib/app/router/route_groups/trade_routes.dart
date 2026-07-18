@@ -89,6 +89,7 @@ List<RouteBase> tradeRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/:pairId/futures/leverage',
       name: AppRouteNames.sc058Leverage,
       builder: (_, state) => LeveragePage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         shellRenderMode: shellRenderMode,
       ),
@@ -97,6 +98,7 @@ List<RouteBase> tradeRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/:pairId/futures',
       name: AppRouteNames.sc057Futures,
       builder: (_, state) => FuturesPage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         shellRenderMode: shellRenderMode,
       ),
@@ -105,6 +107,7 @@ List<RouteBase> tradeRoutes(ShellRenderMode shellRenderMode) {
       path: '/trade/:pairId',
       name: AppRouteNames.sc049TradePair,
       builder: (_, state) => TradePage(
+        // SEC-S45: default hợp lý UX (chợ/tài sản mặc định, không phải thực thể riêng tư) — giữ.
         pairId: state.pathParameters['pairId'] ?? 'btcusdt',
         chartVariant: TradeChartVariant.pairRoute,
         initialSide: _tradeSideFromQuery(state.uri.queryParameters['side']),

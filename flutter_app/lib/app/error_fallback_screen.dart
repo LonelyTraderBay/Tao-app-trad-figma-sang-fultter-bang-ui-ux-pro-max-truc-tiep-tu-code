@@ -12,7 +12,7 @@ class VitErrorFallbackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return const Material(
       color: AppColors.bg,
       child: Center(
         child: VitErrorState(

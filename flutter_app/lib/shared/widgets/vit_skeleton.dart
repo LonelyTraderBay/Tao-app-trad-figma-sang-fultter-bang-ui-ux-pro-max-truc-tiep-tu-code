@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
+/// Pulsing loading placeholder block of fixed [width]/[height], used to
+/// build skeleton loading rows/lists.
 class VitSkeleton extends StatefulWidget {
   const VitSkeleton({
     super.key,
@@ -69,6 +71,8 @@ class _VitSkeletonState extends State<VitSkeleton>
   }
 }
 
+/// One skeleton list-row shape: optional avatar block plus two-line
+/// leading text and two-line trailing value placeholders.
 class VitSkeletonRow extends StatelessWidget {
   const VitSkeletonRow({super.key, this.showAvatar = true});
 
@@ -116,6 +120,8 @@ class VitSkeletonRow extends StatelessWidget {
   }
 }
 
+/// [VitCard]-wrapped stack of [rows] repeated [VitSkeletonRow]s, divided by
+/// hairlines, for list-loading states.
 class VitSkeletonList extends StatelessWidget {
   const VitSkeletonList({super.key, this.rows = 5});
 

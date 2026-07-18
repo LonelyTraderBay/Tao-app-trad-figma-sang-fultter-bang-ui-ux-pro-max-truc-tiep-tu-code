@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
 
+/// The kind of trailing header action button being rendered, driving its
+/// default icon, tooltip, and tone via [VitHeaderActionTypeDefaults].
 enum VitHeaderActionType {
   back,
   close,
@@ -28,6 +30,7 @@ enum VitHeaderActionType {
   more,
 }
 
+/// Color treatment for a [VitHeaderActionButton].
 enum VitHeaderActionTone {
   neutral,
   primary,
@@ -37,8 +40,11 @@ enum VitHeaderActionTone {
   transparent,
 }
 
+/// Tap-target size of a [VitHeaderActionButton].
 enum VitHeaderActionSize { sm, md }
 
+/// Declarative description of one [VitHeader]/[VitTopChrome] trailing
+/// action, converted to a [VitHeaderActionButton] via [VitHeaderActionButton.fromItem].
 final class VitHeaderActionItem {
   const VitHeaderActionItem({
     this.key,
@@ -61,6 +67,8 @@ final class VitHeaderActionItem {
   final VitHeaderActionSize size;
 }
 
+/// A single square icon button used in header/top-chrome trailing action
+/// slots, with tone, size, active state, and an optional unread badge.
 class VitHeaderActionButton extends StatelessWidget {
   const VitHeaderActionButton({
     super.key,
@@ -177,6 +185,7 @@ class VitHeaderActionButton extends StatelessWidget {
   }
 }
 
+/// Default icon, tooltip label, and tone for each [VitHeaderActionType].
 extension VitHeaderActionTypeDefaults on VitHeaderActionType {
   IconData get icon {
     return switch (this) {
@@ -325,11 +334,11 @@ class _HeaderActionBadge extends StatelessWidget {
         minHeight: AppTopHeaderTokens.badgeMinSize,
       ),
       child: DecoratedBox(
-        decoration: ShapeDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.sell,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.pillRadius,
-            side: const BorderSide(
+            side: BorderSide(
               color: AppColors.bg,
               width: AppTopHeaderTokens.badgeBorderWidth,
             ),

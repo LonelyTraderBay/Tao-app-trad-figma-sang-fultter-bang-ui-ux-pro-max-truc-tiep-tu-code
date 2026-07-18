@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// Read-model for the full Markets list screen (pairs, watchlist, active
+/// alerts and filters).
 final class MarketListSnapshot {
   const MarketListSnapshot({
     required this.marketPairs,
@@ -20,6 +22,8 @@ final class MarketListSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Markets Overview dashboard (global stats, breadth,
+/// fear/greed history, sectors, movers).
 final class MarketOverviewSnapshot {
   const MarketOverviewSnapshot({
     required this.globalStats,
@@ -50,6 +54,8 @@ final class MarketOverviewSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Top Movers screen (gainers/losers tabs across
+/// timeframes).
 final class MarketMoversSnapshot {
   const MarketMoversSnapshot({
     required this.movers,
@@ -76,6 +82,7 @@ final class MarketMoversSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Market Sectors screen.
 final class MarketSectorsSnapshot {
   const MarketSectorsSnapshot({
     required this.sectors,
@@ -100,6 +107,7 @@ final class MarketSectorsSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Watchlist screen (saved pairs plus notes).
 final class MarketWatchlistSnapshot {
   const MarketWatchlistSnapshot({
     required this.entries,
@@ -122,6 +130,8 @@ final class MarketWatchlistSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// A single market sector (e.g. DeFi, L1) with aggregate market cap and
+/// change stats.
 final class MarketSector {
   const MarketSector({
     required this.id,
@@ -154,6 +164,8 @@ final class MarketSector {
   final double dominance;
 }
 
+/// A single top-mover coin row (price and 1h/24h/7d change, volume,
+/// market cap).
 final class MarketMover {
   const MarketMover({
     required this.id,
@@ -190,6 +202,7 @@ final class MarketMover {
   final String? listingDate;
 }
 
+/// A single saved watchlist entry (pair id plus an optional user note).
 final class MarketWatchlistEntry {
   const MarketWatchlistEntry({
     required this.id,
@@ -202,6 +215,8 @@ final class MarketWatchlistEntry {
   final String? note;
 }
 
+/// Aggregate global crypto market stats (total market cap, volume,
+/// dominance, fear/greed index).
 final class GlobalMarketStats {
   const GlobalMarketStats({
     required this.totalMarketCap,
@@ -236,6 +251,8 @@ final class GlobalMarketStats {
   final double stablecoinVolume24h;
 }
 
+/// Market breadth counts (advancing/declining/unchanged/new-highs) shown
+/// on the overview dashboard.
 final class MarketBreadth {
   const MarketBreadth({
     required this.advancing,
@@ -252,6 +269,7 @@ final class MarketBreadth {
   final int dropping10Pct;
 }
 
+/// One date's Fear & Greed index value.
 final class FearGreedPoint {
   const FearGreedPoint({
     required this.date,

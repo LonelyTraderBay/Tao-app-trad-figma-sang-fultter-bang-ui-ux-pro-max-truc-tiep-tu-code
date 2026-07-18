@@ -149,10 +149,10 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                           leading: const Icon(Icons.upload_outlined),
                           child: Text('Xác nhận (${_proofs.length} ảnh)'),
                         ),
-                        VitPageContent(
+                        const VitPageContent(
                           rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
-                          children: const [
+                          children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Payment proof state review',

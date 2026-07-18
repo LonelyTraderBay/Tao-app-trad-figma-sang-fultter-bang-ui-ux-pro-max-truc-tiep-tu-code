@@ -65,9 +65,9 @@ class _PositionCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               if (position.insured)
-                Row(
+                const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.shield_outlined,
                       color: AppColors.buy,

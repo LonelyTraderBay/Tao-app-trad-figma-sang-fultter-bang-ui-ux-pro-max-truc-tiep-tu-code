@@ -20,18 +20,18 @@ class _HowItWorksTab extends StatelessWidget {
         VitSegmentedChoice<String>(
           selected: mode,
           onChanged: onModeChanged,
-          options: [
+          options: const [
             VitSegmentedChoiceOption(
               value: 'buy',
               label: 'Mua Crypto',
               key: P2PGuidePage.buyModeKey,
-              leading: const Icon(Icons.account_balance_wallet_outlined),
+              leading: Icon(Icons.account_balance_wallet_outlined),
             ),
             VitSegmentedChoiceOption(
               value: 'sell',
               label: 'Bán Crypto',
               key: P2PGuidePage.sellModeKey,
-              leading: const Icon(Icons.description_outlined),
+              leading: Icon(Icons.description_outlined),
             ),
           ],
         ),
@@ -50,13 +50,19 @@ class _HowItWorksTab extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _RoundIcon(icon: Icons.bolt_rounded, color: AppColors.buy),
+                  const _RoundIcon(
+                    icon: Icons.bolt_rounded,
+                    color: AppColors.buy,
+                  ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Bắt đầu ngay!', style: AppTextStyles.baseMedium),
+                        const Text(
+                          'Bắt đầu ngay!',
+                          style: AppTextStyles.baseMedium,
+                        ),
                         Text(
                           'Thực hiện giao dịch đầu tiên qua Escrow',
                           style: AppTextStyles.micro.copyWith(

@@ -31,7 +31,7 @@ class _AllocationSummary extends StatelessWidget {
               onTap: onAdd,
               enabled: targets.length < 4,
               accentColor: AppColors.accent,
-              leading: Icon(
+              leading: const Icon(
                 Icons.add_rounded,
                 color: AppColors.accent,
                 size: DcaSpacingTokens.dcaRebalanceIconSm,
@@ -288,7 +288,7 @@ class _TargetCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 DecoratedBox(
-                  decoration: ShapeDecoration(
+                  decoration: const ShapeDecoration(
                     color: AppColors.surface2,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.inputRadius,

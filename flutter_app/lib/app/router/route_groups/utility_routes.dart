@@ -1,3 +1,4 @@
+import 'package:vit_trade_flutter/app/router/route_error_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -162,7 +163,7 @@ List<RouteBase> discoveryAndReferralRoutes(ShellRenderMode shellRenderMode) {
       path: '/referral/friend/:friendId',
       name: AppRouteNames.sc289ReferralFriendDetail,
       builder: (_, state) => ReferralFriendDetailPage(
-        friendId: state.pathParameters['friendId'] ?? 'friend001',
+        friendId: requireRouteParam(state, 'friendId'),
       ),
     ),
   ];

@@ -89,7 +89,7 @@ class _HowItWorksNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitAnnouncementBanner(
+    return const VitAnnouncementBanner(
       message:
           'Đặt lệnh limit (không phải market) trong Max Spread và giữ tối thiểu '
           'Min Shares. Phần thưởng phân phối hàng ngày lúc 00:00 UTC — không '
@@ -131,7 +131,7 @@ class _CategoryFilters extends StatelessWidget {
               onTap: onFavoritesToggle,
               accentColor: AppColors.sell,
               padding: PredictionsSpacingTokens.predictionRewardsFilterPadding,
-              leading: Icon(
+              leading: const Icon(
                 Icons.favorite_rounded,
                 size: PredictionsSpacingTokens.predictionRewardsFilterIcon,
               ),

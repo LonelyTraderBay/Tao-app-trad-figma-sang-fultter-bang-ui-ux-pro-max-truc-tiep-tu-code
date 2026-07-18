@@ -4,6 +4,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Minimal tappable icon (no background/border) for inline row actions like
+/// dismiss or header quick-actions.
 class VitInlineIconAction extends StatelessWidget {
   const VitInlineIconAction({
     super.key,

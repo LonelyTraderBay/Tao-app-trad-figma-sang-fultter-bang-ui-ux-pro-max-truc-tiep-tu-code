@@ -1,5 +1,6 @@
 part of 'launchpad_entities.dart';
 
+/// A single third-party audit record shown for a project's risk profile.
 final class LaunchpadRiskAuditDraft {
   const LaunchpadRiskAuditDraft({
     required this.firm,
@@ -14,6 +15,7 @@ final class LaunchpadRiskAuditDraft {
   final int criticalIssues;
 }
 
+/// A single reference link (audit report, docs, etc.) for a risk resource list.
 final class LaunchpadRiskResourceDraft {
   const LaunchpadRiskResourceDraft({required this.label, required this.url});
 
@@ -21,6 +23,7 @@ final class LaunchpadRiskResourceDraft {
   final String url;
 }
 
+/// Lifecycle stage of a cross-chain bridge order.
 enum LaunchpadBridgeOrderStatus {
   initiated,
   approved,
@@ -32,8 +35,10 @@ enum LaunchpadBridgeOrderStatus {
   failed,
 }
 
+/// Severity/category of a bridge order event log entry.
 enum LaunchpadBridgeEventLevel { info, success, warning, error, debug, system }
 
+/// Live connection state used while tracking a bridge order.
 enum LaunchpadBridgeConnectionState {
   connecting,
   connected,
@@ -41,6 +46,7 @@ enum LaunchpadBridgeConnectionState {
   disconnected,
 }
 
+/// Full detail of a single cross-chain bridge order and its event log.
 final class LaunchpadBridgeOrderSnapshot {
   const LaunchpadBridgeOrderSnapshot({
     required this.endpoint,
@@ -69,6 +75,7 @@ final class LaunchpadBridgeOrderSnapshot {
   final String? highRiskContractId;
 }
 
+/// A single cross-chain bridge order: route, fees, and progress steps.
 final class LaunchpadBridgeOrderDraft {
   const LaunchpadBridgeOrderDraft({
     required this.id,
@@ -123,6 +130,7 @@ final class LaunchpadBridgeOrderDraft {
   final LaunchpadBridgeConnectionState connectionState;
 }
 
+/// A single step in a bridge order's execution progress.
 final class LaunchpadBridgeStepDraft {
   const LaunchpadBridgeStepDraft({
     required this.id,
@@ -145,6 +153,7 @@ final class LaunchpadBridgeStepDraft {
   final int? confirmationsRequired;
 }
 
+/// A single log event emitted while tracking a bridge order.
 final class LaunchpadBridgeEventDraft {
   const LaunchpadBridgeEventDraft({
     required this.id,
@@ -163,12 +172,16 @@ final class LaunchpadBridgeEventDraft {
   final String? txHash;
 }
 
+/// Whether a contract function reads or writes on-chain state.
 enum LaunchpadContractFunctionType { read, write }
 
+/// Risk level of calling a contract function.
 enum LaunchpadContractRiskLevel { low, medium, high }
 
+/// Outcome of simulating a transaction before sending it.
 enum LaunchpadTxSimulationStatus { simulating, success, warning, failed }
 
+/// Contract functions and simulations available for the contract-interaction screen.
 final class LaunchpadContractSnapshot {
   const LaunchpadContractSnapshot({
     required this.endpoint,
@@ -199,6 +212,7 @@ final class LaunchpadContractSnapshot {
   final Set<LaunchpadScreenState> supportedStates;
 }
 
+/// A single callable contract function and its parameters.
 final class LaunchpadContractFunctionDraft {
   const LaunchpadContractFunctionDraft({
     required this.name,
@@ -217,6 +231,7 @@ final class LaunchpadContractFunctionDraft {
   final String? estimatedGas;
 }
 
+/// A single input parameter for a contract function call.
 final class LaunchpadContractParamDraft {
   const LaunchpadContractParamDraft({
     required this.name,
@@ -233,6 +248,7 @@ final class LaunchpadContractParamDraft {
   final bool required;
 }
 
+/// Result of simulating a single contract call before submission.
 final class LaunchpadTxSimulationDraft {
   const LaunchpadTxSimulationDraft({
     required this.id,

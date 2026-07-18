@@ -124,7 +124,7 @@ class _PointsHero extends StatelessWidget {
                   selected: true,
                   onTap: onEarn,
                   accentColor: AppColors.accent,
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.redeem_rounded,
                     color: AppColors.accent,
                     size: ArenaSpacingTokens.myArenaAccentPillIcon,
@@ -348,9 +348,9 @@ class _QuickLinkButton extends StatelessWidget {
           ),
           child: Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
-              side: const BorderSide(color: AppColors.cardBorder),
+              side: BorderSide(color: AppColors.cardBorder),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

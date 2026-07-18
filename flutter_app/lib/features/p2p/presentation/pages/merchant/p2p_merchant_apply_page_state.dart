@@ -271,7 +271,7 @@ class _StepConnector extends StatelessWidget {
         height: _p2pMerchantApplyConnectorHeight,
         child: Material(
           color: active ? AppColors.buy : AppColors.surface3,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
       ),
     );

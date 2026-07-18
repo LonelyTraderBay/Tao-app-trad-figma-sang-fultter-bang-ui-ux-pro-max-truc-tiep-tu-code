@@ -59,22 +59,14 @@ class LaunchpadAddressBookPage extends ConsumerStatefulWidget {
 
 class _LaunchpadAddressBookPageState
     extends ConsumerState<LaunchpadAddressBookPage> {
+  // STATE-S23: addresses sống ở LaunchpadAddressBookStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
   final _searchController = TextEditingController();
-  late List<LaunchpadWalletAddressDraft> _addresses;
   var _chainFilter = 'all';
   var _searchQuery = '';
   var _showAddSheet = false;
   String? _expandedId;
   String? _copiedId;
-
-  @override
-  void initState() {
-    super.initState();
-    _addresses = ref
-        .read(launchpadControllerProvider)
-        .getAddressBook()
-        .addresses;
-  }
 
   @override
   void dispose() {
@@ -84,14 +76,15 @@ class _LaunchpadAddressBookPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getAddressBook();
+    final viewState = ref.watch(launchpadAddressBookStateControllerProvider);
+    final snapshot = viewState.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x3
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
-    final filtered = _filteredAddresses();
+    final filtered = _filteredAddresses(viewState.addresses);
     final favorites = filtered.where((address) => address.isFavorite).toList();
     final others = filtered.where((address) => !address.isFavorite).toList();
 
@@ -144,7 +137,7 @@ class _LaunchpadAddressBookPageState
                       onChanged: (value) =>
                           setState(() => _chainFilter = value),
                     ),
-                    _AddressStats(addresses: _addresses),
+                    _AddressStats(addresses: viewState.addresses),
                     if (filtered.isEmpty)
                       const VitEmptyState(
                         key: LaunchpadAddressBookPage.emptyKey,
@@ -221,9 +214,11 @@ class _LaunchpadAddressBookPageState
     );
   }
 
-  List<LaunchpadWalletAddressDraft> _filteredAddresses() {
+  List<LaunchpadWalletAddressDraft> _filteredAddresses(
+    List<LaunchpadWalletAddressDraft> addresses,
+  ) {
     final query = _searchQuery.trim().toLowerCase();
-    final filtered = _addresses.where((address) {
+    final filtered = addresses.where((address) {
       final matchesChain =
           _chainFilter == 'all' || address.chain == _chainFilter;
       final matchesQuery =
@@ -252,22 +247,14 @@ class _LaunchpadAddressBookPageState
   }
 
   void _toggleFavorite(String id) {
-    setState(() {
-      _addresses = [
-        for (final address in _addresses)
-          address.id == id
-              ? address.copyWith(isFavorite: !address.isFavorite)
-              : address,
-      ];
-    });
+    ref
+        .read(launchpadAddressBookStateControllerProvider.notifier)
+        .toggleFavorite(id);
   }
 
   void _setDefault(String id) {
-    setState(() {
-      _addresses = [
-        for (final address in _addresses)
-          address.copyWith(isDefault: address.id == id),
-      ];
-    });
+    ref
+        .read(launchpadAddressBookStateControllerProvider.notifier)
+        .setDefault(id);
   }
 }

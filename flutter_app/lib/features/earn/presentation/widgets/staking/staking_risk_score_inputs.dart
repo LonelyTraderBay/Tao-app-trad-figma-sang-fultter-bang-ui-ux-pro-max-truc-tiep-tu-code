@@ -32,7 +32,7 @@ class _ScenarioInputs extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Scenario Inputs', style: AppTextStyles.baseMedium),
+          const Text('Scenario Inputs', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FieldLabel(
             label: 'Stake Amount (USD)',

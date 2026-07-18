@@ -23,7 +23,7 @@ class MarketCalendarViewTabs extends StatelessWidget {
       variant: VitTabBarVariant.segment,
       activeKey: activeView,
       onChanged: onChanged,
-      tabs: [
+      tabs: const [
         VitTabItem(
           key: 'list',
           label: 'Danh sách',
@@ -201,7 +201,7 @@ class _ImpactChip extends StatelessWidget {
       onTap: onTap,
       accentColor: cfg.color,
       padding: MarketsSpacingTokens.marketCalendarImpactChipPadding,
-      leading: Icon(
+      leading: const Icon(
         Icons.circle,
         size: MarketsSpacingTokens.marketCalendarImpactDot,
       ),

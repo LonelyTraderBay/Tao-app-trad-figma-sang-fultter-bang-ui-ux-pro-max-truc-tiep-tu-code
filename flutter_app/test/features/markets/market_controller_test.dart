@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart
 void main() {
   group('MarketController', () {
     test('exposes core market read models through repository contract', () {
-      final controller = MarketController(const MockMarketRepository());
+      final controller = const MarketController(MockMarketRepository());
 
       final list = controller.getMarketList();
       final overview = controller.getMarketOverview();
@@ -18,7 +18,7 @@ void main() {
     });
 
     test('forwards filter parameters to advanced market read models', () {
-      final controller = MarketController(const MockMarketRepository());
+      final controller = const MarketController(MockMarketRepository());
 
       final depth = controller.getMarketDepth(pairId: 'ethusdt', levels: 5);
       final news = controller.getMarketNews(category: 'defi');

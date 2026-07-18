@@ -68,7 +68,7 @@ class SavingsProductDetailPage extends ConsumerWidget {
                   _NotFoundProductState(snapshot: snapshot)
                 else ...[
                   _ProductHero(product: product),
-                  EarnInfoBanner(
+                  const EarnInfoBanner(
                     text:
                         'APY là ước tính tham khảo và có thể thay đổi theo điều kiện thị trường.',
                   ),
@@ -78,7 +78,7 @@ class SavingsProductDetailPage extends ConsumerWidget {
                     onPressed: () => HapticFeedback.selectionClick(),
                     child: const Text('Đăng ký sản phẩm'),
                   ),
-                  EarnDisclaimerBanner(
+                  const EarnDisclaimerBanner(
                     text:
                         'Rút trước hạn có thể mất lãi tích lũy. Vui lòng xem quy tắc khóa và rút trước khi gửi.',
                   ),

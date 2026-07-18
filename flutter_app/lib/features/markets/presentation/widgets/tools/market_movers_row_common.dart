@@ -251,7 +251,7 @@ class _NewBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitAccentPill(label: 'MỚI', accentColor: _marketPrimary);
+    return const VitAccentPill(label: 'MỚI', accentColor: _marketPrimary);
   }
 }
 

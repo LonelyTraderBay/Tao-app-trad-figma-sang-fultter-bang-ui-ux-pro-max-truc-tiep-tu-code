@@ -162,9 +162,9 @@ class _FormFieldPreview extends StatelessWidget {
           ),
           child: Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
-              side: const BorderSide(color: AppColors.borderSolid),
+              side: BorderSide(color: AppColors.borderSolid),
             ),
             child: Padding(
               padding: ProfileSpacingTokens.profileSubAccountFormInputPadding,

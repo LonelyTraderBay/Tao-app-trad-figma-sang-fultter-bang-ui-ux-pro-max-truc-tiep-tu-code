@@ -48,78 +48,26 @@ final class PredictionEventDetailViewState {
     required this.snapshot,
     this.status = PredictionHighRiskFlowStatus.ready,
     this.errorMessage,
+    this.lastReceiptId,
   });
 
   final PredictionEventDetailSnapshot snapshot;
   final PredictionHighRiskFlowStatus status;
   final String? errorMessage;
-}
+  final String? lastReceiptId;
 
-final class PredictionEventDetailController {
-  const PredictionEventDetailController({required this.state});
-
-  final PredictionEventDetailViewState state;
-
-  String? orderValidationMessage({
-    required String outcome,
-    required String amountText,
+  /// `errorMessage` cố ý không giữ giá trị cũ khi không truyền (retry sạch —
+  /// cùng quy ước với TradeOrderViewState của ADR-001).
+  PredictionEventDetailViewState copyWith({
+    PredictionHighRiskFlowStatus? status,
+    String? errorMessage,
+    String? lastReceiptId,
   }) {
-    if (state.status == PredictionHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before previewing this prediction order.';
-    }
-    if (state.status.isBusy) {
-      return 'Prediction order confirmation is already in progress.';
-    }
-    if (state.snapshot.event.status != PredictionEventStatus.active) {
-      return 'Resolved events are receipt-only and cannot accept new orders.';
-    }
-    final hasOutcome = state.snapshot.event.outcomes.any(
-      (item) => item.label == outcome,
-    );
-    if (!hasOutcome) {
-      return 'Select an available outcome before preview.';
-    }
-    final amount = double.tryParse(amountText.trim().replaceAll(',', ''));
-    if (amount == null || amount <= 0) {
-      return 'Enter a valid order amount before preview.';
-    }
-    return null;
-  }
-
-  bool canSubmitOrder({required String outcome, required String amountText}) {
-    return orderValidationMessage(outcome: outcome, amountText: amountText) ==
-        null;
-  }
-
-  PredictionOrderPreview previewOrder({
-    required String outcome,
-    required bool isBuy,
-    required bool isMarket,
-    required String amountText,
-  }) {
-    final selected = state.snapshot.event.outcomes.firstWhere(
-      (item) => item.label == outcome,
-      orElse: () => state.snapshot.event.outcomes.first,
-    );
-    final amount = double.tryParse(amountText.trim().replaceAll(',', '')) ?? 0;
-    final price = selected.chance / 100;
-    final fee = amount * .005;
-    final shares = price <= 0 ? 0.0 : amount / price;
-    final canSubmit = canSubmitOrder(
-      outcome: selected.label,
-      amountText: amountText,
-    );
-    return PredictionOrderPreview(
-      outcome: selected.label,
-      sideLabel: isBuy ? 'Buy' : 'Sell',
-      orderTypeLabel: isMarket ? 'Market' : 'Limit',
-      probabilityPct: selected.chance,
-      price: price,
-      amount: amount,
-      fee: fee,
-      shares: shares,
-      maxLoss: amount + fee,
-      canSubmit: canSubmit,
+    return PredictionEventDetailViewState(
+      snapshot: snapshot,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+      lastReceiptId: lastReceiptId ?? this.lastReceiptId,
     );
   }
 }

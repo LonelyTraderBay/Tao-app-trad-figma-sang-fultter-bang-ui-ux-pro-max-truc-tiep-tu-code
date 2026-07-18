@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+/// Label/value row (optional leading/trailing widgets, divider, tap
+/// handler) used for key-value detail lists.
 class VitInfoRow extends StatelessWidget {
   const VitInfoRow({
     super.key,

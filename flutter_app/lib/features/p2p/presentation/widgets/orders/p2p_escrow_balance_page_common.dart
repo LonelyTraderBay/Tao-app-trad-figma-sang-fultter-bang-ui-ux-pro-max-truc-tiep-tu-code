@@ -59,12 +59,12 @@ class _EscrowEmptyState extends StatelessWidget {
       child: Column(
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
-          VitCard(
+          const VitCard(
             width: _p2pEscrowBalanceEmptyIconBox,
             height: _p2pEscrowBalanceEmptyIconBox,
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
-            child: const Icon(
+            child: Icon(
               Icons.lock_open_rounded,
               color: AppColors.text3,
               size: AppSpacing.iconMd,

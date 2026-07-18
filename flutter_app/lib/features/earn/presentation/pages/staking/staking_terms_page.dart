@@ -172,7 +172,7 @@ class _TermsHero extends StatelessWidget {
                       borderRadius: AppRadii.lgRadius,
                     ),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.description_outlined,
                     color: AppModuleAccents.earn,
                     size: EarnSpacingTokens.earnTermsHeroIcon,

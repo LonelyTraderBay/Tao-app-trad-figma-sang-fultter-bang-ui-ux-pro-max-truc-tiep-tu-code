@@ -163,11 +163,11 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        VitPageContent(
+                        const VitPageContent(
                           rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
-                          children: const [
+                          children: [
                             VitHighRiskStatePanel(
                               density: VitDensity.compact,
                               state: VitHighRiskUiState.riskReview,
@@ -258,7 +258,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                             const SizedBox(
                               height: AppSpacing.pageRhythmStandardInnerGap,
                             ),
-                            Text(
+                            const Text(
                               'Danh sách thiết bị tin cậy',
                               style: AppTextStyles.sectionTitle,
                             ),
@@ -314,10 +314,10 @@ class P2PWhitelistModePage extends ConsumerWidget {
                         },
                         child: const Text('Quay lại Trung tâm bảo mật'),
                       ),
-                      VitPageContent(
+                      const VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
-                        children: const [
+                        children: [
                           VitHighRiskStatePanel(
                             density: VitDensity.compact,
                             state: VitHighRiskUiState.riskReview,

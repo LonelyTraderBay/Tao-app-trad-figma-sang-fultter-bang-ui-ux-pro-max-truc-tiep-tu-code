@@ -101,15 +101,15 @@ class _SupportPageState extends ConsumerState<SupportPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (showOfflineBanner)
-                Padding(
+                const Padding(
                   key: SupportPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
                     0,
                   ),
-                  child: const VitOfflineBanner(
+                  child: VitOfflineBanner(
                     message: 'Đang ngoại tuyến',
                     detail: 'Hiển thị ticket và FAQ đã lưu gần nhất.',
                   ),

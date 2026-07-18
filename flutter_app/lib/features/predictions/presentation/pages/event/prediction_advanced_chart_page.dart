@@ -195,7 +195,7 @@ class _AdvancedChartTabBar extends StatelessWidget {
     return PredictionEnumTabBar<_ChartTab>(
       activeTab: activeTab,
       onChanged: onChanged,
-      items: [
+      items: const [
         (PredictionAdvancedChartPage.chartTabKey, _ChartTab.chart, 'Bieu do'),
         (
           PredictionAdvancedChartPage.indicatorsTabKey,

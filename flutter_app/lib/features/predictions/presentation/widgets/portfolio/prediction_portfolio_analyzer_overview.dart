@@ -12,7 +12,7 @@ class _AnalyzerTabBar extends StatelessWidget {
       activeTab: activeTab,
       onChanged: onChanged,
       showBottomBorder: true,
-      items: [
+      items: const [
         (
           PredictionPortfolioAnalyzerPage.overviewTabKey,
           _AnalyzerTab.overview,

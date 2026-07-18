@@ -116,7 +116,7 @@ class _EligibilityCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _CardTitle(
+          const _CardTitle(
             icon: Icons.check_circle_outline_rounded,
             title: 'Điều kiện bồi thường',
           ),
@@ -154,15 +154,15 @@ class _FundHealthCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          const Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: _CardTitle(
                   icon: Icons.favorite_border_rounded,
                   title: 'Sức khỏe quỹ',
                 ),
               ),
-              const VitStatusPill(
+              VitStatusPill(
                 label: 'Khỏe mạnh',
                 status: VitStatusPillStatus.success,
                 size: VitStatusPillSize.sm,
@@ -202,15 +202,15 @@ class _FundHealthCard extends StatelessWidget {
             onTap: () => context.go(snapshot.certificateRoute),
             child: Row(
               children: [
-                SizedBox.square(
+                const SizedBox.square(
                   dimension: _p2pInsuranceIconBox,
                   child: Material(
                     color: AppColors.primary12,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.smRadius,
-                      side: const BorderSide(color: AppColors.primary20),
+                      side: BorderSide(color: AppColors.primary20),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.verified_user_outlined,
                       color: AppModuleAccents.p2p,
                       size: AppSpacing.iconMd,
@@ -287,8 +287,8 @@ class _FundChartCard extends StatelessWidget {
             'Số dư quỹ bảo hiểm (triệu VND)',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          Row(
-            children: const [
+          const Row(
+            children: [
               _RangeChip(label: '7 ngày'),
               SizedBox(width: AppSpacing.x2),
               _RangeChip(label: '30 ngày', active: true),
@@ -303,14 +303,14 @@ class _FundChartCard extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          Row(
+          const Row(
             children: [
               Expanded(
                 child: _LegendDot(label: 'Dòng tiền 30d', color: AppColors.buy),
               ),
-              const _LegendDot(label: '+240M', color: AppColors.buy),
-              const SizedBox(width: AppSpacing.x3),
-              const _LegendDot(label: '-47M', color: AppModuleAccents.p2p),
+              _LegendDot(label: '+240M', color: AppColors.buy),
+              SizedBox(width: AppSpacing.x3),
+              _LegendDot(label: '-47M', color: AppModuleAccents.p2p),
             ],
           ),
         ],
@@ -462,12 +462,12 @@ class _HowItWorksCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return const VitCard(
       radius: VitCardRadius.standard,
       padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           _CardTitle(icon: Icons.route_rounded, title: 'Cách hoạt động'),
           SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _StepRow(

@@ -18,7 +18,7 @@ class _KycStatusCard extends StatelessWidget {
           height: ProfileSpacingTokens.kycStatusIconBox,
           child: Material(
             color: _kycGreen.withValues(alpha: .2),
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.cardLargeRadius,
             ),
             child: const Icon(

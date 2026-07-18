@@ -51,19 +51,19 @@ class _OverviewTab extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: EarnSpacingTokens.stakingInsuranceShieldIconBox,
                     height: EarnSpacingTokens.stakingInsuranceShieldIconBox,
                     child: Material(
                       color: AppColors.buy10,
-                      shape: const CircleBorder(
+                      shape: CircleBorder(
                         side: BorderSide(
                           color: AppColors.buy,
                           width: EarnSpacingTokens
                               .stakingInsuranceShieldBorderWidth,
                         ),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.shield_outlined,
                         color: AppColors.buy,
                         size: AppSpacing.iconLg,
@@ -256,9 +256,9 @@ class _WarningNote extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EarnSpacingTokens.earnBulletTopMarginX3,
-                          child: const SizedBox(
+                          child: SizedBox(
                             width: AppSpacing.x1,
                             height: AppSpacing.x1,
                             child: Material(

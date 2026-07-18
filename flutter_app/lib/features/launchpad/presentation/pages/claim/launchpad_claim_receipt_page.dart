@@ -98,7 +98,7 @@ class _LaunchpadClaimReceiptPageState
                 showBack: true,
                 onBack: () =>
                     goBackOrFallback(context, fallbackPath: snapshot.backRoute),
-                actions: [
+                actions: const [
                   VitHeaderActionItem(
                     type: VitHeaderActionType.notifications,
                     tooltip: 'Thông báo claim Launchpad',

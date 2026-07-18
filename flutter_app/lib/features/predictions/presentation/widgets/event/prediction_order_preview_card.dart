@@ -117,7 +117,7 @@ class _PreviewBadge extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: AppColors.primary.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
         padding: PredictionsSpacingTokens.predictionOrderPreviewBadgePadding,

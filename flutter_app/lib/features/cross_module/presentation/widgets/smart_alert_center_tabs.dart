@@ -63,7 +63,7 @@ class _ActiveAlertsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         const _CreateAlertButton(),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        CrossModuleInfoPanel(
+        const CrossModuleInfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
           border: AppColors.primary20,

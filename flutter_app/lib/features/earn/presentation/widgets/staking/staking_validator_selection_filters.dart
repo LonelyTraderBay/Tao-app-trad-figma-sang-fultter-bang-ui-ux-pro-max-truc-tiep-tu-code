@@ -106,7 +106,7 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Bộ lọc & Sắp xếp',
                   style: AppTextStyles.baseMedium,

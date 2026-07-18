@@ -51,7 +51,7 @@ class _DisclosureStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StepTitle(title: 'Nghĩa vụ công khai'),
+        const _StepTitle(title: 'Nghĩa vụ công khai'),
         TradeCopyConsentCard(
           cardKey: ProviderApplicationPage.disclosureKey,
           checked: draft.agreedToDisclosure,
@@ -110,7 +110,7 @@ class _FeesStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StepTitle(title: 'Cấu trúc phí'),
+        const _StepTitle(title: 'Cấu trúc phí'),
         _InfoPanel(
           icon: Icons.attach_money_rounded,
           title: 'Performance Fee',
@@ -153,7 +153,7 @@ class _ReviewStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StepTitle(title: 'Xem lại đơn đăng ký'),
+        const _StepTitle(title: 'Xem lại đơn đăng ký'),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Review provider obligations',

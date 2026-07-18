@@ -1,5 +1,7 @@
 part of 'trade_compliance_entities.dart';
 
+/// Read-model for the Regulatory Disclosures screen (MiFID articles,
+/// investor protection, restrictions, liability, contacts).
 final class TradeRegulatoryDisclosuresSnapshot {
   const TradeRegulatoryDisclosuresSnapshot({
     required this.trade,
@@ -38,6 +40,7 @@ final class TradeRegulatoryDisclosuresSnapshot {
   final String lastUpdatedLabel;
 }
 
+/// A selectable tab on the Regulatory Disclosures screen.
 final class TradeRegulatoryTab {
   const TradeRegulatoryTab({required this.id, required this.label});
 
@@ -45,6 +48,8 @@ final class TradeRegulatoryTab {
   final String label;
 }
 
+/// A single titled disclosure block (body text plus optional bullet
+/// items), reused across regulatory disclosure sections.
 final class TradeRegulatoryDisclosureBlock {
   const TradeRegulatoryDisclosureBlock({
     required this.title,
@@ -57,6 +62,8 @@ final class TradeRegulatoryDisclosureBlock {
   final List<String> items;
 }
 
+/// Investor protection disclosure (coverage, covered/not-covered scope,
+/// claim steps, contact).
 final class TradeRegulatoryProtection {
   const TradeRegulatoryProtection({
     required this.coverage,
@@ -73,6 +80,8 @@ final class TradeRegulatoryProtection {
   final String contactLabel;
 }
 
+/// Regulatory restrictions disclosure (unavailable countries, leverage
+/// rules, tax reporting notes).
 final class TradeRegulatoryRestrictions {
   const TradeRegulatoryRestrictions({
     required this.unavailableCountries,
@@ -85,6 +94,8 @@ final class TradeRegulatoryRestrictions {
   final TradeRegulatoryDisclosureBlock taxReporting;
 }
 
+/// Liability disclosure (platform role, user responsibility,
+/// indemnification, limitation of liability).
 final class TradeRegulatoryLiability {
   const TradeRegulatoryLiability({
     required this.platformRole,
@@ -99,6 +110,7 @@ final class TradeRegulatoryLiability {
   final TradeRegulatoryDisclosureBlock limitation;
 }
 
+/// A single regulatory contact entry (title, subtitle, icon).
 final class TradeRegulatoryContact {
   const TradeRegulatoryContact({
     required this.title,
@@ -111,6 +123,7 @@ final class TradeRegulatoryContact {
   final String icon;
 }
 
+/// A single downloadable regulatory document link (title + icon).
 final class TradeRegulatoryDocumentLink {
   const TradeRegulatoryDocumentLink({required this.title, required this.icon});
 
@@ -118,6 +131,8 @@ final class TradeRegulatoryDocumentLink {
   final String icon;
 }
 
+/// Read-model for the Transaction Reporting screen (queue/history/failed
+/// reports plus aggregate stats).
 final class TradeTransactionReportingSnapshot {
   const TradeTransactionReportingSnapshot({
     required this.reports,
@@ -153,6 +168,8 @@ final class TradeTransactionReportingSnapshot {
   }
 }
 
+/// A single regulatory transaction report (venue, instrument, ARM
+/// provider, submission/SLA status).
 final class TradeTransactionReport {
   const TradeTransactionReport({
     required this.id,
@@ -195,6 +212,8 @@ final class TradeTransactionReport {
   final String slaStatus;
 }
 
+/// Aggregate transaction-reporting stats (totals by status, latency,
+/// per-provider counts).
 final class TradeTransactionReportingStats {
   const TradeTransactionReportingStats({
     required this.total,
@@ -221,6 +240,8 @@ final class TradeTransactionReportingStats {
   final Map<String, int> providerCounts;
 }
 
+/// Read-model for the Regulatory Reports Dashboard screen (daily stats,
+/// ARM provider breakdown, distribution, totals).
 final class TradeRegulatoryReportsDashboardSnapshot {
   const TradeRegulatoryReportsDashboardSnapshot({
     required this.dailyStats,
@@ -245,6 +266,7 @@ final class TradeRegulatoryReportsDashboardSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// One day's transaction-report volume and outcome counts.
 final class TradeRegulatoryDailyStat {
   const TradeRegulatoryDailyStat({
     required this.date,
@@ -261,6 +283,7 @@ final class TradeRegulatoryDailyStat {
   final int avgLatency;
 }
 
+/// A single ARM provider's report volume and success rate.
 final class TradeRegulatoryArmProvider {
   const TradeRegulatoryArmProvider({
     required this.name,
@@ -277,6 +300,7 @@ final class TradeRegulatoryArmProvider {
   final String status;
 }
 
+/// A single labelled slice of the report-distribution chart.
 final class TradeRegulatoryDistributionItem {
   const TradeRegulatoryDistributionItem({
     required this.name,
@@ -289,6 +313,7 @@ final class TradeRegulatoryDistributionItem {
   final int colorHex;
 }
 
+/// Aggregate totals shown atop the Regulatory Reports Dashboard.
 final class TradeRegulatoryDashboardTotals {
   const TradeRegulatoryDashboardTotals({
     required this.total,
@@ -307,6 +332,8 @@ final class TradeRegulatoryDashboardTotals {
   final int distributionTotal;
 }
 
+/// Read-model for the Client Categorization screen (available categories,
+/// change history, current category).
 final class TradeClientCategorizationSnapshot {
   const TradeClientCategorizationSnapshot({
     required this.categories,
@@ -323,6 +350,7 @@ final class TradeClientCategorizationSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single client category definition (protections, requirements).
 final class TradeClientCategoryInfo {
   const TradeClientCategoryInfo({
     required this.id,
@@ -339,6 +367,7 @@ final class TradeClientCategoryInfo {
   final List<String> requirements;
 }
 
+/// A single historical client-category change record.
 final class TradeClientCategoryHistory {
   const TradeClientCategoryHistory({
     required this.date,
@@ -355,6 +384,8 @@ final class TradeClientCategoryHistory {
   final String reason;
 }
 
+/// Read-model for the Product Governance screen (copy-trading products
+/// under governance review).
 final class TradeProductGovernanceSnapshot {
   const TradeProductGovernanceSnapshot({
     required this.products,
@@ -369,6 +400,8 @@ final class TradeProductGovernanceSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single copy-trading product's governance record (target market,
+/// risk level, review dates, distribution channels).
 final class TradeCopyProduct {
   const TradeCopyProduct({
     required this.id,
@@ -395,6 +428,8 @@ final class TradeCopyProduct {
   final List<String> distributionChannels;
 }
 
+/// Read-model for the Target Market Definition screen (suitability
+/// dimensions for a single product).
 final class TradeTargetMarketDefinitionSnapshot {
   const TradeTargetMarketDefinitionSnapshot({
     required this.product,
@@ -411,6 +446,8 @@ final class TradeTargetMarketDefinitionSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single target-market suitability dimension (suitable-for /
+/// not-suitable-for client segments).
 final class TradeTargetMarketDimension {
   const TradeTargetMarketDimension({
     required this.id,
@@ -425,6 +462,8 @@ final class TradeTargetMarketDimension {
   final List<String> notSuitableFor;
 }
 
+/// Read-model for the Audit Trail screen (searchable log entries, stats,
+/// export options).
 final class TradeAuditTrailSnapshot {
   const TradeAuditTrailSnapshot({
     required this.noticeTitle,
@@ -451,6 +490,7 @@ final class TradeAuditTrailSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single labelled audit-trail summary stat.
 final class TradeAuditStat {
   const TradeAuditStat({
     required this.label,
@@ -463,6 +503,7 @@ final class TradeAuditStat {
   final bool emphasized;
 }
 
+/// A selectable tab on the Audit Trail screen.
 final class TradeAuditTab {
   const TradeAuditTab({required this.id, required this.label});
 
@@ -470,6 +511,7 @@ final class TradeAuditTab {
   final String label;
 }
 
+/// A single audit-trail log entry (category, action, actor, IP).
 final class TradeAuditEntry {
   const TradeAuditEntry({
     required this.id,
@@ -492,8 +534,12 @@ final class TradeAuditEntry {
   final String? ipAddress;
 }
 
+/// Category of an audit-trail entry: trade, compliance, client action,
+/// or system.
 enum TradeAuditCategory { trade, compliance, clientAction, system }
 
+/// Read-model for the Regulatory Inspection Readiness screen (compliance
+/// score, frameworks, document checklist, regulator portal).
 final class TradeRegulatoryInspectionSnapshot {
   const TradeRegulatoryInspectionSnapshot({
     required this.complianceScore,
@@ -528,6 +574,7 @@ final class TradeRegulatoryInspectionSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single labelled inspection-readiness stat with an icon.
 final class TradeRegulatoryInspectionStat {
   const TradeRegulatoryInspectionStat({
     required this.label,
@@ -540,6 +587,8 @@ final class TradeRegulatoryInspectionStat {
   final TradeRegulatoryInspectionStatIcon icon;
 }
 
+/// Icon key for an inspection-readiness stat: documents, clients, audit
+/// logs, or retention.
 enum TradeRegulatoryInspectionStatIcon {
   documents,
   clients,
@@ -547,6 +596,8 @@ enum TradeRegulatoryInspectionStatIcon {
   retention,
 }
 
+/// A single regulatory framework's compliance percentage and outstanding
+/// requirements.
 final class TradeRegulatoryFramework {
   const TradeRegulatoryFramework({
     required this.name,
@@ -559,6 +610,7 @@ final class TradeRegulatoryFramework {
   final List<String> requirements;
 }
 
+/// A single regulatory document checklist entry (name, count, status).
 final class TradeRegulatoryDocument {
   const TradeRegulatoryDocument({
     required this.name,

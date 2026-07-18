@@ -36,14 +36,14 @@ class _ChatHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
+                const Positioned(
                   right: P2PSpacingTokens.p2pChatOnlineBadgeOffset,
                   bottom: P2PSpacingTokens.p2pChatOnlineBadgeOffset,
                   child: SizedBox.square(
                     dimension: P2PSpacingTokens.p2pChatOnlineBadgeSize,
                     child: Material(
                       color: AppColors.buy,
-                      shape: const CircleBorder(
+                      shape: CircleBorder(
                         side: BorderSide(
                           color: AppColors.surface,
                           width: P2PSpacingTokens.p2pChatOnlineBadgeBorder,

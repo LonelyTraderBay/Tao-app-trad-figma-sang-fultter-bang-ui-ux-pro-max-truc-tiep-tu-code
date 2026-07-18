@@ -180,7 +180,7 @@ InputDecoration _inputDecoration(String hint) {
     filled: true,
     fillColor: _providerField,
     contentPadding: TradeSpacingTokens.providerApplicationInputContentPadding,
-    border: OutlineInputBorder(
+    border: const OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: AppRadii.inputRadius,
     ),

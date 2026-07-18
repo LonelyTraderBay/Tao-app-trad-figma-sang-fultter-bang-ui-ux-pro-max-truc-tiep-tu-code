@@ -73,9 +73,14 @@ List<RouteEntry> _collectRouteEntries(Directory appRoot) {
   final routeGroups = Directory('${appRoot.path}/lib/app/router/route_groups');
   final entries = <RouteEntry>[];
 
-  for (final file in routeGroups.listSync().whereType<File>().where((file) {
-    return file.path.endsWith('.dart');
-  }).toList()..sort((a, b) => a.path.compareTo(b.path))) {
+  for (final file
+      in routeGroups.listSync().whereType<File>().where((file) {
+        return file.path.endsWith('.dart');
+      }).toList()..sort(
+        (a, b) => a.path
+            .replaceAll(r'\', '/')
+            .compareTo(b.path.replaceAll(r'\', '/')),
+      )) {
     final text = file.readAsStringSync();
     final relativeFile = file.path
         .replaceAll('\\', '/')

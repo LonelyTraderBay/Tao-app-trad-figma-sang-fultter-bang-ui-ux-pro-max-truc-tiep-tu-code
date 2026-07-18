@@ -91,7 +91,7 @@ class _TutorialCard extends StatelessWidget {
         padding: EarnSpacingTokens.earnCardPaddingX4,
         child: Row(
           children: [
-            _RoundIcon(
+            const _RoundIcon(
               icon: Icons.play_circle_outline_rounded,
               color: AppModuleAccents.earn,
               size: AppSpacing.buttonStandard,

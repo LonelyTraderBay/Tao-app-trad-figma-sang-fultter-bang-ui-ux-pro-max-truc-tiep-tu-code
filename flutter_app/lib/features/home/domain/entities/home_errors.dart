@@ -1,3 +1,5 @@
+/// Thrown when mock data is disabled but no production home repository has
+/// been configured.
 final class HomeBackendContractMissingException implements Exception {
   const HomeBackendContractMissingException();
 

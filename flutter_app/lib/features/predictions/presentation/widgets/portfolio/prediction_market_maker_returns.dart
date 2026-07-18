@@ -21,7 +21,7 @@ class _EstimatedReturns extends StatelessWidget {
               small: true,
             ),
           ),
-          Expanded(
+          const Expanded(
             child: _OverviewMetric(
               label: 'Est. APR',
               value: '~22.5%',
@@ -44,7 +44,15 @@ class _AddLiquidityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: PredictionMarketMakerPage.addLiquidityKey,
-      onPressed: enabled ? () {} : null,
+      // ERR-36: handler thật thay no-op — flow thanh khoản đầy đủ chưa mở,
+      // thông báo minh bạch theo pattern coming-soon sẵn có của feature.
+      onPressed: enabled
+          ? () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Thêm thanh khoản sẽ sớm ra mắt')),
+              );
+            }
+          : null,
       density: VitDensity.compact,
       leading: const Icon(Icons.add_rounded),
       child: const Text('Them thanh khoan'),

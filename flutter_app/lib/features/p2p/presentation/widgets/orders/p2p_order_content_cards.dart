@@ -156,7 +156,7 @@ class _QrPanel extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          _SmallPill(
+          const _SmallPill(
             icon: Icons.open_in_new_rounded,
             label: 'Mở app ngân hàng',
             color: AppModuleAccents.p2p,

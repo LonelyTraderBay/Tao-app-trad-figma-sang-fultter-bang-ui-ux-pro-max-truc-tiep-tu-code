@@ -6,6 +6,9 @@ GoRouter createAppRouter({
 }) {
   return GoRouter(
     initialLocation: initialLocation ?? _defaultInitialLocation,
+    // SEC-S45: route không khớp -> trang lỗi tiếng Việt thay ErrorScreen
+    // mặc định tiếng Anh của go_router.
+    errorBuilder: (context, state) => const VitRouteErrorPage(),
     routes: [
       ...topLevelRoutes(shellRenderMode),
       _appShellRoute(shellRenderMode),

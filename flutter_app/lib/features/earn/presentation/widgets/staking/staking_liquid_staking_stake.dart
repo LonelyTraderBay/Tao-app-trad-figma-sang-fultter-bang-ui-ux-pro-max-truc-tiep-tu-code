@@ -57,13 +57,13 @@ class _LiquidTokenCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Material(
+              const Material(
                 color: AppColors.primary12,
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.xlRadius,
-                  side: const BorderSide(color: AppColors.primary30),
+                  side: BorderSide(color: AppColors.primary30),
                 ),
-                child: const SizedBox(
+                child: SizedBox(
                   width: AppSpacing.ctaHeight,
                   height: AppSpacing.ctaHeight,
                   child: Icon(

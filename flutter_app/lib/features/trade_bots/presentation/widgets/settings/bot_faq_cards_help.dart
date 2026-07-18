@@ -24,7 +24,7 @@ class _HelpCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          Row(
+          const Row(
             children: [
               Expanded(
                 child: _HelpButton(
@@ -32,8 +32,8 @@ class _HelpCard extends StatelessWidget {
                   variant: VitCtaButtonVariant.secondary,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x2),
-              const Expanded(
+              SizedBox(width: AppSpacing.x2),
+              Expanded(
                 child: _HelpButton(
                   label: 'Contact Support',
                   variant: VitCtaButtonVariant.primary,

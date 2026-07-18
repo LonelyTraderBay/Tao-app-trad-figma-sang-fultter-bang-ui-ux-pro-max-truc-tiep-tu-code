@@ -171,7 +171,7 @@ class _AlertSettingsTab extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        CrossModuleInfoPanel(
+        const CrossModuleInfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
           border: AppColors.warn15,
@@ -342,12 +342,12 @@ class _TemplateCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              VitCtaButton(
+              const VitCtaButton(
                 onPressed: HapticFeedback.selectionClick,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
                 padding: CrossModuleSpacingTokens.crossModuleTextButtonPadding,
-                child: const Text('Use'),
+                child: Text('Use'),
               ),
             ],
           ),

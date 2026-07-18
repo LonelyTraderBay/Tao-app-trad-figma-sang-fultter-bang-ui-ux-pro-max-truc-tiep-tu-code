@@ -4,7 +4,7 @@
 **Tech Stack:** Flutter, Dart, Riverpod, GoRouter  
 **Package Manager:** Flutter/Dart pub  
 **Test Framework:** flutter_test  
-**Last Updated:** 2026-05-26
+**Last Updated:** 2026-07-18 (ARCH-A4: quy ước part-file; DOC-D4: hệ ADR)
 
 Read `docs/00_START_HERE.md` before using long-form design, architecture, or QA
 guidance.
@@ -60,6 +60,42 @@ Rules:
   confirmed 100% consistent across all 23 feature modules).
 - Prefer `package:vit_trade_flutter/...` imports across modules.
 
+### State management / controller pattern
+
+Chuẩn chốt tại GĐ2 · STATE-S26 (2026-07-17), chi tiết trong
+`docs/05_ARCHITECTURE/decisions/ADR-001-async-error-idiom.md`:
+
+- Controller có **mutation / async / status transition** ⇒ `NotifierProvider`
+  (đường đọc async thuần dùng `AsyncNotifierProvider`). Family arg truyền qua
+  constructor (`ClassName.new` — idiom Riverpod 3). Khuôn mẫu:
+  `NotificationsStateController`
+  (`lib/app/providers/notifications_controller_providers.dart`) và
+  `TradeOrderController` (implementation tham chiếu ADR-001).
+- `Provider<Controller>` const CHỈ cho **read-model thuần** (không ghi status,
+  không repo-write). Ví dụ hợp lệ: `tradeReadModelControllerProvider`,
+  `TradeMarginController`.
+- Cấm seed `late List` từ `ref.read` rồi mutate bằng `setState`
+  (dual-source-of-truth — STATE-S23 đang gỡ). Guardrail:
+  `flutter_app/test/quality/state_management_guardrail_test.dart`.
+- Family key: scalar/record-of-scalar, hoặc bắt buộc `.autoDispose`
+  (STATE-S24).
+- Máy trạng thái high-risk dùng enum `TradeHighRiskFlowStatus` (10 giá trị),
+  KHÔNG bọc `AsyncValue` — xem bảng điểm ghi trong ADR-001.
+
+### Quy ước part-file
+
+Chuẩn chốt tại GĐ3 · ARCH-A4 (2026-07-18):
+
+- Tách một file lớn thành `part`/`part of` là hợp lệ, nhưng **tên part phải
+  mang vai trò ổn định**: `_sections` (các section UI của trang), `_common`
+  (widget/helper dùng chung trong trang), `_widgets`, `_state`, `_methods`
+  (nhóm method của mock repo), `_entities`...
+- **KHÔNG dùng suffix số thứ tự `_part_NN`** — đó là tách cơ học tạm thời, là
+  "nợ có theo dõi". Toàn lib/ hiện đã về 0 và bị khóa ở 0 bởi guardrail
+  `test/quality/architecture_size_style_debt_guardrails_test.dart`.
+- UI tái dùng nên chuyển vào `presentation/widgets/` thay vì phình part-file
+  của trang.
+
 ## Product Boundaries
 
 Prediction Markets and Open Arena must stay separate.
@@ -73,6 +109,28 @@ Prediction Markets and Open Arena must stay separate.
 
 Allowed bridges: topic/category, event context, creator discovery,
 search/discovery, and profile surfaces with clearly separated sections.
+
+## Chính sách ngôn ngữ (vi-VN-only)
+
+Chuẩn chốt tại GĐ2 · I18N-1 (DEC-i18n Nhánh A, 2026-07-16):
+
+- Copy sản phẩm user-facing là **tiếng Việt có dấu đầy đủ, viết inline** —
+  hợp lệ, KHÔNG cần bọc qua ARB/gen-l10n ở giai đoạn mock-UI này. Lý do:
+  sản phẩm một ngôn ngữ, backend chưa chốt; bọc l10n sớm chỉ thêm một tầng
+  gián tiếp mà không có người dùng thứ hai ngôn ngữ nào hưởng lợi.
+- Đường nâng cấp đã định: khi có backend/đa ngôn ngữ thật, migrate sang
+  `flutter gen-l10n` (ARB) theo từng module — locale runtime đã sẵn
+  (`flutter_localizations` + `locale: vi` trong `vit_trade_app.dart`,
+  I18N-2).
+- **Cấm thêm chuỗi tiếng Anh user-facing MỚI** trong presentation layer.
+  Ratchet: `flutter_app/test/quality/i18n_vi_only_guardrail_test.dart` +
+  baseline `i18n_vi_only_baseline.txt` (nợ tiếng Anh hiện trạng ~443 chuỗi —
+  trả dần khi chạm file; SỬA một chuỗi baseline nghĩa là dịch nó luôn).
+  Lưu ý heuristic: tiếng Việt KHÔNG DẤU ("mua nhanh") từng false-positive
+  là tiếng Anh — guardrail chỉ bắt chuỗi có ≥2 từ marker tiếng Anh, không
+  language-detect; copy mới cứ viết đủ dấu là an toàn.
+- Nhãn kỹ thuật không phải copy (semanticIdentifier, route path, Key, tên
+  package/API) không thuộc phạm vi chính sách này.
 
 ## UI Rules
 

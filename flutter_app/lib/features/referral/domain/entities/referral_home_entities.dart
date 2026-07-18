@@ -1,5 +1,7 @@
 part of 'referral_entities.dart';
 
+/// Data for the referral home screen: code/link, tier progress, active
+/// [campaign], stats, milestones, leaderboard, and history.
 final class ReferralHomeSnapshot {
   const ReferralHomeSnapshot({
     required this.endpoint,
@@ -46,6 +48,8 @@ final class ReferralHomeSnapshot {
   final Set<ReferralScreenState> supportedStates;
 }
 
+/// Aggregate referral stats (friends, commission, volume) shown on the
+/// referral home screen.
 final class ReferralHomeStatsDraft {
   const ReferralHomeStatsDraft({
     required this.totalFriends,
@@ -68,6 +72,8 @@ final class ReferralHomeStatsDraft {
   final int thisMonthFriends;
 }
 
+/// The active referral campaign (bonus, days left, participants) shown on
+/// the referral home screen.
 final class ReferralCampaignDraft {
   const ReferralCampaignDraft({
     required this.title,
@@ -88,6 +94,8 @@ final class ReferralCampaignDraft {
   final int bonusMultiplier;
 }
 
+/// One labeled social-proof stat (e.g. "10K+ referrals") shown on the
+/// referral home screen.
 final class ReferralSocialProofDraft {
   const ReferralSocialProofDraft({required this.value, required this.label});
 
@@ -95,6 +103,8 @@ final class ReferralSocialProofDraft {
   final String label;
 }
 
+/// One friend-count milestone reward (claimed or not) on the referral
+/// home screen.
 final class ReferralMilestoneDraft {
   const ReferralMilestoneDraft({
     required this.id,
@@ -111,6 +121,8 @@ final class ReferralMilestoneDraft {
   final bool claimed;
 }
 
+/// One in-progress commission (reason, ETA, progress) owed for a referred
+/// friend.
 final class ReferralPendingCommissionDraft {
   const ReferralPendingCommissionDraft({
     required this.id,
@@ -135,6 +147,7 @@ final class ReferralPendingCommissionDraft {
   final int progress;
 }
 
+/// One ranked entry on the referral leaderboard.
 final class ReferralLeaderboardDraft {
   const ReferralLeaderboardDraft({
     required this.rank,
@@ -151,6 +164,8 @@ final class ReferralLeaderboardDraft {
   final String tier;
 }
 
+/// One navigation shortcut card (title/subtitle/route) on the referral
+/// home screen.
 final class ReferralDetailLinkDraft {
   const ReferralDetailLinkDraft({
     required this.id,
@@ -165,6 +180,7 @@ final class ReferralDetailLinkDraft {
   final String route;
 }
 
+/// One numbered "how it works" step shown on the referral home screen.
 final class ReferralStepDraft {
   const ReferralStepDraft({
     required this.step,
@@ -177,6 +193,8 @@ final class ReferralStepDraft {
   final String description;
 }
 
+/// One past referral campaign's summary (dates, status, participants,
+/// result) on the referral home screen.
 final class ReferralCampaignHistoryDraft {
   const ReferralCampaignHistoryDraft({
     required this.id,

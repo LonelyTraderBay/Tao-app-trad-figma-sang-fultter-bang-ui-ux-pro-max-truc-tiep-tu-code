@@ -30,11 +30,11 @@ class _ClaimSheet extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
+                  const Align(
                     child: SizedBox(
                       width: LaunchpadSpacingTokens.launchpadBox40,
                       height: AppSpacing.x1,
-                      child: const DecoratedBox(
+                      child: DecoratedBox(
                         decoration: ShapeDecoration(
                           color: AppColors.borderSolid,
                           shape: RoundedRectangleBorder(
@@ -90,7 +90,7 @@ class _ClaimSheet extends StatelessWidget {
                   ),
                   _DetailLine(row: _DetailRow('Đợt', entry.label)),
                   _DetailLine(row: _DetailRow('Chain', receipt.chain)),
-                  _DetailLine(row: const _DetailRow('Gas ước tính', r'~$0.15')),
+                  const _DetailLine(row: _DetailRow('Gas ước tính', r'~$0.15')),
                   const SizedBox(
                     height: AppSpacing.pageRhythmStandardSectionGap,
                   ),

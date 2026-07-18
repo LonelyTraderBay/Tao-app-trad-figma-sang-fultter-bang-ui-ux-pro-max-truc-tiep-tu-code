@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 
+/// Decorative radial gradient glow, typically layered behind hero/header
+/// content for a subtle ambient accent.
 class VitHeroGlow extends StatelessWidget {
   const VitHeroGlow({
     super.key,

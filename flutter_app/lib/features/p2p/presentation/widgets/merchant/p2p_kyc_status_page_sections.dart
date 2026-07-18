@@ -17,16 +17,16 @@ class _OverallStatusCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
                 child: Material(
                   color: AppColors.primary15,
                   shape: RoundedRectangleBorder(
                     borderRadius: AppRadii.lgRadius,
-                    side: const BorderSide(color: AppColors.primary20),
+                    side: BorderSide(color: AppColors.primary20),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Icon(
                       Icons.shield_outlined,
                       color: AppModuleAccents.p2p,

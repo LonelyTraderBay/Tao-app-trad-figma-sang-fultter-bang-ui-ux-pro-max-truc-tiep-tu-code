@@ -1,7 +1,9 @@
 part of 'arena_entities.dart';
 
+/// Release-readiness status of a screen in the production-ecosystem registry.
 enum ArenaProductionScreenStatus { live, future, qaOnly, archived }
 
+/// One documented UI state a production Arena screen can render.
 enum ArenaProductionScreenState {
   defaultView,
   loading,
@@ -16,6 +18,7 @@ enum ArenaProductionScreenState {
   expired,
 }
 
+/// Registry of production-ready Arena screens, flows, and components for the release-readiness screen.
 final class ArenaProductionReadySnapshot {
   const ArenaProductionReadySnapshot({
     required this.endpoint,
@@ -42,6 +45,7 @@ final class ArenaProductionReadySnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single screen entry in the production-readiness registry.
 final class ArenaProductionScreenDraft {
   const ArenaProductionScreenDraft({
     required this.name,
@@ -60,6 +64,7 @@ final class ArenaProductionScreenDraft {
   final String notes;
 }
 
+/// A single documented flow in the production-readiness registry.
 final class ArenaProductionFlowDraft {
   const ArenaProductionFlowDraft({
     required this.id,
@@ -72,6 +77,7 @@ final class ArenaProductionFlowDraft {
   final List<ArenaProductionFlowStepDraft> steps;
 }
 
+/// A single step in a documented production flow.
 final class ArenaProductionFlowStepDraft {
   const ArenaProductionFlowStepDraft({
     required this.label,
@@ -84,6 +90,7 @@ final class ArenaProductionFlowStepDraft {
   final String description;
 }
 
+/// A single shared component entry in the production-readiness registry.
 final class ArenaProductionComponentDraft {
   const ArenaProductionComponentDraft({
     required this.name,
@@ -98,6 +105,7 @@ final class ArenaProductionComponentDraft {
   final String description;
 }
 
+/// A category of terms in the production-readiness data dictionary.
 final class ArenaProductionDictionaryDraft {
   const ArenaProductionDictionaryDraft({
     required this.category,
@@ -108,6 +116,7 @@ final class ArenaProductionDictionaryDraft {
   final List<ArenaProductionDictionaryItemDraft> items;
 }
 
+/// A single term entry in the production-readiness data dictionary.
 final class ArenaProductionDictionaryItemDraft {
   const ArenaProductionDictionaryItemDraft({
     required this.code,
@@ -120,6 +129,7 @@ final class ArenaProductionDictionaryItemDraft {
   final String description;
 }
 
+/// Visual tone used to style bridge documentation content.
 enum ArenaBridgeTone {
   content,
   arena,
@@ -130,8 +140,10 @@ enum ArenaBridgeTone {
   neutral,
 }
 
+/// Whether a bridge example illustrates correct or forbidden behavior.
 enum ArenaBridgeExampleStatus { correct, blocked }
 
+/// Explainer content describing what may and may not cross the Arena/Prediction Markets boundary.
 final class ArenaPredictionBridgeSnapshot {
   const ArenaPredictionBridgeSnapshot({
     required this.endpoint,
@@ -166,6 +178,7 @@ final class ArenaPredictionBridgeSnapshot {
   final Set<ArenaScreenState> supportedStates;
 }
 
+/// A single numbered principle in the Arena/Prediction Markets bridge explainer.
 final class ArenaBridgePrincipleDraft {
   const ArenaBridgePrincipleDraft({
     required this.number,
@@ -180,6 +193,7 @@ final class ArenaBridgePrincipleDraft {
   final ArenaBridgeTone tone;
 }
 
+/// A single allowed/not-allowed rule row in the bridge explainer.
 final class ArenaBridgeRuleDraft {
   const ArenaBridgeRuleDraft({
     required this.label,
@@ -192,6 +206,7 @@ final class ArenaBridgeRuleDraft {
   final bool allowed;
 }
 
+/// A single topic comparing its Prediction Markets and Arena usage in the bridge explainer.
 final class ArenaBridgeTopicDraft {
   const ArenaBridgeTopicDraft({
     required this.id,
@@ -210,6 +225,7 @@ final class ArenaBridgeTopicDraft {
   final ArenaBridgeTone tone;
 }
 
+/// A single boundary banner shown in the bridge explainer.
 final class ArenaBridgeBoundaryDraft {
   const ArenaBridgeBoundaryDraft({
     required this.id,
@@ -224,6 +240,7 @@ final class ArenaBridgeBoundaryDraft {
   final ArenaBridgeTone tone;
 }
 
+/// A single badge shown in the bridge explainer.
 final class ArenaBridgeBadgeDraft {
   const ArenaBridgeBadgeDraft({
     required this.id,
@@ -238,6 +255,7 @@ final class ArenaBridgeBadgeDraft {
   final ArenaBridgeTone tone;
 }
 
+/// A single informational text row in the bridge explainer.
 final class ArenaBridgeInfoRowDraft {
   const ArenaBridgeInfoRowDraft({required this.text, required this.tone});
 
@@ -245,6 +263,7 @@ final class ArenaBridgeInfoRowDraft {
   final ArenaBridgeTone tone;
 }
 
+/// A single shared component sample shown in the bridge explainer.
 final class ArenaBridgeComponentDraft {
   const ArenaBridgeComponentDraft({
     required this.name,
@@ -263,6 +282,7 @@ final class ArenaBridgeComponentDraft {
   final ArenaBridgeTone tone;
 }
 
+/// A single correct/blocked usage example in the bridge explainer.
 final class ArenaBridgeExampleDraft {
   const ArenaBridgeExampleDraft({
     required this.id,
@@ -281,6 +301,7 @@ final class ArenaBridgeExampleDraft {
   final List<String> evidenceRows;
 }
 
+/// Side-by-side summary of a user's Prediction Markets positions and Arena points for the bridge explainer.
 final class ArenaBridgeDualStatsDraft {
   const ArenaBridgeDualStatsDraft({
     required this.predictionPositions,

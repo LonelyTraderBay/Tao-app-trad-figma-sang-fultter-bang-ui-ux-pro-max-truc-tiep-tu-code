@@ -1,5 +1,8 @@
 import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
+/// Data contract for the bot lifecycle: terms/risk/suitability onboarding,
+/// running-bot management, risk dashboard, emergency stop, and security
+/// settings.
 abstract interface class TradingBotsRepository {
   TradeBotsSnapshot getTradingBots();
   TradeBotTermsSnapshot getBotTermsOfService();

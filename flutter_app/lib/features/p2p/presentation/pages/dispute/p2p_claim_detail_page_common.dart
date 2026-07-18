@@ -88,13 +88,13 @@ class _NotificationsCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             width: _p2pClaimIconBoxExtent,
             height: _p2pClaimIconBoxExtent,
             child: Material(
               color: AppColors.primary12,
-              shape: const CircleBorder(),
-              child: const Icon(
+              shape: CircleBorder(),
+              child: Icon(
                 Icons.notifications_none_rounded,
                 color: AppModuleAccents.p2p,
                 size: AppSpacing.iconSm,

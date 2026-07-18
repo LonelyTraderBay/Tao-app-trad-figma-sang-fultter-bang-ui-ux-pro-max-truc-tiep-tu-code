@@ -73,11 +73,11 @@ class _TitlesSection extends StatelessWidget {
           ),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-        VitCard(
+        const VitCard(
           padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               _ProcessRow(step: '1', text: 'Chọn Domain để lọc title phù hợp'),
               _ProcessRow(
                 step: '2',
@@ -164,8 +164,8 @@ class _SmallPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.warn10,
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: AppColors.warningBorder),
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: AppColors.warningBorder),
         borderRadius: AppRadii.smRadius,
       ),
       child: Padding(

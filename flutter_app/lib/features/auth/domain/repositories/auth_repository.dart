@@ -1,5 +1,7 @@
 import 'package:vit_trade_flutter/features/auth/domain/entities/auth_entities.dart';
 
+/// Data source contract for the Auth feature: login, registration, OTP
+/// verification, two-factor setup, and password reset.
 abstract interface class AuthRepository {
   Future<AuthSession> login({
     required String identifier,

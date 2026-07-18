@@ -49,15 +49,12 @@ class StakingPerformanceCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const StakingLegendDot(
-                color: AppColors.primary,
-                label: 'Tổng giá trị',
-              ),
-              const SizedBox(width: AppSpacing.x6),
-              const StakingLegendDot(color: AppColors.buy, label: 'Lợi nhuận'),
+              StakingLegendDot(color: AppColors.primary, label: 'Tổng giá trị'),
+              SizedBox(width: AppSpacing.x6),
+              StakingLegendDot(color: AppColors.buy, label: 'Lợi nhuận'),
             ],
           ),
         ],

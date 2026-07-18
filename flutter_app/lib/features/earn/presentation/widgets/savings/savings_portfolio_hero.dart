@@ -190,11 +190,11 @@ class _HeroStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardRadius,
-          side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
+          side: BorderSide(color: AppColors.portfolioBtnGhostBorder),
         ),
       ),
       child: Padding(
@@ -235,11 +235,11 @@ class _HeroPositionStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardRadius,
-          side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
+          side: BorderSide(color: AppColors.portfolioBtnGhostBorder),
         ),
       ),
       child: Padding(

@@ -214,7 +214,7 @@ class _TypeIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: style.color.withValues(alpha: .14),
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       child: Padding(
         padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Icon(

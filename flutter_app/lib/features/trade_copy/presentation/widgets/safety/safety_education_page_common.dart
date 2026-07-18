@@ -79,7 +79,7 @@ class _VerificationTab extends StatelessWidget {
       fullBleed: true,
       density: VitDensity.compact,
       children: [
-        _InfoPanel(
+        const _InfoPanel(
           text:
               'Verification là cơ chế bảo vệ user. Provider verified đã qua kiểm tra KYC và performance audit.',
           color: _safetyPrimary,

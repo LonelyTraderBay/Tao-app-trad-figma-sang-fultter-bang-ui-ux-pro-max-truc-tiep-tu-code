@@ -20,7 +20,7 @@ class _EnforcementTab extends StatelessWidget {
           if (action != actions.last) const SizedBox(height: _safetySpace),
         ],
         const SizedBox(height: _safetySpace),
-        _SimpleCard(
+        const _SimpleCard(
           title: 'Transparent enforcement',
           body:
               'All actions are logged. If you believe an action was unfair, contact support.',
@@ -223,7 +223,7 @@ class _EmergencyPanel extends StatelessWidget {
                     const SizedBox(
                       height: AppSpacing.pageRhythmStandardSectionGap,
                     ),
-                    Text(
+                    const Text(
                       'Emergency stop activated',
                       style: AppTextStyles.baseMedium,
                     ),

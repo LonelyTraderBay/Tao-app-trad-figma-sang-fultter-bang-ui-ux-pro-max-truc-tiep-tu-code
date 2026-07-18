@@ -31,7 +31,7 @@ class _SearchResultCard extends StatelessWidget {
               ),
               if (isResolved) ...[
                 const SizedBox(width: AppSpacing.x2),
-                PredictionSmallBadge(
+                const PredictionSmallBadge(
                   label: 'ĐÃ KẾT THÚC',
                   color: AppColors.text3,
                   background: AppColors.surface2,

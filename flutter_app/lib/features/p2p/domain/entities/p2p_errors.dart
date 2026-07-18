@@ -1,3 +1,4 @@
+/// Thrown when the P2P feature needs a real repository but only mock data is configured.
 final class P2PBackendContractMissingException implements Exception {
   const P2PBackendContractMissingException();
 

@@ -113,7 +113,7 @@ class _ModeSwitch extends StatelessWidget {
       height: _guideActionExtent,
       accentColor: _arenaAccent,
       options: [
-        VitSegmentedChoiceOption(
+        const VitSegmentedChoiceOption(
           key: ArenaGuidePage.modeCreateKey,
           activeKey: ArenaGuidePage.modeCreateKey,
           value: _GuideMode.create,
@@ -124,7 +124,7 @@ class _ModeSwitch extends StatelessWidget {
           ),
           semanticLabel: 'Chế độ tạo challenge',
         ),
-        VitSegmentedChoiceOption(
+        const VitSegmentedChoiceOption(
           key: ArenaGuidePage.modeJoinKey,
           activeKey: ArenaGuidePage.modeJoinKey,
           value: _GuideMode.join,
@@ -149,11 +149,11 @@ class _StepsTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
+        const Positioned(
           left: ArenaSpacingTokens.arenaGuideTimelineLeft,
           top: ArenaSpacingTokens.arenaGuideTimelineInset,
           bottom: ArenaSpacingTokens.arenaGuideTimelineInset,
-          child: const SizedBox(
+          child: SizedBox(
             width: ArenaSpacingTokens.arenaGuideTimelineLineWidth,
             child: ColoredBox(color: AppColors.divider),
           ),
@@ -284,10 +284,10 @@ class _StartCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: ArenaSpacingTokens.arenaGuideStartIconBox,
                 height: ArenaSpacingTokens.arenaGuideStartIconBox,
-                child: const DecoratedBox(
+                child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.primary12,
                     shape: RoundedRectangleBorder(

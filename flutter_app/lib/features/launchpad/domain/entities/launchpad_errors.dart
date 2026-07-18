@@ -1,3 +1,4 @@
+/// Thrown when the Launchpad feature needs a real repository but only mock data is configured.
 final class LaunchpadBackendContractMissingException implements Exception {
   const LaunchpadBackendContractMissingException();
 

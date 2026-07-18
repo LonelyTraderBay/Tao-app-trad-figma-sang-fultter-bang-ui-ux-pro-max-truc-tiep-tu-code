@@ -104,12 +104,32 @@ class _PredictionEventDetailPageState
     );
   }
 
+  /// ERR-36: submit thật qua máy trạng thái ADR-001 — thành công điều hướng
+  /// trang biên lai, thất bại ở lại trang với banner lỗi từ state.
+  Future<void> _submitOrder() async {
+    final provider = predictionEventDetailControllerProvider(widget.eventId);
+    final receiptId = await ref
+        .read(provider.notifier)
+        .submitOrder(
+          outcome: _selectedOutcome,
+          isBuy: _isBuy,
+          isMarket: _isMarket,
+          amountText: _amount,
+        );
+    if (!mounted || receiptId == null) return;
+    HapticFeedback.selectionClick();
+    context.go(AppRoutePaths.marketsPredictionReceipt(receiptId));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
+    final viewState = ref.watch(
       predictionEventDetailControllerProvider(widget.eventId),
     );
-    final snapshot = controller.state.snapshot;
+    final controller = ref.read(
+      predictionEventDetailControllerProvider(widget.eventId).notifier,
+    );
+    final snapshot = viewState.snapshot;
     final event = snapshot.event;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
@@ -188,10 +208,39 @@ class _PredictionEventDetailPageState
                         _StatsGrid(event: event),
                         if (snapshot.highRiskContractId != null)
                           VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Order risk states active',
-                            message:
+                            state: switch (viewState.status) {
+                              PredictionHighRiskFlowStatus.submitting ||
+                              PredictionHighRiskFlowStatus.submitted =>
+                                VitHighRiskUiState.submitting,
+                              PredictionHighRiskFlowStatus.success =>
+                                VitHighRiskUiState.success,
+                              PredictionHighRiskFlowStatus.error =>
+                                VitHighRiskUiState.error,
+                              PredictionHighRiskFlowStatus.offline =>
+                                VitHighRiskUiState.offline,
+                              _ => VitHighRiskUiState.riskReview,
+                            },
+                            title: switch (viewState.status) {
+                              PredictionHighRiskFlowStatus.submitting ||
+                              PredictionHighRiskFlowStatus.submitted =>
+                                'Đang gửi lệnh dự đoán',
+                              PredictionHighRiskFlowStatus.error =>
+                                'Gửi lệnh thất bại',
+                              PredictionHighRiskFlowStatus.offline =>
+                                'Mất kết nối',
+                              _ => 'Order risk states active',
+                            },
+                            message: switch (viewState.status) {
+                              PredictionHighRiskFlowStatus.submitting ||
+                              PredictionHighRiskFlowStatus.submitted =>
+                                'Đang gửi lệnh tới thị trường dự đoán. Vui lòng chờ trong giây lát.',
+                              PredictionHighRiskFlowStatus.error ||
+                              PredictionHighRiskFlowStatus.offline =>
+                                viewState.errorMessage ??
+                                    'Không gửi được lệnh. Vui lòng thử lại.',
+                              _ =>
                                 'Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.',
+                            },
                             contractId: snapshot.highRiskContractId,
                             density: VitDensity.compact,
                           ),
@@ -213,6 +262,9 @@ class _PredictionEventDetailPageState
                             isBuy: _isBuy,
                             isMarket: _isMarket,
                             amount: _amount,
+                            submitting: viewState.status.isBusy,
+                            errorMessage: viewState.errorMessage,
+                            onSubmit: _submitOrder,
                             onSideChanged: (value) => setState(() {
                               _isBuy = value;
                             }),

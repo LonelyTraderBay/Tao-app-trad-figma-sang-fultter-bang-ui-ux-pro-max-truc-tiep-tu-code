@@ -133,7 +133,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                     children: [
                       _ExportHero(snapshot: snapshot),
                       if (activeTab == 'create') ...[
-                        VitSectionHeader(
+                        const VitSectionHeader(
                           title: 'Loại báo cáo',
                           variant: VitSectionHeaderVariant.accentBar,
                           accentColor: AppModuleAccents.earn,
@@ -150,7 +150,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        VitSectionHeader(
+                        const VitSectionHeader(
                           title: 'Định dạng file',
                           variant: VitSectionHeaderVariant.accentBar,
                           accentColor: AppModuleAccents.earn,
@@ -167,7 +167,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        VitSectionHeader(
+                        const VitSectionHeader(
                           title: 'Khoảng thời gian',
                           variant: VitSectionHeaderVariant.accentBar,
                           accentColor: AppModuleAccents.earn,
@@ -184,7 +184,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        VitSectionHeader(
+                        const VitSectionHeader(
                           title: 'Loại giao dịch',
                           variant: VitSectionHeaderVariant.accentBar,
                           accentColor: AppModuleAccents.earn,
@@ -201,7 +201,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                             });
                           },
                         ),
-                        VitSectionHeader(
+                        const VitSectionHeader(
                           title: 'Tùy chọn thêm',
                           variant: VitSectionHeaderVariant.accentBar,
                           accentColor: AppModuleAccents.earn,

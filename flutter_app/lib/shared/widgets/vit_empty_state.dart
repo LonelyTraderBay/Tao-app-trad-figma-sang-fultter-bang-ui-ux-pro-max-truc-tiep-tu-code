@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
+/// Centered "nothing here" placeholder: icon, title, optional
+/// message/secondary message, and optional action button.
 class VitEmptyState extends StatelessWidget {
   const VitEmptyState({
     super.key,

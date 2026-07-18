@@ -209,13 +209,13 @@ class _FAQCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x3),
-                      _FeedbackPill(
+                      const _FeedbackPill(
                         icon: Icons.thumb_up_alt_outlined,
                         label: 'Có',
                         color: AppColors.buy,
                       ),
                       const SizedBox(width: AppSpacing.x2),
-                      _FeedbackPill(
+                      const _FeedbackPill(
                         icon: Icons.thumb_down_alt_outlined,
                         label: 'Không',
                         color: AppColors.sell,

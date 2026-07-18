@@ -1,9 +1,13 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Trigger strategy for a portfolio rebalance plan.
 enum DcaRebalanceStrategy { threshold, periodic, hybrid }
 
+/// Recurring check frequency for a periodic/hybrid rebalance plan.
 enum DcaRebalanceFrequency { weekly, biweekly, monthly, quarterly }
 
+/// Data for the DCA rebalance config screen: strategy/frequency settings
+/// plus per-asset [targets] and their selectable option lists.
 class DcaRebalanceConfigSnapshot {
   const DcaRebalanceConfigSnapshot({
     required this.endpoint,
@@ -32,6 +36,8 @@ class DcaRebalanceConfigSnapshot {
   final List<DcaRebalanceFrequencyOption> frequencyOptions;
 }
 
+/// One asset's target allocation percent/tolerance within a rebalance
+/// config.
 class DcaRebalanceTarget {
   const DcaRebalanceTarget({
     required this.id,
@@ -70,8 +76,11 @@ class DcaRebalanceTarget {
   }
 }
 
+/// Leading icon choice for a rebalance strategy option row.
 enum DcaRebalanceOptionIcon { zap, clock, combine }
 
+/// One selectable [DcaRebalanceStrategy] entry with title/subtitle/icon
+/// copy.
 class DcaRebalanceStrategyOption {
   const DcaRebalanceStrategyOption({
     required this.strategy,
@@ -86,6 +95,7 @@ class DcaRebalanceStrategyOption {
   final DcaRebalanceOptionIcon icon;
 }
 
+/// One selectable [DcaRebalanceFrequency] entry with title/subtitle copy.
 class DcaRebalanceFrequencyOption {
   const DcaRebalanceFrequencyOption({
     required this.frequency,
@@ -98,6 +108,8 @@ class DcaRebalanceFrequencyOption {
   final String subtitle;
 }
 
+/// Data for one rebalance config's dashboard screen, resolved from
+/// [configId] (found/not-found + status message).
 class DcaRebalanceDashboardSnapshot {
   const DcaRebalanceDashboardSnapshot({
     required this.endpoint,
@@ -126,6 +138,8 @@ class DcaRebalanceDashboardSnapshot {
   final List<String> backtests;
 }
 
+/// One proposed buy/sell trade (amount, quantity, current-vs-target
+/// percent) needed to execute a rebalance.
 class DcaRebalanceTradePreview {
   const DcaRebalanceTradePreview({
     required this.symbol,
@@ -144,4 +158,5 @@ class DcaRebalanceTradePreview {
   final double tradeQuantity;
 }
 
+/// The action a [DcaRebalanceTradePreview] proposes for one asset.
 enum DcaRebalanceTradeAction { buy, sell, hold }

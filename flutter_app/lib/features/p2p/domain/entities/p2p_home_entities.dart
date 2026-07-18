@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Data for the P2P home screen: filters, quick actions, platform stats, and ad listings.
 final class P2PHomeSnapshot {
   const P2PHomeSnapshot({
     required this.endpoint,
@@ -90,6 +91,7 @@ final class P2PHomeSnapshot {
   }
 }
 
+/// A single quick-action tile on the P2P home screen.
 final class P2PHomeQuickActionDraft {
   const P2PHomeQuickActionDraft({
     required this.id,
@@ -108,6 +110,7 @@ final class P2PHomeQuickActionDraft {
   final String toneKey;
 }
 
+/// Aggregate platform statistics shown on the P2P home screen.
 final class P2PHomePlatformStatsDraft {
   const P2PHomePlatformStatsDraft({
     required this.volume24h,
@@ -130,6 +133,7 @@ final class P2PHomePlatformStatsDraft {
   final int escrowProtected;
 }
 
+/// Confirmation data for an express trade before it's submitted.
 final class P2PExpressConfirmSnapshot {
   const P2PExpressConfirmSnapshot({
     required this.endpoint,
@@ -166,6 +170,7 @@ final class P2PExpressConfirmSnapshot {
   bool get isBuy => tradeType == P2PTradeType.buy;
 }
 
+/// Data and matching logic for the P2P express (quick buy/sell) screen.
 final class P2PExpressSnapshot {
   const P2PExpressSnapshot({
     required this.endpoint,
@@ -249,6 +254,7 @@ final class P2PExpressSnapshot {
   }
 }
 
+/// A tradable crypto asset and its market price.
 final class P2PAssetDraft {
   const P2PAssetDraft({
     required this.symbol,
@@ -261,6 +267,7 @@ final class P2PAssetDraft {
   final int marketPriceVnd;
 }
 
+/// A single payment method available for an express trade.
 final class P2PPaymentMethodDraft {
   const P2PPaymentMethodDraft({
     required this.id,
@@ -273,6 +280,7 @@ final class P2PPaymentMethodDraft {
   final bool isVerified;
 }
 
+/// A single step in the express-trade explainer.
 final class P2PExpressStepDraft {
   const P2PExpressStepDraft({required this.title, required this.iconKey});
 

@@ -274,10 +274,10 @@ class _MonthlyOrdersCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 child: VitSectionHeader(
                   title: 'Đơn hàng theo tháng',
                   icon: Icons.shopping_cart_outlined,
@@ -285,9 +285,9 @@ class _MonthlyOrdersCard extends StatelessWidget {
                   bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 ),
               ),
-              const _TinyLegend(color: AppColors.buy, label: 'Mua'),
-              const SizedBox(width: AppSpacing.x3),
-              const _TinyLegend(color: AppColors.sell, label: 'Bán'),
+              _TinyLegend(color: AppColors.buy, label: 'Mua'),
+              SizedBox(width: AppSpacing.x3),
+              _TinyLegend(color: AppColors.sell, label: 'Bán'),
             ],
           ),
           SizedBox(

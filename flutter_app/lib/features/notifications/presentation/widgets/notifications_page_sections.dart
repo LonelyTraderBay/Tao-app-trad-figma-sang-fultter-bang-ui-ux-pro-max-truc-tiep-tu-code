@@ -21,7 +21,7 @@ class _NotificationFilterBand extends StatelessWidget {
         child: VitSegmentedChoice<_NotificationFilter>(
           selected: filter,
           onChanged: onChanged,
-          options: [
+          options: const [
             VitSegmentedChoiceOption(
               value: _NotificationFilter.all,
               label: 'Tất cả',
@@ -60,7 +60,7 @@ class _UnreadSummaryBar extends StatelessWidget {
       padding: NotificationsSpacingTokens.notificationsToolbarPadding,
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.notifications_active_rounded,
             color: AppModuleAccents.notifications,
             size: AppSpacing.iconMd,
@@ -117,7 +117,7 @@ class _NotificationFeed extends StatelessWidget {
     return VitPageSection(
       density: VitDensity.compact,
       children: [
-        VitModuleSectionHeader(
+        const VitModuleSectionHeader(
           title: 'THÔNG BÁO GẦN ĐÂY',
           accentColor: AppModuleAccents.notifications,
           density: VitDensity.compact,

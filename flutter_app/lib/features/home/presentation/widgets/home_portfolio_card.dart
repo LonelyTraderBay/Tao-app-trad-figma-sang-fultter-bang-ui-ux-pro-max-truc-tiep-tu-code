@@ -230,7 +230,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (!balanceHidden) ...[
-                    Icon(
+                    const Icon(
                       Icons.swap_horiz_rounded,
                       size: SharedSpacingTokens.homePortfolioBadgeIcon,
                       color: AppColors.portfolioTextMuted,
@@ -306,7 +306,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.account_balance_wallet_outlined,
                 color: AppColors.portfolioTextDim,
                 size: AppSpacing.iconMd,

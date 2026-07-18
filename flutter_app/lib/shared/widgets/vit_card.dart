@@ -6,8 +6,10 @@ import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 
+/// Visual treatment of a [VitCard]'s background and border.
 enum VitCardVariant { standard, hero, inner, ghost }
 
+/// Corner radius preset for a [VitCard].
 enum VitCardRadius {
   /// 16px — standard card surface.
   standard,
@@ -28,6 +30,8 @@ enum VitCardContentAlign {
   center,
 }
 
+/// Base surface primitive for card-shaped content app-wide: variant-driven
+/// background/border, optional tap handling, padding, and sizing.
 class VitCard extends StatelessWidget {
   const VitCard({
     super.key,
@@ -192,6 +196,8 @@ class VitCard extends StatelessWidget {
   }
 }
 
+/// Small ghost-tinted inner stat tile, typically holding a metric label and
+/// value inside a parent [VitCard].
 class VitCardStat extends StatelessWidget {
   const VitCardStat({
     super.key,

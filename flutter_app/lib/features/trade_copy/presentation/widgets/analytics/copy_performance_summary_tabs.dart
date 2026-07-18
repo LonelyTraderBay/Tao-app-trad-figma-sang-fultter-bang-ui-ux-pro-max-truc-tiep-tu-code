@@ -212,9 +212,9 @@ class _OverviewTab extends StatelessWidget {
           ),
         ),
         const SizedBox(height: _performanceSpace),
-        _InfoBox(
+        const _InfoBox(
           title: 'Tại sao có chênh lệch?',
-          lines: const [
+          lines: [
             'Slippage: Copy orders thực thi chậm hơn 0.5-3s',
             'Chi phí: Trading fees + performance fees',
             'Position sizing: Fixed mode sử dụng 50% capital',

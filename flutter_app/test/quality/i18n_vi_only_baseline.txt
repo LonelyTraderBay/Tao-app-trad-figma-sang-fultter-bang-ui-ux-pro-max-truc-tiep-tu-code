@@ -1,0 +1,439 @@
+lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|$title has no data
+lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|No rows are available for the selected scope.
+lib/features/admin/presentation/widgets/admin_dashboard_state_content.dart|The admin data source did not return a view.
+lib/features/admin/presentation/widgets/analytics_dashboard_common.dart|The event stream is quiet for the selected period.
+lib/features/admin/presentation/widgets/analytics_dashboard_sections.dart|Events will rank here after tracking data arrives.
+lib/features/admin/presentation/widgets/analytics_dashboard_sections.dart|The selected range has no tracked admin events yet.
+lib/features/admin/presentation/widgets/funnel_dashboard_waterfall_details.dart|Dropout rates appear after sessions enter this funnel.
+lib/features/admin/presentation/widgets/funnel_dashboard_waterfall_details.dart|No dropout data
+lib/features/arena/presentation/controllers/arena_controller.dart|Appeal opens a local review request for moderation notes and rule evidence.
+lib/features/arena/presentation/controllers/arena_controller.dart|Arena Points only. Completion, fair-play review, and Points pool stay inside Open Arena.
+lib/features/arena/presentation/controllers/arena_controller.dart|Confirm the Arena Points review before joining.
+lib/features/arena/presentation/controllers/arena_controller.dart|Insufficient Arena Points for this join preview.
+lib/features/arena/presentation/controllers/arena_controller.dart|No local report case is available for this route.
+lib/features/arena/presentation/controllers/arena_controller.dart|Report case is unavailable for review.
+lib/features/arena/presentation/controllers/arena_controller.dart|Report handling stays limited to safety, rule clarity, and fair-play review.
+lib/features/arena/presentation/pages/hub/arena_production_ready_page_flows_registry_handoff.dart|Clear labels: Live = implemented local UI, Release-gated = not user-available, QA = internal only.
+lib/features/auth/presentation/controllers/auth_controller.dart|Authentication service is temporarily unavailable. Please try again.
+lib/features/cross_module/presentation/pages/tax_report_center_generate_tab.dart|Export request queued locally. Production wiring will post to /exports with the selected period and format.
+lib/features/cross_module/presentation/pages/tax_report_center_generate_tab.dart|Tax reports are for reference only. Consult a tax professional for accurate filing. We are not tax advisors.
+lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart|Form 8949 - Sales and Dispositions of Capital Assets
+lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart|Reports may not include all taxable events
+lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart|Tax reports aggregate data from all modules. Each transaction includes timestamp, type, amount, and gain/loss calculation.
+lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart|This platform does not provide tax advice. Tax reports are generated for your convenience only. Please consult a qualified tax professional or accountant for accurate tax filing guidance specific to your jurisdiction.
+lib/features/cross_module/presentation/pages/tax_report_center_settings_tab.dart|We are not tax advisors or accountants
+lib/features/cross_module/presentation/widgets/cross_module_analytics_common.dart|Open Arena metrics are not included in financial analytics as Arena uses points-only system. See Arena leaderboard for trust and performance metrics.
+lib/features/cross_module/presentation/widgets/smart_alert_center_history_settings.dart|SMS alerts may incur additional charges. Check with your mobile provider.
+lib/features/cross_module/presentation/widgets/smart_alert_center_tabs.dart|Smart alerts work across all modules. Set conditions and get notified via push, email, or SMS.
+lib/features/cross_module/presentation/widgets/unified_portfolio_overview.dart|Arena Points are not included in portfolio value as they are points-only and not financial assets. Each module maintains separate accounting.
+lib/features/cross_module/presentation/widgets/unified_portfolio_overview.dart|Refresh Data
+lib/features/dca/presentation/pages/hub/dca_overview_demo.dart|Add overview card scenarios to preview profitable and loss states.
+lib/features/dca/presentation/pages/hub/dca_overview_demo.dart|Could not load DCA card scenarios. Retry when back online.
+lib/features/dca/presentation/pages/portfolio/dca_multi_asset_page_setup.dart|Budget, frequency, target allocations, asset removal notice, rebalance threshold, and disabled automation state remain visible before saving multi-asset DCA settings.
+lib/features/dca/presentation/pages/portfolio/dca_multi_asset_page_setup.dart|Portfolio value, per-asset allocation, rebalance requirement, and automatic rebalance toggle remain visible before the next DCA execution.
+lib/features/dca/presentation/pages/portfolio/dca_multi_asset_page_setup.dart|Some allocations deviate from target. Next purchase will rebalance automatically.
+lib/features/dca/presentation/pages/portfolio/dca_performance_compare_page.dart|DCA is optimal for volatile markets and when you want to reduce timing risk. Lump sum can win in steady bull markets with low volatility.
+lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart|Target allocations, strategy, threshold, frequency, advanced settings, auto-execute risk, preview sheet, fees, and disabled save state remain visible before saving rebalance automation.
+lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page_settings_and_preview.dart|Review trade count, estimated fees, and automation risk before saving rebalance execution.
+lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart|Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.
+lib/features/dca/presentation/pages/research/dca_dynamic_amount_page.dart|Dynamic amount settings ready
+lib/features/dca/presentation/pages/schedule/dca_smart_rules_page.dart|Rule conditions, automated trade actions, trigger history, success rate, delete preview, and create-rule confirmation are reviewed before DCA automation changes.
+lib/features/dca/presentation/widgets/hub/dca_overview_demo_shell.dart|Hide balance
+lib/features/dca/presentation/widgets/hub/dca_overview_demo_shell.dart|Show balance
+lib/features/dca/presentation/widgets/research/dca_backtester_results.dart|Avg Buy Price
+lib/features/dev/presentation/pages/design_system_page.dart|Could not load token catalog. Retry when back online.
+lib/features/dev/presentation/pages/design_system_page.dart|Token registry is empty. Reload when the dev catalog syncs.
+lib/features/dev/presentation/pages/missing_screens_showcase_page.dart|Add missing screens to the dev registry to preview flows here.
+lib/features/dev/presentation/pages/missing_screens_showcase_page.dart|Could not load screen catalog. Retry when back online.
+lib/features/dev/presentation/pages/performance_monitor.dart|Performance metrics could not be loaded. Retry when back online.
+lib/features/dev/presentation/pages/performance_monitor.dart|Run a profiling session to populate vitals and resource timings.
+lib/features/dev/presentation/pages/route_checker_page.dart|Could not load the route registry. Retry when back online.
+lib/features/dev/presentation/pages/route_checker_page.dart|No routes in this phase
+lib/features/dev/presentation/pages/route_checker_page.dart|Pick another phase or reset the filter.
+lib/features/dev/presentation/pages/route_checker_page.dart|Show all routes
+lib/features/dev/presentation/pages/route_checker_page.dart|Switch phase filter or return to live data.
+lib/features/dev/presentation/widgets/design_system_input_section.dart|InputWrapper with error
+lib/features/dev/presentation/widgets/design_system_playground.dart|Leave empty for no error
+lib/features/earn/presentation/pages/savings/savings_ladder_page.dart|Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.
+lib/features/earn/presentation/pages/savings/savings_risk_assessment_page.dart|Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.
+lib/features/earn/presentation/pages/staking/auto_compound_settings_page.dart|Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.
+lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Create Order
+lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Order History
+lib/features/earn/presentation/pages/staking/staking_advanced_orders_page.dart|Order type, trigger condition, asset amount, risk disclosure, create-order preview, submitting state, and result handling are reviewed before an advanced staking order is placed.
+lib/features/earn/presentation/pages/staking/staking_developer_console_page.dart|API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.
+lib/features/earn/presentation/pages/staking/staking_earn_page.dart|Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.
+lib/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart|Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.
+lib/features/earn/presentation/widgets/savings/savings_risk_assessment_result.dart|Review product fit, lockup, APY variability, risk notes and next steps before subscribing.
+lib/features/earn/presentation/widgets/staking/staking_advanced_orders_overview_orders.dart|${_formatAmount(order.amount)} ${order.asset}
+lib/features/earn/presentation/widgets/staking/staking_advanced_orders_sheet_fields.dart|Create Order
+lib/features/earn/presentation/widgets/staking/staking_api_documentation_auth.dart|Include your API key in the X-API-Key header with every request.
+lib/features/earn/presentation/widgets/staking/staking_api_documentation_examples.dart|Test your integration with fake data before going live. No real funds involved.
+lib/features/earn/presentation/widgets/staking/staking_custody_assets.dart|Online for withdrawals, secured with MPC technology
+lib/features/earn/presentation/widgets/staking/staking_institutional_sheet_painter.dart|Drop CSV or click to upload
+lib/features/earn/presentation/widgets/staking/staking_institutional_sheet_painter.dart|Submit for Approval
+lib/features/earn/presentation/widgets/staking/staking_insurance_fund_claims.dart|Claim Processing: All claims are reviewed within 24 hours. Approved claims are paid out within 7 business days. Average approval rate: 94%.
+lib/features/earn/presentation/widgets/staking/staking_insurance_fund_contribution_card.dart|${snapshot.stakingFeeContribution}% of all staking fees are automatically allocated to the insurance fund. No user funds are ever used.
+lib/features/earn/presentation/widgets/staking/staking_insurance_fund_contribution_card.dart|Total Contributed (All-time)
+lib/features/earn/presentation/widgets/staking/staking_insurance_fund_status_card.dart|Total Fund Balance
+lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify.dart|Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.
+lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify.dart|Verify Your Balance
+lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify_sheet.dart|Verify Your Balance
+lib/features/earn/presentation/widgets/staking/staking_proof_of_reserves_verify_sheet.dart|Your balance of ${proof.balance.toStringAsFixed(2)} ETH is included in the Proof of Reserves Merkle tree.
+lib/features/earn/presentation/widgets/staking/staking_risk_dashboard_page_sections.dart|Your staking portfolio has ${label.toLowerCase()}. No immediate action required, but monitor market volatility.
+lib/features/earn/presentation/widgets/staking/staking_slashing_history_prevention.dart|Our multi-layered prevention system has reduced slashing events by 40% year-over-year. Continuous monitoring and automated rebalancing ensure your stake is always protected.
+lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_common.dart|Review recommended products, allocation limits, lockup terms, annual reassessment and next steps before subscribing.
+lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_common.dart|This assessment is valid until ${snapshot.validUntil}. You must re-assess annually or if your financial situation changes significantly.
+lib/features/earn/presentation/widgets/staking/staking_suitability_assessment_page_sections.dart|Question ${current + 1} of $total
+lib/features/earn/presentation/widgets/staking/staking_transaction_reporting_sheet_widgets.dart|Once you choose a method for a tax year, use it consistently. Consult a tax professional for guidance.
+lib/features/earn/presentation/widgets/staking/staking_validator_health_monitor_page_sections.dart|View Details
+lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart|Loading · Empty · Error · Offline
+lib/features/launchpad/presentation/pages/tools/launchpad_notif_sound_page.dart|Sound, vibration, do-not-disturb, alert categories and delivery preferences are reviewed before saving.
+lib/features/launchpad/presentation/pages/tools/launchpad_rebalance_page.dart|Target allocation, deviation, gas estimate, risk impact and confirmation are reviewed before execution.
+lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_history_settings.dart|${history[i].amount.toStringAsFixed(0)} ${history[i].from}
+lib/features/launchpad/presentation/widgets/bridge/launchpad_swap_aggregator_history_settings.dart|${history[i].from} \u2192 ${history[i].to}
+lib/features/launchpad/presentation/widgets/claim/launchpad_claim_receipt_claim_sheet_widgets.dart|Check reward token, chain, gas, and claim amount.
+lib/features/launchpad/presentation/widgets/tools/launchpad_address_book_sheet_common.dart|Address mutation se can KYC submission-step va preview confirm truoc khi ghi len backend.
+lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_create_form.dart|Check token, amount, budget, start date, and cadence.
+lib/features/launchpad/presentation/widgets/tools/launchpad_dca_builder_strategies.dart|${strategy.executedOrders} orders - \$${strategy.amount.toStringAsFixed(0)}/order
+lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_active_widgets.dart|${_formatAmount(order.amount)} ${order.symbol}
+lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_active_widgets.dart|${_formatAmount(order.filled)} / ${_formatAmount(order.amount)}
+lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_history_widgets.dart|${_formatAmount(order.amount)} ${order.symbol}
+lib/features/launchpad/presentation/widgets/tools/launchpad_limit_orders_preview_widgets.dart|Create a limit order to get started
+lib/features/launchpad/presentation/widgets/tools/launchpad_risk_report_common.dart|Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.
+lib/features/markets/presentation/pages/hub/market_overview_page.dart|Global cap and breadth metrics stay above exploratory market tools.
+lib/features/markets/presentation/pages/hub/market_overview_page.dart|Global stats, movers, sectors, heatmap links, empty, and refresh states remain visible.
+lib/features/markets/presentation/pages/hub/market_overview_page.dart|Market overview data reviewed
+lib/features/markets/presentation/pages/hub/market_overview_page.dart|Tools remain grouped below market context so scanning is not interrupted.
+lib/features/markets/presentation/pages/hub/watchlist_page.dart|Note editing and remove actions preserve the selected pair context.
+lib/features/markets/presentation/pages/hub/watchlist_page.dart|Search, add, note, remove, empty, and refresh states remain visible for tracked pairs.
+lib/features/markets/presentation/pages/hub/watchlist_page.dart|Toolbar search and add-pair actions stay above watched assets.
+lib/features/markets/presentation/pages/tools/market_movers_page.dart|Filter chips and result summary keep the active market slice explicit.
+lib/features/markets/presentation/pages/tools/market_movers_page.dart|Market movers data reviewed
+lib/features/markets/presentation/pages/tools/market_movers_page.dart|Mover rows preserve pair identity, movement, volume, and next navigation.
+lib/features/markets/presentation/pages/tools/market_movers_page.dart|Tab, timeframe, category, sort, empty, and refresh states remain visible for mover discovery.
+lib/features/markets/presentation/widgets/pair/market_depth_whale_alerts.dart|@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r
+lib/features/markets/presentation/widgets/portfolio/price_alerts_page_details.dart|Delete price alert
+lib/features/p2p/presentation/controllers/p2p_controller.dart|Fee review: no listing fee in mock; order fees must be checked before escrow.
+lib/features/p2p/presentation/controllers/p2p_order_dispute_controllers.dart|Review price, payment, and escrow details before confirmation.
+lib/features/p2p/presentation/controllers/p2p_order_dispute_controllers.dart|Upload or select at least one evidence document before preview.
+lib/features/p2p/presentation/controllers/p2p_payment_method_controllers.dart|Enter the account or wallet identifier before preview.
+lib/features/p2p/presentation/controllers/p2p_payment_method_controllers.dart|Enter the verified owner name before preview.
+lib/features/p2p/presentation/controllers/p2p_payment_method_controllers.dart|Ownership review: account owner must match the verified P2P profile before activation.
+lib/features/p2p/presentation/pages/ads/p2p_ad_analytics_page.dart|Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.
+lib/features/p2p/presentation/pages/ads/p2p_ad_detail_page.dart|Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.
+lib/features/p2p/presentation/pages/ads/p2p_create_ad_page.dart|Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.
+lib/features/p2p/presentation/pages/ads/p2p_my_ads_page.dart|Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.
+lib/features/p2p/presentation/pages/dispute/p2p_dispute_evidence_page.dart|Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.
+lib/features/p2p/presentation/pages/dispute/p2p_dispute_page.dart|Reason, description, uploaded evidence, escrow impact, case target and next dispute step are reviewed before submission.
+lib/features/p2p/presentation/pages/dispute/p2p_dispute_resolution_page.dart|Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.
+lib/features/p2p/presentation/pages/hub/p2p_express_confirm_page.dart|Trade direction, fiat amount, crypto amount, merchant, payment method, escrow note, fee, warning, cancel and confirm actions are reviewed before order creation.
+lib/features/p2p/presentation/pages/merchant/p2p_identity_verification_page.dart|Document type, front/back upload status, security notice, KYC route and next verification step are reviewed before continuing.
+lib/features/p2p/presentation/pages/merchant/p2p_kyc_requirements_page.dart|Current tier, locked requirements, available upgrade action, support path, and P2P limit impact remain visible before starting verification.
+lib/features/p2p/presentation/pages/merchant/p2p_kyc_status_page.dart|Overall status, refresh state, timeline actions, support path, and P2P trading impact remain visible while verification is reviewed.
+lib/features/p2p/presentation/pages/merchant/p2p_selfie_verification_page.dart|Guide, capture, liveness progress, biometric handling, result state and support next step are reviewed before P2P verification completes.
+lib/features/p2p/presentation/pages/merchant/p2p_video_verification_page.dart|Preparation checklist, slot availability, selected time, verification status route and next KYC step are reviewed before booking.
+lib/features/p2p/presentation/pages/orders/p2p_fund_lock_history_page.dart|Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.
+lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset}
+lib/features/p2p/presentation/pages/orders/p2p_order_cancel_page.dart|Order summary, cancellation reason, reputation warning, disabled confirmation, submitting state, and return path remain visible before cancelling a P2P order.
+lib/features/p2p/presentation/pages/orders/p2p_order_proof_page.dart|Order summary, upload source, attachment count, remove actions, tips, warning, disabled confirmation, upload state, and submitting state remain visible before proof submission.
+lib/features/p2p/presentation/pages/orders/p2p_order_rate_page.dart|Merchant summary, rating selection, quick tags, review text, skip path, disabled submit, submitting state, and success view remain visible before closing feedback.
+lib/features/p2p/presentation/pages/payment/p2p_payment_method_add_page.dart|Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.
+lib/features/p2p/presentation/pages/payment/p2p_payment_method_cooling_period_page.dart|New payment methods stay restricted until the waiting period completes. Keep escrow, dispute, and withdrawal limits visible before enabling use.
+lib/features/p2p/presentation/pages/payment/p2p_payment_method_history_page.dart|P2P payment history keeps order direction, cancelled status, total volume, success rate, and next review context visible before users reuse or change a payment method.
+lib/features/p2p/presentation/pages/payment/p2p_payment_method_ownership_page.dart|Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.
+lib/features/p2p/presentation/pages/payment/p2p_payment_method_verification_page.dart|Micro-deposit confirmation, ownership check, warning note, and return path are reviewed before enabling a P2P payment method for escrow trades.
+lib/features/p2p/presentation/pages/security/p2p_address_proof_page.dart|Document type, upload status, extracted address, manual confirmation, and next verification step remain visible before submitting P2P address proof.
+lib/features/p2p/presentation/pages/security/p2p_anti_phishing_code_page.dart|Current code visibility, edit state, examples, warning copy, and save readiness stay visible before changing P2P email security.
+lib/features/p2p/presentation/pages/security/p2p_blacklist_add_page.dart|Username, reason, note, warning, submitting state and undo/support next step are reviewed before blocking a merchant.
+lib/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart|Checklist status, route targets, incomplete requirements and next compliance action are reviewed before opening P2P flows.
+lib/features/p2p/presentation/pages/security/p2p_limit_tracker_page.dart|Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.
+lib/features/p2p/presentation/pages/security/p2p_risk_assessment_page.dart|Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.
+lib/features/p2p/presentation/pages/security/p2p_security_center_page.dart|Security score, feature status, quick actions, recent events, settings route, and login history route stay visible before sensitive P2P security changes.
+lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart|Alert severity, reviewed state, dismissal action, account risk and next security step are reviewed before clearing alerts.
+lib/features/p2p/presentation/pages/wallet/p2p_wallet_page.dart|Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.
+lib/features/p2p/presentation/widgets/hub/p2p_express_page_state.dart|Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.
+lib/features/p2p/presentation/widgets/hub/p2p_home_page_state.dart|Offer browse, order placement, payment proof, and dispute flows are tracked as one P2P escrow contract.
+lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Back to P2P order detail
+lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Open E2E encryption info
+lib/features/p2p/presentation/widgets/orders/p2p_chat_header_banners.dart|Open P2P order detail
+lib/features/p2p/presentation/widgets/orders/p2p_my_orders_page_sections.dart|${_formatCrypto(order.amount)} ${order.asset}
+lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart|${order.typeLabel} ${_formatCrypto(order.amount)} ${order.asset}
+lib/features/p2p/presentation/widgets/orders/p2p_order_page_state.dart|Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.
+lib/features/p2p/presentation/widgets/orders/p2p_order_rate_widgets.dart|${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}
+lib/features/p2p/presentation/widgets/wallet/p2p_wallet_hero.dart|Toggle P2P wallet balance visibility
+lib/features/p2p/presentation/widgets/wallet/p2p_wallet_transfer_form.dart|${balance.balanceLabel}: ${_formatAvailable(balance.available, balance.asset)} ${balance.asset}
+lib/features/predictions/presentation/controllers/predictions_controller.dart|Enter a valid portfolio impact amount.
+lib/features/predictions/presentation/controllers/predictions_controller.dart|Enter valid shares, entry price, and current price.
+lib/features/predictions/presentation/controllers/predictions_controller.dart|Offline: reconnect before changing this prediction order.
+lib/features/predictions/presentation/controllers/predictions_controller.dart|Open order is no longer available.
+lib/features/predictions/presentation/controllers/predictions_controller.dart|Prediction order action is already in progress.
+lib/features/predictions/presentation/controllers/predictions_controller.dart|Select an open prediction order before confirmation.
+lib/features/predictions/presentation/pages/event/prediction_advanced_chart_page.dart|Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.
+lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart|Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.
+lib/features/predictions/presentation/pages/portfolio/prediction_portfolio_analyzer_page.dart|Portfolio value, category exposure, P/L attribution, probability drift, risk concentration, diversification, and warning states are reviewed before portfolio decisions.
+lib/features/predictions/presentation/pages/portfolio/prediction_risk_calculator_page.dart|Outcome side, shares, entry/current probability, risk budget, max loss, result range, scenario table, and guidance states are reviewed before sizing a prediction position.
+lib/features/predictions/presentation/pages/social/prediction_data_integration_page.dart|Add Data Source
+lib/features/predictions/presentation/pages/social/prediction_data_integration_page.dart|Keep your API keys secret. Never share them or commit to version control. Revoke immediately if compromised.
+lib/features/predictions/presentation/pages/social/prediction_data_integration_page.dart|Oracle data sources are used for automatic event resolution. All sources are verified and monitored.
+lib/features/predictions/presentation/pages/social/prediction_data_integration_page.dart|Webhooks allow you to receive real-time notifications when events occur. Configure your endpoint to handle POST requests.
+lib/features/predictions/presentation/pages/social/prediction_event_calendar_page.dart|Category filters, upcoming catalysts, watched events, notification settings, empty results, and calendar state are reviewed before users act on prediction-market timing signals.
+lib/features/predictions/presentation/pages/social/prediction_social_page.dart|Comment stance, moderation context, sentiment analysis, contributor signals, share/copy feedback, and disclaimer states are reviewed before social trading signals influence a prediction decision.
+lib/features/predictions/presentation/pages/social/predictions_global_activity_page.dart|Lower the minimum amount filter
+lib/features/predictions/presentation/pages/social/predictions_leaderboard_page.dart|P/L (Profit/Loss) shows how much a trader has gained or lost. 
+lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_analysis.dart|Order Flow (Buy vs Sell Pressure)
+lib/features/predictions/presentation/widgets/event/prediction_advanced_chart_indicators.dart|3/4 indicators show buy signal. Momentum is positive.
+lib/features/predictions/presentation/widgets/event/prediction_event_detail_comments.dart|Beware of external links. Do not share personal or financial information.
+lib/features/predictions/presentation/widgets/event/prediction_event_detail_comments.dart|Strong ETF flow and liquidity backdrop support this market.
+lib/features/predictions/presentation/widgets/event/prediction_event_detail_detail_tabs.dart|This market will resolve to "Yes" if bitcoin reaches \$150K before July 2026 before the end date. Otherwise, it resolves to "No".
+lib/features/predictions/presentation/widgets/event/prediction_event_detail_trade_panel.dart|Execute at current best available price
+lib/features/predictions/presentation/widgets/event/prediction_event_detail_trade_panel.dart|Set your desired entry price
+lib/features/predictions/presentation/widgets/event/prediction_order_preview_card.dart|Enter amount
+lib/features/predictions/presentation/widgets/event/prediction_order_preview_card.dart|Prediction positions, probability, receipt, rewards, and P/L stay separate from Arena Points.
+lib/features/predictions/presentation/widgets/hub/predictions_rewards_table.dart|Try adjusting your filters
+lib/features/predictions/presentation/widgets/portfolio/prediction_portfolio_positions.dart|Start trading to build your portfolio
+lib/features/predictions/presentation/widgets/portfolio/prediction_portfolio_summary.dart|Hide balance
+lib/features/predictions/presentation/widgets/portfolio/prediction_portfolio_summary.dart|Shares represent your stake in a market outcome. Each share pays \$1.00 
+lib/features/predictions/presentation/widgets/portfolio/prediction_portfolio_summary.dart|Show balance
+lib/features/predictions/presentation/widgets/portfolio/predictions_portfolio_bridge_card.dart|Prediction positions and P/L stay separate from Arena Points.
+lib/features/predictions/presentation/widgets/social/prediction_data_integration_sources.dart|External data feeds for event resolution
+lib/features/predictions/presentation/widgets/social/prediction_social_analysis_share.dart|Join the prediction market and share your insights with the community.
+lib/features/predictions/presentation/widgets/social/prediction_tournaments_detail.dart|Return to the tournament list to continue.
+lib/features/predictions/presentation/widgets/social/prediction_tournaments_list.dart|View Details
+lib/features/predictions/presentation/widgets/social/predictions_leaderboard_rows_wins.dart|Top single-trade profits this period
+lib/features/profile/presentation/widgets/device_management_page_sections.dart|High-risk action: preview + confirm + audit trail required.
+lib/features/trade/presentation/controllers/trade_futures_margin_controller_models.dart|No available margin remains for this preview.
+lib/features/trade/presentation/controllers/trade_order_controller_models.dart|Offline: reconnect before changing this order.
+lib/features/trade/presentation/controllers/trade_order_controller_models.dart|Order action is already in progress.
+lib/features/trade/presentation/controllers/trade_order_controller_models.dart|Select an open order before confirmation.
+lib/features/trade/presentation/pages/hub/position_dashboard_page.dart|PnL, notional exposure, margin risk, close path, fees and next steps are reviewed before position actions.
+lib/features/trade/presentation/pages/hub/position_dashboard_page.dart|Summary, risk, tabs, sort, empty, position rows, and result states stay visible.
+lib/features/trade/presentation/pages/hub/position_dashboard_page.dart|Tabs and sort chips keep exposure scanning explicit.
+lib/features/trade/presentation/pages/hub/trade_history_export_page.dart|Download/new-export actions remain in the sticky footer.
+lib/features/trade/presentation/pages/hub/trade_history_export_page.dart|Format, period, included records, tax note, generated result and download next step are reviewed before export.
+lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.
+lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Confirmation and slippage settings stay grouped by risk intent.
+lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Order defaults, confirmations, feedback, display, reset, and result states stay visible.
+lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Trade settings body reviewed
+lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Trade settings safety review
+lib/features/trade/presentation/widgets/futures/futures_page_form_controls.dart|Confirm before submit
+lib/features/trade/presentation/widgets/hub/trade_page_state.dart|Preview fees, slippage, and available balance before submitting a market order.
+lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart|Settings are saved on this device and apply immediately. Other devices keep default settings until changed there.
+lib/features/trade/presentation/widgets/margin/margin_trading_order_summary.dart|Confirm leverage before submit
+lib/features/trade_bots/presentation/controllers/trade_bots_controller_models.dart|Bot security update is already in progress.
+lib/features/trade_bots/presentation/controllers/trade_bots_controller_models.dart|Confirm the emergency-stop acknowledgement first.
+lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart|Backtest output is framed as simulation, not guaranteed performance.
+lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart|Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.
+lib/features/trade_bots/presentation/pages/backtest/bot_optimization_page.dart|Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.
+lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart|Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.
+lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart|Which Strategy to Choose?
+lib/features/trade_bots/presentation/pages/dashboard/bot_drawdown_analyzer_page.dart|Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.
+lib/features/trade_bots/presentation/pages/dashboard/bot_equity_curve_page.dart|Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.
+lib/features/trade_bots/presentation/pages/dashboard/bot_equity_curve_page.dart|Performance is not guaranteed
+lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Search by bot name or pair...
+lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Trade History
+lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.
+lib/features/trade_bots/presentation/pages/dashboard/bot_performance_analytics_page.dart|PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.
+lib/features/trade_bots/presentation/pages/dashboard/bot_portfolio_dashboard_page.dart|Equity curve, allocation concentration, correlation pressure and health next steps are reviewed before portfolio changes.
+lib/features/trade_bots/presentation/pages/dashboard/bot_risk_dashboard_page.dart|Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.
+lib/features/trade_bots/presentation/pages/settings/bot_api_documentation_page.dart|Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.
+lib/features/trade_bots/presentation/pages/settings/bot_emergency_stop_page.dart|Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.
+lib/features/trade_bots/presentation/pages/settings/bot_guide_page.dart|Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.
+lib/features/trade_bots/presentation/pages/settings/bot_risk_disclosure_page.dart|Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.
+lib/features/trade_bots/presentation/pages/settings/bot_security_settings_page.dart|Create New API Key
+lib/features/trade_bots/presentation/pages/settings/bot_suitability_assessment_page.dart|Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.
+lib/features/trade_bots/presentation/pages/settings/bot_tax_reporting_page.dart|Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.
+lib/features/trade_bots/presentation/pages/settings/bot_terms_of_service_page.dart|Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.
+lib/features/trade_bots/presentation/widgets/backtest/bot_backtesting_widgets.dart|Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.
+lib/features/trade_bots/presentation/widgets/backtest/bot_optimization_page_sections.dart|Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.
+lib/features/trade_bots/presentation/widgets/backtest/bot_strategy_compare_selection.dart| has the highest Sharpe ratio (${strategy.metrics.sharpeRatio.toStringAsFixed(2)}) among selected strategies, indicating superior risk-adjusted performance.
+lib/features/trade_bots/presentation/widgets/dashboard/bot_history_page_common.dart|Download your complete trade history for tax reporting, accounting, or analysis. Available formats: CSV, PDF, Excel.
+lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_metrics_summary.dart|Your bots are performing above average. Sharpe ratio > 1.5, win rate > 65%, and profit factor > 2 indicate strong risk-adjusted returns. Keep monitoring and adjusting as market conditions change.
+lib/features/trade_bots/presentation/widgets/settings/bot_guide_practices_videos.dart|View All Tutorials
+lib/features/trade_bots/presentation/widgets/settings/bot_security_settings_cards.dart|Required for creating/deleting bots
+lib/features/trade_bots/presentation/widgets/settings/bot_security_settings_sheets.dart|Add IP to Whitelist
+lib/features/trade_bots/presentation/widgets/settings/bot_security_settings_sheets.dart|Save this key now - you will not be able to see it again.
+lib/features/trade_bots/presentation/widgets/settings/bot_tax_reporting_notice_year.dart|reports for convenience, but you should consult a tax 
+lib/features/trade_compliance/presentation/pages/client_money/arm_integration_status_page.dart|Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.
+lib/features/trade_compliance/presentation/pages/client_money/cass_reconciliation_page.dart|Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.
+lib/features/trade_compliance/presentation/pages/client_money/client_money_protection_page.dart|All client money is held in segregated bank accounts and 
+lib/features/trade_compliance/presentation/pages/client_money/client_money_protection_page.dart|Your Funds Are Protected
+lib/features/trade_compliance/presentation/pages/client_money/investor_compensation_page.dart|Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.
+lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Brief summary of your complaint
+lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.
+lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Evidence and terms stay visible before the submit action.
+lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Please provide full details of your complaint, including dates, amounts, and any relevant information
+lib/features/trade_compliance/presentation/pages/complaints/complaint_tracking_page.dart|Confirm evidence, response deadline, escalation limits, and next steps before adding information.
+lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.
+lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|You have the right to complain. We will investigate fairly 
+lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|and respond within 8 weeks. If dissatisfied, you can refer 
+lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|to the Financial Ombudsman Service.
+lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart|Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.
+lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart|Contact and process steps stay separated for regulated escalation.
+lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart|When Can You Refer?
+lib/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart|Required by EU regulation for retail clients.
+lib/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart|Review fees, RIY impact, limits, and next-step documents before investing.
+lib/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart|This document shows all costs you will pay before investing. 
+lib/features/trade_compliance/presentation/pages/disclosures/ex_post_costs_report_page.dart|Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.
+lib/features/trade_compliance/presentation/pages/disclosures/ex_post_costs_report_page.dart|This report shows the actual costs you paid in 
+lib/features/trade_compliance/presentation/pages/disclosures/kid_generator_page.dart|Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.
+lib/features/trade_compliance/presentation/pages/disclosures/kid_generator_page.dart|This Key Information Document must be provided before you 
+lib/features/trade_compliance/presentation/pages/disclosures/performance_scenarios_page.dart|Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.
+lib/features/trade_compliance/presentation/pages/disclosures/regulatory_disclosures_page.dart|Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.
+lib/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart|SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.
+lib/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart|What is the Summary Risk Indicator?
+lib/features/trade_compliance/presentation/pages/disclosures/riy_calculator_page.dart|Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.
+lib/features/trade_compliance/presentation/pages/disclosures/riy_calculator_page.dart|Without-cost and with-cost values stay comparable.
+lib/features/trade_compliance/presentation/pages/execution/execution_venue_analysis_page.dart|Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.
+lib/features/trade_compliance/presentation/pages/execution/market_data_analytics_page.dart|Market Data
+lib/features/trade_compliance/presentation/pages/execution/slippage_monitoring_page.dart|Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.
+lib/features/trade_compliance/presentation/pages/governance/audit_trail_page.dart|Confirm record scope, retention limits, client identifiers, and next steps before exporting audit evidence.
+lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Compliance review is required before any categorization change takes effect.
+lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.
+lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Evidence must be reviewed before status can change.
+lib/features/trade_compliance/presentation/pages/governance/client_categorization_opt_up_page.dart|Submit for Review
+lib/features/trade_compliance/presentation/pages/governance/client_categorization_page.dart|Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.
+lib/features/trade_compliance/presentation/pages/governance/product_governance_page.dart|${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.
+lib/features/trade_compliance/presentation/pages/governance/product_governance_page.dart|Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.
+lib/features/trade_compliance/presentation/pages/governance/regulatory_inspection_ready_page.dart|Confirm report scope, access limits, retained records, and next steps before sharing compliance material.
+lib/features/trade_compliance/presentation/pages/governance/target_market_definition_page.dart|Not suitable for:
+lib/features/trade_compliance/presentation/pages/governance/target_market_definition_page.dart|Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.
+lib/features/trade_compliance/presentation/pages/governance/transaction_reporting_page.dart|All transactions must be reported to ARM within 
+lib/features/trade_compliance/presentation/pages/governance/transaction_reporting_page.dart|Confirm report status, retry impact, and next steps before resubmitting transaction records.
+lib/features/trade_compliance/presentation/pages/hub/regulatory_reports_dashboard_page.dart|Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.
+lib/features/trade_compliance/presentation/widgets/client_money/client_money_protection_page_common.dart|Bank Account Balance
+lib/features/trade_compliance/presentation/widgets/client_money/client_money_protection_page_common.dart|View Full Reconciliation History
+lib/features/trade_compliance/presentation/widgets/client_money/client_money_protection_page_common.dart|What happens to your funds
+lib/features/trade_compliance/presentation/widgets/client_money/client_money_protection_page_sections.dart|How Your Money Is Protected
+lib/features/trade_compliance/presentation/widgets/client_money/client_money_protection_page_sections.dart|Your Segregated Balance
+lib/features/trade_compliance/presentation/widgets/disclosures/ex_ante_costs_summary_breakdown.dart|Costs paid every year while you hold the investment
+lib/features/trade_compliance/presentation/widgets/disclosures/ex_ante_costs_summary_breakdown.dart|Costs paid once when entering or exiting the investment
+lib/features/trade_compliance/presentation/widgets/disclosures/performance_scenarios_outcome_widgets.dart|historical volatility and returns. The stress scenario shows 
+lib/features/trade_compliance/presentation/widgets/disclosures/performance_scenarios_outcome_widgets.dart|what you might get back in extreme market conditions.
+lib/features/trade_compliance/presentation/widgets/disclosures/regulatory_disclosures_tabs.dart|Copy Trading Not Available In:
+lib/features/trade_compliance/presentation/widgets/disclosures/regulatory_disclosures_tabs.dart|ICS contact details would open here.
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_details_common.dart|$holdingPeriodYears years. The actual risk can vary 
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_details_common.dart|The Summary Risk Indicator (SRI) is a guide to the level of risk 
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_details_common.dart|The risk indicator assumes you keep the product for 
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_details_common.dart|it is that the product will lose money because of movements in 
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_details_common.dart|of this product compared to other products. It shows how likely 
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_details_common.dart|the markets or because we are not able to pay you.
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_scale_intro.dart|This product has high volatility. You could lose a 
+lib/features/trade_compliance/presentation/widgets/disclosures/risk_indicator_scale_intro.dart|significant portion of your investment.
+lib/features/trade_compliance/presentation/widgets/execution/best_execution_overview.dart|Quarterly disclosure of Top 5 execution venues by trading volume. Review price, cost, speed, execution likelihood, settlement, and next steps before publishing.
+lib/features/trade_compliance/presentation/widgets/execution/live_market_interest_open_interest.dart|Total Open Interest
+lib/features/trade_compliance/presentation/widgets/execution/live_market_interest_top_traders.dart|Shifted ${data.change24h.abs().toStringAsFixed(1)}% to ${shortShift ? 
+lib/features/trade_compliance/presentation/widgets/execution/live_market_interest_top_traders.dart|of top traders are long
+lib/features/trade_compliance/presentation/widgets/execution/live_market_tabs.dart|Market Data
+lib/features/trade_compliance/presentation/widgets/execution/market_data_analytics_funding_traders.dart|Shifted ${data.change24h.toStringAsFixed(1)}% to Long
+lib/features/trade_compliance/presentation/widgets/execution/market_data_analytics_funding_traders.dart|of top traders are long
+lib/features/trade_compliance/presentation/widgets/execution/market_data_analytics_open_interest.dart|Total Open Interest
+lib/features/trade_compliance/presentation/widgets/governance/client_categorization_overview_tab.dart|If you meet the criteria, you can request to be treated as a professional client with reduced regulatory requirements.
+lib/features/trade_compliance/presentation/widgets/governance/client_categorization_overview_tab.dart|Opting up means you waive certain investor protections. This cannot be reversed easily.
+lib/features/trade_compliance/presentation/widgets/governance/client_categorization_page_chrome.dart|You have full MiFID II retail investor protections
+lib/features/trade_compliance/presentation/widgets/governance/client_categorization_page_chrome.dart|Your client category determines the level of regulatory protection you receive. Retail clients have maximum protection.
+lib/features/trade_compliance/presentation/widgets/governance/product_governance_products.dart|Open target market definition
+lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart|View all reports
+lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_filters.dart|Search by transaction ID or instrument...
+lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_reports.dart|Try a different search term
+lib/features/trade_compliance/presentation/widgets/hub/regulatory_reports_dashboard_kpis.dart|${(totals.failed / totals.total * 100).toStringAsFixed(1)}% failure rate
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Accept all disclosure and suitability terms before submission.
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Accept all required suitability and risk confirmations first.
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Copy amount exceeds available capital.
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Copy settings save is already in progress.
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Enter a valid copy amount before preview.
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Enter valid capital and fee details before submission.
+lib/features/trade_copy/presentation/controllers/trade_copy_controller_models.dart|Provider application requires at least 6 months of history.
+lib/features/trade_copy/presentation/pages/hub/active_copies_page.dart|Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.
+lib/features/trade_copy/presentation/pages/hub/copy_notifications_page.dart|Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.
+lib/features/trade_copy/presentation/pages/hub/copy_settings_page.dart|Confirm stop-loss, take-profit, allocation limits, circuit breaker, and emergency contact before saving copy defaults.
+lib/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart|Add-provider actions remain gated by comparison limits and review copy.
+lib/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart|Disclaimer, selected providers, metrics, legend, add action, and review states stay visible.
+lib/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart|Risk, execution, cost, and performance groups stay separated for scanning.
+lib/features/trade_copy/presentation/pages/provider/provider_governance_page.dart|Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.
+lib/features/trade_copy/presentation/pages/safety/copy_audit_log_page.dart|Search, filter, and export audit evidence with retention, risk, and config-change context preserved.
+lib/features/trade_copy/presentation/widgets/flow/copy_configuration_risk_summary.dart|Confirm copier limits before submit
+lib/features/trade_copy/presentation/widgets/flow/copy_confirmation_page_sections.dart|Confirm this amount fits your risk tolerance, provider drawdown, and portfolio limit before cooling-off starts.
+lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_sections.dart|AUM, copier count, and trader metrics are informational. Copy decisions must show fee, drawdown, allocation, and confirmation disclosure before live follow.
+lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_sections.dart|Below are 3 variants designed to address enterprise-level fintech standards: visual hierarchy, trust-first principles, and regulatory compliance.
+lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_widgets.dart|View Details
+lib/features/trade_copy/presentation/widgets/hub/copy_trading_list.dart|$message Preview, fees, allocation limit and confirmation are reviewed before copying.
+lib/features/trade_copy/presentation/widgets/provider/provider_application_steps.dart|Preview fee, disclosure, copier impact, limits, and next step before submitting this provider application.
+lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_common.dart|Send announcement to all followers
+lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_details.dart|This Month \$${snapshot.stats.monthlyFeesEarned.toStringAsFixed(0)} · All-Time \$${snapshot.stats.allTimeFeesEarned.toStringAsFixed(0)}
+lib/features/trade_copy/presentation/widgets/safety/copy_audit_log_events.dart|Your Price
+lib/features/trade_copy/presentation/widgets/safety/copy_safety_enforcement_common.dart|All actions are logged. If you believe an action was unfair, contact support.
+lib/features/trade_copy/presentation/widgets/safety/copy_safety_enforcement_common.dart|All copies would be stopped and positions queued for close in the backend flow.
+lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_cases.dart|Case is now available in Active Cases.
+lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_common.dart|No Action Required
+lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_common.dart|\$5 refund issued to your account
+lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_form.dart|Brief summary of the issue
+lib/features/trade_copy/presentation/widgets/safety/dispute_resolution_form.dart|Describe the issue in detail. Include dates, trade IDs, amounts, etc.
+lib/features/trade_core/presentation/widgets/trade_module_layout.dart|navigationBuilder was supplied. This nav-bar source is 
+lib/features/trade_core/presentation/widgets/trade_module_layout.dart|tradeShellWithProductTabs: showProductTabs is true but no 
+lib/features/trade_terminal/presentation/controllers/trade_order_controller_models.dart|Enter a valid amended price and amount before preview.
+lib/features/trade_terminal/presentation/controllers/trade_order_controller_models.dart|Offline: reconnect before amending this order.
+lib/features/trade_terminal/presentation/controllers/trade_order_controller_models.dart|Order amendment is already in progress.
+lib/features/trade_terminal/presentation/controllers/trade_order_controller_models.dart|Select an order before amendment preview.
+lib/features/trade_terminal/presentation/controllers/trade_order_controller_models.dart|Select at least one order before confirmation.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Enter valid balance and risk percent before calculation.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Enter valid entry and stop prices before calculation.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Enter valid quantity, limit, take-profit, and stop prices.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Entry and stop prices must be different.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Offline: reconnect before previewing this OCO order.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Risk order confirmation is already in progress.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Stop price must stay below the sell limit price.
+lib/features/trade_terminal/presentation/controllers/trade_risk_management_controller_models.dart|Take-profit must be above the buy limit price.
+lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|Buy Order Placed · 0.5 BTC
+lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|Click any price level on the order book to place instant orders
+lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|Select multiple orders and perform batch actions
+lib/features/trade_terminal/presentation/pages/tools/advanced_tools_demo_page.dart|View all keyboard shortcuts and customize key bindings
+lib/features/trade_terminal/presentation/widgets/tools/advanced_analytics_page_ai_signals.dart|Signals are predictions, not guarantees. Always conduct your own research and risk management. Past accuracy does not guarantee future results.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_analytics_page_risk_journal.dart|Automatic trade tagging, setup classification, pattern recognition and export-ready analytics.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_analytics_page_risk_journal.dart|VaR calculated using Monte Carlo simulation. Sharpe and Sortino ratios update daily with a 30-day rolling window.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_analytics_page_sizing_footer.dart|Kelly percent is capped at half-Kelly for safety and adjusted by your actual win rate and R:R ratio.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_analytics_page_sizing_footer.dart|Signals generated using technical indicators, on-chain data, sentiment analysis and volume profiling.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${order.amount.toStringAsFixed(1)} BTC @ \$${_formatMoney(order.price)}
+lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${order.remaining.toStringAsFixed(1)} @ \$${_formatMoney(order.price)}
+lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|${orders.length} open orders selected for batch action.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|BTC/USDT DOM · click price level to place instant order.
+lib/features/trade_terminal/presentation/widgets/tools/advanced_tools_tabs_sheets.dart|Place Buy Order
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_common.dart|Close success message
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|${fill.amount.toStringAsFixed(1)} BTC @ \$${formatExecutionQualityMoney(fill.price)}
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|Save Slippage Settings
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_sheets.dart|Set max slippage tolerance before the order is rejected.
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_tabs.dart|Modify Open Order
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_tabs.dart|Modify open order price or quantity
+lib/features/trade_terminal/presentation/widgets/tools/execution_quality_tabs.dart|View detailed execution breakdown after order fills
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Amount exceeds the available balance.
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Amount exceeds the network limit.
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Amount is below the network minimum.
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Enter a valid withdrawal amount before preview.
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Gas estimate: one revoke transaction per approval; network fee must be reviewed before broadcast.\n
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Gas estimate: preview required before broadcast; network fee must be confirmed.\n
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Impact: removes this token allowance for the selected spender.
+lib/features/wallet/presentation/controllers/wallet_controller.dart|No token approvals are available for review.
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Review the spender, token, allowance, gas estimate, and impacted permissions before confirming this revocation.\n
+lib/features/wallet/presentation/controllers/wallet_controller.dart|Token approval is no longer available for review.
+lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart|$label is not connected yet.
+lib/features/wallet/presentation/pages/transfer/withdraw_page.dart|Address, network, amount, fee, and confirmation are tracked as one wallet money-movement contract.
+lib/features/wallet/presentation/widgets/tools/network_status_summary.dart|Refresh network status
+lib/features/wallet/presentation/widgets/tools/wallet_gas_optimizer_trends.dart|Historically, fees have often been lower between 2 AM - 6 AM UTC. Confirm live fees before signing.
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|42% of your portfolio is in BTC. Consider rebalancing to reduce single-asset risk.
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Advisory snapshot only. Your wallet is ${snapshot.overallMessage}
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Backup your seed phrase and enable withdrawal whitelist to improve security score.
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Diversification reduces portfolio volatility. Aim for balance across asset types and risk levels.
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|Limit single asset to max 30% of portfolio
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_cards.dart|The highest-priority advisory action is shown above.
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart|This is an advisory health signal, not financial advice. Review account settings and live risk before taking action.
+lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart|Wallet health actions will appear here when needed.
+lib/features/wallet/presentation/widgets/tools/wallet_manager_all_wallets_tab.dart|Hide ${wallet.name} address
+lib/features/wallet/presentation/widgets/tools/wallet_token_active_approvals_tab.dart|You have $count approval(s) to unverified contracts. Revoke immediately to protect your funds.
+lib/features/wallet/presentation/widgets/tools/wallet_token_approval_common.dart|Token approvals allow smart contracts to spend your tokens. Revoke unused or suspicious approvals to protect your assets.
+lib/features/wallet/presentation/widgets/transfer/withdraw_preview_sheet.dart|High-risk action: preview + confirm + audit trail required.
+lib/shared/layout/vit_header.dart|VitHeader.actions supports up to 3 actions. Use more overflow.
+lib/shared/layout/vit_header.dart|VitHeader.showBack requires onBack so visible back buttons are actionable.
+lib/shared/layout/vit_top_chrome.dart|VitTopChrome.actions supports up to 3 actions. Use more overflow.
+lib/shared/layout/vit_top_chrome.dart|VitTopChrome.showBack requires onBack so visible back buttons are actionable.
+lib/shared/widgets/vit_carousel_dots.dart|Carousel has no pages
+lib/shared/widgets/vit_error_state.dart|Please try again or check your connection.
+lib/shared/widgets/vit_preset_chip_row.dart|Use $value% of available balance

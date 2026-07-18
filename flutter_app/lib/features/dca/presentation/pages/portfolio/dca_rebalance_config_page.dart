@@ -64,20 +64,18 @@ class DCARebalanceConfig extends ConsumerStatefulWidget {
 }
 
 class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
-  late List<DcaRebalanceTarget> _targets;
-  late DcaRebalanceStrategy _strategy;
-  late DcaRebalanceFrequency _frequency;
-  late double _driftThreshold;
-  late double _minTradeAmountUsd;
   bool _autoExecute = false;
   bool _showAdvanced = false;
   bool _showPreview = false;
-  bool _initialized = false;
+
+  // STATE-S23: targets/strategy/frequency/driftThreshold/minTradeAmountUsd
+  // sống ở DcaRebalanceConfigStateController (một nguồn sự thật) — hết
+  // `late List`/`late` seed từ snapshot + setState.
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaRebalanceConfigProvider);
-    _initialize(snapshot);
+    final viewState = ref.watch(dcaRebalanceConfigStateControllerProvider);
+    final snapshot = viewState.snapshot;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
@@ -124,58 +122,77 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                         padding: _dcaRebalanceHeroPadding,
                       ),
                       _AllocationSummary(
-                        targets: _targets,
-                        totalPercent: _totalPercent,
+                        targets: viewState.targets,
+                        totalPercent: _totalPercent(viewState.targets),
                         onAdd: _addTarget,
                       ),
                       _TargetList(
-                        targets: _targets,
+                        targets: viewState.targets,
                         onPercentChanged: _updateTargetPercent,
                         onToleranceChanged: _updateTargetTolerance,
                         onRemove: _removeTarget,
                       ),
                       _StrategySection(
                         options: snapshot.strategyOptions,
-                        active: _strategy,
+                        active: viewState.strategy,
                         onChanged: (strategy) {
                           HapticFeedback.selectionClick();
-                          setState(() => _strategy = strategy);
+                          ref
+                              .read(
+                                dcaRebalanceConfigStateControllerProvider
+                                    .notifier,
+                              )
+                              .setStrategy(strategy);
                         },
                       ),
-                      if (_strategy == DcaRebalanceStrategy.threshold ||
-                          _strategy == DcaRebalanceStrategy.hybrid)
+                      if (viewState.strategy ==
+                              DcaRebalanceStrategy.threshold ||
+                          viewState.strategy == DcaRebalanceStrategy.hybrid)
                         _ThresholdCard(
-                          value: _driftThreshold,
-                          onChanged: (value) =>
-                              setState(() => _driftThreshold = value),
+                          value: viewState.driftThreshold,
+                          onChanged: (value) => ref
+                              .read(
+                                dcaRebalanceConfigStateControllerProvider
+                                    .notifier,
+                              )
+                              .setDriftThreshold(value),
                         ),
-                      if (_strategy == DcaRebalanceStrategy.periodic ||
-                          _strategy == DcaRebalanceStrategy.hybrid)
+                      if (viewState.strategy == DcaRebalanceStrategy.periodic ||
+                          viewState.strategy == DcaRebalanceStrategy.hybrid)
                         _FrequencyCard(
                           options: snapshot.frequencyOptions,
-                          active: _frequency,
+                          active: viewState.frequency,
                           onChanged: (frequency) {
                             HapticFeedback.selectionClick();
-                            setState(() => _frequency = frequency);
+                            ref
+                                .read(
+                                  dcaRebalanceConfigStateControllerProvider
+                                      .notifier,
+                                )
+                                .setFrequency(frequency);
                           },
                         ),
                       _AdvancedSettings(
                         expanded: _showAdvanced,
-                        minTradeAmountUsd: _minTradeAmountUsd,
+                        minTradeAmountUsd: viewState.minTradeAmountUsd,
                         autoExecute: _autoExecute,
                         onToggleExpanded: () {
                           HapticFeedback.selectionClick();
                           setState(() => _showAdvanced = !_showAdvanced);
                         },
-                        onMinTradeChanged: (value) =>
-                            setState(() => _minTradeAmountUsd = value),
+                        onMinTradeChanged: (value) => ref
+                            .read(
+                              dcaRebalanceConfigStateControllerProvider
+                                  .notifier,
+                            )
+                            .setMinTradeAmount(value),
                         onAutoExecuteChanged: (value) {
                           HapticFeedback.selectionClick();
                           setState(() => _autoExecute = value);
                         },
                       ),
                       _InlineRebalanceActions(
-                        valid: _isValidTotal,
+                        valid: _isValidTotal(viewState.targets),
                         onPreview: _openPreview,
                         onSave: _openPreview,
                       ),
@@ -193,8 +210,16 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
               ),
               if (_showPreview)
                 _PreviewSheet(
-                  previews: _tradePreviews(snapshot.totalPortfolioUsd),
-                  totalFeesUsd: _totalFeesUsd(snapshot.totalPortfolioUsd),
+                  previews: _tradePreviews(
+                    viewState.targets,
+                    viewState.minTradeAmountUsd,
+                    snapshot.totalPortfolioUsd,
+                  ),
+                  totalFeesUsd: _totalFeesUsd(
+                    viewState.targets,
+                    viewState.minTradeAmountUsd,
+                    snapshot.totalPortfolioUsd,
+                  ),
                   onClose: _closePreview,
                   onConfirm: _saveConfig,
                 ),
@@ -205,84 +230,40 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
     );
   }
 
-  void _initialize(DcaRebalanceConfigSnapshot snapshot) {
-    if (_initialized) return;
-    _targets = List<DcaRebalanceTarget>.from(snapshot.targets);
-    _strategy = snapshot.strategy;
-    _frequency = snapshot.frequency;
-    _driftThreshold = snapshot.driftThreshold;
-    _minTradeAmountUsd = snapshot.minTradeAmountUsd.toDouble();
-    _initialized = true;
+  double _totalPercent(List<DcaRebalanceTarget> targets) {
+    return targets.fold<double>(0, (sum, target) => sum + target.targetPercent);
   }
 
-  double get _totalPercent {
-    return _targets.fold<double>(
-      0,
-      (sum, target) => sum + target.targetPercent,
-    );
-  }
-
-  bool get _isValidTotal => (_totalPercent - 100).abs() < 0.01;
+  bool _isValidTotal(List<DcaRebalanceTarget> targets) =>
+      (_totalPercent(targets) - 100).abs() < 0.01;
 
   void _addTarget() {
     HapticFeedback.selectionClick();
-    if (_targets.length >= 4) return;
-    final nextId = 'target-extra-${_targets.length + 1}';
-    final accent = _targets.length.isEven
-        ? DcaRebalanceAccent.warning
-        : DcaRebalanceAccent.accent;
-    setState(() {
-      _targets = [
-        ..._targets,
-        DcaRebalanceTarget(
-          id: nextId,
-          symbol: _targets.length.isEven ? 'BNB' : 'SOL',
-          assetName: _targets.length.isEven ? 'BNB' : 'Solana',
-          currentPercent: 0,
-          targetPercent: 0,
-          tolerance: 5,
-          currentValueUsd: 0,
-          unitPriceUsd: _targets.length.isEven ? 320 : 105,
-          accent: accent,
-        ),
-      ];
-    });
+    ref.read(dcaRebalanceConfigStateControllerProvider.notifier).addTarget();
   }
 
   void _removeTarget(String id) {
     HapticFeedback.selectionClick();
-    if (_targets.length <= 2) return;
-    setState(() {
-      _targets = _targets.where((target) => target.id != id).toList();
-    });
+    ref
+        .read(dcaRebalanceConfigStateControllerProvider.notifier)
+        .removeTarget(id);
   }
 
   void _updateTargetPercent(String id, double value) {
-    setState(() {
-      _targets = _targets
-          .map(
-            (target) => target.id == id
-                ? target.copyWith(targetPercent: value.roundToDouble())
-                : target,
-          )
-          .toList();
-    });
+    ref
+        .read(dcaRebalanceConfigStateControllerProvider.notifier)
+        .updateTargetPercent(id, value);
   }
 
   void _updateTargetTolerance(String id, double value) {
-    setState(() {
-      _targets = _targets
-          .map(
-            (target) => target.id == id
-                ? target.copyWith(tolerance: value.clamp(1, 20).toDouble())
-                : target,
-          )
-          .toList();
-    });
+    ref
+        .read(dcaRebalanceConfigStateControllerProvider.notifier)
+        .updateTargetTolerance(id, value);
   }
 
   void _openPreview() {
-    if (!_isValidTotal) return;
+    final targets = ref.read(dcaRebalanceConfigStateControllerProvider).targets;
+    if (!_isValidTotal(targets)) return;
     HapticFeedback.selectionClick();
     setState(() => _showPreview = true);
   }
@@ -305,12 +286,16 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
     context.go(AppRoutePaths.dca);
   }
 
-  List<DcaRebalanceTradePreview> _tradePreviews(int totalPortfolioUsd) {
-    return _targets.map((target) {
+  List<DcaRebalanceTradePreview> _tradePreviews(
+    List<DcaRebalanceTarget> targets,
+    double minTradeAmountUsd,
+    int totalPortfolioUsd,
+  ) {
+    return targets.map((target) {
       final targetValue = totalPortfolioUsd * target.targetPercent / 100;
       final diff = targetValue - target.currentValueUsd;
       final tradeAmount = diff.abs();
-      final action = tradeAmount < _minTradeAmountUsd
+      final action = tradeAmount < minTradeAmountUsd
           ? DcaRebalanceTradeAction.hold
           : diff > 0
           ? DcaRebalanceTradeAction.buy
@@ -328,8 +313,12 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
     }).toList();
   }
 
-  double _totalFeesUsd(int totalPortfolioUsd) {
-    return _tradePreviews(totalPortfolioUsd)
+  double _totalFeesUsd(
+    List<DcaRebalanceTarget> targets,
+    double minTradeAmountUsd,
+    int totalPortfolioUsd,
+  ) {
+    return _tradePreviews(targets, minTradeAmountUsd, totalPortfolioUsd)
         .where((preview) => preview.action != DcaRebalanceTradeAction.hold)
         .fold<double>(
           0,

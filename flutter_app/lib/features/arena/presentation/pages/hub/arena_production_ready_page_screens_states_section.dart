@@ -298,7 +298,7 @@ class _ScreensSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check_circle_outline,
                     color: AppModuleAccents.arena,
                     size: ArenaSpacingTokens.arenaProductionHandoffIcon,

@@ -1,11 +1,17 @@
+/// UI state the smart alerts screen supports rendering.
 enum SmartAlertsScreenState { loading, empty, error, offline }
 
+/// The active tab on the smart alerts screen.
 enum SmartAlertTab { active, history, settings }
 
+/// A product module a smart alert can be scoped to.
 enum SmartAlertModuleId { trading, p2p, predictions, arena, dca, wallet }
 
+/// Lifecycle status of a [SmartAlertDraft].
 enum SmartAlertStatus { active, paused, triggered }
 
+/// Data for the smart alerts screen: configured [alerts], trigger
+/// [history], notification [channels], and starter [templates].
 final class SmartAlertsSnapshot {
   const SmartAlertsSnapshot({
     required this.endpoint,
@@ -42,6 +48,7 @@ final class SmartAlertsSnapshot {
   int get moduleCount => alerts.map((alert) => alert.module).toSet().length;
 }
 
+/// One selectable [SmartAlertTab] entry with its display label.
 final class SmartAlertTabDraft {
   const SmartAlertTabDraft({required this.tab, required this.label});
 
@@ -49,6 +56,8 @@ final class SmartAlertTabDraft {
   final String label;
 }
 
+/// One configured cross-module alert: module scope, trigger condition,
+/// resulting action, status, and trigger count.
 final class SmartAlertDraft {
   const SmartAlertDraft({
     required this.id,
@@ -73,6 +82,7 @@ final class SmartAlertDraft {
   final String? lastTriggeredLabel;
 }
 
+/// One past trigger event for a [SmartAlertDraft].
 final class SmartAlertHistoryDraft {
   const SmartAlertHistoryDraft({
     required this.id,
@@ -89,6 +99,8 @@ final class SmartAlertHistoryDraft {
   final String action;
 }
 
+/// One notification channel (e.g. push/email) with its enabled state,
+/// shown on the smart alerts settings tab.
 final class SmartAlertChannelDraft {
   const SmartAlertChannelDraft({
     required this.id,
@@ -103,6 +115,8 @@ final class SmartAlertChannelDraft {
   final bool enabled;
 }
 
+/// A pre-built alert template (category, description, popularity) users
+/// can add as-is.
 final class SmartAlertTemplateDraft {
   const SmartAlertTemplateDraft({
     required this.id,

@@ -129,7 +129,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
+            const Padding(
               padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
               child: VitSectionHeader(
                 title: 'Loại quảng cáo',
@@ -176,7 +176,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
+            const Padding(
               padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
               child: VitSectionHeader(
                 title: 'Loại giá',
@@ -422,7 +422,9 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         return AlertDialog(
           backgroundColor: AppColors.surface,
           surfaceTintColor: AppColors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
           title: Text(
             'Xác nhận đăng quảng cáo',
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),

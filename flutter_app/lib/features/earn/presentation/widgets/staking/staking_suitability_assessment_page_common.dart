@@ -20,7 +20,7 @@ class _ResultView extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitHighRiskStatePanel(
+        const VitHighRiskStatePanel(
           density: VitDensity.compact,
           state: VitHighRiskUiState.success,
           title: 'Suitability result ready',

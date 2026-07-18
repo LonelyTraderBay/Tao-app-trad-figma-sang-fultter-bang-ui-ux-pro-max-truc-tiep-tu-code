@@ -42,9 +42,9 @@ class _MessageBubble extends StatelessWidget {
             ),
             child: Material(
               color: AppColors.primary08,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: AppRadii.cardRadius,
-                side: const BorderSide(color: AppColors.primary20),
+                side: BorderSide(color: AppColors.primary20),
               ),
               child: Padding(
                 padding: P2PSpacingTokens.p2pChatSystemMessagePadding,

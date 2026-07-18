@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/hub/arena_home_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/hub/market_list_page.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_search_page.dart';
 import 'package:vit_trade_flutter/features/predictions/data/predictions_repository.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/event/prediction_event_detail_page.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/hub/predictions_home_page.dart';
@@ -211,5 +212,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(MarketListPage), findsOneWidget);
+  });
+
+  testWidgets('SC-027 PERF-HN3: cap 8 event + "Xem tất cả" dẫn sang tìm kiếm', (
+    tester,
+  ) async {
+    await pumpPredictions(tester);
+
+    // Mock 12 sự kiện nhưng hub chỉ dựng lát cắt bounded 8 card.
+    expect(tester.widgetList(find.byType(PredictionsHomePage)).length, 1);
+
+    await tester.fling(
+      find.byKey(PredictionsHomePage.contentKey),
+      const Offset(0, -1200),
+      3000,
+    );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(PredictionsHomePage.viewAllEventsKey),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Xem tất cả'), findsOneWidget);
+
+    await tester.tap(find.byKey(PredictionsHomePage.viewAllEventsKey));
+    await tester.pumpAndSettle();
+    expect(find.byType(PredictionsSearchPage), findsOneWidget);
   });
 }

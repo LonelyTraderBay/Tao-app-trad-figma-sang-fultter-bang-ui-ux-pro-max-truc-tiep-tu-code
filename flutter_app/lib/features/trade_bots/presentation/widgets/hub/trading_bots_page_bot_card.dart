@@ -176,7 +176,7 @@ class _StrategiesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (strategies.isEmpty) {
-      return VitEmptyState(
+      return const VitEmptyState(
         title: 'Chưa có chiến lược',
         message: 'Danh sách chiến lược sẽ hiển thị tại đây.',
         icon: Icons.storefront_outlined,

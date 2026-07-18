@@ -214,11 +214,11 @@ class _PositionMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.smRadius,
-          side: const BorderSide(color: AppColors.cardBorder),
+          side: BorderSide(color: AppColors.cardBorder),
         ),
       ),
       child: Padding(

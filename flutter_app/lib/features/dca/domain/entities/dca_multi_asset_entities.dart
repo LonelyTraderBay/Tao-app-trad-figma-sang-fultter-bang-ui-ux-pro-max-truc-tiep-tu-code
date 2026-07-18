@@ -1,7 +1,10 @@
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_common_entities.dart';
 
+/// Recurring buy frequency for a multi-asset DCA plan.
 enum DcaMultiAssetFrequency { weekly, monthly }
 
+/// Data for the multi-asset DCA screen: budget/frequency config,
+/// per-asset [allocations], and portfolio performance history.
 class DcaMultiAssetSnapshot {
   const DcaMultiAssetSnapshot({
     required this.endpoint,
@@ -59,6 +62,8 @@ class DcaMultiAssetSnapshot {
   }
 }
 
+/// One asset's target-vs-current allocation, invested amount, and return
+/// within a multi-asset DCA plan.
 class DcaMultiAssetAllocation {
   const DcaMultiAssetAllocation({
     required this.id,
@@ -92,6 +97,8 @@ class DcaMultiAssetAllocation {
   }
 }
 
+/// One monthly per-asset value data point in a multi-asset DCA plan's
+/// performance chart.
 class DcaMultiAssetPerformancePoint {
   const DcaMultiAssetPerformancePoint({
     required this.month,

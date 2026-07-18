@@ -95,7 +95,7 @@ class _LiveStatusCard extends StatelessWidget {
                   valueColor: AppColors.primary,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
                 child: ColoredBox(color: AppColors.border),
@@ -117,7 +117,7 @@ class _LiveStatusCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.timer_outlined,
                 size: AppSpacing.iconSm,
                 color: AppColors.text3,
@@ -217,7 +217,7 @@ class _PoolFeeCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _SmallIcon(
+              const _SmallIcon(
                 icon: Icons.receipt_long_outlined,
                 color: AppColors.primary,
               ),
@@ -260,7 +260,7 @@ class _RewardCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _SmallIcon(
+              const _SmallIcon(
                 icon: Icons.workspace_premium_outlined,
                 color: AppColors.primary,
               ),

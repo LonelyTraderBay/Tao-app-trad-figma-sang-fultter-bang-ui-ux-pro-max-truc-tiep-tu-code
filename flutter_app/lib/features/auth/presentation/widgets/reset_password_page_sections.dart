@@ -10,23 +10,23 @@ class _ResetExpired extends StatelessWidget {
       padding: AuthSpacingTokens.authStateVerticalPadding,
       child: Column(
         children: [
-          AuthHeroIconBox(
+          const AuthHeroIconBox(
             dimension: AuthSpacingTokens.authHeroIconBoxMd,
-            shape: const CircleBorder(
+            shape: CircleBorder(
               side: BorderSide(
                 color: AppColors.warningBorder,
                 width: AppSpacing.hairlineStroke,
               ),
             ),
             fillColor: AppColors.warn10,
-            child: const Icon(
+            child: Icon(
               Icons.lock_clock_outlined,
               color: AppColors.warn,
               size: AuthSpacingTokens.authHeroIconLg,
             ),
           ),
           const Padding(padding: AuthSpacingTokens.authTopGapX6),
-          Text(
+          const Text(
             'Phiên xác minh đã hết hạn',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,
@@ -54,9 +54,9 @@ class _ResetHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AuthHeroIconBox(
+        const AuthHeroIconBox(
           dimension: AuthSpacingTokens.authHeroIconBoxSm,
-          shape: const RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
             borderRadius: AppRadii.cardRadius,
             side: BorderSide(
               color: _authPrimary30,
@@ -64,14 +64,14 @@ class _ResetHero extends StatelessWidget {
             ),
           ),
           fillColor: _authPrimary10,
-          child: const Icon(
+          child: Icon(
             Icons.lock_outline_rounded,
             color: _authPrimary,
             size: AuthSpacingTokens.authHeroIconMd,
           ),
         ),
         const Padding(padding: AuthSpacingTokens.authTopGapX5),
-        Text(
+        const Text(
           'Tạo mật khẩu mới',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
@@ -179,17 +179,17 @@ class _ResetSuccess extends StatelessWidget {
       padding: AuthSpacingTokens.authStateVerticalPadding,
       child: Column(
         children: [
-          SizedBox.square(
+          const SizedBox.square(
             dimension: AuthSpacingTokens.authStateIconBox,
             child: Material(
               color: AppColors.buy15,
-              shape: const CircleBorder(
+              shape: CircleBorder(
                 side: BorderSide(
                   color: AppColors.buy20,
                   width: AppSpacing.hairlineStroke,
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
                 size: AuthSpacingTokens.authStateIconLg,
@@ -197,7 +197,7 @@ class _ResetSuccess extends StatelessWidget {
             ),
           ),
           const Padding(padding: AuthSpacingTokens.authTopGapX6),
-          Text(
+          const Text(
             'Đổi mật khẩu thành công!',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,

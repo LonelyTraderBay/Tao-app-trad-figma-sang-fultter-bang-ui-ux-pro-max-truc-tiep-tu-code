@@ -48,7 +48,7 @@ class _CreateBatchSheet extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   'Create Batch Operation',
                   style: AppTextStyles.sectionTitle,

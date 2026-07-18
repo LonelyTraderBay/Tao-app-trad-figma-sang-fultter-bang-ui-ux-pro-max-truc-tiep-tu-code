@@ -33,8 +33,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-057 mock repository exposes futures BE draft', () {
-    final repo = const MockTradeRepository();
+  test('SC-057 mock repository exposes futures BE draft', () async {
+    final repo = const MockTradeRepository(loadDelay: Duration.zero);
     final snapshot = repo.getFutures(pairId: 'btcusdt');
     final preview = repo.previewFuturesOrder(
       const TradeFuturesOrderDraft(
@@ -45,7 +45,7 @@ void main() {
         leverage: 10,
       ),
     );
-    final receipt = repo.submitFuturesOrder(
+    final receipt = await repo.submitFuturesOrder(
       const TradeFuturesOrderDraft(
         pairId: 'btcusdt',
         side: TradeFuturesSide.long,

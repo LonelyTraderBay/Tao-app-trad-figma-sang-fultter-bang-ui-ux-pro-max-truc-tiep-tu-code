@@ -13,7 +13,7 @@ class _CompareSheet extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 'So sánh Chiến lược',
                 style: AppTextStyles.sectionTitle,

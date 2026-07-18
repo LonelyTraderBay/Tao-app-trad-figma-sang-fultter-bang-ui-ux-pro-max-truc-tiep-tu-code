@@ -1,5 +1,7 @@
 part of 'referral_entities.dart';
 
+/// Data for the referral rules/terms screen: commission [tiers], reward
+/// type explanations, terms, and FAQs.
 final class ReferralRulesSnapshot {
   const ReferralRulesSnapshot({
     required this.endpoint,
@@ -32,6 +34,8 @@ final class ReferralRulesSnapshot {
   final Set<ReferralScreenState> supportedStates;
 }
 
+/// One referral commission tier (friend threshold, commission %, KYC
+/// bonus) shown on the rules screen.
 final class ReferralTierRuleDraft {
   const ReferralTierRuleDraft({
     required this.id,
@@ -50,6 +54,7 @@ final class ReferralTierRuleDraft {
   final double kycBonus;
 }
 
+/// One reward-type explanation entry on the referral rules screen.
 final class ReferralRewardTypeRuleDraft {
   const ReferralRewardTypeRuleDraft({
     required this.id,
@@ -64,6 +69,7 @@ final class ReferralRewardTypeRuleDraft {
   final String highlight;
 }
 
+/// One question/answer FAQ entry on the referral rules screen.
 final class ReferralFaqDraft {
   const ReferralFaqDraft({required this.question, required this.answer});
 

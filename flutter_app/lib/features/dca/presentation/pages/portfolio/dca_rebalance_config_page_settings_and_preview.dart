@@ -188,46 +188,16 @@ class _AdvancedSettings extends StatelessWidget {
   final ValueChanged<double> onMinTradeChanged;
   final ValueChanged<bool> onAutoExecuteChanged;
 
+  // DEBT-88: build tách thành 3 khối con (toggle header, min-trade card,
+  // auto-execute card) — không đổi hành vi/layout, chỉ trích xuất.
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitCard(
-          key: DCARebalanceConfig.advancedToggleKey,
-          onTap: onToggleExpanded,
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.standard,
-          padding: DcaSpacingTokens.dcaVerticalPaddingX3,
-          borderColor: AppColors.transparent,
-          child: Row(
-            children: [
-              const Icon(
-                Icons.settings_suggest_outlined,
-                color: AppColors.text3,
-                size: DcaSpacingTokens.dcaRebalanceIconSm,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  'Cài đặt nâng cao',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              AnimatedRotation(
-                turns: expanded ? .5 : 0,
-                duration: const Duration(milliseconds: 160),
-                child: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text3,
-                  size: DcaSpacingTokens.dcaRebalanceIcon,
-                ),
-              ),
-            ],
-          ),
+        _AdvancedToggleHeader(
+          expanded: expanded,
+          onToggleExpanded: onToggleExpanded,
         ),
         AnimatedCrossFade(
           duration: const Duration(milliseconds: 180),
@@ -237,167 +207,273 @@ class _AdvancedSettings extends StatelessWidget {
           firstChild: const SizedBox.shrink(),
           secondChild: Column(
             children: [
-              VitCard(
-                radius: VitCardRadius.large,
-                padding: VitDensity.compact.cardPadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Giao dịch tối thiểu',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text2,
-                              fontWeight: AppTextStyles.medium,
-                            ),
-                          ),
-                        ),
-                        DecoratedBox(
-                          decoration: ShapeDecoration(
-                            color: AppColors.surface2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: AppRadii.smRadius,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: DcaSpacingTokens.dcaScoreChipPadding,
-                            child: Text(
-                              '\$${minTradeAmountUsd.toStringAsFixed(0)}',
-                              style: AppTextStyles.baseMedium.copyWith(
-                                color: AppColors.text1,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    _TokenSlider(
-                      value: minTradeAmountUsd,
-                      min: 10,
-                      max: 500,
-                      divisions: 49,
-                      accent: AppModuleAccents.trade,
-                      onChanged: onMinTradeChanged,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [_FinePrint('\$10'), _FinePrint('\$500')],
-                    ),
-                  ],
-                ),
+              _MinTradeCard(
+                minTradeAmountUsd: minTradeAmountUsd,
+                onMinTradeChanged: onMinTradeChanged,
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-              VitCard(
-                radius: VitCardRadius.large,
-                padding: VitDensity.compact.cardPadding,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        VitAccentIconBox(
-                          icon: Icons.flash_on_rounded,
-                          color: autoExecute ? AppColors.buy : AppColors.text3,
-                          muted: !autoExecute,
-                        ),
-                        const SizedBox(width: AppSpacing.x4),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Tự động thực thi',
-                                style: AppTextStyles.base.copyWith(
-                                  color: AppColors.text1,
-                                  fontWeight: AppTextStyles.bold,
-                                ),
-                              ),
-                              const SizedBox(height: AppSpacing.x1),
-                              Text(
-                                'Rebalance tự động không cần duyệt',
-                                style: AppTextStyles.caption.copyWith(
-                                  color: AppColors.text3,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Semantics(
-                          button: true,
-                          checked: autoExecute,
-                          child: VitCard(
-                            onTap: () => onAutoExecuteChanged(!autoExecute),
-                            variant: VitCardVariant.ghost,
-                            radius: VitCardRadius.standard,
-                            padding: EdgeInsets.zero,
-                            width: DcaSpacingTokens.dcaRebalanceToggleWidth,
-                            height: _dcaRebalanceToggleHeight,
-                            borderColor: AppColors.transparent,
-                            clip: true,
-                            child: VitTogglePill(
-                              enabled: autoExecute,
-                              width: DcaSpacingTokens.dcaRebalanceToggleWidth,
-                              height: _dcaRebalanceToggleHeight,
-                              knobSize:
-                                  DcaSpacingTokens.dcaRebalanceToggleThumb,
-                              knobMargin: DcaSpacingTokens.dcaPaddingX1,
-                              activeColor: AppColors.buy,
-                              inactiveColor: AppColors.borderSolid,
-                              activeKnobColor: AppColors.text1,
-                              inactiveKnobColor: AppColors.text1,
-                              inactiveBorderColor: AppColors.borderSolid,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (autoExecute) ...[
-                      const SizedBox(
-                        height: AppSpacing.pageRhythmStandardInnerGap,
-                      ),
-                      DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: AppColors.warningBg,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.inputRadius,
-                            side: const BorderSide(
-                              color: AppColors.warningBorder,
-                            ),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: DcaSpacingTokens.dcaPaddingX4,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.error_outline_rounded,
-                                color: AppColors.warn,
-                                size: DcaSpacingTokens.dcaRebalanceIconSm,
-                              ),
-                              const SizedBox(width: AppSpacing.x3),
-                              Expanded(
-                                child: Text(
-                                  'Hệ thống sẽ tự động thực hiện giao dịch khi danh mục lệch. Bạn có thể tắt bất kỳ lúc nào.',
-                                  style: AppTextStyles.micro.copyWith(
-                                    color: AppColors.warningText,
-                                    height: _dcaRebalanceBodyLineHeight,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+              _AutoExecuteCard(
+                autoExecute: autoExecute,
+                onAutoExecuteChanged: onAutoExecuteChanged,
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _AdvancedToggleHeader extends StatelessWidget {
+  const _AdvancedToggleHeader({
+    required this.expanded,
+    required this.onToggleExpanded,
+  });
+
+  final bool expanded;
+  final VoidCallback onToggleExpanded;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      key: DCARebalanceConfig.advancedToggleKey,
+      onTap: onToggleExpanded,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.standard,
+      padding: DcaSpacingTokens.dcaVerticalPaddingX3,
+      borderColor: AppColors.transparent,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.settings_suggest_outlined,
+            color: AppColors.text3,
+            size: DcaSpacingTokens.dcaRebalanceIconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              'Cài đặt nâng cao',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+          AnimatedRotation(
+            turns: expanded ? .5 : 0,
+            duration: const Duration(milliseconds: 160),
+            child: const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: AppColors.text3,
+              size: DcaSpacingTokens.dcaRebalanceIcon,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MinTradeCard extends StatelessWidget {
+  const _MinTradeCard({
+    required this.minTradeAmountUsd,
+    required this.onMinTradeChanged,
+  });
+
+  final double minTradeAmountUsd;
+  final ValueChanged<double> onMinTradeChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: VitDensity.compact.cardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Giao dịch tối thiểu',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ),
+              DecoratedBox(
+                decoration: const ShapeDecoration(
+                  color: AppColors.surface2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
+                ),
+                child: Padding(
+                  padding: DcaSpacingTokens.dcaScoreChipPadding,
+                  child: Text(
+                    '\$${minTradeAmountUsd.toStringAsFixed(0)}',
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          _TokenSlider(
+            value: minTradeAmountUsd,
+            min: 10,
+            max: 500,
+            divisions: 49,
+            accent: AppModuleAccents.trade,
+            onChanged: onMinTradeChanged,
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [_FinePrint('\$10'), _FinePrint('\$500')],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AutoExecuteCard extends StatelessWidget {
+  const _AutoExecuteCard({
+    required this.autoExecute,
+    required this.onAutoExecuteChanged,
+  });
+
+  final bool autoExecute;
+  final ValueChanged<bool> onAutoExecuteChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: VitDensity.compact.cardPadding,
+      child: Column(
+        children: [
+          _AutoExecuteToggleRow(
+            autoExecute: autoExecute,
+            onAutoExecuteChanged: onAutoExecuteChanged,
+          ),
+          if (autoExecute) ...[
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            const _AutoExecuteWarning(),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _AutoExecuteToggleRow extends StatelessWidget {
+  const _AutoExecuteToggleRow({
+    required this.autoExecute,
+    required this.onAutoExecuteChanged,
+  });
+
+  final bool autoExecute;
+  final ValueChanged<bool> onAutoExecuteChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        VitAccentIconBox(
+          icon: Icons.flash_on_rounded,
+          color: autoExecute ? AppColors.buy : AppColors.text3,
+          muted: !autoExecute,
+        ),
+        const SizedBox(width: AppSpacing.x4),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Tự động thực thi',
+                style: AppTextStyles.base.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                'Rebalance tự động không cần duyệt',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
+        ),
+        Semantics(
+          button: true,
+          checked: autoExecute,
+          child: VitCard(
+            onTap: () => onAutoExecuteChanged(!autoExecute),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.standard,
+            padding: EdgeInsets.zero,
+            width: DcaSpacingTokens.dcaRebalanceToggleWidth,
+            height: _dcaRebalanceToggleHeight,
+            borderColor: AppColors.transparent,
+            clip: true,
+            child: VitTogglePill(
+              enabled: autoExecute,
+              width: DcaSpacingTokens.dcaRebalanceToggleWidth,
+              height: _dcaRebalanceToggleHeight,
+              knobSize: DcaSpacingTokens.dcaRebalanceToggleThumb,
+              knobMargin: DcaSpacingTokens.dcaPaddingX1,
+              activeColor: AppColors.buy,
+              inactiveColor: AppColors.borderSolid,
+              activeKnobColor: AppColors.text1,
+              inactiveKnobColor: AppColors.text1,
+              inactiveBorderColor: AppColors.borderSolid,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AutoExecuteWarning extends StatelessWidget {
+  const _AutoExecuteWarning();
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        color: AppColors.warningBg,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: AppColors.warningBorder),
+        ),
+      ),
+      child: Padding(
+        padding: DcaSpacingTokens.dcaPaddingX4,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.warn,
+              size: DcaSpacingTokens.dcaRebalanceIconSm,
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                'Hệ thống sẽ tự động thực hiện giao dịch khi danh mục lệch. Bạn có thể tắt bất kỳ lúc nào.',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.warningText,
+                  height: _dcaRebalanceBodyLineHeight,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

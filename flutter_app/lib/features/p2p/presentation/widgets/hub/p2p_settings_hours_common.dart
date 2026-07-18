@@ -148,7 +148,7 @@ class _SettingIcon extends StatelessWidget {
       dimension: AppSpacing.buttonCompact,
       child: Material(
         color: color.withValues(alpha: .10),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );

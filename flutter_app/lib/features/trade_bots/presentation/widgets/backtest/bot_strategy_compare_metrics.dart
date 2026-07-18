@@ -11,9 +11,13 @@ class _EquityChartCard extends StatelessWidget {
     return _Card(
       child: AspectRatio(
         aspectRatio: 2.15,
-        child: CustomPaint(
-          painter: _EquityChartPainter(points, strategies),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _EquityChartPainter(points, strategies),
+            size: Size.infinite,
+          ),
         ),
       ),
     );
@@ -30,9 +34,13 @@ class _RadarCard extends StatelessWidget {
     return _Card(
       child: AspectRatio(
         aspectRatio: 1.85,
-        child: CustomPaint(
-          painter: _RadarPainter(strategies),
-          size: Size.infinite,
+        // PERF-HN5: isolate the heavy chart painter into its own compositor
+        // layer.
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _RadarPainter(strategies),
+            size: Size.infinite,
+          ),
         ),
       ),
     );
@@ -47,14 +55,44 @@ class _MetricsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      _MetricRowData('Total Return', 'totalReturn', '%', _BestMode.highest),
-      _MetricRowData('Sharpe Ratio', 'sharpeRatio', '', _BestMode.highest),
-      _MetricRowData('Max Drawdown', 'maxDrawdown', '%', _BestMode.lowest),
-      _MetricRowData('Win Rate', 'winRate', '%', _BestMode.highest),
-      _MetricRowData('Profit Factor', 'profitFactor', '', _BestMode.highest),
-      _MetricRowData('Total Trades', 'totalTrades', '', _BestMode.neutral),
-      _MetricRowData('Avg Duration', 'avgTradeDuration', '', _BestMode.neutral),
-      _MetricRowData('Volatility', 'volatility', '%', _BestMode.lowest),
+      const _MetricRowData(
+        'Total Return',
+        'totalReturn',
+        '%',
+        _BestMode.highest,
+      ),
+      const _MetricRowData(
+        'Sharpe Ratio',
+        'sharpeRatio',
+        '',
+        _BestMode.highest,
+      ),
+      const _MetricRowData(
+        'Max Drawdown',
+        'maxDrawdown',
+        '%',
+        _BestMode.lowest,
+      ),
+      const _MetricRowData('Win Rate', 'winRate', '%', _BestMode.highest),
+      const _MetricRowData(
+        'Profit Factor',
+        'profitFactor',
+        '',
+        _BestMode.highest,
+      ),
+      const _MetricRowData(
+        'Total Trades',
+        'totalTrades',
+        '',
+        _BestMode.neutral,
+      ),
+      const _MetricRowData(
+        'Avg Duration',
+        'avgTradeDuration',
+        '',
+        _BestMode.neutral,
+      ),
+      const _MetricRowData('Volatility', 'volatility', '%', _BestMode.lowest),
     ];
 
     return _Card(

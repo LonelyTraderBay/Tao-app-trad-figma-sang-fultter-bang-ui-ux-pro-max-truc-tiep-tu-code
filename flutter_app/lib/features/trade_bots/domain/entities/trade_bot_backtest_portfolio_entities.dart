@@ -1,5 +1,7 @@
 part of 'trade_bots_entities.dart';
 
+/// A single bucket (duration label + count) in a backtest trade-duration
+/// histogram.
 final class TradeBotDurationDistribution {
   const TradeBotDurationDistribution({
     required this.duration,
@@ -10,6 +12,8 @@ final class TradeBotDurationDistribution {
   final int count;
 }
 
+/// Read-model for the Bot Backtesting screen (available strategies, pairs,
+/// date ranges, and default form values).
 final class TradeBotBacktestingSnapshot {
   const TradeBotBacktestingSnapshot({
     required this.strategies,
@@ -36,6 +40,7 @@ final class TradeBotBacktestingSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A strategy option selectable in the backtest form.
 final class TradeBotBacktestStrategy {
   const TradeBotBacktestStrategy({
     required this.id,
@@ -48,6 +53,7 @@ final class TradeBotBacktestStrategy {
   final int colorHex;
 }
 
+/// A selectable historical date range for a backtest run.
 final class TradeBotBacktestDateRange {
   const TradeBotBacktestDateRange({
     required this.id,
@@ -60,6 +66,8 @@ final class TradeBotBacktestDateRange {
   final String periodLabel;
 }
 
+/// Request to run a backtest for a strategy/pair/date range with an
+/// initial capital amount.
 final class TradeBotBacktestRequest {
   const TradeBotBacktestRequest({
     required this.strategyId,
@@ -74,6 +82,7 @@ final class TradeBotBacktestRequest {
   final double initialCapital;
 }
 
+/// Result of kicking off a backtest run (status, report id, progress).
 final class TradeBotBacktestResult {
   const TradeBotBacktestResult({
     required this.status,
@@ -86,6 +95,8 @@ final class TradeBotBacktestResult {
   final int progress;
 }
 
+/// Read-model for the Strategy Comparison screen (compared strategies,
+/// equity curves, recommendations).
 final class TradeBotStrategyCompareSnapshot {
   const TradeBotStrategyCompareSnapshot({
     required this.strategies,
@@ -108,6 +119,8 @@ final class TradeBotStrategyCompareSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A strategy entry with its performance metrics shown on the comparison
+/// screen.
 final class TradeBotCompareStrategy {
   const TradeBotCompareStrategy({
     required this.id,
@@ -122,6 +135,8 @@ final class TradeBotCompareStrategy {
   final TradeBotCompareMetrics metrics;
 }
 
+/// Performance metrics (return, Sharpe, drawdown, win rate, etc.) for one
+/// strategy in the comparison screen.
 final class TradeBotCompareMetrics {
   const TradeBotCompareMetrics({
     required this.totalReturn,
@@ -144,6 +159,8 @@ final class TradeBotCompareMetrics {
   final double volatility;
 }
 
+/// One date's equity value across the compared strategies (DCA, grid,
+/// momentum, martingale).
 final class TradeBotCompareEquityPoint {
   const TradeBotCompareEquityPoint({
     required this.date,
@@ -170,6 +187,7 @@ final class TradeBotCompareEquityPoint {
   }
 }
 
+/// A recommended strategy with the reasoning behind the suggestion.
 final class TradeBotRecommendation {
   const TradeBotRecommendation({
     required this.title,
@@ -184,6 +202,8 @@ final class TradeBotRecommendation {
   final String reason;
 }
 
+/// Read-model for the Strategy Optimization screen (optimization targets,
+/// tunable parameter ranges, wizard steps).
 final class TradeBotOptimizationSnapshot {
   const TradeBotOptimizationSnapshot({
     required this.targets,
@@ -204,6 +224,7 @@ final class TradeBotOptimizationSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A selectable optimization objective (e.g. maximize Sharpe ratio).
 final class TradeBotOptimizationTarget {
   const TradeBotOptimizationTarget({
     required this.id,
@@ -216,6 +237,8 @@ final class TradeBotOptimizationTarget {
   final String description;
 }
 
+/// A tunable strategy parameter's min/max/step/default range for
+/// optimization.
 final class TradeBotOptimizationRange {
   const TradeBotOptimizationRange({
     required this.id,
@@ -236,6 +259,7 @@ final class TradeBotOptimizationRange {
   final String unit;
 }
 
+/// Request to run a strategy-parameter optimization job.
 final class TradeBotOptimizationRequest {
   const TradeBotOptimizationRequest({
     required this.targetId,
@@ -248,6 +272,7 @@ final class TradeBotOptimizationRequest {
   final double gridRangePct;
 }
 
+/// Result of kicking off an optimization job (status, job id, ETA).
 final class TradeBotOptimizationResult {
   const TradeBotOptimizationResult({
     required this.status,
@@ -260,6 +285,8 @@ final class TradeBotOptimizationResult {
   final int estimatedMinutes;
 }
 
+/// Read-model for the Bot Portfolio dashboard screen (summary,
+/// allocations, equity curve, correlations, health checklist).
 final class TradeBotPortfolioDashboardSnapshot {
   const TradeBotPortfolioDashboardSnapshot({
     required this.summary,
@@ -282,6 +309,8 @@ final class TradeBotPortfolioDashboardSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Aggregate portfolio-level metrics across all bots (equity, PnL, Sharpe,
+/// diversification score, active bot count).
 final class TradeBotPortfolioSummary {
   const TradeBotPortfolioSummary({
     required this.totalEquity,
@@ -304,6 +333,7 @@ final class TradeBotPortfolioSummary {
   final int totalTrades;
 }
 
+/// A single strategy's allocation weight and PnL within the bot portfolio.
 final class TradeBotPortfolioAllocation {
   const TradeBotPortfolioAllocation({
     required this.strategy,
@@ -318,6 +348,7 @@ final class TradeBotPortfolioAllocation {
   final int colorHex;
 }
 
+/// One date's total portfolio equity value.
 final class TradeBotPortfolioEquityPoint {
   const TradeBotPortfolioEquityPoint({
     required this.date,
@@ -328,6 +359,8 @@ final class TradeBotPortfolioEquityPoint {
   final double equity;
 }
 
+/// One bot's correlation values against every other bot in the portfolio
+/// (row of the correlation matrix).
 final class TradeBotCorrelationRow {
   const TradeBotCorrelationRow({required this.bot, required this.values});
 
@@ -335,6 +368,8 @@ final class TradeBotCorrelationRow {
   final Map<String, double> values;
 }
 
+/// Read-model for the Drawdown Analyzer screen (summary, underwater curve,
+/// duration buckets, drawdown events, insights).
 final class TradeBotDrawdownAnalyzerSnapshot {
   const TradeBotDrawdownAnalyzerSnapshot({
     required this.summary,
@@ -357,6 +392,8 @@ final class TradeBotDrawdownAnalyzerSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Aggregate drawdown metrics (max/avg drawdown %, days underwater,
+/// frequency).
 final class TradeBotDrawdownSummary {
   const TradeBotDrawdownSummary({
     required this.maxDrawdownPct,
@@ -373,6 +410,7 @@ final class TradeBotDrawdownSummary {
   final int frequency;
 }
 
+/// One date's underwater (below-peak) percentage on the drawdown curve.
 final class TradeBotUnderwaterPoint {
   const TradeBotUnderwaterPoint({
     required this.date,
@@ -385,6 +423,7 @@ final class TradeBotUnderwaterPoint {
   final double underwaterPct;
 }
 
+/// A histogram bucket of drawdown-event durations.
 final class TradeBotDrawdownDurationBucket {
   const TradeBotDrawdownDurationBucket({
     required this.range,
@@ -395,6 +434,7 @@ final class TradeBotDrawdownDurationBucket {
   final int count;
 }
 
+/// A single historical drawdown event (start, depth, duration, recovery).
 final class TradeBotDrawdownEvent {
   const TradeBotDrawdownEvent({
     required this.id,
@@ -413,6 +453,7 @@ final class TradeBotDrawdownEvent {
   final bool severe;
 }
 
+/// A single textual insight derived from the drawdown analysis.
 final class TradeBotDrawdownInsight {
   const TradeBotDrawdownInsight({
     required this.symbol,
@@ -425,6 +466,8 @@ final class TradeBotDrawdownInsight {
   final String text;
 }
 
+/// Read-model for the Equity Curve screen (summary, curve points, monthly
+/// returns, performance stats, analysis notes).
 final class TradeBotEquityCurveSnapshot {
   const TradeBotEquityCurveSnapshot({
     required this.summary,
@@ -447,6 +490,8 @@ final class TradeBotEquityCurveSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Bot vs. buy-and-hold return summary shown atop the equity curve
+/// screen.
 final class TradeBotEquityCurveSummary {
   const TradeBotEquityCurveSummary({
     required this.botReturnPct,
@@ -459,6 +504,8 @@ final class TradeBotEquityCurveSummary {
   final double alphaPct;
 }
 
+/// One date's bot equity vs. buy-and-hold value (with optional rolling
+/// Sharpe ratio).
 final class TradeBotEquityCurvePoint {
   const TradeBotEquityCurvePoint({
     required this.date,
@@ -475,6 +522,7 @@ final class TradeBotEquityCurvePoint {
   final double? rollingSharpe;
 }
 
+/// One month's bot return vs. market return and derived alpha.
 final class TradeBotMonthlyReturn {
   const TradeBotMonthlyReturn({
     required this.month,
@@ -489,6 +537,7 @@ final class TradeBotMonthlyReturn {
   final double alpha;
 }
 
+/// A single labelled performance stat with a display color.
 final class TradeBotPerformanceStat {
   const TradeBotPerformanceStat({
     required this.id,
@@ -503,6 +552,8 @@ final class TradeBotPerformanceStat {
   final int colorHex;
 }
 
+/// Read-model for the Bot Strategy Guide screen (strategy explanations,
+/// best practices, common mistakes).
 final class TradeBotGuideSnapshot {
   const TradeBotGuideSnapshot({
     required this.strategies,
@@ -521,6 +572,8 @@ final class TradeBotGuideSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A single strategy's educational explanation (how it works, pros/cons,
+/// worked example).
 final class TradeBotGuideStrategy {
   const TradeBotGuideStrategy({
     required this.id,
@@ -549,6 +602,8 @@ final class TradeBotGuideStrategy {
   final TradeBotGuideExample example;
 }
 
+/// A worked numeric example (setup, duration, result, profit) for a guide
+/// strategy.
 final class TradeBotGuideExample {
   const TradeBotGuideExample({
     required this.setup,
@@ -563,6 +618,7 @@ final class TradeBotGuideExample {
   final String profit;
 }
 
+/// A single best-practice tip shown on the strategy guide screen.
 final class TradeBotGuidePractice {
   const TradeBotGuidePractice({
     required this.id,
@@ -577,6 +633,7 @@ final class TradeBotGuidePractice {
   final String iconKey;
 }
 
+/// A common mistake plus why it happens and how to fix it.
 final class TradeBotGuideMistake {
   const TradeBotGuideMistake({
     required this.mistake,
@@ -589,6 +646,7 @@ final class TradeBotGuideMistake {
   final String fix;
 }
 
+/// Read-model for the Bot FAQ screen (grouped question categories).
 final class TradeBotFaqSnapshot {
   const TradeBotFaqSnapshot({
     required this.categories,
@@ -606,6 +664,7 @@ final class TradeBotFaqSnapshot {
       categories.fold<int>(0, (sum, category) => sum + category.items.length);
 }
 
+/// A labelled group of FAQ items.
 final class TradeBotFaqCategory {
   const TradeBotFaqCategory({
     required this.id,
@@ -618,6 +677,7 @@ final class TradeBotFaqCategory {
   final List<TradeBotFaqItem> items;
 }
 
+/// A single question/answer FAQ entry.
 final class TradeBotFaqItem {
   const TradeBotFaqItem({required this.question, required this.answer});
 
@@ -625,6 +685,8 @@ final class TradeBotFaqItem {
   final String answer;
 }
 
+/// Read-model for the Tax Reporting screen (available tax years, summary,
+/// report types, gain/loss breakdown).
 final class TradeBotTaxReportingSnapshot {
   const TradeBotTaxReportingSnapshot({
     required this.taxYears,
@@ -651,6 +713,7 @@ final class TradeBotTaxReportingSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// Aggregate realized gain/loss tax summary for the selected tax year.
 final class TradeBotTaxSummary {
   const TradeBotTaxSummary({
     required this.totalTrades,
@@ -671,6 +734,7 @@ final class TradeBotTaxSummary {
   final double totalFees;
 }
 
+/// A selectable tax report type/format (e.g. IRS Form 8949, CSV).
 final class TradeBotTaxReportType {
   const TradeBotTaxReportType({
     required this.id,
@@ -689,6 +753,8 @@ final class TradeBotTaxReportType {
   final bool selectedByDefault;
 }
 
+/// Short-term vs. long-term gain labels/descriptions shown on the tax
+/// reporting screen.
 final class TradeBotTaxBreakdown {
   const TradeBotTaxBreakdown({
     required this.shortTermLabel,
@@ -703,6 +769,8 @@ final class TradeBotTaxBreakdown {
   final String longTermDescription;
 }
 
+/// Request to export tax reports for a given year/report types/cost-basis
+/// method.
 final class TradeBotTaxReportExportRequest {
   const TradeBotTaxReportExportRequest({
     required this.year,
@@ -715,6 +783,7 @@ final class TradeBotTaxReportExportRequest {
   final String costBasisMethod;
 }
 
+/// Result of exporting tax reports.
 final class TradeBotTaxReportExportResult {
   const TradeBotTaxReportExportResult({
     required this.status,
@@ -729,6 +798,8 @@ final class TradeBotTaxReportExportResult {
   final String exportId;
 }
 
+/// Read-model for the API Documentation screen (REST endpoints,
+/// WebSocket events, code examples, rate limits).
 final class TradeBotApiDocumentationSnapshot {
   const TradeBotApiDocumentationSnapshot({
     required this.tabs,
@@ -759,6 +830,7 @@ final class TradeBotApiDocumentationSnapshot {
   final List<TradeScreenState> supportedStates;
 }
 
+/// A selectable tab on the API Documentation screen.
 final class TradeBotApiTab {
   const TradeBotApiTab({required this.id, required this.label});
 
@@ -766,6 +838,8 @@ final class TradeBotApiTab {
   final String label;
 }
 
+/// A single documented REST API endpoint (method, path, params,
+/// response shape).
 final class TradeBotApiEndpoint {
   const TradeBotApiEndpoint({
     required this.method,
@@ -782,6 +856,7 @@ final class TradeBotApiEndpoint {
   final String response;
 }
 
+/// A single documented request parameter for an API endpoint.
 final class TradeBotApiParameter {
   const TradeBotApiParameter({
     required this.name,
@@ -796,6 +871,7 @@ final class TradeBotApiParameter {
   final String description;
 }
 
+/// A single documented WebSocket event and its payload shape.
 final class TradeBotWebSocketEvent {
   const TradeBotWebSocketEvent({
     required this.event,
@@ -808,6 +884,7 @@ final class TradeBotWebSocketEvent {
   final String payload;
 }
 
+/// A language-specific code sample shown on the API Documentation screen.
 final class TradeBotCodeExample {
   const TradeBotCodeExample({
     required this.language,
@@ -822,6 +899,7 @@ final class TradeBotCodeExample {
   final String source;
 }
 
+/// A single documented API rate-limit entry (label + value).
 final class TradeBotRateLimit {
   const TradeBotRateLimit({required this.label, required this.value});
 

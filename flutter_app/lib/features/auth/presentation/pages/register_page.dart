@@ -194,12 +194,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         onChanged: _setContactType,
                         height: AuthSpacingTokens.authSegmentedHeight,
                         options: [
-                          VitSegmentedChoiceOption(
+                          const VitSegmentedChoiceOption(
                             value: _RegisterContactType.email,
                             label: 'Email',
                             key: RegisterPage.emailTabKey,
                           ),
-                          VitSegmentedChoiceOption(
+                          const VitSegmentedChoiceOption(
                             value: _RegisterContactType.phone,
                             label: 'Điện thoại',
                             key: RegisterPage.phoneTabKey,

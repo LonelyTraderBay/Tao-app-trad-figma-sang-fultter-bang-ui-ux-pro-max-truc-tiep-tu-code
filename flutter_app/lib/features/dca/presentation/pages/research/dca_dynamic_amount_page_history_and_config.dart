@@ -100,7 +100,7 @@ class _HistoryRow extends StatelessWidget {
         : AppColors.text3;
 
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
@@ -118,7 +118,7 @@ class _HistoryRow extends StatelessWidget {
                       : change < 0
                       ? AppColors.warn10
                       : AppColors.hoverBg,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.mdRadius,
                   ),
                 ),
@@ -200,7 +200,7 @@ class _ChangeBadge extends StatelessWidget {
             : change < 0
             ? AppColors.warn10
             : AppColors.hoverBg,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
         padding: DcaSpacingTokens.dcaTinyChipPadding,
@@ -342,7 +342,9 @@ class _StrategyExplainer extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: _accentSoft(option.accent),
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
               ),
               child: Icon(
                 Icons.auto_awesome_rounded,
@@ -386,11 +388,11 @@ class _DynamicDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary08,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardRadius,
-          side: const BorderSide(color: AppColors.primary20),
+          side: BorderSide(color: AppColors.primary20),
         ),
       ),
       child: Padding(

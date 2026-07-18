@@ -42,7 +42,7 @@ class _VerifyTab extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Merkle Tree Verification',
                               style: AppTextStyles.baseMedium,
                             ),

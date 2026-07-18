@@ -51,7 +51,10 @@ class _ProtectionCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _RoundIcon(icon: Icons.shield_outlined, color: AppColors.primary),
+              const _RoundIcon(
+                icon: Icons.shield_outlined,
+                color: AppColors.primary,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -126,7 +129,7 @@ class _ComplaintsTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     'How to File a Complaint',
                     style: AppTextStyles.baseMedium,
                   ),

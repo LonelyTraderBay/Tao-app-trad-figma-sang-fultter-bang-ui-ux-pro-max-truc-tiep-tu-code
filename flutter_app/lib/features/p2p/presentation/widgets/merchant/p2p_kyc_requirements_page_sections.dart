@@ -15,16 +15,16 @@ class _KycHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             width: _p2pKycIconBoxExtent,
             height: _p2pKycIconBoxExtent,
             child: Material(
               color: AppColors.primary15,
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadii.lgRadius,
-                side: const BorderSide(color: AppColors.primary20),
+                side: BorderSide(color: AppColors.primary20),
               ),
-              child: const Center(
+              child: Center(
                 child: Icon(
                   Icons.shield_outlined,
                   color: AppModuleAccents.p2p,

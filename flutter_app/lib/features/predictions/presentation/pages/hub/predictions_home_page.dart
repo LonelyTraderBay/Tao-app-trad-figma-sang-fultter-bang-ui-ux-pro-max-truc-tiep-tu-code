@@ -47,6 +47,7 @@ class PredictionsHomePage extends ConsumerStatefulWidget {
   static const arenaBridgeKey = Key('sc027_arena_bridge');
 
   static Key eventCardKey(String id) => Key('sc027_event_$id');
+  static const viewAllEventsKey = Key('sc027_view_all_events');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -240,8 +241,10 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                               AppRoutePaths.marketsPredictionsBreaking,
                             ),
                           )
-                        else
-                          for (final event in snapshot.events)
+                        else ...[
+                          // PERF-HN3: chỉ dựng lát cắt bounded (cap 8) —
+                          // phần còn lại đi qua trang tìm kiếm.
+                          for (final event in snapshot.visibleEvents)
                             _PredictionEventCard(
                               key: PredictionsHomePage.eventCardKey(event.id),
                               event: event,
@@ -249,6 +252,23 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                                 AppRoutePaths.marketsPredictionEvent(event.id),
                               ),
                             ),
+                          if (snapshot.events.length >
+                              snapshot.visibleEvents.length)
+                            VitCard(
+                              key: PredictionsHomePage.viewAllEventsKey,
+                              onTap: () => context.go(
+                                AppRoutePaths.marketsPredictionsSearch,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Xem tất cả ${snapshot.events.length} sự kiện',
+                                  style: AppTextStyles.baseMedium.copyWith(
+                                    color: AppColors.accent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                         const _RiskDisclaimer(),
                       ],
                     ),

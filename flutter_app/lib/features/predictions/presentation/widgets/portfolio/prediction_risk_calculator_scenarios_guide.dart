@@ -102,10 +102,10 @@ class _GuideTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageSection(
+    return const VitPageSection(
       label: 'How to Use',
       accentColor: _predictionPrimary,
-      children: const [
+      children: [
         _GuideCard(
           title: '1. Input Position Details',
           body:

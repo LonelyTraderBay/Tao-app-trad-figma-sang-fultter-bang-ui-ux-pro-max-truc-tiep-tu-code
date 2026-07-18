@@ -50,7 +50,7 @@ class _PortfolioHero extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.business_center_outlined,
                     color: AppModuleAccents.launchpad,
                     size: AppSpacing.iconLg,

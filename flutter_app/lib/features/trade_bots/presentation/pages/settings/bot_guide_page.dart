@@ -13,8 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
 part '../../widgets/settings/bot_guide_intro_tabs.dart';
 part '../../widgets/settings/bot_guide_strategies.dart';
@@ -68,7 +68,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
           secondaryLabel: 'Thực hành',
           secondaryValue: '${snapshot.bestPractices.length}',
         ),
-        VitTradeSection(title: 'Tổng quan', child: const _IntroBanner()),
+        const VitTradeSection(title: 'Tổng quan', child: _IntroBanner()),
         VitTradeSection(
           title: 'Chủ đề',
           child: VitTabBar(
@@ -110,9 +110,9 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
               ? _BestPracticesView(items: snapshot.bestPractices)
               : _MistakesView(items: snapshot.mistakes),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Video tutorials',
-          child: const _VideoTutorialsCard(),
+          child: _VideoTutorialsCard(),
         ),
         const VitBotRiskReviewFooter(
           title: 'Bot education review',

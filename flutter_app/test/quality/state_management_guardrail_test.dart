@@ -9,6 +9,26 @@ import 'package:flutter_test/flutter_test.dart';
 /// key (e.g. a mutable draft class) does.
 const _safeKeyTypes = {'String', 'int', 'double', 'num', 'bool'};
 
+/// PERF-HN2 (c): family-key autoDispose guardrail phải quét cả composition
+/// root (`lib/app/providers`, không đệ quy — layout hiện tại phẳng) LẪN
+/// từng feature's own `data/providers/*.dart` (STATE-S26 đã tách repository
+/// providers ra khỏi `app/providers` cho một số feature — xem AGENTS.md
+/// "Architecture"). Đo thực tế (2026-07-17): quét mở rộng không lộ vi phạm
+/// nào (`grep -rn '\.family[<(]' lib/features/**/data/providers/*.dart` =
+/// 0 kết quả) — không cần allowlist thêm, drift ghi nhận trong báo cáo
+/// PERF-HN2 là "đã phủ đủ, không cần sửa gì".
+Iterable<File> _providerFiles() sync* {
+  yield* Directory('lib/app/providers').listSync().whereType<File>();
+  for (final file in Directory(
+    'lib/features',
+  ).listSync(recursive: true).whereType<File>()) {
+    final path = file.path.replaceAll('\\', '/');
+    if (path.endsWith('.dart') && path.contains('/data/providers/')) {
+      yield file;
+    }
+  }
+}
+
 void main() {
   group('state management guardrails', () {
     test('Provider.family with a non-scalar key uses autoDispose', () {
@@ -23,8 +43,9 @@ void main() {
         // fixed by PERF-HN1 (2026-07-16): now .autoDispose.family, and
         // their draft key types (TradeOrderDraft/TradeFuturesOrderDraft)
         // gained value equality — no longer need an allowlist entry.
-        'lib/app/providers/trade_controller_providers.dart:tradeLeverageControllerProvider',
-        'lib/app/providers/trade_controller_providers.dart:tradeMarginControllerProvider',
+        // tradeLeverageControllerProvider / tradeMarginControllerProvider
+        // fixed by STATE-S22 (2026-07-17): leverage thành NotifierProvider
+        // family key String; margin thêm .autoDispose.
         'lib/app/providers/p2p_controller_providers.dart:p2pHomeProvider',
         'lib/app/providers/p2p_controller_providers.dart:p2pExpressConfirmProvider',
         'lib/app/providers/p2p_controller_providers.dart:p2pTaxReportingProvider',
@@ -36,9 +57,7 @@ void main() {
       };
 
       final violations = <String>[];
-      for (final file in Directory(
-        'lib/app/providers',
-      ).listSync().whereType<File>()) {
+      for (final file in _providerFiles()) {
         if (!file.path.endsWith('.dart')) continue;
         final source = file.readAsStringSync();
         final path = file.path.replaceAll('\\', '/');
@@ -72,32 +91,14 @@ void main() {
 
     test('presentation pages do not seed a mutable local list from ref.read '
         '(dual-source state)', () {
-      // Baseline (2026-07-16, A-Plus roadmap STATE-S24 / S2.3): these
-      // pages already seed a `late List<...>` field from `ref.read(...)`
-      // in initState and mutate it locally with setState, instead of
-      // going through a Notifier — this is the "two sources of truth"
-      // pattern S2.3 migrates away from. otp_page.dart's `late final
-      // List<TextEditingController>` is a legitimate UI controller list,
-      // not domain state, and is correctly NOT in this baseline.
-      const allowlist = {
-        'lib/features/arena/presentation/pages/governance/arena_blocked_users_page.dart',
-        'lib/features/dca/presentation/pages/portfolio/dca_rebalance_config_page.dart',
-        'lib/features/earn/presentation/pages/savings/savings_notification_preferences_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_address_book_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_gas_tracker_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_multisig_page.dart',
-        'lib/features/launchpad/presentation/pages/tools/launchpad_webhooks_page.dart',
-        'lib/features/markets/presentation/pages/hub/watchlist_page.dart',
-        'lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart',
-        'lib/features/markets/presentation/pages/tools/comparison_tool_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_2fa_settings_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_device_management_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_fraud_prevention_page.dart',
-        'lib/features/p2p/presentation/pages/security/p2p_suspicious_activity_page.dart',
-        'lib/features/trade/presentation/pages/hub/trade_history_export_page.dart',
-        'lib/features/trade_terminal/presentation/pages/tools/advanced_chart_page.dart',
-        'lib/features/wallet/presentation/pages/address/address_book_page.dart',
-      };
+      // Baseline gốc (2026-07-16, STATE-S24 / S2.3) từng ghim 17 trang.
+      // STATE-S23 (2026-07-17) đã migrate TOÀN BỘ sang Notifier tại
+      // composition root (khuôn MarketWatchlistStateController) — allowlist
+      // về RỖNG và phải giữ rỗng: trang mới seed `late List` từ ref.read
+      // + setState là fail ngay. otp_page.dart's `late final
+      // List<TextEditingController>` là UI controller list hợp lệ, không
+      // thuộc phạm vi guardrail này.
+      const allowlist = <String>{};
 
       final violations = <String>[];
       for (final file in Directory(
@@ -125,6 +126,92 @@ void main() {
             'New pages seed a mutable local list from ref.read(...) '
             'instead of a Notifier, reintroducing the dual-source-of-truth '
             'pattern S2.3 migrates away from: $violations',
+      );
+    });
+
+    test('write controllers are exposed via NotifierProvider, not Provider', () {
+      // Baseline (2026-07-17, A-Plus roadmap STATE-S26 / ADR-001): các
+      // controller CÓ đường ghi (gọi _repository.submit*/patch*/create*)
+      // nhưng vẫn bọc trong `Provider` thường — migrate dần theo
+      // STATE-S22/S23/TEST-HR3, xóa entry khi controller đã thành Notifier.
+      // Controller read-model thuần (không match marker ghi) được phép giữ
+      // Provider const theo đúng chuẩn AGENTS.md.
+      const allowlist = {
+        // tradeLeverageControllerProvider + tradeFuturesOrderControllerProvider
+        // đã thành NotifierProvider ở STATE-S22 (2026-07-17) — xóa khỏi baseline.
+        'lib/app/providers/trade_controller_providers.dart:tradeOrdersHistoryControllerProvider',
+        'lib/app/providers/trade_bots_controller_providers.dart:tradeBotEmergencyStopControllerProvider',
+        'lib/app/providers/trade_bots_controller_providers.dart:tradeBotSecuritySettingsControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeActiveCopiesControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeCopySettingsControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeProviderApplicationControllerProvider',
+        'lib/app/providers/trade_copy_controller_providers.dart:tradeCopyConfirmationControllerProvider',
+        'lib/app/providers/trade_terminal_controller_providers.dart:tradeRiskManagementControllerProvider',
+        'lib/app/providers/trade_terminal_controller_providers.dart:tradeAdvancedToolsControllerProvider',
+      };
+
+      // Marker "đường ghi" trong body class controller (model file).
+      final writeMarker = RegExp(
+        r'_repository\.(submit|patch|create|update|amend|cancel)|'
+        r'\.submitOrderAction\(',
+      );
+
+      // Gom body class controller theo tên từ toàn bộ model files.
+      final controllerSources = <String, String>{};
+      for (final file in Directory(
+        'lib/features',
+      ).listSync(recursive: true).whereType<File>()) {
+        final path = file.path.replaceAll('\\', '/');
+        if (!path.contains('/presentation/controllers/')) continue;
+        if (!path.endsWith('.dart')) continue;
+        final source = file.readAsStringSync();
+        for (final match in RegExp(
+          r'class\s+(\w+Controller)[\s<]',
+        ).allMatches(source)) {
+          final name = match.group(1)!;
+          final next = source.indexOf('\nfinal class ', match.start + 1);
+          final end = next < 0 ? source.length : next;
+          controllerSources[name] = source.substring(match.start, end);
+        }
+      }
+
+      final violations = <String>[];
+      for (final file in Directory(
+        'lib/app/providers',
+      ).listSync().whereType<File>()) {
+        if (!file.path.endsWith('.dart')) continue;
+        final source = file.readAsStringSync();
+        final path = file.path.replaceAll('\\', '/');
+
+        // Anchor `= Provider` để KHÔNG match NotifierProvider/AsyncNotifier.
+        for (final match in RegExp(
+          r'final\s+(\w+)\s*=\s*Provider[\.<(]',
+        ).allMatches(source)) {
+          final providerName = match.group(1)!;
+          final declEnd = source.indexOf('\nfinal ', match.start + 1);
+          final body = source.substring(
+            match.start,
+            declEnd < 0 ? source.length : declEnd,
+          );
+          final ctor = RegExp(r'return\s+(\w+Controller)\(').firstMatch(body);
+          if (ctor == null) continue;
+          final controllerBody = controllerSources[ctor.group(1)!];
+          if (controllerBody == null) continue;
+          if (!writeMarker.hasMatch(controllerBody)) continue;
+
+          final id = '$path:$providerName';
+          if (allowlist.contains(id)) continue;
+          violations.add(id);
+        }
+      }
+
+      expect(
+        violations,
+        isEmpty,
+        reason:
+            'Controller có đường ghi (submit/patch/...) phải là '
+            'NotifierProvider theo ADR-001/AGENTS.md — Provider const chỉ '
+            'dành cho read-model thuần: $violations',
       );
     });
   });

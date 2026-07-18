@@ -41,19 +41,10 @@ class ComparisonToolPage extends ConsumerStatefulWidget {
 
 class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
   final TextEditingController _pickerSearchController = TextEditingController();
-  late List<String> _selectedIds;
   bool _showPicker = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _selectedIds = [
-      ...ref
-          .read(marketControllerProvider)
-          .getMarketComparison()
-          .selectedPairIds,
-    ];
-  }
+  // STATE-S23: selectedIds sống ở MarketComparisonStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
 
   @override
   void dispose() {
@@ -62,29 +53,27 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
   }
 
   void _addToken(String id) {
-    if (_selectedIds.length >= comparisonToolMaxCompare ||
-        _selectedIds.contains(id)) {
-      return;
-    }
+    final added = ref
+        .read(marketComparisonStateControllerProvider.notifier)
+        .addToken(id);
+    if (!added) return;
     setState(() {
-      _selectedIds = [..._selectedIds, id];
       _showPicker = false;
       _pickerSearchController.clear();
     });
   }
 
   void _removeToken(String id) {
-    if (_selectedIds.length <= 2) return;
-    setState(() {
-      _selectedIds = _selectedIds.where((value) => value != id).toList();
-    });
+    ref.read(marketComparisonStateControllerProvider.notifier).removeToken(id);
   }
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(marketControllerProvider).getMarketComparison();
+    final viewState = ref.watch(marketComparisonStateControllerProvider);
+    final snapshot = viewState.snapshot;
+    final selectedIds = viewState.selectedIds;
     final selectedPairs = [
-      for (final id in _selectedIds)
+      for (final id in selectedIds)
         if (comparisonFindPair(snapshot.marketPairs, id) != null)
           comparisonFindPair(snapshot.marketPairs, id)!,
     ];
@@ -128,16 +117,15 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
                       children: [
                         ComparisonSelectedTokensStrip(
                           selectedPairs: selectedPairs,
-                          canAdd:
-                              _selectedIds.length < comparisonToolMaxCompare,
-                          canRemove: _selectedIds.length > 2,
+                          canAdd: selectedIds.length < comparisonToolMaxCompare,
+                          canRemove: selectedIds.length > 2,
                           onAdd: () => setState(() => _showPicker = true),
                           onRemove: _removeToken,
                         ),
                         if (_showPicker)
                           ComparisonTokenPickerCard(
                             snapshot: snapshot,
-                            selectedIds: _selectedIds,
+                            selectedIds: selectedIds,
                             controller: _pickerSearchController,
                             onChanged: () => setState(() {}),
                             onClose: () => setState(() {

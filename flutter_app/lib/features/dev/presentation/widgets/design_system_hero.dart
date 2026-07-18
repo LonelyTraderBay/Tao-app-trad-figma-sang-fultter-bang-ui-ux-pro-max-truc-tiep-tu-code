@@ -20,11 +20,11 @@ class DesignSystemHero extends StatelessWidget {
       padding: AdminSpacingTokens.devCardPaddingLarge,
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
             top: -AppSpacing.x6,
             right: -AppSpacing.x6,
             child: DecoratedBox(
-              decoration: const ShapeDecoration(
+              decoration: ShapeDecoration(
                 color: AppColors.accent15,
                 shape: CircleBorder(),
               ),

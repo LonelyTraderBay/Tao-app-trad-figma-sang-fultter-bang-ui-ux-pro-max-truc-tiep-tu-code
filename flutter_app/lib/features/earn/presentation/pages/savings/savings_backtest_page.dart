@@ -172,7 +172,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
     double weightedApy,
   ) {
     return [
-      SectionTitle(label: 'Vốn ban đầu (USD)'),
+      const SectionTitle(label: 'Vốn ban đầu (USD)'),
       AmountField(
         controller: _amountController,
         quickAmounts: snapshot.quickAmounts,
@@ -186,7 +186,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
           });
         },
       ),
-      SectionTitle(label: 'Thời gian mô phỏng'),
+      const SectionTitle(label: 'Thời gian mô phỏng'),
       PeriodRow(
         periods: snapshot.periods,
         selected: selectedPeriod,
@@ -198,7 +198,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
           });
         },
       ),
-      SectionTitle(label: 'Chiến lược phân bổ'),
+      const SectionTitle(label: 'Chiến lược phân bổ'),
       PresetList(
         presets: snapshot.presets,
         selected: preset.id,
@@ -210,7 +210,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
           });
         },
       ),
-      SectionTitle(label: 'Phân bổ hiện tại'),
+      const SectionTitle(label: 'Phân bổ hiện tại'),
       AllocationCard(
         preset: preset,
         weightedApy: weightedApy,

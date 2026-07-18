@@ -11,8 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_bots_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
 part '../../widgets/dashboard/bot_history_page_sections.dart';
 part '../../widgets/dashboard/bot_history_page_common.dart';
@@ -88,9 +88,9 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
             totalFees: totalFees,
           ),
         ),
-        VitTradeSection(
+        const VitTradeSection(
           title: 'Search',
-          child: const VitSearchBar(
+          child: VitSearchBar(
             enabled: false,
             placeholder: 'Search by bot name or pair...',
           ),

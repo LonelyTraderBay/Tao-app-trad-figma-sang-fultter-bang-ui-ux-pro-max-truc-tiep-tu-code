@@ -120,7 +120,7 @@ class _ChangeIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: change.color.withValues(alpha: .14),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Icon(
           change.icon,
@@ -144,7 +144,7 @@ class _SmallBadge extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -299,7 +299,7 @@ class _SignatureBlock extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DecoratedBox(
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: AppColors.surface2,
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.inputRadius,
@@ -362,11 +362,11 @@ class _RiskWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       key: LaunchpadAbiDiffPage.warningKey,
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn08,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.inputRadius,
-          side: const BorderSide(color: AppColors.warn15),
+          side: BorderSide(color: AppColors.warn15),
         ),
       ),
       child: Padding(

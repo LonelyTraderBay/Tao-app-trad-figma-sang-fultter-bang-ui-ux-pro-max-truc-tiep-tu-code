@@ -7,8 +7,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
+/// Leading-decoration style of a [VitSectionHeader]: no decoration, a
+/// colored accent bar, or a smaller marker-title bar.
 enum VitSectionHeaderVariant { plain, accentBar, markerTitle }
 
+/// Section title row: optional accent bar/icon/subtitle and a trailing
+/// "see more"-style text action.
 class VitSectionHeader extends StatelessWidget {
   const VitSectionHeader({
     super.key,
@@ -110,7 +114,9 @@ class VitSectionHeader extends StatelessWidget {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accentColor,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
               ),
             ),
           ),

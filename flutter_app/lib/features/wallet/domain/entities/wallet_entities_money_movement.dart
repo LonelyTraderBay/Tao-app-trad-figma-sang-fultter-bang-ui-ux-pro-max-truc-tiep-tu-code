@@ -1,5 +1,7 @@
 part of 'wallet_entities.dart';
 
+/// Data for the withdraw limits screen: KYC [tiers], today/month usage,
+/// and FAQs, with derived remaining/percent-used helpers.
 final class WalletWithdrawLimitsSnapshot {
   const WalletWithdrawLimitsSnapshot({
     required this.currentLevel,
@@ -39,6 +41,8 @@ final class WalletWithdrawLimitsSnapshot {
       : (usedMonth / currentTier.monthlyLimit) * 100;
 }
 
+/// One KYC verification tier (limits, requirements, unlocked features) on
+/// the withdraw limits screen.
 final class WalletKycTier {
   const WalletKycTier({
     required this.level,
@@ -61,6 +65,7 @@ final class WalletKycTier {
   final int colorHex;
 }
 
+/// One question/answer FAQ entry on the withdraw limits screen.
 final class WalletLimitFaq {
   const WalletLimitFaq({required this.question, required this.answer});
 
@@ -68,6 +73,8 @@ final class WalletLimitFaq {
   final String answer;
 }
 
+/// Data for the dust converter screen: convertible small-balance [assets],
+/// selectable convert [targets], and the fee/threshold config.
 final class WalletDustConverterSnapshot {
   const WalletDustConverterSnapshot({
     required this.dustThresholdUsd,
@@ -92,6 +99,7 @@ final class WalletDustConverterSnapshot {
       .toList(growable: false);
 }
 
+/// One selectable conversion-target asset on the dust converter screen.
 final class WalletDustTarget {
   const WalletDustTarget({
     required this.symbol,
@@ -104,6 +112,7 @@ final class WalletDustTarget {
   final int colorHex;
 }
 
+/// One small-balance ("dust") asset eligible for conversion.
 final class WalletDustAsset {
   const WalletDustAsset({
     required this.id,
@@ -122,6 +131,8 @@ final class WalletDustAsset {
   final int colorHex;
 }
 
+/// Data for the network status screen: per-network health info with
+/// derived operational/degraded/congested/down counts.
 final class WalletNetworkStatusSnapshot {
   const WalletNetworkStatusSnapshot({
     required this.networks,
@@ -152,6 +163,8 @@ final class WalletNetworkStatusSnapshot {
       networks.where((network) => network.health == 'down').length;
 }
 
+/// One blockchain network's live status (health, congestion, deposit/
+/// withdraw availability) on the network status screen.
 final class WalletNetworkInfo {
   const WalletNetworkInfo({
     required this.id,
@@ -186,6 +199,8 @@ final class WalletNetworkInfo {
   final String? notes;
 }
 
+/// One selectable transaction-type filter on the transaction history
+/// screen.
 final class WalletTransactionFilter {
   const WalletTransactionFilter({required this.id, required this.label});
 
@@ -193,6 +208,7 @@ final class WalletTransactionFilter {
   final String label;
 }
 
+/// Category of a [WalletTransaction].
 enum WalletTransactionType {
   deposit,
   withdraw,
@@ -202,8 +218,11 @@ enum WalletTransactionType {
   p2pSell,
 }
 
+/// Settlement status of a [WalletTransaction].
 enum WalletTransactionStatus { completed, pending, failed }
 
+/// One wallet transaction (deposit/withdraw/trade/P2P) shown in history and
+/// detail screens.
 final class WalletTransaction {
   const WalletTransaction({
     required this.id,
@@ -230,6 +249,8 @@ final class WalletTransaction {
   final double? fee;
 }
 
+/// Data for the deposit screen: the target [asset] and its selectable
+/// [networks].
 final class WalletDepositSnapshot {
   const WalletDepositSnapshot({
     required this.asset,
@@ -246,6 +267,8 @@ final class WalletDepositSnapshot {
   final List<WalletScreenState> supportedStates;
 }
 
+/// One selectable deposit network (address, fee, arrival time, optional
+/// memo requirement) on the deposit screen.
 final class WalletDepositNetwork {
   const WalletDepositNetwork({
     required this.id,
@@ -270,6 +293,8 @@ final class WalletDepositNetwork {
   final String? memoLabel;
 }
 
+/// Data for the withdraw screen: the target [asset], available balance,
+/// selectable [networks], and recently used addresses.
 final class WalletWithdrawSnapshot {
   const WalletWithdrawSnapshot({
     required this.asset,
@@ -292,6 +317,8 @@ final class WalletWithdrawSnapshot {
   final String? highRiskContractId;
 }
 
+/// One selectable withdraw network (fee, min/max, optional memo
+/// requirement) on the withdraw screen.
 final class WalletWithdrawNetwork {
   const WalletWithdrawNetwork({
     required this.id,
@@ -314,6 +341,8 @@ final class WalletWithdrawNetwork {
   final String? memoPlaceholder;
 }
 
+/// One recently used withdrawal address shown as a quick-pick on the
+/// withdraw screen.
 final class WalletRecentAddress {
   const WalletRecentAddress({
     required this.label,

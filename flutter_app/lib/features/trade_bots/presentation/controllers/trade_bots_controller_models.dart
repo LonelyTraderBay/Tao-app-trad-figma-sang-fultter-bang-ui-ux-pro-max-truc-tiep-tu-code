@@ -10,6 +10,7 @@
 // spot/futures/margin risk management, not the trading-bots domain.
 import 'package:vit_trade_flutter/features/trade_bots/domain/repositories/trading_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_core/presentation/controllers/trade_read_model.dart';
+import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots_entities.dart';
 
 final class TradeBotEmergencyStopViewState {
   const TradeBotEmergencyStopViewState({

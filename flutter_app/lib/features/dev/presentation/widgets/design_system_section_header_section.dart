@@ -82,12 +82,12 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
               ],
             ),
           ),
-        VitCard(
+        const VitCard(
           padding: AdminSpacingTokens.devCardPadding,
           radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               DesignSystemAccentSample(
                 label: 'Mua (Buy)',
                 color: AppColors.buy,

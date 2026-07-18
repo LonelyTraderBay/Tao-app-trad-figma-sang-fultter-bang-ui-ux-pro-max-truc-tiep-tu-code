@@ -16,10 +16,10 @@ class _LiveStats extends StatelessWidget {
         children: [
           Row(
             children: [
-              Stack(
+              const Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.settings_input_antenna_rounded,
                     color: AppColors.buy,
                     size: AppSpacing.iconMd,
@@ -27,7 +27,7 @@ class _LiveStats extends StatelessWidget {
                   Positioned(
                     right: -AppSpacing.hairlineStroke,
                     top: -AppSpacing.hairlineStroke,
-                    child: const Material(
+                    child: Material(
                       color: AppColors.buy,
                       shape: CircleBorder(),
                       child: SizedBox.square(dimension: AppSpacing.x1),
@@ -69,7 +69,7 @@ class _LiveStats extends StatelessWidget {
                   value: _formatVolume(snapshot.totalVolume),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 1,
                 height: AppSpacing.x6,
                 child: ColoredBox(color: AppColors.border),

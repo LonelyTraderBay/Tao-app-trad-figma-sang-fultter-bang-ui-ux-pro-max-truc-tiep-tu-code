@@ -1,3 +1,5 @@
+/// Thrown when mock data is disabled but no production news repository has
+/// been configured.
 final class NewsBackendContractMissingException implements Exception {
   const NewsBackendContractMissingException();
 

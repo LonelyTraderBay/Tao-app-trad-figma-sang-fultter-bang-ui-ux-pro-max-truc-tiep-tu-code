@@ -1,5 +1,9 @@
 part of '../../pages/tools/advanced_chart_page.dart';
 
+// PERF-HN5: [candles] is expected to already be the expanded (3x
+// interpolated) series produced by [expandAdvancedTradeCandles] — the page
+// state memoizes that expansion (see `_expandedCandlesFor` in
+// advanced_chart_page.dart) so it isn't recomputed on every repaint.
 class _AdvancedTradeChartPainter extends CustomPainter {
   const _AdvancedTradeChartPainter({
     required this.candles,
@@ -11,14 +15,24 @@ class _AdvancedTradeChartPainter extends CustomPainter {
   final List<TradeChartIndicator> indicators;
   final String chartType;
 
+  /// Debug-only paint counter (kDebugMode only) used by repaint regression
+  /// tests. `_AdvancedTradeChartPainter` is private to this library, so it
+  /// can't be named from a test file — read it externally via the public
+  /// [advancedTradeChartPainterDebugPaintCount] getter below.
+  @visibleForTesting
+  static int debugPaintCount = 0;
+
   @override
   void paint(Canvas canvas, Size size) {
+    if (kDebugMode) {
+      debugPaintCount++;
+    }
     final bg = Paint()..color = _chartBlack;
     canvas.drawRect(Offset.zero & size, bg);
 
     if (candles.isEmpty) return;
 
-    final chartCandles = _expandedCandles(candles);
+    final chartCandles = candles;
     final showVolume = indicators.any(
       (indicator) => indicator.id == 'vol' && indicator.enabled,
     );
@@ -144,12 +158,17 @@ class _AdvancedTradeChartPainter extends CustomPainter {
       final period = indicator.period!;
       final path = Path();
       var started = false;
+      // PERF-HN5: sliding-window running sum instead of a per-candle
+      // sublist+fold — O(n) instead of O(n*period).
+      var windowSum = 0.0;
       for (var i = 0; i < source.length; i++) {
-        final start = math.max(0, i - period + 1);
-        final slice = source.sublist(start, i + 1);
-        final average =
-            slice.fold<double>(0, (sum, candle) => sum + candle.close) /
-            slice.length;
+        windowSum += source[i].close;
+        final windowStart = i - period;
+        if (windowStart >= 0) {
+          windowSum -= source[windowStart].close;
+        }
+        final windowLength = math.min(period, i + 1);
+        final average = windowSum / windowLength;
         final offset = Offset(xFor(i), yFor(average));
         if (!started) {
           path.moveTo(offset.dx, offset.dy);
@@ -210,49 +229,73 @@ class _AdvancedTradeChartPainter extends CustomPainter {
     tp.paint(canvas, Offset(size.width - tp.width - 6, 96));
   }
 
-  List<TradeCandle> _expandedCandles(List<TradeCandle> source) {
-    if (source.length < 2) return source;
-    final expanded = <TradeCandle>[];
-    var previousClose = source.first.open;
-    for (var i = 0; i < source.length - 1; i++) {
-      final current = source[i];
-      final next = source[i + 1];
-      for (var step = 0; step < 3; step++) {
-        final t = step / 3;
-        final close =
-            current.close +
-            (next.close - current.close) * t +
-            math.sin((i * 3 + step) * .9) * 26;
-        final open = previousClose;
-        final high = math.max(open, close) + 46 + (step % 2) * 15;
-        final low = math.min(open, close) - 42 - ((i + step) % 2) * 13;
-        final volume =
-            current.volume +
-            (next.volume - current.volume) * t +
-            ((i + step) % 4) * 180;
-        expanded.add(
-          TradeCandle(
-            time: current.time,
-            open: open,
-            high: high,
-            low: low,
-            close: close,
-            volume: volume,
-          ),
-        );
-        previousClose = close;
-      }
-    }
-    expanded.add(source.last);
-    return expanded;
-  }
-
   @override
   bool shouldRepaint(covariant _AdvancedTradeChartPainter oldDelegate) {
-    return oldDelegate.chartType != chartType ||
-        oldDelegate.indicators != indicators ||
-        oldDelegate.candles != candles;
+    if (oldDelegate.chartType != chartType) return true;
+    if (identical(oldDelegate.candles, candles) &&
+        identical(oldDelegate.indicators, indicators)) {
+      return false;
+    }
+    // PERF-HN5: TradeCandle/TradeChartIndicator have no value `==` (default
+    // identity), so listEquals below only catches same-length lists whose
+    // elements are pairwise-identical objects — it can't detect "different
+    // list instance, equal contents". The page-level memo
+    // (`_expandedCandlesFor` in advanced_chart_page.dart) is line 1 of
+    // defense against redundant repaints; this is line 2, in case a caller
+    // ever passes a rebuilt-but-unchanged list.
+    return !listEquals(oldDelegate.candles, candles) ||
+        !listEquals(oldDelegate.indicators, indicators);
   }
 }
+
+/// Interpolates [source] into a denser 3x candle series for rendering.
+///
+/// PERF-HN5: kept as a pure top-level function (not a painter method) so the
+/// owning page state can memoize the result once per `candles` reference
+/// instead of recomputing it on every `paint()` call, and so it can be
+/// unit-tested directly.
+@visibleForTesting
+List<TradeCandle> expandAdvancedTradeCandles(List<TradeCandle> source) {
+  if (source.length < 2) return source;
+  final expanded = <TradeCandle>[];
+  var previousClose = source.first.open;
+  for (var i = 0; i < source.length - 1; i++) {
+    final current = source[i];
+    final next = source[i + 1];
+    for (var step = 0; step < 3; step++) {
+      final t = step / 3;
+      final close =
+          current.close +
+          (next.close - current.close) * t +
+          math.sin((i * 3 + step) * .9) * 26;
+      final open = previousClose;
+      final high = math.max(open, close) + 46 + (step % 2) * 15;
+      final low = math.min(open, close) - 42 - ((i + step) % 2) * 13;
+      final volume =
+          current.volume +
+          (next.volume - current.volume) * t +
+          ((i + step) % 4) * 180;
+      expanded.add(
+        TradeCandle(
+          time: current.time,
+          open: open,
+          high: high,
+          low: low,
+          close: close,
+          volume: volume,
+        ),
+      );
+      previousClose = close;
+    }
+  }
+  expanded.add(source.last);
+  return expanded;
+}
+
+/// External-test accessor for [_AdvancedTradeChartPainter.debugPaintCount]
+/// (the painter class itself is private to this library).
+@visibleForTesting
+int get advancedTradeChartPainterDebugPaintCount =>
+    _AdvancedTradeChartPainter.debugPaintCount;
 
 String _formatRawPrice(double value) => value.toStringAsFixed(2);

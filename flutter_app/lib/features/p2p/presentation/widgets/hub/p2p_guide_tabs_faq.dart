@@ -53,7 +53,7 @@ class _FaqTab extends StatelessWidget {
       key: P2PGuidePage.faqListKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Câu hỏi thường gặp', style: AppTextStyles.baseMedium),
+        const Text('Câu hỏi thường gặp', style: AppTextStyles.baseMedium),
         const SizedBox(height: AppSpacing.x1),
         Text(
           '${snapshot.faqItems.length} câu hỏi',

@@ -78,10 +78,10 @@ class _FundLockHero extends StatelessWidget {
           Material(
             color: AppColors.onAccent.withValues(alpha: .20),
             borderRadius: AppRadii.smRadius,
-            child: SizedBox(
+            child: const SizedBox(
               width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
               height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
-              child: const Icon(
+              child: Icon(
                 Icons.lock_outline_rounded,
                 color: AppColors.onAccent,
                 size: AppSpacing.iconMd,

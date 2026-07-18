@@ -1,3 +1,4 @@
+/// UI state the cross-module analytics screen supports rendering.
 enum CrossModuleAnalyticsScreenState {
   loading,
   empty,
@@ -6,10 +7,14 @@ enum CrossModuleAnalyticsScreenState {
   realtimeRefresh,
 }
 
+/// The active tab on the cross-module analytics screen.
 enum CrossModuleAnalyticsTab { performance, metrics, comparison }
 
+/// A product module tracked by cross-module analytics.
 enum AnalyticsModuleId { trading, p2p, predictions, dca }
 
+/// Data for the cross-module analytics screen: per-module [modules]
+/// metrics, monthly performance series, and available [tabs].
 final class CrossModuleAnalyticsSnapshot {
   const CrossModuleAnalyticsSnapshot({
     required this.endpoint,
@@ -59,6 +64,7 @@ final class CrossModuleAnalyticsSnapshot {
   }
 }
 
+/// One selectable [CrossModuleAnalyticsTab] entry with its display label.
 final class CrossModuleAnalyticsTabDraft {
   const CrossModuleAnalyticsTabDraft({required this.tab, required this.label});
 
@@ -66,6 +72,8 @@ final class CrossModuleAnalyticsTabDraft {
   final String label;
 }
 
+/// One module's performance metrics (ROI, trades, win rate, volume, risk
+/// score) shown on the cross-module analytics screen.
 final class CrossModuleMetricDraft {
   const CrossModuleMetricDraft({
     required this.id,
@@ -90,6 +98,8 @@ final class CrossModuleMetricDraft {
   final int riskScore;
 }
 
+/// One month's per-module performance values in the cross-module
+/// analytics comparison chart.
 final class CrossModuleMonthlyPerformanceDraft {
   const CrossModuleMonthlyPerformanceDraft({
     required this.month,

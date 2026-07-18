@@ -199,9 +199,9 @@ class _BatchOperationCard extends StatelessWidget {
                 ),
               ),
               if (batch.status == StakingInstitutionalBatchStatus.pending)
-                _InlineAction(label: 'Approve', color: AppColors.primary)
+                const _InlineAction(label: 'Approve', color: AppColors.primary)
               else if (batch.status == StakingInstitutionalBatchStatus.approved)
-                _InlineAction(label: 'Execute', color: AppColors.buy),
+                const _InlineAction(label: 'Execute', color: AppColors.buy),
             ],
           ),
         ],

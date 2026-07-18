@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
@@ -17,22 +18,20 @@ void main() {
     return tester.widget<Text>(find.byKey(key)).data!;
   }
 
-  Future<void> pumpAlerts(WidgetTester tester) async {
+  Future<GoRouter> pumpAlerts(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    final router = createAppRouter(
+      initialLocation: AppRoutePaths.marketsAlerts,
+    );
     await tester.pumpWidget(
-      ProviderScope(
-        child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.marketsAlerts,
-          ),
-        ),
-      ),
+      ProviderScope(child: VitTradeApp(routerConfig: router)),
     );
     await tester.pumpAndSettle();
+    return router;
   }
 
   test('SC-014 mock repository exposes the BE draft read model', () {
@@ -141,6 +140,28 @@ void main() {
     await tester.pump();
 
     expect(find.text('Tạo cảnh báo mới sẽ được bổ sung sau'), findsOneWidget);
+  });
+
+  testWidgets('SC-014 toggle/delete state persists across a navigation '
+      'round-trip', (tester) async {
+    final router = await pumpAlerts(tester);
+
+    await tester.tap(find.byKey(PriceAlertsPage.deleteKey('alert002')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(PriceAlertsPage.cardKey('alert002')), findsNothing);
+    expect(keyedText(tester, PriceAlertsPage.totalCountKey), '3');
+
+    // STATE-S23 round-trip: điều hướng đi rồi quay lại — mutation giữ nguyên
+    // (state sống ở Notifier, không phải late List của trang).
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+    expect(find.byType(MarketListPage), findsOneWidget);
+
+    router.go(AppRoutePaths.marketsAlerts);
+    await tester.pumpAndSettle();
+    expect(find.byKey(PriceAlertsPage.cardKey('alert002')), findsNothing);
+    expect(keyedText(tester, PriceAlertsPage.totalCountKey), '3');
   });
 
   testWidgets('SC-014 back button returns to SC-008 Markets', (tester) async {

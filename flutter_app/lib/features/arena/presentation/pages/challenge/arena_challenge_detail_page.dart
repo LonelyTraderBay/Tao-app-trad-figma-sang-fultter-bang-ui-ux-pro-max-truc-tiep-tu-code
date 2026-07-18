@@ -172,7 +172,7 @@ class _ArenaChallengeDetailPageState
                           onChanged: (tab) => setState(() => _activeTab = tab),
                         ),
                         _TabContent(snapshot: snapshot, active: _activeTab),
-                        _WarningStack(
+                        const _WarningStack(
                           warnings: [
                             'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính.',
                             'Không thỏa thuận giao dịch ngoài nền tảng.',

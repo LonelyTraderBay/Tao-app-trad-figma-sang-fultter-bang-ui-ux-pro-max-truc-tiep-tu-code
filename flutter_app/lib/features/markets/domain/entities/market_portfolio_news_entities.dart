@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// Read-model for the Portfolio screen (holdings, performance history,
+/// sort order).
 final class MarketPortfolioSnapshot {
   const MarketPortfolioSnapshot({
     required this.stats,
@@ -28,6 +30,8 @@ final class MarketPortfolioSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Read-model for the Market News screen (feed, breaking news, category
+/// and sentiment filters).
 final class MarketNewsSnapshot {
   const MarketNewsSnapshot({
     required this.news,
@@ -60,6 +64,7 @@ final class MarketNewsSnapshot {
   final Set<MarketScreenState> supportedStates;
 }
 
+/// Aggregate portfolio value/PnL stats shown atop the Portfolio screen.
 final class PortfolioStats {
   const PortfolioStats({
     required this.totalValue,
@@ -84,6 +89,7 @@ final class PortfolioStats {
   final double stableAllocation;
 }
 
+/// A single portfolio holding (quantity, cost basis, current value, PnL).
 final class PortfolioHolding {
   const PortfolioHolding({
     required this.id,
@@ -114,6 +120,7 @@ final class PortfolioHolding {
   final List<double> sparkline;
 }
 
+/// One date's total portfolio value.
 final class PortfolioPerformancePoint {
   const PortfolioPerformancePoint({required this.date, required this.value});
 
@@ -121,8 +128,11 @@ final class PortfolioPerformancePoint {
   final double value;
 }
 
+/// Sort key for the portfolio holdings list: value, PnL, or change.
 enum MarketPortfolioSort { value, pnl, change }
 
+/// A single market news article (title, summary, source, sentiment,
+/// related tokens).
 final class MarketNewsItem {
   const MarketNewsItem({
     required this.id,
@@ -153,6 +163,7 @@ final class MarketNewsItem {
   final bool isBreaking;
 }
 
+/// A selectable news category filter (id, label, accent color).
 final class MarketNewsCategory {
   const MarketNewsCategory({
     required this.id,
@@ -165,6 +176,8 @@ final class MarketNewsCategory {
   final AccentTone color;
 }
 
+/// Display label/color for a news sentiment badge (bullish/bearish/
+/// neutral).
 final class MarketNewsSentimentBadge {
   const MarketNewsSentimentBadge({required this.label, required this.color});
 
@@ -172,4 +185,6 @@ final class MarketNewsSentimentBadge {
   final AccentTone color;
 }
 
+/// Sentiment classification of a news article: bullish, bearish, or
+/// neutral.
 enum MarketNewsSentiment { bullish, bearish, neutral }

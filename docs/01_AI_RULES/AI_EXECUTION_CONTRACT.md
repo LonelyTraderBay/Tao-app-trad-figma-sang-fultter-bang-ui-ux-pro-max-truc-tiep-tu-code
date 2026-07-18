@@ -1,5 +1,7 @@
 # AI Execution Contract
 
+**Last Updated:** 2026-07-18
+
 These rules are mandatory for VitTrade Flutter work after the 2026-05-26
 Flutter-only cleanup.
 

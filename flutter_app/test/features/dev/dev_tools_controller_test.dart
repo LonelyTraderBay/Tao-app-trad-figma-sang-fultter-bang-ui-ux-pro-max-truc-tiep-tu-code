@@ -5,8 +5,8 @@ import 'package:vit_trade_flutter/features/dev/presentation/controllers/dev_tool
 void main() {
   group('dev tools controllers', () {
     test('route checker exposes a route snapshot from repository contract', () {
-      final controller = RouteCheckerController(
-        const MockRouteCheckerRepository(),
+      final controller = const RouteCheckerController(
+        MockRouteCheckerRepository(),
       );
 
       final snapshot = controller.snapshot();
@@ -17,8 +17,8 @@ void main() {
     });
 
     test('performance monitor exposes mock read model', () {
-      final controller = PerformanceMonitorController(
-        const MockPerformanceMonitorRepository(),
+      final controller = const PerformanceMonitorController(
+        MockPerformanceMonitorRepository(),
       );
 
       final snapshot = controller.snapshot();
@@ -29,11 +29,11 @@ void main() {
     });
 
     test('showcase and design system controllers expose static drafts', () {
-      final showcase = MissingScreensShowcaseController(
-        const MockMissingScreensShowcaseRepository(),
+      final showcase = const MissingScreensShowcaseController(
+        MockMissingScreensShowcaseRepository(),
       ).snapshot();
-      final designSystem = DesignSystemController(
-        const MockDesignSystemRepository(),
+      final designSystem = const DesignSystemController(
+        MockDesignSystemRepository(),
       ).snapshot();
 
       expect(showcase.newScreens, hasLength(3));

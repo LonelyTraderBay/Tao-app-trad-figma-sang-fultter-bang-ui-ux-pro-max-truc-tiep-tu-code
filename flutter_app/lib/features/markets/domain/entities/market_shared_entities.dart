@@ -1,5 +1,7 @@
 part of 'market_entities.dart';
 
+/// A single tradable market pair (price, 24h stats, sparkline) — kernel
+/// entity shared across every markets screen.
 final class MarketPair {
   const MarketPair({
     required this.id,
@@ -34,6 +36,7 @@ final class MarketPair {
   final String category;
 }
 
+/// A pending/created price-alert draft for a market pair.
 final class MarketAlertDraft {
   const MarketAlertDraft({
     required this.id,
@@ -46,6 +49,8 @@ final class MarketAlertDraft {
   final String label;
 }
 
+/// Available category/sort options and defaults shared by market list
+/// screens' filter bar.
 final class MarketScreenFilters {
   const MarketScreenFilters({
     required this.categories,
@@ -60,6 +65,7 @@ final class MarketScreenFilters {
   final String defaultSort;
 }
 
+/// A single selectable sort option (id + label) in a market filter bar.
 final class MarketSortOption {
   const MarketSortOption({required this.id, required this.label});
 
@@ -67,4 +73,6 @@ final class MarketSortOption {
   final String label;
 }
 
+/// Supported UI states (loading/empty/error/offline/realtime-refresh)
+/// shared by market screen read-model snapshots.
 enum MarketScreenState { loading, empty, error, offline, realtimeRefresh }

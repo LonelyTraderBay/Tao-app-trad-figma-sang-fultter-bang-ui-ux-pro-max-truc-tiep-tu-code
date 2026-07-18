@@ -1,3 +1,16 @@
+/// DEBT-87 (A-Plus GĐ3): lớp fixture mock "god-family chấp nhận được" —
+/// 26 part-file / ~11k dòng data tĩnh phục vụ giai đoạn mock-UI, SẼ ĐƯỢC
+/// THAY bằng repository backend thật khi có DEC-backend. Quy ước:
+/// - KHÔNG refactor cấu trúc family này (tách/gộp part) — công sức đổ vào
+///   lớp sẽ bị thay thế là lãng phí;
+/// - KHÔNG thêm logic hiển thị vào đây — mock chỉ trả data, mọi logic
+///   trình bày thuộc presentation/controller;
+/// - Kích thước family bị đóng băng bởi
+///   test/quality/mock_fixture_baseline_guardrail_test.dart (chỉ được
+///   giảm hoặc tăng trong dung sai) — phình thêm là tín hiệu logic đang
+///   chảy nhầm tầng. Xem thêm docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md.
+library;
+
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';

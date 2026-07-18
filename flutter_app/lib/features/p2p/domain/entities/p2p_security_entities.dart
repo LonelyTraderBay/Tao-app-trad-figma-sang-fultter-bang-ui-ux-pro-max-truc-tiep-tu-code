@@ -1,5 +1,6 @@
 part of 'p2p_entities.dart';
 
+/// Security score, enabled features, and recent activity for the security center screen.
 final class P2PSecurityCenterSnapshot {
   const P2PSecurityCenterSnapshot({
     required this.endpoint,
@@ -38,6 +39,7 @@ final class P2PSecurityCenterSnapshot {
   final String contractNotes;
 }
 
+/// A single security feature toggle contributing to the security score.
 final class P2PSecurityFeatureDraft {
   const P2PSecurityFeatureDraft({
     required this.id,
@@ -56,6 +58,7 @@ final class P2PSecurityFeatureDraft {
   final String route;
 }
 
+/// A single quick-action shortcut on the security center screen.
 final class P2PSecurityQuickActionDraft {
   const P2PSecurityQuickActionDraft({
     required this.id,
@@ -72,6 +75,7 @@ final class P2PSecurityQuickActionDraft {
   final String route;
 }
 
+/// A single recent security event shown on the security center screen.
 final class P2PSecurityEventDraft {
   const P2PSecurityEventDraft({
     required this.id,
@@ -90,6 +94,7 @@ final class P2PSecurityEventDraft {
   final P2PSecurityEventSeverity severity;
 }
 
+/// Two-factor authentication methods and transaction thresholds for the 2FA settings screen.
 final class P2PTwoFactorSettingsSnapshot {
   const P2PTwoFactorSettingsSnapshot({
     required this.endpoint,
@@ -114,6 +119,7 @@ final class P2PTwoFactorSettingsSnapshot {
   final String contractNotes;
 }
 
+/// A single two-factor authentication method and its enabled state.
 final class P2PTwoFactorMethodDraft {
   const P2PTwoFactorMethodDraft({
     required this.id,
@@ -153,6 +159,7 @@ final class P2PTwoFactorMethodDraft {
   }
 }
 
+/// A single transaction-value threshold that triggers extra 2FA confirmation.
 final class P2PTransactionThresholdDraft {
   const P2PTransactionThresholdDraft({
     required this.id,
@@ -182,6 +189,7 @@ final class P2PTransactionThresholdDraft {
   }
 }
 
+/// Trusted and untrusted devices for the device management screen.
 final class P2PDeviceManagementSnapshot {
   const P2PDeviceManagementSnapshot({
     required this.endpoint,
@@ -214,6 +222,7 @@ final class P2PDeviceManagementSnapshot {
       devices.where((device) => !device.isTrusted).toList(growable: false);
 }
 
+/// A single device that has logged into the account.
 final class P2PTrustedDeviceDraft {
   const P2PTrustedDeviceDraft({
     required this.id,
@@ -261,6 +270,7 @@ final class P2PTrustedDeviceDraft {
   }
 }
 
+/// A user's anti-phishing code, explainer, and email examples.
 final class P2PAntiPhishingCodeSnapshot {
   const P2PAntiPhishingCodeSnapshot({
     required this.endpoint,
@@ -299,6 +309,7 @@ final class P2PAntiPhishingCodeSnapshot {
   final String contractNotes;
 }
 
+/// A single sample email used to illustrate legitimate vs. phishing messages.
 final class P2PAntiPhishingExampleDraft {
   const P2PAntiPhishingExampleDraft({
     required this.id,
@@ -313,6 +324,7 @@ final class P2PAntiPhishingExampleDraft {
   final bool isLegit;
 }
 
+/// Login event history and security tips for the login history screen.
 final class P2PLoginHistorySnapshot {
   const P2PLoginHistorySnapshot({
     required this.endpoint,
@@ -344,6 +356,7 @@ final class P2PLoginHistorySnapshot {
   int get riskEventCount => events.where((event) => event.isRiskEvent).length;
 }
 
+/// A single login event record.
 final class P2PLoginEventDraft {
   const P2PLoginEventDraft({
     required this.id,
@@ -380,6 +393,7 @@ final class P2PLoginEventDraft {
   bool get isRiskEvent => status == 'suspicious' || status == 'failed';
 }
 
+/// Suspicious-activity alerts for the account security screen.
 final class P2PSuspiciousActivitySnapshot {
   const P2PSuspiciousActivitySnapshot({
     required this.endpoint,
@@ -404,6 +418,7 @@ final class P2PSuspiciousActivitySnapshot {
   int get unreviewedCount => alerts.where((alert) => !alert.reviewed).length;
 }
 
+/// A single suspicious-activity alert and its review status.
 final class P2PSuspiciousAlertDraft {
   const P2PSuspiciousAlertDraft({
     required this.id,
@@ -433,6 +448,7 @@ final class P2PSuspiciousAlertDraft {
   }
 }
 
+/// Explainer content and fingerprint info for end-to-end chat encryption.
 final class P2PE2EInfoSnapshot {
   const P2PE2EInfoSnapshot({
     required this.endpoint,
@@ -471,6 +487,7 @@ final class P2PE2EInfoSnapshot {
   final String contractNotes;
 }
 
+/// A single explainer item on the end-to-end encryption info screen.
 final class P2PE2EInfoItemDraft {
   const P2PE2EInfoItemDraft({
     required this.id,
@@ -487,6 +504,7 @@ final class P2PE2EInfoItemDraft {
   final String toneKey;
 }
 
+/// A single step in the end-to-end encryption explainer.
 final class P2PE2EStepDraft {
   const P2PE2EStepDraft({
     required this.id,
@@ -501,6 +519,7 @@ final class P2PE2EStepDraft {
   final String description;
 }
 
+/// Scam patterns, safety checklist, and emergency actions for the fraud prevention screen.
 final class P2PFraudPreventionSnapshot {
   const P2PFraudPreventionSnapshot({
     required this.endpoint,
@@ -531,6 +550,7 @@ final class P2PFraudPreventionSnapshot {
   int get safetyScore => (checkedSafetyCount / checklist.length * 100).round();
 }
 
+/// A single known scam pattern with red flags and prevention tips.
 final class P2PScamPatternDraft {
   const P2PScamPatternDraft({
     required this.id,
@@ -553,6 +573,7 @@ final class P2PScamPatternDraft {
   final String iconKey;
 }
 
+/// A single item in the trade-safety checklist.
 final class P2PSafetyChecklistItemDraft {
   const P2PSafetyChecklistItemDraft({
     required this.id,
@@ -579,6 +600,7 @@ final class P2PSafetyChecklistItemDraft {
   }
 }
 
+/// A single emergency action shortcut shown on the fraud prevention screen.
 final class P2PFraudEmergencyActionDraft {
   const P2PFraudEmergencyActionDraft({
     required this.id,
@@ -595,6 +617,8 @@ final class P2PFraudEmergencyActionDraft {
   final String iconKey;
 }
 
+/// Enabled/warning/disabled state of a security feature.
 enum P2PSecurityStatus { enabled, warning, disabled }
 
+/// Severity level of a security event.
 enum P2PSecurityEventSeverity { info, warning, critical }

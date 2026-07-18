@@ -18,7 +18,7 @@ import 'package:vit_trade_flutter/features/trade_core/presentation/widgets/vit_t
 part '../../widgets/hub/copy_trading_hero.dart';
 part '../../widgets/hub/copy_trading_metrics_common.dart';
 
-CopyTradingListKeys get _copyListKeys => CopyTradingListKeys(
+CopyTradingListKeys get _copyListKeys => const CopyTradingListKeys(
   traderKey: CopyTradingPage.traderKey,
   detailKey: CopyTradingPage.detailKey,
   sortKey: CopyTradingPage.sortKey,

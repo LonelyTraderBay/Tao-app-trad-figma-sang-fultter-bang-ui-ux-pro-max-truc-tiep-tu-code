@@ -74,7 +74,10 @@ class _AppealNotice extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _ToneIcon(icon: Icons.balance_outlined, color: AppColors.warn),
+              const _ToneIcon(
+                icon: Icons.balance_outlined,
+                color: AppColors.warn,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(

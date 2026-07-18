@@ -187,14 +187,14 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                           _SentimentHero(global: snapshot.global),
                           _SentimentStats(global: snapshot.global),
                           _SocialDominanceCard(global: snapshot.global),
-                          VitSectionHeader(
+                          const VitSectionHeader(
                             title: 'Diễn biến 7 ngày',
                             accentColor: _marketPrimary,
                             bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                             variant: VitSectionHeaderVariant.accentBar,
                           ),
                           _TimelineCard(points: snapshot.timeline),
-                          VitSectionHeader(
+                          const VitSectionHeader(
                             title: 'Xu hướng nóng',
                             accentColor: AppColors.warn,
                             bottomGap: AppSpacing.pageRhythmStandardInnerGap,
@@ -214,7 +214,7 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                             _TokenDetailCard(token: token),
                         ] else ...[
                           _TopicCloud(tokens: snapshot.tokens),
-                          VitSectionHeader(
+                          const VitSectionHeader(
                             title: 'Bản đồ tâm lý',
                             accentColor: AppColors.accent,
                             bottomGap: AppSpacing.pageRhythmStandardInnerGap,
@@ -222,7 +222,7 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                           ),
                           _SentimentHeatmap(tokens: snapshot.tokens),
                           _TrendLeaderboards(tokens: snapshot.tokens),
-                          VitSectionHeader(
+                          const VitSectionHeader(
                             title: 'Tốc độ đề cập (24h)',
                             accentColor: AppAssetColors.cyanChain,
                             bottomGap: AppSpacing.pageRhythmStandardInnerGap,

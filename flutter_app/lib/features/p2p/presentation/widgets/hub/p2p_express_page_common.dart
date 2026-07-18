@@ -212,7 +212,7 @@ class _SmallTextChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.surface2,
-      shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       child: Padding(
         padding: P2PSpacingTokens.p2pExpressSmallChipPadding,
         child: Text(

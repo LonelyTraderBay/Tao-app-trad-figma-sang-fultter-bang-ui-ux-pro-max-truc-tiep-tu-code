@@ -401,3 +401,297 @@ final p2pGuideProvider = Provider<P2PGuideSnapshot>(
 final p2pMyOrdersProvider = Provider<P2PMyOrdersSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getMyOrders(),
 );
+
+/// STATE-S23: view-state bất biến của Cài đặt 2FA P2P — methods/thresholds
+/// sống ở Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
+final class P2PTwoFactorSettingsViewState {
+  const P2PTwoFactorSettingsViewState({
+    required this.snapshot,
+    required this.methods,
+    required this.thresholds,
+  });
+
+  factory P2PTwoFactorSettingsViewState.fromSnapshot(
+    P2PTwoFactorSettingsSnapshot snapshot,
+  ) {
+    return P2PTwoFactorSettingsViewState(
+      snapshot: snapshot,
+      methods: List.unmodifiable(snapshot.methods),
+      thresholds: List.unmodifiable(snapshot.thresholds),
+    );
+  }
+
+  final P2PTwoFactorSettingsSnapshot snapshot;
+  final List<P2PTwoFactorMethodDraft> methods;
+  final List<P2PTransactionThresholdDraft> thresholds;
+
+  P2PTwoFactorSettingsViewState copyWith({
+    List<P2PTwoFactorMethodDraft>? methods,
+    List<P2PTransactionThresholdDraft>? thresholds,
+  }) {
+    return P2PTwoFactorSettingsViewState(
+      snapshot: snapshot,
+      methods: methods == null ? this.methods : List.unmodifiable(methods),
+      thresholds: thresholds == null
+          ? this.thresholds
+          : List.unmodifiable(thresholds),
+    );
+  }
+}
+
+/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state cài đặt
+/// 2FA giữ nguyên khi điều hướng đi/về trong phiên.
+final class P2P2FASettingsStateController
+    extends Notifier<P2PTwoFactorSettingsViewState> {
+  @override
+  P2PTwoFactorSettingsViewState build() {
+    return P2PTwoFactorSettingsViewState.fromSnapshot(
+      ref.watch(p2pTwoFactorSettingsProvider),
+    );
+  }
+
+  void toggleMethod(String methodId) {
+    state = state.copyWith(
+      methods: [
+        for (final method in state.methods)
+          if (method.id == methodId)
+            method.copyWith(
+              enabled: !method.enabled,
+              setupRequired: method.enabled ? method.setupRequired : false,
+            )
+          else
+            method,
+      ],
+    );
+  }
+
+  void setPrimaryMethod(String methodId) {
+    state = state.copyWith(
+      methods: [
+        for (final method in state.methods)
+          method.copyWith(isPrimary: method.id == methodId),
+      ],
+    );
+  }
+
+  void toggleThreshold(String thresholdId) {
+    state = state.copyWith(
+      thresholds: [
+        for (final threshold in state.thresholds)
+          if (threshold.id == thresholdId)
+            threshold.copyWith(enabled: !threshold.enabled)
+          else
+            threshold,
+      ],
+    );
+  }
+}
+
+final p2p2FASettingsStateControllerProvider =
+    NotifierProvider<
+      P2P2FASettingsStateController,
+      P2PTwoFactorSettingsViewState
+    >(P2P2FASettingsStateController.new);
+
+/// STATE-S23: view-state bất biến của Quản lý thiết bị P2P — devices sống ở
+/// Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
+final class P2PDeviceManagementViewState {
+  const P2PDeviceManagementViewState({
+    required this.snapshot,
+    required this.devices,
+  });
+
+  factory P2PDeviceManagementViewState.fromSnapshot(
+    P2PDeviceManagementSnapshot snapshot,
+  ) {
+    return P2PDeviceManagementViewState(
+      snapshot: snapshot,
+      devices: List.unmodifiable(snapshot.devices),
+    );
+  }
+
+  final P2PDeviceManagementSnapshot snapshot;
+  final List<P2PTrustedDeviceDraft> devices;
+
+  P2PDeviceManagementViewState copyWith({
+    List<P2PTrustedDeviceDraft>? devices,
+  }) {
+    return P2PDeviceManagementViewState(
+      snapshot: snapshot,
+      devices: devices == null ? this.devices : List.unmodifiable(devices),
+    );
+  }
+}
+
+/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state thiết bị
+/// tin cậy giữ nguyên khi điều hướng đi/về trong phiên.
+final class P2PDeviceManagementStateController
+    extends Notifier<P2PDeviceManagementViewState> {
+  @override
+  P2PDeviceManagementViewState build() {
+    return P2PDeviceManagementViewState.fromSnapshot(
+      ref.watch(p2pDeviceManagementProvider),
+    );
+  }
+
+  void trustDevice(String deviceId) {
+    state = state.copyWith(
+      devices: [
+        for (final device in state.devices)
+          if (device.id == deviceId)
+            device.copyWith(isTrusted: true)
+          else
+            device,
+      ],
+    );
+  }
+
+  void revokeTrust(String deviceId) {
+    state = state.copyWith(
+      devices: [
+        for (final device in state.devices)
+          if (device.id == deviceId)
+            device.copyWith(isTrusted: false)
+          else
+            device,
+      ],
+    );
+  }
+
+  void removeDevice(String deviceId) {
+    state = state.copyWith(
+      devices: state.devices
+          .where((device) => device.id != deviceId)
+          .toList(growable: false),
+    );
+  }
+}
+
+final p2pDeviceManagementStateControllerProvider =
+    NotifierProvider<
+      P2PDeviceManagementStateController,
+      P2PDeviceManagementViewState
+    >(P2PDeviceManagementStateController.new);
+
+/// STATE-S23: view-state bất biến của Phòng chống gian lận P2P — checklist
+/// sống ở Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
+final class P2PFraudPreventionViewState {
+  const P2PFraudPreventionViewState({
+    required this.snapshot,
+    required this.checklist,
+  });
+
+  factory P2PFraudPreventionViewState.fromSnapshot(
+    P2PFraudPreventionSnapshot snapshot,
+  ) {
+    return P2PFraudPreventionViewState(
+      snapshot: snapshot,
+      checklist: List.unmodifiable(snapshot.checklist),
+    );
+  }
+
+  final P2PFraudPreventionSnapshot snapshot;
+  final List<P2PSafetyChecklistItemDraft> checklist;
+
+  P2PFraudPreventionViewState copyWith({
+    List<P2PSafetyChecklistItemDraft>? checklist,
+  }) {
+    return P2PFraudPreventionViewState(
+      snapshot: snapshot,
+      checklist: checklist == null
+          ? this.checklist
+          : List.unmodifiable(checklist),
+    );
+  }
+}
+
+/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state checklist
+/// an toàn giữ nguyên khi điều hướng đi/về trong phiên.
+final class P2PFraudPreventionStateController
+    extends Notifier<P2PFraudPreventionViewState> {
+  @override
+  P2PFraudPreventionViewState build() {
+    return P2PFraudPreventionViewState.fromSnapshot(
+      ref.watch(p2pFraudPreventionProvider),
+    );
+  }
+
+  void toggleChecklistItem(String itemId) {
+    state = state.copyWith(
+      checklist: [
+        for (final item in state.checklist)
+          if (item.id == itemId)
+            item.copyWith(checked: !item.checked)
+          else
+            item,
+      ],
+    );
+  }
+}
+
+final p2pFraudPreventionStateControllerProvider =
+    NotifierProvider<
+      P2PFraudPreventionStateController,
+      P2PFraudPreventionViewState
+    >(P2PFraudPreventionStateController.new);
+
+/// STATE-S23: view-state bất biến của Hoạt động đáng ngờ P2P — alerts sống ở
+/// Notifier (một nguồn sự thật), trang chỉ watch + gọi method.
+final class P2PSuspiciousActivityViewState {
+  const P2PSuspiciousActivityViewState({
+    required this.snapshot,
+    required this.alerts,
+  });
+
+  factory P2PSuspiciousActivityViewState.fromSnapshot(
+    P2PSuspiciousActivitySnapshot snapshot,
+  ) {
+    return P2PSuspiciousActivityViewState(
+      snapshot: snapshot,
+      alerts: List.unmodifiable(snapshot.alerts),
+    );
+  }
+
+  final P2PSuspiciousActivitySnapshot snapshot;
+  final List<P2PSuspiciousAlertDraft> alerts;
+
+  P2PSuspiciousActivityViewState copyWith({
+    List<P2PSuspiciousAlertDraft>? alerts,
+  }) {
+    return P2PSuspiciousActivityViewState(
+      snapshot: snapshot,
+      alerts: alerts == null ? this.alerts : List.unmodifiable(alerts),
+    );
+  }
+}
+
+/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
+/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state cảnh
+/// báo giữ nguyên khi điều hướng đi/về trong phiên.
+final class P2PSuspiciousActivityStateController
+    extends Notifier<P2PSuspiciousActivityViewState> {
+  @override
+  P2PSuspiciousActivityViewState build() {
+    return P2PSuspiciousActivityViewState.fromSnapshot(
+      ref.watch(p2pSuspiciousActivityProvider),
+    );
+  }
+
+  void markReviewed(String alertId) {
+    state = state.copyWith(
+      alerts: [
+        for (final alert in state.alerts)
+          if (alert.id == alertId) alert.copyWith(reviewed: true) else alert,
+      ],
+    );
+  }
+}
+
+final p2pSuspiciousActivityStateControllerProvider =
+    NotifierProvider<
+      P2PSuspiciousActivityStateController,
+      P2PSuspiciousActivityViewState
+    >(P2PSuspiciousActivityStateController.new);

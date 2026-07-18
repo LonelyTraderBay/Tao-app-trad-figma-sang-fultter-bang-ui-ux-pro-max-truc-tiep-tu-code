@@ -129,7 +129,7 @@ class _ProductPickerSheet extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 'Chọn sản phẩm so sánh',
                 style: AppTextStyles.sectionTitle,
@@ -242,7 +242,10 @@ class _EmptyComparisonState extends StatelessWidget {
             size: AppSpacing.iconLg,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          Text('Chọn ít nhất 2 sản phẩm', style: AppTextStyles.baseMedium),
+          const Text(
+            'Chọn ít nhất 2 sản phẩm',
+            style: AppTextStyles.baseMedium,
+          ),
           const SizedBox(height: AppSpacing.x1),
           Text(
             'Thêm sản phẩm để bắt đầu so sánh chi tiết các chỉ số',

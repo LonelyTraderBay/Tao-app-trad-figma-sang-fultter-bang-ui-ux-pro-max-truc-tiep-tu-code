@@ -134,7 +134,7 @@ class _AttributionTab extends StatelessWidget {
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
-        VitSectionHeader(
+        const VitSectionHeader(
           title: 'Returns Decomposition',
           titleColor: AppColors.text2,
           titleFontWeight: AppTextStyles.extraBold,

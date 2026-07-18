@@ -50,24 +50,18 @@ class P2P2FASettingsPage extends ConsumerStatefulWidget {
 }
 
 class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
-  late List<P2PTwoFactorMethodDraft> _methods;
-  late List<P2PTransactionThresholdDraft> _thresholds;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(p2pTwoFactorSettingsProvider);
-    _methods = List.of(snapshot.methods);
-    _thresholds = List.of(snapshot.thresholds);
-  }
+  // STATE-S23: methods/thresholds sống ở P2P2FASettingsStateController (một
+  // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pTwoFactorSettingsProvider);
-    final enabledMethods = _methods.where((method) => method.enabled).length;
-    final primaryMethod = _methods.firstWhere(
+    final viewState = ref.watch(p2p2FASettingsStateControllerProvider);
+    final snapshot = viewState.snapshot;
+    final methods = viewState.methods;
+    final enabledMethods = methods.where((method) => method.enabled).length;
+    final primaryMethod = methods.firstWhere(
       (method) => method.isPrimary,
-      orElse: () => _methods.first,
+      orElse: () => methods.first,
     );
 
     return VitP2PFlowScaffold(
@@ -83,11 +77,14 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
           primaryMethod: primaryMethod.label,
         ),
         _MethodSection(
-          methods: _methods,
+          methods: methods,
           onToggle: _toggleMethod,
           onSetPrimary: _setPrimaryMethod,
         ),
-        _ThresholdSection(thresholds: _thresholds, onToggle: _toggleThreshold),
+        _ThresholdSection(
+          thresholds: viewState.thresholds,
+          onToggle: _toggleThreshold,
+        ),
         _SecurityRecommendation(text: snapshot.recommendation),
         const VitCard(
           variant: VitCardVariant.inner,
@@ -105,11 +102,11 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
   }
 
   Future<void> _toggleMethod(String methodId) async {
-    final target = _methods.firstWhere((method) => method.id == methodId);
+    final methods = ref.read(p2p2FASettingsStateControllerProvider).methods;
+    final target = methods.firstWhere((method) => method.id == methodId);
     final willEnable = !target.enabled;
     final willDisableLastMethod =
-        target.enabled &&
-        _methods.where((method) => method.enabled).length == 1;
+        target.enabled && methods.where((method) => method.enabled).length == 1;
 
     final confirmed = await showVitConfirmDialog(
       context: context,
@@ -134,22 +131,14 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     if (!mounted || !confirmed) return;
 
     HapticFeedback.selectionClick();
-    setState(() {
-      _methods = [
-        for (final method in _methods)
-          if (method.id == methodId)
-            method.copyWith(
-              enabled: !method.enabled,
-              setupRequired: method.enabled ? method.setupRequired : false,
-            )
-          else
-            method,
-      ];
-    });
+    ref
+        .read(p2p2FASettingsStateControllerProvider.notifier)
+        .toggleMethod(methodId);
   }
 
   Future<void> _setPrimaryMethod(String methodId) async {
-    final target = _methods.firstWhere((method) => method.id == methodId);
+    final methods = ref.read(p2p2FASettingsStateControllerProvider).methods;
+    final target = methods.firstWhere((method) => method.id == methodId);
 
     final confirmed = await showVitConfirmDialog(
       context: context,
@@ -160,16 +149,16 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     if (!mounted || !confirmed) return;
 
     HapticFeedback.selectionClick();
-    setState(() {
-      _methods = [
-        for (final method in _methods)
-          method.copyWith(isPrimary: method.id == methodId),
-      ];
-    });
+    ref
+        .read(p2p2FASettingsStateControllerProvider.notifier)
+        .setPrimaryMethod(methodId);
   }
 
   Future<void> _toggleThreshold(String thresholdId) async {
-    final target = _thresholds.firstWhere(
+    final thresholds = ref
+        .read(p2p2FASettingsStateControllerProvider)
+        .thresholds;
+    final target = thresholds.firstWhere(
       (threshold) => threshold.id == thresholdId,
     );
 
@@ -189,14 +178,8 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     if (!mounted || !confirmed) return;
 
     HapticFeedback.selectionClick();
-    setState(() {
-      _thresholds = [
-        for (final threshold in _thresholds)
-          if (threshold.id == thresholdId)
-            threshold.copyWith(enabled: !threshold.enabled)
-          else
-            threshold,
-      ];
-    });
+    ref
+        .read(p2p2FASettingsStateControllerProvider.notifier)
+        .toggleThreshold(thresholdId);
   }
 }
