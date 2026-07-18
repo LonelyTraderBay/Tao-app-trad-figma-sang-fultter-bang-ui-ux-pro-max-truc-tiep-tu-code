@@ -6,12 +6,29 @@ part '../fixtures/mock_dca_repository_methods_dynamic_amount_backtest_multi_asse
 part '../fixtures/mock_dca_repository_methods_performance_and_smart_rules.dart';
 part '../fixtures/mock_dca_repository_methods_overview_demo.dart';
 
-final class MockDcaRepository
+abstract class _MockDcaRepositoryBase {
+  const _MockDcaRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('dca_mock_fetch_failed');
+  }
+}
+
+final class MockDcaRepository extends _MockDcaRepositoryBase
     with
         _DcaRepositoryMethodsPart01,
         _DcaRepositoryMethodsPart02,
         _DcaRepositoryMethodsPart03,
         _DcaRepositoryMethodsPart04
     implements DcaRepository {
-  const MockDcaRepository();
+  const MockDcaRepository({super.simulateError, super.loadDelay});
 }

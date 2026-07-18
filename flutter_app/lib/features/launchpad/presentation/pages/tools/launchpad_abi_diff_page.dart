@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/tools/launchpad_abi_diff_summary.dart';
@@ -66,10 +67,9 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(launchpadControllerProvider)
-        .getAbiDiff(widget.contractId);
-    final diff = snapshot.diff;
+    final abiDiffAsync = ref.watch(
+      launchpadAbiDiffSnapshotProvider(widget.contractId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -77,7 +77,6 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom +
         AppSpacing.x3;
-    final entries = _filteredEntries(diff.entries);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -90,10 +89,10 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
           semanticLabel: 'So sánh thay đổi ABI hợp đồng thông minh',
           semanticIdentifier: 'SC-308',
           header: VitHeader(
-            title: snapshot.title,
+            title: 'ABI Diff',
             subtitle: 'So sánh ABI contract · Xem trước thay đổi',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(AppRoutePaths.launchpad),
           ),
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(
@@ -107,47 +106,67 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
                 padding: VitContentPadding.compact,
                 gap: VitContentGap.tight,
                 children: [
-                  _RiskHero(diff: diff),
-                  _SummaryStats(
-                    diff: diff,
-                    activeFilter: _filter,
-                    onChanged: (filter) => setState(() {
-                      _filter = _filter == filter ? null : filter;
-                    }),
-                  ),
-                  _UpgradeMetadata(
-                    diff: diff,
-                    copiedField: _copiedField,
-                    onCopy: _copyField,
-                  ),
-                  _FilterRow(
-                    active: _functionsOnly,
-                    count: entries.length,
-                    onChanged: () =>
-                        setState(() => _functionsOnly = !_functionsOnly),
-                  ),
-                  VitPageSection(
-                    label: 'ABI Changes',
-                    accentColor: AppColors.accent,
-                    children: [
-                      Column(
-                        key: LaunchpadAbiDiffPage.entriesKey,
-                        children: [
-                          for (final entry in entries)
-                            _AbiEntryCard(
-                              entry: entry,
-                              expanded: _expandedEntry == entry.name,
-                              onToggle: () => setState(() {
-                                _expandedEntry = _expandedEntry == entry.name
-                                    ? null
-                                    : entry.name;
-                              }),
-                            ),
-                        ],
+                  ...abiDiffAsync.when(
+                    loading: () => const [VitSkeletonList()],
+                    error: (error, stackTrace) => [
+                      VitErrorState(
+                        title: 'Không tải được ABI diff',
+                        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () => ref.invalidate(
+                          launchpadAbiDiffSnapshotProvider(widget.contractId),
+                        ),
                       ),
                     ],
+                    data: (snapshot) {
+                      final diff = snapshot.diff;
+                      final entries = _filteredEntries(diff.entries);
+                      return [
+                        _RiskHero(diff: diff),
+                        _SummaryStats(
+                          diff: diff,
+                          activeFilter: _filter,
+                          onChanged: (filter) => setState(() {
+                            _filter = _filter == filter ? null : filter;
+                          }),
+                        ),
+                        _UpgradeMetadata(
+                          diff: diff,
+                          copiedField: _copiedField,
+                          onCopy: _copyField,
+                        ),
+                        _FilterRow(
+                          active: _functionsOnly,
+                          count: entries.length,
+                          onChanged: () =>
+                              setState(() => _functionsOnly = !_functionsOnly),
+                        ),
+                        VitPageSection(
+                          label: 'ABI Changes',
+                          accentColor: AppColors.accent,
+                          children: [
+                            Column(
+                              key: LaunchpadAbiDiffPage.entriesKey,
+                              children: [
+                                for (final entry in entries)
+                                  _AbiEntryCard(
+                                    entry: entry,
+                                    expanded: _expandedEntry == entry.name,
+                                    onToggle: () => setState(() {
+                                      _expandedEntry =
+                                          _expandedEntry == entry.name
+                                          ? null
+                                          : entry.name;
+                                    }),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const _RiskWarning(),
+                      ];
+                    },
                   ),
-                  const _RiskWarning(),
                 ],
               ),
             ),

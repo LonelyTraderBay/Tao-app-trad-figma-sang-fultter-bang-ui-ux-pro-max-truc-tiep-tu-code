@@ -1,11 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsPortfolioRepository
+final class MockSavingsPortfolioRepository extends _MockEarnRepositoryBase
     implements SavingsPortfolioRepository {
-  const MockSavingsPortfolioRepository();
+  const MockSavingsPortfolioRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsPortfolioSnapshot getPortfolio() {
+  Future<SavingsPortfolioSnapshot> getPortfolio() async {
+    await _simulateNetwork();
     return const SavingsPortfolioSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-portfolio',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -156,11 +157,13 @@ final class MockSavingsPortfolioRepository
   }
 }
 
-final class MockSavingsHistoryRepository implements SavingsHistoryRepository {
-  const MockSavingsHistoryRepository();
+final class MockSavingsHistoryRepository extends _MockEarnRepositoryBase
+    implements SavingsHistoryRepository {
+  const MockSavingsHistoryRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsHistorySnapshot getHistory() {
+  Future<SavingsHistorySnapshot> getHistory() async {
+    await _simulateNetwork();
     return const SavingsHistorySnapshot(
       endpoint: '/api/mobile/earn/earn-savings-history',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

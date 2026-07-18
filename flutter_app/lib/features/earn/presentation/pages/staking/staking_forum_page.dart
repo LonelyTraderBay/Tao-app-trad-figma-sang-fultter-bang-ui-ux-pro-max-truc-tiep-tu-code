@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -33,13 +34,7 @@ class StakingForumPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(stakingForumRepositoryProvider).getForum();
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingForumSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -47,51 +42,85 @@ class StakingForumPage extends ConsumerWidget {
       semanticIdentifier: 'SC-392',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Diễn đàn cộng đồng stake',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnCommunityGovernance),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _ForumHero(snapshot: snapshot),
-                      _CategoryGrid(
-                        title: snapshot.categoriesTitle,
-                        categories: snapshot.categories,
-                      ),
-                      _TrendingThreads(
-                        title: snapshot.threadsTitle,
-                        threads: snapshot.threads,
-                      ),
-                      VitCtaButton(
-                        key: StakingForumPage.createKey,
-                        onPressed: () => _showComingSoon(
-                          context,
-                          'Tạo chủ đề sẽ sớm ra mắt',
-                        ),
-                        child: Text(snapshot.createLabel),
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnCommunityGovernance),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingForumSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Diễn đàn cộng đồng stake',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.defaultPadding,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _ForumHero(snapshot: snapshot),
+                          _CategoryGrid(
+                            title: snapshot.categoriesTitle,
+                            categories: snapshot.categories,
+                          ),
+                          _TrendingThreads(
+                            title: snapshot.threadsTitle,
+                            threads: snapshot.threads,
+                          ),
+                          VitCtaButton(
+                            key: StakingForumPage.createKey,
+                            onPressed: () => _showComingSoon(
+                              context,
+                              'Tạo chủ đề sẽ sớm ra mắt',
+                            ),
+                            child: Text(snapshot.createLabel),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

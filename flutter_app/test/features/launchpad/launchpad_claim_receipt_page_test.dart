@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-302 mock repository exposes claim receipt BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getClaimReceipt('pos001');
+  test('SC-302 mock repository exposes claim receipt BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getClaimReceipt('pos001');
 
     expect(
       snapshot.endpoint,

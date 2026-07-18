@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -60,18 +61,7 @@ class _AutoCompoundSettingsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(autoCompoundSettingsRepositoryProvider)
-        .getSettings();
-    final positions = [
-      for (final position in snapshot.positions) _resolved(position),
-    ];
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(autoCompoundSettingsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,64 +71,101 @@ class _AutoCompoundSettingsPageState
         color: AppColors.bg,
         child: Stack(
           children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: snapshot.title,
-                subtitle: kSavingsToolsHeaderSubtitle,
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
-                actions: [
-                  VitHeaderActionItem(
-                    key: AutoCompoundSettingsPage.infoButtonKey,
-                    type: VitHeaderActionType.help,
-                    onPressed: () => _openInfo(snapshot),
-                  ),
-                ],
+            snapshotAsync.when(
+              loading: () => VitAutoHideHeaderScaffold(
+                header: VitHeader(
+                  title: 'Đang tải…',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.earnSavings),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      padding: AppSpacing.zeroInsets.copyWith(
-                        bottom: scrollTailReserve,
+              error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+                header: VitHeader(
+                  title: 'Không tải được',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.earnSavings),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được',
+                  message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(autoCompoundSettingsSnapshotProvider),
+                ),
+              ),
+              data: (snapshot) {
+                final positions = [
+                  for (final position in snapshot.positions)
+                    _resolved(position),
+                ];
+                final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+                final scrollTailReserve =
+                    (mode.usesVisualQaFrame
+                        ? DeviceMetrics.bottomChrome + AppSpacing.x3
+                        : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+                    MediaQuery.paddingOf(context).bottom;
+
+                return VitAutoHideHeaderScaffold(
+                  header: VitHeader(
+                    title: snapshot.title,
+                    subtitle: kSavingsToolsHeaderSubtitle,
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
+                    actions: [
+                      VitHeaderActionItem(
+                        key: AutoCompoundSettingsPage.infoButtonKey,
+                        type: VitHeaderActionType.help,
+                        onPressed: () => _openInfo(snapshot),
                       ),
-                      child: VitPageContent(
-                        rhythm: VitPageRhythm.standard,
-                        padding: VitContentPadding.compact,
-                        gap: VitContentGap.tight,
-                        children: [
-                          _SummaryCard(positions: positions),
-                          VitPageSection(
-                            label: 'Vị thế tiết kiệm',
-                            accentColor: AppColors.buy,
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const ClampingScrollPhysics(),
+                          padding: AppSpacing.zeroInsets.copyWith(
+                            bottom: scrollTailReserve,
+                          ),
+                          child: VitPageContent(
+                            rhythm: VitPageRhythm.standard,
+                            padding: VitContentPadding.compact,
+                            gap: VitContentGap.tight,
                             children: [
-                              for (final position in positions)
-                                _PositionCard(
-                                  position: position,
-                                  onToggle: () => _toggle(position),
-                                  onSettings: () =>
-                                      _openSettings(snapshot, position),
-                                ),
+                              _SummaryCard(positions: positions),
+                              VitPageSection(
+                                label: 'Vị thế tiết kiệm',
+                                accentColor: AppColors.buy,
+                                children: [
+                                  for (final position in positions)
+                                    _PositionCard(
+                                      position: position,
+                                      onToggle: () => _toggle(position),
+                                      onSettings: () =>
+                                          _openSettings(snapshot, position),
+                                    ),
+                                ],
+                              ),
+                              const _CalculatorPreview(),
+                              _NoteCard(text: snapshot.note),
+                              const VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Auto-compound settings review',
+                                message:
+                                    'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
+                                contractId: 'SC-341',
+                              ),
+                              const SavingsToolsYieldFooter(),
                             ],
                           ),
-                          const _CalculatorPreview(),
-                          _NoteCard(text: snapshot.note),
-                          const VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Auto-compound settings review',
-                            message:
-                                'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
-                            contractId: 'SC-341',
-                          ),
-                          const SavingsToolsYieldFooter(),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
             if (_showSuccess)
               Positioned(

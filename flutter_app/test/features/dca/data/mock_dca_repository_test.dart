@@ -12,52 +12,61 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 /// `lib/features/dca/data/fixtures/mock_dca_repository_methods_*.dart` so a
 /// silent fixture edit shows up as a failing assertion, not just a
 /// type/emptiness check. DcaRepository has no write/action methods — every
-/// call below is a plain synchronous getter.
+/// call below is a plain async getter.
 void main() {
-  const repository = MockDcaRepository();
+  const repository = MockDcaRepository(loadDelay: Duration.zero);
 
   group('MockDcaRepository data smoke test', () {
-    test('getDashboard pins the overview headline and plan/tool counts', () {
-      final snapshot = repository.getDashboard();
+    test(
+      'getDashboard pins the overview headline and plan/tool counts',
+      () async {
+        final snapshot = await repository.getDashboard();
 
-      expect(snapshot.endpoint, '/api/mobile/dca/dca');
-      expect(snapshot.screenState, DcaScreenState.success);
-      expect(snapshot.overview.currentValueVnd, 3027250000);
-      expect(snapshot.overview.totalInvestedVnd, 22200000);
-      expect(snapshot.overview.activePlans, 3);
-      expect(snapshot.tools, hasLength(4));
-      expect(snapshot.plans, hasLength(3));
-      expect(snapshot.plans.first.id, 'plan-1');
-      expect(snapshot.plans.first.coinSymbol, 'BTC');
-      expect(snapshot.history, hasLength(7));
-    });
+        expect(snapshot.endpoint, '/api/mobile/dca/dca');
+        expect(snapshot.screenState, DcaScreenState.success);
+        expect(snapshot.overview.currentValueVnd, 3027250000);
+        expect(snapshot.overview.totalInvestedVnd, 22200000);
+        expect(snapshot.overview.activePlans, 3);
+        expect(snapshot.tools, hasLength(4));
+        expect(snapshot.plans, hasLength(3));
+        expect(snapshot.plans.first.id, 'plan-1');
+        expect(snapshot.plans.first.coinSymbol, 'BTC');
+        expect(snapshot.history, hasLength(7));
+      },
+    );
 
-    test('getRebalanceConfig pins portfolio totals and target allocations', () {
-      final snapshot = repository.getRebalanceConfig();
+    test(
+      'getRebalanceConfig pins portfolio totals and target allocations',
+      () async {
+        final snapshot = await repository.getRebalanceConfig();
 
-      expect(snapshot.endpoint, '/api/mobile/dca/dca-rebalance-config');
-      expect(snapshot.totalPortfolioUsd, 45000);
-      expect(snapshot.driftThreshold, 10);
-      expect(snapshot.strategy, DcaRebalanceStrategy.threshold);
-      expect(snapshot.targets, hasLength(3));
-      expect(snapshot.targets.first.symbol, 'BTC');
-      expect(snapshot.targets.first.currentPercent, 50);
-      expect(snapshot.targets.first.targetPercent, 40);
-      expect(snapshot.strategyOptions, hasLength(3));
-      expect(snapshot.frequencyOptions, hasLength(4));
-    });
+        expect(snapshot.endpoint, '/api/mobile/dca/dca-rebalance-config');
+        expect(snapshot.totalPortfolioUsd, 45000);
+        expect(snapshot.driftThreshold, 10);
+        expect(snapshot.strategy, DcaRebalanceStrategy.threshold);
+        expect(snapshot.targets, hasLength(3));
+        expect(snapshot.targets.first.symbol, 'BTC');
+        expect(snapshot.targets.first.currentPercent, 50);
+        expect(snapshot.targets.first.targetPercent, 40);
+        expect(snapshot.strategyOptions, hasLength(3));
+        expect(snapshot.frequencyOptions, hasLength(4));
+      },
+    );
 
-    test('getRebalanceDashboard echoes configId and reports not-found', () {
-      final snapshot = repository.getRebalanceDashboard('config-123');
+    test(
+      'getRebalanceDashboard echoes configId and reports not-found',
+      () async {
+        final snapshot = await repository.getRebalanceDashboard('config-123');
 
-      expect(snapshot.configId, 'config-123');
-      expect(snapshot.configFound, isFalse);
-      expect(snapshot.message, 'Configuration not found');
-      expect(snapshot.dcaPlans, isEmpty);
-    });
+        expect(snapshot.configId, 'config-123');
+        expect(snapshot.configFound, isFalse);
+        expect(snapshot.message, 'Configuration not found');
+        expect(snapshot.dcaPlans, isEmpty);
+      },
+    );
 
-    test('getScheduleConfig pins the hybrid strategy defaults', () {
-      final snapshot = repository.getScheduleConfig();
+    test('getScheduleConfig pins the hybrid strategy defaults', () async {
+      final snapshot = await repository.getScheduleConfig();
 
       expect(snapshot.endpoint, '/api/mobile/dca/dca-schedule-config');
       expect(snapshot.strategy, DcaScheduleStrategy.hybrid);
@@ -68,18 +77,21 @@ void main() {
       expect(snapshot.timePreferences, hasLength(5));
     });
 
-    test('getScheduleAnalytics echoes configId and reports not-found', () {
-      final snapshot = repository.getScheduleAnalytics('config-456');
+    test(
+      'getScheduleAnalytics echoes configId and reports not-found',
+      () async {
+        final snapshot = await repository.getScheduleAnalytics('config-456');
 
-      expect(snapshot.configId, 'config-456');
-      expect(snapshot.configFound, isFalse);
-      expect(snapshot.message, 'Configuration not found');
-    });
+        expect(snapshot.configId, 'config-456');
+        expect(snapshot.configFound, isFalse);
+        expect(snapshot.message, 'Configuration not found');
+      },
+    );
 
     test(
       'getPortfolioOptimizer pins the score, drift, and suggestion count',
-      () {
-        final snapshot = repository.getPortfolioOptimizer();
+      () async {
+        final snapshot = await repository.getPortfolioOptimizer();
 
         expect(snapshot.endpoint, '/api/mobile/dca/dca-portfolio-optimizer');
         expect(snapshot.score, 73);
@@ -96,8 +108,8 @@ void main() {
       },
     );
 
-    test('getDynamicAmount pins the active strategy and adjustment', () {
-      final snapshot = repository.getDynamicAmount();
+    test('getDynamicAmount pins the active strategy and adjustment', () async {
+      final snapshot = await repository.getDynamicAmount();
 
       expect(snapshot.endpoint, '/api/mobile/dca/dca-dynamic-amount');
       expect(snapshot.activeStrategy, DcaDynamicStrategy.volatility);
@@ -109,8 +121,8 @@ void main() {
       expect(snapshot.configItems, hasLength(6));
     });
 
-    test('getBacktester pins the asset list and backtest result', () {
-      final snapshot = repository.getBacktester();
+    test('getBacktester pins the asset list and backtest result', () async {
+      final snapshot = await repository.getBacktester();
 
       expect(snapshot.endpoint, '/api/mobile/dca/dca-backtester');
       expect(snapshot.assets, ['BTC', 'ETH', 'BNB', 'SOL']);
@@ -124,8 +136,8 @@ void main() {
       expect(snapshot.drawdowns, hasLength(12));
     });
 
-    test('getMultiAsset pins the budget and BTC allocation slice', () {
-      final snapshot = repository.getMultiAsset();
+    test('getMultiAsset pins the budget and BTC allocation slice', () async {
+      final snapshot = await repository.getMultiAsset();
 
       expect(snapshot.endpoint, '/api/mobile/dca/dca-multi-asset');
       expect(snapshot.totalBudgetUsd, 1000);
@@ -137,32 +149,38 @@ void main() {
       expect(snapshot.performance, hasLength(6));
     });
 
-    test('getPerformanceCompare pins the invested total and metric count', () {
-      final snapshot = repository.getPerformanceCompare();
+    test(
+      'getPerformanceCompare pins the invested total and metric count',
+      () async {
+        final snapshot = await repository.getPerformanceCompare();
 
-      expect(snapshot.endpoint, '/api/mobile/dca/dca-performance-compare');
-      expect(snapshot.investedUsd, 12000);
-      expect(snapshot.comparison, hasLength(12));
-      expect(snapshot.metrics, hasLength(5));
-      expect(snapshot.metrics.first.label, 'Average Entry Price');
-      expect(snapshot.scenarios, hasLength(4));
-      expect(snapshot.radar, hasLength(5));
-    });
+        expect(snapshot.endpoint, '/api/mobile/dca/dca-performance-compare');
+        expect(snapshot.investedUsd, 12000);
+        expect(snapshot.comparison, hasLength(12));
+        expect(snapshot.metrics, hasLength(5));
+        expect(snapshot.metrics.first.label, 'Average Entry Price');
+        expect(snapshot.scenarios, hasLength(4));
+        expect(snapshot.radar, hasLength(5));
+      },
+    );
 
-    test('getSmartRules pins the success rate and rule/template counts', () {
-      final snapshot = repository.getSmartRules();
+    test(
+      'getSmartRules pins the success rate and rule/template counts',
+      () async {
+        final snapshot = await repository.getSmartRules();
 
-      expect(snapshot.endpoint, '/api/mobile/dca/dca-smart-rules');
-      expect(snapshot.successPercent, 95);
-      expect(snapshot.smartRules, hasLength(4));
-      expect(snapshot.smartRules.first.id, 'rule-buy-dip');
-      expect(snapshot.smartRules.first.status, DcaSmartRuleStatus.active);
-      expect(snapshot.templates, hasLength(6));
-      expect(snapshot.history, hasLength(3));
-    });
+        expect(snapshot.endpoint, '/api/mobile/dca/dca-smart-rules');
+        expect(snapshot.successPercent, 95);
+        expect(snapshot.smartRules, hasLength(4));
+        expect(snapshot.smartRules.first.id, 'rule-buy-dip');
+        expect(snapshot.smartRules.first.status, DcaSmartRuleStatus.active);
+        expect(snapshot.templates, hasLength(6));
+        expect(snapshot.history, hasLength(3));
+      },
+    );
 
-    test('getOverviewDemo pins the title and demo scenario set', () {
-      final snapshot = repository.getOverviewDemo();
+    test('getOverviewDemo pins the title and demo scenario set', () async {
+      final snapshot = await repository.getOverviewDemo();
 
       expect(snapshot.endpoint, '/api/mobile/dev/dev-dca-overview');
       expect(snapshot.title, 'DCA Overview Card Demo');

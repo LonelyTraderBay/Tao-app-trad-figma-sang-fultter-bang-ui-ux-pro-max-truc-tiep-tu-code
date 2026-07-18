@@ -33,8 +33,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-174 mock repository exposes portfolio optimizer BE draft', () {
-    final snapshot = const MockDcaRepository().getPortfolioOptimizer();
+  test('SC-174 mock repository exposes portfolio optimizer BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getPortfolioOptimizer();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-portfolio-optimizer');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

@@ -27,30 +27,33 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-371 mock repository exposes staking notifications BE draft', () {
-    final snapshot = const MockStakingNotificationsRepository()
-        .getNotifications();
+  test(
+    'SC-371 mock repository exposes staking notifications BE draft',
+    () async {
+      final snapshot = await const MockStakingNotificationsRepository()
+          .getNotifications();
 
-    expect(snapshot.endpoint, '/api/mobile/earn/earn-notifications');
-    expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
-    expect(snapshot.settingsActionDraft, contains('PATCH /user/settings'));
-    expect(snapshot.title, 'Thông báo');
-    expect(snapshot.backRoute, AppRoutePaths.earnStaking);
-    expect(snapshot.settings, hasLength(8));
-    expect(snapshot.channels, hasLength(3));
-    expect(snapshot.history, hasLength(5));
-    expect(snapshot.history.where((item) => !item.read), hasLength(2));
-    expect(snapshot.contractNotes, contains('riskData'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        EarnScreenState.loading,
-        EarnScreenState.empty,
-        EarnScreenState.error,
-        EarnScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/earn/earn-notifications');
+      expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
+      expect(snapshot.settingsActionDraft, contains('PATCH /user/settings'));
+      expect(snapshot.title, 'Thông báo');
+      expect(snapshot.backRoute, AppRoutePaths.earnStaking);
+      expect(snapshot.settings, hasLength(8));
+      expect(snapshot.channels, hasLength(3));
+      expect(snapshot.history, hasLength(5));
+      expect(snapshot.history.where((item) => !item.read), hasLength(2));
+      expect(snapshot.contractNotes, contains('riskData'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          EarnScreenState.loading,
+          EarnScreenState.empty,
+          EarnScreenState.error,
+          EarnScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-371 renders notification settings baseline', (tester) async {
     await pumpNotifications(tester);

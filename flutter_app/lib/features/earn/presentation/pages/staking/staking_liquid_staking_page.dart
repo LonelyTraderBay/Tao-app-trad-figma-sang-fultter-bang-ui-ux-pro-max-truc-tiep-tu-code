@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -72,15 +73,7 @@ class _StakingLiquidStakingPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingLiquidStakingRepositoryProvider)
-        .getLiquidStaking();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingLiquidStakingSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,87 +82,126 @@ class _StakingLiquidStakingPageState
       semanticIdentifier: 'SC-364',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: snapshot.infoTitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingLiquidStakingPage.infoKey,
-                        message: snapshot.infoBody,
-                        icon: Icons.water_drop_outlined,
-                        accentColor: AppModuleAccents.earn,
-                      ),
-                      _LiquidTabs(
-                        active: _tab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == _LiquidTab.stake)
-                        _StakeTab(
-                          snapshot: snapshot,
-                          onDetail: _showTokenDetail,
-                          onStake: (token) {
-                            HapticFeedback.lightImpact();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Đã chọn stake ${token.symbol}'),
-                              ),
-                            );
-                          },
-                        ),
-                      if (_tab == _LiquidTab.swap)
-                        _SwapTab(
-                          snapshot: snapshot,
-                          swapFrom: _swapFrom,
-                          swapTo: _swapTo,
-                          amountController: _swapAmountController,
-                          onFromChanged: (value) =>
-                              setState(() => _swapFrom = value),
-                          onToChanged: (value) =>
-                              setState(() => _swapTo = value),
-                          onAmountChanged: (_) => setState(() {}),
-                          onReverse: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              final oldFrom = _swapFrom;
-                              _swapFrom = _swapTo;
-                              _swapTo = oldFrom;
-                            });
-                          },
-                        ),
-                      if (_tab == _LiquidTab.holdings)
-                        _HoldingsTab(
-                          snapshot: snapshot,
-                          onStakeNow: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tab = _LiquidTab.stake);
-                          },
-                        ),
-                      _BenefitsGrid(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingLiquidStakingSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: snapshot.infoTitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: AppSpacing.zeroInsets.copyWith(
+                        bottom: bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitInfoCallout(
+                            key: StakingLiquidStakingPage.infoKey,
+                            message: snapshot.infoBody,
+                            icon: Icons.water_drop_outlined,
+                            accentColor: AppModuleAccents.earn,
+                          ),
+                          _LiquidTabs(
+                            active: _tab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (_tab == _LiquidTab.stake)
+                            _StakeTab(
+                              snapshot: snapshot,
+                              onDetail: _showTokenDetail,
+                              onStake: (token) {
+                                HapticFeedback.lightImpact();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Đã chọn stake ${token.symbol}',
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          if (_tab == _LiquidTab.swap)
+                            _SwapTab(
+                              snapshot: snapshot,
+                              swapFrom: _swapFrom,
+                              swapTo: _swapTo,
+                              amountController: _swapAmountController,
+                              onFromChanged: (value) =>
+                                  setState(() => _swapFrom = value),
+                              onToChanged: (value) =>
+                                  setState(() => _swapTo = value),
+                              onAmountChanged: (_) => setState(() {}),
+                              onReverse: () {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  final oldFrom = _swapFrom;
+                                  _swapFrom = _swapTo;
+                                  _swapTo = oldFrom;
+                                });
+                              },
+                            ),
+                          if (_tab == _LiquidTab.holdings)
+                            _HoldingsTab(
+                              snapshot: snapshot,
+                              onStakeNow: () {
+                                HapticFeedback.selectionClick();
+                                setState(() => _tab = _LiquidTab.stake);
+                              },
+                            ),
+                          _BenefitsGrid(snapshot: snapshot),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

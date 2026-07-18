@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingAdvancedOrdersRepository
+final class MockStakingAdvancedOrdersRepository extends _MockEarnRepositoryBase
     implements StakingAdvancedOrdersRepository {
-  const MockStakingAdvancedOrdersRepository();
+  const MockStakingAdvancedOrdersRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingAdvancedOrdersSnapshot getAdvancedOrders() {
+  Future<StakingAdvancedOrdersSnapshot> getAdvancedOrders() async {
+    await _simulateNetwork();
     return const StakingAdvancedOrdersSnapshot(
       endpoint: '/api/mobile/earn/earn-advanced-orders',
       actionDraft:
@@ -136,12 +140,13 @@ final class MockStakingAdvancedOrdersRepository
   }
 }
 
-final class MockStakingMultiChainRepository
+final class MockStakingMultiChainRepository extends _MockEarnRepositoryBase
     implements StakingMultiChainRepository {
-  const MockStakingMultiChainRepository();
+  const MockStakingMultiChainRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingMultiChainSnapshot getMultiChain() {
+  Future<StakingMultiChainSnapshot> getMultiChain() async {
+    await _simulateNetwork();
     return const StakingMultiChainSnapshot(
       endpoint: '/api/mobile/earn/earn-multi-chain',
       actionDraft:
@@ -247,12 +252,16 @@ final class MockStakingMultiChainRepository
   }
 }
 
-final class MockStakingInstitutionalRepository
+final class MockStakingInstitutionalRepository extends _MockEarnRepositoryBase
     implements StakingInstitutionalRepository {
-  const MockStakingInstitutionalRepository();
+  const MockStakingInstitutionalRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingInstitutionalSnapshot getInstitutional() {
+  Future<StakingInstitutionalSnapshot> getInstitutional() async {
+    await _simulateNetwork();
     return const StakingInstitutionalSnapshot(
       endpoint: '/api/mobile/earn/earn-institutional',
       actionDraft:

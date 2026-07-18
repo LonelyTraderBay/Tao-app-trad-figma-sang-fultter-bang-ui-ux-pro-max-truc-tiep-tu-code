@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingVotingRepository implements StakingVotingRepository {
-  const MockStakingVotingRepository();
+final class MockStakingVotingRepository extends _MockEarnRepositoryBase
+    implements StakingVotingRepository {
+  const MockStakingVotingRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingVotingSnapshot getVoting({String? proposalId}) {
+  Future<StakingVotingSnapshot> getVoting({String? proposalId}) async {
+    await _simulateNetwork();
     final endpoint = proposalId == null
         ? '/api/mobile/earn/earn-voting'
         : '/api/mobile/earn/earn-voting-$proposalId';
@@ -58,11 +60,13 @@ final class MockStakingVotingRepository implements StakingVotingRepository {
   }
 }
 
-final class MockStakingForumRepository implements StakingForumRepository {
-  const MockStakingForumRepository();
+final class MockStakingForumRepository extends _MockEarnRepositoryBase
+    implements StakingForumRepository {
+  const MockStakingForumRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingForumSnapshot getForum() {
+  Future<StakingForumSnapshot> getForum() async {
+    await _simulateNetwork();
     return const StakingForumSnapshot(
       endpoint: '/api/mobile/earn/earn-forum',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -131,11 +135,13 @@ final class MockStakingForumRepository implements StakingForumRepository {
   }
 }
 
-final class MockStakingWebhooksRepository implements StakingWebhooksRepository {
-  const MockStakingWebhooksRepository();
+final class MockStakingWebhooksRepository extends _MockEarnRepositoryBase
+    implements StakingWebhooksRepository {
+  const MockStakingWebhooksRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingWebhooksSnapshot getWebhooks() {
+  Future<StakingWebhooksSnapshot> getWebhooks() async {
+    await _simulateNetwork();
     return const StakingWebhooksSnapshot(
       endpoint: '/api/mobile/earn/earn-webhooks',
       actionDraft:
@@ -197,12 +203,13 @@ final class MockStakingWebhooksRepository implements StakingWebhooksRepository {
   }
 }
 
-final class MockStakingDataExportRepository
+final class MockStakingDataExportRepository extends _MockEarnRepositoryBase
     implements StakingDataExportRepository {
-  const MockStakingDataExportRepository();
+  const MockStakingDataExportRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingDataExportSnapshot getDataExport() {
+  Future<StakingDataExportSnapshot> getDataExport() async {
+    await _simulateNetwork();
     return const StakingDataExportSnapshot(
       endpoint: '/api/mobile/earn/earn-data-export',
       actionDraft:
@@ -264,11 +271,16 @@ final class MockStakingDataExportRepository
 }
 
 final class MockStakingThirdPartyIntegrationsRepository
+    extends _MockEarnRepositoryBase
     implements StakingThirdPartyIntegrationsRepository {
-  const MockStakingThirdPartyIntegrationsRepository();
+  const MockStakingThirdPartyIntegrationsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingThirdPartyIntegrationsSnapshot getIntegrations() {
+  Future<StakingThirdPartyIntegrationsSnapshot> getIntegrations() async {
+    await _simulateNetwork();
     return const StakingThirdPartyIntegrationsSnapshot(
       endpoint: '/api/mobile/earn/earn-third-party-integrations',
       actionDraft:
@@ -343,11 +355,16 @@ final class MockStakingThirdPartyIntegrationsRepository
 }
 
 final class MockStakingDeveloperConsoleRepository
+    extends _MockEarnRepositoryBase
     implements StakingDeveloperConsoleRepository {
-  const MockStakingDeveloperConsoleRepository();
+  const MockStakingDeveloperConsoleRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingDeveloperConsoleSnapshot getConsole() {
+  Future<StakingDeveloperConsoleSnapshot> getConsole() async {
+    await _simulateNetwork();
     return const StakingDeveloperConsoleSnapshot(
       endpoint: '/api/mobile/earn/earn-developer-console',
       actionDraft:

@@ -1,11 +1,16 @@
 part of '../repositories/mock_earn_repository.dart';
 
 final class MockStakingValidatorSelectionRepository
+    extends _MockEarnRepositoryBase
     implements StakingValidatorSelectionRepository {
-  const MockStakingValidatorSelectionRepository();
+  const MockStakingValidatorSelectionRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingValidatorSelectionSnapshot getSelection() {
+  Future<StakingValidatorSelectionSnapshot> getSelection() async {
+    await _simulateNetwork();
     return const StakingValidatorSelectionSnapshot(
       endpoint: '/api/mobile/earn/earn-validator-selection',
       actionDraft:
@@ -140,12 +145,16 @@ final class MockStakingValidatorSelectionRepository
   }
 }
 
-final class MockStakingAutoCompoundRepository
+final class MockStakingAutoCompoundRepository extends _MockEarnRepositoryBase
     implements StakingAutoCompoundRepository {
-  const MockStakingAutoCompoundRepository();
+  const MockStakingAutoCompoundRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingAutoCompoundSnapshot getAutoCompound() {
+  Future<StakingAutoCompoundSnapshot> getAutoCompound() async {
+    await _simulateNetwork();
     return const StakingAutoCompoundSnapshot(
       endpoint: '/api/mobile/earn/earn-auto-compound',
       actionDraft:
@@ -218,12 +227,16 @@ final class MockStakingAutoCompoundRepository
   }
 }
 
-final class MockStakingLiquidStakingRepository
+final class MockStakingLiquidStakingRepository extends _MockEarnRepositoryBase
     implements StakingLiquidStakingRepository {
-  const MockStakingLiquidStakingRepository();
+  const MockStakingLiquidStakingRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingLiquidStakingSnapshot getLiquidStaking() {
+  Future<StakingLiquidStakingSnapshot> getLiquidStaking() async {
+    await _simulateNetwork();
     return const StakingLiquidStakingSnapshot(
       endpoint: '/api/mobile/earn/earn-liquid-staking',
       actionDraft:
@@ -329,12 +342,13 @@ final class MockStakingLiquidStakingRepository
   }
 }
 
-final class MockStakingInsuranceRepository
+final class MockStakingInsuranceRepository extends _MockEarnRepositoryBase
     implements StakingInsuranceRepository {
-  const MockStakingInsuranceRepository();
+  const MockStakingInsuranceRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingInsuranceSnapshot getInsurance() {
+  Future<StakingInsuranceSnapshot> getInsurance() async {
+    await _simulateNetwork();
     return const StakingInsuranceSnapshot(
       endpoint: '/api/mobile/earn/earn-insurance',
       actionDraft:

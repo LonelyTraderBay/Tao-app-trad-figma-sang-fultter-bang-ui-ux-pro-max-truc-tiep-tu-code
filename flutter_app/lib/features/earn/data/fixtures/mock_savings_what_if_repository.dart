@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsWhatIfRepository implements SavingsWhatIfRepository {
-  const MockSavingsWhatIfRepository();
+final class MockSavingsWhatIfRepository extends _MockEarnRepositoryBase
+    implements SavingsWhatIfRepository {
+  const MockSavingsWhatIfRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsWhatIfSnapshot getWhatIf() {
+  Future<SavingsWhatIfSnapshot> getWhatIf() async {
+    await _simulateNetwork();
     return const SavingsWhatIfSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-whatif',
       actionDraft:
@@ -149,11 +151,13 @@ final class MockSavingsWhatIfRepository implements SavingsWhatIfRepository {
   }
 }
 
-final class MockStakingTermsRepository implements StakingTermsRepository {
-  const MockStakingTermsRepository();
+final class MockStakingTermsRepository extends _MockEarnRepositoryBase
+    implements StakingTermsRepository {
+  const MockStakingTermsRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingTermsSnapshot getTerms() {
+  Future<StakingTermsSnapshot> getTerms() async {
+    await _simulateNetwork();
     return const StakingTermsSnapshot(
       endpoint: '/api/mobile/earn/earn-staking-terms',
       actionDraft:

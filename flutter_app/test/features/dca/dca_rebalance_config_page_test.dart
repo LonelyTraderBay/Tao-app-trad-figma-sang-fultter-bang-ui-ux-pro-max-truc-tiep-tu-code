@@ -35,8 +35,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-170 mock repository exposes rebalance config BE draft', () {
-    final snapshot = const MockDcaRepository().getRebalanceConfig();
+  test('SC-170 mock repository exposes rebalance config BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getRebalanceConfig();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-rebalance-config');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');
@@ -190,7 +192,9 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
-      final base = const MockDcaRepository().getRebalanceConfig();
+      final base = await const MockDcaRepository(
+        loadDelay: Duration.zero,
+      ).getRebalanceConfig();
       final largeTradeSnapshot = DcaRebalanceConfigSnapshot(
         endpoint: base.endpoint,
         actionDraft: base.actionDraft,
@@ -208,7 +212,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            dcaRebalanceConfigProvider.overrideWithValue(largeTradeSnapshot),
+            dcaRebalanceConfigProvider.overrideWith(
+              (ref) => largeTradeSnapshot,
+            ),
           ],
           child: VitTradeApp(
             routerConfig: createAppRouter(

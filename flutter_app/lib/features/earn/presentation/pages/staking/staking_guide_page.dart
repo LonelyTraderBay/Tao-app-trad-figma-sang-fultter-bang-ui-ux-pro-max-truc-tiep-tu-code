@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -49,16 +50,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(stakingGuideRepositoryProvider).getGuide();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
-    final tutorials = snapshot.tutorials
-        .where((tutorial) => tutorial.difficulty == _difficulty)
-        .toList(growable: false);
+    final snapshotAsync = ref.watch(stakingGuideSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -66,57 +58,94 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
       semanticIdentifier: 'SC-369',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Hướng dẫn stake — APY ước tính có thể thay đổi',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _HeroBanner(snapshot: snapshot),
-                      _DifficultyTabs(
-                        active: _difficulty,
-                        onChanged: (difficulty) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _difficulty = difficulty);
-                        },
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingGuideSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+            final tutorials = snapshot.tutorials
+                .where((tutorial) => tutorial.difficulty == _difficulty)
+                .toList(growable: false);
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Hướng dẫn stake — APY ước tính có thể thay đổi',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
                       ),
-                      VitPageSection(
-                        key: StakingGuidePage.tutorialsKey,
-                        label: 'Tutorials',
-                        accentColor: AppModuleAccents.earn,
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
                         children: [
-                          for (final tutorial in tutorials)
-                            _TutorialCard(
-                              tutorial: tutorial,
-                              onTap: () => _openTutorialSheet(tutorial),
-                            ),
+                          _HeroBanner(snapshot: snapshot),
+                          _DifficultyTabs(
+                            active: _difficulty,
+                            onChanged: (difficulty) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _difficulty = difficulty);
+                            },
+                          ),
+                          VitPageSection(
+                            key: StakingGuidePage.tutorialsKey,
+                            label: 'Tutorials',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              for (final tutorial in tutorials)
+                                _TutorialCard(
+                                  tutorial: tutorial,
+                                  onTap: () => _openTutorialSheet(tutorial),
+                                ),
+                            ],
+                          ),
+                          _QuickTipsGrid(snapshot: snapshot),
+                          _CommonMistakes(snapshot: snapshot),
+                          _StartStakingCard(snapshot: snapshot),
                         ],
                       ),
-                      _QuickTipsGrid(snapshot: snapshot),
-                      _CommonMistakes(snapshot: snapshot),
-                      _StartStakingCard(snapshot: snapshot),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

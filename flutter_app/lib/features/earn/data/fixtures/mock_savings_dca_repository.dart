@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsDcaRepository implements SavingsDcaRepository {
-  const MockSavingsDcaRepository();
+final class MockSavingsDcaRepository extends _MockEarnRepositoryBase
+    implements SavingsDcaRepository {
+  const MockSavingsDcaRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsDcaSnapshot getDca() {
+  Future<SavingsDcaSnapshot> getDca() async {
+    await _simulateNetwork();
     return const SavingsDcaSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-dca',
       actionDraft:
@@ -160,11 +162,16 @@ final class MockSavingsDcaRepository implements SavingsDcaRepository {
 }
 
 final class MockSavingsSmartSuggestionsRepository
+    extends _MockEarnRepositoryBase
     implements SavingsSmartSuggestionsRepository {
-  const MockSavingsSmartSuggestionsRepository();
+  const MockSavingsSmartSuggestionsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsSmartSuggestionsSnapshot getSuggestions() {
+  Future<SavingsSmartSuggestionsSnapshot> getSuggestions() async {
+    await _simulateNetwork();
     return const SavingsSmartSuggestionsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-smart-suggestions',
       actionDraft:

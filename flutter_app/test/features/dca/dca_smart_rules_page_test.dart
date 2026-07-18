@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-179 mock repository exposes smart rules BE draft', () {
-    final snapshot = const MockDcaRepository().getSmartRules();
+  test('SC-179 mock repository exposes smart rules BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getSmartRules();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-smart-rules');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

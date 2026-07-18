@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-366 mock repository exposes advanced orders BE draft', () {
-    final snapshot = const MockStakingAdvancedOrdersRepository()
+  test('SC-366 mock repository exposes advanced orders BE draft', () async {
+    final snapshot = await const MockStakingAdvancedOrdersRepository()
         .getAdvancedOrders();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-advanced-orders');

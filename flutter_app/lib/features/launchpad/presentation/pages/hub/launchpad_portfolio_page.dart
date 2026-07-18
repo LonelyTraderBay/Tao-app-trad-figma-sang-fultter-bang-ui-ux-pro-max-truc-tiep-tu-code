@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -58,8 +59,7 @@ class _LaunchpadPortfolioPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getPortfolio();
-    final subscriptions = _subscriptionsFor(snapshot.subscriptions, _activeTab);
+    final portfolioAsync = ref.watch(launchpadPortfolioSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -77,10 +77,10 @@ class _LaunchpadPortfolioPageState
           semanticLabel: 'Danh mục dự án Launchpad – vùng cuộn nội dung',
           semanticIdentifier: 'SC-296',
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Launchpad Portfolio',
+            subtitle: 'Các dự án đã tham gia',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(AppRoutePaths.launchpad),
           ),
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(
@@ -95,25 +95,45 @@ class _LaunchpadPortfolioPageState
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [
-                  _PortfolioHero(subscriptions: snapshot.subscriptions),
-                  _PortfolioTabs(
-                    activeTab: _activeTab,
-                    onChanged: (tab) => setState(() => _activeTab = tab),
-                  ),
-                  if (subscriptions.isEmpty)
-                    _EmptyPortfolio(
-                      route: snapshot.launchpadRoute,
-                      filtered: _activeTab != _PortfolioTab.all,
-                      onShowAll: () =>
-                          setState(() => _activeTab = _PortfolioTab.all),
-                    )
-                  else
-                    for (final subscription in subscriptions)
-                      _SubscriptionCard(
-                        subscription: subscription,
-                        receiptRoute: snapshot.receiptRoute,
+                  ...portfolioAsync.when(
+                    loading: () => const [VitSkeletonList()],
+                    error: (error, stackTrace) => [
+                      VitErrorState(
+                        title: 'Không tải được portfolio',
+                        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () =>
+                            ref.invalidate(launchpadPortfolioSnapshotProvider),
                       ),
-                  const _PortfolioDisclaimer(),
+                    ],
+                    data: (snapshot) {
+                      final subscriptions = _subscriptionsFor(
+                        snapshot.subscriptions,
+                        _activeTab,
+                      );
+                      return [
+                        _PortfolioHero(subscriptions: snapshot.subscriptions),
+                        _PortfolioTabs(
+                          activeTab: _activeTab,
+                          onChanged: (tab) => setState(() => _activeTab = tab),
+                        ),
+                        if (subscriptions.isEmpty)
+                          _EmptyPortfolio(
+                            route: snapshot.launchpadRoute,
+                            filtered: _activeTab != _PortfolioTab.all,
+                            onShowAll: () =>
+                                setState(() => _activeTab = _PortfolioTab.all),
+                          )
+                        else
+                          for (final subscription in subscriptions)
+                            _SubscriptionCard(
+                              subscription: subscription,
+                              receiptRoute: snapshot.receiptRoute,
+                            ),
+                        const _PortfolioDisclaimer(),
+                      ];
+                    },
+                  ),
                 ],
               ),
             ),

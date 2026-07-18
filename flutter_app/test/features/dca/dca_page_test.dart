@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-169 mock repository exposes DCA BE draft', () {
-    final snapshot = const MockDcaRepository().getDashboard();
+  test('SC-169 mock repository exposes DCA BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getDashboard();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

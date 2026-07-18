@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -65,16 +66,7 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingAnalyticsRepositoryProvider)
-        .getAnalytics();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? SharedSpacingTokens.bottomNavVisualClearance
-            : SharedSpacingTokens.bottomNavNativeClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingAnalyticsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,68 +75,103 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
       semanticIdentifier: 'SC-359',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnDashboard),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _SummaryCard(
-                        snapshot: snapshot,
-                        showCalculator: _showCalculator,
-                        onCalculate: _toggleCalculator,
-                        onExport: _exportReport,
-                      ),
-                      if (_showCalculator)
-                        _CalculatorCard(
-                          key: StakingAnalyticsPage.calculatorKey,
-                          compound: _compound,
-                          onToggleCompound: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _compound = !_compound);
-                          },
-                        ),
-                      _AnalyticsTabs(
-                        key: StakingAnalyticsPage.tabBarKey,
-                        tabs: snapshot.tabs,
-                        activeTab: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (activeTab == 'earnings')
-                        _EarningsTab(snapshot: snapshot)
-                      else if (activeTab == 'apy')
-                        _ApyTab(snapshot: snapshot)
-                      else if (activeTab == 'roi')
-                        _RoiTab(snapshot: snapshot)
-                      else
-                        _ProductsTab(snapshot: snapshot),
-                      const EarnDisclaimerBanner(
-                        text:
-                            'APY là ước tính tham khảo và có thể thay đổi. '
-                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
-                      ),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnDashboard),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingAnalyticsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final scrollEndPadding =
+                (mode.usesVisualQaFrame
+                    ? SharedSpacingTokens.bottomNavVisualClearance
+                    : SharedSpacingTokens.bottomNavNativeClearance) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: [
+                          _SummaryCard(
+                            snapshot: snapshot,
+                            showCalculator: _showCalculator,
+                            onCalculate: _toggleCalculator,
+                            onExport: _exportReport,
+                          ),
+                          if (_showCalculator)
+                            _CalculatorCard(
+                              key: StakingAnalyticsPage.calculatorKey,
+                              compound: _compound,
+                              onToggleCompound: () {
+                                HapticFeedback.selectionClick();
+                                setState(() => _compound = !_compound);
+                              },
+                            ),
+                          _AnalyticsTabs(
+                            key: StakingAnalyticsPage.tabBarKey,
+                            tabs: snapshot.tabs,
+                            activeTab: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (activeTab == 'earnings')
+                            _EarningsTab(snapshot: snapshot)
+                          else if (activeTab == 'apy')
+                            _ApyTab(snapshot: snapshot)
+                          else if (activeTab == 'roi')
+                            _RoiTab(snapshot: snapshot)
+                          else
+                            _ProductsTab(snapshot: snapshot),
+                          const EarnDisclaimerBanner(
+                            text:
+                                'APY là ước tính tham khảo và có thể thay đổi. '
+                                'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                          ),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

@@ -28,8 +28,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-331 mock repository exposes redeem BE draft', () {
-    final snapshot = const MockSavingsRedeemRepository().getRedeem(
+  test('SC-331 mock repository exposes redeem BE draft', () async {
+    final snapshot = await const MockSavingsRedeemRepository().getRedeem(
       positionId: 'pos001',
     );
 

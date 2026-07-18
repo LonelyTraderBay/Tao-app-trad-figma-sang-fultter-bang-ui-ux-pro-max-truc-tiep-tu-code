@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadIdoBridgePage extends ConsumerWidget {
@@ -34,9 +35,9 @@ class LaunchpadIdoBridgePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(launchpadControllerProvider)
-        .getIdoBridge(projectId);
+    final idoBridgeAsync = ref.watch(
+      launchpadIdoBridgeSnapshotProvider(projectId),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -44,37 +45,85 @@ class LaunchpadIdoBridgePage extends ConsumerWidget {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'Bridge token để tham gia IDO',
-      semanticIdentifier: 'SC-299',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
-          semanticLabel: 'Bridge token IDO – vùng cuộn nội dung',
-          semanticIdentifier: 'SC-299',
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.project == null
-                ? null
-                : 'Bridge token · Tham gia IDO',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+    // GD4-F4: subtitle phụ thuộc snapshot.project (nullable) nên bọc CẢ
+    // scaffold — title/backRoute vẫn là literal hằng số.
+    return idoBridgeAsync.when(
+      loading: () => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Bridge token để tham gia IDO',
+        semanticIdentifier: 'SC-299',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            bottomInset: bottomInset,
+            semanticLabel: 'Bridge token IDO – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-299',
+            header: VitHeader(
+              title: 'IDO Bridge',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.launchpad),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: SingleChildScrollView(
-            key: contentKey,
-            physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
-              rhythm: VitPageRhythm.standard,
-              padding: VitContentPadding.compact,
-              gap: VitContentGap.tight,
-              children: [
-                if (snapshot.project == null)
-                  const _BridgeProjectNotFound()
-                else
-                  _BridgeParticipationFlow(snapshot: snapshot),
-              ],
+        ),
+      ),
+      error: (error, stackTrace) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Bridge token để tham gia IDO',
+        semanticIdentifier: 'SC-299',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            bottomInset: bottomInset,
+            semanticLabel: 'Bridge token IDO – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-299',
+            header: VitHeader(
+              title: 'IDO Bridge',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.launchpad),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(launchpadIdoBridgeSnapshotProvider(projectId)),
+            ),
+          ),
+        ),
+      ),
+      data: (snapshot) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Bridge token để tham gia IDO',
+        semanticIdentifier: 'SC-299',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            bottomInset: bottomInset,
+            semanticLabel: 'Bridge token IDO – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-299',
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.project == null
+                  ? null
+                  : 'Bridge token · Tham gia IDO',
+              showBack: true,
+              onBack: () => context.go(snapshot.backRoute),
+            ),
+            child: SingleChildScrollView(
+              key: contentKey,
+              physics: const ClampingScrollPhysics(),
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
+                padding: VitContentPadding.compact,
+                gap: VitContentGap.tight,
+                children: [
+                  if (snapshot.project == null)
+                    const _BridgeProjectNotFound()
+                  else
+                    _BridgeParticipationFlow(snapshot: snapshot),
+                ],
+              ),
             ),
           ),
         ),

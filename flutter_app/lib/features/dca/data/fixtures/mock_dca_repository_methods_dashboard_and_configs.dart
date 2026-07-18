@@ -1,7 +1,8 @@
 part of '../repositories/mock_dca_repository.dart';
 
-mixin _DcaRepositoryMethodsPart01 {
-  DcaDashboardSnapshot getDashboard() {
+mixin _DcaRepositoryMethodsPart01 on _MockDcaRepositoryBase {
+  Future<DcaDashboardSnapshot> getDashboard() async {
+    await _simulateNetwork();
     return const DcaDashboardSnapshot(
       endpoint: '/api/mobile/dca/dca',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -126,7 +127,8 @@ mixin _DcaRepositoryMethodsPart01 {
     );
   }
 
-  DcaRebalanceConfigSnapshot getRebalanceConfig() {
+  Future<DcaRebalanceConfigSnapshot> getRebalanceConfig() async {
+    await _simulateNetwork();
     return const DcaRebalanceConfigSnapshot(
       endpoint: '/api/mobile/dca/dca-rebalance-config',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -223,7 +225,10 @@ mixin _DcaRepositoryMethodsPart01 {
     );
   }
 
-  DcaRebalanceDashboardSnapshot getRebalanceDashboard(String configId) {
+  Future<DcaRebalanceDashboardSnapshot> getRebalanceDashboard(
+    String configId,
+  ) async {
+    await _simulateNetwork();
     return DcaRebalanceDashboardSnapshot(
       endpoint: '/api/mobile/dca/dca-rebalance-config001',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -244,7 +249,8 @@ mixin _DcaRepositoryMethodsPart01 {
     );
   }
 
-  DcaScheduleConfigSnapshot getScheduleConfig() {
+  Future<DcaScheduleConfigSnapshot> getScheduleConfig() async {
+    await _simulateNetwork();
     return const DcaScheduleConfigSnapshot(
       endpoint: '/api/mobile/dca/dca-schedule-config',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -328,7 +334,10 @@ mixin _DcaRepositoryMethodsPart01 {
     );
   }
 
-  DcaScheduleAnalyticsSnapshot getScheduleAnalytics(String configId) {
+  Future<DcaScheduleAnalyticsSnapshot> getScheduleAnalytics(
+    String configId,
+  ) async {
+    await _simulateNetwork();
     return DcaScheduleAnalyticsSnapshot(
       endpoint: '/api/mobile/dca/dca-schedule-config001',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -349,7 +358,8 @@ mixin _DcaRepositoryMethodsPart01 {
     );
   }
 
-  DcaPortfolioOptimizerSnapshot getPortfolioOptimizer() {
+  Future<DcaPortfolioOptimizerSnapshot> getPortfolioOptimizer() async {
+    await _simulateNetwork();
     return const DcaPortfolioOptimizerSnapshot(
       endpoint: '/api/mobile/dca/dca-portfolio-optimizer',
       actionDraft: 'POST /dca/plans|rebalance|schedule',

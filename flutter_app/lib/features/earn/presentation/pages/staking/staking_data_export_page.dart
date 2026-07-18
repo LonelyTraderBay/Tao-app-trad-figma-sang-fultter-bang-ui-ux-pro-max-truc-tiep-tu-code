@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -41,28 +42,13 @@ class StakingDataExportPage extends ConsumerStatefulWidget {
 
 class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
   String? _selectedQuickExport;
-  late String _format;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(stakingDataExportRepositoryProvider)
-        .getDataExport();
-    _format = snapshot.defaultFormat;
-  }
+  // Bẫy 14 (GD4 playbook): seed từ getter giờ-đã-async — không còn seed ở
+  // initState, seed 1 lần trong nhánh data: bên dưới.
+  String? _format;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingDataExportRepositoryProvider)
-        .getDataExport();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingDataExportSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -70,50 +56,85 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
       semanticIdentifier: 'SC-394',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Xuất dữ liệu stake và yield',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earn),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _ExportHero(snapshot: snapshot),
-                      _QuickExports(
-                        snapshot: snapshot,
-                        selectedId: _selectedQuickExport,
-                        onSelect: (id) {
-                          setState(() => _selectedQuickExport = id);
-                        },
-                      ),
-                      _CustomExport(
-                        snapshot: snapshot,
-                        format: _format,
-                        onFormatChanged: (value) {
-                          setState(() => _format = value);
-                        },
-                      ),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earn),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingDataExportSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _format ??= snapshot.defaultFormat;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Xuất dữ liệu stake và yield',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.defaultPadding,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _ExportHero(snapshot: snapshot),
+                          _QuickExports(
+                            snapshot: snapshot,
+                            selectedId: _selectedQuickExport,
+                            onSelect: (id) {
+                              setState(() => _selectedQuickExport = id);
+                            },
+                          ),
+                          _CustomExport(
+                            snapshot: snapshot,
+                            format: _format!,
+                            onFormatChanged: (value) {
+                              setState(() => _format = value);
+                            },
+                          ),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

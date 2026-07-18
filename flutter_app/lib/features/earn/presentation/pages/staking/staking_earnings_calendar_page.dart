@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -51,30 +52,13 @@ class _StakingEarningsCalendarPageState
     extends ConsumerState<StakingEarningsCalendarPage> {
   String _tab = 'calendar';
   bool _notificationsEnabled = true;
-  late DateTime _visibleMonth;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(stakingEarningsCalendarRepositoryProvider)
-        .getCalendar();
-    _visibleMonth = DateTime(snapshot.currentYear, snapshot.currentMonth);
-  }
+  // Bẫy 14 (GD4 playbook): repo giờ đã async — seed 1 lần trong nhánh
+  // data: bên dưới thay vì initState.
+  DateTime? _visibleMonth;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingEarningsCalendarRepositoryProvider)
-        .getCalendar();
-    final today = DateTime.parse(snapshot.todayIso);
-    final upcoming = _upcomingEvents(snapshot.events, today);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingEarningsCalendarSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -82,72 +66,111 @@ class _StakingEarningsCalendarPageState
       semanticIdentifier: 'SC-361',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _SummaryCard(
-                        snapshot: snapshot,
-                        upcomingCount: upcoming.length,
-                        notificationsEnabled: _notificationsEnabled,
-                        onToggleNotifications: _toggleNotifications,
-                        onExport: _exportCalendar,
-                      ),
-                      _CalendarTabs(
-                        key: StakingEarningsCalendarPage.tabsKey,
-                        tabs: snapshot.tabs,
-                        active: _tab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == 'calendar') ...[
-                        _CalendarCard(
-                          snapshot: snapshot,
-                          visibleMonth: _visibleMonth,
-                          today: today,
-                          onPrevious: _previousMonth,
-                          onNext: _nextMonth,
-                        ),
-                        const _LegendCard(),
-                      ] else
-                        _UpcomingList(events: upcoming),
-                      const EarnDisclaimerBanner(
-                        text:
-                            'APY là ước tính tham khảo và có thể thay đổi. '
-                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
-                      ),
-                      VitInfoCallout(
-                        key: StakingEarningsCalendarPage.infoKey,
-                        title: snapshot.infoTitle,
-                        message: snapshot.infoBullets.join('\n'),
-                        icon: Icons.calendar_month_rounded,
-                        accentColor: AppColors.primarySoft,
-                        padding: EarnSpacingTokens.earnCardPaddingX4,
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingEarningsCalendarSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _visibleMonth ??= DateTime(
+              snapshot.currentYear,
+              snapshot.currentMonth,
+            );
+            final today = DateTime.parse(snapshot.todayIso);
+            final upcoming = _upcomingEvents(snapshot.events, today);
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _SummaryCard(
+                            snapshot: snapshot,
+                            upcomingCount: upcoming.length,
+                            notificationsEnabled: _notificationsEnabled,
+                            onToggleNotifications: _toggleNotifications,
+                            onExport: _exportCalendar,
+                          ),
+                          _CalendarTabs(
+                            key: StakingEarningsCalendarPage.tabsKey,
+                            tabs: snapshot.tabs,
+                            active: _tab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (_tab == 'calendar') ...[
+                            _CalendarCard(
+                              snapshot: snapshot,
+                              visibleMonth: _visibleMonth!,
+                              today: today,
+                              onPrevious: _previousMonth,
+                              onNext: _nextMonth,
+                            ),
+                            const _LegendCard(),
+                          ] else
+                            _UpcomingList(events: upcoming),
+                          const EarnDisclaimerBanner(
+                            text:
+                                'APY là ước tính tham khảo và có thể thay đổi. '
+                                'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                          ),
+                          VitInfoCallout(
+                            key: StakingEarningsCalendarPage.infoKey,
+                            title: snapshot.infoTitle,
+                            message: snapshot.infoBullets.join('\n'),
+                            icon: Icons.calendar_month_rounded,
+                            accentColor: AppColors.primarySoft,
+                            padding: EarnSpacingTokens.earnCardPaddingX4,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -171,14 +194,14 @@ class _StakingEarningsCalendarPageState
   void _previousMonth() {
     HapticFeedback.selectionClick();
     setState(() {
-      _visibleMonth = DateTime(_visibleMonth.year, _visibleMonth.month - 1);
+      _visibleMonth = DateTime(_visibleMonth!.year, _visibleMonth!.month - 1);
     });
   }
 
   void _nextMonth() {
     HapticFeedback.selectionClick();
     setState(() {
-      _visibleMonth = DateTime(_visibleMonth.year, _visibleMonth.month + 1);
+      _visibleMonth = DateTime(_visibleMonth!.year, _visibleMonth!.month + 1);
     });
   }
 }

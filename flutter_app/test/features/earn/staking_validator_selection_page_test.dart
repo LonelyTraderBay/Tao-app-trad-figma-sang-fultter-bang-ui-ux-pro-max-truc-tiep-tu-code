@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-362 mock repository exposes validator selection BE draft', () {
-    final snapshot = const MockStakingValidatorSelectionRepository()
+  test('SC-362 mock repository exposes validator selection BE draft', () async {
+    final snapshot = await const MockStakingValidatorSelectionRepository()
         .getSelection();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-validator-selection');

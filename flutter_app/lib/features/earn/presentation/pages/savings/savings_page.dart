@@ -60,15 +60,7 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(savingsControllerProvider);
-    final snapshot = controller.state.snapshot;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
-    final products = _filteredProducts(controller, _filter);
+    final controllerAsync = ref.watch(savingsControllerProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -76,66 +68,108 @@ class _SavingsPageState extends ConsumerState<SavingsPage> {
       semanticIdentifier: 'SC-329',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => goBackOrFallback(
-              context,
-              fallbackPath: snapshot.backRoute,
-              mode: BackNavigationMode.historyThenFallback,
+        child: controllerAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => goBackOrFallback(
+                context,
+                fallbackPath: '/earn',
+                mode: BackNavigationMode.historyThenFallback,
+              ),
+            ),
+            child: const VitSkeletonList(),
+          ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => goBackOrFallback(
+                context,
+                fallbackPath: '/earn',
+                mode: BackNavigationMode.historyThenFallback,
+              ),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsSnapshotProvider),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _SavingsHero(snapshot: snapshot),
-                      _SavingsTabs(
-                        activeTab: _tab,
-                        positionCount: snapshot.positions.length,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == _SavingsTab.products) ...[
-                        _SavingsFilters(
-                          activeFilter: _filter,
-                          onChanged: (filter) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filter = filter);
-                          },
-                        ),
-                        _SavingsProductList(
-                          products: products,
-                          detailRoute: snapshot.productDetailRoute,
-                        ),
-                      ] else
-                        _SavingsPositions(positions: snapshot.positions),
-                      _InsightList(insights: snapshot.insights),
-                      _ToolboxButton(
-                        guideRoute: snapshot.guideRoute,
-                        exportRoute: snapshot.exportRoute,
-                      ),
-                      const _YieldDisclaimer(),
-                    ],
-                  ),
+          data: (controller) {
+            final snapshot = controller.state.snapshot;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+            final products = _filteredProducts(controller, _filter);
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => goBackOrFallback(
+                  context,
+                  fallbackPath: snapshot.backRoute,
+                  mode: BackNavigationMode.historyThenFallback,
                 ),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _SavingsHero(snapshot: snapshot),
+                          _SavingsTabs(
+                            activeTab: _tab,
+                            positionCount: snapshot.positions.length,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (_tab == _SavingsTab.products) ...[
+                            _SavingsFilters(
+                              activeFilter: _filter,
+                              onChanged: (filter) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _filter = filter);
+                              },
+                            ),
+                            _SavingsProductList(
+                              products: products,
+                              detailRoute: snapshot.productDetailRoute,
+                            ),
+                          ] else
+                            _SavingsPositions(positions: snapshot.positions),
+                          _InsightList(insights: snapshot.insights),
+                          _ToolboxButton(
+                            guideRoute: snapshot.guideRoute,
+                            exportRoute: snapshot.exportRoute,
+                          ),
+                          const _YieldDisclaimer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

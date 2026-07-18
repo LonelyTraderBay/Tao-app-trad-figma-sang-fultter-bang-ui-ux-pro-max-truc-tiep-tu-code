@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-383 mock repository exposes validator health BE draft', () {
-    final snapshot = const MockStakingValidatorHealthMonitorRepository()
+  test('SC-383 mock repository exposes validator health BE draft', () async {
+    final snapshot = await const MockStakingValidatorHealthMonitorRepository()
         .getValidatorHealth();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-validator-health-monitor');

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -58,22 +59,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(savingsAutoPilotRepositoryProvider)
-        .getAutoPilot();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final status = _status ?? snapshot.config.status;
-    final selectedMode = _mode ?? snapshot.config.mode;
-    final monthlyBudget = _monthlyBudgetUsd ?? snapshot.config.monthlyBudgetUsd;
-    final mode = modeById(snapshot, selectedMode);
-    final pendingCount = _pendingCount(snapshot);
-    final executedCount = _executedCount(snapshot);
-    final modeRender = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
-        (modeRender.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsAutoPilotSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,101 +67,143 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
       semanticIdentifier: 'SC-350',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      AutoPilotHero(
-                        snapshot: snapshot,
-                        mode: mode,
-                        status: status,
-                        monthlyBudgetUsd: monthlyBudget,
-                        executedCount: executedCount,
-                        pendingCount: pendingCount,
-                        onToggleStatus: _toggleStatus,
-                      ),
-                      AutoPilotTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (activeTab == 'overview')
-                        OverviewTab(
-                          snapshot: snapshot,
-                          moduleStates: _moduleStates,
-                          onOpenModule: (route) => context.go(route),
-                          onShowActions: () => setState(() => _tab = 'actions'),
-                          actionStatusFor: _actionStatus,
-                          onOpenAction: (action) =>
-                              _showActionDetail(context, action),
-                        )
-                      else if (activeTab == 'actions')
-                        ActionsTab(
-                          snapshot: snapshot,
-                          actionStatusFor: _actionStatus,
-                          onOpenAction: (action) =>
-                              _showActionDetail(context, action),
-                          onApprove: _approveAction,
-                          onSkip: _skipAction,
-                        )
-                      else
-                        SettingsTab(
-                          snapshot: snapshot,
-                          mode: selectedMode,
-                          monthlyBudgetUsd: monthlyBudget,
-                          approvalRequired:
-                              _approvalRequired ??
-                              snapshot.config.approvalRequired,
-                          notificationsEnabled:
-                              _notificationsEnabled ??
-                              snapshot.config.notificationsEnabled,
-                          moduleEnabled: _moduleEnabled,
-                          onModeChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _mode = value);
-                          },
-                          onBudgetChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _monthlyBudgetUsd = value);
-                          },
-                          onModuleChanged: (id, enabled) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _moduleStates[id] = enabled);
-                          },
-                          onApprovalChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _approvalRequired = value);
-                          },
-                          onNotificationChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _notificationsEnabled = value);
-                          },
-                        ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsAutoPilotSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final status = _status ?? snapshot.config.status;
+            final selectedMode = _mode ?? snapshot.config.mode;
+            final monthlyBudget =
+                _monthlyBudgetUsd ?? snapshot.config.monthlyBudgetUsd;
+            final mode = modeById(snapshot, selectedMode);
+            final pendingCount = _pendingCount(snapshot);
+            final executedCount = _executedCount(snapshot);
+            final modeRender =
+                widget.shellRenderMode ?? defaultShellRenderMode();
+            final scrollTailReserve =
+                (modeRender.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x3
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollTailReserve,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          AutoPilotHero(
+                            snapshot: snapshot,
+                            mode: mode,
+                            status: status,
+                            monthlyBudgetUsd: monthlyBudget,
+                            executedCount: executedCount,
+                            pendingCount: pendingCount,
+                            onToggleStatus: _toggleStatus,
+                          ),
+                          AutoPilotTabs(
+                            tabs: snapshot.tabs,
+                            active: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (activeTab == 'overview')
+                            OverviewTab(
+                              snapshot: snapshot,
+                              moduleStates: _moduleStates,
+                              onOpenModule: (route) => context.go(route),
+                              onShowActions: () =>
+                                  setState(() => _tab = 'actions'),
+                              actionStatusFor: _actionStatus,
+                              onOpenAction: (action) =>
+                                  _showActionDetail(context, action),
+                            )
+                          else if (activeTab == 'actions')
+                            ActionsTab(
+                              snapshot: snapshot,
+                              actionStatusFor: _actionStatus,
+                              onOpenAction: (action) =>
+                                  _showActionDetail(context, action),
+                              onApprove: _approveAction,
+                              onSkip: _skipAction,
+                            )
+                          else
+                            SettingsTab(
+                              snapshot: snapshot,
+                              mode: selectedMode,
+                              monthlyBudgetUsd: monthlyBudget,
+                              approvalRequired:
+                                  _approvalRequired ??
+                                  snapshot.config.approvalRequired,
+                              notificationsEnabled:
+                                  _notificationsEnabled ??
+                                  snapshot.config.notificationsEnabled,
+                              moduleEnabled: _moduleEnabled,
+                              onModeChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _mode = value);
+                              },
+                              onBudgetChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _monthlyBudgetUsd = value);
+                              },
+                              onModuleChanged: (id, enabled) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _moduleStates[id] = enabled);
+                              },
+                              onApprovalChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _approvalRequired = value);
+                              },
+                              onNotificationChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _notificationsEnabled = value);
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -183,13 +211,12 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
 
   void _toggleStatus() {
     HapticFeedback.mediumImpact();
+    // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
+    // `.value` (đã có sẵn vì nút này chỉ render trong nhánh data:).
     final current =
         _status ??
-        ref
-            .read(savingsAutoPilotRepositoryProvider)
-            .getAutoPilot()
-            .config
-            .status;
+        ref.read(savingsAutoPilotSnapshotProvider).value?.config.status;
+    if (current == null) return;
     setState(() {
       _status = switch (current) {
         SavingsAutoPilotStatus.active => SavingsAutoPilotStatus.paused,

@@ -4,12 +4,16 @@ import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.d
 /// Smoke test for [MockLaunchpadRepository]: exercises every method on
 /// [LaunchpadRepository] and asserts each call succeeds without throwing and
 /// returns a plausible, correctly-typed result.
+///
+/// GD4-F4: every method is now `Future<T>` (ADR-001 read idiom) — tests
+/// `await` with `loadDelay: Duration.zero`. See
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md.
 void main() {
-  const repository = MockLaunchpadRepository();
+  const repository = MockLaunchpadRepository(loadDelay: Duration.zero);
 
   group('MockLaunchpadRepository smoke test', () {
-    test('getHome returns a populated snapshot', () {
-      final snapshot = repository.getHome();
+    test('getHome returns a populated snapshot', () async {
+      final snapshot = await repository.getHome();
 
       expect(snapshot, isA<LaunchpadHomeSnapshot>());
       expect(snapshot.projects, isNotEmpty);
@@ -18,8 +22,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getDetail returns the matching project for a known id', () {
-      final snapshot = repository.getDetail('proj1');
+    test('getDetail returns the matching project for a known id', () async {
+      final snapshot = await repository.getDetail('proj1');
 
       expect(snapshot, isA<LaunchpadDetailSnapshot>());
       expect(snapshot.projectId, 'proj1');
@@ -29,51 +33,46 @@ void main() {
     });
 
     test('getDetail does not throw for an unknown id and falls back to a '
-        'null project', () {
-      late final LaunchpadDetailSnapshot snapshot;
+        'null project', () async {
+      final snapshot = await repository.getDetail('does-not-exist');
 
-      expect(
-        () => snapshot = repository.getDetail('does-not-exist'),
-        returnsNormally,
-      );
       expect(snapshot, isA<LaunchpadDetailSnapshot>());
       expect(snapshot.project, isNull);
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getPortfolio returns a populated snapshot', () {
-      final snapshot = repository.getPortfolio();
+    test('getPortfolio returns a populated snapshot', () async {
+      final snapshot = await repository.getPortfolio();
 
       expect(snapshot, isA<LaunchpadPortfolioSnapshot>());
       expect(snapshot.subscriptions, isNotEmpty);
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getReceipt returns the matching subscription for a known id', () {
-      final snapshot = repository.getReceipt('sub1');
+    test(
+      'getReceipt returns the matching subscription for a known id',
+      () async {
+        final snapshot = await repository.getReceipt('sub1');
 
-      expect(snapshot, isA<LaunchpadReceiptSnapshot>());
-      expect(snapshot.subscriptionId, 'sub1');
-      expect(snapshot.subscription, isNotNull);
-      expect(snapshot.subscription?.id, 'sub1');
-      expect(snapshot.endpoint, isNotEmpty);
-    });
+        expect(snapshot, isA<LaunchpadReceiptSnapshot>());
+        expect(snapshot.subscriptionId, 'sub1');
+        expect(snapshot.subscription, isNotNull);
+        expect(snapshot.subscription?.id, 'sub1');
+        expect(snapshot.endpoint, isNotEmpty);
+      },
+    );
 
     test('getReceipt does not throw for an unknown id and falls back to a '
-        'null subscription', () {
-      late final LaunchpadReceiptSnapshot snapshot;
+        'null subscription', () async {
+      final snapshot = await repository.getReceipt('does-not-exist');
 
-      expect(
-        () => snapshot = repository.getReceipt('does-not-exist'),
-        returnsNormally,
-      );
       expect(snapshot, isA<LaunchpadReceiptSnapshot>());
       expect(snapshot.subscription, isNull);
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getPerformance returns a populated snapshot', () {
-      final snapshot = repository.getPerformance();
+    test('getPerformance returns a populated snapshot', () async {
+      final snapshot = await repository.getPerformance();
 
       expect(snapshot, isA<LaunchpadPerformanceSnapshot>());
       expect(snapshot.projects, isNotEmpty);
@@ -82,8 +81,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getStaking returns a populated snapshot', () {
-      final snapshot = repository.getStaking();
+    test('getStaking returns a populated snapshot', () async {
+      final snapshot = await repository.getStaking();
 
       expect(snapshot, isA<LaunchpadStakingSnapshot>());
       expect(snapshot.pools, isNotEmpty);
@@ -91,8 +90,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getBatchClaim returns a populated snapshot', () {
-      final snapshot = repository.getBatchClaim();
+    test('getBatchClaim returns a populated snapshot', () async {
+      final snapshot = await repository.getBatchClaim();
 
       expect(snapshot, isA<LaunchpadBatchClaimSnapshot>());
       expect(snapshot.positions, isNotEmpty);
@@ -102,8 +101,8 @@ void main() {
 
     test(
       'getClaimReceipt returns the matching receipt for a known position id',
-      () {
-        final snapshot = repository.getClaimReceipt('sp1');
+      () async {
+        final snapshot = await repository.getClaimReceipt('sp1');
 
         expect(snapshot, isA<LaunchpadClaimReceiptSnapshot>());
         expect(snapshot.positionId, 'sp1');
@@ -113,20 +112,16 @@ void main() {
     );
 
     test('getClaimReceipt does not throw for an unknown position id and '
-        'falls back to the first receipt', () {
-      late final LaunchpadClaimReceiptSnapshot snapshot;
+        'falls back to the first receipt', () async {
+      final snapshot = await repository.getClaimReceipt('does-not-exist');
 
-      expect(
-        () => snapshot = repository.getClaimReceipt('does-not-exist'),
-        returnsNormally,
-      );
       expect(snapshot, isA<LaunchpadClaimReceiptSnapshot>());
       expect(snapshot.positionId, 'does-not-exist');
       expect(snapshot.receipt, isNotNull);
     });
 
-    test('getIdoBridge returns the matching project for a known id', () {
-      final snapshot = repository.getIdoBridge('proj1');
+    test('getIdoBridge returns the matching project for a known id', () async {
+      final snapshot = await repository.getIdoBridge('proj1');
 
       expect(snapshot, isA<LaunchpadIdoBridgeSnapshot>());
       expect(snapshot.projectId, 'proj1');
@@ -137,19 +132,15 @@ void main() {
     });
 
     test('getIdoBridge does not throw for an unknown id and falls back to a '
-        'null project', () {
-      late final LaunchpadIdoBridgeSnapshot snapshot;
+        'null project', () async {
+      final snapshot = await repository.getIdoBridge('does-not-exist');
 
-      expect(
-        () => snapshot = repository.getIdoBridge('does-not-exist'),
-        returnsNormally,
-      );
       expect(snapshot, isA<LaunchpadIdoBridgeSnapshot>());
       expect(snapshot.project, isNull);
     });
 
-    test('getBridgeCompare returns a populated snapshot', () {
-      final snapshot = repository.getBridgeCompare();
+    test('getBridgeCompare returns a populated snapshot', () async {
+      final snapshot = await repository.getBridgeCompare();
 
       expect(snapshot, isA<LaunchpadBridgeCompareSnapshot>());
       expect(snapshot.comparison.routes, isNotEmpty);
@@ -157,8 +148,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getNotifSound returns a populated snapshot', () {
-      final snapshot = repository.getNotifSound();
+    test('getNotifSound returns a populated snapshot', () async {
+      final snapshot = await repository.getNotifSound();
 
       expect(snapshot, isA<LaunchpadNotifSoundSnapshot>());
       expect(snapshot.categories, isNotEmpty);
@@ -167,8 +158,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getEventLog returns a populated snapshot', () {
-      final snapshot = repository.getEventLog();
+    test('getEventLog returns a populated snapshot', () async {
+      final snapshot = await repository.getEventLog();
 
       expect(snapshot, isA<LaunchpadEventLogSnapshot>());
       expect(snapshot.events, isNotEmpty);
@@ -176,23 +167,29 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getAbiDiff returns a populated snapshot for a known contract id', () {
-      final snapshot = repository.getAbiDiff('contract001');
+    test(
+      'getAbiDiff returns a populated snapshot for a known contract id',
+      () async {
+        final snapshot = await repository.getAbiDiff('contract001');
 
-      expect(snapshot, isA<LaunchpadAbiDiffSnapshot>());
-      expect(snapshot.contractId, 'contract001');
-      expect(snapshot.diff.entries, isNotEmpty);
-      expect(snapshot.endpoint, isNotEmpty);
-    });
+        expect(snapshot, isA<LaunchpadAbiDiffSnapshot>());
+        expect(snapshot.contractId, 'contract001');
+        expect(snapshot.diff.entries, isNotEmpty);
+        expect(snapshot.endpoint, isNotEmpty);
+      },
+    );
 
-    test('getAbiDiff falls back to a default contract id for an empty id', () {
-      final snapshot = repository.getAbiDiff('');
+    test(
+      'getAbiDiff falls back to a default contract id for an empty id',
+      () async {
+        final snapshot = await repository.getAbiDiff('');
 
-      expect(snapshot.contractId, 'contract001');
-    });
+        expect(snapshot.contractId, 'contract001');
+      },
+    );
 
-    test('getAddressBook returns a populated snapshot', () {
-      final snapshot = repository.getAddressBook();
+    test('getAddressBook returns a populated snapshot', () async {
+      final snapshot = await repository.getAddressBook();
 
       expect(snapshot, isA<LaunchpadAddressBookSnapshot>());
       expect(snapshot.addresses, isNotEmpty);
@@ -200,8 +197,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getWebhooks returns a populated snapshot', () {
-      final snapshot = repository.getWebhooks();
+    test('getWebhooks returns a populated snapshot', () async {
+      final snapshot = await repository.getWebhooks();
 
       expect(snapshot, isA<LaunchpadWebhooksSnapshot>());
       expect(snapshot.subscriptions, isNotEmpty);
@@ -211,8 +208,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getGasTracker returns a populated snapshot', () {
-      final snapshot = repository.getGasTracker();
+    test('getGasTracker returns a populated snapshot', () async {
+      final snapshot = await repository.getGasTracker();
 
       expect(snapshot, isA<LaunchpadGasTrackerSnapshot>());
       expect(snapshot.prices, isNotEmpty);
@@ -222,8 +219,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getRebalance returns a populated snapshot', () {
-      final snapshot = repository.getRebalance();
+    test('getRebalance returns a populated snapshot', () async {
+      final snapshot = await repository.getRebalance();
 
       expect(snapshot, isA<LaunchpadRebalanceSnapshot>());
       expect(snapshot.assets, isNotEmpty);
@@ -232,8 +229,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getMultisig returns a populated snapshot', () {
-      final snapshot = repository.getMultisig();
+    test('getMultisig returns a populated snapshot', () async {
+      final snapshot = await repository.getMultisig();
 
       expect(snapshot, isA<LaunchpadMultisigSnapshot>());
       expect(snapshot.safes, isNotEmpty);
@@ -242,8 +239,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getSwapAggregator returns a populated snapshot', () {
-      final snapshot = repository.getSwapAggregator();
+    test('getSwapAggregator returns a populated snapshot', () async {
+      final snapshot = await repository.getSwapAggregator();
 
       expect(snapshot, isA<LaunchpadSwapAggregatorSnapshot>());
       expect(snapshot.dexQuotes, isNotEmpty);
@@ -253,8 +250,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getLimitOrders returns a populated snapshot', () {
-      final snapshot = repository.getLimitOrders();
+    test('getLimitOrders returns a populated snapshot', () async {
+      final snapshot = await repository.getLimitOrders();
 
       expect(snapshot, isA<LaunchpadLimitOrdersSnapshot>());
       expect(snapshot.orders, isNotEmpty);
@@ -262,8 +259,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getDcaBuilder returns a populated snapshot', () {
-      final snapshot = repository.getDcaBuilder();
+    test('getDcaBuilder returns a populated snapshot', () async {
+      final snapshot = await repository.getDcaBuilder();
 
       expect(snapshot, isA<LaunchpadDcaBuilderSnapshot>());
       expect(snapshot.strategies, isNotEmpty);
@@ -271,8 +268,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getRiskAnalytics returns a populated snapshot', () {
-      final snapshot = repository.getRiskAnalytics();
+    test('getRiskAnalytics returns a populated snapshot', () async {
+      final snapshot = await repository.getRiskAnalytics();
 
       expect(snapshot, isA<LaunchpadRiskAnalyticsSnapshot>());
       expect(snapshot.comparisonProjects, isNotEmpty);
@@ -282,8 +279,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getBridgeOrder returns a populated snapshot for a tx id', () {
-      final snapshot = repository.getBridgeOrder('tx001');
+    test('getBridgeOrder returns a populated snapshot for a tx id', () async {
+      final snapshot = await repository.getBridgeOrder('tx001');
 
       expect(snapshot, isA<LaunchpadBridgeOrderSnapshot>());
       expect(snapshot.txId, 'tx001');
@@ -293,8 +290,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getContract returns the matching project for a known id', () {
-      final snapshot = repository.getContract('proj1');
+    test('getContract returns the matching project for a known id', () async {
+      final snapshot = await repository.getContract('proj1');
 
       expect(snapshot, isA<LaunchpadContractSnapshot>());
       expect(snapshot.projectId, 'proj1');
@@ -306,13 +303,9 @@ void main() {
     });
 
     test('getContract does not throw for an unknown id and falls back to a '
-        'null project', () {
-      late final LaunchpadContractSnapshot snapshot;
+        'null project', () async {
+      final snapshot = await repository.getContract('does-not-exist');
 
-      expect(
-        () => snapshot = repository.getContract('does-not-exist'),
-        returnsNormally,
-      );
       expect(snapshot, isA<LaunchpadContractSnapshot>());
       expect(snapshot.project, isNull);
     });

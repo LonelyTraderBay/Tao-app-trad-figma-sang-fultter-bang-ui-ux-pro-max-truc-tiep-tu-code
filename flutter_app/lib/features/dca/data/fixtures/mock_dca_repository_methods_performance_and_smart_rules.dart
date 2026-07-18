@@ -1,7 +1,8 @@
 part of '../repositories/mock_dca_repository.dart';
 
-mixin _DcaRepositoryMethodsPart03 {
-  DcaPerformanceCompareSnapshot getPerformanceCompare() {
+mixin _DcaRepositoryMethodsPart03 on _MockDcaRepositoryBase {
+  Future<DcaPerformanceCompareSnapshot> getPerformanceCompare() async {
+    await _simulateNetwork();
     return const DcaPerformanceCompareSnapshot(
       endpoint: '/api/mobile/dca/dca-performance-compare',
       actionDraft: 'POST /dca/plans|rebalance|schedule; GET with query filters',
@@ -171,7 +172,8 @@ mixin _DcaRepositoryMethodsPart03 {
     );
   }
 
-  DcaSmartRulesSnapshot getSmartRules() {
+  Future<DcaSmartRulesSnapshot> getSmartRules() async {
+    await _simulateNetwork();
     return const DcaSmartRulesSnapshot(
       endpoint: '/api/mobile/dca/dca-smart-rules',
       actionDraft: 'POST /dca/plans|rebalance|schedule',

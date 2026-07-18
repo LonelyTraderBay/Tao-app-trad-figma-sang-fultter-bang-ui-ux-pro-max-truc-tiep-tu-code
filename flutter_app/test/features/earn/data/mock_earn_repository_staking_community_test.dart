@@ -14,8 +14,8 @@ void main() {
   const forumRepo = MockStakingForumRepository();
 
   group('Earn staking community/governance mocks smoke test', () {
-    test('getFeed returns a populated social feed snapshot', () {
-      final snapshot = socialFeedRepo.getFeed();
+    test('getFeed returns a populated social feed snapshot', () async {
+      final snapshot = await socialFeedRepo.getFeed();
 
       expect(snapshot, isA<StakingSocialFeedSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -28,27 +28,30 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getGovernance returns a populated community governance snapshot', () {
-      final snapshot = governanceRepo.getGovernance();
+    test(
+      'getGovernance returns a populated community governance snapshot',
+      () async {
+        final snapshot = await governanceRepo.getGovernance();
 
-      expect(snapshot, isA<StakingCommunityGovernanceSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, isNotEmpty);
-      expect(snapshot.proposalsRoute, isNotEmpty);
-      expect(snapshot.forumRoute, isNotEmpty);
-      expect(snapshot.stats, isNotEmpty);
-      expect(
-        snapshot.activeProposal,
-        isA<StakingGovernanceActiveProposalDraft>(),
-      );
-      expect(snapshot.recentDecisions, isNotEmpty);
-      expect(snapshot.governanceSteps, isNotEmpty);
-      expect(snapshot.votingPower, isA<StakingGovernanceVotingPowerDraft>());
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingCommunityGovernanceSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, isNotEmpty);
+        expect(snapshot.proposalsRoute, isNotEmpty);
+        expect(snapshot.forumRoute, isNotEmpty);
+        expect(snapshot.stats, isNotEmpty);
+        expect(
+          snapshot.activeProposal,
+          isA<StakingGovernanceActiveProposalDraft>(),
+        );
+        expect(snapshot.recentDecisions, isNotEmpty);
+        expect(snapshot.governanceSteps, isNotEmpty);
+        expect(snapshot.votingPower, isA<StakingGovernanceVotingPowerDraft>());
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getProposals returns a populated proposals snapshot', () {
-      final snapshot = proposalsRepo.getProposals();
+    test('getProposals returns a populated proposals snapshot', () async {
+      final snapshot = await proposalsRepo.getProposals();
 
       expect(snapshot, isA<StakingProposalsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -61,8 +64,8 @@ void main() {
     });
 
     test('getVoting returns a populated voting snapshot for the default '
-        'proposal', () {
-      final snapshot = votingRepo.getVoting();
+        'proposal', () async {
+      final snapshot = await votingRepo.getVoting();
 
       expect(snapshot, isA<StakingVotingSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/earn/earn-voting');
@@ -75,25 +78,21 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getVoting scopes the endpoint to a supplied proposalId', () {
-      final snapshot = votingRepo.getVoting(proposalId: 'prop003');
+    test('getVoting scopes the endpoint to a supplied proposalId', () async {
+      final snapshot = await votingRepo.getVoting(proposalId: 'prop003');
 
       expect(snapshot.endpoint, '/api/mobile/earn/earn-voting-prop003');
     });
 
-    test('getVoting does not throw for an unrecognized proposalId', () {
-      late final StakingVotingSnapshot snapshot;
-
-      expect(
-        () => snapshot = votingRepo.getVoting(proposalId: 'does-not-exist'),
-        returnsNormally,
-      );
+    test('getVoting does not throw for an unrecognized proposalId', () async {
+      // GD4 playbook mục 7: await trực tiếp thay vì `returnsNormally`.
+      final snapshot = await votingRepo.getVoting(proposalId: 'does-not-exist');
       expect(snapshot.endpoint, contains('does-not-exist'));
       expect(snapshot.results, isNotEmpty);
     });
 
-    test('getForum returns a populated forum snapshot', () {
-      final snapshot = forumRepo.getForum();
+    test('getForum returns a populated forum snapshot', () async {
+      final snapshot = await forumRepo.getForum();
 
       expect(snapshot, isA<StakingForumSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);

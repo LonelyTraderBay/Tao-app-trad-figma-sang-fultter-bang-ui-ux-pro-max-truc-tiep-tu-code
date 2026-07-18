@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -63,14 +64,7 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(stakingHistoryRepositoryProvider).getHistory();
-    final transactions = _filteredTransactions(snapshot.transactions);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingHistorySnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -78,91 +72,124 @@ class _StakingHistoryPageState extends ConsumerState<StakingHistoryPage> {
       semanticIdentifier: 'SC-360',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnDashboard),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _SummaryCard(snapshot: snapshot),
-                      _SearchAndActions(
-                        controller: _searchController,
-                        placeholder: snapshot.searchPlaceholder,
-                        filtersActive:
-                            _typeFilter != _HistoryTypeFilter.all ||
-                            _statusFilter != _HistoryStatusFilter.all,
-                        onQueryChanged: (query) {
-                          setState(() => _query = query);
-                        },
-                        onFilter: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _showFilters = !_showFilters);
-                        },
-                        onExport: _export,
-                      ),
-                      if (_showFilters)
-                        _HistoryFilterSection(
-                          key: StakingHistoryPage.filterPanelKey,
-                          typeFilter: _typeFilter,
-                          statusFilter: _statusFilter,
-                          onTypeChanged: (filter) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _typeFilter = filter);
-                          },
-                          onStatusChanged: (filter) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _statusFilter = filter);
-                          },
-                          onClear: _clearFilters,
-                        ),
-                      _ResultsHeader(
-                        count: transactions.length,
-                        filtered:
-                            transactions.length !=
-                                snapshot.transactions.length ||
-                            _query.isNotEmpty,
-                        total: snapshot.transactions.length,
-                        onClear: _clearFilters,
-                      ),
-                      if (_selected != null)
-                        _TransactionDetailCard(
-                          key: StakingHistoryPage.detailKey,
-                          tx: _selected!,
-                          onClose: () => setState(() => _selected = null),
-                        ),
-                      _TransactionList(
-                        transactions: transactions,
-                        onTap: (tx) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _selected = tx);
-                        },
-                      ),
-                      const EarnDisclaimerBanner(
-                        text:
-                            'APY là ước tính tham khảo và có thể thay đổi. '
-                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
-                      ),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnDashboard),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingHistorySnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final transactions = _filteredTransactions(snapshot.transactions);
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _SummaryCard(snapshot: snapshot),
+                          _SearchAndActions(
+                            controller: _searchController,
+                            placeholder: snapshot.searchPlaceholder,
+                            filtersActive:
+                                _typeFilter != _HistoryTypeFilter.all ||
+                                _statusFilter != _HistoryStatusFilter.all,
+                            onQueryChanged: (query) {
+                              setState(() => _query = query);
+                            },
+                            onFilter: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _showFilters = !_showFilters);
+                            },
+                            onExport: _export,
+                          ),
+                          if (_showFilters)
+                            _HistoryFilterSection(
+                              key: StakingHistoryPage.filterPanelKey,
+                              typeFilter: _typeFilter,
+                              statusFilter: _statusFilter,
+                              onTypeChanged: (filter) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _typeFilter = filter);
+                              },
+                              onStatusChanged: (filter) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _statusFilter = filter);
+                              },
+                              onClear: _clearFilters,
+                            ),
+                          _ResultsHeader(
+                            count: transactions.length,
+                            filtered:
+                                transactions.length !=
+                                    snapshot.transactions.length ||
+                                _query.isNotEmpty,
+                            total: snapshot.transactions.length,
+                            onClear: _clearFilters,
+                          ),
+                          if (_selected != null)
+                            _TransactionDetailCard(
+                              key: StakingHistoryPage.detailKey,
+                              tx: _selected!,
+                              onClose: () => setState(() => _selected = null),
+                            ),
+                          _TransactionList(
+                            transactions: transactions,
+                            onTap: (tx) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selected = tx);
+                            },
+                          ),
+                          const EarnDisclaimerBanner(
+                            text:
+                                'APY là ước tính tham khảo và có thể thay đổi. '
+                                'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                          ),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

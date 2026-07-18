@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -76,17 +77,13 @@ class _LaunchpadAddressBookPageState
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(launchpadAddressBookStateControllerProvider);
-    final snapshot = viewState.snapshot;
+    final addressBookAsync = ref.watch(launchpadAddressBookSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x3
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
-    final filtered = _filteredAddresses(viewState.addresses);
-    final favorites = filtered.where((address) => address.isFavorite).toList();
-    final others = filtered.where((address) => !address.isFavorite).toList();
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -101,10 +98,10 @@ class _LaunchpadAddressBookPageState
               semanticLabel: 'Sổ địa chỉ ví đáng tin cậy trong Launchpad',
               semanticIdentifier: 'SC-309',
               header: VitHeader(
-                title: snapshot.title,
+                title: 'So dia chi',
                 subtitle: 'Sổ địa chỉ tin cậy · Xác minh trước khi gửi',
                 showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+                onBack: () => context.go(AppRoutePaths.launchpad),
                 actions: [
                   VitHeaderActionItem(
                     key: LaunchpadAddressBookPage.addKey,
@@ -121,82 +118,113 @@ class _LaunchpadAddressBookPageState
                   padding: VitContentPadding.compact,
                   gap: VitContentGap.tight,
                   children: [
-                    _SearchField(
-                      controller: _searchController,
-                      query: _searchQuery,
-                      onChanged: (value) =>
-                          setState(() => _searchQuery = value),
-                      onClear: () => setState(() {
-                        _searchController.clear();
-                        _searchQuery = '';
-                      }),
-                    ),
-                    _ChainFilters(
-                      filters: snapshot.chainFilters,
-                      activeFilter: _chainFilter,
-                      onChanged: (value) =>
-                          setState(() => _chainFilter = value),
-                    ),
-                    _AddressStats(addresses: viewState.addresses),
-                    if (filtered.isEmpty)
-                      const VitEmptyState(
-                        key: LaunchpadAddressBookPage.emptyKey,
-                        title: 'Khong tim thay dia chi',
-                        message:
-                            'Thu doi tu khoa tim kiem hoac chon tat ca chain de tiep tuc.',
-                        icon: Icons.search_off_rounded,
-                      ),
-                    if (favorites.isNotEmpty)
-                      VitPageSection(
-                        key: LaunchpadAddressBookPage.favoritesKey,
-                        label: 'Yeu thich',
-                        accentColor: AppColors.warn,
-                        children: [
-                          for (final address in favorites)
-                            _AddressCard(
-                              address: address,
-                              expanded: _expandedId == address.id,
-                              copied: _copiedId == address.id,
-                              onCopy: () => _copyAddress(address),
-                              onFavorite: () => _toggleFavorite(address.id),
-                              onDefault: () => _setDefault(address.id),
-                              onExpand: () => setState(() {
-                                _expandedId = _expandedId == address.id
-                                    ? null
-                                    : address.id;
-                              }),
+                    ...addressBookAsync.when(
+                      loading: () => const [VitSkeletonList()],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
+                          title: 'Không tải được sổ địa chỉ',
+                          message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                          actionLabel: 'Thử lại',
+                          onAction: () => ref.invalidate(
+                            launchpadAddressBookSnapshotProvider,
+                          ),
+                        ),
+                      ],
+                      data: (snapshot) {
+                        final viewState = ref.watch(
+                          launchpadAddressBookStateControllerProvider,
+                        );
+                        final filtered = _filteredAddresses(
+                          viewState.addresses,
+                        );
+                        final favorites = filtered
+                            .where((address) => address.isFavorite)
+                            .toList();
+                        final others = filtered
+                            .where((address) => !address.isFavorite)
+                            .toList();
+                        return [
+                          _SearchField(
+                            controller: _searchController,
+                            query: _searchQuery,
+                            onChanged: (value) =>
+                                setState(() => _searchQuery = value),
+                            onClear: () => setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                            }),
+                          ),
+                          _ChainFilters(
+                            filters: snapshot.chainFilters,
+                            activeFilter: _chainFilter,
+                            onChanged: (value) =>
+                                setState(() => _chainFilter = value),
+                          ),
+                          _AddressStats(addresses: viewState.addresses),
+                          if (filtered.isEmpty)
+                            const VitEmptyState(
+                              key: LaunchpadAddressBookPage.emptyKey,
+                              title: 'Khong tim thay dia chi',
+                              message:
+                                  'Thu doi tu khoa tim kiem hoac chon tat ca chain de tiep tuc.',
+                              icon: Icons.search_off_rounded,
                             ),
-                        ],
-                      ),
-                    if (others.isNotEmpty)
-                      VitPageSection(
-                        key: LaunchpadAddressBookPage.allKey,
-                        label: 'Tat ca dia chi',
-                        accentColor: AppModuleAccents.launchpad,
-                        children: [
-                          for (final address in others)
-                            _AddressCard(
-                              address: address,
-                              expanded: _expandedId == address.id,
-                              copied: _copiedId == address.id,
-                              onCopy: () => _copyAddress(address),
-                              onFavorite: () => _toggleFavorite(address.id),
-                              onDefault: () => _setDefault(address.id),
-                              onExpand: () => setState(() {
-                                _expandedId = _expandedId == address.id
-                                    ? null
-                                    : address.id;
-                              }),
+                          if (favorites.isNotEmpty)
+                            VitPageSection(
+                              key: LaunchpadAddressBookPage.favoritesKey,
+                              label: 'Yeu thich',
+                              accentColor: AppColors.warn,
+                              children: [
+                                for (final address in favorites)
+                                  _AddressCard(
+                                    address: address,
+                                    expanded: _expandedId == address.id,
+                                    copied: _copiedId == address.id,
+                                    onCopy: () => _copyAddress(address),
+                                    onFavorite: () =>
+                                        _toggleFavorite(address.id),
+                                    onDefault: () => _setDefault(address.id),
+                                    onExpand: () => setState(() {
+                                      _expandedId = _expandedId == address.id
+                                          ? null
+                                          : address.id;
+                                    }),
+                                  ),
+                              ],
                             ),
-                        ],
-                      ),
-                    const VitInfoCallout(
-                      key: LaunchpadAddressBookPage.infoKey,
-                      message:
-                          'So dia chi duoc luu tren thiet bi. Luon kiem tra lai dia chi truoc khi thuc hien giao dich.',
-                      icon: Icons.info_outline_rounded,
-                      accentColor: AppColors.primary,
-                      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
+                          if (others.isNotEmpty)
+                            VitPageSection(
+                              key: LaunchpadAddressBookPage.allKey,
+                              label: 'Tat ca dia chi',
+                              accentColor: AppModuleAccents.launchpad,
+                              children: [
+                                for (final address in others)
+                                  _AddressCard(
+                                    address: address,
+                                    expanded: _expandedId == address.id,
+                                    copied: _copiedId == address.id,
+                                    onCopy: () => _copyAddress(address),
+                                    onFavorite: () =>
+                                        _toggleFavorite(address.id),
+                                    onDefault: () => _setDefault(address.id),
+                                    onExpand: () => setState(() {
+                                      _expandedId = _expandedId == address.id
+                                          ? null
+                                          : address.id;
+                                    }),
+                                  ),
+                              ],
+                            ),
+                          const VitInfoCallout(
+                            key: LaunchpadAddressBookPage.infoKey,
+                            message:
+                                'So dia chi duoc luu tren thiet bi. Luon kiem tra lai dia chi truoc khi thuc hien giao dich.',
+                            icon: Icons.info_outline_rounded,
+                            accentColor: AppColors.primary,
+                            padding: LaunchpadSpacingTokens.launchpadPaddingX3,
+                          ),
+                        ];
+                      },
                     ),
                   ],
                 ),

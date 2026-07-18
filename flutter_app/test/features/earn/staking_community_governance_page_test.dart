@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-388 mock repository exposes governance BE draft', () {
-    final snapshot = const MockStakingCommunityGovernanceRepository()
+  test('SC-388 mock repository exposes governance BE draft', () async {
+    final snapshot = await const MockStakingCommunityGovernanceRepository()
         .getGovernance();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-community-governance');

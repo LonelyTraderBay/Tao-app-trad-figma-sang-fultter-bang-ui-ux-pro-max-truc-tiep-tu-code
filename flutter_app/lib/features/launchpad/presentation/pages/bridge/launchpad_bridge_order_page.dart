@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
@@ -56,9 +57,9 @@ class _LaunchpadBridgeOrderPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(launchpadControllerProvider)
-        .getBridgeOrder(widget.txId);
+    final bridgeOrderAsync = ref.watch(
+      launchpadBridgeOrderSnapshotProvider(widget.txId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -66,56 +67,102 @@ class _LaunchpadBridgeOrderPageState
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'Theo dõi trạng thái đơn bridge',
-      semanticIdentifier: 'SC-303',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          semanticLabel: 'Đơn bridge – vùng cuộn nội dung',
-          semanticIdentifier: 'SC-303',
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle:
-                '${snapshot.order.sourceChain} → ${snapshot.order.targetChain}',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+    // GD4-F4: subtitle phụ thuộc snapshot.order nên bọc CẢ scaffold.
+    return bridgeOrderAsync.when(
+      loading: () => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Theo dõi trạng thái đơn bridge',
+        semanticIdentifier: 'SC-303',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            semanticLabel: 'Đơn bridge – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-303',
+            header: VitHeader(
+              title: 'Chi tiet Bridge',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.launchpadIdoBridgeSample),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(
-              context,
-            ).copyWith(scrollbars: false),
-            child: SingleChildScrollView(
-              key: LaunchpadBridgeOrderPage.contentKey,
-              physics: const ClampingScrollPhysics(),
-              padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
-              child: VitPageContent(
-                rhythm: VitPageRhythm.standard,
-                padding: VitContentPadding.compact,
-                density: VitDensity.compact,
-                children: [
-                  _BridgeStatusHero(order: snapshot.order),
-                  if (snapshot.highRiskContractId != null)
-                    VitHighRiskStatePanel(
-                      state: VitHighRiskUiState.success,
-                      title: 'Đã theo dõi trạng thái bridge',
-                      message:
-                          'Điều kiện, xem trước hợp đồng, xác nhận, trạng thái gửi, biên lai và hỗ trợ gắn với hợp đồng rủi ro cao Launchpad.',
-                      contractId: snapshot.highRiskContractId,
+        ),
+      ),
+      error: (error, stackTrace) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Theo dõi trạng thái đơn bridge',
+        semanticIdentifier: 'SC-303',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            semanticLabel: 'Đơn bridge – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-303',
+            header: VitHeader(
+              title: 'Chi tiet Bridge',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.launchpadIdoBridgeSample),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                launchpadBridgeOrderSnapshotProvider(widget.txId),
+              ),
+            ),
+          ),
+        ),
+      ),
+      data: (snapshot) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Theo dõi trạng thái đơn bridge',
+        semanticIdentifier: 'SC-303',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            semanticLabel: 'Đơn bridge – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-303',
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle:
+                  '${snapshot.order.sourceChain} → ${snapshot.order.targetChain}',
+              showBack: true,
+              onBack: () => context.go(snapshot.backRoute),
+            ),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(
+                context,
+              ).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                key: LaunchpadBridgeOrderPage.contentKey,
+                physics: const ClampingScrollPhysics(),
+                padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    _BridgeStatusHero(order: snapshot.order),
+                    if (snapshot.highRiskContractId != null)
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.success,
+                        title: 'Đã theo dõi trạng thái bridge',
+                        message:
+                            'Điều kiện, xem trước hợp đồng, xác nhận, trạng thái gửi, biên lai và hỗ trợ gắn với hợp đồng rủi ro cao Launchpad.',
+                        contractId: snapshot.highRiskContractId,
+                      ),
+                    _BridgeTimeline(order: snapshot.order),
+                    _BridgeEventLog(
+                      order: snapshot.order,
+                      events: snapshot.events,
+                      expanded: _logExpanded,
+                      onToggle: () =>
+                          setState(() => _logExpanded = !_logExpanded),
                     ),
-                  _BridgeTimeline(order: snapshot.order),
-                  _BridgeEventLog(
-                    order: snapshot.order,
-                    events: snapshot.events,
-                    expanded: _logExpanded,
-                    onToggle: () =>
-                        setState(() => _logExpanded = !_logExpanded),
-                  ),
-                  _BridgeDetails(order: snapshot.order),
-                  const _SimulationDisclosure(),
-                  _BridgeSupportAction(supportRoute: snapshot.supportRoute),
-                ],
+                    _BridgeDetails(order: snapshot.order),
+                    const _SimulationDisclosure(),
+                    _BridgeSupportAction(supportRoute: snapshot.supportRoute),
+                  ],
+                ),
               ),
             ),
           ),

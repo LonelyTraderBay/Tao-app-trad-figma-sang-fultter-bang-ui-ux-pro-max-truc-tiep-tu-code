@@ -29,35 +29,38 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-378 mock repository exposes transaction reporting BE draft', () {
-    final snapshot = const MockStakingTransactionReportingRepository()
-        .getReporting();
+  test(
+    'SC-378 mock repository exposes transaction reporting BE draft',
+    () async {
+      final snapshot = await const MockStakingTransactionReportingRepository()
+          .getReporting();
 
-    expect(snapshot.endpoint, '/api/mobile/earn/earn-transaction-reporting');
-    expect(snapshot.actionDraft, contains('POST /exports'));
-    expect(snapshot.title, 'Tax Reporting');
-    expect(snapshot.backRoute, AppRoutePaths.earnStaking);
-    expect(snapshot.years, contains('2025'));
-    expect(snapshot.defaultCostBasis, 'FIFO');
-    expect(snapshot.summary.totalStakingIncome, 5234.56);
-    expect(snapshot.summary.rewardsByAsset, hasLength(3));
-    expect(snapshot.transactions, hasLength(6));
-    expect(snapshot.costBasisMethods, hasLength(4));
-    expect(snapshot.taxForms, hasLength(3));
-    expect(snapshot.integrations, hasLength(3));
-    expect(snapshot.rawDataFormats, hasLength(2));
-    expect(snapshot.resources, hasLength(3));
-    expect(snapshot.contractNotes, contains('riskData'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        EarnScreenState.loading,
-        EarnScreenState.empty,
-        EarnScreenState.error,
-        EarnScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/earn/earn-transaction-reporting');
+      expect(snapshot.actionDraft, contains('POST /exports'));
+      expect(snapshot.title, 'Tax Reporting');
+      expect(snapshot.backRoute, AppRoutePaths.earnStaking);
+      expect(snapshot.years, contains('2025'));
+      expect(snapshot.defaultCostBasis, 'FIFO');
+      expect(snapshot.summary.totalStakingIncome, 5234.56);
+      expect(snapshot.summary.rewardsByAsset, hasLength(3));
+      expect(snapshot.transactions, hasLength(6));
+      expect(snapshot.costBasisMethods, hasLength(4));
+      expect(snapshot.taxForms, hasLength(3));
+      expect(snapshot.integrations, hasLength(3));
+      expect(snapshot.rawDataFormats, hasLength(2));
+      expect(snapshot.resources, hasLength(3));
+      expect(snapshot.contractNotes, contains('riskData'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          EarnScreenState.loading,
+          EarnScreenState.empty,
+          EarnScreenState.error,
+          EarnScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-378 renders tax summary baseline', (tester) async {
     await pumpReporting(tester);

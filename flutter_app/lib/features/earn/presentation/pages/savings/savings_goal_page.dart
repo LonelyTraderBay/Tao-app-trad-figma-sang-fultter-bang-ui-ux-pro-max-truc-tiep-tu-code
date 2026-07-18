@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -52,19 +53,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsGoalsRepositoryProvider).getGoals();
-    final activeGoals = snapshot.goals
-        .where((goal) => goal.status == SavingsGoalStatus.active)
-        .toList();
-    final completedGoals = snapshot.goals
-        .where((goal) => goal.status == SavingsGoalStatus.completed)
-        .toList();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsGoalsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -72,70 +61,109 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
       semanticIdentifier: 'SC-342',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _GoalSummaryCard(goals: snapshot.goals),
-                      VitCtaButton(
-                        key: SavingsGoalPage.createButtonKey,
-                        leading: const Icon(Icons.add_rounded),
-                        onPressed: () => _openCreateSheet(snapshot),
-                        child: const Text('Tạo mục tiêu mới'),
-                      ),
-                      VitPageSection(
-                        label: 'Đang thực hiện',
-                        accentColor: AppColors.primary,
-                        children: [
-                          for (final goal in activeGoals)
-                            _GoalCard(
-                              goal: goal,
-                              onTap: () => _openGoalDetail(goal),
-                            ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Đã hoàn thành',
-                        accentColor: AppColors.buy,
-                        children: [
-                          for (final goal in completedGoals)
-                            _GoalCard(
-                              goal: goal,
-                              onTap: () => _openGoalDetail(goal),
-                            ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Mẹo tiết kiệm',
-                        accentColor: AppColors.accent,
-                        children: [
-                          for (final tip in snapshot.tips) _TipCard(tip: tip),
-                        ],
-                      ),
-                      const SavingsToolsYieldFooter(),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsGoalsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeGoals = snapshot.goals
+                .where((goal) => goal.status == SavingsGoalStatus.active)
+                .toList();
+            final completedGoals = snapshot.goals
+                .where((goal) => goal.status == SavingsGoalStatus.completed)
+                .toList();
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _GoalSummaryCard(goals: snapshot.goals),
+                          VitCtaButton(
+                            key: SavingsGoalPage.createButtonKey,
+                            leading: const Icon(Icons.add_rounded),
+                            onPressed: () => _openCreateSheet(snapshot),
+                            child: const Text('Tạo mục tiêu mới'),
+                          ),
+                          VitPageSection(
+                            label: 'Đang thực hiện',
+                            accentColor: AppColors.primary,
+                            children: [
+                              for (final goal in activeGoals)
+                                _GoalCard(
+                                  goal: goal,
+                                  onTap: () => _openGoalDetail(goal),
+                                ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Đã hoàn thành',
+                            accentColor: AppColors.buy,
+                            children: [
+                              for (final goal in completedGoals)
+                                _GoalCard(
+                                  goal: goal,
+                                  onTap: () => _openGoalDetail(goal),
+                                ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Mẹo tiết kiệm',
+                            accentColor: AppColors.accent,
+                            children: [
+                              for (final tip in snapshot.tips)
+                                _TipCard(tip: tip),
+                            ],
+                          ),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

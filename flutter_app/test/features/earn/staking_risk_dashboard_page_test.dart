@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-381 mock repository exposes risk dashboard BE draft', () {
-    final snapshot = const MockStakingRiskDashboardRepository()
+  test('SC-381 mock repository exposes risk dashboard BE draft', () async {
+    final snapshot = await const MockStakingRiskDashboardRepository()
         .getRiskDashboard();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-risk-dashboard');

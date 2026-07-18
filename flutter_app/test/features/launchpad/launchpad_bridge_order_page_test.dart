@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-303 mock repository exposes bridge order BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getBridgeOrder('tx001');
+  test('SC-303 mock repository exposes bridge order BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getBridgeOrder('tx001');
 
     expect(
       snapshot.endpoint,

@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-300 mock repository exposes launchpad contract BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getContract('sample');
+  test('SC-300 mock repository exposes launchpad contract BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getContract('sample');
 
     expect(
       snapshot.endpoint,

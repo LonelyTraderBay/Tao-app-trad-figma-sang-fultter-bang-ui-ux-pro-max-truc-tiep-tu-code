@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-349 mock repository exposes savings backtest BE draft', () {
-    final snapshot = const MockSavingsBacktestRepository().getBacktest();
+  test('SC-349 mock repository exposes savings backtest BE draft', () async {
+    final snapshot = await const MockSavingsBacktestRepository().getBacktest();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-backtest');
     expect(snapshot.actionDraft, contains('backtest/run'));

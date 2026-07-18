@@ -2,7 +2,8 @@ part of '../repositories/mock_launchpad_repository.dart';
 
 mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   @override
-  LaunchpadHomeSnapshot getHome() {
+  Future<LaunchpadHomeSnapshot> getHome() async {
+    await _simulateNetwork();
     return const LaunchpadHomeSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -27,7 +28,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadDetailSnapshot getDetail(String projectId) {
+  Future<LaunchpadDetailSnapshot> getDetail(String projectId) async {
+    await _simulateNetwork();
     final normalizedId = projectId.trim().isEmpty ? 'sample' : projectId.trim();
     final matchingProjects = _launchpadProjects.where(
       (project) => project.id == normalizedId,
@@ -55,7 +57,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadPortfolioSnapshot getPortfolio() {
+  Future<LaunchpadPortfolioSnapshot> getPortfolio() async {
+    await _simulateNetwork();
     return const LaunchpadPortfolioSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-portfolio',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -77,7 +80,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadReceiptSnapshot getReceipt(String subscriptionId) {
+  Future<LaunchpadReceiptSnapshot> getReceipt(String subscriptionId) async {
+    await _simulateNetwork();
     final normalizedId = subscriptionId.trim();
     final matchingSubscriptions = _launchpadSubscriptions.where(
       (subscription) => subscription.id == normalizedId,
@@ -105,7 +109,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadPerformanceSnapshot getPerformance() {
+  Future<LaunchpadPerformanceSnapshot> getPerformance() async {
+    await _simulateNetwork();
     return const LaunchpadPerformanceSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-performance',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -138,7 +143,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadStakingSnapshot getStaking() {
+  Future<LaunchpadStakingSnapshot> getStaking() async {
+    await _simulateNetwork();
     return const LaunchpadStakingSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-staking',
       actionDraft:
@@ -163,7 +169,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadBatchClaimSnapshot getBatchClaim() {
+  Future<LaunchpadBatchClaimSnapshot> getBatchClaim() async {
+    await _simulateNetwork();
     return const LaunchpadBatchClaimSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-batch-claim',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -186,7 +193,10 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadClaimReceiptSnapshot getClaimReceipt(String positionId) {
+  Future<LaunchpadClaimReceiptSnapshot> getClaimReceipt(
+    String positionId,
+  ) async {
+    await _simulateNetwork();
     final normalizedId = positionId.trim();
     final matchingReceipts = _claimReceipts.where(
       (receipt) => receipt.positionId == normalizedId,
@@ -212,7 +222,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadIdoBridgeSnapshot getIdoBridge(String projectId) {
+  Future<LaunchpadIdoBridgeSnapshot> getIdoBridge(String projectId) async {
+    await _simulateNetwork();
     final normalizedId = projectId.trim();
     final matchingProjects = _launchpadProjects.where(
       (project) => project.id == normalizedId,
@@ -240,7 +251,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadBridgeCompareSnapshot getBridgeCompare() {
+  Future<LaunchpadBridgeCompareSnapshot> getBridgeCompare() async {
+    await _simulateNetwork();
     return const LaunchpadBridgeCompareSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-bridge-compare',
       actionDraft:
@@ -262,7 +274,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadNotifSoundSnapshot getNotifSound() {
+  Future<LaunchpadNotifSoundSnapshot> getNotifSound() async {
+    await _simulateNetwork();
     return const LaunchpadNotifSoundSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-notif-sound',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -288,7 +301,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadEventLogSnapshot getEventLog() {
+  Future<LaunchpadEventLogSnapshot> getEventLog() async {
+    await _simulateNetwork();
     return const LaunchpadEventLogSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-event-log',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -308,7 +322,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadAbiDiffSnapshot getAbiDiff(String contractId) {
+  Future<LaunchpadAbiDiffSnapshot> getAbiDiff(String contractId) async {
+    await _simulateNetwork();
     final normalizedId = contractId.trim().isEmpty
         ? 'contract001'
         : contractId.trim();
@@ -331,7 +346,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadAddressBookSnapshot getAddressBook() {
+  Future<LaunchpadAddressBookSnapshot> getAddressBook() async {
+    await _simulateNetwork();
     return const LaunchpadAddressBookSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-address-book',
       actionDraft:
@@ -352,7 +368,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadWebhooksSnapshot getWebhooks() {
+  Future<LaunchpadWebhooksSnapshot> getWebhooks() async {
+    await _simulateNetwork();
     return const LaunchpadWebhooksSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-webhooks',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -376,7 +393,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadGasTrackerSnapshot getGasTracker() {
+  Future<LaunchpadGasTrackerSnapshot> getGasTracker() async {
+    await _simulateNetwork();
     return const LaunchpadGasTrackerSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-gas-tracker',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -400,7 +418,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadRebalanceSnapshot getRebalance() {
+  Future<LaunchpadRebalanceSnapshot> getRebalance() async {
+    await _simulateNetwork();
     return const LaunchpadRebalanceSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-rebalance',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -423,7 +442,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadMultisigSnapshot getMultisig() {
+  Future<LaunchpadMultisigSnapshot> getMultisig() async {
+    await _simulateNetwork();
     return const LaunchpadMultisigSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-multisig',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -447,7 +467,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadSwapAggregatorSnapshot getSwapAggregator() {
+  Future<LaunchpadSwapAggregatorSnapshot> getSwapAggregator() async {
+    await _simulateNetwork();
     return const LaunchpadSwapAggregatorSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-swap-aggregator',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
@@ -475,7 +496,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadLimitOrdersSnapshot getLimitOrders() {
+  Future<LaunchpadLimitOrdersSnapshot> getLimitOrders() async {
+    await _simulateNetwork();
     return const LaunchpadLimitOrdersSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-limit-orders',
       actionDraft:
@@ -500,7 +522,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadDcaBuilderSnapshot getDcaBuilder() {
+  Future<LaunchpadDcaBuilderSnapshot> getDcaBuilder() async {
+    await _simulateNetwork();
     return const LaunchpadDcaBuilderSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-dca-builder',
       actionDraft:
@@ -522,7 +545,8 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadRiskAnalyticsSnapshot getRiskAnalytics() {
+  Future<LaunchpadRiskAnalyticsSnapshot> getRiskAnalytics() async {
+    await _simulateNetwork();
     return const LaunchpadRiskAnalyticsSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-risk-analytics',
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',

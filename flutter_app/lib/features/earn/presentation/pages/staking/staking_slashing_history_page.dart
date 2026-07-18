@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -19,6 +20,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class StakingSlashingHistoryPage extends ConsumerStatefulWidget {
   const StakingSlashingHistoryPage({super.key, this.shellRenderMode});
@@ -49,15 +52,7 @@ class _StakingSlashingHistoryPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingSlashingHistoryRepositoryProvider)
-        .getSlashingHistory();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingSlashingHistorySnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -65,58 +60,95 @@ class _StakingSlashingHistoryPageState
       semanticIdentifier: 'SC-382',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Lịch sử slashing — rủi ro validator',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnRiskDashboard),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: StakingSlashingInsuranceBanner(
-                          snapshot: snapshot,
-                        ),
-                      ),
-                      StakingSlashingSummaryStats(stats: snapshot.stats),
-                      StakingSlashingTabs(
-                        active: _activeTab,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      switch (_activeTab) {
-                        StakingSlashingTab.history => StakingSlashingHistoryTab(
-                          snapshot: snapshot,
-                        ),
-                        StakingSlashingTab.statistics =>
-                          StakingSlashingStatisticsTab(snapshot: snapshot),
-                        StakingSlashingTab.prevention =>
-                          StakingSlashingPreventionTab(snapshot: snapshot),
-                      },
-                      StakingSlashingExportButton(label: snapshot.exportLabel),
-                      StakingSlashingFooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnRiskDashboard),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingSlashingHistorySnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Lịch sử slashing — rủi ro validator',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitCard(
+                            variant: VitCardVariant.standard,
+                            radius: VitCardRadius.standard,
+                            padding: AppSpacing.zeroInsets,
+                            child: StakingSlashingInsuranceBanner(
+                              snapshot: snapshot,
+                            ),
+                          ),
+                          StakingSlashingSummaryStats(stats: snapshot.stats),
+                          StakingSlashingTabs(
+                            active: _activeTab,
+                            onChanged: (tab) =>
+                                setState(() => _activeTab = tab),
+                          ),
+                          switch (_activeTab) {
+                            StakingSlashingTab.history =>
+                              StakingSlashingHistoryTab(snapshot: snapshot),
+                            StakingSlashingTab.statistics =>
+                              StakingSlashingStatisticsTab(snapshot: snapshot),
+                            StakingSlashingTab.prevention =>
+                              StakingSlashingPreventionTab(snapshot: snapshot),
+                          },
+                          StakingSlashingExportButton(
+                            label: snapshot.exportLabel,
+                          ),
+                          StakingSlashingFooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

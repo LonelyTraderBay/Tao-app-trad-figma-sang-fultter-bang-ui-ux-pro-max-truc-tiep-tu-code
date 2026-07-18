@@ -42,3 +42,24 @@ part '../fixtures/mock_savings_auto_pilot_repository.dart';
 part '../fixtures/mock_savings_what_if_repository.dart';
 part '../fixtures/mock_staking_risk_disclosure_repository.dart';
 part '../fixtures/mock_staking_tax_guide_repository.dart';
+
+/// Shared base for every mock Earn repository (GD4 async playbook mục 2/12):
+/// carries `simulateError`/`loadDelay` and the network-simulation helper so
+/// all 68 standalone mock classes across `../fixtures/*.dart` (part files of
+/// this library) can extend it without repeating the boilerplate.
+abstract class _MockEarnRepositoryBase {
+  const _MockEarnRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('earn_mock_fetch_failed');
+  }
+}

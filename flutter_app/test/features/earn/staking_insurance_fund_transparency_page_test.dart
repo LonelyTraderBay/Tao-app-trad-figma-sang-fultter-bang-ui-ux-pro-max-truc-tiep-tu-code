@@ -27,9 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-377 mock repository exposes insurance fund BE draft', () {
-    final snapshot = const MockStakingInsuranceFundTransparencyRepository()
-        .getTransparency();
+  test('SC-377 mock repository exposes insurance fund BE draft', () async {
+    final snapshot =
+        await const MockStakingInsuranceFundTransparencyRepository()
+            .getTransparency();
 
     expect(
       snapshot.endpoint,

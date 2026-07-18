@@ -178,15 +178,15 @@ void main() {
 
       const staking = MockStakingEarnRepository();
       expect(
-        staking
-            .getStakingEarn(route: StakingEarnRoute.staking)
-            .highRiskContractId,
+        (await staking.getStakingEarn(
+          route: StakingEarnRoute.staking,
+        )).highRiskContractId,
         HighRiskFlowContractIds.earnSavingsStaking,
       );
 
-      const launchpad = MockLaunchpadRepository();
+      const launchpad = MockLaunchpadRepository(loadDelay: Duration.zero);
       expect(
-        launchpad.getBridgeOrder('tx001').highRiskContractId,
+        (await launchpad.getBridgeOrder('tx001')).highRiskContractId,
         HighRiskFlowContractIds.launchpadTokenAccess,
       );
 

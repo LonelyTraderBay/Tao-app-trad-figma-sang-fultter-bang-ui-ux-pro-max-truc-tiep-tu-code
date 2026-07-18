@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-313 mock repository exposes launchpad multisig BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getMultisig();
+  test('SC-313 mock repository exposes launchpad multisig BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getMultisig();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-multisig');
     expect(

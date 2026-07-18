@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
@@ -39,15 +40,7 @@ class StakingContingencyPlanPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(stakingContingencyPlanRepositoryProvider)
-        .getContingencyPlan();
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingContingencyPlanSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -55,50 +48,85 @@ class StakingContingencyPlanPage extends ConsumerWidget {
       semanticIdentifier: 'SC-386',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Kế hoạch dự phòng và khôi phục earn',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnRiskDashboard),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingContingencyPlanPage.infoKey,
-                        icon: Icons.shield_outlined,
-                        accentColor: AppModuleAccents.earn,
-                        title: snapshot.infoTitle,
-                        message: snapshot.infoBody,
-                        padding: EarnSpacingTokens.earnCardPaddingX4,
-                      ),
-                      _RecoveryMetrics(metrics: snapshot.metrics),
-                      _ScenariosSection(scenarios: snapshot.scenarios),
-                      _ValidationSection(
-                        items: snapshot.validationItems,
-                        body: snapshot.validationBody,
-                      ),
-                      _DocumentationSection(documents: snapshot.documents),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnRiskDashboard),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingContingencyPlanSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Kế hoạch dự phòng và khôi phục earn',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitInfoCallout(
+                            key: StakingContingencyPlanPage.infoKey,
+                            icon: Icons.shield_outlined,
+                            accentColor: AppModuleAccents.earn,
+                            title: snapshot.infoTitle,
+                            message: snapshot.infoBody,
+                            padding: EarnSpacingTokens.earnCardPaddingX4,
+                          ),
+                          _RecoveryMetrics(metrics: snapshot.metrics),
+                          _ScenariosSection(scenarios: snapshot.scenarios),
+                          _ValidationSection(
+                            items: snapshot.validationItems,
+                            body: snapshot.validationBody,
+                          ),
+                          _DocumentationSection(documents: snapshot.documents),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

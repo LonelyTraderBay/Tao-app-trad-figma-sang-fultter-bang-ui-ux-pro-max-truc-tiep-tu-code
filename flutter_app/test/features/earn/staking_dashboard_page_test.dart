@@ -32,8 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-358 mock repository exposes dashboard BE draft', () {
-    final snapshot = const MockStakingDashboardRepository().getDashboard();
+  test('SC-358 mock repository exposes dashboard BE draft', () async {
+    final snapshot = await const MockStakingDashboardRepository()
+        .getDashboard();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-dashboard');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

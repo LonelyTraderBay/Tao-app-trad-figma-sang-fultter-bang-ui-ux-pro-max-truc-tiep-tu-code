@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 part '../../widgets/claim/launchpad_batch_claim_summary.dart';
 part '../../widgets/claim/launchpad_batch_claim_selection.dart';
@@ -52,32 +53,18 @@ class LaunchpadBatchClaimPage extends ConsumerStatefulWidget {
 class _LaunchpadBatchClaimPageState
     extends ConsumerState<LaunchpadBatchClaimPage> {
   var _step = _BatchClaimStep.select;
-  late Set<String> _selectedIds;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(launchpadControllerProvider).getBatchClaim();
-    _selectedIds = snapshot.positions
-        .map((position) => position.positionId)
-        .toSet();
-  }
+  // GD4-F4 bẫy 14: initState() không còn seed từ getter đồng bộ — hạt giống
+  // 1 lần trong nhánh `data:` qua `_selectedIds ??= ...`.
+  Set<String>? _selectedIds;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getBatchClaim();
+    final batchClaimAsync = ref.watch(launchpadBatchClaimSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final footerHeight =
-        _step == _BatchClaimStep.select && _selectedIds.isNotEmpty ? 92.0 : 0.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + footerHeight;
-    final selectedPositions = snapshot.positions
-        .where((position) => _selectedIds.contains(position.positionId))
-        .toList();
-    final selectedSummary = _summaryFor(selectedPositions);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -85,95 +72,151 @@ class _LaunchpadBatchClaimPageState
       semanticIdentifier: 'SC-304',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
-              semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
-              semanticIdentifier: 'SC-304',
-              header: VitHeader(
-                title: _step == _BatchClaimStep.success
-                    ? 'Hoàn tất'
-                    : snapshot.title,
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+        child: batchClaimAsync.when(
+          loading: () => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: navInset + safeBottom + AppSpacing.x6,
+                semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
+                semanticIdentifier: 'SC-304',
+                header: VitHeader(
+                  title: 'Batch Claim',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpadStaking),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: SingleChildScrollView(
-                key: LaunchpadBatchClaimPage.contentKey,
-                physics: const ClampingScrollPhysics(),
-                child: VitPageContent(
-                  rhythm: VitPageRhythm.standard,
-                  padding: VitContentPadding.defaultPadding,
-                  children: [
-                    if (_step == _BatchClaimStep.select) ...[
-                      _BatchSummaryHero(
-                        summary: selectedSummary,
-                        positionCount: _selectedIds.length,
-                      ),
-                      _GasSavingsBanner(summary: selectedSummary),
-                      _SelectionHeader(
-                        selected: _selectedIds.length,
-                        total: snapshot.positions.length,
-                        onSelectAll: () => setState(() {
-                          _selectedIds = snapshot.positions
-                              .map((position) => position.positionId)
-                              .toSet();
-                        }),
-                        onClear: () => setState(_selectedIds.clear),
-                      ),
-                      for (final position in snapshot.positions)
-                        _BatchPositionCard(
-                          position: position,
-                          selected: _selectedIds.contains(position.positionId),
-                          onToggle: () => _toggle(position.positionId),
-                          onDetail: () =>
-                              context.go(snapshot.claimReceiptRoute),
-                        ),
-                      if (selectedSummary.chains.length > 1)
-                        _ChainWarning(summary: selectedSummary),
-                    ] else if (_step == _BatchClaimStep.review)
-                      _ReviewStep(
-                        positions: selectedPositions,
-                        summary: selectedSummary,
-                        onBack: () =>
-                            setState(() => _step = _BatchClaimStep.select),
-                        onConfirm: () =>
-                            setState(() => _step = _BatchClaimStep.success),
-                      )
-                    else
-                      _SuccessStep(
-                        positions: selectedPositions,
-                        summary: selectedSummary,
-                        onDone: () => context.go(snapshot.backRoute),
-                      ),
-                  ],
+            ],
+          ),
+          error: (error, stackTrace) => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: navInset + safeBottom + AppSpacing.x6,
+                semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
+                semanticIdentifier: 'SC-304',
+                header: VitHeader(
+                  title: 'Batch Claim',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpadStaking),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(launchpadBatchClaimSnapshotProvider),
                 ),
               ),
-            ),
-            if (_step == _BatchClaimStep.select && _selectedIds.isNotEmpty)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: navInset + safeBottom,
-                child: VitStickyFooter(
-                  backgroundColor: AppColors.surface.withValues(alpha: .94),
-                  child: VitCtaButton(
-                    key: LaunchpadBatchClaimPage.ctaKey,
-                    variant: VitCtaButtonVariant.success,
-                    leading: const Icon(
-                      Icons.bolt_rounded,
-                      color: AppColors.onAccent,
-                      size: AppSpacing.iconSm,
-                    ),
-                    onPressed: () =>
-                        setState(() => _step = _BatchClaimStep.review),
-                    child: Text(
-                      'Nhận ${_selectedIds.length} vị trí - ~${_formatUsd(selectedSummary.totalClaimableUsd)}',
+            ],
+          ),
+          data: (snapshot) {
+            final selectedIds = _selectedIds ??= snapshot.positions
+                .map((position) => position.positionId)
+                .toSet();
+            final footerHeight =
+                _step == _BatchClaimStep.select && selectedIds.isNotEmpty
+                ? 92.0
+                : 0.0;
+            final bottomInset =
+                navInset + safeBottom + AppSpacing.x6 + footerHeight;
+            final selectedPositions = snapshot.positions
+                .where((position) => selectedIds.contains(position.positionId))
+                .toList();
+            final selectedSummary = _summaryFor(selectedPositions);
+
+            return Stack(
+              children: [
+                VitAutoHideHeaderScaffold(
+                  bottomInset: bottomInset,
+                  semanticLabel: 'Nhận thưởng hàng loạt – vùng cuộn nội dung',
+                  semanticIdentifier: 'SC-304',
+                  header: VitHeader(
+                    title: _step == _BatchClaimStep.success
+                        ? 'Hoàn tất'
+                        : snapshot.title,
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
+                  ),
+                  child: SingleChildScrollView(
+                    key: LaunchpadBatchClaimPage.contentKey,
+                    physics: const ClampingScrollPhysics(),
+                    child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
+                      padding: VitContentPadding.defaultPadding,
+                      children: [
+                        if (_step == _BatchClaimStep.select) ...[
+                          _BatchSummaryHero(
+                            summary: selectedSummary,
+                            positionCount: selectedIds.length,
+                          ),
+                          _GasSavingsBanner(summary: selectedSummary),
+                          _SelectionHeader(
+                            selected: selectedIds.length,
+                            total: snapshot.positions.length,
+                            onSelectAll: () => setState(() {
+                              _selectedIds = snapshot.positions
+                                  .map((position) => position.positionId)
+                                  .toSet();
+                            }),
+                            onClear: () => setState(selectedIds.clear),
+                          ),
+                          for (final position in snapshot.positions)
+                            _BatchPositionCard(
+                              position: position,
+                              selected: selectedIds.contains(
+                                position.positionId,
+                              ),
+                              onToggle: () => _toggle(position.positionId),
+                              onDetail: () =>
+                                  context.go(snapshot.claimReceiptRoute),
+                            ),
+                          if (selectedSummary.chains.length > 1)
+                            _ChainWarning(summary: selectedSummary),
+                        ] else if (_step == _BatchClaimStep.review)
+                          _ReviewStep(
+                            positions: selectedPositions,
+                            summary: selectedSummary,
+                            onBack: () =>
+                                setState(() => _step = _BatchClaimStep.select),
+                            onConfirm: () =>
+                                setState(() => _step = _BatchClaimStep.success),
+                          )
+                        else
+                          _SuccessStep(
+                            positions: selectedPositions,
+                            summary: selectedSummary,
+                            onDone: () => context.go(snapshot.backRoute),
+                          ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-          ],
+                if (_step == _BatchClaimStep.select && selectedIds.isNotEmpty)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: navInset + safeBottom,
+                    child: VitStickyFooter(
+                      backgroundColor: AppColors.surface.withValues(alpha: .94),
+                      child: VitCtaButton(
+                        key: LaunchpadBatchClaimPage.ctaKey,
+                        variant: VitCtaButtonVariant.success,
+                        leading: const Icon(
+                          Icons.bolt_rounded,
+                          color: AppColors.onAccent,
+                          size: AppSpacing.iconSm,
+                        ),
+                        onPressed: () =>
+                            setState(() => _step = _BatchClaimStep.review),
+                        child: Text(
+                          'Nhận ${selectedIds.length} vị trí - ~${_formatUsd(selectedSummary.totalClaimableUsd)}',
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -181,10 +224,12 @@ class _LaunchpadBatchClaimPageState
 
   void _toggle(String id) {
     setState(() {
-      if (_selectedIds.contains(id)) {
-        _selectedIds.remove(id);
+      final ids = _selectedIds;
+      if (ids == null) return;
+      if (ids.contains(id)) {
+        ids.remove(id);
       } else {
-        _selectedIds.add(id);
+        ids.add(id);
       }
     });
   }

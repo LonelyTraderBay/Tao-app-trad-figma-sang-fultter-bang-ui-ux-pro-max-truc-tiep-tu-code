@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-380 mock repository exposes proof of reserves BE draft', () {
-    final snapshot = const MockStakingProofOfReservesRepository()
+  test('SC-380 mock repository exposes proof of reserves BE draft', () async {
+    final snapshot = await const MockStakingProofOfReservesRepository()
         .getProofOfReserves();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-proof-of-reserves');

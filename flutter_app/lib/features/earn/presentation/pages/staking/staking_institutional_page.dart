@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -54,18 +55,7 @@ class _StakingInstitutionalPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingInstitutionalRepositoryProvider)
-        .getInstitutional();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
-    final batches = _tab == _InstitutionalBatchTab.pending
-        ? snapshot.pendingBatches
-        : snapshot.executedBatches;
+    final snapshotAsync = ref.watch(stakingInstitutionalSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -74,67 +64,105 @@ class _StakingInstitutionalPageState
       semanticIdentifier: 'SC-368',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: snapshot.infoTitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingInstitutionalPage.infoKey,
-                        message: snapshot.infoBody,
-                        icon: Icons.apartment_rounded,
-                        accentColor: AppModuleAccents.earn,
-                        padding: EarnSpacingTokens.earnPaddingX4,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingInstitutionalSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+            final batches = _tab == _InstitutionalBatchTab.pending
+                ? snapshot.pendingBatches
+                : snapshot.executedBatches;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: snapshot.infoTitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
                       ),
-                      _StatsCard(snapshot: snapshot),
-                      VitCtaButton(
-                        key: StakingInstitutionalPage.createButtonKey,
-                        onPressed: () => _showCreateBatch(snapshot),
-                        child: const Text('Create Batch Operation'),
-                      ),
-                      _BatchTabs(
-                        active: _tab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      VitPageSection(
-                        label: _tab == _InstitutionalBatchTab.pending
-                            ? 'Pending Approvals'
-                            : 'Executed Batches',
-                        accentColor: AppModuleAccents.earn,
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
                         children: [
-                          for (final batch in batches)
-                            _BatchOperationCard(batch: batch),
+                          VitInfoCallout(
+                            key: StakingInstitutionalPage.infoKey,
+                            message: snapshot.infoBody,
+                            icon: Icons.apartment_rounded,
+                            accentColor: AppModuleAccents.earn,
+                            padding: EarnSpacingTokens.earnPaddingX4,
+                          ),
+                          _StatsCard(snapshot: snapshot),
+                          VitCtaButton(
+                            key: StakingInstitutionalPage.createButtonKey,
+                            onPressed: () => _showCreateBatch(snapshot),
+                            child: const Text('Create Batch Operation'),
+                          ),
+                          _BatchTabs(
+                            active: _tab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          VitPageSection(
+                            label: _tab == _InstitutionalBatchTab.pending
+                                ? 'Pending Approvals'
+                                : 'Executed Batches',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              for (final batch in batches)
+                                _BatchOperationCard(batch: batch),
+                            ],
+                          ),
+                          _AuthorizedSigners(snapshot: snapshot),
+                          _EnterpriseFeatures(snapshot: snapshot),
+                          _ComplianceNote(snapshot: snapshot),
                         ],
                       ),
-                      _AuthorizedSigners(snapshot: snapshot),
-                      _EnterpriseFeatures(snapshot: snapshot),
-                      _ComplianceNote(snapshot: snapshot),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -19,6 +20,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingApiDocumentationPage extends ConsumerStatefulWidget {
@@ -52,33 +55,17 @@ class StakingApiDocumentationPage extends ConsumerStatefulWidget {
 
 class _StakingApiDocumentationPageState
     extends ConsumerState<StakingApiDocumentationPage> {
-  late StakingApiDocumentationTab _tab;
-  late String _language;
+  // Bẫy 14 (GD4 playbook): seed từ getter giờ-đã-async — không còn seed ở
+  // initState, seed 1 lần trong nhánh data: bên dưới.
+  StakingApiDocumentationTab? _tab;
+  String? _language;
   int _selectedEndpoint = 0;
   bool _responseCopied = false;
   bool _exampleCopied = false;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(stakingApiDocumentationRepositoryProvider)
-        .getDocumentation();
-    _tab = stakingApiDocumentationTabFromId(snapshot.defaultTab);
-    _language = snapshot.defaultLanguage;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingApiDocumentationRepositoryProvider)
-        .getDocumentation();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingApiDocumentationSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,93 +73,132 @@ class _StakingApiDocumentationPageState
       semanticIdentifier: 'SC-379',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Tài liệu API stake — không lời khuyên đầu tư',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: StakingApiDocumentationInfoBanner(
-                          snapshot: snapshot,
-                        ),
-                      ),
-                      StakingApiDocumentationQuickStats(stats: snapshot.stats),
-                      StakingApiDocumentationTabs(
-                        active: _tab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == StakingApiDocumentationTab.endpoints)
-                        StakingApiDocumentationEndpointsTab(
-                          snapshot: snapshot,
-                          selectedIndex: _selectedEndpoint,
-                          responseCopied: _responseCopied,
-                          onSelect: (index) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _selectedEndpoint = index;
-                              _responseCopied = false;
-                            });
-                          },
-                          onCopyResponse: () {
-                            _copy(
-                              snapshot
-                                  .endpoints[_selectedEndpoint]
-                                  .responseJson,
-                            );
-                            setState(() => _responseCopied = true);
-                          },
-                        )
-                      else if (_tab == StakingApiDocumentationTab.examples)
-                        StakingApiDocumentationExamplesTab(
-                          snapshot: snapshot,
-                          language: _language,
-                          copied: _exampleCopied,
-                          onLanguageChanged: (language) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _language = language;
-                              _exampleCopied = false;
-                            });
-                          },
-                          onCopy: (source) {
-                            _copy(source);
-                            setState(() => _exampleCopied = true);
-                          },
-                        )
-                      else
-                        StakingApiDocumentationAuthTab(snapshot: snapshot),
-                      StakingApiDocumentationFooterNote(
-                        note: snapshot.footerNote,
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingApiDocumentationSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _tab ??= stakingApiDocumentationTabFromId(snapshot.defaultTab);
+            _language ??= snapshot.defaultLanguage;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Tài liệu API stake — không lời khuyên đầu tư',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitCard(
+                            variant: VitCardVariant.standard,
+                            radius: VitCardRadius.standard,
+                            padding: AppSpacing.zeroInsets,
+                            child: StakingApiDocumentationInfoBanner(
+                              snapshot: snapshot,
+                            ),
+                          ),
+                          StakingApiDocumentationQuickStats(
+                            stats: snapshot.stats,
+                          ),
+                          StakingApiDocumentationTabs(
+                            active: _tab!,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (_tab == StakingApiDocumentationTab.endpoints)
+                            StakingApiDocumentationEndpointsTab(
+                              snapshot: snapshot,
+                              selectedIndex: _selectedEndpoint,
+                              responseCopied: _responseCopied,
+                              onSelect: (index) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _selectedEndpoint = index;
+                                  _responseCopied = false;
+                                });
+                              },
+                              onCopyResponse: () {
+                                _copy(
+                                  snapshot
+                                      .endpoints[_selectedEndpoint]
+                                      .responseJson,
+                                );
+                                setState(() => _responseCopied = true);
+                              },
+                            )
+                          else if (_tab == StakingApiDocumentationTab.examples)
+                            StakingApiDocumentationExamplesTab(
+                              snapshot: snapshot,
+                              language: _language!,
+                              copied: _exampleCopied,
+                              onLanguageChanged: (language) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _language = language;
+                                  _exampleCopied = false;
+                                });
+                              },
+                              onCopy: (source) {
+                                _copy(source);
+                                setState(() => _exampleCopied = true);
+                              },
+                            )
+                          else
+                            StakingApiDocumentationAuthTab(snapshot: snapshot),
+                          StakingApiDocumentationFooterNote(
+                            note: snapshot.footerNote,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

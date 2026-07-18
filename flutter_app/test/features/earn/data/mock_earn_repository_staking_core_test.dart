@@ -30,8 +30,8 @@ void main() {
   group('MockEarnRepository staking core smoke test', () {
     test(
       'getStakingEarn returns a populated snapshot for the default route',
-      () {
-        final snapshot = stakingEarnRepo.getStakingEarn();
+      () async {
+        final snapshot = await stakingEarnRepo.getStakingEarn();
 
         expect(snapshot, isA<StakingEarnSnapshot>());
         expect(snapshot.endpoint, '/api/mobile/earn/earn');
@@ -46,16 +46,16 @@ void main() {
       },
     );
 
-    test('getStakingEarn scopes the endpoint to the staking route', () {
-      final snapshot = stakingEarnRepo.getStakingEarn(
+    test('getStakingEarn scopes the endpoint to the staking route', () async {
+      final snapshot = await stakingEarnRepo.getStakingEarn(
         route: StakingEarnRoute.staking,
       );
 
       expect(snapshot.endpoint, '/api/mobile/earn/earn-staking');
     });
 
-    test('getTerms returns a populated staking terms snapshot', () {
-      final snapshot = termsRepo.getTerms();
+    test('getTerms returns a populated staking terms snapshot', () async {
+      final snapshot = await termsRepo.getTerms();
 
       expect(snapshot, isA<StakingTermsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -66,22 +66,25 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getDisclosure returns a populated risk disclosure snapshot', () {
-      final snapshot = riskDisclosureRepo.getDisclosure();
+    test(
+      'getDisclosure returns a populated risk disclosure snapshot',
+      () async {
+        final snapshot = await riskDisclosureRepo.getDisclosure();
 
-      expect(snapshot, isA<StakingRiskDisclosureSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.defaultTab, 'overview');
-      expect(snapshot.tabs, hasLength(3));
-      expect(snapshot.riskCounts, hasLength(3));
-      expect(snapshot.products, hasLength(3));
-      expect(snapshot.categories, hasLength(7));
-      expect(snapshot.faqs, hasLength(4));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingRiskDisclosureSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.defaultTab, 'overview');
+        expect(snapshot.tabs, hasLength(3));
+        expect(snapshot.riskCounts, hasLength(3));
+        expect(snapshot.products, hasLength(3));
+        expect(snapshot.categories, hasLength(7));
+        expect(snapshot.faqs, hasLength(4));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getPolicy returns a populated withdrawal policy snapshot', () {
-      final snapshot = withdrawalPolicyRepo.getPolicy();
+    test('getPolicy returns a populated withdrawal policy snapshot', () async {
+      final snapshot = await withdrawalPolicyRepo.getPolicy();
 
       expect(snapshot, isA<StakingWithdrawalPolicySnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -97,8 +100,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getGuide (tax) returns a populated tax guide snapshot', () {
-      final snapshot = taxGuideRepo.getGuide();
+    test('getGuide (tax) returns a populated tax guide snapshot', () async {
+      final snapshot = await taxGuideRepo.getGuide();
 
       expect(snapshot, isA<StakingTaxGuideSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -111,51 +114,60 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getRiskAssessment returns a populated risk assessment snapshot', () {
-      final snapshot = riskAssessmentRepo.getRiskAssessment();
+    test(
+      'getRiskAssessment returns a populated risk assessment snapshot',
+      () async {
+        final snapshot = await riskAssessmentRepo.getRiskAssessment();
 
-      expect(snapshot, isA<StakingRiskAssessmentSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.questions, hasLength(7));
-      expect(snapshot.results, hasLength(3));
-      expect(
-        snapshot.results.first.level,
-        StakingRiskProfileLevel.conservative,
-      );
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingRiskAssessmentSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.questions, hasLength(7));
+        expect(snapshot.results, hasLength(3));
+        expect(
+          snapshot.results.first.level,
+          StakingRiskProfileLevel.conservative,
+        );
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getDashboard returns a populated staking dashboard snapshot', () {
-      final snapshot = dashboardRepo.getDashboard();
+    test(
+      'getDashboard returns a populated staking dashboard snapshot',
+      () async {
+        final snapshot = await dashboardRepo.getDashboard();
 
-      expect(snapshot, isA<StakingDashboardSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.totalStakedUsd, 17577);
-      expect(snapshot.activePositions, 3);
-      expect(snapshot.maturingSoon, 2);
-      expect(snapshot.performance, hasLength(6));
-      expect(snapshot.allocations, hasLength(5));
-      expect(snapshot.positions, hasLength(5));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingDashboardSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.totalStakedUsd, 17577);
+        expect(snapshot.activePositions, 3);
+        expect(snapshot.maturingSoon, 2);
+        expect(snapshot.performance, hasLength(6));
+        expect(snapshot.allocations, hasLength(5));
+        expect(snapshot.positions, hasLength(5));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getAnalytics returns a populated staking analytics snapshot', () {
-      final snapshot = analyticsRepo.getAnalytics();
+    test(
+      'getAnalytics returns a populated staking analytics snapshot',
+      () async {
+        final snapshot = await analyticsRepo.getAnalytics();
 
-      expect(snapshot, isA<StakingAnalyticsSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.defaultTab, 'earnings');
-      expect(snapshot.tabs, hasLength(4));
-      expect(snapshot.summary.totalEarned, 315.82);
-      expect(snapshot.earningsBreakdown, hasLength(6));
-      expect(snapshot.apyTrends, hasLength(6));
-      expect(snapshot.roiComparison, hasLength(6));
-      expect(snapshot.productPerformance, hasLength(5));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingAnalyticsSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.defaultTab, 'earnings');
+        expect(snapshot.tabs, hasLength(4));
+        expect(snapshot.summary.totalEarned, 315.82);
+        expect(snapshot.earningsBreakdown, hasLength(6));
+        expect(snapshot.apyTrends, hasLength(6));
+        expect(snapshot.roiComparison, hasLength(6));
+        expect(snapshot.productPerformance, hasLength(5));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getHistory returns a populated staking history snapshot', () {
-      final snapshot = historyRepo.getHistory();
+    test('getHistory returns a populated staking history snapshot', () async {
+      final snapshot = await historyRepo.getHistory();
 
       expect(snapshot, isA<StakingHistorySnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -165,47 +177,59 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getCalendar returns a populated earnings calendar snapshot', () {
-      final snapshot = calendarRepo.getCalendar();
+    test(
+      'getCalendar returns a populated earnings calendar snapshot',
+      () async {
+        final snapshot = await calendarRepo.getCalendar();
 
-      expect(snapshot, isA<StakingEarningsCalendarSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.currentYear, 2026);
-      expect(snapshot.currentMonth, 3);
-      expect(snapshot.tabs, hasLength(2));
-      expect(snapshot.events, hasLength(10));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingEarningsCalendarSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.currentYear, 2026);
+        expect(snapshot.currentMonth, 3);
+        expect(snapshot.tabs, hasLength(2));
+        expect(snapshot.events, hasLength(10));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getSelection returns a populated validator selection snapshot', () {
-      final snapshot = validatorSelectionRepo.getSelection();
+    test(
+      'getSelection returns a populated validator selection snapshot',
+      () async {
+        final snapshot = await validatorSelectionRepo.getSelection();
 
-      expect(snapshot, isA<StakingValidatorSelectionSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.validators, hasLength(7));
-      expect(snapshot.validators.first.tier, StakingValidatorTier.top);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingValidatorSelectionSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.validators, hasLength(7));
+        expect(snapshot.validators.first.tier, StakingValidatorTier.top);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getAutoCompound returns a populated auto-compound snapshot', () {
-      final snapshot = autoCompoundRepo.getAutoCompound();
+    test(
+      'getAutoCompound returns a populated auto-compound snapshot',
+      () async {
+        final snapshot = await autoCompoundRepo.getAutoCompound();
 
-      expect(snapshot, isA<StakingAutoCompoundSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.frequencies, hasLength(3));
-      expect(snapshot.positions, hasLength(4));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingAutoCompoundSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.frequencies, hasLength(3));
+        expect(snapshot.positions, hasLength(4));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getLiquidStaking returns a populated liquid staking snapshot', () {
-      final snapshot = liquidStakingRepo.getLiquidStaking();
+    test(
+      'getLiquidStaking returns a populated liquid staking snapshot',
+      () async {
+        final snapshot = await liquidStakingRepo.getLiquidStaking();
 
-      expect(snapshot, isA<StakingLiquidStakingSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.tokens, hasLength(3));
-      expect(snapshot.swapFromOptions, hasLength(3));
-      expect(snapshot.swapToOptions, hasLength(4));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingLiquidStakingSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.tokens, hasLength(3));
+        expect(snapshot.swapFromOptions, hasLength(3));
+        expect(snapshot.swapToOptions, hasLength(4));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
   });
 }

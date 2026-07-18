@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-312 mock repository exposes launchpad rebalance BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getRebalance();
+  test('SC-312 mock repository exposes launchpad rebalance BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getRebalance();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-rebalance');
     expect(

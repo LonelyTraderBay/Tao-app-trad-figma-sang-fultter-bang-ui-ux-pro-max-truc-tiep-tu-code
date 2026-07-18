@@ -74,8 +74,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(dcaRebalanceConfigStateControllerProvider);
-    final snapshot = viewState.snapshot;
+    final dcaRebalanceConfigAsync = ref.watch(dcaRebalanceConfigProvider);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
@@ -97,136 +96,143 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
             showBack: true,
             onBack: _close,
           ),
-          child: Stack(
-            children: [
-              ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: VitInsetScrollView(
-                  key: DCARebalanceConfig.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  bottomInset: scrollEndPadding,
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      const VitInfoCallout(
-                        title: 'Tự động cân bằng danh mục',
-                        message:
-                            'Duy trì tỷ lệ phân bổ tài sản theo mục tiêu. Hệ thống tự động mua/bán khi danh mục lệch khỏi ngưỡng.',
-                        icon: Icons.verified_user_outlined,
-                        accentColor: AppModuleAccents.trade,
-                        radius: VitCardRadius.large,
-                        padding: _dcaRebalanceHeroPadding,
-                      ),
-                      _AllocationSummary(
-                        targets: viewState.targets,
-                        totalPercent: _totalPercent(viewState.targets),
-                        onAdd: _addTarget,
-                      ),
-                      _TargetList(
-                        targets: viewState.targets,
-                        onPercentChanged: _updateTargetPercent,
-                        onToleranceChanged: _updateTargetTolerance,
-                        onRemove: _removeTarget,
-                      ),
-                      _StrategySection(
-                        options: snapshot.strategyOptions,
-                        active: viewState.strategy,
-                        onChanged: (strategy) {
-                          HapticFeedback.selectionClick();
-                          ref
-                              .read(
-                                dcaRebalanceConfigStateControllerProvider
-                                    .notifier,
-                              )
-                              .setStrategy(strategy);
-                        },
-                      ),
-                      if (viewState.strategy ==
-                              DcaRebalanceStrategy.threshold ||
-                          viewState.strategy == DcaRebalanceStrategy.hybrid)
-                        _ThresholdCard(
-                          value: viewState.driftThreshold,
-                          onChanged: (value) => ref
-                              .read(
-                                dcaRebalanceConfigStateControllerProvider
-                                    .notifier,
-                              )
-                              .setDriftThreshold(value),
-                        ),
-                      if (viewState.strategy == DcaRebalanceStrategy.periodic ||
-                          viewState.strategy == DcaRebalanceStrategy.hybrid)
-                        _FrequencyCard(
-                          options: snapshot.frequencyOptions,
-                          active: viewState.frequency,
-                          onChanged: (frequency) {
-                            HapticFeedback.selectionClick();
-                            ref
-                                .read(
-                                  dcaRebalanceConfigStateControllerProvider
-                                      .notifier,
-                                )
-                                .setFrequency(frequency);
-                          },
-                        ),
-                      _AdvancedSettings(
-                        expanded: _showAdvanced,
-                        minTradeAmountUsd: viewState.minTradeAmountUsd,
-                        autoExecute: _autoExecute,
-                        onToggleExpanded: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _showAdvanced = !_showAdvanced);
-                        },
-                        onMinTradeChanged: (value) => ref
-                            .read(
-                              dcaRebalanceConfigStateControllerProvider
-                                  .notifier,
-                            )
-                            .setMinTradeAmount(value),
-                        onAutoExecuteChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _autoExecute = value);
-                        },
-                      ),
-                      _InlineRebalanceActions(
-                        valid: _isValidTotal(viewState.targets),
-                        onPreview: _openPreview,
-                        onSave: _openPreview,
-                      ),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'DCA rebalance configuration state review',
-                        message:
-                            'Target allocations, strategy, threshold, frequency, advanced settings, auto-execute risk, preview sheet, fees, and disabled save state remain visible before saving rebalance automation.',
-                        contractId: 'SC-170',
-                        density: VitDensity.compact,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              if (_showPreview)
-                _PreviewSheet(
-                  previews: _tradePreviews(
-                    viewState.targets,
-                    viewState.minTradeAmountUsd,
-                    snapshot.totalPortfolioUsd,
-                  ),
-                  totalFeesUsd: _totalFeesUsd(
-                    viewState.targets,
-                    viewState.minTradeAmountUsd,
-                    snapshot.totalPortfolioUsd,
-                  ),
-                  onClose: _closePreview,
-                  onConfirm: _saveConfig,
-                ),
-            ],
+          child: dcaRebalanceConfigAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được cấu hình cân bằng',
+              message: 'Thử lại sau hoặc quay lại màn DCA.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(dcaRebalanceConfigProvider),
+            ),
+            data: (_) => _buildBody(context, scrollEndPadding),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, double scrollEndPadding) {
+    final viewState = ref.watch(dcaRebalanceConfigStateControllerProvider);
+    final snapshot = viewState.snapshot;
+
+    return Stack(
+      children: [
+        ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: VitInsetScrollView(
+            key: DCARebalanceConfig.contentKey,
+            physics: const ClampingScrollPhysics(),
+            bottomInset: scrollEndPadding,
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                const VitInfoCallout(
+                  title: 'Tự động cân bằng danh mục',
+                  message:
+                      'Duy trì tỷ lệ phân bổ tài sản theo mục tiêu. Hệ thống tự động mua/bán khi danh mục lệch khỏi ngưỡng.',
+                  icon: Icons.verified_user_outlined,
+                  accentColor: AppModuleAccents.trade,
+                  radius: VitCardRadius.large,
+                  padding: _dcaRebalanceHeroPadding,
+                ),
+                _AllocationSummary(
+                  targets: viewState.targets,
+                  totalPercent: _totalPercent(viewState.targets),
+                  onAdd: _addTarget,
+                ),
+                _TargetList(
+                  targets: viewState.targets,
+                  onPercentChanged: _updateTargetPercent,
+                  onToleranceChanged: _updateTargetTolerance,
+                  onRemove: _removeTarget,
+                ),
+                _StrategySection(
+                  options: snapshot.strategyOptions,
+                  active: viewState.strategy,
+                  onChanged: (strategy) {
+                    HapticFeedback.selectionClick();
+                    ref
+                        .read(
+                          dcaRebalanceConfigStateControllerProvider.notifier,
+                        )
+                        .setStrategy(strategy);
+                  },
+                ),
+                if (viewState.strategy == DcaRebalanceStrategy.threshold ||
+                    viewState.strategy == DcaRebalanceStrategy.hybrid)
+                  _ThresholdCard(
+                    value: viewState.driftThreshold,
+                    onChanged: (value) => ref
+                        .read(
+                          dcaRebalanceConfigStateControllerProvider.notifier,
+                        )
+                        .setDriftThreshold(value),
+                  ),
+                if (viewState.strategy == DcaRebalanceStrategy.periodic ||
+                    viewState.strategy == DcaRebalanceStrategy.hybrid)
+                  _FrequencyCard(
+                    options: snapshot.frequencyOptions,
+                    active: viewState.frequency,
+                    onChanged: (frequency) {
+                      HapticFeedback.selectionClick();
+                      ref
+                          .read(
+                            dcaRebalanceConfigStateControllerProvider.notifier,
+                          )
+                          .setFrequency(frequency);
+                    },
+                  ),
+                _AdvancedSettings(
+                  expanded: _showAdvanced,
+                  minTradeAmountUsd: viewState.minTradeAmountUsd,
+                  autoExecute: _autoExecute,
+                  onToggleExpanded: () {
+                    HapticFeedback.selectionClick();
+                    setState(() => _showAdvanced = !_showAdvanced);
+                  },
+                  onMinTradeChanged: (value) => ref
+                      .read(dcaRebalanceConfigStateControllerProvider.notifier)
+                      .setMinTradeAmount(value),
+                  onAutoExecuteChanged: (value) {
+                    HapticFeedback.selectionClick();
+                    setState(() => _autoExecute = value);
+                  },
+                ),
+                _InlineRebalanceActions(
+                  valid: _isValidTotal(viewState.targets),
+                  onPreview: _openPreview,
+                  onSave: _openPreview,
+                ),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'DCA rebalance configuration state review',
+                  message:
+                      'Target allocations, strategy, threshold, frequency, advanced settings, auto-execute risk, preview sheet, fees, and disabled save state remain visible before saving rebalance automation.',
+                  contractId: 'SC-170',
+                  density: VitDensity.compact,
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (_showPreview)
+          _PreviewSheet(
+            previews: _tradePreviews(
+              viewState.targets,
+              viewState.minTradeAmountUsd,
+              snapshot.totalPortfolioUsd,
+            ),
+            totalFeesUsd: _totalFeesUsd(
+              viewState.targets,
+              viewState.minTradeAmountUsd,
+              snapshot.totalPortfolioUsd,
+            ),
+            onClose: _closePreview,
+            onConfirm: _saveConfig,
+          ),
+      ],
     );
   }
 

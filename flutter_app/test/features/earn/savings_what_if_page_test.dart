@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-352 mock repository exposes savings what-if BE draft', () {
-    final snapshot = const MockSavingsWhatIfRepository().getWhatIf();
+  test('SC-352 mock repository exposes savings what-if BE draft', () async {
+    final snapshot = await const MockSavingsWhatIfRepository().getWhatIf();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-whatif');
     expect(snapshot.actionDraft, contains('whatif/run'));

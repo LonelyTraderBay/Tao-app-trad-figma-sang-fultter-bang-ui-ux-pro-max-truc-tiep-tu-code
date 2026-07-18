@@ -31,42 +31,47 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-314 mock repository exposes launchpad swap aggregator BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getSwapAggregator();
+  test(
+    'SC-314 mock repository exposes launchpad swap aggregator BE draft',
+    () async {
+      final snapshot = await const MockLaunchpadRepository(
+        loadDelay: Duration.zero,
+      ).getSwapAggregator();
 
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/launchpad/launchpad-swap-aggregator',
-    );
-    expect(
-      snapshot.actionDraft,
-      'POST /launchpad/subscribe|claim|bridge where applicable',
-    );
-    expect(snapshot.title, 'Swap Aggregator');
-    expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.tabs, [
-      'So s\u00E1nh',
-      'L\u1ECBch s\u1EED',
-      'C\u00E0i \u0111\u1EB7t',
-    ]);
-    expect(snapshot.fromToken, 'USDT');
-    expect(snapshot.toToken, 'ARB');
-    expect(snapshot.dexQuotes, hasLength(5));
-    expect(snapshot.dexQuotes.first.recommended, isTrue);
-    expect(snapshot.history, hasLength(3));
-    expect(snapshot.contractNotes, contains('DEX quotes'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        LaunchpadScreenState.loading,
-        LaunchpadScreenState.empty,
-        LaunchpadScreenState.error,
-        LaunchpadScreenState.offline,
-        LaunchpadScreenState.submitting,
-        LaunchpadScreenState.success,
-      ]),
-    );
-  });
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/launchpad/launchpad-swap-aggregator',
+      );
+      expect(
+        snapshot.actionDraft,
+        'POST /launchpad/subscribe|claim|bridge where applicable',
+      );
+      expect(snapshot.title, 'Swap Aggregator');
+      expect(snapshot.backRoute, AppRoutePaths.launchpad);
+      expect(snapshot.tabs, [
+        'So s\u00E1nh',
+        'L\u1ECBch s\u1EED',
+        'C\u00E0i \u0111\u1EB7t',
+      ]);
+      expect(snapshot.fromToken, 'USDT');
+      expect(snapshot.toToken, 'ARB');
+      expect(snapshot.dexQuotes, hasLength(5));
+      expect(snapshot.dexQuotes.first.recommended, isTrue);
+      expect(snapshot.history, hasLength(3));
+      expect(snapshot.contractNotes, contains('DEX quotes'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          LaunchpadScreenState.loading,
+          LaunchpadScreenState.empty,
+          LaunchpadScreenState.error,
+          LaunchpadScreenState.offline,
+          LaunchpadScreenState.submitting,
+          LaunchpadScreenState.success,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-314 renders swap aggregator compare baseline', (
     tester,

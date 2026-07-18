@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-393 mock repository exposes webhooks BE draft', () {
-    final snapshot = const MockStakingWebhooksRepository().getWebhooks();
+  test('SC-393 mock repository exposes webhooks BE draft', () async {
+    final snapshot = await const MockStakingWebhooksRepository().getWebhooks();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-webhooks');
     expect(snapshot.actionDraft, contains('POST /earn/webhooks'));

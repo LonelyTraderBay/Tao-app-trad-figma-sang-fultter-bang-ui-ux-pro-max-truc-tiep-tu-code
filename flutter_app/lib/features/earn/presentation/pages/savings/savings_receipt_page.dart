@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -24,7 +25,7 @@ class SavingsReceiptPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(savingsReceiptRepositoryProvider).getReceipt();
+    final snapshotAsync = ref.watch(savingsReceiptSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -32,31 +33,56 @@ class SavingsReceiptPage extends ConsumerWidget {
       semanticIdentifier: 'SC-332',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              VitPageContent(
-                rhythm: VitPageRhythm.standard,
-                grow: true,
-                padding: VitContentPadding.compact,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsReceiptSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  VitCard(
-                    variant: VitCardVariant.standard,
-                    radius: VitCardRadius.standard,
-                    padding: AppSpacing.zeroInsets,
-                    child: _EmptyReceiptState(snapshot: snapshot),
+                  VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    grow: true,
+                    padding: VitContentPadding.compact,
+                    children: [
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.standard,
+                        padding: AppSpacing.zeroInsets,
+                        child: _EmptyReceiptState(snapshot: snapshot),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
-                  const Spacer(),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

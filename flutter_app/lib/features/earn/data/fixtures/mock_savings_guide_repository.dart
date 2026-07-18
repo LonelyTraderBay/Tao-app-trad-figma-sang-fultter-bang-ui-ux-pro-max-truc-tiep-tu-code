@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsGuideRepository implements SavingsGuideRepository {
-  const MockSavingsGuideRepository();
+final class MockSavingsGuideRepository extends _MockEarnRepositoryBase
+    implements SavingsGuideRepository {
+  const MockSavingsGuideRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsGuideSnapshot getGuide() {
+  Future<SavingsGuideSnapshot> getGuide() async {
+    await _simulateNetwork();
     return const SavingsGuideSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-guide',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -251,11 +253,13 @@ final class MockSavingsGuideRepository implements SavingsGuideRepository {
   }
 }
 
-final class MockSavingsFAQRepository implements SavingsFAQRepository {
-  const MockSavingsFAQRepository();
+final class MockSavingsFAQRepository extends _MockEarnRepositoryBase
+    implements SavingsFAQRepository {
+  const MockSavingsFAQRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsFAQSnapshot getFAQ() {
+  Future<SavingsFAQSnapshot> getFAQ() async {
+    await _simulateNetwork();
     return SavingsFAQSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-faq',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

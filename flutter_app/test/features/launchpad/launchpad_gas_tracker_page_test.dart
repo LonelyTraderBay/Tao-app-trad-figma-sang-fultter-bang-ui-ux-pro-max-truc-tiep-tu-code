@@ -29,34 +29,39 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-311 mock repository exposes launchpad gas tracker BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getGasTracker();
+  test(
+    'SC-311 mock repository exposes launchpad gas tracker BE draft',
+    () async {
+      final snapshot = await const MockLaunchpadRepository(
+        loadDelay: Duration.zero,
+      ).getGasTracker();
 
-    expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-gas-tracker');
-    expect(
-      snapshot.actionDraft,
-      'POST /launchpad/subscribe|claim|bridge where applicable',
-    );
-    expect(snapshot.title, 'Gas Tracker');
-    expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.tabs, ['prices', 'estimator', 'alerts']);
-    expect(snapshot.prices, hasLength(5));
-    expect(snapshot.estimates, hasLength(5));
-    expect(snapshot.alerts, hasLength(3));
-    expect(snapshot.prices.first.chain, 'Ethereum');
-    expect(snapshot.contractNotes, contains('multi-chain gas prices'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        LaunchpadScreenState.loading,
-        LaunchpadScreenState.empty,
-        LaunchpadScreenState.error,
-        LaunchpadScreenState.offline,
-        LaunchpadScreenState.submitting,
-        LaunchpadScreenState.success,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-gas-tracker');
+      expect(
+        snapshot.actionDraft,
+        'POST /launchpad/subscribe|claim|bridge where applicable',
+      );
+      expect(snapshot.title, 'Gas Tracker');
+      expect(snapshot.backRoute, AppRoutePaths.launchpad);
+      expect(snapshot.tabs, ['prices', 'estimator', 'alerts']);
+      expect(snapshot.prices, hasLength(5));
+      expect(snapshot.estimates, hasLength(5));
+      expect(snapshot.alerts, hasLength(3));
+      expect(snapshot.prices.first.chain, 'Ethereum');
+      expect(snapshot.contractNotes, contains('multi-chain gas prices'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          LaunchpadScreenState.loading,
+          LaunchpadScreenState.empty,
+          LaunchpadScreenState.error,
+          LaunchpadScreenState.offline,
+          LaunchpadScreenState.submitting,
+          LaunchpadScreenState.success,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-311 renders gas tracker price baseline', (tester) async {
     await pumpGasTracker(tester);

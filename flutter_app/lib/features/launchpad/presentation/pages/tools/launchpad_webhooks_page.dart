@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
@@ -124,18 +125,13 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(launchpadWebhooksStateControllerProvider);
-    final snapshot = viewState.snapshot;
+    final webhooksAsync = ref.watch(launchpadWebhooksSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
         : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
-    final stats = _WebhookStats.from(
-      viewState.subscriptions,
-      snapshot.deliveries,
-    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -143,117 +139,169 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
       semanticIdentifier: 'SC-310',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
-              semanticIdentifier: 'SC-310',
-              header: VitHeader(
-                title: snapshot.title,
-                subtitle: 'Webhook tích hợp · Chỉ dùng cho developer',
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+        child: webhooksAsync.when(
+          loading: () => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
+                semanticIdentifier: 'SC-310',
+                header: VitHeader(
+                  title: 'Webhooks',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: _launchpadWebhooksHeaderStatsPadding,
-                    child: _StatsGrid(
-                      key: LaunchpadWebhooksPage.statsKey,
-                      stats: stats,
-                    ),
+            ],
+          ),
+          error: (error, stackTrace) => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
+                semanticIdentifier: 'SC-310',
+                header: VitHeader(
+                  title: 'Webhooks',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(launchpadWebhooksSnapshotProvider),
+                ),
+              ),
+            ],
+          ),
+          data: (_) {
+            // GD4-F4 mục 6: Notifier gate qua provider trên — `.value` đã có
+            // dữ liệu thật ở đây.
+            final viewState = ref.watch(
+              launchpadWebhooksStateControllerProvider,
+            );
+            final snapshot = viewState.snapshot;
+            final stats = _WebhookStats.from(
+              viewState.subscriptions,
+              snapshot.deliveries,
+            );
+
+            return Stack(
+              children: [
+                VitAutoHideHeaderScaffold(
+                  semanticLabel: 'Quản lý webhook tích hợp cho nhà phát triển',
+                  semanticIdentifier: 'SC-310',
+                  header: VitHeader(
+                    title: snapshot.title,
+                    subtitle: 'Webhook tích hợp · Chỉ dùng cho developer',
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
                   ),
-                  ColoredBox(
-                    key: LaunchpadWebhooksPage.tabsKey,
-                    color: AppColors.surface,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Divider(
-                          height: _launchpadWebhooksDividerHeight,
-                          color: AppColors.divider,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: _launchpadWebhooksHeaderStatsPadding,
+                        child: _StatsGrid(
+                          key: LaunchpadWebhooksPage.statsKey,
+                          stats: stats,
                         ),
-                        Padding(
-                          padding: LaunchpadSpacingTokens
-                              .launchpadHorizontalContentPadding,
-                          child: _WebhookTabs(
-                            activeTab: _activeTab,
-                            onChanged: (tab) =>
-                                setState(() => _activeTab = tab),
-                          ),
-                        ),
-                        const Divider(
-                          height: _launchpadWebhooksDividerHeight,
-                          color: AppColors.divider,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: LaunchpadWebhooksPage.contentKey,
-                        physics: const ClampingScrollPhysics(),
-                        padding: EdgeInsetsDirectional.only(
-                          bottom: scrollEndPadding,
-                        ),
-                        child: VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.compact,
-                          density: VitDensity.compact,
+                      ),
+                      ColoredBox(
+                        key: LaunchpadWebhooksPage.tabsKey,
+                        color: AppColors.surface,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (_activeTab == _WebhookTab.subscriptions) ...[
-                              _CreateWebhookCard(
-                                onTap: () =>
-                                    setState(() => _showCreateSheet = true),
+                            const Divider(
+                              height: _launchpadWebhooksDividerHeight,
+                              color: AppColors.divider,
+                            ),
+                            Padding(
+                              padding: LaunchpadSpacingTokens
+                                  .launchpadHorizontalContentPadding,
+                              child: _WebhookTabs(
+                                activeTab: _activeTab,
+                                onChanged: (tab) =>
+                                    setState(() => _activeTab = tab),
                               ),
-                              _SubscriptionsSection(
-                                subscriptions: viewState.subscriptions,
-                                eventTypes: snapshot.eventTypes,
-                                expandedId: _expandedId,
-                                copiedField: _copiedField,
-                                onExpand: (id) => setState(() {
-                                  _expandedId = _expandedId == id ? null : id;
-                                }),
-                                onCopy: _copyField,
-                                onToggle: _toggleStatus,
-                                onDelete: _deleteSubscription,
-                              ),
-                            ] else
-                              _DeliveriesSection(
-                                deliveries: snapshot.deliveries,
-                                eventTypes: snapshot.eventTypes,
-                                copiedField: _copiedField,
-                                onCopy: _copyField,
-                              ),
-                            const VitInfoCallout(
-                              key: LaunchpadWebhooksPage.infoKey,
-                              message:
-                                  'Webhooks gui HTTP POST den URL cua ban moi khi event xay ra tren blockchain. Dam bao endpoint co the xu ly payload va tra ve 2xx status code.',
-                              icon: Icons.info_outline_rounded,
-                              accentColor: AppColors.accent,
-                              padding: _launchpadWebhooksCompactCardPadding,
+                            ),
+                            const Divider(
+                              height: _launchpadWebhooksDividerHeight,
+                              color: AppColors.divider,
                             ),
                           ],
                         ),
                       ),
+                      Expanded(
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(
+                            context,
+                          ).copyWith(scrollbars: false),
+                          child: SingleChildScrollView(
+                            key: LaunchpadWebhooksPage.contentKey,
+                            physics: const ClampingScrollPhysics(),
+                            padding: EdgeInsetsDirectional.only(
+                              bottom: scrollEndPadding,
+                            ),
+                            child: VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.compact,
+                              density: VitDensity.compact,
+                              children: [
+                                if (_activeTab ==
+                                    _WebhookTab.subscriptions) ...[
+                                  _CreateWebhookCard(
+                                    onTap: () =>
+                                        setState(() => _showCreateSheet = true),
+                                  ),
+                                  _SubscriptionsSection(
+                                    subscriptions: viewState.subscriptions,
+                                    eventTypes: snapshot.eventTypes,
+                                    expandedId: _expandedId,
+                                    copiedField: _copiedField,
+                                    onExpand: (id) => setState(() {
+                                      _expandedId = _expandedId == id
+                                          ? null
+                                          : id;
+                                    }),
+                                    onCopy: _copyField,
+                                    onToggle: _toggleStatus,
+                                    onDelete: _deleteSubscription,
+                                  ),
+                                ] else
+                                  _DeliveriesSection(
+                                    deliveries: snapshot.deliveries,
+                                    eventTypes: snapshot.eventTypes,
+                                    copiedField: _copiedField,
+                                    onCopy: _copyField,
+                                  ),
+                                const VitInfoCallout(
+                                  key: LaunchpadWebhooksPage.infoKey,
+                                  message:
+                                      'Webhooks gui HTTP POST den URL cua ban moi khi event xay ra tren blockchain. Dam bao endpoint co the xu ly payload va tra ve 2xx status code.',
+                                  icon: Icons.info_outline_rounded,
+                                  accentColor: AppColors.accent,
+                                  padding: _launchpadWebhooksCompactCardPadding,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (_showCreateSheet)
+                  Positioned.fill(
+                    child: _CreateWebhookSheet(
+                      eventTypes: snapshot.eventTypes,
+                      onClose: () => setState(() => _showCreateSheet = false),
+                      onCreate: _createSubscription,
                     ),
                   ),
-                ],
-              ),
-            ),
-            if (_showCreateSheet)
-              Positioned.fill(
-                child: _CreateWebhookSheet(
-                  eventTypes: snapshot.eventTypes,
-                  onClose: () => setState(() => _showCreateSheet = false),
-                  onCreate: _createSubscription,
-                ),
-              ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsExportRepository implements SavingsExportRepository {
-  const MockSavingsExportRepository();
+final class MockSavingsExportRepository extends _MockEarnRepositoryBase
+    implements SavingsExportRepository {
+  const MockSavingsExportRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsExportSnapshot getExport() {
+  Future<SavingsExportSnapshot> getExport() async {
+    await _simulateNetwork();
     return const SavingsExportSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-export',
       actionDraft:

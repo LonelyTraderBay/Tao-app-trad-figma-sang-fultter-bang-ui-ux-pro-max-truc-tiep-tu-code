@@ -34,7 +34,9 @@ class DCARebalanceDashboard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(dcaRebalanceDashboardProvider(configId));
+    final rebalanceDashboardAsync = ref.watch(
+      dcaRebalanceDashboardProvider(configId),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -65,36 +67,51 @@ class DCARebalanceDashboard extends ConsumerWidget {
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: [
-                if (!snapshot.configFound)
-                  DcaMissingConfigPanel(
-                    icon: Icons.pie_chart_outline_rounded,
-                    title: snapshot.message,
-                    titleKey: DCARebalanceDashboard.missingConfigKey,
-                    subtitle:
-                        'Chưa có cấu hình cân bằng danh mục. Thiết lập tỷ lệ mục tiêu và ngưỡng drift trước khi xem lịch sử thực thi.',
-                    ctaLabel: 'Thiết lập cân bằng',
-                    ctaIcon: Icons.tune_rounded,
-                    ctaKey: DCARebalanceDashboard.configureKey,
-                    onConfigure: () =>
-                        context.go(AppRoutePaths.dcaRebalanceConfig),
-                  )
-                else
-                  VitPageSection(
-                    label: 'Lịch sử cân bằng',
-                    accentColor: AppModuleAccents.dca,
-                    children: [
-                      VitCard(
-                        density: VitDensity.compact,
-                        child: Text(
-                          snapshot.message,
-                          style: AppTextStyles.base.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.medium,
-                          ),
-                        ),
+                ...rebalanceDashboardAsync.when(
+                  loading: () => const [VitSkeletonList()],
+                  error: (error, stackTrace) => [
+                    VitErrorState(
+                      title: 'Không tải được bảng cân bằng danh mục',
+                      message: 'Thử lại sau hoặc quay lại màn DCA.',
+                      actionLabel: 'Thử lại',
+                      onAction: () => ref.invalidate(
+                        dcaRebalanceDashboardProvider(configId),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                  data: (snapshot) => [
+                    if (!snapshot.configFound)
+                      DcaMissingConfigPanel(
+                        icon: Icons.pie_chart_outline_rounded,
+                        title: snapshot.message,
+                        titleKey: DCARebalanceDashboard.missingConfigKey,
+                        subtitle:
+                            'Chưa có cấu hình cân bằng danh mục. Thiết lập tỷ lệ mục tiêu và ngưỡng drift trước khi xem lịch sử thực thi.',
+                        ctaLabel: 'Thiết lập cân bằng',
+                        ctaIcon: Icons.tune_rounded,
+                        ctaKey: DCARebalanceDashboard.configureKey,
+                        onConfigure: () =>
+                            context.go(AppRoutePaths.dcaRebalanceConfig),
+                      )
+                    else
+                      VitPageSection(
+                        label: 'Lịch sử cân bằng',
+                        accentColor: AppModuleAccents.dca,
+                        children: [
+                          VitCard(
+                            density: VitDensity.compact,
+                            child: Text(
+                              snapshot.message,
+                              style: AppTextStyles.base.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.medium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
                 const VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
                   title: 'Rebalance review required',

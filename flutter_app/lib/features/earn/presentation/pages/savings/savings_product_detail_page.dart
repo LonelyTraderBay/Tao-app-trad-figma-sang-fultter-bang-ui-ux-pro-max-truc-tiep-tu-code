@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -33,16 +34,15 @@ class SavingsProductDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(savingsProductDetailRepositoryProvider)
-        .getProductDetail(productId: productId);
+    final snapshotAsync = ref.watch(
+      savingsProductDetailSnapshotProvider(productId),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x7
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
-    final product = snapshot.product;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -50,42 +50,70 @@ class SavingsProductDetailPage extends ConsumerWidget {
       semanticIdentifier: 'SC-330',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            padding: EarnSpacingTokens.earnBottomInsetPadding(bottomInset),
-            child: VitPageContent(
-              rhythm: VitPageRhythm.standard,
-              padding: VitContentPadding.compact,
-              gap: VitContentGap.defaultGap,
-              children: [
-                if (product == null)
-                  _NotFoundProductState(snapshot: snapshot)
-                else ...[
-                  _ProductHero(product: product),
-                  const EarnInfoBanner(
-                    text:
-                        'APY là ước tính tham khảo và có thể thay đổi theo điều kiện thị trường.',
-                  ),
-                  _ProductFacts(product: product),
-                  VitCtaButton(
-                    height: AppSpacing.inputHeight,
-                    onPressed: () => HapticFeedback.selectionClick(),
-                    child: const Text('Đăng ký sản phẩm'),
-                  ),
-                  const EarnDisclaimerBanner(
-                    text:
-                        'Rút trước hạn có thể mất lãi tích lũy. Vui lòng xem quy tắc khóa và rút trước khi gửi.',
-                  ),
-                ],
-              ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                savingsProductDetailSnapshotProvider(productId),
+              ),
             ),
           ),
+          data: (snapshot) {
+            final product = snapshot.product;
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                padding: EarnSpacingTokens.earnBottomInsetPadding(bottomInset),
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.defaultGap,
+                  children: [
+                    if (product == null)
+                      _NotFoundProductState(snapshot: snapshot)
+                    else ...[
+                      _ProductHero(product: product),
+                      const EarnInfoBanner(
+                        text:
+                            'APY là ước tính tham khảo và có thể thay đổi theo điều kiện thị trường.',
+                      ),
+                      _ProductFacts(product: product),
+                      VitCtaButton(
+                        height: AppSpacing.inputHeight,
+                        onPressed: () => HapticFeedback.selectionClick(),
+                        child: const Text('Đăng ký sản phẩm'),
+                      ),
+                      const EarnDisclaimerBanner(
+                        text:
+                            'Rút trước hạn có thể mất lãi tích lũy. Vui lòng xem quy tắc khóa và rút trước khi gửi.',
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

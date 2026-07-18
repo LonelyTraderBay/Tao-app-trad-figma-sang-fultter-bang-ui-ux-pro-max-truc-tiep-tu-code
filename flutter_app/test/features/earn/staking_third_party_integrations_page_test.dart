@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-395 mock repository exposes integrations BE draft', () {
-    final snapshot = const MockStakingThirdPartyIntegrationsRepository()
+  test('SC-395 mock repository exposes integrations BE draft', () async {
+    final snapshot = await const MockStakingThirdPartyIntegrationsRepository()
         .getIntegrations();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-third-party-integrations');

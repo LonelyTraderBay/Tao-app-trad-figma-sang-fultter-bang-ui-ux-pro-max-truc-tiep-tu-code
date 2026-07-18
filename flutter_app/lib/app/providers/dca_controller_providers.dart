@@ -6,61 +6,71 @@ import 'package:vit_trade_flutter/features/dca/presentation/controllers/dca_cont
 
 export 'package:vit_trade_flutter/features/dca/presentation/controllers/dca_controller.dart';
 
-final dcaDashboardProvider = Provider<DcaDashboardSnapshot>((ref) {
+final dcaDashboardProvider = FutureProvider<DcaDashboardSnapshot>((ref) {
   return ref.watch(data.dcaRepositoryProvider).getDashboard();
 });
 
-final dcaRebalanceConfigProvider = Provider<DcaRebalanceConfigSnapshot>((ref) {
+final dcaRebalanceConfigProvider = FutureProvider<DcaRebalanceConfigSnapshot>((
+  ref,
+) {
   return ref.watch(data.dcaRepositoryProvider).getRebalanceConfig();
 });
 
 final dcaRebalanceDashboardProvider =
-    Provider.family<DcaRebalanceDashboardSnapshot, String>((ref, configId) {
+    FutureProvider.family<DcaRebalanceDashboardSnapshot, String>((
+      ref,
+      configId,
+    ) {
       return ref
           .watch(data.dcaRepositoryProvider)
           .getRebalanceDashboard(configId);
     });
 
-final dcaScheduleConfigProvider = Provider<DcaScheduleConfigSnapshot>((ref) {
+final dcaScheduleConfigProvider = FutureProvider<DcaScheduleConfigSnapshot>((
+  ref,
+) {
   return ref.watch(data.dcaRepositoryProvider).getScheduleConfig();
 });
 
 final dcaScheduleAnalyticsProvider =
-    Provider.family<DcaScheduleAnalyticsSnapshot, String>((ref, configId) {
+    FutureProvider.family<DcaScheduleAnalyticsSnapshot, String>((
+      ref,
+      configId,
+    ) {
       return ref
           .watch(data.dcaRepositoryProvider)
           .getScheduleAnalytics(configId);
     });
 
-final dcaPortfolioOptimizerProvider = Provider<DcaPortfolioOptimizerSnapshot>((
+final dcaPortfolioOptimizerProvider =
+    FutureProvider<DcaPortfolioOptimizerSnapshot>((ref) {
+      return ref.watch(data.dcaRepositoryProvider).getPortfolioOptimizer();
+    });
+
+final dcaDynamicAmountProvider = FutureProvider<DcaDynamicAmountSnapshot>((
   ref,
 ) {
-  return ref.watch(data.dcaRepositoryProvider).getPortfolioOptimizer();
-});
-
-final dcaDynamicAmountProvider = Provider<DcaDynamicAmountSnapshot>((ref) {
   return ref.watch(data.dcaRepositoryProvider).getDynamicAmount();
 });
 
-final dcaBacktesterProvider = Provider<DcaBacktesterSnapshot>((ref) {
+final dcaBacktesterProvider = FutureProvider<DcaBacktesterSnapshot>((ref) {
   return ref.watch(data.dcaRepositoryProvider).getBacktester();
 });
 
-final dcaMultiAssetProvider = Provider<DcaMultiAssetSnapshot>((ref) {
+final dcaMultiAssetProvider = FutureProvider<DcaMultiAssetSnapshot>((ref) {
   return ref.watch(data.dcaRepositoryProvider).getMultiAsset();
 });
 
-final dcaPerformanceCompareProvider = Provider<DcaPerformanceCompareSnapshot>((
-  ref,
-) {
-  return ref.watch(data.dcaRepositoryProvider).getPerformanceCompare();
-});
+final dcaPerformanceCompareProvider =
+    FutureProvider<DcaPerformanceCompareSnapshot>((ref) {
+      return ref.watch(data.dcaRepositoryProvider).getPerformanceCompare();
+    });
 
-final dcaSmartRulesProvider = Provider<DcaSmartRulesSnapshot>((ref) {
+final dcaSmartRulesProvider = FutureProvider<DcaSmartRulesSnapshot>((ref) {
   return ref.watch(data.dcaRepositoryProvider).getSmartRules();
 });
 
-final dcaOverviewDemoProvider = Provider<DcaOverviewDemoSnapshot>((ref) {
+final dcaOverviewDemoProvider = FutureProvider<DcaOverviewDemoSnapshot>((ref) {
   return ref.watch(data.dcaRepositoryProvider).getOverviewDemo();
 });
 
@@ -115,6 +125,25 @@ final class DcaRebalanceConfigViewState {
   }
 }
 
+/// GD4 (khuôn STATE-S25 biến thể A): `dcaRebalanceConfigProvider` giờ là
+/// `FutureProvider` — build() seed từ `.value` (nullable ở Riverpod 3.x)
+/// với fallback rỗng tường minh. Trang gate qua `dcaRebalanceConfigProvider
+/// .when()` trước khi đọc Notifier này (xem GD4-Async-Playbook.md mục 6),
+/// nên `.value` không bao giờ null trong luồng UI thật.
+const _emptyDcaRebalanceConfigSnapshot = DcaRebalanceConfigSnapshot(
+  endpoint: '',
+  actionDraft: '',
+  supportedStates: [],
+  totalPortfolioUsd: 0,
+  driftThreshold: 0,
+  minTradeAmountUsd: 0,
+  strategy: DcaRebalanceStrategy.threshold,
+  frequency: DcaRebalanceFrequency.monthly,
+  targets: [],
+  strategyOptions: [],
+  frequencyOptions: [],
+);
+
 /// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
 /// method mutate `state = copyWith(...)`. KHÔNG autoDispose — cấu hình
 /// rebalance giữ nguyên khi điều hướng đi/về trong phiên (trước khi lưu).
@@ -122,9 +151,10 @@ final class DcaRebalanceConfigStateController
     extends Notifier<DcaRebalanceConfigViewState> {
   @override
   DcaRebalanceConfigViewState build() {
-    return DcaRebalanceConfigViewState.fromSnapshot(
-      ref.watch(dcaRebalanceConfigProvider),
-    );
+    final snapshot =
+        ref.watch(dcaRebalanceConfigProvider).value ??
+        _emptyDcaRebalanceConfigSnapshot;
+    return DcaRebalanceConfigViewState.fromSnapshot(snapshot);
   }
 
   void addTarget() {

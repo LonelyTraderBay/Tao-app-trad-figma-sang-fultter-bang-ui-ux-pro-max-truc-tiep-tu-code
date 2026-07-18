@@ -1,12 +1,14 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingEarnRepository implements StakingEarnRepository {
-  const MockStakingEarnRepository();
+final class MockStakingEarnRepository extends _MockEarnRepositoryBase
+    implements StakingEarnRepository {
+  const MockStakingEarnRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingEarnSnapshot getStakingEarn({
+  Future<StakingEarnSnapshot> getStakingEarn({
     StakingEarnRoute route = StakingEarnRoute.earn,
-  }) {
+  }) async {
+    await _simulateNetwork();
     return StakingEarnSnapshot(
       endpoint: switch (route) {
         StakingEarnRoute.earn => '/api/mobile/earn/earn',
@@ -148,11 +150,13 @@ final class MockStakingEarnRepository implements StakingEarnRepository {
   }
 }
 
-final class MockSavingsRepository implements SavingsRepository {
-  const MockSavingsRepository();
+final class MockSavingsRepository extends _MockEarnRepositoryBase
+    implements SavingsRepository {
+  const MockSavingsRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsSnapshot getSavings() {
+  Future<SavingsSnapshot> getSavings() async {
+    await _simulateNetwork();
     return const SavingsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -359,13 +363,20 @@ final class MockSavingsRepository implements SavingsRepository {
   }
 }
 
-final class MockSavingsProductDetailRepository
+final class MockSavingsProductDetailRepository extends _MockEarnRepositoryBase
     implements SavingsProductDetailRepository {
-  const MockSavingsProductDetailRepository();
+  const MockSavingsProductDetailRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsProductDetailSnapshot getProductDetail({required String productId}) {
-    final savings = const MockSavingsRepository().getSavings();
+  Future<SavingsProductDetailSnapshot> getProductDetail({
+    required String productId,
+  }) async {
+    // Bẫy 18 (GD4 playbook): chuỗi mock khác — không simulate 2 lần, chỉ
+    // await lời gọi trong (nó đã tự simulate delay/error).
+    final savings = await const MockSavingsRepository().getSavings();
     SavingsProductDraft? product;
     for (final item in savings.products) {
       if (item.id == productId) {
@@ -394,12 +405,14 @@ final class MockSavingsProductDetailRepository
   }
 }
 
-final class MockSavingsRedeemRepository implements SavingsRedeemRepository {
-  const MockSavingsRedeemRepository();
+final class MockSavingsRedeemRepository extends _MockEarnRepositoryBase
+    implements SavingsRedeemRepository {
+  const MockSavingsRedeemRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsRedeemSnapshot getRedeem({required String positionId}) {
-    final savings = const MockSavingsRepository().getSavings();
+  Future<SavingsRedeemSnapshot> getRedeem({required String positionId}) async {
+    // Bẫy 18: không simulate 2 lần — await lời gọi mock trong.
+    final savings = await const MockSavingsRepository().getSavings();
     SavingsPositionDraft? position;
     for (final item in savings.positions) {
       if (item.id == positionId) {
@@ -431,11 +444,13 @@ final class MockSavingsRedeemRepository implements SavingsRedeemRepository {
   }
 }
 
-final class MockSavingsReceiptRepository implements SavingsReceiptRepository {
-  const MockSavingsReceiptRepository();
+final class MockSavingsReceiptRepository extends _MockEarnRepositoryBase
+    implements SavingsReceiptRepository {
+  const MockSavingsReceiptRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsReceiptSnapshot getReceipt() {
+  Future<SavingsReceiptSnapshot> getReceipt() async {
+    await _simulateNetwork();
     return const SavingsReceiptSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-receipt',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

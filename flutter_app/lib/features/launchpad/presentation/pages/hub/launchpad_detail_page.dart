@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -35,9 +36,7 @@ class LaunchpadDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(launchpadControllerProvider)
-        .getDetail(projectId);
+    final detailAsync = ref.watch(launchpadDetailSnapshotProvider(projectId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -45,36 +44,85 @@ class LaunchpadDetailPage extends ConsumerWidget {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'Chi tiết dự án Launchpad',
-      semanticIdentifier: 'SC-318',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
-          semanticLabel: 'Chi tiết dự án – vùng cuộn nội dung',
-          semanticIdentifier: 'SC-318',
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.project == null
-                ? null
-                : '${_typeLabel(snapshot.project!.type)} · ${snapshot.project!.chain}',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+    // GD4-F4: subtitle phụ thuộc snapshot.project (nullable) nên bọc CẢ
+    // scaffold — title/backRoute vẫn là literal hằng số (xem
+    // GD4-Async-Playbook.md, mục "header phụ thuộc dữ liệu").
+    return detailAsync.when(
+      loading: () => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Chi tiết dự án Launchpad',
+        semanticIdentifier: 'SC-318',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            bottomInset: bottomInset,
+            semanticLabel: 'Chi tiết dự án – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-318',
+            header: VitHeader(
+              title: 'Launchpad',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.launchpad),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: SingleChildScrollView(
-            key: contentKey,
-            physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
-              rhythm: VitPageRhythm.standard,
-              padding: VitContentPadding.defaultPadding,
-              children: [
-                if (snapshot.project == null)
-                  const _LaunchpadDetailError()
-                else
-                  _LaunchpadDetailSummary(snapshot: snapshot),
-              ],
+        ),
+      ),
+      error: (error, stackTrace) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Chi tiết dự án Launchpad',
+        semanticIdentifier: 'SC-318',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            bottomInset: bottomInset,
+            semanticLabel: 'Chi tiết dự án – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-318',
+            header: VitHeader(
+              title: 'Launchpad',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.launchpad),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được dữ liệu',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(launchpadDetailSnapshotProvider(projectId)),
+            ),
+          ),
+        ),
+      ),
+      data: (snapshot) => VitPageLayout(
+        variant: VitPageVariant.flush,
+        semanticLabel: 'Chi tiết dự án Launchpad',
+        semanticIdentifier: 'SC-318',
+        child: Material(
+          type: MaterialType.transparency,
+          child: VitAutoHideHeaderScaffold(
+            bottomInset: bottomInset,
+            semanticLabel: 'Chi tiết dự án – vùng cuộn nội dung',
+            semanticIdentifier: 'SC-318',
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.project == null
+                  ? null
+                  : '${_typeLabel(snapshot.project!.type)} · ${snapshot.project!.chain}',
+              showBack: true,
+              onBack: () => context.go(snapshot.backRoute),
+            ),
+            child: SingleChildScrollView(
+              key: contentKey,
+              physics: const ClampingScrollPhysics(),
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
+                padding: VitContentPadding.defaultPadding,
+                children: [
+                  if (snapshot.project == null)
+                    const _LaunchpadDetailError()
+                  else
+                    _LaunchpadDetailSummary(snapshot: snapshot),
+                ],
+              ),
             ),
           ),
         ),

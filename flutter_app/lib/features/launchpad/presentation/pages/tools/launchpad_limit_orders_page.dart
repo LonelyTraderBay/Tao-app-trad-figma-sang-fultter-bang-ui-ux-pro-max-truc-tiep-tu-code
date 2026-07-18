@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/tools/launchpad_limit_orders_header_widgets.dart';
@@ -96,7 +97,7 @@ class _LaunchpadLimitOrdersPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getLimitOrders();
+    final limitOrdersAsync = ref.watch(launchpadLimitOrdersSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -123,10 +124,10 @@ class _LaunchpadLimitOrdersPageState
               semanticLabel: 'Quản lý lệnh giới hạn giao dịch token',
               semanticIdentifier: 'SC-315',
               header: VitHeader(
-                title: snapshot.title,
+                title: 'Limit Orders',
                 subtitle: 'Lệnh giới hạn · Xem trước trước khi đặt',
                 showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+                onBack: () => context.go(AppRoutePaths.launchpad),
                 actions: [
                   VitHeaderActionItem(
                     key: LaunchpadLimitOrdersPage.headerCreateKey,
@@ -168,31 +169,50 @@ class _LaunchpadLimitOrdersPageState
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.tight,
                         children: [
-                          if (_activeTab == _LimitOrderTab.active) ...[
-                            _StatsCard(snapshot: snapshot),
-                            _ActiveOrdersSection(orders: snapshot.activeOrders),
-                          ] else if (_activeTab == _LimitOrderTab.history) ...[
-                            _HistorySection(orders: snapshot.historyOrders),
-                          ] else ...[
-                            _CreateOrderSection(
-                              orderSide: _orderSide,
-                              tokenController: _tokenController,
-                              targetPriceController: _targetPriceController,
-                              amountController: _amountController,
-                              expiryDays: _expiryDays,
-                              partialFill: _partialFill,
-                              submissionMessage: _submissionMessage,
-                              onSideChanged: (side) =>
-                                  setState(() => _orderSide = side),
-                              onExpiryChanged: (days) =>
-                                  setState(() => _expiryDays = days),
-                              onPartialFillChanged: (value) =>
-                                  setState(() => _partialFill = value),
-                              onInputChanged: () => setState(() {
-                                _submissionMessage = null;
-                              }),
-                            ),
-                          ],
+                          ...limitOrdersAsync.when(
+                            loading: () => const [VitSkeletonList()],
+                            error: (error, stackTrace) => [
+                              VitErrorState(
+                                title: 'Không tải được limit orders',
+                                message:
+                                    'Vui lòng kiểm tra kết nối và thử lại.',
+                                actionLabel: 'Thử lại',
+                                onAction: () => ref.invalidate(
+                                  launchpadLimitOrdersSnapshotProvider,
+                                ),
+                              ),
+                            ],
+                            data: (snapshot) => [
+                              if (_activeTab == _LimitOrderTab.active) ...[
+                                _StatsCard(snapshot: snapshot),
+                                _ActiveOrdersSection(
+                                  orders: snapshot.activeOrders,
+                                ),
+                              ] else if (_activeTab ==
+                                  _LimitOrderTab.history) ...[
+                                _HistorySection(orders: snapshot.historyOrders),
+                              ] else ...[
+                                _CreateOrderSection(
+                                  orderSide: _orderSide,
+                                  tokenController: _tokenController,
+                                  targetPriceController: _targetPriceController,
+                                  amountController: _amountController,
+                                  expiryDays: _expiryDays,
+                                  partialFill: _partialFill,
+                                  submissionMessage: _submissionMessage,
+                                  onSideChanged: (side) =>
+                                      setState(() => _orderSide = side),
+                                  onExpiryChanged: (days) =>
+                                      setState(() => _expiryDays = days),
+                                  onPartialFillChanged: (value) =>
+                                      setState(() => _partialFill = value),
+                                  onInputChanged: () => setState(() {
+                                    _submissionMessage = null;
+                                  }),
+                                ),
+                              ],
+                            ],
+                          ),
                         ],
                       ),
                     ),

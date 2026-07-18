@@ -24,8 +24,8 @@ void main() {
   group('MockSavingsGuideRepository smoke test', () {
     const repository = MockSavingsGuideRepository();
 
-    test('getGuide returns a populated snapshot', () {
-      final snapshot = repository.getGuide();
+    test('getGuide returns a populated snapshot', () async {
+      final snapshot = await repository.getGuide();
 
       expect(snapshot, isA<SavingsGuideSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -42,8 +42,8 @@ void main() {
   group('MockSavingsFAQRepository smoke test', () {
     const repository = MockSavingsFAQRepository();
 
-    test('getFAQ returns a populated snapshot', () {
-      final snapshot = repository.getFAQ();
+    test('getFAQ returns a populated snapshot', () async {
+      final snapshot = await repository.getFAQ();
 
       expect(snapshot, isA<SavingsFAQSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -58,8 +58,8 @@ void main() {
   group('MockSavingsNotificationsRepository smoke test', () {
     const repository = MockSavingsNotificationsRepository();
 
-    test('getNotifications returns a populated snapshot', () {
-      final snapshot = repository.getNotifications();
+    test('getNotifications returns a populated snapshot', () async {
+      final snapshot = await repository.getNotifications();
 
       expect(snapshot, isA<SavingsNotificationsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -74,8 +74,8 @@ void main() {
   group('MockSavingsRecommendationsRepository smoke test', () {
     const repository = MockSavingsRecommendationsRepository();
 
-    test('getRecommendations returns a populated snapshot', () {
-      final snapshot = repository.getRecommendations();
+    test('getRecommendations returns a populated snapshot', () async {
+      final snapshot = await repository.getRecommendations();
 
       expect(snapshot, isA<SavingsRecommendationsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -90,8 +90,8 @@ void main() {
   group('MockSavingsRiskAssessmentRepository smoke test', () {
     const repository = MockSavingsRiskAssessmentRepository();
 
-    test('getRiskAssessment returns a populated snapshot', () {
-      final snapshot = repository.getRiskAssessment();
+    test('getRiskAssessment returns a populated snapshot', () async {
+      final snapshot = await repository.getRiskAssessment();
 
       expect(snapshot, isA<SavingsRiskAssessmentSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -105,8 +105,8 @@ void main() {
   group('MockSavingsComparisonRepository smoke test', () {
     const repository = MockSavingsComparisonRepository();
 
-    test('getComparison returns a populated snapshot', () {
-      final snapshot = repository.getComparison();
+    test('getComparison returns a populated snapshot', () async {
+      final snapshot = await repository.getComparison();
 
       expect(snapshot, isA<SavingsComparisonSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -122,8 +122,8 @@ void main() {
   group('MockAutoCompoundSettingsRepository smoke test', () {
     const repository = MockAutoCompoundSettingsRepository();
 
-    test('getSettings returns a populated snapshot', () {
-      final snapshot = repository.getSettings();
+    test('getSettings returns a populated snapshot', () async {
+      final snapshot = await repository.getSettings();
 
       expect(snapshot, isA<AutoCompoundSettingsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -138,8 +138,8 @@ void main() {
   group('MockSavingsAnalyticsRepository smoke test', () {
     const repository = MockSavingsAnalyticsRepository();
 
-    test('getAnalytics returns a populated snapshot', () {
-      final snapshot = repository.getAnalytics();
+    test('getAnalytics returns a populated snapshot', () async {
+      final snapshot = await repository.getAnalytics();
 
       expect(snapshot, isA<SavingsAnalyticsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -156,8 +156,8 @@ void main() {
   group('MockSavingsAutoRebalanceRepository smoke test', () {
     const repository = MockSavingsAutoRebalanceRepository();
 
-    test('getRebalance returns a populated snapshot', () {
-      final snapshot = repository.getRebalance();
+    test('getRebalance returns a populated snapshot', () async {
+      final snapshot = await repository.getRebalance();
 
       expect(snapshot, isA<SavingsAutoRebalanceSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -175,8 +175,8 @@ void main() {
   group('MockSavingsNotificationPreferencesRepository smoke test', () {
     const repository = MockSavingsNotificationPreferencesRepository();
 
-    test('getPreferences returns a populated snapshot', () {
-      final snapshot = repository.getPreferences();
+    test('getPreferences returns a populated snapshot', () async {
+      final snapshot = await repository.getPreferences();
 
       expect(snapshot, isA<SavingsNotificationPreferencesSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -193,8 +193,8 @@ void main() {
   group('MockSavingsDcaRepository smoke test', () {
     const repository = MockSavingsDcaRepository();
 
-    test('getDca returns a populated snapshot', () {
-      final snapshot = repository.getDca();
+    test('getDca returns a populated snapshot', () async {
+      final snapshot = await repository.getDca();
 
       expect(snapshot, isA<SavingsDcaSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -210,8 +210,8 @@ void main() {
   group('MockSavingsSmartSuggestionsRepository smoke test', () {
     const repository = MockSavingsSmartSuggestionsRepository();
 
-    test('getSuggestions returns a populated snapshot', () {
-      final snapshot = repository.getSuggestions();
+    test('getSuggestions returns a populated snapshot', () async {
+      final snapshot = await repository.getSuggestions();
 
       expect(snapshot, isA<SavingsSmartSuggestionsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -228,8 +228,8 @@ void main() {
   group('MockSavingsExportRepository smoke test', () {
     const repository = MockSavingsExportRepository();
 
-    test('getExport returns a populated snapshot', () {
-      final snapshot = repository.getExport();
+    test('getExport returns a populated snapshot', () async {
+      final snapshot = await repository.getExport();
 
       expect(snapshot, isA<SavingsExportSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -248,8 +248,8 @@ void main() {
   group('MockSavingsBacktestRepository smoke test', () {
     const repository = MockSavingsBacktestRepository();
 
-    test('getBacktest returns a populated snapshot', () {
-      final snapshot = repository.getBacktest();
+    test('getBacktest returns a populated snapshot', () async {
+      final snapshot = await repository.getBacktest();
 
       expect(snapshot, isA<SavingsBacktestSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -267,8 +267,8 @@ void main() {
   group('MockSavingsAutoPilotRepository smoke test', () {
     const repository = MockSavingsAutoPilotRepository();
 
-    test('getAutoPilot returns a populated snapshot', () {
-      final snapshot = repository.getAutoPilot();
+    test('getAutoPilot returns a populated snapshot', () async {
+      final snapshot = await repository.getAutoPilot();
 
       expect(snapshot, isA<SavingsAutoPilotSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -286,8 +286,8 @@ void main() {
   group('MockSavingsLadderRepository smoke test', () {
     const repository = MockSavingsLadderRepository();
 
-    test('getLadder returns a populated snapshot', () {
-      final snapshot = repository.getLadder();
+    test('getLadder returns a populated snapshot', () async {
+      final snapshot = await repository.getLadder();
 
       expect(snapshot, isA<SavingsLadderSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -303,8 +303,8 @@ void main() {
   group('MockSavingsWhatIfRepository smoke test', () {
     const repository = MockSavingsWhatIfRepository();
 
-    test('getWhatIf returns a populated snapshot', () {
-      final snapshot = repository.getWhatIf();
+    test('getWhatIf returns a populated snapshot', () async {
+      final snapshot = await repository.getWhatIf();
 
       expect(snapshot, isA<SavingsWhatIfSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);

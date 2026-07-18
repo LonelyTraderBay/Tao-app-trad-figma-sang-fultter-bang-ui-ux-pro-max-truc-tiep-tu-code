@@ -30,8 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-344 mock repository exposes rebalance BE draft', () {
-    final snapshot = const MockSavingsAutoRebalanceRepository().getRebalance();
+  test('SC-344 mock repository exposes rebalance BE draft', () async {
+    final snapshot = await const MockSavingsAutoRebalanceRepository()
+        .getRebalance();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-rebalance');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

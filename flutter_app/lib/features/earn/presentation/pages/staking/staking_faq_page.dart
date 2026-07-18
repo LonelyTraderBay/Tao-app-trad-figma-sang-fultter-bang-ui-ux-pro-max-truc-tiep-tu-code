@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -43,14 +44,7 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(stakingFAQRepositoryProvider).getFAQ();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
-    final filtered = _filteredItems(snapshot.items, _category, _query);
+    final snapshotAsync = ref.watch(stakingFAQSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -58,70 +52,106 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
       semanticIdentifier: 'SC-370',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Giải đáp yield và rủi ro staking',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _SearchField(
-                        placeholder: snapshot.searchPlaceholder,
-                        onChanged: (value) => setState(() => _query = value),
-                      ),
-                      _CategoryTabs(
-                        active: _category,
-                        onChanged: (category) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _category = category);
-                        },
-                      ),
-                      if (_query.trim().isNotEmpty)
-                        Text(
-                          'Tìm thấy ${filtered.length} kết quả',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text2,
-                          ),
-                        ),
-                      if (filtered.isEmpty)
-                        _EmptyResults(
-                          onReset: () => setState(() => _query = ''),
-                        )
-                      else
-                        _FAQList(
-                          items: filtered,
-                          expandedIds: _expandedIds,
-                          onToggle: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              if (!_expandedIds.add(id)) {
-                                _expandedIds.remove(id);
-                              }
-                            });
-                          },
-                        ),
-                      _SupportPanel(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingFAQSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+            final filtered = _filteredItems(snapshot.items, _category, _query);
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Giải đáp yield và rủi ro staking',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _SearchField(
+                            placeholder: snapshot.searchPlaceholder,
+                            onChanged: (value) =>
+                                setState(() => _query = value),
+                          ),
+                          _CategoryTabs(
+                            active: _category,
+                            onChanged: (category) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _category = category);
+                            },
+                          ),
+                          if (_query.trim().isNotEmpty)
+                            Text(
+                              'Tìm thấy ${filtered.length} kết quả',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text2,
+                              ),
+                            ),
+                          if (filtered.isEmpty)
+                            _EmptyResults(
+                              onReset: () => setState(() => _query = ''),
+                            )
+                          else
+                            _FAQList(
+                              items: filtered,
+                              expandedIds: _expandedIds,
+                              onToggle: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  if (!_expandedIds.add(id)) {
+                                    _expandedIds.remove(id);
+                                  }
+                                });
+                              },
+                            ),
+                          _SupportPanel(snapshot: snapshot),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

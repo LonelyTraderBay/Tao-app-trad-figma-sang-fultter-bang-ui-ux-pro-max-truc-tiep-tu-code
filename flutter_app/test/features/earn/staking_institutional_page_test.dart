@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-368 mock repository exposes institutional BE draft', () {
-    final snapshot = const MockStakingInstitutionalRepository()
+  test('SC-368 mock repository exposes institutional BE draft', () async {
+    final snapshot = await const MockStakingInstitutionalRepository()
         .getInstitutional();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-institutional');

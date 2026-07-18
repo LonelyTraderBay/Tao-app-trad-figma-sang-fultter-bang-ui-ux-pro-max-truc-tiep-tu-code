@@ -1,7 +1,8 @@
 part of '../repositories/mock_dca_repository.dart';
 
-mixin _DcaRepositoryMethodsPart04 {
-  DcaOverviewDemoSnapshot getOverviewDemo() {
+mixin _DcaRepositoryMethodsPart04 on _MockDcaRepositoryBase {
+  Future<DcaOverviewDemoSnapshot> getOverviewDemo() async {
+    await _simulateNetwork();
     const profitSparkline = <double>[
       30.0,
       32,

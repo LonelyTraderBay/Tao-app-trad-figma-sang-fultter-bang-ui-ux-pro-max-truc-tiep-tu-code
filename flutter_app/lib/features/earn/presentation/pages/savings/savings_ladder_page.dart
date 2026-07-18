@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -64,24 +65,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsLadderRepositoryProvider).getLadder();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final selectedPreset = _preset ?? snapshot.defaultPreset;
-    final amountUsd = _amountUsd ?? snapshot.defaultAmountUsd;
-    final template = savingsLadderTemplateById(snapshot, selectedPreset);
-    final rungs = selectedPreset == SavingsLadderPreset.custom
-        ? (_customRungs ?? const <SavingsLadderRungDraft>[])
-        : savingsLadderGenerateRungs(template, amountUsd);
-    final totalAllocated = savingsLadderTotalAllocated(rungs);
-    final weightedApy = savingsLadderWeightedApy(rungs);
-    final annualInterest = savingsLadderAnnualInterest(rungs);
-    final liquidityScore = savingsLadderLiquidityScore(rungs);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndPadding =
-        (mode.usesVisualQaFrame
-            ? _visualNavClearance + _visualScrollExtra
-            : _nativeNavClearance + _nativeScrollExtra) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsLadderSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,77 +73,125 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
       semanticIdentifier: 'SC-351',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    density: VitDensity.compact,
-                    children: [
-                      LadderHero(
-                        snapshot: snapshot,
-                        amountUsd: amountUsd,
-                        annualInterest: annualInterest,
-                        rungCount: rungs.length,
-                        weightedApy: weightedApy,
-                        liquidityScore: liquidityScore,
-                      ),
-                      LadderTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (activeTab == 'builder')
-                        ..._buildBuilder(
-                          snapshot,
-                          amountUsd,
-                          selectedPreset,
-                          rungs,
-                          totalAllocated,
-                        )
-                      else if (activeTab == 'timeline')
-                        TimelineTab(
-                          snapshot: snapshot,
-                          rungs: rungs,
-                          onEmptyCta: _goToBuilderTab,
-                        )
-                      else
-                        AnalysisTab(
-                          snapshot: snapshot,
-                          rungs: rungs,
-                          amountUsd: amountUsd,
-                          weightedApy: weightedApy,
-                          annualInterest: annualInterest,
-                          liquidityScore: liquidityScore,
-                          onEmptyCta: _goToBuilderTab,
-                        ),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Savings ladder confirmation review',
-                        message:
-                            'Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.',
-                        contractId: 'SC-351',
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsLadderSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final selectedPreset = _preset ?? snapshot.defaultPreset;
+            final amountUsd = _amountUsd ?? snapshot.defaultAmountUsd;
+            final template = savingsLadderTemplateById(
+              snapshot,
+              selectedPreset,
+            );
+            final rungs = selectedPreset == SavingsLadderPreset.custom
+                ? (_customRungs ?? const <SavingsLadderRungDraft>[])
+                : savingsLadderGenerateRungs(template, amountUsd);
+            final totalAllocated = savingsLadderTotalAllocated(rungs);
+            final weightedApy = savingsLadderWeightedApy(rungs);
+            final annualInterest = savingsLadderAnnualInterest(rungs);
+            final liquidityScore = savingsLadderLiquidityScore(rungs);
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final scrollEndPadding =
+                (mode.usesVisualQaFrame
+                    ? _visualNavClearance + _visualScrollExtra
+                    : _nativeNavClearance + _nativeScrollExtra) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        density: VitDensity.compact,
+                        children: [
+                          LadderHero(
+                            snapshot: snapshot,
+                            amountUsd: amountUsd,
+                            annualInterest: annualInterest,
+                            rungCount: rungs.length,
+                            weightedApy: weightedApy,
+                            liquidityScore: liquidityScore,
+                          ),
+                          LadderTabs(
+                            tabs: snapshot.tabs,
+                            active: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (activeTab == 'builder')
+                            ..._buildBuilder(
+                              snapshot,
+                              amountUsd,
+                              selectedPreset,
+                              rungs,
+                              totalAllocated,
+                            )
+                          else if (activeTab == 'timeline')
+                            TimelineTab(
+                              snapshot: snapshot,
+                              rungs: rungs,
+                              onEmptyCta: _goToBuilderTab,
+                            )
+                          else
+                            AnalysisTab(
+                              snapshot: snapshot,
+                              rungs: rungs,
+                              amountUsd: amountUsd,
+                              weightedApy: weightedApy,
+                              annualInterest: annualInterest,
+                              liquidityScore: liquidityScore,
+                              onEmptyCta: _goToBuilderTab,
+                            ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            density: VitDensity.compact,
+                            title: 'Savings ladder confirmation review',
+                            message:
+                                'Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.',
+                            contractId: 'SC-351',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -235,7 +267,11 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
   }
 
   void _removeRung(String id) {
-    final snapshot = ref.read(savingsLadderRepositoryProvider).getLadder();
+    // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
+    // `.value` (đã có sẵn vì chỉ tap được nút này sau khi nhánh data:
+    // render), không cần provider trung gian mới.
+    final snapshot = ref.read(savingsLadderSnapshotProvider).value;
+    if (snapshot == null) return;
     final amountUsd = _amountUsd ?? snapshot.defaultAmountUsd;
     final preset = _preset ?? snapshot.defaultPreset;
     final current = preset == SavingsLadderPreset.custom
@@ -252,7 +288,9 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
   }
 
   void _toggleAutoRenew(String id) {
-    final snapshot = ref.read(savingsLadderRepositoryProvider).getLadder();
+    // Bẫy 15: xem _removeRung ở trên.
+    final snapshot = ref.read(savingsLadderSnapshotProvider).value;
+    if (snapshot == null) return;
     final amountUsd = _amountUsd ?? snapshot.defaultAmountUsd;
     final preset = _preset ?? snapshot.defaultPreset;
     final current = preset == SavingsLadderPreset.custom

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -67,7 +68,7 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getStaking();
+    final stakingAsync = ref.watch(launchpadStakingSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -85,10 +86,10 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
           semanticLabel: 'Stake token Launchpool và nhận phần thưởng',
           semanticIdentifier: 'SC-298',
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Launchpool Staking',
+            subtitle: 'Stake token · Nhận phần thưởng',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(AppRoutePaths.launchpad),
           ),
           child: Column(
             children: [
@@ -112,17 +113,34 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
-                        _StakingHero(snapshot: snapshot),
-                        switch (_activeTab) {
-                          _StakingTab.pools => _PoolsTab(snapshot: snapshot),
-                          _StakingTab.positions => _PositionsTab(
-                            snapshot: snapshot,
-                          ),
-                          _StakingTab.calculator => _ApyCalculator(
-                            pools: snapshot.pools,
-                          ),
-                        },
-                        const _RiskDisclosure(),
+                        ...stakingAsync.when(
+                          loading: () => const [VitSkeletonList()],
+                          error: (error, stackTrace) => [
+                            VitErrorState(
+                              title: 'Không tải được staking',
+                              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                              actionLabel: 'Thử lại',
+                              onAction: () => ref.invalidate(
+                                launchpadStakingSnapshotProvider,
+                              ),
+                            ),
+                          ],
+                          data: (snapshot) => [
+                            _StakingHero(snapshot: snapshot),
+                            switch (_activeTab) {
+                              _StakingTab.pools => _PoolsTab(
+                                snapshot: snapshot,
+                              ),
+                              _StakingTab.positions => _PositionsTab(
+                                snapshot: snapshot,
+                              ),
+                              _StakingTab.calculator => _ApyCalculator(
+                                pools: snapshot.pools,
+                              ),
+                            },
+                            const _RiskDisclosure(),
+                          ],
+                        ),
                       ],
                     ),
                   ),

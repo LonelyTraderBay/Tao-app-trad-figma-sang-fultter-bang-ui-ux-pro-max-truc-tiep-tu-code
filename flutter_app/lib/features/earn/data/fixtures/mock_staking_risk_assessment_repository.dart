@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingRiskAssessmentRepository
+final class MockStakingRiskAssessmentRepository extends _MockEarnRepositoryBase
     implements StakingRiskAssessmentRepository {
-  const MockStakingRiskAssessmentRepository();
+  const MockStakingRiskAssessmentRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingRiskAssessmentSnapshot getRiskAssessment() {
+  Future<StakingRiskAssessmentSnapshot> getRiskAssessment() async {
+    await _simulateNetwork();
     return const StakingRiskAssessmentSnapshot(
       endpoint: '/api/mobile/earn/earn-staking-risk-assessment',
       actionDraft:
@@ -257,12 +261,13 @@ final class MockStakingRiskAssessmentRepository
   }
 }
 
-final class MockStakingDashboardRepository
+final class MockStakingDashboardRepository extends _MockEarnRepositoryBase
     implements StakingDashboardRepository {
-  const MockStakingDashboardRepository();
+  const MockStakingDashboardRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingDashboardSnapshot getDashboard() {
+  Future<StakingDashboardSnapshot> getDashboard() async {
+    await _simulateNetwork();
     return const StakingDashboardSnapshot(
       endpoint: '/api/mobile/earn/earn-dashboard',
       actionDraft:

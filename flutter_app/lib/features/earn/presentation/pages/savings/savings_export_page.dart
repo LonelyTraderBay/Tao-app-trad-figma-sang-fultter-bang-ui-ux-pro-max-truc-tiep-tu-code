@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -71,19 +72,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsExportRepositoryProvider).getExport();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final selectedReport = _reportType ?? snapshot.defaultReportType;
-    final selectedFormat = _format ?? snapshot.defaultFormat;
-    final selectedPeriod = _period ?? snapshot.defaultPeriod;
-    final selectedScope = _scope ?? snapshot.defaultScope;
-    final enabledOptions = _enabledOptions ?? snapshot.defaultEnabledOptions;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsExportSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -91,168 +80,207 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
       semanticIdentifier: 'SC-348',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ColoredBox(
-                color: AppColors.surface,
-                child: Padding(
-                  padding: EarnSpacingTokens.earnSurfaceTabsPadding,
-                  child: _ExportTabs(
-                    tabs: snapshot.tabs,
-                    active: activeTab,
-                    onChanged: (tab) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _tab = tab);
-                    },
-                  ),
-                ),
-              ),
-              const Divider(
-                height: AppSpacing.dividerHairline,
-                thickness: AppSpacing.dividerHairline,
-                color: AppColors.divider,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _ExportHero(snapshot: snapshot),
-                      if (activeTab == 'create') ...[
-                        const VitSectionHeader(
-                          title: 'Loại báo cáo',
-                          variant: VitSectionHeaderVariant.accentBar,
-                          accentColor: AppModuleAccents.earn,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _ReportTypeList(
-                          reports: snapshot.reportTypes,
-                          selected: selectedReport,
-                          onChanged: (report) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _reportType = report;
-                              _previewReady = false;
-                            });
-                          },
-                        ),
-                        const VitSectionHeader(
-                          title: 'Định dạng file',
-                          variant: VitSectionHeaderVariant.accentBar,
-                          accentColor: AppModuleAccents.earn,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _FormatCards(
-                          formats: snapshot.formats,
-                          selected: selectedFormat,
-                          onChanged: (format) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _format = format;
-                              _previewReady = false;
-                            });
-                          },
-                        ),
-                        const VitSectionHeader(
-                          title: 'Khoảng thời gian',
-                          variant: VitSectionHeaderVariant.accentBar,
-                          accentColor: AppModuleAccents.earn,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _PeriodChips(
-                          periods: snapshot.periods,
-                          selected: selectedPeriod,
-                          onChanged: (period) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _period = period;
-                              _previewReady = false;
-                            });
-                          },
-                        ),
-                        const VitSectionHeader(
-                          title: 'Loại giao dịch',
-                          variant: VitSectionHeaderVariant.accentBar,
-                          accentColor: AppModuleAccents.earn,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _ScopeChips(
-                          scopes: snapshot.scopes,
-                          selected: selectedScope,
-                          onChanged: (scope) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _scope = scope;
-                              _previewReady = false;
-                            });
-                          },
-                        ),
-                        const VitSectionHeader(
-                          title: 'Tùy chọn thêm',
-                          variant: VitSectionHeaderVariant.accentBar,
-                          accentColor: AppModuleAccents.earn,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _OptionsList(
-                          options: snapshot.options,
-                          enabled: enabledOptions,
-                          onToggle: _toggleOption,
-                        ),
-                        _ExportSummary(
-                          snapshot: snapshot,
-                          selectedReport: selectedReport,
-                          selectedFormat: selectedFormat,
-                        ),
-                        EarnWarningBanner(
-                          text: snapshot.sensitiveNotice,
-                          lineHeight:
-                              EarnSpacingTokens.earnExportWarningLineHeight,
-                        ),
-                        VitHighRiskStatePanel(
-                          state: _previewReady
-                              ? VitHighRiskUiState.success
-                              : VitHighRiskUiState.riskReview,
-                          title: _previewReady
-                              ? 'Đã sẵn sàng xem trước'
-                              : 'Cần xem xét trước khi xuất',
-                          message:
-                              'Dữ liệu tài khoản được che, phạm vi báo cáo, định dạng file, phí và khoảng thời gian giao dịch được xem xét trước khi xuất.',
-                          contractId:
-                              'savings-export-${selectedReport.name}-${selectedFormat.name}',
-                        ),
-                        if (_previewReady)
-                          _PreviewReadyBanner(format: selectedFormat),
-                        VitCtaButton(
-                          key: SavingsExportPage.exportButtonKey,
-                          onPressed: () => _previewExport(selectedFormat),
-                          leading: const Icon(Icons.file_download_outlined),
-                          child: Text(
-                            'Xem trước & Xuất ${_formatLabel(selectedFormat)}',
-                          ),
-                        ),
-                      ] else
-                        _HistoryList(history: snapshot.history),
-                      const SavingsToolsYieldFooter(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsExportSnapshotProvider),
+            ),
           ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final selectedReport = _reportType ?? snapshot.defaultReportType;
+            final selectedFormat = _format ?? snapshot.defaultFormat;
+            final selectedPeriod = _period ?? snapshot.defaultPeriod;
+            final selectedScope = _scope ?? snapshot.defaultScope;
+            final enabledOptions =
+                _enabledOptions ?? snapshot.defaultEnabledOptions;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ColoredBox(
+                    color: AppColors.surface,
+                    child: Padding(
+                      padding: EarnSpacingTokens.earnSurfaceTabsPadding,
+                      child: _ExportTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _ExportHero(snapshot: snapshot),
+                          if (activeTab == 'create') ...[
+                            const VitSectionHeader(
+                              title: 'Loại báo cáo',
+                              variant: VitSectionHeaderVariant.accentBar,
+                              accentColor: AppModuleAccents.earn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _ReportTypeList(
+                              reports: snapshot.reportTypes,
+                              selected: selectedReport,
+                              onChanged: (report) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _reportType = report;
+                                  _previewReady = false;
+                                });
+                              },
+                            ),
+                            const VitSectionHeader(
+                              title: 'Định dạng file',
+                              variant: VitSectionHeaderVariant.accentBar,
+                              accentColor: AppModuleAccents.earn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _FormatCards(
+                              formats: snapshot.formats,
+                              selected: selectedFormat,
+                              onChanged: (format) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _format = format;
+                                  _previewReady = false;
+                                });
+                              },
+                            ),
+                            const VitSectionHeader(
+                              title: 'Khoảng thời gian',
+                              variant: VitSectionHeaderVariant.accentBar,
+                              accentColor: AppModuleAccents.earn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _PeriodChips(
+                              periods: snapshot.periods,
+                              selected: selectedPeriod,
+                              onChanged: (period) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _period = period;
+                                  _previewReady = false;
+                                });
+                              },
+                            ),
+                            const VitSectionHeader(
+                              title: 'Loại giao dịch',
+                              variant: VitSectionHeaderVariant.accentBar,
+                              accentColor: AppModuleAccents.earn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _ScopeChips(
+                              scopes: snapshot.scopes,
+                              selected: selectedScope,
+                              onChanged: (scope) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _scope = scope;
+                                  _previewReady = false;
+                                });
+                              },
+                            ),
+                            const VitSectionHeader(
+                              title: 'Tùy chọn thêm',
+                              variant: VitSectionHeaderVariant.accentBar,
+                              accentColor: AppModuleAccents.earn,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _OptionsList(
+                              options: snapshot.options,
+                              enabled: enabledOptions,
+                              onToggle: _toggleOption,
+                            ),
+                            _ExportSummary(
+                              snapshot: snapshot,
+                              selectedReport: selectedReport,
+                              selectedFormat: selectedFormat,
+                            ),
+                            EarnWarningBanner(
+                              text: snapshot.sensitiveNotice,
+                              lineHeight:
+                                  EarnSpacingTokens.earnExportWarningLineHeight,
+                            ),
+                            VitHighRiskStatePanel(
+                              state: _previewReady
+                                  ? VitHighRiskUiState.success
+                                  : VitHighRiskUiState.riskReview,
+                              title: _previewReady
+                                  ? 'Đã sẵn sàng xem trước'
+                                  : 'Cần xem xét trước khi xuất',
+                              message:
+                                  'Dữ liệu tài khoản được che, phạm vi báo cáo, định dạng file, phí và khoảng thời gian giao dịch được xem xét trước khi xuất.',
+                              contractId:
+                                  'savings-export-${selectedReport.name}-${selectedFormat.name}',
+                            ),
+                            if (_previewReady)
+                              _PreviewReadyBanner(format: selectedFormat),
+                            VitCtaButton(
+                              key: SavingsExportPage.exportButtonKey,
+                              onPressed: () => _previewExport(selectedFormat),
+                              leading: const Icon(Icons.file_download_outlined),
+                              child: Text(
+                                'Xem trước & Xuất ${_formatLabel(selectedFormat)}',
+                              ),
+                            ),
+                          ] else
+                            _HistoryList(history: snapshot.history),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -260,7 +288,10 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
 
   void _toggleOption(String id) {
     HapticFeedback.selectionClick();
-    final snapshot = ref.read(savingsExportRepositoryProvider).getExport();
+    // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
+    // `.value` thay vì gọi lại repo.
+    final snapshot = ref.read(savingsExportSnapshotProvider).value;
+    if (snapshot == null) return;
     final next = <String>{
       ...(_enabledOptions ?? snapshot.defaultEnabledOptions),
     };

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -49,17 +50,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(savingsAnalyticsRepositoryProvider)
-        .getAnalytics();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final activeRange = _range ?? snapshot.defaultTimeRange;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsAnalyticsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -67,67 +58,103 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
       semanticIdentifier: 'SC-343',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnDashboard),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _SummaryHero(summary: snapshot.summary),
-                      VitTabBar(
-                        variant: VitTabBarVariant.segment,
-                        activeKey: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                        tabs: [
-                          for (final tab in snapshot.tabs)
-                            VitTabItem(key: tab, label: tab),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnDashboard),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsAnalyticsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final activeRange = _range ?? snapshot.defaultTimeRange;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _SummaryHero(summary: snapshot.summary),
+                          VitTabBar(
+                            variant: VitTabBarVariant.segment,
+                            activeKey: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                            tabs: [
+                              for (final tab in snapshot.tabs)
+                                VitTabItem(key: tab, label: tab),
+                            ],
+                          ),
+                          if (activeTab == 'Yield') ...[
+                            _TimeRangeSelector(
+                              ranges: snapshot.timeRanges,
+                              activeRange: activeRange,
+                              onChanged: (range) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _range = range);
+                              },
+                            ),
+                            _YieldChartCard(
+                              summary: snapshot.summary,
+                              points: snapshot.yieldHistory,
+                            ),
+                            _MonthlyIncomeCard(
+                              points: snapshot.monthlyEarnings,
+                            ),
+                            _MetricRow(summary: snapshot.summary),
+                          ] else
+                            _SecondaryTabContent(
+                              tab: activeTab,
+                              summary: snapshot.summary,
+                            ),
+                          const SavingsToolsYieldFooter(),
                         ],
                       ),
-                      if (activeTab == 'Yield') ...[
-                        _TimeRangeSelector(
-                          ranges: snapshot.timeRanges,
-                          activeRange: activeRange,
-                          onChanged: (range) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _range = range);
-                          },
-                        ),
-                        _YieldChartCard(
-                          summary: snapshot.summary,
-                          points: snapshot.yieldHistory,
-                        ),
-                        _MonthlyIncomeCard(points: snapshot.monthlyEarnings),
-                        _MetricRow(summary: snapshot.summary),
-                      ] else
-                        _SecondaryTabContent(
-                          tab: activeTab,
-                          summary: snapshot.summary,
-                        ),
-                      const SavingsToolsYieldFooter(),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

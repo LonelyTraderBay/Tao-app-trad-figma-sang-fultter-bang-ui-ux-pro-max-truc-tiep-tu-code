@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -55,23 +56,7 @@ class _StakingNotificationsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingNotificationsRepositoryProvider)
-        .getNotifications();
-    _settings ??= snapshot.settings;
-    _channels ??= snapshot.channels;
-    _history ??= snapshot.history;
-
-    final history = _history!;
-    final unreadCount = history
-        .where((notification) => !notification.read)
-        .length;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingNotificationsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,64 +64,107 @@ class _StakingNotificationsPageState
       semanticIdentifier: 'SC-371',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Cảnh báo APY và sự kiện stake',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingNotificationsPage.infoKey,
-                        title: snapshot.infoTitle,
-                        message: snapshot.infoBody,
-                        icon: Icons.notifications_none_rounded,
-                        accentColor: AppModuleAccents.earn,
-                        padding: EarnSpacingTokens.earnCardPaddingX4,
-                      ),
-                      _SettingsList(
-                        settings: _settings!,
-                        onToggle: _toggleSetting,
-                      ),
-                      _ChannelsList(
-                        channels: _channels!,
-                        onToggle: _toggleChannel,
-                      ),
-                      _HistoryList(
-                        history: history,
-                        unreadCount: unreadCount,
-                        onMarkAllRead: _markAllRead,
-                        onMarkRead: _markRead,
-                      ),
-                      _DoNotDisturbCard(
-                        enabled: _dndEnabled,
-                        onToggle: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _dndEnabled = !_dndEnabled);
-                        },
-                      ),
-                      _FooterNote(text: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingNotificationsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _settings ??= snapshot.settings;
+            _channels ??= snapshot.channels;
+            _history ??= snapshot.history;
+
+            final history = _history!;
+            final unreadCount = history
+                .where((notification) => !notification.read)
+                .length;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Cảnh báo APY và sự kiện stake',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitInfoCallout(
+                            key: StakingNotificationsPage.infoKey,
+                            title: snapshot.infoTitle,
+                            message: snapshot.infoBody,
+                            icon: Icons.notifications_none_rounded,
+                            accentColor: AppModuleAccents.earn,
+                            padding: EarnSpacingTokens.earnCardPaddingX4,
+                          ),
+                          _SettingsList(
+                            settings: _settings!,
+                            onToggle: _toggleSetting,
+                          ),
+                          _ChannelsList(
+                            channels: _channels!,
+                            onToggle: _toggleChannel,
+                          ),
+                          _HistoryList(
+                            history: history,
+                            unreadCount: unreadCount,
+                            onMarkAllRead: _markAllRead,
+                            onMarkRead: _markRead,
+                          ),
+                          _DoNotDisturbCard(
+                            enabled: _dndEnabled,
+                            onToggle: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _dndEnabled = !_dndEnabled);
+                            },
+                          ),
+                          _FooterNote(text: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

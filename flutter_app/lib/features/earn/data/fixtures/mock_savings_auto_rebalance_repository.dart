@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsAutoRebalanceRepository
+final class MockSavingsAutoRebalanceRepository extends _MockEarnRepositoryBase
     implements SavingsAutoRebalanceRepository {
-  const MockSavingsAutoRebalanceRepository();
+  const MockSavingsAutoRebalanceRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsAutoRebalanceSnapshot getRebalance() {
+  Future<SavingsAutoRebalanceSnapshot> getRebalance() async {
+    await _simulateNetwork();
     return const SavingsAutoRebalanceSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-rebalance',
       actionDraft:
@@ -181,11 +185,16 @@ final class MockSavingsAutoRebalanceRepository
 }
 
 final class MockSavingsNotificationPreferencesRepository
+    extends _MockEarnRepositoryBase
     implements SavingsNotificationPreferencesRepository {
-  const MockSavingsNotificationPreferencesRepository();
+  const MockSavingsNotificationPreferencesRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsNotificationPreferencesSnapshot getPreferences() {
+  Future<SavingsNotificationPreferencesSnapshot> getPreferences() async {
+    await _simulateNetwork();
     return const SavingsNotificationPreferencesSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-notification-preferences',
       actionDraft:

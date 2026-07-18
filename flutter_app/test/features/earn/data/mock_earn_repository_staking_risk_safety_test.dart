@@ -28,8 +28,8 @@ void main() {
   const contingencyPlanRepo = MockStakingContingencyPlanRepository();
 
   group('Earn staking risk & safety mocks smoke test', () {
-    test('getInsurance returns a populated insurance snapshot', () {
-      final snapshot = insuranceRepo.getInsurance();
+    test('getInsurance returns a populated insurance snapshot', () async {
+      final snapshot = await insuranceRepo.getInsurance();
 
       expect(snapshot, isA<StakingInsuranceSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/earn/earn-insurance');
@@ -44,8 +44,8 @@ void main() {
     });
 
     test('getTransparency returns a populated insurance fund transparency '
-        'snapshot', () {
-      final snapshot = transparencyRepo.getTransparency();
+        'snapshot', () async {
+      final snapshot = await transparencyRepo.getTransparency();
 
       expect(snapshot, isA<StakingInsuranceFundTransparencySnapshot>());
       expect(
@@ -62,42 +62,51 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getReporting returns a populated transaction reporting snapshot', () {
-      final snapshot = reportingRepo.getReporting();
+    test(
+      'getReporting returns a populated transaction reporting snapshot',
+      () async {
+        final snapshot = await reportingRepo.getReporting();
 
-      expect(snapshot, isA<StakingTransactionReportingSnapshot>());
-      expect(snapshot.endpoint, '/api/mobile/earn/earn-transaction-reporting');
-      expect(snapshot.title, 'Tax Reporting');
-      expect(snapshot.years, hasLength(3));
-      expect(snapshot.defaultYear, '2025');
-      expect(snapshot.defaultCostBasis, 'FIFO');
-      expect(snapshot.summary, isA<StakingTaxSummaryDraft>());
-      expect(snapshot.transactions, isNotEmpty);
-      expect(snapshot.costBasisMethods, isNotEmpty);
-      expect(snapshot.taxForms, isNotEmpty);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingTransactionReportingSnapshot>());
+        expect(
+          snapshot.endpoint,
+          '/api/mobile/earn/earn-transaction-reporting',
+        );
+        expect(snapshot.title, 'Tax Reporting');
+        expect(snapshot.years, hasLength(3));
+        expect(snapshot.defaultYear, '2025');
+        expect(snapshot.defaultCostBasis, 'FIFO');
+        expect(snapshot.summary, isA<StakingTaxSummaryDraft>());
+        expect(snapshot.transactions, isNotEmpty);
+        expect(snapshot.costBasisMethods, isNotEmpty);
+        expect(snapshot.taxForms, isNotEmpty);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getDocumentation returns a populated API documentation snapshot', () {
-      final snapshot = documentationRepo.getDocumentation();
+    test(
+      'getDocumentation returns a populated API documentation snapshot',
+      () async {
+        final snapshot = await documentationRepo.getDocumentation();
 
-      expect(snapshot, isA<StakingApiDocumentationSnapshot>());
-      expect(snapshot.endpoint, '/api/mobile/earn/earn-api-documentation');
-      expect(snapshot.title, 'API Documentation');
-      expect(snapshot.stats, hasLength(3));
-      expect(snapshot.defaultTab, 'endpoints');
-      expect(snapshot.defaultLanguage, 'javascript');
-      expect(snapshot.endpoints, isNotEmpty);
-      expect(snapshot.codeExamples, isNotEmpty);
-      expect(snapshot.rateLimits, isNotEmpty);
-      expect(snapshot.errorCodes, isNotEmpty);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingApiDocumentationSnapshot>());
+        expect(snapshot.endpoint, '/api/mobile/earn/earn-api-documentation');
+        expect(snapshot.title, 'API Documentation');
+        expect(snapshot.stats, hasLength(3));
+        expect(snapshot.defaultTab, 'endpoints');
+        expect(snapshot.defaultLanguage, 'javascript');
+        expect(snapshot.endpoints, isNotEmpty);
+        expect(snapshot.codeExamples, isNotEmpty);
+        expect(snapshot.rateLimits, isNotEmpty);
+        expect(snapshot.errorCodes, isNotEmpty);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
     test(
       'getProofOfReserves returns a populated proof of reserves snapshot',
-      () {
-        final snapshot = proofOfReservesRepo.getProofOfReserves();
+      () async {
+        final snapshot = await proofOfReservesRepo.getProofOfReserves();
 
         expect(snapshot, isA<StakingProofOfReservesSnapshot>());
         expect(snapshot.endpoint, '/api/mobile/earn/earn-proof-of-reserves');
@@ -112,27 +121,30 @@ void main() {
       },
     );
 
-    test('getRiskDashboard returns a populated risk dashboard snapshot', () {
-      final snapshot = riskDashboardRepo.getRiskDashboard();
+    test(
+      'getRiskDashboard returns a populated risk dashboard snapshot',
+      () async {
+        final snapshot = await riskDashboardRepo.getRiskDashboard();
 
-      expect(snapshot, isA<StakingRiskDashboardSnapshot>());
-      expect(snapshot.endpoint, '/api/mobile/earn/earn-risk-dashboard');
-      expect(snapshot.title, 'Risk Dashboard');
-      expect(snapshot.overallScore, 28);
-      expect(snapshot.totalStakedUsd, 100000);
-      expect(snapshot.atRiskUsd, 5000);
-      expect(snapshot.protectedPercent, 95);
-      expect(snapshot.riskMetrics, hasLength(6));
-      expect(snapshot.exposures, hasLength(4));
-      expect(snapshot.events, hasLength(3));
-      expect(snapshot.actions, hasLength(4));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingRiskDashboardSnapshot>());
+        expect(snapshot.endpoint, '/api/mobile/earn/earn-risk-dashboard');
+        expect(snapshot.title, 'Risk Dashboard');
+        expect(snapshot.overallScore, 28);
+        expect(snapshot.totalStakedUsd, 100000);
+        expect(snapshot.atRiskUsd, 5000);
+        expect(snapshot.protectedPercent, 95);
+        expect(snapshot.riskMetrics, hasLength(6));
+        expect(snapshot.exposures, hasLength(4));
+        expect(snapshot.events, hasLength(3));
+        expect(snapshot.actions, hasLength(4));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
     test(
       'getSlashingHistory returns a populated slashing history snapshot',
-      () {
-        final snapshot = slashingHistoryRepo.getSlashingHistory();
+      () async {
+        final snapshot = await slashingHistoryRepo.getSlashingHistory();
 
         expect(snapshot, isA<StakingSlashingHistorySnapshot>());
         expect(snapshot.endpoint, '/api/mobile/earn/earn-slashing-history');
@@ -151,8 +163,8 @@ void main() {
 
     test(
       'getValidatorHealth returns a populated validator health snapshot',
-      () {
-        final snapshot = validatorHealthRepo.getValidatorHealth();
+      () async {
+        final snapshot = await validatorHealthRepo.getValidatorHealth();
 
         expect(snapshot, isA<StakingValidatorHealthMonitorSnapshot>());
         expect(
@@ -172,8 +184,8 @@ void main() {
 
     test(
       'getCalculator returns a populated risk score calculator snapshot',
-      () {
-        final snapshot = calculatorRepo.getCalculator();
+      () async {
+        final snapshot = await calculatorRepo.getCalculator();
 
         expect(snapshot, isA<StakingRiskScoreCalculatorSnapshot>());
         expect(
@@ -195,8 +207,8 @@ void main() {
 
     test(
       'getEmergencyActions returns a populated emergency actions snapshot',
-      () {
-        final snapshot = emergencyActionsRepo.getEmergencyActions();
+      () async {
+        final snapshot = await emergencyActionsRepo.getEmergencyActions();
 
         expect(snapshot, isA<StakingEmergencyActionsSnapshot>());
         expect(snapshot.endpoint, '/api/mobile/earn/earn-emergency-actions');
@@ -213,8 +225,8 @@ void main() {
 
     test(
       'getContingencyPlan returns a populated contingency plan snapshot',
-      () {
-        final snapshot = contingencyPlanRepo.getContingencyPlan();
+      () async {
+        final snapshot = await contingencyPlanRepo.getContingencyPlan();
 
         expect(snapshot, isA<StakingContingencyPlanSnapshot>());
         expect(snapshot.endpoint, '/api/mobile/earn/earn-contingency-plan');

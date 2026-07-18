@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-364 mock repository exposes liquid staking BE draft', () {
-    final snapshot = const MockStakingLiquidStakingRepository()
+  test('SC-364 mock repository exposes liquid staking BE draft', () async {
+    final snapshot = await const MockStakingLiquidStakingRepository()
         .getLiquidStaking();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-liquid-staking');

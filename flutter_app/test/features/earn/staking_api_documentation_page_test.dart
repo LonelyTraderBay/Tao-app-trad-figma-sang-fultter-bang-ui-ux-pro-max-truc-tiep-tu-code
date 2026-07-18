@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-379 mock repository exposes API documentation BE draft', () {
-    final snapshot = const MockStakingApiDocumentationRepository()
+  test('SC-379 mock repository exposes API documentation BE draft', () async {
+    final snapshot = await const MockStakingApiDocumentationRepository()
         .getDocumentation();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-api-documentation');

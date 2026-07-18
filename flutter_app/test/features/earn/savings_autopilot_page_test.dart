@@ -30,8 +30,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-350 mock repository exposes savings autopilot BE draft', () {
-    final snapshot = const MockSavingsAutoPilotRepository().getAutoPilot();
+  test('SC-350 mock repository exposes savings autopilot BE draft', () async {
+    final snapshot = await const MockSavingsAutoPilotRepository()
+        .getAutoPilot();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-autopilot');
     expect(snapshot.actionDraft, contains('autopilot/activate'));

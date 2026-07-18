@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-374 mock repository exposes audit reports BE draft', () {
-    final snapshot = const MockStakingAuditReportsRepository()
+  test('SC-374 mock repository exposes audit reports BE draft', () async {
+    final snapshot = await const MockStakingAuditReportsRepository()
         .getAuditReports();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-audit-reports');

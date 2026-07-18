@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -63,15 +64,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingInsuranceRepositoryProvider)
-        .getInsurance();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingInsuranceSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,65 +73,102 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
       semanticIdentifier: 'SC-365',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: snapshot.infoTitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingInsurancePage.infoKey,
-                        message: snapshot.infoBody,
-                        icon: Icons.shield_outlined,
-                        accentColor: AppModuleAccents.earn,
-                        padding: EarnSpacingTokens.earnPaddingX4,
-                      ),
-                      _InsuranceTabs(
-                        active: _tab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == _InsuranceTab.overview)
-                        _OverviewTab(snapshot: snapshot),
-                      if (_tab == _InsuranceTab.plans)
-                        _PlansTab(snapshot: snapshot, onOpenPlan: _showPlan),
-                      if (_tab == _InsuranceTab.positions)
-                        _PositionsTab(
-                          snapshot: snapshot,
-                          onAddInsurance: (position) {
-                            HapticFeedback.lightImpact();
-                            setState(() => _tab = _InsuranceTab.plans);
-                          },
-                        ),
-                      if (_tab == _InsuranceTab.claims)
-                        _ClaimsTab(
-                          snapshot: snapshot,
-                          onFileClaim: () => _showClaimForm(snapshot),
-                        ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingInsuranceSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: snapshot.infoTitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitInfoCallout(
+                            key: StakingInsurancePage.infoKey,
+                            message: snapshot.infoBody,
+                            icon: Icons.shield_outlined,
+                            accentColor: AppModuleAccents.earn,
+                            padding: EarnSpacingTokens.earnPaddingX4,
+                          ),
+                          _InsuranceTabs(
+                            active: _tab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (_tab == _InsuranceTab.overview)
+                            _OverviewTab(snapshot: snapshot),
+                          if (_tab == _InsuranceTab.plans)
+                            _PlansTab(
+                              snapshot: snapshot,
+                              onOpenPlan: _showPlan,
+                            ),
+                          if (_tab == _InsuranceTab.positions)
+                            _PositionsTab(
+                              snapshot: snapshot,
+                              onAddInsurance: (position) {
+                                HapticFeedback.lightImpact();
+                                setState(() => _tab = _InsuranceTab.plans);
+                              },
+                            ),
+                          if (_tab == _InsuranceTab.claims)
+                            _ClaimsTab(
+                              snapshot: snapshot,
+                              onFileClaim: () => _showClaimForm(snapshot),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

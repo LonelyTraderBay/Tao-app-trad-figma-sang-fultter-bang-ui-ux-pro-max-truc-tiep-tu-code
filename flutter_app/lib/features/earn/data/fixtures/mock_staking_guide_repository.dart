@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingGuideRepository implements StakingGuideRepository {
-  const MockStakingGuideRepository();
+final class MockStakingGuideRepository extends _MockEarnRepositoryBase
+    implements StakingGuideRepository {
+  const MockStakingGuideRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingGuideSnapshot getGuide() {
+  Future<StakingGuideSnapshot> getGuide() async {
+    await _simulateNetwork();
     return const StakingGuideSnapshot(
       endpoint: '/api/mobile/earn/earn-guide',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -225,11 +227,13 @@ final class MockStakingGuideRepository implements StakingGuideRepository {
   }
 }
 
-final class MockStakingFAQRepository implements StakingFAQRepository {
-  const MockStakingFAQRepository();
+final class MockStakingFAQRepository extends _MockEarnRepositoryBase
+    implements StakingFAQRepository {
+  const MockStakingFAQRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingFAQSnapshot getFAQ() {
+  Future<StakingFAQSnapshot> getFAQ() async {
+    await _simulateNetwork();
     return StakingFAQSnapshot(
       endpoint: '/api/mobile/earn/earn-faq',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -399,12 +403,16 @@ final class MockStakingFAQRepository implements StakingFAQRepository {
   }
 }
 
-final class MockStakingNotificationsRepository
+final class MockStakingNotificationsRepository extends _MockEarnRepositoryBase
     implements StakingNotificationsRepository {
-  const MockStakingNotificationsRepository();
+  const MockStakingNotificationsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingNotificationsSnapshot getNotifications() {
+  Future<StakingNotificationsSnapshot> getNotifications() async {
+    await _simulateNetwork();
     return const StakingNotificationsSnapshot(
       endpoint: '/api/mobile/earn/earn-notifications',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

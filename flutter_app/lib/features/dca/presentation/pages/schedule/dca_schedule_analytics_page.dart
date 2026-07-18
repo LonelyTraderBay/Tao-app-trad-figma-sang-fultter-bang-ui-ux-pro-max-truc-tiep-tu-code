@@ -34,7 +34,9 @@ class DCAScheduleAnalytics extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(dcaScheduleAnalyticsProvider(configId));
+    final scheduleAnalyticsAsync = ref.watch(
+      dcaScheduleAnalyticsProvider(configId),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -65,36 +67,51 @@ class DCAScheduleAnalytics extends ConsumerWidget {
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: [
-                if (!snapshot.configFound)
-                  DcaMissingConfigPanel(
-                    icon: Icons.event_busy_outlined,
-                    title: snapshot.message,
-                    titleKey: DCAScheduleAnalytics.missingConfigKey,
-                    subtitle:
-                        'Chưa có cấu hình lịch mua để phân tích. Thiết lập lịch trình trước khi xem cadence và chất lượng thực thi.',
-                    ctaLabel: 'Thiết lập lịch mua',
-                    ctaIcon: Icons.schedule_outlined,
-                    ctaKey: DCAScheduleAnalytics.configureKey,
-                    onConfigure: () =>
-                        context.go(AppRoutePaths.dcaScheduleConfig),
-                  )
-                else
-                  VitPageSection(
-                    label: 'Hiệu suất lịch mua',
-                    accentColor: AppModuleAccents.dca,
-                    children: [
-                      VitCard(
-                        density: VitDensity.compact,
-                        child: Text(
-                          snapshot.message,
-                          style: AppTextStyles.base.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.medium,
-                          ),
-                        ),
+                ...scheduleAnalyticsAsync.when(
+                  loading: () => const [VitSkeletonList()],
+                  error: (error, stackTrace) => [
+                    VitErrorState(
+                      title: 'Không tải được phân tích lịch mua',
+                      message: 'Thử lại sau hoặc quay lại màn DCA.',
+                      actionLabel: 'Thử lại',
+                      onAction: () => ref.invalidate(
+                        dcaScheduleAnalyticsProvider(configId),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                  data: (snapshot) => [
+                    if (!snapshot.configFound)
+                      DcaMissingConfigPanel(
+                        icon: Icons.event_busy_outlined,
+                        title: snapshot.message,
+                        titleKey: DCAScheduleAnalytics.missingConfigKey,
+                        subtitle:
+                            'Chưa có cấu hình lịch mua để phân tích. Thiết lập lịch trình trước khi xem cadence và chất lượng thực thi.',
+                        ctaLabel: 'Thiết lập lịch mua',
+                        ctaIcon: Icons.schedule_outlined,
+                        ctaKey: DCAScheduleAnalytics.configureKey,
+                        onConfigure: () =>
+                            context.go(AppRoutePaths.dcaScheduleConfig),
+                      )
+                    else
+                      VitPageSection(
+                        label: 'Hiệu suất lịch mua',
+                        accentColor: AppModuleAccents.dca,
+                        children: [
+                          VitCard(
+                            density: VitDensity.compact,
+                            child: Text(
+                              snapshot.message,
+                              style: AppTextStyles.base.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.medium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
                 const VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
                   title: 'Phân tích chỉ đọc',

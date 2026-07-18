@@ -79,8 +79,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-376 mock repository exposes suitability BE draft', () {
-    final snapshot = const MockStakingSuitabilityAssessmentRepository()
+  test('SC-376 mock repository exposes suitability BE draft', () async {
+    final snapshot = await const MockStakingSuitabilityAssessmentRepository()
         .getAssessment();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-suitability-assessment');

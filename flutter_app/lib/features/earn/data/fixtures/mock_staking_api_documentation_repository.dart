@@ -1,11 +1,16 @@
 part of '../repositories/mock_earn_repository.dart';
 
 final class MockStakingApiDocumentationRepository
+    extends _MockEarnRepositoryBase
     implements StakingApiDocumentationRepository {
-  const MockStakingApiDocumentationRepository();
+  const MockStakingApiDocumentationRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingApiDocumentationSnapshot getDocumentation() {
+  Future<StakingApiDocumentationSnapshot> getDocumentation() async {
+    await _simulateNetwork();
     return const StakingApiDocumentationSnapshot(
       endpoint: '/api/mobile/earn/earn-api-documentation',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -332,12 +337,16 @@ curl -X POST https://api.platform.com/v1/staking/stake \
   }
 }
 
-final class MockStakingProofOfReservesRepository
+final class MockStakingProofOfReservesRepository extends _MockEarnRepositoryBase
     implements StakingProofOfReservesRepository {
-  const MockStakingProofOfReservesRepository();
+  const MockStakingProofOfReservesRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingProofOfReservesSnapshot getProofOfReserves() {
+  Future<StakingProofOfReservesSnapshot> getProofOfReserves() async {
+    await _simulateNetwork();
     return const StakingProofOfReservesSnapshot(
       endpoint: '/api/mobile/earn/earn-proof-of-reserves',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

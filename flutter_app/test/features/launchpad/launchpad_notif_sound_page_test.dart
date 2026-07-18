@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-306 mock repository exposes notification sound BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getNotifSound();
+  test('SC-306 mock repository exposes notification sound BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getNotifSound();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-notif-sound');
     expect(

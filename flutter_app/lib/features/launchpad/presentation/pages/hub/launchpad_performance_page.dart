@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 part '../../widgets/hub/launchpad_performance_overview.dart';
 part '../../widgets/hub/launchpad_performance_projects.dart';
@@ -79,7 +80,7 @@ class _LaunchpadPerformancePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getPerformance();
+    final performanceAsync = ref.watch(launchpadPerformanceSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? _launchpadPerformanceVisualNavClearance
@@ -97,10 +98,10 @@ class _LaunchpadPerformancePageState
           semanticLabel: 'Hiệu suất Launchpad – vùng cuộn nội dung',
           semanticIdentifier: 'SC-297',
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Hiệu suất Launchpad',
+            subtitle: 'Lịch sử · Thống kê',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(AppRoutePaths.launchpad),
           ),
           child: Column(
             children: [
@@ -124,18 +125,33 @@ class _LaunchpadPerformancePageState
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
-                        switch (_activeTab) {
-                          _PerformanceTab.overview => _OverviewTab(
-                            snapshot: snapshot,
-                          ),
-                          _PerformanceTab.projects => _ProjectsTab(
-                            projects: snapshot.projects,
-                          ),
-                          _PerformanceTab.chart => _ChartTab(
-                            points: snapshot.chartPoints,
-                          ),
-                        },
-                        const _PerformanceDisclaimer(),
+                        ...performanceAsync.when(
+                          loading: () => const [VitSkeletonList()],
+                          error: (error, stackTrace) => [
+                            VitErrorState(
+                              title: 'Không tải được hiệu suất',
+                              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                              actionLabel: 'Thử lại',
+                              onAction: () => ref.invalidate(
+                                launchpadPerformanceSnapshotProvider,
+                              ),
+                            ),
+                          ],
+                          data: (snapshot) => [
+                            switch (_activeTab) {
+                              _PerformanceTab.overview => _OverviewTab(
+                                snapshot: snapshot,
+                              ),
+                              _PerformanceTab.projects => _ProjectsTab(
+                                projects: snapshot.projects,
+                              ),
+                              _PerformanceTab.chart => _ChartTab(
+                                points: snapshot.chartPoints,
+                              ),
+                            },
+                            const _PerformanceDisclaimer(),
+                          ],
+                        ),
                       ],
                     ),
                   ),

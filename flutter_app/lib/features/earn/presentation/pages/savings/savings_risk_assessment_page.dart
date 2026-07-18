@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -51,14 +52,9 @@ class _SavingsRiskAssessmentPageState
   bool _showResult = false;
   final Map<String, int> _answers = {};
 
-  int get _score {
-    return ref.read(savingsRiskAssessmentControllerProvider).score(_answers);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(savingsRiskAssessmentControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(savingsRiskAssessmentControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -72,70 +68,101 @@ class _SavingsRiskAssessmentPageState
       semanticIdentifier: 'SC-339',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: _showResult ? snapshot.resultTitle : snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: controllerAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      ...(_showResult
-                          ? [
-                              _ResultView(
-                                snapshot: snapshot,
-                                result: controller.resultForAnswers(_answers),
-                                score: _score,
-                                onReset: _reset,
-                              ),
-                            ]
-                          : [
-                              _ProgressHeader(
-                                currentQuestion: _currentQuestion,
-                                totalQuestions: snapshot.questions.length,
-                              ),
-                              const VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Risk assessment in review',
-                                message:
-                                    'Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.',
-                                contractId: 'savings-risk-assessment',
-                              ),
-                              _QuestionCard(
-                                question: snapshot.questions[_currentQuestion],
-                                index: _currentQuestion,
-                                selectedValue:
-                                    _answers[snapshot
-                                        .questions[_currentQuestion]
-                                        .id],
-                                onSelected: _selectOption,
-                                onPrevious: _previous,
-                              ),
-                              VitInfoCallout(
-                                message: snapshot.infoText,
-                                padding: EarnSpacingTokens.earnCardPaddingX3,
-                              ),
-                            ]),
-                      const SavingsToolsYieldFooter(),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(savingsRiskAssessmentSnapshotProvider),
+            ),
+          ),
+          data: (controller) {
+            final snapshot = controller.state.snapshot;
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: _showResult ? snapshot.resultTitle : snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollTailReserve,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          ...(_showResult
+                              ? [
+                                  _ResultView(
+                                    snapshot: snapshot,
+                                    result: controller.resultForAnswers(
+                                      _answers,
+                                    ),
+                                    score: controller.score(_answers),
+                                    onReset: _reset,
+                                  ),
+                                ]
+                              : [
+                                  _ProgressHeader(
+                                    currentQuestion: _currentQuestion,
+                                    totalQuestions: snapshot.questions.length,
+                                  ),
+                                  const VitHighRiskStatePanel(
+                                    state: VitHighRiskUiState.riskReview,
+                                    title: 'Risk assessment in review',
+                                    message:
+                                        'Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.',
+                                    contractId: 'savings-risk-assessment',
+                                  ),
+                                  _QuestionCard(
+                                    question:
+                                        snapshot.questions[_currentQuestion],
+                                    index: _currentQuestion,
+                                    selectedValue:
+                                        _answers[snapshot
+                                            .questions[_currentQuestion]
+                                            .id],
+                                    onSelected: _selectOption,
+                                    onPrevious: _previous,
+                                  ),
+                                  VitInfoCallout(
+                                    message: snapshot.infoText,
+                                    padding:
+                                        EarnSpacingTokens.earnCardPaddingX3,
+                                  ),
+                                ]),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -143,23 +170,22 @@ class _SavingsRiskAssessmentPageState
 
   void _selectOption(SavingsRiskQuestionDraft question, int value) {
     HapticFeedback.selectionClick();
+    // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
+    // `.value` (đã có sẵn vì câu hỏi chỉ render trong nhánh data:).
+    final questionsLength = ref
+        .read(savingsRiskAssessmentSnapshotProvider)
+        .value
+        ?.questions
+        .length;
+    if (questionsLength == null) return;
     setState(() {
       _answers[question.id] = value;
-      if (_currentQuestion < _questionsLength - 1) {
+      if (_currentQuestion < questionsLength - 1) {
         _currentQuestion += 1;
       } else {
         _showResult = true;
       }
     });
-  }
-
-  int get _questionsLength {
-    return ref
-        .read(savingsRiskAssessmentControllerProvider)
-        .state
-        .snapshot
-        .questions
-        .length;
   }
 
   void _previous() {

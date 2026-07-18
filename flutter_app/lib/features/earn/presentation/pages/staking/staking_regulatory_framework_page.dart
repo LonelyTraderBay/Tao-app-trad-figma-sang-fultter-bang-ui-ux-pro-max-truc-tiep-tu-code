@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -51,17 +52,7 @@ class _StakingRegulatoryFrameworkPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingRegulatoryFrameworkRepositoryProvider)
-        .getFramework();
-    _activeTab ??= snapshot.defaultTabId;
-
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingRegulatoryFrameworkSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -69,60 +60,97 @@ class _StakingRegulatoryFrameworkPageState
       semanticIdentifier: 'SC-373',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Minh bạch giấy phép và tuân thủ',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _HeroCard(snapshot: snapshot),
-                      SizedBox(
-                        key: StakingRegulatoryFrameworkPage.tabsKey,
-                        child: VitTabBar(
-                          variant: VitTabBarVariant.underline,
-                          tabs: [
-                            for (final tab in snapshot.tabs)
-                              VitTabItem(key: tab.id, label: tab.label),
-                          ],
-                          activeKey: _activeTab!,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeTab = id);
-                          },
-                        ),
-                      ),
-                      if (_activeTab == 'protection')
-                        _ProtectionTab(snapshot: snapshot)
-                      else if (_activeTab == 'complaints')
-                        _ComplaintsTab(snapshot: snapshot)
-                      else
-                        _LicensesTab(
-                          snapshot: snapshot,
-                          onLicenseTap: _openLicenseSheet,
-                        ),
-                      _FooterNote(text: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingRegulatoryFrameworkSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _activeTab ??= snapshot.defaultTabId;
+
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Minh bạch giấy phép và tuân thủ',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _HeroCard(snapshot: snapshot),
+                          SizedBox(
+                            key: StakingRegulatoryFrameworkPage.tabsKey,
+                            child: VitTabBar(
+                              variant: VitTabBarVariant.underline,
+                              tabs: [
+                                for (final tab in snapshot.tabs)
+                                  VitTabItem(key: tab.id, label: tab.label),
+                              ],
+                              activeKey: _activeTab!,
+                              onChanged: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _activeTab = id);
+                              },
+                            ),
+                          ),
+                          if (_activeTab == 'protection')
+                            _ProtectionTab(snapshot: snapshot)
+                          else if (_activeTab == 'complaints')
+                            _ComplaintsTab(snapshot: snapshot)
+                          else
+                            _LicensesTab(
+                              snapshot: snapshot,
+                              onLicenseTap: _openLicenseSheet,
+                            ),
+                          _FooterNote(text: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

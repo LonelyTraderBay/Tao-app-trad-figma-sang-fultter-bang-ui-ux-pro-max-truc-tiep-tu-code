@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -45,15 +46,9 @@ class _StakingValidatorHealthMonitorPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingValidatorHealthMonitorRepositoryProvider)
-        .getValidatorHealth();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(
+      stakingValidatorHealthMonitorSnapshotProvider,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -61,59 +56,96 @@ class _StakingValidatorHealthMonitorPageState
       semanticIdentifier: 'SC-383',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Theo dõi sức khỏe validator',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _SummaryStats(snapshot: snapshot),
-                      VitPageSection(
-                        key: StakingValidatorHealthMonitorPage.validatorsKey,
-                        label: 'Active Validators',
-                        accentColor: AppColors.primarySoft,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingValidatorHealthMonitorSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Theo dõi sức khỏe validator',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
                         children: [
-                          for (final validator in snapshot.validators)
-                            _ValidatorCard(
-                              validator: validator,
-                              selected: _selectedValidatorId == validator.id,
-                              onTap: () {
-                                setState(() {
-                                  _selectedValidatorId =
-                                      _selectedValidatorId == validator.id
-                                      ? null
-                                      : validator.id;
-                                });
-                              },
-                            ),
+                          _SummaryStats(snapshot: snapshot),
+                          VitPageSection(
+                            key:
+                                StakingValidatorHealthMonitorPage.validatorsKey,
+                            label: 'Active Validators',
+                            accentColor: AppColors.primarySoft,
+                            children: [
+                              for (final validator in snapshot.validators)
+                                _ValidatorCard(
+                                  validator: validator,
+                                  selected:
+                                      _selectedValidatorId == validator.id,
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedValidatorId =
+                                          _selectedValidatorId == validator.id
+                                          ? null
+                                          : validator.id;
+                                    });
+                                  },
+                                ),
+                            ],
+                          ),
+                          _TrendSection(points: snapshot.uptimeHistory),
+                          if (snapshot.warningCount > 0)
+                            _ActionRequiredCard(snapshot: snapshot),
+                          _FooterNote(note: snapshot.footerNote),
                         ],
                       ),
-                      _TrendSection(points: snapshot.uptimeHistory),
-                      if (snapshot.warningCount > 0)
-                        _ActionRequiredCard(snapshot: snapshot),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

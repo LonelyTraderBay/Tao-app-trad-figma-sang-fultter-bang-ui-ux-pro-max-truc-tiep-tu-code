@@ -32,8 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-172 mock repository exposes schedule config BE draft', () {
-    final snapshot = const MockDcaRepository().getScheduleConfig();
+  test('SC-172 mock repository exposes schedule config BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getScheduleConfig();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-schedule-config');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

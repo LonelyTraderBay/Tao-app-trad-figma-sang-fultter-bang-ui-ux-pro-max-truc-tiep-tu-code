@@ -4,116 +4,119 @@ import 'package:vit_trade_flutter/features/launchpad/domain/repositories/launchp
 export 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 export 'package:vit_trade_flutter/features/launchpad/domain/repositories/launchpad_repository.dart';
 
+/// GD4-F4: forwards the now-`Future<T>` [LaunchpadRepository] contract
+/// unchanged — see docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md.
 final class LaunchpadController implements LaunchpadRepository {
   const LaunchpadController(this._repository);
 
   final LaunchpadRepository _repository;
 
   @override
-  LaunchpadHomeSnapshot getHome() => _repository.getHome();
+  Future<LaunchpadHomeSnapshot> getHome() => _repository.getHome();
 
   @override
-  LaunchpadDetailSnapshot getDetail(String projectId) {
+  Future<LaunchpadDetailSnapshot> getDetail(String projectId) {
     return _repository.getDetail(projectId);
   }
 
   @override
-  LaunchpadPortfolioSnapshot getPortfolio() => _repository.getPortfolio();
+  Future<LaunchpadPortfolioSnapshot> getPortfolio() =>
+      _repository.getPortfolio();
 
   @override
-  LaunchpadReceiptSnapshot getReceipt(String subscriptionId) {
+  Future<LaunchpadReceiptSnapshot> getReceipt(String subscriptionId) {
     return _repository.getReceipt(subscriptionId);
   }
 
   @override
-  LaunchpadPerformanceSnapshot getPerformance() {
+  Future<LaunchpadPerformanceSnapshot> getPerformance() {
     return _repository.getPerformance();
   }
 
   @override
-  LaunchpadStakingSnapshot getStaking() => _repository.getStaking();
+  Future<LaunchpadStakingSnapshot> getStaking() => _repository.getStaking();
 
   @override
-  LaunchpadBatchClaimSnapshot getBatchClaim() {
+  Future<LaunchpadBatchClaimSnapshot> getBatchClaim() {
     return _repository.getBatchClaim();
   }
 
   @override
-  LaunchpadClaimReceiptSnapshot getClaimReceipt(String positionId) {
+  Future<LaunchpadClaimReceiptSnapshot> getClaimReceipt(String positionId) {
     return _repository.getClaimReceipt(positionId);
   }
 
   @override
-  LaunchpadIdoBridgeSnapshot getIdoBridge(String projectId) {
+  Future<LaunchpadIdoBridgeSnapshot> getIdoBridge(String projectId) {
     return _repository.getIdoBridge(projectId);
   }
 
   @override
-  LaunchpadBridgeCompareSnapshot getBridgeCompare() {
+  Future<LaunchpadBridgeCompareSnapshot> getBridgeCompare() {
     return _repository.getBridgeCompare();
   }
 
   @override
-  LaunchpadNotifSoundSnapshot getNotifSound() {
+  Future<LaunchpadNotifSoundSnapshot> getNotifSound() {
     return _repository.getNotifSound();
   }
 
   @override
-  LaunchpadEventLogSnapshot getEventLog() => _repository.getEventLog();
+  Future<LaunchpadEventLogSnapshot> getEventLog() => _repository.getEventLog();
 
   @override
-  LaunchpadAbiDiffSnapshot getAbiDiff(String contractId) {
+  Future<LaunchpadAbiDiffSnapshot> getAbiDiff(String contractId) {
     return _repository.getAbiDiff(contractId);
   }
 
   @override
-  LaunchpadAddressBookSnapshot getAddressBook() {
+  Future<LaunchpadAddressBookSnapshot> getAddressBook() {
     return _repository.getAddressBook();
   }
 
   @override
-  LaunchpadWebhooksSnapshot getWebhooks() => _repository.getWebhooks();
+  Future<LaunchpadWebhooksSnapshot> getWebhooks() => _repository.getWebhooks();
 
   @override
-  LaunchpadGasTrackerSnapshot getGasTracker() {
+  Future<LaunchpadGasTrackerSnapshot> getGasTracker() {
     return _repository.getGasTracker();
   }
 
   @override
-  LaunchpadRebalanceSnapshot getRebalance() {
+  Future<LaunchpadRebalanceSnapshot> getRebalance() {
     return _repository.getRebalance();
   }
 
   @override
-  LaunchpadMultisigSnapshot getMultisig() => _repository.getMultisig();
+  Future<LaunchpadMultisigSnapshot> getMultisig() => _repository.getMultisig();
 
   @override
-  LaunchpadSwapAggregatorSnapshot getSwapAggregator() {
+  Future<LaunchpadSwapAggregatorSnapshot> getSwapAggregator() {
     return _repository.getSwapAggregator();
   }
 
   @override
-  LaunchpadLimitOrdersSnapshot getLimitOrders() {
+  Future<LaunchpadLimitOrdersSnapshot> getLimitOrders() {
     return _repository.getLimitOrders();
   }
 
   @override
-  LaunchpadDcaBuilderSnapshot getDcaBuilder() {
+  Future<LaunchpadDcaBuilderSnapshot> getDcaBuilder() {
     return _repository.getDcaBuilder();
   }
 
   @override
-  LaunchpadRiskAnalyticsSnapshot getRiskAnalytics() {
+  Future<LaunchpadRiskAnalyticsSnapshot> getRiskAnalytics() {
     return _repository.getRiskAnalytics();
   }
 
   @override
-  LaunchpadBridgeOrderSnapshot getBridgeOrder(String txId) {
+  Future<LaunchpadBridgeOrderSnapshot> getBridgeOrder(String txId) {
     return _repository.getBridgeOrder(txId);
   }
 
   @override
-  LaunchpadContractSnapshot getContract(String projectId) {
+  Future<LaunchpadContractSnapshot> getContract(String projectId) {
     return _repository.getContract(projectId);
   }
 }

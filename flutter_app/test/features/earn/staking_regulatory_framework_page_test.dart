@@ -29,35 +29,38 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-373 mock repository exposes regulatory framework BE draft', () {
-    final snapshot = const MockStakingRegulatoryFrameworkRepository()
-        .getFramework();
+  test(
+    'SC-373 mock repository exposes regulatory framework BE draft',
+    () async {
+      final snapshot = await const MockStakingRegulatoryFrameworkRepository()
+          .getFramework();
 
-    expect(snapshot.endpoint, '/api/mobile/earn/earn-regulatory-framework');
-    expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
-    expect(snapshot.title, 'Regulatory Framework');
-    expect(snapshot.backRoute, AppRoutePaths.earnStaking);
-    expect(snapshot.defaultTabId, 'licenses');
-    expect(snapshot.tabs.map((tab) => tab.id), [
-      'licenses',
-      'protection',
-      'complaints',
-    ]);
-    expect(snapshot.licenses, hasLength(5));
-    expect(snapshot.protectionSchemes, hasLength(3));
-    expect(snapshot.complaintSteps, hasLength(3));
-    expect(snapshot.authorityContacts, hasLength(3));
-    expect(snapshot.contractNotes, contains('riskData'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        EarnScreenState.loading,
-        EarnScreenState.empty,
-        EarnScreenState.error,
-        EarnScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/earn/earn-regulatory-framework');
+      expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
+      expect(snapshot.title, 'Regulatory Framework');
+      expect(snapshot.backRoute, AppRoutePaths.earnStaking);
+      expect(snapshot.defaultTabId, 'licenses');
+      expect(snapshot.tabs.map((tab) => tab.id), [
+        'licenses',
+        'protection',
+        'complaints',
+      ]);
+      expect(snapshot.licenses, hasLength(5));
+      expect(snapshot.protectionSchemes, hasLength(3));
+      expect(snapshot.complaintSteps, hasLength(3));
+      expect(snapshot.authorityContacts, hasLength(3));
+      expect(snapshot.contractNotes, contains('riskData'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          EarnScreenState.loading,
+          EarnScreenState.empty,
+          EarnScreenState.error,
+          EarnScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-373 renders licenses baseline', (tester) async {
     await pumpFramework(tester);

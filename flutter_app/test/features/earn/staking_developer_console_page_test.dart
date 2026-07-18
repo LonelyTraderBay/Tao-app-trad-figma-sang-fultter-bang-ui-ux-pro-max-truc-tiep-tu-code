@@ -28,8 +28,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-396 mock repository exposes developer console BE draft', () {
-    final snapshot = const MockStakingDeveloperConsoleRepository().getConsole();
+  test('SC-396 mock repository exposes developer console BE draft', () async {
+    final snapshot = await const MockStakingDeveloperConsoleRepository()
+        .getConsole();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-developer-console');
     expect(

@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingRiskDashboardRepository
+final class MockStakingRiskDashboardRepository extends _MockEarnRepositoryBase
     implements StakingRiskDashboardRepository {
-  const MockStakingRiskDashboardRepository();
+  const MockStakingRiskDashboardRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingRiskDashboardSnapshot getRiskDashboard() {
+  Future<StakingRiskDashboardSnapshot> getRiskDashboard() async {
+    await _simulateNetwork();
     return const StakingRiskDashboardSnapshot(
       endpoint: '/api/mobile/earn/earn-risk-dashboard',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -151,12 +155,16 @@ final class MockStakingRiskDashboardRepository
   }
 }
 
-final class MockStakingSlashingHistoryRepository
+final class MockStakingSlashingHistoryRepository extends _MockEarnRepositoryBase
     implements StakingSlashingHistoryRepository {
-  const MockStakingSlashingHistoryRepository();
+  const MockStakingSlashingHistoryRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingSlashingHistorySnapshot getSlashingHistory() {
+  Future<StakingSlashingHistorySnapshot> getSlashingHistory() async {
+    await _simulateNetwork();
     return const StakingSlashingHistorySnapshot(
       endpoint: '/api/mobile/earn/earn-slashing-history',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -345,11 +353,16 @@ final class MockStakingSlashingHistoryRepository
 }
 
 final class MockStakingValidatorHealthMonitorRepository
+    extends _MockEarnRepositoryBase
     implements StakingValidatorHealthMonitorRepository {
-  const MockStakingValidatorHealthMonitorRepository();
+  const MockStakingValidatorHealthMonitorRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingValidatorHealthMonitorSnapshot getValidatorHealth() {
+  Future<StakingValidatorHealthMonitorSnapshot> getValidatorHealth() async {
+    await _simulateNetwork();
     return const StakingValidatorHealthMonitorSnapshot(
       endpoint: '/api/mobile/earn/earn-validator-health-monitor',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -456,11 +469,16 @@ final class MockStakingValidatorHealthMonitorRepository
 }
 
 final class MockStakingRiskScoreCalculatorRepository
+    extends _MockEarnRepositoryBase
     implements StakingRiskScoreCalculatorRepository {
-  const MockStakingRiskScoreCalculatorRepository();
+  const MockStakingRiskScoreCalculatorRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingRiskScoreCalculatorSnapshot getCalculator() {
+  Future<StakingRiskScoreCalculatorSnapshot> getCalculator() async {
+    await _simulateNetwork();
     return const StakingRiskScoreCalculatorSnapshot(
       endpoint: '/api/mobile/earn/earn-risk-score-calculator',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

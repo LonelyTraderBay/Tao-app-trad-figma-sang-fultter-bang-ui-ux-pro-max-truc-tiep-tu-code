@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -53,16 +54,13 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingEarnRepositoryProvider)
-        .getStakingEarn(route: widget.route);
+    final snapshotAsync = ref.watch(stakingEarnSnapshotProvider(widget.route));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x7
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
-    final products = _filteredProducts(snapshot.products, _filter);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -73,73 +71,102 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
           : 'SC-328',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.rootModule,
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.rootModule,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.home),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(
-              context,
-            ).copyWith(scrollbars: false),
-            child: VitInsetScrollView(
-              physics: const ClampingScrollPhysics(),
-              bottomInset: bottomInset,
-              child: VitPageContent(
-                rhythm: VitPageRhythm.standard,
-                padding: VitContentPadding.compact,
-                gap: VitContentGap.defaultGap,
-                density: VitDensity.compact,
-                children: [
-                  _EarnHero(snapshot: snapshot),
-                  VitCtaButton(
-                    key: StakingEarnPage.savingsButtonKey,
-                    onPressed: () => context.go(snapshot.savingsRoute),
-                    height: AppSpacing.inputHeight,
-                    leading: const Icon(Icons.savings_outlined),
-                    child: const Text('Tiet kiem'),
-                  ),
-                  if (snapshot.highRiskContractId != null)
-                    VitHighRiskStatePanel(
-                      state: VitHighRiskUiState.riskReview,
-                      title: 'Yield risk states active',
-                      message:
-                          'Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.',
-                      contractId: snapshot.highRiskContractId,
-                    ),
-                  _MainTabs(
-                    activeTab: _tab,
-                    positionCount: snapshot.positions.length,
-                    onChanged: (tab) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _tab = tab);
-                    },
-                  ),
-                  if (_tab == _EarnTab.products) ...[
-                    _FilterRow(
-                      activeFilter: _filter,
-                      onChanged: (filter) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _filter = filter);
-                      },
-                    ),
-                    _ProductList(products: products),
-                  ] else
-                    _PositionsList(
-                      snapshot: snapshot,
-                      onExploreProducts: () {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = _EarnTab.products);
-                      },
-                    ),
-                  const _YieldDisclaimer(),
-                ],
-              ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.rootModule,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.home),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingEarnSnapshotProvider(widget.route)),
             ),
           ),
+          data: (snapshot) {
+            final products = _filteredProducts(snapshot.products, _filter);
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.rootModule,
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: VitInsetScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  bottomInset: bottomInset,
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
+                    children: [
+                      _EarnHero(snapshot: snapshot),
+                      VitCtaButton(
+                        key: StakingEarnPage.savingsButtonKey,
+                        onPressed: () => context.go(snapshot.savingsRoute),
+                        height: AppSpacing.inputHeight,
+                        leading: const Icon(Icons.savings_outlined),
+                        child: const Text('Tiet kiem'),
+                      ),
+                      if (snapshot.highRiskContractId != null)
+                        VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Yield risk states active',
+                          message:
+                              'Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.',
+                          contractId: snapshot.highRiskContractId,
+                        ),
+                      _MainTabs(
+                        activeTab: _tab,
+                        positionCount: snapshot.positions.length,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                      if (_tab == _EarnTab.products) ...[
+                        _FilterRow(
+                          activeFilter: _filter,
+                          onChanged: (filter) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _filter = filter);
+                          },
+                        ),
+                        _ProductList(products: products),
+                      ] else
+                        _PositionsList(
+                          snapshot: snapshot,
+                          onExploreProducts: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tab = _EarnTab.products);
+                          },
+                        ),
+                      const _YieldDisclaimer(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-176 mock repository exposes backtester BE draft', () {
-    final snapshot = const MockDcaRepository().getBacktester();
+  test('SC-176 mock repository exposes backtester BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getBacktester();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-backtester');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

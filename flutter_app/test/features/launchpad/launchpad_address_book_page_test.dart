@@ -29,37 +29,42 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-309 mock repository exposes launchpad address book BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getAddressBook();
+  test(
+    'SC-309 mock repository exposes launchpad address book BE draft',
+    () async {
+      final snapshot = await const MockLaunchpadRepository(
+        loadDelay: Duration.zero,
+      ).getAddressBook();
 
-    expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-address-book');
-    expect(
-      snapshot.actionDraft,
-      'POST /kyc/submission-step; POST /launchpad/subscribe|claim|bridge where applicable',
-    );
-    expect(snapshot.title, 'So dia chi');
-    expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.addresses, hasLength(6));
-    expect(snapshot.addresses.first.label, 'Vi chinh');
-    expect(snapshot.chainFilters, [
-      'all',
-      'Ethereum',
-      'BSC',
-      'Polygon',
-      'Arbitrum',
-    ]);
-    expect(snapshot.contractNotes, contains('multi-chain saved addresses'));
-    expect(snapshot.contractNotes, contains('KYC submission-step'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        LaunchpadScreenState.loading,
-        LaunchpadScreenState.empty,
-        LaunchpadScreenState.error,
-        LaunchpadScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-address-book');
+      expect(
+        snapshot.actionDraft,
+        'POST /kyc/submission-step; POST /launchpad/subscribe|claim|bridge where applicable',
+      );
+      expect(snapshot.title, 'So dia chi');
+      expect(snapshot.backRoute, AppRoutePaths.launchpad);
+      expect(snapshot.addresses, hasLength(6));
+      expect(snapshot.addresses.first.label, 'Vi chinh');
+      expect(snapshot.chainFilters, [
+        'all',
+        'Ethereum',
+        'BSC',
+        'Polygon',
+        'Arbitrum',
+      ]);
+      expect(snapshot.contractNotes, contains('multi-chain saved addresses'));
+      expect(snapshot.contractNotes, contains('KYC submission-step'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          LaunchpadScreenState.loading,
+          LaunchpadScreenState.empty,
+          LaunchpadScreenState.error,
+          LaunchpadScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-309 renders address book baseline', (tester) async {
     await pumpAddressBook(tester);

@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-360 mock repository exposes staking history BE draft', () {
-    final snapshot = const MockStakingHistoryRepository().getHistory();
+  test('SC-360 mock repository exposes staking history BE draft', () async {
+    final snapshot = await const MockStakingHistoryRepository().getHistory();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-history');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

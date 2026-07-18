@@ -30,8 +30,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-339 mock repository exposes risk assessment BE draft', () {
-    final snapshot = const MockSavingsRiskAssessmentRepository()
+  test('SC-339 mock repository exposes risk assessment BE draft', () async {
+    final snapshot = await const MockSavingsRiskAssessmentRepository()
         .getRiskAssessment();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-risk-assessment');

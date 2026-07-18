@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/tools/launchpad_notif_sound_controls.dart';
@@ -71,9 +72,7 @@ class _LaunchpadNotifSoundPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getNotifSound();
-    _ensureState(snapshot);
-
+    final notifSoundAsync = ref.watch(launchpadNotifSoundSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -92,10 +91,10 @@ class _LaunchpadNotifSoundPageState
           semanticLabel: 'Cài đặt âm thanh và thông báo Launchpad',
           semanticIdentifier: 'SC-306',
           header: VitHeader(
-            title: snapshot.title,
+            title: 'Âm thanh thông báo',
             subtitle: 'Cài đặt thông báo · Không ảnh hưởng tham gia IDO',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(AppRoutePaths.launchpad),
           ),
           child: SingleChildScrollView(
             key: LaunchpadNotifSoundPage.contentKey,
@@ -105,75 +104,94 @@ class _LaunchpadNotifSoundPageState
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [
-                _MasterSoundHero(
-                  masterEnabled: _masterEnabled,
-                  volume: _masterVolume,
-                  onToggle: () => _markChanged(() {
-                    _masterEnabled = !_masterEnabled;
-                  }),
-                  onVolumeChanged: (value) => _markChanged(() {
-                    _masterVolume = value;
-                  }),
-                ),
-                VitHighRiskStatePanel(
-                  state: _saved
-                      ? VitHighRiskUiState.success
-                      : VitHighRiskUiState.riskReview,
-                  title: _saved
-                      ? 'Notification settings saved'
-                      : 'Notification settings review',
-                  message:
-                      'Sound, vibration, do-not-disturb, alert categories and delivery preferences are reviewed before saving.',
-                  contractId: 'launchpad-notification-sound',
-                ),
-                _QuickTogglesCard(
-                  vibrate: _vibrate,
-                  doNotDisturb: _doNotDisturb,
-                  dndStartHour: _dndStartHour,
-                  dndEndHour: _dndEndHour,
-                  onVibrate: () => _markChanged(() {
-                    _vibrate = !_vibrate;
-                  }),
-                  onDoNotDisturb: () => _markChanged(() {
-                    _doNotDisturb = !_doNotDisturb;
-                  }),
-                ),
-                if (_doNotDisturb)
-                  _DndScheduleCard(
-                    startHour: _dndStartHour,
-                    endHour: _dndEndHour,
-                    onStartChanged: (value) => _markChanged(() {
-                      _dndStartHour = value;
-                    }),
-                    onEndChanged: (value) => _markChanged(() {
-                      _dndEndHour = value;
-                    }),
-                  ),
-                _CategorySoundSection(
-                  snapshot: snapshot,
-                  masterEnabled: _masterEnabled,
-                  categories: _categories,
-                  expandedCategoryId: _expandedCategoryId,
-                  playingPreviewId: _playingPreviewId,
-                  onToggleCategory: _toggleCategory,
-                  onExpandCategory: (id) => setState(() {
-                    _expandedCategoryId = _expandedCategoryId == id ? null : id;
-                  }),
-                  onSoundType: _setSoundType,
-                  onVolume: _setCategoryVolume,
-                  onPreview: _previewSound,
-                ),
-                const VitInfoCallout(
-                  key: LaunchpadNotifSoundPage.infoKey,
-                  message:
-                      'Âm thanh chỉ phát khi ứng dụng đang hoạt động. Thông báo push ngoài app sử dụng cài đặt hệ thống thiết bị.',
-                  accentColor: AppModuleAccents.launchpad,
-                  padding: LaunchpadSpacingTokens.launchpadPaddingX3,
-                ),
-                _InlineSaveActions(
-                  saved: _saved,
-                  hasChanges: _hasChanges,
-                  onSave: _hasChanges || _saved ? _save : null,
+                ...notifSoundAsync.when(
+                  loading: () => const [VitSkeletonList()],
+                  error: (error, stackTrace) => [
+                    VitErrorState(
+                      title: 'Không tải được cài đặt âm thanh',
+                      message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                      actionLabel: 'Thử lại',
+                      onAction: () =>
+                          ref.invalidate(launchpadNotifSoundSnapshotProvider),
+                    ),
+                  ],
+                  data: (snapshot) {
+                    _ensureState(snapshot);
+                    return [
+                      _MasterSoundHero(
+                        masterEnabled: _masterEnabled,
+                        volume: _masterVolume,
+                        onToggle: () => _markChanged(() {
+                          _masterEnabled = !_masterEnabled;
+                        }),
+                        onVolumeChanged: (value) => _markChanged(() {
+                          _masterVolume = value;
+                        }),
+                      ),
+                      VitHighRiskStatePanel(
+                        state: _saved
+                            ? VitHighRiskUiState.success
+                            : VitHighRiskUiState.riskReview,
+                        title: _saved
+                            ? 'Notification settings saved'
+                            : 'Notification settings review',
+                        message:
+                            'Sound, vibration, do-not-disturb, alert categories and delivery preferences are reviewed before saving.',
+                        contractId: 'launchpad-notification-sound',
+                      ),
+                      _QuickTogglesCard(
+                        vibrate: _vibrate,
+                        doNotDisturb: _doNotDisturb,
+                        dndStartHour: _dndStartHour,
+                        dndEndHour: _dndEndHour,
+                        onVibrate: () => _markChanged(() {
+                          _vibrate = !_vibrate;
+                        }),
+                        onDoNotDisturb: () => _markChanged(() {
+                          _doNotDisturb = !_doNotDisturb;
+                        }),
+                      ),
+                      if (_doNotDisturb)
+                        _DndScheduleCard(
+                          startHour: _dndStartHour,
+                          endHour: _dndEndHour,
+                          onStartChanged: (value) => _markChanged(() {
+                            _dndStartHour = value;
+                          }),
+                          onEndChanged: (value) => _markChanged(() {
+                            _dndEndHour = value;
+                          }),
+                        ),
+                      _CategorySoundSection(
+                        snapshot: snapshot,
+                        masterEnabled: _masterEnabled,
+                        categories: _categories,
+                        expandedCategoryId: _expandedCategoryId,
+                        playingPreviewId: _playingPreviewId,
+                        onToggleCategory: _toggleCategory,
+                        onExpandCategory: (id) => setState(() {
+                          _expandedCategoryId = _expandedCategoryId == id
+                              ? null
+                              : id;
+                        }),
+                        onSoundType: _setSoundType,
+                        onVolume: _setCategoryVolume,
+                        onPreview: _previewSound,
+                      ),
+                      const VitInfoCallout(
+                        key: LaunchpadNotifSoundPage.infoKey,
+                        message:
+                            'Âm thanh chỉ phát khi ứng dụng đang hoạt động. Thông báo push ngoài app sử dụng cài đặt hệ thống thiết bị.',
+                        accentColor: AppModuleAccents.launchpad,
+                        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
+                      ),
+                      _InlineSaveActions(
+                        saved: _saved,
+                        hasChanges: _hasChanges,
+                        onSave: _hasChanges || _saved ? _save : null,
+                      ),
+                    ];
+                  },
                 ),
               ],
             ),

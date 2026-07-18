@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-361 mock repository exposes earnings calendar BE draft', () {
-    final snapshot = const MockStakingEarningsCalendarRepository()
+  test('SC-361 mock repository exposes earnings calendar BE draft', () async {
+    final snapshot = await const MockStakingEarningsCalendarRepository()
         .getCalendar();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-calendar');

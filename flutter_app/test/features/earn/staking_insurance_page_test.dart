@@ -27,8 +27,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-365 mock repository exposes insurance BE draft', () {
-    final snapshot = const MockStakingInsuranceRepository().getInsurance();
+  test('SC-365 mock repository exposes insurance BE draft', () async {
+    final snapshot = await const MockStakingInsuranceRepository()
+        .getInsurance();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-insurance');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
