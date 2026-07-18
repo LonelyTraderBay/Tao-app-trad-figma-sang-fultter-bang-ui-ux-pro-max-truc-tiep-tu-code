@@ -5,11 +5,11 @@ import 'package:vit_trade_flutter/features/notifications/data/notifications_repo
 /// [NotificationsRepository] and asserts each call succeeds without
 /// throwing and returns a plausible, non-empty result.
 void main() {
-  const repository = MockNotificationsRepository();
+  const repository = MockNotificationsRepository(loadDelay: Duration.zero);
 
   group('MockNotificationsRepository smoke test', () {
-    test('getNotifications returns a populated snapshot', () {
-      final snapshot = repository.getNotifications();
+    test('getNotifications returns a populated snapshot', () async {
+      final snapshot = await repository.getNotifications();
 
       expect(snapshot, isA<NotificationsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -23,32 +23,38 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getNotifications does not throw', () {
-      expect(() => repository.getNotifications(), returnsNormally);
+    test('getNotifications does not throw', () async {
+      await expectLater(repository.getNotifications(), completes);
     });
 
-    test('getNotifications exposes the expected endpoint and back route', () {
-      final snapshot = repository.getNotifications();
+    test(
+      'getNotifications exposes the expected endpoint and back route',
+      () async {
+        final snapshot = await repository.getNotifications();
 
-      expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
-      expect(snapshot.backRoute, '/home');
-    });
+        expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
+        expect(snapshot.backRoute, '/home');
+      },
+    );
 
-    test('notifications include a spot-checked entry with expected fields', () {
-      final snapshot = repository.getNotifications();
-      final first = snapshot.notifications.first;
+    test(
+      'notifications include a spot-checked entry with expected fields',
+      () async {
+        final snapshot = await repository.getNotifications();
+        final first = snapshot.notifications.first;
 
-      expect(first, isA<AppNotificationDraft>());
-      expect(first.id, 'notif001');
-      expect(first.type, AppNotificationType.trade);
-      expect(first.title, isNotEmpty);
-      expect(first.message, isNotEmpty);
-      expect(first.time, isNotEmpty);
-      expect(first.actionPath, isNotEmpty);
-    });
+        expect(first, isA<AppNotificationDraft>());
+        expect(first.id, 'notif001');
+        expect(first.type, AppNotificationType.trade);
+        expect(first.title, isNotEmpty);
+        expect(first.message, isNotEmpty);
+        expect(first.time, isNotEmpty);
+        expect(first.actionPath, isNotEmpty);
+      },
+    );
 
-    test('notifications cover multiple app notification types', () {
-      final snapshot = repository.getNotifications();
+    test('notifications cover multiple app notification types', () async {
+      final snapshot = await repository.getNotifications();
       final types = snapshot.notifications.map((n) => n.type).toSet();
 
       expect(types, contains(AppNotificationType.arena));
@@ -57,15 +63,15 @@ void main() {
       expect(types, contains(AppNotificationType.referral));
     });
 
-    test('notifications include both read and unread entries', () {
-      final snapshot = repository.getNotifications();
+    test('notifications include both read and unread entries', () async {
+      final snapshot = await repository.getNotifications();
 
       expect(snapshot.notifications.any((n) => n.isRead), isTrue);
       expect(snapshot.notifications.any((n) => !n.isRead), isTrue);
     });
 
-    test('supportedStates covers the non-ready screen states', () {
-      final snapshot = repository.getNotifications();
+    test('supportedStates covers the non-ready screen states', () async {
+      final snapshot = await repository.getNotifications();
 
       expect(
         snapshot.supportedStates,

@@ -29,9 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-137 mock repository exposes wallet deposit BE draft', () {
-    final snapshot = const MockWalletRepository().getDeposit('USDT');
-    final scopedSnapshot = const MockWalletRepository().getDeposit(
+  test('SC-137 mock repository exposes wallet deposit BE draft', () async {
+    const repository = MockWalletRepository(loadDelay: Duration.zero);
+    final snapshot = await repository.getDeposit('USDT');
+    final scopedSnapshot = await repository.getDeposit(
       'USDT',
       assetScoped: true,
     );

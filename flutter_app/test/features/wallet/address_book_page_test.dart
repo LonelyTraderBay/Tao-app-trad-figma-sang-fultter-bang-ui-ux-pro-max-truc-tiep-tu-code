@@ -31,8 +31,10 @@ void main() {
     return router;
   }
 
-  test('SC-144 mock repository exposes address book BE draft', () {
-    final snapshot = const MockWalletRepository().getAddressBook();
+  test('SC-144 mock repository exposes address book BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getAddressBook();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-address-book');
     expect(snapshot.actionDraft, 'POST /kyc/submission-step');

@@ -18,8 +18,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletTokenApprovalPage extends ConsumerStatefulWidget {
@@ -49,8 +51,7 @@ class _WalletTokenApprovalPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(tokenApprovalControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(tokenApprovalControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -85,21 +86,39 @@ class _WalletTokenApprovalPageState
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      WalletTokenSecurityOverview(snapshot: snapshot),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Xem lại rủi ro phê duyệt',
-                        message:
-                            'Xem trước spender, token, hạn mức, ước tính gas và tác động trước khi thu hồi.',
-                        contractId:
-                            '${snapshot.criticalCount} nghiêm trọng / ${snapshot.unlimitedCount} không giới hạn',
-                        density: VitDensity.compact,
+                      ...controllerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được dữ liệu',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              walletTokenApprovalsSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (controller) {
+                          final snapshot = controller.state.snapshot;
+                          return [
+                            WalletTokenSecurityOverview(snapshot: snapshot),
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Xem lại rủi ro phê duyệt',
+                              message:
+                                  'Xem trước spender, token, hạn mức, ước tính gas và tác động trước khi thu hồi.',
+                              contractId:
+                                  '${snapshot.criticalCount} nghiêm trọng / ${snapshot.unlimitedCount} không giới hạn',
+                              density: VitDensity.compact,
+                            ),
+                            WalletTokenApprovalTabs(
+                              activeTab: _tab,
+                              onChanged: (tab) => setState(() => _tab = tab),
+                            ),
+                            _contentForTab(controller),
+                          ];
+                        },
                       ),
-                      WalletTokenApprovalTabs(
-                        activeTab: _tab,
-                        onChanged: (tab) => setState(() => _tab = tab),
-                      ),
-                      _contentForTab(controller),
                     ],
                   ),
                 ),

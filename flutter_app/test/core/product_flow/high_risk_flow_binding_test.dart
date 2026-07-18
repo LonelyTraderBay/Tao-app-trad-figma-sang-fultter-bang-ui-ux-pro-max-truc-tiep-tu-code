@@ -111,95 +111,98 @@ void main() {
     );
   });
 
-  test('mock repository snapshots expose high-risk contract metadata', () {
-    const trade = MockTradeTerminalRepository();
-    expect(
-      trade.getTrade().highRiskContractId,
-      HighRiskFlowContractIds.tradeSpotOrder,
-    );
-    expect(
-      trade.getOrderReceipt().highRiskContractId,
-      HighRiskFlowContractIds.tradeSpotOrder,
-    );
-    expect(
-      trade.getFutures().highRiskContractId,
-      HighRiskFlowContractIds.tradeMarginFutures,
-    );
-    expect(
-      trade.getMarginTrading().highRiskContractId,
-      HighRiskFlowContractIds.tradeMarginFutures,
-    );
+  test(
+    'mock repository snapshots expose high-risk contract metadata',
+    () async {
+      const trade = MockTradeTerminalRepository();
+      expect(
+        trade.getTrade().highRiskContractId,
+        HighRiskFlowContractIds.tradeSpotOrder,
+      );
+      expect(
+        trade.getOrderReceipt().highRiskContractId,
+        HighRiskFlowContractIds.tradeSpotOrder,
+      );
+      expect(
+        trade.getFutures().highRiskContractId,
+        HighRiskFlowContractIds.tradeMarginFutures,
+      );
+      expect(
+        trade.getMarginTrading().highRiskContractId,
+        HighRiskFlowContractIds.tradeMarginFutures,
+      );
 
-    const bots = MockTradeBotsRepository();
-    expect(
-      bots.getTradingBots().highRiskContractId,
-      HighRiskFlowContractIds.tradeBots,
-    );
+      const bots = MockTradeBotsRepository();
+      expect(
+        bots.getTradingBots().highRiskContractId,
+        HighRiskFlowContractIds.tradeBots,
+      );
 
-    const copy = MockTradeCopyTradingRepository();
-    expect(
-      copy.getCopyTrading().highRiskContractId,
-      HighRiskFlowContractIds.tradeCopy,
-    );
+      const copy = MockTradeCopyTradingRepository();
+      expect(
+        copy.getCopyTrading().highRiskContractId,
+        HighRiskFlowContractIds.tradeCopy,
+      );
 
-    const wallet = MockWalletRepository();
-    expect(
-      wallet.getWithdrawLimits().highRiskContractId,
-      HighRiskFlowContractIds.walletMoneyMovement,
-    );
-    expect(
-      wallet.getWithdraw('USDT').highRiskContractId,
-      HighRiskFlowContractIds.walletMoneyMovement,
-    );
+      const wallet = MockWalletRepository(loadDelay: Duration.zero);
+      expect(
+        (await wallet.getWithdrawLimits()).highRiskContractId,
+        HighRiskFlowContractIds.walletMoneyMovement,
+      );
+      expect(
+        (await wallet.getWithdraw('USDT')).highRiskContractId,
+        HighRiskFlowContractIds.walletMoneyMovement,
+      );
 
-    const p2p = MockP2PRepository();
-    expect(
-      p2p.getHome().highRiskContractId,
-      HighRiskFlowContractIds.p2pEscrowOrder,
-    );
-    expect(
-      p2p.getExpressConfirm(fiatAmount: 5000000).highRiskContractId,
-      HighRiskFlowContractIds.p2pEscrowOrder,
-    );
-    expect(
-      p2p.getOrderTimeline('order001').highRiskContractId,
-      HighRiskFlowContractIds.p2pEscrowOrder,
-    );
-    expect(
-      p2p.getOrder('order001').highRiskContractId,
-      HighRiskFlowContractIds.p2pEscrowOrder,
-    );
-    expect(
-      p2p.getClaimDetail('sample').highRiskContractId,
-      HighRiskFlowContractIds.p2pEscrowOrder,
-    );
+      const p2p = MockP2PRepository();
+      expect(
+        p2p.getHome().highRiskContractId,
+        HighRiskFlowContractIds.p2pEscrowOrder,
+      );
+      expect(
+        p2p.getExpressConfirm(fiatAmount: 5000000).highRiskContractId,
+        HighRiskFlowContractIds.p2pEscrowOrder,
+      );
+      expect(
+        p2p.getOrderTimeline('order001').highRiskContractId,
+        HighRiskFlowContractIds.p2pEscrowOrder,
+      );
+      expect(
+        p2p.getOrder('order001').highRiskContractId,
+        HighRiskFlowContractIds.p2pEscrowOrder,
+      );
+      expect(
+        p2p.getClaimDetail('sample').highRiskContractId,
+        HighRiskFlowContractIds.p2pEscrowOrder,
+      );
 
-    const staking = MockStakingEarnRepository();
-    expect(
-      staking
-          .getStakingEarn(route: StakingEarnRoute.staking)
-          .highRiskContractId,
-      HighRiskFlowContractIds.earnSavingsStaking,
-    );
+      const staking = MockStakingEarnRepository();
+      expect(
+        staking
+            .getStakingEarn(route: StakingEarnRoute.staking)
+            .highRiskContractId,
+        HighRiskFlowContractIds.earnSavingsStaking,
+      );
 
-    const launchpad = MockLaunchpadRepository();
-    expect(
-      launchpad.getBridgeOrder('tx001').highRiskContractId,
-      HighRiskFlowContractIds.launchpadTokenAccess,
-    );
+      const launchpad = MockLaunchpadRepository();
+      expect(
+        launchpad.getBridgeOrder('tx001').highRiskContractId,
+        HighRiskFlowContractIds.launchpadTokenAccess,
+      );
 
-    const predictions = MockPredictionsRepository();
-    expect(
-      predictions.getHome().highRiskContractId,
-      HighRiskFlowContractIds.predictionMarketEvent,
-    );
-    expect(
-      predictions.getEventDetail('event001').highRiskContractId,
-      HighRiskFlowContractIds.predictionMarketEvent,
-    );
-    expect(
-      predictions.getOrderReceipt('receipt001').highRiskContractId,
-      HighRiskFlowContractIds.predictionMarketEvent,
-    );
-  });
+      const predictions = MockPredictionsRepository();
+      expect(
+        predictions.getHome().highRiskContractId,
+        HighRiskFlowContractIds.predictionMarketEvent,
+      );
+      expect(
+        predictions.getEventDetail('event001').highRiskContractId,
+        HighRiskFlowContractIds.predictionMarketEvent,
+      );
+      expect(
+        predictions.getOrderReceipt('receipt001').highRiskContractId,
+        HighRiskFlowContractIds.predictionMarketEvent,
+      );
+    },
+  );
 }

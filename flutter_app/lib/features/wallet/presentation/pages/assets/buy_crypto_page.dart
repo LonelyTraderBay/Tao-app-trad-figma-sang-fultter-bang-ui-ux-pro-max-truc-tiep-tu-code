@@ -10,8 +10,10 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/hub/vit_w
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/assets/wallet_buy_crypto_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class BuyCryptoPage extends ConsumerStatefulWidget {
   const BuyCryptoPage({super.key, this.shellRenderMode});
@@ -49,82 +51,114 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletBuyCryptoProvider);
+    final snapshotAsync = ref.watch(walletBuyCryptoProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + 32
             : DeviceMetrics.nativeBottomChrome + 32) +
         MediaQuery.paddingOf(context).bottom;
-    final crypto = _crypto(snapshot);
-    final payment = _payment(snapshot);
-    final receiveAmount = _amountVnd / crypto.priceVnd;
 
-    if (_success) {
-      return BuySuccessState(
-        crypto: crypto,
-        amountVnd: _amountVnd,
-        receiveAmount: receiveAmount,
-        onWallet: () => context.go(AppRoutePaths.wallet),
-        onBuyMore: () {
-          setState(() {
-            _success = false;
-            _confirming = false;
-            _submitting = false;
-            _amountController.clear();
-          });
-        },
-      );
-    }
-
-    return VitWalletDetailScaffold(
-      title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
-      subtitle: 'Giao dịch · Wallet',
-      semanticLabel: 'Mua tiền mã hoá',
-      semanticIdentifier: 'SC-145',
-      contentKey: BuyCryptoPage.contentKey,
-      bottomInset: bottomInset,
-      onBack: () => _confirming
-          ? setState(() => _confirming = false)
-          : context.go(AppRoutePaths.wallet),
-      children: [
-        if (_confirming) ...[
-          VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Xem lại lệnh mua',
-            message:
-                'Xác nhận số tiền, tài sản nhận, phương thức thanh toán, phí và bước tiếp theo trước khi gửi.',
-            contractId: '${crypto.symbol} / ${payment.name}',
+    return snapshotAsync.when(
+      loading: () => VitWalletDetailScaffold(
+        title: 'Mua Crypto',
+        subtitle: 'Giao dịch · Wallet',
+        semanticLabel: 'Mua tiền mã hoá',
+        semanticIdentifier: 'SC-145',
+        contentKey: BuyCryptoPage.contentKey,
+        bottomInset: bottomInset,
+        onBack: () => context.go(AppRoutePaths.wallet),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitWalletDetailScaffold(
+        title: 'Mua Crypto',
+        subtitle: 'Giao dịch · Wallet',
+        semanticLabel: 'Mua tiền mã hoá',
+        semanticIdentifier: 'SC-145',
+        contentKey: BuyCryptoPage.contentKey,
+        bottomInset: bottomInset,
+        onBack: () => context.go(AppRoutePaths.wallet),
+        children: [
+          VitErrorState(
+            title: 'Không tải được dữ liệu mua crypto',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(walletBuyCryptoProvider),
           ),
-          BuyConfirmContent(
+        ],
+      ),
+      data: (snapshot) {
+        final crypto = _crypto(snapshot);
+        final payment = _payment(snapshot);
+        final receiveAmount = _amountVnd / crypto.priceVnd;
+
+        if (_success) {
+          return BuySuccessState(
             crypto: crypto,
-            payment: payment,
             amountVnd: _amountVnd,
             receiveAmount: receiveAmount,
-            submitting: _submitting,
-            onConfirm: _submitBuyOrder,
-            onBack: () => setState(() => _confirming = false),
-          ),
-        ] else
-          ...BuyInputContent.sections(
-            snapshot: snapshot,
-            selectedCrypto: crypto,
-            selectedPaymentId: _selectedPayment,
-            amountController: _amountController,
-            amountVnd: _amountVnd,
-            receiveAmount: receiveAmount,
-            onAmountChanged: () => setState(() {}),
-            onPreset: (amount) {
-              _amountController.text = amount.toString();
-              setState(() {});
+            onWallet: () => context.go(AppRoutePaths.wallet),
+            onBuyMore: () {
+              setState(() {
+                _success = false;
+                _confirming = false;
+                _submitting = false;
+                _amountController.clear();
+              });
             },
-            onCryptoTap: () => _showCryptoPicker(snapshot),
-            onPaymentChanged: (id) => setState(() => _selectedPayment = id),
-            onBuy: _canBuy(crypto)
-                ? () => setState(() => _confirming = true)
-                : null,
-          ),
-      ],
+          );
+        }
+
+        return VitWalletDetailScaffold(
+          title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
+          subtitle: 'Giao dịch · Wallet',
+          semanticLabel: 'Mua tiền mã hoá',
+          semanticIdentifier: 'SC-145',
+          contentKey: BuyCryptoPage.contentKey,
+          bottomInset: bottomInset,
+          onBack: () => _confirming
+              ? setState(() => _confirming = false)
+              : context.go(AppRoutePaths.wallet),
+          children: [
+            if (_confirming) ...[
+              VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Xem lại lệnh mua',
+                message:
+                    'Xác nhận số tiền, tài sản nhận, phương thức thanh toán, phí và bước tiếp theo trước khi gửi.',
+                contractId: '${crypto.symbol} / ${payment.name}',
+              ),
+              BuyConfirmContent(
+                crypto: crypto,
+                payment: payment,
+                amountVnd: _amountVnd,
+                receiveAmount: receiveAmount,
+                submitting: _submitting,
+                onConfirm: _submitBuyOrder,
+                onBack: () => setState(() => _confirming = false),
+              ),
+            ] else
+              ...BuyInputContent.sections(
+                snapshot: snapshot,
+                selectedCrypto: crypto,
+                selectedPaymentId: _selectedPayment,
+                amountController: _amountController,
+                amountVnd: _amountVnd,
+                receiveAmount: receiveAmount,
+                onAmountChanged: () => setState(() {}),
+                onPreset: (amount) {
+                  _amountController.text = amount.toString();
+                  setState(() {});
+                },
+                onCryptoTap: () => _showCryptoPicker(snapshot),
+                onPaymentChanged: (id) => setState(() => _selectedPayment = id),
+                onBuy: _canBuy(crypto)
+                    ? () => setState(() => _confirming = true)
+                    : null,
+              ),
+          ],
+        );
+      },
     );
   }
 

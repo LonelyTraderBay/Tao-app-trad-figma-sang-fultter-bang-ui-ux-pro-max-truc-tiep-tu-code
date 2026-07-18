@@ -2,10 +2,37 @@ import 'package:vit_trade_flutter/features/notifications/domain/entities/notific
 import 'package:vit_trade_flutter/features/notifications/domain/repositories/notifications_repository.dart';
 
 final class MockNotificationsRepository implements NotificationsRepository {
-  const MockNotificationsRepository();
+  const MockNotificationsRepository({
+    this.simulateError = false,
+    this.loadDelay = Duration.zero,
+  });
+
+  /// When `true`, [getNotifications] throws a [StateError] after
+  /// [loadDelay] — used to exercise error/retry UI states in tests.
+  final bool simulateError;
+
+  /// Simulated network latency before [getNotifications] resolves.
+  ///
+  /// MẶC ĐỊNH PHẢI là [Duration.zero] — KHÁC khuôn 300ms của các mock
+  /// page-scoped (home/wallet/...): badge notifications được watch từ APP
+  /// SHELL nên provider này dựng trong MỌI widget test đi qua router; một
+  /// delay khác 0 để lại pending timer làm hàng trăm test chết
+  /// '!timersPending' (bài học F2). Muốn demo độ trễ, override ở
+  /// composition root — đừng đổi mặc định này.
+  final Duration loadDelay;
 
   @override
-  NotificationsSnapshot getNotifications() {
+  Future<NotificationsSnapshot> getNotifications() async {
+    // Delay 0 thì KHÔNG tạo timer: Future.delayed(Duration.zero) vẫn là
+    // timer, và tester.pump() không-duration không đẩy fake clock nên badge
+    // trên shell không bao giờ resolve trong golden/widget test (bài học
+    // F2). Khuôn này áp cho mọi mock async từ đây (xem GD4-Async-Playbook).
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('notifications_mock_fetch_failed');
+    }
     return const NotificationsSnapshot(
       endpoint: '/api/mobile/notifications/notifications',
       actionDraft: 'PATCH /user/settings or module settings',

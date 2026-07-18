@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-151 mock repository exposes wallet health score BE draft', () {
-    final snapshot = const MockWalletRepository().getHealthScore();
+  test('SC-151 mock repository exposes wallet health score BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getHealthScore();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-health-score');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

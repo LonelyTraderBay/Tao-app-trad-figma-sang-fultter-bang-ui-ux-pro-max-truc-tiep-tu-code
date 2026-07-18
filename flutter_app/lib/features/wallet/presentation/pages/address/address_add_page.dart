@@ -15,7 +15,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class AddressAddPage extends ConsumerStatefulWidget {
@@ -73,8 +75,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(addressAddControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(addressAddControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     if (_saved) {
@@ -117,31 +118,49 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      ...AddressAddForm.sections(
-                        snapshot: snapshot,
-                        selectedNetworkId: _networkId,
-                        selectedAsset: _asset,
-                        labelController: _labelController,
-                        addressController: _addressController,
-                        memoController: _memoController,
-                        whitelist: _whitelist,
-                        agreed: _agreed,
-                        onNetworkChanged: (id) =>
-                            setState(() => _networkId = id),
-                        onAssetChanged: (asset) =>
-                            setState(() => _asset = asset),
-                        onWhitelistChanged: () =>
-                            setState(() => _whitelist = !_whitelist),
-                        onAgreementChanged: () =>
-                            setState(() => _agreed = !_agreed),
-                        onInputChanged: () => setState(() {}),
-                      ),
-                      AddressPrimaryActionButton(
-                        key: AddressAddPage.saveKey,
-                        enabled: _canSave(controller),
-                        semanticLabel: 'Lưu địa chỉ ví',
-                        label: 'Lưu địa chỉ',
-                        onTap: () => _showConfirmPreview(controller),
+                      ...controllerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được dữ liệu',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              walletAddressAddSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (controller) {
+                          final snapshot = controller.state.snapshot;
+                          return [
+                            ...AddressAddForm.sections(
+                              snapshot: snapshot,
+                              selectedNetworkId: _networkId,
+                              selectedAsset: _asset,
+                              labelController: _labelController,
+                              addressController: _addressController,
+                              memoController: _memoController,
+                              whitelist: _whitelist,
+                              agreed: _agreed,
+                              onNetworkChanged: (id) =>
+                                  setState(() => _networkId = id),
+                              onAssetChanged: (asset) =>
+                                  setState(() => _asset = asset),
+                              onWhitelistChanged: () =>
+                                  setState(() => _whitelist = !_whitelist),
+                              onAgreementChanged: () =>
+                                  setState(() => _agreed = !_agreed),
+                              onInputChanged: () => setState(() {}),
+                            ),
+                            AddressPrimaryActionButton(
+                              key: AddressAddPage.saveKey,
+                              enabled: _canSave(controller),
+                              semanticLabel: 'Lưu địa chỉ ví',
+                              label: 'Lưu địa chỉ',
+                              onTap: () => _showConfirmPreview(controller),
+                            ),
+                          ];
+                        },
                       ),
                     ],
                   ),

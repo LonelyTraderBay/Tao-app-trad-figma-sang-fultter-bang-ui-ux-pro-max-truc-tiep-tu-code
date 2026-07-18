@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-154 mock repository exposes dust converter BE draft', () {
-    final snapshot = const MockWalletRepository().getDustConverter();
+  test('SC-154 mock repository exposes dust converter BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getDustConverter();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-dust-converter');
     expect(

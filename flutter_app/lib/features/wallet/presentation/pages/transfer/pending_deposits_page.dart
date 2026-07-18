@@ -63,8 +63,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(walletPendingDepositsProvider);
-    final deposits = _filteredDeposits(snapshot.deposits);
+    final snapshotAsync = ref.watch(walletPendingDepositsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _pendingScrollBottomInset(context, mode);
 
@@ -95,35 +94,55 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      const _TrustReviewNotice(),
-                      _SummaryBanner(
-                        pendingCount: snapshot.pendingCount,
-                        lastRefreshLabel: _lastRefreshLabel,
-                        onRefresh: _refreshDeposits,
-                      ),
-                      _PendingDepositFilters(
-                        active: _filter,
-                        pendingCount: snapshot.pendingCount,
-                        onChanged: (filter) => setState(() => _filter = filter),
-                      ),
-                      VitPageSection(
-                        label: 'Danh s\u00E1ch n\u1EA1p',
-                        headerIcon: Icons.pending_actions_outlined,
-                        headerVariant: VitSectionHeaderVariant.plain,
-                        innerGap: AppSpacing.pageRhythmStandardInnerGap,
-                        children: [
-                          if (deposits.isEmpty)
-                            const _EmptyDeposits()
-                          else
-                            for (final deposit in deposits)
-                              _DepositCard(
-                                deposit: deposit,
-                                copied: _copiedId == deposit.id,
-                                onCopy: () => _copyHash(deposit),
-                              ),
+                      ...snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title:
+                                'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c n\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
+                            message:
+                                'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+                            actionLabel: 'Th\u1EED l\u1EA1i',
+                            onAction: () =>
+                                ref.invalidate(walletPendingDepositsProvider),
+                          ),
                         ],
+                        data: (snapshot) {
+                          final deposits = _filteredDeposits(snapshot.deposits);
+                          return [
+                            const _TrustReviewNotice(),
+                            _SummaryBanner(
+                              pendingCount: snapshot.pendingCount,
+                              lastRefreshLabel: _lastRefreshLabel,
+                              onRefresh: _refreshDeposits,
+                            ),
+                            _PendingDepositFilters(
+                              active: _filter,
+                              pendingCount: snapshot.pendingCount,
+                              onChanged: (filter) =>
+                                  setState(() => _filter = filter),
+                            ),
+                            VitPageSection(
+                              label: 'Danh s\u00E1ch n\u1EA1p',
+                              headerIcon: Icons.pending_actions_outlined,
+                              headerVariant: VitSectionHeaderVariant.plain,
+                              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+                              children: [
+                                if (deposits.isEmpty)
+                                  const _EmptyDeposits()
+                                else
+                                  for (final deposit in deposits)
+                                    _DepositCard(
+                                      deposit: deposit,
+                                      copied: _copiedId == deposit.id,
+                                      onCopy: () => _copyHash(deposit),
+                                    ),
+                              ],
+                            ),
+                            const _InfoNotice(),
+                          ];
+                        },
                       ),
-                      const _InfoNotice(),
                     ],
                   ),
                 ),

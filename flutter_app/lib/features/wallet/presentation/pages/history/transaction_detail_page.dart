@@ -62,7 +62,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       walletTransactionDetailProvider(widget.transactionId),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -78,55 +78,68 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
       shellRenderMode: mode,
       backgroundColor: _detailBackground,
       onBack: () => context.go(AppRoutePaths.walletHistory),
-      children: [
-        if (snapshot.transaction == null)
-          _MissingTransaction(
-            onBack: () => context.go(AppRoutePaths.walletHistory),
-          )
-        else ...[
-          _SummaryCard(
-            tx: snapshot.transaction!,
-            type: _DetailTypeMeta.from(snapshot.transaction!),
-            status: _DetailStatusMeta.from(snapshot.transaction!.status),
-          ),
-          VitPageSection(
-            label: 'Ti\u1EBFn tr\u00ECnh',
-            headerIcon: Icons.timeline_rounded,
-            headerIconColor: _detailPrimary,
-            innerGap: AppSpacing.pageRhythmStandardInnerGap,
-            children: [_ProgressCard(tx: snapshot.transaction!)],
-          ),
-          VitPageSection(
-            label: 'Th\u00F4ng tin chi ti\u1EBFt',
-            headerIcon: Icons.article_outlined,
-            headerIconColor: _detailPrimary,
-            innerGap: AppSpacing.pageRhythmStandardInnerGap,
-            children: [
-              _DetailsCard(
-                rows: _detailsFor(
-                  snapshot.transaction!,
-                  _DetailTypeMeta.from(snapshot.transaction!).isDebit,
-                ),
-                copiedValue: _copiedValue,
-                onCopy: _copyValue,
-              ),
-            ],
-          ),
-          if (snapshot.transaction!.txHash != null) const _ExplorerButton(),
-          _SupportButton(
-            onTap: () => context.go(
-              ContextualSupportContracts.supportRouteFor(
-                ContextualSupportFlow.withdrawal,
-                referenceId: snapshot.transaction!.id,
-                sourceRoute: AppRoutePaths.walletTransaction(
-                  snapshot.transaction!.id,
-                ),
-                issueLabel: 'Wallet transaction support',
-              ),
+      children: snapshotAsync.when(
+        loading: () => const [VitSkeletonList()],
+        error: (error, stackTrace) => [
+          VitErrorState(
+            title: 'Không tải được chi tiết giao dịch',
+            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(
+              walletTransactionDetailProvider(widget.transactionId),
             ),
           ),
         ],
-      ],
+        data: (snapshot) => [
+          if (snapshot.transaction == null)
+            _MissingTransaction(
+              onBack: () => context.go(AppRoutePaths.walletHistory),
+            )
+          else ...[
+            _SummaryCard(
+              tx: snapshot.transaction!,
+              type: _DetailTypeMeta.from(snapshot.transaction!),
+              status: _DetailStatusMeta.from(snapshot.transaction!.status),
+            ),
+            VitPageSection(
+              label: 'Ti\u1EBFn tr\u00ECnh',
+              headerIcon: Icons.timeline_rounded,
+              headerIconColor: _detailPrimary,
+              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+              children: [_ProgressCard(tx: snapshot.transaction!)],
+            ),
+            VitPageSection(
+              label: 'Th\u00F4ng tin chi ti\u1EBFt',
+              headerIcon: Icons.article_outlined,
+              headerIconColor: _detailPrimary,
+              innerGap: AppSpacing.pageRhythmStandardInnerGap,
+              children: [
+                _DetailsCard(
+                  rows: _detailsFor(
+                    snapshot.transaction!,
+                    _DetailTypeMeta.from(snapshot.transaction!).isDebit,
+                  ),
+                  copiedValue: _copiedValue,
+                  onCopy: _copyValue,
+                ),
+              ],
+            ),
+            if (snapshot.transaction!.txHash != null) const _ExplorerButton(),
+            _SupportButton(
+              onTap: () => context.go(
+                ContextualSupportContracts.supportRouteFor(
+                  ContextualSupportFlow.withdrawal,
+                  referenceId: snapshot.transaction!.id,
+                  sourceRoute: AppRoutePaths.walletTransaction(
+                    snapshot.transaction!.id,
+                  ),
+                  issueLabel: 'Wallet transaction support',
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 

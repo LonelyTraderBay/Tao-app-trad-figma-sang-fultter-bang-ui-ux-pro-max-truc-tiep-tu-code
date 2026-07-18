@@ -44,8 +44,10 @@ void main() {
     });
   }
 
-  test('SC-153 mock repository exposes withdraw limits BE draft', () {
-    final snapshot = const MockWalletRepository().getWithdrawLimits();
+  test('SC-153 mock repository exposes withdraw limits BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getWithdrawLimits();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-limits');
     expect(

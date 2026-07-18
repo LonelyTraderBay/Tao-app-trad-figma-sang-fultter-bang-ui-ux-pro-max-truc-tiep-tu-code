@@ -1,61 +1,85 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
+import 'package:vit_trade_flutter/features/notifications/data/providers/notifications_repository_provider.dart';
 import 'package:vit_trade_flutter/features/notifications/data/repositories/mock_notifications_repository.dart';
 
 void main() {
   group('NotificationsController', () {
-    test('exposes notifications snapshot through repository contract', () {
-      final controller = const NotificationsController(
-        MockNotificationsRepository(),
-      );
+    test(
+      'exposes notifications snapshot through repository contract',
+      () async {
+        final controller = const NotificationsController(
+          MockNotificationsRepository(loadDelay: Duration.zero),
+        );
 
-      final snapshot = controller.getNotifications();
+        final snapshot = await controller.getNotifications();
 
-      expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
-      expect(snapshot.notifications, hasLength(15));
-      expect(snapshot.notifications.where((item) => !item.isRead), isNotEmpty);
-      expect(snapshot.screenState, NotificationsScreenState.ready);
-      expect(
-        snapshot.supportedStates,
-        containsAll([
-          NotificationsScreenState.loading,
-          NotificationsScreenState.empty,
-          NotificationsScreenState.error,
-          NotificationsScreenState.offline,
-        ]),
-      );
-    });
+        expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
+        expect(snapshot.notifications, hasLength(15));
+        expect(
+          snapshot.notifications.where((item) => !item.isRead),
+          isNotEmpty,
+        );
+        expect(snapshot.screenState, NotificationsScreenState.ready);
+        expect(
+          snapshot.supportedStates,
+          containsAll([
+            NotificationsScreenState.loading,
+            NotificationsScreenState.empty,
+            NotificationsScreenState.error,
+            NotificationsScreenState.offline,
+          ]),
+        );
+      },
+    );
 
-    test('global state exposes unread count and idempotent mutations', () {
-      final container = ProviderContainer();
-      addTearDown(container.dispose);
+    test(
+      'global state exposes unread count and idempotent mutations',
+      () async {
+        final container = ProviderContainer(
+          overrides: [
+            notificationsRepositoryProvider.overrideWithValue(
+              const MockNotificationsRepository(loadDelay: Duration.zero),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
 
-      expect(container.read(notificationUnreadCountProvider), 7);
+        await container.read(notificationsSnapshotProvider.future);
+        expect(container.read(notificationUnreadCountProvider), 7);
 
-      container.read(notificationsStateProvider.notifier).markRead('notif001');
-      expect(container.read(notificationUnreadCountProvider), 6);
-
-      container.read(notificationsStateProvider.notifier).markRead('notif001');
-      expect(container.read(notificationUnreadCountProvider), 6);
-
-      container
-          .read(notificationsStateProvider.notifier)
-          .deleteNotification('notif002');
-      expect(container.read(notificationUnreadCountProvider), 5);
-      expect(
         container
-            .read(notificationsStateProvider)
-            .notifications
-            .where((item) => item.id == 'notif002'),
-        isEmpty,
-      );
+            .read(notificationsStateProvider.notifier)
+            .markRead('notif001');
+        expect(container.read(notificationUnreadCountProvider), 6);
 
-      container.read(notificationsStateProvider.notifier).markAllRead();
-      expect(container.read(notificationUnreadCountProvider), 0);
+        container
+            .read(notificationsStateProvider.notifier)
+            .markRead('notif001');
+        expect(container.read(notificationUnreadCountProvider), 6);
 
-      container.read(notificationsStateProvider.notifier).resetFromRepository();
-      expect(container.read(notificationUnreadCountProvider), 7);
-    });
+        container
+            .read(notificationsStateProvider.notifier)
+            .deleteNotification('notif002');
+        expect(container.read(notificationUnreadCountProvider), 5);
+        expect(
+          container
+              .read(notificationsStateProvider)
+              .notifications
+              .where((item) => item.id == 'notif002'),
+          isEmpty,
+        );
+
+        container.read(notificationsStateProvider.notifier).markAllRead();
+        expect(container.read(notificationUnreadCountProvider), 0);
+
+        container
+            .read(notificationsStateProvider.notifier)
+            .resetFromRepository();
+        await container.read(notificationsSnapshotProvider.future);
+        expect(container.read(notificationUnreadCountProvider), 7);
+      },
+    );
   });
 }

@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-146 mock repository exposes transfer BE draft', () {
-    final snapshot = const MockWalletRepository().getTransfer();
+  test('SC-146 mock repository exposes transfer BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getTransfer();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-transfer');
     expect(

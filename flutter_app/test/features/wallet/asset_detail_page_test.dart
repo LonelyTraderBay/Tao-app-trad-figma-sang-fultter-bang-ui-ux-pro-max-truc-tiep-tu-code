@@ -32,8 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-147 mock repository exposes asset detail BE draft', () {
-    final snapshot = const MockWalletRepository().getAssetDetail('btc');
+  test('SC-147 mock repository exposes asset detail BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getAssetDetail('btc');
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-asset-btc');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

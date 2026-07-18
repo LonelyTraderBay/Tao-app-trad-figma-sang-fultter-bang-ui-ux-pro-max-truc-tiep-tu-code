@@ -8,10 +8,21 @@ part '../fixtures/mock_wallet_repository_management_tools_fixtures.dart';
 part '../fixtures/mock_wallet_repository_home_operations_fixtures.dart';
 
 abstract class _MockWalletRepositoryBase implements WalletRepository {
-  const _MockWalletRepositoryBase();
+  const _MockWalletRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  /// When `true`, every method throws a [StateError] after [loadDelay] —
+  /// used to exercise error/retry UI states in tests.
+  final bool simulateError;
+
+  /// Simulated network latency before a method resolves. Tests should pass
+  /// [Duration.zero] to avoid slowing down the suite.
+  final Duration loadDelay;
 }
 
 final class MockWalletRepository extends _MockWalletRepositoryBase
     with _MockWalletRepositoryMethodsPart01 {
-  const MockWalletRepository();
+  const MockWalletRepository({super.simulateError, super.loadDelay});
 }

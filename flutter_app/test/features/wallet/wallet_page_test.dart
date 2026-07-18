@@ -55,8 +55,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-135 mock repository exposes wallet BE draft', () {
-    final snapshot = const MockWalletRepository().getWallet();
+  test('SC-135 mock repository exposes wallet BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getWallet();
 
     expect(snapshot.totalUsd, 57664);
     expect(snapshot.totalBtc, 0.85373496);

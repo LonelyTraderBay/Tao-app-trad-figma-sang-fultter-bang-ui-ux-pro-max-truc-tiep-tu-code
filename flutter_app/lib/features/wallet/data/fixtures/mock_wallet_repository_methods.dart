@@ -1,8 +1,24 @@
 part of '../repositories/mock_wallet_repository.dart';
 
 mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
+  /// Shared network simulation for every method: awaits [loadDelay], then
+  /// throws when [simulateError] is set. Khuôn MockHomeRepository.
+  ///
+  /// Delay 0 thì KHÔNG tạo timer — Future.delayed(Duration.zero) vẫn là
+  /// timer và tester.pump() không-duration không đẩy fake clock (bẫy F2,
+  /// xem GD4-Async-Playbook §9).
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('wallet_mock_fetch_failed');
+    }
+  }
+
   @override
-  WalletSnapshot getWallet() {
+  Future<WalletSnapshot> getWallet() async {
+    await _simulateNetwork();
     return const WalletSnapshot(
       totalUsd: 57664,
       totalBtc: 0.85373496,
@@ -25,7 +41,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletTransactionHistorySnapshot getTransactionHistory() {
+  Future<WalletTransactionHistorySnapshot> getTransactionHistory() async {
+    await _simulateNetwork();
     return const WalletTransactionHistorySnapshot(
       transactions: _walletTransactions,
       filters: _walletTransactionFilters,
@@ -41,7 +58,10 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletTransactionDetailSnapshot getTransactionDetail(String transactionId) {
+  Future<WalletTransactionDetailSnapshot> getTransactionDetail(
+    String transactionId,
+  ) async {
+    await _simulateNetwork();
     WalletTransaction? tx;
     for (final transaction in _walletTransactions) {
       if (transaction.id == transactionId) {
@@ -64,7 +84,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletPortfolioAnalyticsSnapshot getPortfolioAnalytics() {
+  Future<WalletPortfolioAnalyticsSnapshot> getPortfolioAnalytics() async {
+    await _simulateNetwork();
     const totalUsd = 57664.00;
     return const WalletPortfolioAnalyticsSnapshot(
       totalUsd: totalUsd,
@@ -92,7 +113,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletAddressAddSnapshot getAddressAdd() {
+  Future<WalletAddressAddSnapshot> getAddressAdd() async {
+    await _simulateNetwork();
     return const WalletAddressAddSnapshot(
       networks: _walletAddressNetworks,
       assets: _walletAddressAssets,
@@ -111,7 +133,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletAddressBookSnapshot getAddressBook() {
+  Future<WalletAddressBookSnapshot> getAddressBook() async {
+    await _simulateNetwork();
     return const WalletAddressBookSnapshot(
       addresses: _walletSavedAddresses,
       networkFilters: _walletAddressNetworkFilters,
@@ -127,7 +150,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletBuyCryptoSnapshot getBuyCrypto() {
+  Future<WalletBuyCryptoSnapshot> getBuyCrypto() async {
+    await _simulateNetwork();
     return const WalletBuyCryptoSnapshot(
       cryptoOptions: _walletBuyCryptoOptions,
       paymentMethods: _walletBuyPaymentMethods,
@@ -144,7 +168,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletTransferSnapshot getTransfer() {
+  Future<WalletTransferSnapshot> getTransfer() async {
+    await _simulateNetwork();
     return const WalletTransferSnapshot(
       wallets: _walletTransferWallets,
       assets: _walletTransferAssets,
@@ -164,7 +189,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletAssetDetailSnapshot getAssetDetail(String assetId) {
+  Future<WalletAssetDetailSnapshot> getAssetDetail(String assetId) async {
+    await _simulateNetwork();
     final normalized = assetId.toLowerCase();
     if (normalized == 'btc' || normalized == 'bitcoin') {
       return _walletBtcAssetDetail;
@@ -173,7 +199,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletMultiManagerSnapshot getMultiManager() {
+  Future<WalletMultiManagerSnapshot> getMultiManager() async {
+    await _simulateNetwork();
     return const WalletMultiManagerSnapshot(
       wallets: _walletManagerWallets,
       groups: _walletManagerGroups,
@@ -189,7 +216,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletGasOptimizerSnapshot getGasOptimizer() {
+  Future<WalletGasOptimizerSnapshot> getGasOptimizer() async {
+    await _simulateNetwork();
     return const WalletGasOptimizerSnapshot(
       levels: _walletGasLevels,
       history: _walletGasHistory,
@@ -209,7 +237,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletTokenApprovalSnapshot getTokenApprovals() {
+  Future<WalletTokenApprovalSnapshot> getTokenApprovals() async {
+    await _simulateNetwork();
     return const WalletTokenApprovalSnapshot(
       approvals: _walletTokenApprovals,
       revokedApprovals: _walletRevokedApprovals,
@@ -228,7 +257,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletHealthScoreSnapshot getHealthScore() {
+  Future<WalletHealthScoreSnapshot> getHealthScore() async {
+    await _simulateNetwork();
     return const WalletHealthScoreSnapshot(
       metrics: _walletHealthMetrics,
       diversification: _walletHealthDiversification,
@@ -247,7 +277,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletPendingDepositsSnapshot getPendingDeposits() {
+  Future<WalletPendingDepositsSnapshot> getPendingDeposits() async {
+    await _simulateNetwork();
     return const WalletPendingDepositsSnapshot(
       deposits: _walletPendingDeposits,
       endpoint: '/api/mobile/wallet/wallet-pending-deposits',
@@ -264,7 +295,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletWithdrawLimitsSnapshot getWithdrawLimits() {
+  Future<WalletWithdrawLimitsSnapshot> getWithdrawLimits() async {
+    await _simulateNetwork();
     return const WalletWithdrawLimitsSnapshot(
       currentLevel: 2,
       usedToday: 2450,
@@ -284,7 +316,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletDustConverterSnapshot getDustConverter() {
+  Future<WalletDustConverterSnapshot> getDustConverter() async {
+    await _simulateNetwork();
     return const WalletDustConverterSnapshot(
       dustThresholdUsd: 10,
       conversionFeePct: .5,
@@ -305,7 +338,8 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletNetworkStatusSnapshot getNetworkStatus() {
+  Future<WalletNetworkStatusSnapshot> getNetworkStatus() async {
+    await _simulateNetwork();
     return const WalletNetworkStatusSnapshot(
       networks: _walletNetworks,
       refreshIntervalSeconds: 4,
@@ -322,7 +356,11 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletDepositSnapshot getDeposit(String asset, {bool assetScoped = false}) {
+  Future<WalletDepositSnapshot> getDeposit(
+    String asset, {
+    bool assetScoped = false,
+  }) async {
+    await _simulateNetwork();
     final normalizedAsset = asset.toUpperCase();
     return WalletDepositSnapshot(
       asset: normalizedAsset,
@@ -345,7 +383,11 @@ mixin _MockWalletRepositoryMethodsPart01 on _MockWalletRepositoryBase {
   }
 
   @override
-  WalletWithdrawSnapshot getWithdraw(String asset, {bool assetScoped = false}) {
+  Future<WalletWithdrawSnapshot> getWithdraw(
+    String asset, {
+    bool assetScoped = false,
+  }) async {
+    await _simulateNetwork();
     final normalizedAsset = asset.toUpperCase();
     return WalletWithdrawSnapshot(
       asset: normalizedAsset,

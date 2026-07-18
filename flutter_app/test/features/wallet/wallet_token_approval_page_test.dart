@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-150 mock repository exposes token approval BE draft', () {
-    final snapshot = const MockWalletRepository().getTokenApprovals();
+  test('SC-150 mock repository exposes token approval BE draft', () async {
+    final snapshot = await const MockWalletRepository(
+      loadDelay: Duration.zero,
+    ).getTokenApprovals();
 
     expect(snapshot.endpoint, '/api/mobile/wallet/wallet-token-approval');
     expect(snapshot.actionDraft, contains('revoke-preview'));

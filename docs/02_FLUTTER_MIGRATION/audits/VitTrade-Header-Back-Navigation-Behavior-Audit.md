@@ -3,7 +3,7 @@
 Generated from `flutter_app/tool/back_navigation_behavior_audit.dart`.
 
 ```text
-visible_header_back_entries=282
+visible_header_back_entries=284
 strict_back_issues=0
 high_risk_entries=53
 modal_close_baseline=73
@@ -14,7 +14,7 @@ sheet_result_baseline=9
 
 | Classification | Count |
 | --- | ---: |
-| parent_route_only | 227 |
+| parent_route_only | 229 |
 | history_then_fallback | 55 |
 
 ## Strict Issue Counts
@@ -301,19 +301,21 @@ sheet_result_baseline=9
 | `flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart` | 222 | `VitTradeDetailScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/trade_core/presentation/widgets/trade_module_layout.dart` | 324 | `VitTradeHubScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/trade_core/presentation/widgets/vit_trade_terminal_header.dart` | 60 | `VitTradeTerminalHeader` | `VitTopChrome` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
-| `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` | 98 | `_AddressAddPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.walletAddressBook` | yes | - | Uses shared back-navigation helper. |
-| `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` | 82 | `_AddressBookPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` | 70 | `_AssetDetailPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` | 70 | `_TransactionHistoryPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` | 80 | `_WalletPageState` | `VitTopChrome` | history_then_fallback | history_then_fallback | `AppRoutePaths.home` | no | - | Uses shared back-navigation helper. |
-| `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` | 137 | `_NetworkStatusPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` | 99 | `_AddressAddPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.walletAddressBook` | yes | - | Uses shared back-navigation helper. |
+| `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` | 78 | `_AddressBookPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` | 74 | `_AssetDetailPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` | 87 | `_AssetDetailPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` | 108 | `_AssetDetailPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/history/transaction_history_page.dart` | 71 | `_TransactionHistoryPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/hub/wallet_page.dart` | 79 | `_WalletPageState` | `VitTopChrome` | history_then_fallback | history_then_fallback | `AppRoutePaths.home` | no | - | Uses shared back-navigation helper. |
+| `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` | 136 | `_NetworkStatusPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` | 71 | `_PortfolioAnalyticsPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart` | 81 | `_WalletGasOptimizerPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_multi_manager_page.dart` | 73 | `_WalletMultiManagerPageState` | `VitTopChrome` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
-| `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart` | 68 | `_WalletTokenApprovalPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | yes | - | Uses shared back-navigation helper. |
-| `flutter_app/lib/features/wallet/presentation/pages/transfer/pending_deposits_page.dart` | 78 | `_PendingDepositsPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_token_approval_page.dart` | 69 | `_WalletTokenApprovalPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | yes | - | Uses shared back-navigation helper. |
+| `flutter_app/lib/features/wallet/presentation/pages/transfer/pending_deposits_page.dart` | 77 | `_PendingDepositsPageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/pages/transfer/withdraw_limits_page.dart` | 63 | `WithdrawLimitsPage` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | yes | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/features/wallet/presentation/widgets/address/wallet_address_add_preview.dart` | 125 | `AddressSavedState` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | yes | - | Reusable widget receives an owner-provided back callback. |
 | `flutter_app/lib/features/wallet/presentation/widgets/hub/vit_wallet_detail_scaffold.dart` | 79 | `VitWalletDetailScaffold` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
-| `flutter_app/lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart` | 22 | `_WalletHealthScorePageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
+| `flutter_app/lib/features/wallet/presentation/widgets/tools/wallet_health_score_page_shell.dart` | 19 | `_WalletHealthScorePageState` | `VitHeader` | parent_route_only | parent_route_only | `AppRoutePaths.wallet` | no | - | Back goes to an explicit parent route. |
 | `flutter_app/lib/shared/layout/vit_top_chrome.dart` | 91 | `VitTopChrome` | `VitHeader` | parent_route_only | delegated_by_owner | `delegated_callback` | no | - | Reusable widget receives an owner-provided back callback. |
