@@ -6,18 +6,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/core/config/app_environment.dart';
 import 'package:vit_trade_flutter/core/data/offline_failure.dart';
+import 'package:vit_trade_flutter/core/storage/secure_store.dart';
 
 /// Provider cấu hình môi trường đang chạy (đọc từ dart-defines).
 final appConfigProvider = Provider<AppConfig>((ref) => AppConfig.current);
 
 /// Provider [ApiClient] dùng chung — điểm thay thế khi backend thật về.
 final apiClientProvider = Provider<ApiClient>(
-  (ref) => ApiClient(config: ref.watch(appConfigProvider)),
+  (ref) => ApiClient(
+    config: ref.watch(appConfigProvider),
+    tokenProvider: () =>
+        ref.read(secureStoreProvider).read(SecureStoreKeys.authToken),
+  ),
 );
 
 /// Callback cấp auth token cho [authTokenInterceptor] — chỗ cắm SEC-S46,
-/// CHƯA bật mặc định (bật khi backend/đăng nhập thật về: truyền vào
-/// [ApiClient] một provider đọc từ secure storage).
+/// đã bật một nửa ở GĐ4-F1: token demo lấy từ [SecureStore]
+/// (`SecureStoreKeys.authToken`, ghi bởi `AuthSessionController.login`).
+/// Backend thật chỉ đổi GIÁ TRỊ token được ghi vào store, không đổi cơ chế
+/// truyền qua đây.
 typedef AuthTokenProvider = Future<String?> Function();
 
 /// Lỗi API đã map về tầng domain (SEC-S46): controller hiển thị

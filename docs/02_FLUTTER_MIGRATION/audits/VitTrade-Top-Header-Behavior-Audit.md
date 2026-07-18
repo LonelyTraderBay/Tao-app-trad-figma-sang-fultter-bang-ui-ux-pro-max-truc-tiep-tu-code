@@ -3,8 +3,8 @@
 Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 
 ```text
-total_routed_screens=413
-fixed_vit_header_remaining=18
+total_routed_screens=415
+fixed_vit_header_remaining=20
 auto_hide_header=382
 custom_scroll_header=2
 no_top_header=11
@@ -18,6 +18,7 @@ unresolved=0
 | trade_copy | 10 |
 | admin | 3 |
 | trade_bots | 3 |
+| enterprise_states | 2 |
 | trade | 2 |
 
 ## Route Header Inventory
@@ -157,6 +158,8 @@ unresolved=0
 | earn | `AppRoutePaths.earnVotingProposalRoute` | `StakingVotingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking/staking_webhooks_page.dart` |
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
+| enterprise_states | `AppRoutePaths.forceUpdateGate` | `ForceUpdateGatePage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart` |
+| enterprise_states | `AppRoutePaths.maintenanceGate` | `MaintenanceGatePage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart` |
 | home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/tools/launchpad_abi_diff_page.dart` |

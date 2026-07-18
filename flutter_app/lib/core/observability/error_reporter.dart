@@ -2,10 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Single seam every uncaught-error path in the app reports through.
 ///
-/// [NoopErrorReporter] is the only implementation during the mock-data
-/// phase — swap it for a Crashlytics/Sentry-backed implementation behind
-/// [errorReporterProvider] when a backend/telemetry vendor is chosen; no
-/// other file should need to change.
+/// GĐ4-F1: app thật chạy `LocalLogErrorReporter` (ring-buffer + debugPrint,
+/// xem local_log_error_reporter.dart) — bootstrap trong `main.dart` override
+/// [errorReporterProvider] bằng CÙNG MỘT instance dùng cho cả ba đường lỗi
+/// ngoài cây widget. Mặc định trong container vẫn là [NoopErrorReporter] để
+/// 3.4k+ test giữ im lặng và hermetic. Khi chọn vendor Crashlytics/Sentry,
+/// chỉ thay impl ở hai chỗ đó; không file nào khác phải đổi (ADR-008).
 abstract interface class ErrorReporter {
   void report(Object error, StackTrace stack, {String? context});
 }

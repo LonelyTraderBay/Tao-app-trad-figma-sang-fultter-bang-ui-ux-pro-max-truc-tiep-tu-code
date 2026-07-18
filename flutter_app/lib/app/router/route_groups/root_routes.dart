@@ -3,12 +3,33 @@ part of '../app_router.dart';
 GoRouter createAppRouter({
   String? initialLocation,
   ShellRenderMode shellRenderMode = ShellRenderMode.native,
+  AppConfig? appConfig,
 }) {
+  final config = appConfig ?? AppConfig.current;
   return GoRouter(
     initialLocation: initialLocation ?? _defaultInitialLocation,
     // SEC-S45: route không khớp -> trang lỗi tiếng Việt thay ErrorScreen
     // mặc định tiếng Anh của go_router.
     errorBuilder: (context, state) => const VitRouteErrorPage(),
+    // GĐ4-F1 kill-switch: redirect toàn cục sang 1 trong 2 trang gate khi
+    // maintenanceMode/forceUpdateRequired bật, và tự đưa người dùng ra khỏi
+    // gate khi cả 2 cờ đều tắt (không nhốt user ở lại trang gate).
+    redirect: (context, state) {
+      final path = state.uri.path;
+      final onMaintenanceGate = path == AppRoutePaths.maintenanceGate;
+      final onForceUpdateGate = path == AppRoutePaths.forceUpdateGate;
+
+      if (config.maintenanceMode) {
+        return onMaintenanceGate ? null : AppRoutePaths.maintenanceGate;
+      }
+      if (config.forceUpdateRequired) {
+        return onForceUpdateGate ? null : AppRoutePaths.forceUpdateGate;
+      }
+      if (onMaintenanceGate || onForceUpdateGate) {
+        return AppRoutePaths.home;
+      }
+      return null;
+    },
     routes: [
       ...topLevelRoutes(shellRenderMode),
       _appShellRoute(shellRenderMode),

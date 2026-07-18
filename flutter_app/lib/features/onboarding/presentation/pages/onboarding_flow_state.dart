@@ -310,10 +310,12 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
 
   void _skip(OnboardingSnapshot snapshot) {
     HapticFeedback.selectionClick();
+    _markOnboardingSeen();
     context.go(snapshot.homeRoute);
   }
 
   void _finishWithPrimary(OnboardingSnapshot snapshot) {
+    _markOnboardingSeen();
     final selected = _selectedGoals.toList(growable: false);
     final recommendation = selected.isEmpty
         ? null
@@ -323,6 +325,16 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
 
   void _openRoute(String route) {
     HapticFeedback.selectionClick();
+    _markOnboardingSeen();
     context.go(route);
+  }
+
+  /// persist GĐ4-F1: đánh dấu user đã đi qua (hoặc bỏ qua) onboarding.
+  void _markOnboardingSeen() {
+    unawaited(
+      ref
+          .read(keyValueStoreProvider)
+          .setBool(KeyValueStoreKeys.onboardingSeen, true),
+    );
   }
 }

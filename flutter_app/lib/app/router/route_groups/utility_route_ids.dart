@@ -21,6 +21,11 @@ final class UtilityRoutePaths {
   static const String devDcaOverview = '/dev/dca-overview';
   static const String notifications = '/notifications';
   static const String rewards = '/rewards';
+
+  // GĐ4-F1 kill-switch: 2 trang gate toàn cục (bảo trì / bắt buộc cập
+  // nhật), redirect từ root_routes.dart.
+  static const String maintenanceGate = '/maintenance';
+  static const String forceUpdateGate = '/force-update';
 }
 
 final class UtilityRouteNames {
@@ -47,4 +52,9 @@ final class UtilityRouteNames {
       'sc398MissingScreensShowcase';
   static const String sc399DesignSystem = 'sc399DesignSystem';
   static const String sc400DcaOverviewDemo = 'sc400DcaOverviewDemo';
+
+  // GĐ4-F1 kill-switch: 2 trang gate toàn cục (bảo trì / bắt buộc cập
+  // nhật), redirect từ root_routes.dart.
+  static const String sc417MaintenanceGate = 'sc417MaintenanceGate';
+  static const String sc418ForceUpdateGate = 'sc418ForceUpdateGate';
 }

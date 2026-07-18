@@ -2110,6 +2110,8 @@ root_page,flutter_app/lib/features/earn/presentation/pages/staking/staking_votin
 root_page,flutter_app/lib/features/earn/presentation/pages/staking/staking_webhooks_page.dart,flutter_app/lib/features/earn/presentation/pages/staking/staking_webhooks_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart,flutter_app/lib/features/earn/presentation/pages/staking/staking_withdrawal_policy_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart,flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page,flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart,flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutter_app/lib/features/home/presentation/pages/home_page.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutter_app/lib/features/home/presentation/pages/home_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page,flutter_app/lib/features/home/presentation/pages/home_page.dart,flutter_app/lib/features/home/presentation/pages/home_page_sections.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: candlestick
@@ -2449,6 +2451,8 @@ root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/stakin
 root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/staking/staking_validator_selection_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/staking/staking_voting_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/staking/staking_webhooks_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/bridge/launchpad_ido_bridge_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_contract_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_detail_page.dart,1 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-

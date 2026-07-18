@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
+import 'package:vit_trade_flutter/core/storage/key_value_store.dart';
 import 'package:vit_trade_flutter/features/profile/data/profile_repository.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/settings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
@@ -15,7 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpSettings(WidgetTester tester) async {
+  Future<void> pumpSettings(WidgetTester tester, {KeyValueStore? store}) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -23,6 +24,9 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (store != null) keyValueStoreProvider.overrideWithValue(store),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.profileSettings,
@@ -145,5 +149,53 @@ void main() {
     );
     expect(biometricTrack.enabled, isTrue);
     expect(biometricTrack.activeColor, AppColors.buy);
+  });
+
+  testWidgets('SC-160 GĐ4-F1 khôi phục lựa chọn đã lưu từ store', (
+    tester,
+  ) async {
+    final store = InMemoryKeyValueStore(
+      seed: {
+        KeyValueStoreKeys.settingsCurrency: 'VND',
+        KeyValueStoreKeys.settingsLanguage: 'en',
+        '${KeyValueStoreKeys.settingsTogglePrefix}biometric': true,
+      },
+    );
+    await pumpSettings(tester, store: store);
+
+    final vndChip = tester.widget<VitChoicePill>(
+      find.byKey(SettingsPage.currencyKey('VND')),
+    );
+    expect(vndChip.selected, isTrue);
+
+    final biometricTrack = tester.widget<VitTogglePill>(
+      find.descendant(
+        of: find.byKey(SettingsPage.toggleKey('biometric')),
+        matching: find.byType(VitTogglePill),
+      ),
+    );
+    expect(biometricTrack.enabled, isTrue);
+  });
+
+  testWidgets('SC-160 GĐ4-F1 đổi toggle ghi lại vào store', (tester) async {
+    final store = InMemoryKeyValueStore();
+    await pumpSettings(tester, store: store);
+
+    expect(
+      store.getBool('${KeyValueStoreKeys.settingsTogglePrefix}biometric'),
+      isNull,
+    );
+
+    await tester.tap(find.byKey(SettingsPage.toggleKey('biometric')));
+    await tester.tap(find.byKey(SettingsPage.currencyKey('VND')));
+    await tester.tap(find.byKey(SettingsPage.languageKey('en')));
+    await tester.pumpAndSettle();
+
+    expect(
+      store.getBool('${KeyValueStoreKeys.settingsTogglePrefix}biometric'),
+      isTrue,
+    );
+    expect(store.getString(KeyValueStoreKeys.settingsCurrency), 'VND');
+    expect(store.getString(KeyValueStoreKeys.settingsLanguage), 'en');
   });
 }

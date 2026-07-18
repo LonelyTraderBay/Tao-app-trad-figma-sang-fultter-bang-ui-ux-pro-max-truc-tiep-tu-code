@@ -545,6 +545,8 @@ earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/stakin
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_withdrawal_policy_penalties.dart,0,0,0,0,0,0,0,0,no,-
 earn,root_page,flutter_app/lib/features/earn/presentation/widgets/staking/staking_withdrawal_policy_timeline.dart,0,0,0,0,0,0,0,0,no,-
 enterprise_states,root_page,flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart,0,0,0,0,0,0,0,0,no,-
+enterprise_states,root_page,flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart,0,0,0,0,0,0,0,0,no,-
+enterprise_states,root_page,flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart,0,0,0,0,0,0,0,0,no,-
 enterprise_states,root_page,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_hero_tabs.dart,0,0,0,0,0,0,0,0,no,-
 enterprise_states,root_page,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_preview_kit.dart,0,0,0,0,0,0,0,0,no,-
 enterprise_states,root_page,flutter_app/lib/features/enterprise_states/presentation/widgets/enterprise_states_references.dart,0,0,0,0,0,0,0,0,no,-

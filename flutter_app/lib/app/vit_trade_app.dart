@@ -2,24 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// Riverpod 3 giấu type `Override` khỏi export chính — misc.dart là nơi chuẩn.
+import 'package:flutter_riverpod/misc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/session_bootstrap.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
 class VitTradeApp extends StatelessWidget {
-  const VitTradeApp({super.key, this.routerConfig, this.shellRenderMode});
+  const VitTradeApp({
+    super.key,
+    this.routerConfig,
+    this.shellRenderMode,
+    this.overrides = const [],
+  });
 
   final GoRouter? routerConfig;
   final ShellRenderMode? shellRenderMode;
+
+  /// GĐ4-F1: điểm bơm DI runtime từ bootstrap (storage thật, error reporter
+  /// hợp nhất). Test không truyền gì — provider mặc định là impl in-memory.
+  final List<Override> overrides;
 
   @override
   Widget build(BuildContext context) {
     final resolvedShellRenderMode = shellRenderMode ?? defaultShellRenderMode();
 
     return ProviderScope(
+      overrides: overrides,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarColor: AppColors.transparent,
@@ -28,10 +41,14 @@ class VitTradeApp extends StatelessWidget {
           systemNavigationBarColor: AppColors.bg,
           systemNavigationBarIconBrightness: Brightness.light,
         ),
-        child: _VitTradeMaterialApp(
-          routerConfig:
-              routerConfig ??
-              createAppRouter(shellRenderMode: resolvedShellRenderMode),
+        // GĐ4-F1: khôi phục phiên đăng nhập từ SecureStore ngay khi cây
+        // widget dựng — phải nằm DƯỚI ProviderScope để đọc được provider.
+        child: SessionBootstrap(
+          child: _VitTradeMaterialApp(
+            routerConfig:
+                routerConfig ??
+                createAppRouter(shellRenderMode: resolvedShellRenderMode),
+          ),
         ),
       ),
     );
