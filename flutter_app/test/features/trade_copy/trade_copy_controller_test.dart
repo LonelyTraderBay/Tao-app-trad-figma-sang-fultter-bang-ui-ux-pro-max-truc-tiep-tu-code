@@ -28,7 +28,7 @@ void main() {
           acceptedConsentIds: const {},
         ),
       ).validationMessage(),
-      'Accept all required suitability and risk confirmations first.',
+      'Chấp nhận toàn bộ xác nhận phù hợp và rủi ro bắt buộc trước.',
     );
     final result = controller.submit();
     expect(result.status, 'pending_cooling_off');
@@ -99,7 +99,7 @@ void main() {
           ),
         ),
       ).validationMessage(),
-      'Enter a valid copy amount before preview.',
+      'Nhập số tiền sao chép hợp lệ trước khi xem trước.',
     );
   });
 }

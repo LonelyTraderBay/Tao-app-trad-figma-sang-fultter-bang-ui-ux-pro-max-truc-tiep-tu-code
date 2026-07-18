@@ -4,7 +4,7 @@
 **Tech Stack:** Flutter, Dart, Riverpod, GoRouter  
 **Package Manager:** Flutter/Dart pub  
 **Test Framework:** flutter_test  
-**Last Updated:** 2026-07-18 (ARCH-A4: quy ước part-file; DOC-D4: hệ ADR)
+**Last Updated:** 2026-07-18 (GĐ4-S4: 28 feature module / 27 file controller_providers; ARCH-A4: quy ước part-file; DOC-D4: hệ ADR)
 
 Read `docs/00_START_HERE.md` before using long-form design, architecture, or QA
 guidance.
@@ -57,7 +57,10 @@ Rules:
   under `data/`; feature/screen-level controller providers that wire a
   repository provider together with `presentation/controllers/` models live
   in `app/providers/<feature>_controller_providers.dart` (composition root —
-  confirmed 100% consistent across all 23 feature modules).
+  27 provider files covering 27/28 feature modules as of 2026-07-18; naming
+  variants: `dev` → `dev_tools_controller_providers.dart`, `markets` →
+  `market_controller_providers.dart`. `trade_core` intentionally has none —
+  it is the shared entity kernel with no screens/controllers of its own).
 - Prefer `package:vit_trade_flutter/...` imports across modules.
 
 ### State management / controller pattern
@@ -124,7 +127,8 @@ Chuẩn chốt tại GĐ2 · I18N-1 (DEC-i18n Nhánh A, 2026-07-16):
   I18N-2).
 - **Cấm thêm chuỗi tiếng Anh user-facing MỚI** trong presentation layer.
   Ratchet: `flutter_app/test/quality/i18n_vi_only_guardrail_test.dart` +
-  baseline `i18n_vi_only_baseline.txt` (nợ tiếng Anh hiện trạng ~443 chuỗi —
+  baseline `i18n_vi_only_baseline.txt` (nợ tiếng Anh baseline — xem số dòng
+  file làm nguồn sự thật, đang giảm dần —
   trả dần khi chạm file; SỬA một chuỗi baseline nghĩa là dịch nó luôn).
   Lưu ý heuristic: tiếng Việt KHÔNG DẤU ("mua nhanh") từng false-positive
   là tiếng Anh — guardrail chỉ bắt chuỗi có ≥2 từ marker tiếng Anh, không

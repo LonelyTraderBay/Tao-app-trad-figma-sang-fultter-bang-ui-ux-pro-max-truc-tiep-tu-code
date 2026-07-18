@@ -103,7 +103,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Revoke WETH approval'), findsOneWidget);
     expect(
-      find.textContaining('Review the spender, token, allowance'),
+      find.textContaining('Xem lại bên chi tiêu, token, hạn mức'),
       findsOneWidget,
     );
     expect(find.text('Spender'), findsOneWidget);
@@ -112,8 +112,8 @@ void main() {
     expect(find.text('WETH'), findsWidgets);
     expect(find.text('Allowance'), findsOneWidget);
     expect(find.textContaining('Unlimited'), findsWidgets);
-    expect(find.text('Gas estimate'), findsOneWidget);
-    expect(find.text('Impact'), findsOneWidget);
+    expect(find.text('Ước tính gas'), findsOneWidget);
+    expect(find.text('Tác động'), findsOneWidget);
     expect(find.textContaining('mock flow'), findsNothing);
     await tester.tap(find.byKey(WalletTokenApprovalPage.revokeSheetCancelKey));
     await tester.pumpAndSettle();

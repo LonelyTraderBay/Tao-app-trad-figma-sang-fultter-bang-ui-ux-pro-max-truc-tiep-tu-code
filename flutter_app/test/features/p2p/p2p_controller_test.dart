@@ -34,7 +34,7 @@ void main() {
     expect(preview.totalAmountLabel, '100 USDT');
     expect(preview.paymentSummary, 'Vietcombank');
     expect(preview.limitSummary, contains('500000'));
-    expect(preview.feeReviewLabel, contains('Fee review'));
+    expect(preview.feeReviewLabel, contains('Xem xét phí'));
     expect(preview.riskReviewLabel, snapshot.warningNote);
     expect(preview.escrowReviewLabel, snapshot.escrowNote);
 
@@ -173,7 +173,7 @@ void main() {
       expect(preview.account, '0071000123456');
       expect(preview.maskedAccount, '007...3456');
       expect(preview.ownerName, 'NGUYEN VAN A');
-      expect(preview.ownershipRiskMessage, contains('Ownership review'));
+      expect(preview.ownershipRiskMessage, contains('Xem xét quyền sở hữu'));
       expect(preview.limitMessage, contains('Limits:'));
       expect(preview.confirmTitle, 'Xác nhận thêm phương thức?');
       expect(preview.saveRoute, '/p2p/payment-methods');

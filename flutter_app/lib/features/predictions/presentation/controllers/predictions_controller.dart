@@ -125,19 +125,19 @@ final class PredictionsPortfolioController {
 
   String? cancelValidationMessage(String orderId) {
     if (state.status == PredictionHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before changing this prediction order.';
+      return 'Mất kết nối: kết nối lại trước khi thay đổi lệnh dự đoán này.';
     }
     if (state.status.isBusy) {
-      return 'Prediction order action is already in progress.';
+      return 'Thao tác lệnh dự đoán đang được xử lý.';
     }
     if (orderId.trim().isEmpty) {
-      return 'Select an open prediction order before confirmation.';
+      return 'Chọn một lệnh dự đoán đang mở trước khi xác nhận.';
     }
     final exists = state.snapshot.openOrders.any(
       (order) => order.id == orderId,
     );
     if (!exists) {
-      return 'Open order is no longer available.';
+      return 'Lệnh đang mở không còn khả dụng.';
     }
     return null;
   }
@@ -238,10 +238,10 @@ final class PredictionRiskCalculatorController {
     final currentPrice = _parsePredictionNumber(currentPriceText);
     final portfolioBudget = _parsePredictionNumber(portfolioBudgetText);
     if (shares <= 0 || entryPrice <= 0 || currentPrice <= 0) {
-      return 'Enter valid shares, entry price, and current price.';
+      return 'Nhập số cổ phần, giá vào lệnh và giá hiện tại hợp lệ.';
     }
     if (portfolioBudget <= 0) {
-      return 'Enter a valid portfolio impact amount.';
+      return 'Nhập số tiền tác động đến danh mục hợp lệ.';
     }
     return null;
   }

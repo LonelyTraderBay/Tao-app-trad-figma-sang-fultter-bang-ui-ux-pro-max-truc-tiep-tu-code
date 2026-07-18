@@ -46,7 +46,7 @@ final class TradeAdvancedToolsController {
       return 'Select a tool action before confirmation.';
     }
     if (request.orderIds.isEmpty) {
-      return 'Select at least one order before confirmation.';
+      return 'Chọn ít nhất một lệnh trước khi xác nhận.';
     }
     return null;
   }
@@ -57,16 +57,16 @@ final class TradeAdvancedToolsController {
 
   String? amendmentValidationMessage(TradeOrderAmendmentRequest request) {
     if (state.status == TradeHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before amending this order.';
+      return 'Mất kết nối: kết nối lại trước khi sửa lệnh này.';
     }
     if (state.status.isBusy) {
-      return 'Order amendment is already in progress.';
+      return 'Yêu cầu sửa lệnh đang được xử lý.';
     }
     if (request.orderId.trim().isEmpty) {
-      return 'Select an order before amendment preview.';
+      return 'Chọn một lệnh trước khi xem trước sửa lệnh.';
     }
     if (request.newPrice <= 0 || request.newAmount <= 0) {
-      return 'Enter a valid amended price and amount before preview.';
+      return 'Nhập giá và khối lượng sửa lệnh hợp lệ trước khi xem trước.';
     }
     return null;
   }

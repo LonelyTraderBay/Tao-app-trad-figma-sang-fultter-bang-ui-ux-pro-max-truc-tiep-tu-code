@@ -42,7 +42,7 @@ final class TradeCopyConfirmationController {
       return 'Copy confirmation is already in progress.';
     }
     if (!allRequiredAccepted) {
-      return 'Accept all required suitability and risk confirmations first.';
+      return 'Chấp nhận toàn bộ xác nhận phù hợp và rủi ro bắt buộc trước.';
     }
     return null;
   }
@@ -147,7 +147,7 @@ final class TradeCopySettingsController {
       return 'Offline: reconnect before saving copy settings.';
     }
     if (state.status.isBusy) {
-      return 'Copy settings save is already in progress.';
+      return 'Đang lưu cài đặt sao chép.';
     }
     if (settings.defaultCopyRatio <= 0) {
       return 'Enter a valid default copy ratio before saving.';
@@ -194,10 +194,10 @@ final class TradeCopyConfigurationController {
       return 'Copy configuration is already in progress.';
     }
     if (state.draft.copyCapital <= 0) {
-      return 'Enter a valid copy amount before preview.';
+      return 'Nhập số tiền sao chép hợp lệ trước khi xem trước.';
     }
     if (state.draft.copyCapital > state.snapshot.availableCapital) {
-      return 'Copy amount exceeds available capital.';
+      return 'Số tiền sao chép vượt quá vốn khả dụng.';
     }
     if (state.preview.hasBlockingErrors) {
       return 'Resolve blocking suitability or limit checks before continuing.';
@@ -242,10 +242,10 @@ final class TradeProviderApplicationController {
       return 'Complete identity verification before applying as provider.';
     }
     if (draft.tradingMonths < 6) {
-      return 'Provider application requires at least 6 months of history.';
+      return 'Đơn đăng ký nhà cung cấp yêu cầu tối thiểu 6 tháng lịch sử giao dịch.';
     }
     if (draft.minCapital <= 0 || draft.performanceFee < 0) {
-      return 'Enter valid capital and fee details before submission.';
+      return 'Nhập vốn và chi tiết phí hợp lệ trước khi gửi.';
     }
     if (draft.strategyDescription.trim().isEmpty) {
       return 'Describe the strategy before submitting the application.';
@@ -253,7 +253,7 @@ final class TradeProviderApplicationController {
     if (!draft.agreedToDisclosure ||
         !draft.agreedToFiduciary ||
         !draft.agreedToTerms) {
-      return 'Accept all disclosure and suitability terms before submission.';
+      return 'Chấp nhận toàn bộ điều khoản công bố thông tin và phù hợp trước khi gửi.';
     }
     return null;
   }

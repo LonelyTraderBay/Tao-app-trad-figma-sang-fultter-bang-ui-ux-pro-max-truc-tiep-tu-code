@@ -79,7 +79,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(P2PPaymentMethodAddPage.previewKey.finder, findsOneWidget);
-    expect(find.textContaining('Ownership review'), findsOneWidget);
+    expect(find.textContaining('Xem xét quyền sở hữu'), findsOneWidget);
     expect(find.textContaining('Limits:'), findsOneWidget);
 
     await tester.ensureVisible(P2PPaymentMethodAddPage.saveButtonKey.finder);

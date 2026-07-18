@@ -154,7 +154,7 @@ final class P2PDisputeEvidenceController {
       uploadedDocumentIds,
     ).any((document) => document.uploaded);
     if (!hasEvidence) {
-      return 'Upload or select at least one evidence document before preview.';
+      return 'Tải lên hoặc chọn ít nhất một tài liệu bằng chứng trước khi xem trước.';
     }
     return null;
   }
@@ -206,7 +206,7 @@ final class P2PExpressConfirmController {
       return 'Express confirmation is already in progress.';
     }
     if (!acceptedReview) {
-      return 'Review price, payment, and escrow details before confirmation.';
+      return 'Xem lại giá, phương thức thanh toán và chi tiết ký quỹ trước khi xác nhận.';
     }
     return null;
   }

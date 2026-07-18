@@ -40,7 +40,7 @@ void main() {
         amount: '0',
         network: network,
       ),
-      'Enter a valid withdrawal amount before preview.',
+      'Nhập số tiền rút hợp lệ trước khi xem trước.',
     );
     expect(
       WithdrawController(
@@ -150,7 +150,7 @@ void main() {
     expect(controller.revokeValidationMessage(approval), isNull);
     expect(single.title, 'Revoke WETH approval');
     expect(single.bulk, isFalse);
-    expect(single.body, contains('spender, token, allowance'));
+    expect(single.body, contains('bên chi tiêu, token, hạn mức'));
 
     final bulk = controller.revokePreview(null);
     expect(controller.revokeValidationMessage(null), isNull);
