@@ -36,7 +36,7 @@ class P2PTradingLevelPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pTradingLevelProvider);
+    final snapshotAsync = ref.watch(p2pTradingLevelProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -57,43 +57,52 @@ class P2PTradingLevelPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PTradingLevelPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pTradingLevelScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _CurrentLevelHero(snapshot: snapshot),
-                        if (snapshot.userLevel.currentLevel <
-                            snapshot.levels.length)
-                          _NextLevelProgress(snapshot: snapshot),
-                        const VitModuleSectionHeader(
-                          title: 'Tất cả cấp độ',
-                          accentColor: AppModuleAccents.p2p,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        for (final level in snapshot.levels)
-                          _LevelCard(snapshot: snapshot, level: level),
-                      ],
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pTradingLevelProvider),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PTradingLevelPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pTradingLevelScrollPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _CurrentLevelHero(snapshot: snapshot),
+                          if (snapshot.userLevel.currentLevel <
+                              snapshot.levels.length)
+                            _NextLevelProgress(snapshot: snapshot),
+                          const VitModuleSectionHeader(
+                            title: 'Tất cả cấp độ',
+                            accentColor: AppModuleAccents.p2p,
+                            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
+                          for (final level in snapshot.levels)
+                            _LevelCard(snapshot: snapshot, level: level),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

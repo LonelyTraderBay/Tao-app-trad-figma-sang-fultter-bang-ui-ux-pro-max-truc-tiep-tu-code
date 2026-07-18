@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryMyArenaMethods on _MockArenaRepositoryBase {
   @override
-  MyArenaSnapshot getMyArena() {
+  Future<MyArenaSnapshot> getMyArena() async {
+    await _simulateNetwork();
     return const MyArenaSnapshot(
       endpoint: '/api/mobile/profile/profile-arena',
       actionDraft:
@@ -167,7 +168,10 @@ mixin _MockArenaRepositoryMyArenaMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  MyArenaSnapshot getArenaMy() {
-    return getMyArena().copyWith(endpoint: '/api/mobile/arena/arena-my');
+  Future<MyArenaSnapshot> getArenaMy() async {
+    // Bẫy 18 (GD4 Playbook mục 9): getMyArena() đã tự _simulateNetwork() —
+    // không lặp lại delay/error ở lớp ngoài.
+    final snapshot = await getMyArena();
+    return snapshot.copyWith(endpoint: '/api/mobile/arena/arena-my');
   }
 }

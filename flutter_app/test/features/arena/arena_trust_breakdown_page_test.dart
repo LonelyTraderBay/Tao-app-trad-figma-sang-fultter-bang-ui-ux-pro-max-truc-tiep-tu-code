@@ -30,11 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-199 mock repository exposes Arena Trust BE draft', () {
-    final missing = const MockArenaRepository().getArenaTrustBreakdown(
-      'user001',
-    );
-    final creator = const MockArenaRepository().getArenaTrustBreakdown('cr001');
+  test('SC-199 mock repository exposes Arena Trust BE draft', () async {
+    const repository = MockArenaRepository(loadDelay: Duration.zero);
+    final missing = await repository.getArenaTrustBreakdown('user001');
+    final creator = await repository.getArenaTrustBreakdown('cr001');
 
     expect(missing.endpoint, '/api/mobile/arena/arena-trust-user001');
     expect(

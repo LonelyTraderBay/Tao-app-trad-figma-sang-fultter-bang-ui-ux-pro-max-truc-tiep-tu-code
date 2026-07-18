@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -51,8 +52,7 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pGuideProvider);
-    _ensureState(snapshot);
+    final snapshotAsync = ref.watch(p2pGuideProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -66,76 +66,102 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
       semanticIdentifier: 'SC-280',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _GuideTabs(
-                tabs: snapshot.tabs,
-                active: _tab,
-                onChanged: (value) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _tab = value);
-                },
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pGuideProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _ensureState(snapshot);
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
               ),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pGuideScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      children: [
-                        switch (_tab) {
-                          'guide' => _HowItWorksTab(
-                            snapshot: snapshot,
-                            mode: _mode,
-                            onModeChanged: (value) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _mode = value);
-                            },
-                          ),
-                          'safety' => _SafetyTab(snapshot: snapshot),
-                          'video' => _VideoTab(snapshot: snapshot),
-                          _ => _FaqTab(
-                            snapshot: snapshot,
-                            expandedFaqId: _expandedFaqId,
-                            onFaqToggle: (faqId) {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _expandedFaqId = _expandedFaqId == faqId
-                                    ? null
-                                    : faqId;
-                              });
-                            },
-                          ),
-                        },
-                        Text(
-                          snapshot.contractNotes,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _GuideTabs(
+                    tabs: snapshot.tabs,
+                    active: _tab,
+                    onChanged: (value) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = value);
+                    },
+                  ),
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pGuideScrollPadding(
+                          bottomInset,
                         ),
-                      ],
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          children: [
+                            switch (_tab) {
+                              'guide' => _HowItWorksTab(
+                                snapshot: snapshot,
+                                mode: _mode,
+                                onModeChanged: (value) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _mode = value);
+                                },
+                              ),
+                              'safety' => _SafetyTab(snapshot: snapshot),
+                              'video' => _VideoTab(snapshot: snapshot),
+                              _ => _FaqTab(
+                                snapshot: snapshot,
+                                expandedFaqId: _expandedFaqId,
+                                onFaqToggle: (faqId) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _expandedFaqId = _expandedFaqId == faqId
+                                        ? null
+                                        : faqId;
+                                  });
+                                },
+                              ),
+                            },
+                            Text(
+                              snapshot.contractNotes,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

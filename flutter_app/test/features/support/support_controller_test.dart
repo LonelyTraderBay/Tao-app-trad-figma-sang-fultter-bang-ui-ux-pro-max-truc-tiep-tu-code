@@ -4,12 +4,14 @@ import 'package:vit_trade_flutter/features/support/presentation/controllers/supp
 
 void main() {
   group('SupportController', () {
-    test('exposes support snapshots through repository contract', () {
-      final controller = const SupportController(MockSupportRepository());
+    test('exposes support snapshots through repository contract', () async {
+      final controller = const SupportController(
+        MockSupportRepository(loadDelay: Duration.zero),
+      );
 
-      final hub = controller.getSupportHub();
-      final help = controller.getHelpCenter();
-      final announcements = controller.getAnnouncements();
+      final hub = await controller.getSupportHub();
+      final help = await controller.getHelpCenter();
+      final announcements = await controller.getAnnouncements();
 
       expect(hub.endpoint, '/api/mobile/support/support');
       expect(hub.tickets, isNotEmpty);

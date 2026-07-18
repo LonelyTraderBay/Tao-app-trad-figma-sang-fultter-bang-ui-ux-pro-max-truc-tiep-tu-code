@@ -32,46 +32,53 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-028 mock repository exposes search filters for the BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getSearch();
+  test(
+    'SC-028 mock repository exposes search filters for the BE draft',
+    () async {
+      final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+      final snapshot = await repo.getSearch();
 
-    expect(snapshot.results, hasLength(12));
-    expect(snapshot.results.map((event) => event.id).take(3), [
-      'pred-5',
-      'pred-10',
-      'pred-1',
-    ]);
-    expect(snapshot.categories, containsAll(['Live Crypto', 'Sports', 'AI']));
-    expect(snapshot.orders, hasLength(2));
-    expect(snapshot.receipts, hasLength(1));
-    expect(snapshot.rewards, hasLength(2));
-    expect(snapshot.lastUpdatedLabel, 'read-only');
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        PredictionScreenState.loading,
-        PredictionScreenState.empty,
-        PredictionScreenState.error,
-        PredictionScreenState.offline,
-        PredictionScreenState.realtimeRefresh,
-      ]),
-    );
+      expect(snapshot.results, hasLength(12));
+      expect(snapshot.results.map((event) => event.id).take(3), [
+        'pred-5',
+        'pred-10',
+        'pred-1',
+      ]);
+      expect(snapshot.categories, containsAll(['Live Crypto', 'Sports', 'AI']));
+      expect(snapshot.orders, hasLength(2));
+      expect(snapshot.receipts, hasLength(1));
+      expect(snapshot.rewards, hasLength(2));
+      expect(snapshot.lastUpdatedLabel, 'read-only');
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          PredictionScreenState.loading,
+          PredictionScreenState.empty,
+          PredictionScreenState.error,
+          PredictionScreenState.offline,
+          PredictionScreenState.realtimeRefresh,
+        ]),
+      );
 
-    final liquidity = repo.getSearch(sort: PredictionSearchSort.liquidity);
-    expect(liquidity.results.first.id, 'pred-1');
+      final liquidity = await repo.getSearch(
+        sort: PredictionSearchSort.liquidity,
+      );
+      expect(liquidity.results.first.id, 'pred-1');
 
-    final resolved = repo.getSearch(status: PredictionStatusFilter.resolved);
-    expect(resolved.results.map((event) => event.id), ['pred-r1', 'pred-r2']);
+      final resolved = await repo.getSearch(
+        status: PredictionStatusFilter.resolved,
+      );
+      expect(resolved.results.map((event) => event.id), ['pred-r1', 'pred-r2']);
 
-    final liveCrypto = repo.getSearch(category: 'Live Crypto');
-    expect(liveCrypto.results.map((event) => event.category).toSet(), {
-      'Live Crypto',
-    });
+      final liveCrypto = await repo.getSearch(category: 'Live Crypto');
+      expect(liveCrypto.results.map((event) => event.category).toSet(), {
+        'Live Crypto',
+      });
 
-    final search = repo.getSearch(searchQuery: 'Tesla');
-    expect(search.results.single.id, 'pred-10');
-  });
+      final search = await repo.getSearch(searchQuery: 'Tesla');
+      expect(search.results.single.id, 'pred-10');
+    },
+  );
 
   testWidgets('SC-028 renders search inside the Markets shell', (tester) async {
     await pumpSearch(tester);

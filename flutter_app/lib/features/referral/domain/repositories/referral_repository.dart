@@ -3,20 +3,20 @@ import 'package:vit_trade_flutter/features/referral/domain/entities/referral_ent
 /// Data source contract for the Referral feature: read snapshots for the
 /// home, history, rewards, rules, and friend-detail screens.
 abstract interface class ReferralRepository {
-  ReferralHomeSnapshot getHome();
+  Future<ReferralHomeSnapshot> getHome();
 
-  ReferralHistorySnapshot getHistory({
+  Future<ReferralHistorySnapshot> getHistory({
     ReferralFriendFilter filter = ReferralFriendFilter.all,
     ReferralHistorySort sort = ReferralHistorySort.date,
     String query = '',
   });
 
-  ReferralRewardsSnapshot getRewards({
+  Future<ReferralRewardsSnapshot> getRewards({
     ReferralRewardFilter filter = ReferralRewardFilter.all,
     ReferralRewardSort sort = ReferralRewardSort.date,
   });
 
-  ReferralRulesSnapshot getRules();
+  Future<ReferralRulesSnapshot> getRules();
 
-  ReferralFriendDetailSnapshot getFriendDetail(String friendId);
+  Future<ReferralFriendDetailSnapshot> getFriendDetail(String friendId);
 }

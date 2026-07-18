@@ -5,11 +5,11 @@ import 'package:vit_trade_flutter/features/support/data/support_repository.dart'
 /// [SupportRepository] and asserts each call succeeds without throwing and
 /// returns a plausible, non-empty result.
 void main() {
-  const repository = MockSupportRepository();
+  const repository = MockSupportRepository(loadDelay: Duration.zero);
 
   group('MockSupportRepository smoke test', () {
-    test('getSupportHub returns a populated snapshot', () {
-      final snapshot = repository.getSupportHub();
+    test('getSupportHub returns a populated snapshot', () async {
+      final snapshot = await repository.getSupportHub();
 
       expect(snapshot, isA<SupportHubSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -23,8 +23,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getSupportHub tickets carry nested message threads', () {
-      final snapshot = repository.getSupportHub();
+    test('getSupportHub tickets carry nested message threads', () async {
+      final snapshot = await repository.getSupportHub();
 
       final ticket = snapshot.tickets.first;
       expect(ticket, isA<SupportTicketDraft>());
@@ -36,8 +36,8 @@ void main() {
       expect(ticket.messages.first, isA<SupportMessageDraft>());
     });
 
-    test('getHelpCenter returns a populated snapshot', () {
-      final snapshot = repository.getHelpCenter();
+    test('getHelpCenter returns a populated snapshot', () async {
+      final snapshot = await repository.getHelpCenter();
 
       expect(snapshot, isA<HelpCenterSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -49,8 +49,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getHelpCenter categories and articles are well-typed', () {
-      final snapshot = repository.getHelpCenter();
+    test('getHelpCenter categories and articles are well-typed', () async {
+      final snapshot = await repository.getHelpCenter();
 
       final category = snapshot.categories.first;
       expect(category, isA<HelpCategoryDraft>());
@@ -63,8 +63,8 @@ void main() {
       expect(article.views, greaterThan(0));
     });
 
-    test('getAnnouncements returns a populated snapshot', () {
-      final snapshot = repository.getAnnouncements();
+    test('getAnnouncements returns a populated snapshot', () async {
+      final snapshot = await repository.getAnnouncements();
 
       expect(snapshot, isA<AnnouncementsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -75,8 +75,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getAnnouncements filters and entries are well-typed', () {
-      final snapshot = repository.getAnnouncements();
+    test('getAnnouncements filters and entries are well-typed', () async {
+      final snapshot = await repository.getAnnouncements();
 
       final filter = snapshot.filters.first;
       expect(filter, isA<AnnouncementFilterDraft>());

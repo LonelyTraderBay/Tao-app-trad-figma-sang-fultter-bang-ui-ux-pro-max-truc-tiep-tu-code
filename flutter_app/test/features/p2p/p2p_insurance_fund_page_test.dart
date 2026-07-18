@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-238/SC-244 mock repository exposes insurance BE draft', () {
-    final snapshot = const MockP2PRepository().getInsuranceFund();
+  test('SC-238/SC-244 mock repository exposes insurance BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getInsuranceFund();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-insurance');
     expect(snapshot.legacyEndpoint, '/api/mobile/p2p/p2p-insurance-fund');

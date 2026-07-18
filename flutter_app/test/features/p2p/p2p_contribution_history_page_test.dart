@@ -27,36 +27,41 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-242 mock repository exposes contribution history BE draft', () {
-    final snapshot = const MockP2PRepository().getContributionHistory();
+  test(
+    'SC-242 mock repository exposes contribution history BE draft',
+    () async {
+      final snapshot = await const MockP2PRepository(
+        loadDelay: Duration.zero,
+      ).getContributionHistory();
 
-    expect(
-      snapshot.endpoint,
-      '/api/mobile/p2p/p2p-insurance-contribution-history',
-    );
-    expect(
-      snapshot.actionDraft,
-      'POST /p2p/* workflow action where applicable',
-    );
-    expect(snapshot.totalContributed, 309700);
-    expect(snapshot.totalTrades, 15);
-    expect(snapshot.averagePerTrade, 20647);
-    expect(snapshot.monthlyGroups, hasLength(3));
-    expect(snapshot.monthlyGroups.first.monthLabel, 'Tháng 3/2026');
-    expect(snapshot.monthlyGroups.first.totalAmount, 67700);
-    expect(snapshot.contributionRateLabel, '0.1%');
-    expect(snapshot.parentRoute, AppRoutePaths.p2pInsurance);
-    expect(snapshot.contractNotes, contains('P2P requires escrow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        P2PScreenState.loading,
-        P2PScreenState.empty,
-        P2PScreenState.error,
-        P2PScreenState.offline,
-      ]),
-    );
-  });
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/p2p/p2p-insurance-contribution-history',
+      );
+      expect(
+        snapshot.actionDraft,
+        'POST /p2p/* workflow action where applicable',
+      );
+      expect(snapshot.totalContributed, 309700);
+      expect(snapshot.totalTrades, 15);
+      expect(snapshot.averagePerTrade, 20647);
+      expect(snapshot.monthlyGroups, hasLength(3));
+      expect(snapshot.monthlyGroups.first.monthLabel, 'Tháng 3/2026');
+      expect(snapshot.monthlyGroups.first.totalAmount, 67700);
+      expect(snapshot.contributionRateLabel, '0.1%');
+      expect(snapshot.parentRoute, AppRoutePaths.p2pInsurance);
+      expect(snapshot.contractNotes, contains('P2P requires escrow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          P2PScreenState.loading,
+          P2PScreenState.empty,
+          P2PScreenState.error,
+          P2PScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-242 renders grouped contribution history in P2P shell', (
     tester,

@@ -32,10 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-202 mock repository exposes Arena report case BE draft', () {
-    final repository = const MockArenaRepository();
-    final missing = repository.getArenaReportCase('case001');
-    final report = repository.getArenaReportCase('rpt001');
+  test('SC-202 mock repository exposes Arena report case BE draft', () async {
+    const repository = MockArenaRepository(loadDelay: Duration.zero);
+    final missing = await repository.getArenaReportCase('case001');
+    final report = await repository.getArenaReportCase('rpt001');
 
     expect(missing.endpoint, '/api/mobile/arena/arena-report-case001');
     expect(

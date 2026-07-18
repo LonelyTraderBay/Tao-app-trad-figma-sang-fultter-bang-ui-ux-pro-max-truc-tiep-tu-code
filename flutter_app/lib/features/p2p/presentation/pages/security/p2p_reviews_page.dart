@@ -42,10 +42,7 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pReviewsProvider);
-    final reviews = _tab == _P2PReviewTab.received
-        ? snapshot.receivedReviews
-        : snapshot.givenReviews;
+    final snapshotAsync = ref.watch(p2pReviewsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -66,58 +63,73 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PReviewsPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pMerchantCommerceScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _ReviewSummaryCard(reviews: reviews),
-                        VitTabBar(
-                          variant: VitTabBarVariant.segment,
-                          activeKey: _tab.name,
-                          onChanged: (key) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tab = _tabFromKey(key));
-                          },
-                          tabs: const [
-                            VitTabItem(
-                              key: 'received',
-                              label: 'Nhận được',
-                              widgetKey: P2PReviewsPage.receivedTabKey,
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pReviewsProvider),
+            ),
+            data: (snapshot) {
+              final reviews = _tab == _P2PReviewTab.received
+                  ? snapshot.receivedReviews
+                  : snapshot.givenReviews;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PReviewsPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pMerchantCommerceScrollPadding(
+                              bottomInset,
                             ),
-                            VitTabItem(
-                              key: 'given',
-                              label: 'Đã viết',
-                              widgetKey: P2PReviewsPage.givenTabKey,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _ReviewSummaryCard(reviews: reviews),
+                            VitTabBar(
+                              variant: VitTabBarVariant.segment,
+                              activeKey: _tab.name,
+                              onChanged: (key) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _tab = _tabFromKey(key));
+                              },
+                              tabs: const [
+                                VitTabItem(
+                                  key: 'received',
+                                  label: 'Nhận được',
+                                  widgetKey: P2PReviewsPage.receivedTabKey,
+                                ),
+                                VitTabItem(
+                                  key: 'given',
+                                  label: 'Đã viết',
+                                  widgetKey: P2PReviewsPage.givenTabKey,
+                                ),
+                              ],
+                            ),
+                            _ReviewList(
+                              reviews: reviews,
+                              emptyTitle: snapshot.emptyTitle,
+                              tab: _tab,
                             ),
                           ],
                         ),
-                        _ReviewList(
-                          reviews: reviews,
-                          emptyTitle: snapshot.emptyTitle,
-                          tab: _tab,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),

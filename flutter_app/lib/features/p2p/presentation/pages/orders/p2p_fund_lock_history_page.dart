@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -30,30 +31,57 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pFundLockHistoryProvider(walletHistoryAlias));
+    final snapshotAsync = ref.watch(
+      p2pFundLockHistoryProvider(walletHistoryAlias),
+    );
+    final screenId = walletHistoryAlias ? 'SC-263' : 'SC-262';
 
-    return VitP2PFlowScaffold(
-      title: snapshot.title,
-      subtitle: snapshot.subtitle,
-      semanticLabel: 'Lịch sử khóa quỹ P2P',
-      semanticIdentifier: walletHistoryAlias ? 'SC-263' : 'SC-262',
-      shellRenderMode: shellRenderMode,
-      onBack: () => context.go(snapshot.parentRoute),
-      children: [
-        _FundLockHero(snapshot: snapshot),
-        _FundLockList(records: snapshot.records),
-        const VitCard(
-          variant: VitCardVariant.inner,
-          padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Fund lock history review',
-            message:
-                'Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.',
-            contractId: 'p2p-fund-lock-history-review',
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Lịch sử khóa quỹ P2P',
+        semanticIdentifier: screenId,
+        onBack: () => context.go(AppRoutePaths.p2pWallet),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Lịch sử khóa quỹ P2P',
+        semanticIdentifier: screenId,
+        onBack: () => context.go(AppRoutePaths.p2pWallet),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(p2pFundLockHistoryProvider(walletHistoryAlias)),
           ),
-        ),
-      ],
+        ],
+      ),
+      data: (snapshot) => VitP2PFlowScaffold(
+        title: snapshot.title,
+        subtitle: snapshot.subtitle,
+        semanticLabel: 'Lịch sử khóa quỹ P2P',
+        semanticIdentifier: screenId,
+        shellRenderMode: shellRenderMode,
+        onBack: () => context.go(snapshot.parentRoute),
+        children: [
+          _FundLockHero(snapshot: snapshot),
+          _FundLockList(records: snapshot.records),
+          const VitCard(
+            variant: VitCardVariant.inner,
+            padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Fund lock history review',
+              message:
+                  'Locked and released records, asset amount, order reference, alias route and next wallet/P2P step are reviewed before action.',
+              contractId: 'p2p-fund-lock-history-review',
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-235 mock repository exposes cooling period BE draft', () {
-    final snapshot = const MockP2PRepository().getPaymentMethodCoolingPeriod();
+  test('SC-235 mock repository exposes cooling period BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getPaymentMethodCoolingPeriod();
 
     expect(
       snapshot.endpoint,

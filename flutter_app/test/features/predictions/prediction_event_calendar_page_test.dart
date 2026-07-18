@@ -32,9 +32,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-039 mock repository exposes the event calendar BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getEventCalendar();
+  test('SC-039 mock repository exposes the event calendar BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getEventCalendar();
 
     expect(snapshot.events, hasLength(6));
     expect(snapshot.categories, ['Crypto', 'Politics', 'Tech', 'Macro']);
@@ -43,7 +43,10 @@ void main() {
     expect(snapshot.months.first.label, 'December 2026');
     expect(snapshot.upcomingEvents, hasLength(4));
     expect(snapshot.watchingEvents, hasLength(4));
-    expect(repo.getEventCalendar(category: 'Tech').events, hasLength(2));
+    expect(
+      (await repo.getEventCalendar(category: 'Tech')).events,
+      hasLength(2),
+    );
     expect(snapshot.orders, hasLength(3));
     expect(snapshot.receipts, hasLength(6));
     expect(snapshot.rewards, isNotEmpty);

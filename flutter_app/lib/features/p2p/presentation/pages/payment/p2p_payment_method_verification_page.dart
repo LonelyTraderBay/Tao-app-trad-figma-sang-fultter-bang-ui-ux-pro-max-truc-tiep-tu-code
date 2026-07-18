@@ -66,7 +66,7 @@ class _P2PPaymentMethodVerificationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       p2pPaymentMethodVerificationProvider(widget.methodId),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -77,79 +77,118 @@ class _P2PPaymentMethodVerificationPageState
             : _p2pPaymentVerificationNativeNavClearance +
                   _p2pPaymentVerificationNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-
+    // onBack phải là closure INLINE tại từng VitHeader — auditor
+    // back-navigation phân loại theo body lambda, không phân giải tham
+    // chiếu hàm local (bài học F5).
     return VitPageLayout(
       semanticLabel: 'Xác minh phương thức thanh toán P2P',
       semanticIdentifier: 'SC-233',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: _selectedMethodId == null
-                ? 'Xác minh phương thức'
-                : _selectedTitle(snapshot),
-            subtitle: _selectedMethodId == null ? 'Thanh toán · P2P' : null,
-            showBack: true,
-            onBack: () {
-              if (_selectedMethodId != null) {
-                setState(() => _selectedMethodId = null);
-                return;
-              }
-              context.go(AppRoutePaths.p2pPaymentMethods);
-            },
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Xác minh phương thức',
+              showBack: true,
+              onBack: () {
+                if (_selectedMethodId != null) {
+                  setState(() => _selectedMethodId = null);
+                  return;
+                }
+                context.go(AppRoutePaths.p2pPaymentMethods);
+              },
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PPaymentMethodVerificationPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding:
-                        P2PSpacingTokens.p2pPaymentVerificationScrollPadding(
-                          scrollEndPadding,
-                        ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      children: [
-                        if (_selectedMethodId == null)
-                          _MethodChooser(
-                            snapshot: snapshot,
-                            onSelected: (methodId) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _selectedMethodId = methodId);
-                            },
-                          )
-                        else
-                          _VerificationFlow(
-                            snapshot: snapshot,
-                            methodId: _selectedMethodId!,
-                            controller: _codeController,
-                            submitting: _submitting,
-                            onChanged: () => setState(() {}),
-                            onSubmit: _canSubmit
-                                ? () => _confirmSubmit(context, snapshot)
-                                : null,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () {
+                if (_selectedMethodId != null) {
+                  setState(() => _selectedMethodId = null);
+                  return;
+                }
+                context.go(AppRoutePaths.p2pPaymentMethods);
+              },
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pPaymentMethodVerificationProvider(widget.methodId),
+              ),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: _selectedMethodId == null
+                  ? 'Xác minh phương thức'
+                  : _selectedTitle(snapshot),
+              subtitle: _selectedMethodId == null ? 'Thanh toán · P2P' : null,
+              showBack: true,
+              onBack: () {
+                if (_selectedMethodId != null) {
+                  setState(() => _selectedMethodId = null);
+                  return;
+                }
+                context.go(AppRoutePaths.p2pPaymentMethods);
+              },
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PPaymentMethodVerificationPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding:
+                          P2PSpacingTokens.p2pPaymentVerificationScrollPadding(
+                            scrollEndPadding,
                           ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Payment method verification review',
-                          message:
-                              'Micro-deposit confirmation, ownership check, warning note, and return path are reviewed before enabling a P2P payment method for escrow trades.',
-                          contractId: 'SC-233',
-                        ),
-                      ],
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.form,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        children: [
+                          if (_selectedMethodId == null)
+                            _MethodChooser(
+                              snapshot: snapshot,
+                              onSelected: (methodId) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _selectedMethodId = methodId);
+                              },
+                            )
+                          else
+                            _VerificationFlow(
+                              snapshot: snapshot,
+                              methodId: _selectedMethodId!,
+                              controller: _codeController,
+                              submitting: _submitting,
+                              onChanged: () => setState(() {}),
+                              onSubmit: _canSubmit
+                                  ? () => _confirmSubmit(context, snapshot)
+                                  : null,
+                            ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Payment method verification review',
+                            message:
+                                'Micro-deposit confirmation, ownership check, warning note, and return path are reviewed before enabling a P2P payment method for escrow trades.',
+                            contractId: 'SC-233',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

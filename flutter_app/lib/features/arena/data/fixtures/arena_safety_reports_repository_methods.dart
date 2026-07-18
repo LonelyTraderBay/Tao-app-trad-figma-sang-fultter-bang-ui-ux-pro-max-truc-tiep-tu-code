@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositorySafetyReportsMethods on _MockArenaRepositoryBase {
   @override
-  ArenaSafetyCenterSnapshot getArenaSafetyCenter() {
+  Future<ArenaSafetyCenterSnapshot> getArenaSafetyCenter() async {
+    await _simulateNetwork();
     return const ArenaSafetyCenterSnapshot(
       endpoint: '/api/mobile/arena/arena-safety',
       actionDraft:
@@ -173,7 +174,8 @@ mixin _MockArenaRepositorySafetyReportsMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaReportCaseSnapshot getArenaReportCase(String caseId) {
+  Future<ArenaReportCaseSnapshot> getArenaReportCase(String caseId) async {
+    await _simulateNetwork();
     final reports = _arenaReportCases;
     ArenaReportCaseDraft? reportCase;
     for (final report in reports) {
@@ -207,7 +209,8 @@ mixin _MockArenaRepositorySafetyReportsMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  MyArenaReportsSnapshot getMyArenaReports() {
+  Future<MyArenaReportsSnapshot> getMyArenaReports() async {
+    await _simulateNetwork();
     const reports = _arenaReportCases;
     final submitted = _reportStatusCount(
       reports,

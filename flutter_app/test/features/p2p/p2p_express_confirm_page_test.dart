@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-210 mock repository exposes P2P Express Confirm BE draft', () {
-    final snapshot = const MockP2PRepository().getExpressConfirm();
+  test('SC-210 mock repository exposes P2P Express Confirm BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getExpressConfirm();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-express-confirm');
     expect(

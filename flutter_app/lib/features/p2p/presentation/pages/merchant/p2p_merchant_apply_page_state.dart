@@ -29,7 +29,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pMerchantApplyProvider);
+    final snapshotAsync = ref.watch(p2pMerchantApplyProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -52,51 +52,60 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (!_submitted)
-                _ProgressHeader(steps: _steps, currentStep: _step),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PMerchantApplyPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pMerchantApplyScrollPadding(
-                      scrollEndPadding,
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pMerchantApplyProvider),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (!_submitted)
+                  _ProgressHeader(steps: _steps, currentStep: _step),
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PMerchantApplyPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pMerchantApplyScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: _submitted
+                          ? _SuccessState(
+                              reviewSteps: snapshot.reviewSteps,
+                              onBackToP2P: () => context.go(AppRoutePaths.p2p),
+                            )
+                          : VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.none,
+                              fullBleed: true,
+                              density: VitDensity.compact,
+                              children: [
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 180),
+                                  child: _stepContent(snapshot),
+                                ),
+                                _NavigationButtons(
+                                  step: _step,
+                                  canProceed: _canProceed(snapshot),
+                                  submitting: _submitting,
+                                  onPrevious: _previous,
+                                  onNext: _next,
+                                  onSubmit: () => _submit(snapshot),
+                                ),
+                              ],
+                            ),
                     ),
-                    child: _submitted
-                        ? _SuccessState(
-                            reviewSteps: snapshot.reviewSteps,
-                            onBackToP2P: () => context.go(AppRoutePaths.p2p),
-                          )
-                        : VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            padding: VitContentPadding.none,
-                            fullBleed: true,
-                            density: VitDensity.compact,
-                            children: [
-                              AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 180),
-                                child: _stepContent(snapshot),
-                              ),
-                              _NavigationButtons(
-                                step: _step,
-                                canProceed: _canProceed(snapshot),
-                                submitting: _submitting,
-                                onPrevious: _previous,
-                                onNext: _next,
-                                onSubmit: () => _submit(snapshot),
-                              ),
-                            ],
-                          ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

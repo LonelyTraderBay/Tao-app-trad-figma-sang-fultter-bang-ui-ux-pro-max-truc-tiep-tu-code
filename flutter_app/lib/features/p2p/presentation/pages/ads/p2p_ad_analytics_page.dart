@@ -65,7 +65,7 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pAdAnalyticsProvider(adId));
+    final snapshotAsync = ref.watch(p2pAdAnalyticsProvider(adId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -86,63 +86,72 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PAdAnalyticsPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      density: VitDensity.compact,
-                      children: [
-                        _AdIdentityCard(snapshot: snapshot),
-                        _KpiGrid(snapshot: snapshot),
-                        _QuickStats(snapshot: snapshot),
-                        _ConversionFunnel(snapshot: snapshot),
-                        _PerformanceCard(snapshot: snapshot),
-                        _VolumeCard(points: snapshot.dailyPerformance),
-                        _HeatmapCard(points: snapshot.hourlyHeatmap),
-                        _PaymentBreakdownCard(snapshot: snapshot),
-                        _CompetitorCard(rows: snapshot.competitorComparison),
-                        _TipsCard(tips: snapshot.optimizationTips),
-                        const VitPageSection(
-                          density: VitDensity.compact,
-                          children: [
-                            VitCard(
-                              variant: VitCardVariant.inner,
-                              padding: P2PSpacingTokens
-                                  .p2pMarketplaceAnalyticsCompactPadding,
-                              child: VitHighRiskStatePanel(
-                                density: VitDensity.compact,
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Ad performance review',
-                                message:
-                                    'Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.',
-                                contractId: 'p2p-ad-analytics-review',
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pAdAnalyticsProvider(adId)),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PAdAnalyticsPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        AppSpacing.contentPad,
+                        AppSpacing.x3,
+                        AppSpacing.contentPad,
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        density: VitDensity.compact,
+                        children: [
+                          _AdIdentityCard(snapshot: snapshot),
+                          _KpiGrid(snapshot: snapshot),
+                          _QuickStats(snapshot: snapshot),
+                          _ConversionFunnel(snapshot: snapshot),
+                          _PerformanceCard(snapshot: snapshot),
+                          _VolumeCard(points: snapshot.dailyPerformance),
+                          _HeatmapCard(points: snapshot.hourlyHeatmap),
+                          _PaymentBreakdownCard(snapshot: snapshot),
+                          _CompetitorCard(rows: snapshot.competitorComparison),
+                          _TipsCard(tips: snapshot.optimizationTips),
+                          const VitPageSection(
+                            density: VitDensity.compact,
+                            children: [
+                              VitCard(
+                                variant: VitCardVariant.inner,
+                                padding: P2PSpacingTokens
+                                    .p2pMarketplaceAnalyticsCompactPadding,
+                                child: VitHighRiskStatePanel(
+                                  density: VitDensity.compact,
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Ad performance review',
+                                  message:
+                                      'Ad identity, conversion funnel, volume trend, payment mix, competitor spread and optimization next step are reviewed before changes.',
+                                  contractId: 'p2p-ad-analytics-review',
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -61,9 +61,7 @@ class _ArenaUniversalPresetLibraryPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaPresetLibrary();
+    final snapshotAsync = ref.watch(arenaPresetLibrarySnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -85,65 +83,85 @@ class _ArenaUniversalPresetLibraryPageState
             showBack: true,
             onBack: _close,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _SectionTabs(
-                sections: snapshot.sections,
-                activeId: _activeSection,
-                onChanged: _selectSection,
-              ),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: ArenaUniversalPresetLibraryPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: ArenaSpacingTokens.arenaPresetScrollPadding(
-                      footerPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
-                      children: [
-                        if (_activeSection == 'domains')
-                          _DomainPacksSection(
-                            packs: snapshot.domainPacks,
-                            expandedId: _expandedDomainId,
-                            onToggle: _toggleDomain,
-                          )
-                        else if (_activeSection == 'suggestions')
-                          _SuggestionsSection(
-                            packs: snapshot.domainPacks,
-                            suggestionsByDomain: snapshot.suggestionsByDomain,
-                            activeDomainId: _suggestionDomainId,
-                            selectedSuggestion: _selectedSuggestion,
-                            onDomainChanged: _selectSuggestionDomain,
-                            onSuggestionSelected: _selectSuggestion,
-                          )
-                        else if (_activeSection == 'dropdowns')
-                          _DropdownsSection(groups: snapshot.dropdownGroups)
-                        else if (_activeSection == 'demo_flows')
-                          _DemoFlowsSection(
-                            flows: snapshot.demoFlows,
-                            activeIndex: _activeDemoIndex,
-                            onChanged: _selectDemo,
-                          )
-                        else
-                          _TitlesSection(
-                            titles: snapshot.titleSuggestions,
-                            selectedTitle: _selectedTitle,
-                            onSelected: _selectTitle,
-                          ),
-                      ],
+          child: snapshotAsync.when(
+            loading: () => const Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [Expanded(child: VitSkeletonList())],
+            ),
+            error: (error, stackTrace) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: VitErrorState(
+                    title: 'Không tải được Preset Library',
+                    message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () =>
+                        ref.invalidate(arenaPresetLibrarySnapshotProvider),
+                  ),
+                ),
+              ],
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _SectionTabs(
+                  sections: snapshot.sections,
+                  activeId: _activeSection,
+                  onChanged: _selectSection,
+                ),
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: ArenaUniversalPresetLibraryPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: ArenaSpacingTokens.arenaPresetScrollPadding(
+                        footerPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          if (_activeSection == 'domains')
+                            _DomainPacksSection(
+                              packs: snapshot.domainPacks,
+                              expandedId: _expandedDomainId,
+                              onToggle: _toggleDomain,
+                            )
+                          else if (_activeSection == 'suggestions')
+                            _SuggestionsSection(
+                              packs: snapshot.domainPacks,
+                              suggestionsByDomain: snapshot.suggestionsByDomain,
+                              activeDomainId: _suggestionDomainId,
+                              selectedSuggestion: _selectedSuggestion,
+                              onDomainChanged: _selectSuggestionDomain,
+                              onSuggestionSelected: _selectSuggestion,
+                            )
+                          else if (_activeSection == 'dropdowns')
+                            _DropdownsSection(groups: snapshot.dropdownGroups)
+                          else if (_activeSection == 'demo_flows')
+                            _DemoFlowsSection(
+                              flows: snapshot.demoFlows,
+                              activeIndex: _activeDemoIndex,
+                              onChanged: _selectDemo,
+                            )
+                          else
+                            _TitlesSection(
+                              titles: snapshot.titleSuggestions,
+                              selectedTitle: _selectedTitle,
+                              onSelected: _selectTitle,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -7,18 +7,13 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pOrderProvider(widget.orderId));
-    final controller = P2POrderController(
-      state: P2POrderViewState(snapshot: snapshot),
-    );
-    final paidPreview = controller.paidPreview();
+    final snapshotAsync = ref.watch(p2pOrderProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? _p2pOrderVisualNavClearance + _p2pOrderVisualClearance
             : _p2pOrderNativeNavClearance + _p2pOrderNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final order = snapshot.order;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -34,115 +29,133 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
             onBack: () =>
                 goBackOrFallback(context, fallbackPath: AppRoutePaths.p2p),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _StatusBanner(
-                label: _step == _P2POrderUiStep.payment
-                    ? order.statusLabel
-                    : paidPreview.statusLabel,
-                countdown: _step == _P2POrderUiStep.payment
-                    ? order.countdownLabel
-                    : paidPreview.countdownLabel,
-                color: _step == _P2POrderUiStep.payment
-                    ? AppColors.warn
-                    : AppColors.primary,
-              ),
-              _OrderStepper(step: _step),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2POrderPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pOrderScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      gap: VitContentGap.tight,
-                      fullBleed: true,
-                      children: [
-                        _SafetyBanner(
-                          title: snapshot.safetyTitle,
-                          bullets: snapshot.safetyBullets,
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pOrderProvider(widget.orderId)),
+            ),
+            data: (snapshot) {
+              final controller = P2POrderController(
+                state: P2POrderViewState(snapshot: snapshot),
+              );
+              final paidPreview = controller.paidPreview();
+              final order = snapshot.order;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _StatusBanner(
+                    label: _step == _P2POrderUiStep.payment
+                        ? order.statusLabel
+                        : paidPreview.statusLabel,
+                    countdown: _step == _P2POrderUiStep.payment
+                        ? order.countdownLabel
+                        : paidPreview.countdownLabel,
+                    color: _step == _P2POrderUiStep.payment
+                        ? AppColors.warn
+                        : AppColors.primary,
+                  ),
+                  _OrderStepper(step: _step),
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2POrderPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pOrderScrollPadding(
+                          scrollEndPadding,
                         ),
-                        _EscrowBanner(
-                          order: order,
-                          onTap: () =>
-                              context.go(AppRoutePaths.p2pEscrow(order.id)),
-                        ),
-                        _OrderInfoCard(order: order),
-                        if (_step == _P2POrderUiStep.payment)
-                          _PaymentInfoCard(
-                            order: order,
-                            fields: snapshot.paymentFields,
-                            showQr: _showQr,
-                            copiedField: _copiedField,
-                            warningTitle: snapshot.transferWarningTitle,
-                            warning: snapshot.transferWarning,
-                            onToggleQr: () {
-                              HapticFeedback.selectionClick();
-                              setState(() => _showQr = !_showQr);
-                            },
-                            onCopyAll: () => _markCopied('all'),
-                            onCopy: _markCopied,
-                          ),
-                        _ProofCard(
-                          step: _step,
-                          onUpload: () =>
-                              context.go(AppRoutePaths.p2pOrderProof(order.id)),
-                        ),
-                        _TimelineCard(timeline: snapshot.timeline),
-                        _PaymentWarning(message: snapshot.paymentWarning),
-                        _PrimaryActions(
-                          step: _step,
-                          onChat: () =>
-                              context.go(AppRoutePaths.p2pChat(order.id)),
-                          onPaid: _markPaid,
-                        ),
-                        if (_step == _P2POrderUiStep.payment)
-                          _TextActionButton(
-                            key: P2POrderPage.disputeKey,
-                            onPressed: () =>
-                                context.go(AppRoutePaths.p2pDispute(order.id)),
-                            icon: const Icon(
-                              Icons.gavel_outlined,
-                              size: AppSpacing.iconSm,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          gap: VitContentGap.tight,
+                          fullBleed: true,
+                          children: [
+                            _SafetyBanner(
+                              title: snapshot.safetyTitle,
+                              bullets: snapshot.safetyBullets,
                             ),
-                            label: 'Mở khiếu nại',
-                            color: AppColors.warn,
-                          ),
-                        if (_step == _P2POrderUiStep.payment)
-                          _TextActionButton(
-                            key: P2POrderPage.cancelKey,
-                            onPressed: () => context.go(
-                              AppRoutePaths.p2pOrderCancel(order.id),
+                            _EscrowBanner(
+                              order: order,
+                              onTap: () =>
+                                  context.go(AppRoutePaths.p2pEscrow(order.id)),
                             ),
-                            icon: const Icon(
-                              Icons.close_rounded,
-                              size: AppSpacing.iconSm,
+                            _OrderInfoCard(order: order),
+                            if (_step == _P2POrderUiStep.payment)
+                              _PaymentInfoCard(
+                                order: order,
+                                fields: snapshot.paymentFields,
+                                showQr: _showQr,
+                                copiedField: _copiedField,
+                                warningTitle: snapshot.transferWarningTitle,
+                                warning: snapshot.transferWarning,
+                                onToggleQr: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _showQr = !_showQr);
+                                },
+                                onCopyAll: () => _markCopied('all'),
+                                onCopy: _markCopied,
+                              ),
+                            _ProofCard(
+                              step: _step,
+                              onUpload: () => context.go(
+                                AppRoutePaths.p2pOrderProof(order.id),
+                              ),
                             ),
-                            label: 'Hủy đơn hàng',
-                            color: AppColors.sell,
-                          ),
-                        _QuickActions(actions: snapshot.quickActions),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'P2P order state review',
-                          message:
-                              'Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.',
-                          contractId: 'SC-216',
+                            _TimelineCard(timeline: snapshot.timeline),
+                            _PaymentWarning(message: snapshot.paymentWarning),
+                            _PrimaryActions(
+                              step: _step,
+                              onChat: () =>
+                                  context.go(AppRoutePaths.p2pChat(order.id)),
+                              onPaid: _markPaid,
+                            ),
+                            if (_step == _P2POrderUiStep.payment)
+                              _TextActionButton(
+                                key: P2POrderPage.disputeKey,
+                                onPressed: () => context.go(
+                                  AppRoutePaths.p2pDispute(order.id),
+                                ),
+                                icon: const Icon(
+                                  Icons.gavel_outlined,
+                                  size: AppSpacing.iconSm,
+                                ),
+                                label: 'Mở khiếu nại',
+                                color: AppColors.warn,
+                              ),
+                            if (_step == _P2POrderUiStep.payment)
+                              _TextActionButton(
+                                key: P2POrderPage.cancelKey,
+                                onPressed: () => context.go(
+                                  AppRoutePaths.p2pOrderCancel(order.id),
+                                ),
+                                icon: const Icon(
+                                  Icons.close_rounded,
+                                  size: AppSpacing.iconSm,
+                                ),
+                                label: 'Hủy đơn hàng',
+                                color: AppColors.sell,
+                              ),
+                            _QuickActions(actions: snapshot.quickActions),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'P2P order state review',
+                              message:
+                                  'Status timer, escrow amount, payment details, proof upload, timeline, warnings, chat, paid state, cancel route, and quick actions remain visible before order progression.',
+                              contractId: 'SC-216',
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),

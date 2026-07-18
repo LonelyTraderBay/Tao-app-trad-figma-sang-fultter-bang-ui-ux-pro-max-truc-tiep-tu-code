@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-192 mock repository exposes Resolution Center BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaResolutionCenter();
+  test('SC-192 mock repository exposes Resolution Center BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaResolutionCenter();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-resolution');
     expect(

@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryHomeStudioMethods on _MockArenaRepositoryBase {
   @override
-  ArenaHomeSnapshot getArenaHome() {
+  Future<ArenaHomeSnapshot> getArenaHome() async {
+    await _simulateNetwork();
     return const ArenaHomeSnapshot(
       endpoint: '/api/mobile/arena/arena',
       actionDraft:
@@ -180,7 +181,8 @@ mixin _MockArenaRepositoryHomeStudioMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaStudioSnapshot getArenaStudio() {
+  Future<ArenaStudioSnapshot> getArenaStudio() async {
+    await _simulateNetwork();
     return const ArenaStudioSnapshot(
       endpoint: '/api/mobile/arena/arena-studio',
       actionDraft:

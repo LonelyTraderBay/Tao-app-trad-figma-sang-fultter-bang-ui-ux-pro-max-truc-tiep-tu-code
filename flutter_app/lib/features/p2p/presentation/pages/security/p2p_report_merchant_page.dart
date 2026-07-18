@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -66,9 +67,8 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pReportMerchantProvider(widget.merchantId));
-    final selectedReason = snapshot.reasons.where(
-      (reason) => reason.id == _selectedReasonId,
+    final snapshotAsync = ref.watch(
+      p2pReportMerchantProvider(widget.merchantId),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
@@ -83,116 +83,148 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
       semanticIdentifier: 'SC-229',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Báo cáo & Chặn',
-            subtitle: 'An toàn · P2P',
-            showBack: true,
-            onBack: () => _returnToMerchant(snapshot),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () =>
+                  context.go(AppRoutePaths.p2pMerchant(widget.merchantId)),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PReportMerchantPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding:
-                        P2PSpacingTokens.p2pRiskControlsReportScrollPadding(
-                          scrollEndPadding,
-                        ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _MerchantSummaryCard(snapshot: snapshot),
-                        _ReportActionRow(
-                          key: P2PReportMerchantPage.blockButtonKey,
-                          icon: Icons.person_remove_alt_1_outlined,
-                          title: 'Chặn người dùng',
-                          subtitle: 'Không thể giao dịch với bạn',
-                          foreground: AppColors.sell,
-                          background: AppColors.sell10,
-                          borderColor: AppColors.sell20,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.blacklistAddRoute);
-                          },
-                        ),
-                        _ReportActionRow(
-                          key: P2PReportMerchantPage.profileButtonKey,
-                          icon: Icons.groups_2_outlined,
-                          title: 'Xem profile Merchant',
-                          subtitle: 'Đánh giá, lịch sử, thông tin chi tiết',
-                          foreground: AppColors.text2,
-                          background: AppColors.surface2,
-                          borderColor: AppColors.borderSolid,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.merchantProfileRoute);
-                          },
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const VitModuleSectionHeader(
-                              title: 'Báo cáo vi phạm',
-                              accentColor: AppModuleAccents.p2p,
-                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () =>
+                  context.go(AppRoutePaths.p2pMerchant(widget.merchantId)),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pReportMerchantProvider(widget.merchantId)),
+            ),
+          ),
+          data: (snapshot) {
+            final selectedReason = snapshot.reasons.where(
+              (reason) => reason.id == _selectedReasonId,
+            );
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Báo cáo & Chặn',
+                subtitle: 'An toàn · P2P',
+                showBack: true,
+                onBack: () => _returnToMerchant(snapshot),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PReportMerchantPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pRiskControlsReportScrollPadding(
+                              scrollEndPadding,
                             ),
-                            Text(
-                              'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24–48h.',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
-                                height: 1.25,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _MerchantSummaryCard(snapshot: snapshot),
+                            _ReportActionRow(
+                              key: P2PReportMerchantPage.blockButtonKey,
+                              icon: Icons.person_remove_alt_1_outlined,
+                              title: 'Chặn người dùng',
+                              subtitle: 'Không thể giao dịch với bạn',
+                              foreground: AppColors.sell,
+                              background: AppColors.sell10,
+                              borderColor: AppColors.sell20,
+                              onTap: () {
+                                HapticFeedback.selectionClick();
+                                context.go(snapshot.blacklistAddRoute);
+                              },
+                            ),
+                            _ReportActionRow(
+                              key: P2PReportMerchantPage.profileButtonKey,
+                              icon: Icons.groups_2_outlined,
+                              title: 'Xem profile Merchant',
+                              subtitle: 'Đánh giá, lịch sử, thông tin chi tiết',
+                              foreground: AppColors.text2,
+                              background: AppColors.surface2,
+                              borderColor: AppColors.borderSolid,
+                              onTap: () {
+                                HapticFeedback.selectionClick();
+                                context.go(snapshot.merchantProfileRoute);
+                              },
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const VitModuleSectionHeader(
+                                  title: 'Báo cáo vi phạm',
+                                  accentColor: AppModuleAccents.p2p,
+                                  bottomGap:
+                                      AppSpacing.pageRhythmStandardInnerGap,
+                                ),
+                                Text(
+                                  'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24–48h.',
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.text3,
+                                    height: 1.25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            for (final reason in snapshot.reasons)
+                              _ReasonCard(
+                                reason: reason,
+                                selected: reason.id == _selectedReasonId,
+                                onTap: () => _selectReason(reason.id),
                               ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 180),
+                              child: selectedReason.isEmpty
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      padding: P2PSpacingTokens
+                                          .p2pRiskControlsDetailBottomPadding,
+                                      child: _DetailField(
+                                        controller: _detailController,
+                                        hintText: snapshot.detailPrompt,
+                                        onChanged: () => setState(() {}),
+                                      ),
+                                    ),
+                            ),
+                            _NoticeCard(text: snapshot.reviewNotice),
+                            VitCtaButton(
+                              key: P2PReportMerchantPage.submitButtonKey,
+                              variant: VitCtaButtonVariant.danger,
+                              loading: _submitting,
+                              leading: const Icon(Icons.send_rounded),
+                              onPressed: _selectedReasonId.isEmpty
+                                  ? null
+                                  : () => _submit(snapshot),
+                              child: const Text('Gửi báo cáo'),
                             ),
                           ],
                         ),
-                        for (final reason in snapshot.reasons)
-                          _ReasonCard(
-                            reason: reason,
-                            selected: reason.id == _selectedReasonId,
-                            onTap: () => _selectReason(reason.id),
-                          ),
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 180),
-                          child: selectedReason.isEmpty
-                              ? const SizedBox.shrink()
-                              : Padding(
-                                  padding: P2PSpacingTokens
-                                      .p2pRiskControlsDetailBottomPadding,
-                                  child: _DetailField(
-                                    controller: _detailController,
-                                    hintText: snapshot.detailPrompt,
-                                    onChanged: () => setState(() {}),
-                                  ),
-                                ),
-                        ),
-                        _NoticeCard(text: snapshot.reviewNotice),
-                        VitCtaButton(
-                          key: P2PReportMerchantPage.submitButtonKey,
-                          variant: VitCtaButtonVariant.danger,
-                          loading: _submitting,
-                          leading: const Icon(Icons.send_rounded),
-                          onPressed: _selectedReasonId.isEmpty
-                              ? null
-                              : () => _submit(snapshot),
-                          child: const Text('Gửi báo cáo'),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

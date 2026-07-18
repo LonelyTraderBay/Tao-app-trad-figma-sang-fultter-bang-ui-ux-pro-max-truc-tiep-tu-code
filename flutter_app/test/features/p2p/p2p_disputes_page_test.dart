@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-222 mock repository exposes P2P disputes BE draft', () {
-    final snapshot = const MockP2PRepository().getDisputes();
+  test('SC-222 mock repository exposes P2P disputes BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDisputes();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-disputes');
     expect(

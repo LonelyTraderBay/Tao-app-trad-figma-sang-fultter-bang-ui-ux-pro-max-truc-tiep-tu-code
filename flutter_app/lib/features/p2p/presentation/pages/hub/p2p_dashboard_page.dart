@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
@@ -70,7 +71,7 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pDashboardProvider(_timeFilter));
+    final snapshotAsync = ref.watch(p2pDashboardProvider(_timeFilter));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -84,57 +85,80 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
       semanticIdentifier: 'SC-274',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pDashboardPageScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _DashboardFilterRow(
-                          snapshot: snapshot,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _timeFilter = id);
-                          },
-                        ),
-                        _VolumeHero(snapshot: snapshot),
-                        _MetricsGrid(snapshot: snapshot),
-                        _WeeklyVolumeCard(snapshot: snapshot),
-                        _MonthlyOrdersCard(snapshot: snapshot),
-                        _AssetDistributionCard(snapshot: snapshot),
-                        _LevelCard(snapshot: snapshot),
-                        _PlatformComparisonCard(snapshot: snapshot),
-                        _ExtraStats(snapshot: snapshot),
-                        _OrderBreakdownCard(snapshot: snapshot),
-                        _TopMerchantsCard(snapshot: snapshot),
-                        _RecentActivityCard(snapshot: snapshot),
-                        _QuickNavigation(snapshot: snapshot),
-                      ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pDashboardProvider(_timeFilter)),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pDashboardPageScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _DashboardFilterRow(
+                            snapshot: snapshot,
+                            onChanged: (id) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _timeFilter = id);
+                            },
+                          ),
+                          _VolumeHero(snapshot: snapshot),
+                          _MetricsGrid(snapshot: snapshot),
+                          _WeeklyVolumeCard(snapshot: snapshot),
+                          _MonthlyOrdersCard(snapshot: snapshot),
+                          _AssetDistributionCard(snapshot: snapshot),
+                          _LevelCard(snapshot: snapshot),
+                          _PlatformComparisonCard(snapshot: snapshot),
+                          _ExtraStats(snapshot: snapshot),
+                          _OrderBreakdownCard(snapshot: snapshot),
+                          _TopMerchantsCard(snapshot: snapshot),
+                          _RecentActivityCard(snapshot: snapshot),
+                          _QuickNavigation(snapshot: snapshot),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-255 mock repository exposes device management BE draft', () {
-    final snapshot = const MockP2PRepository().getDeviceManagement();
+  test('SC-255 mock repository exposes device management BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getDeviceManagement();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-security-devices');
     expect(

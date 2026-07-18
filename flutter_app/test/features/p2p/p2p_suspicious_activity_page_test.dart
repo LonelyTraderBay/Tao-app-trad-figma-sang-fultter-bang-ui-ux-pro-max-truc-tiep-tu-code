@@ -45,8 +45,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-258 mock repository exposes suspicious activity BE draft', () {
-    final snapshot = const MockP2PRepository().getSuspiciousActivity();
+  test('SC-258 mock repository exposes suspicious activity BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getSuspiciousActivity();
 
     expect(
       snapshot.endpoint,

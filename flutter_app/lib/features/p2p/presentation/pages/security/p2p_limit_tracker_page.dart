@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -41,50 +42,75 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pLimitTrackerProvider);
-    final usage = snapshot.usageFor(_period);
+    final snapshotAsync = ref.watch(p2pLimitTrackerProvider);
 
-    return VitP2PFlowScaffold(
-      title: snapshot.title,
-      subtitle: snapshot.subtitle,
-      semanticLabel: 'Theo dõi hạn mức P2P',
-      semanticIdentifier: 'SC-265',
-      shellRenderMode: widget.shellRenderMode,
-      onBack: () => context.go(snapshot.parentRoute),
-      children: [
-        VitSegmentedChoice<String>(
-          key: P2PLimitTrackerPage.periodTabsKey,
-          selected: _period,
-          height: AppSpacing.buttonCompact,
-          padding: P2PSpacingTokens.p2pLimitTrackerPeriodTabPadding,
-          options: [
-            for (final usage in snapshot.usages)
-              VitSegmentedChoiceOption(
-                value: usage.period,
-                label: usage.label,
-                key: P2PLimitTrackerPage.periodKey(usage.period),
-                accentColor: AppModuleAccents.p2p,
-              ),
-          ],
-          onChanged: (period) {
-            HapticFeedback.selectionClick();
-            setState(() => _period = period);
-          },
-        ),
-        _UsageHero(usage: usage),
-        _LimitBreakdownList(items: snapshot.breakdown),
-        const VitCard(
-          variant: VitCardVariant.inner,
-          padding: P2PSpacingTokens.p2pLimitTrackerCompactPadding,
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'P2P limit review',
-            message:
-                'Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.',
-            contractId: 'p2p-limit-tracker-review',
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Theo dõi hạn mức P2P',
+        semanticIdentifier: 'SC-265',
+        onBack: () => context.go(AppRoutePaths.p2pLimits),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Theo dõi hạn mức P2P',
+        semanticIdentifier: 'SC-265',
+        onBack: () => context.go(AppRoutePaths.p2pLimits),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pLimitTrackerProvider),
           ),
-        ),
-      ],
+        ],
+      ),
+      data: (snapshot) {
+        final usage = snapshot.usageFor(_period);
+        return VitP2PFlowScaffold(
+          title: snapshot.title,
+          subtitle: snapshot.subtitle,
+          semanticLabel: 'Theo dõi hạn mức P2P',
+          semanticIdentifier: 'SC-265',
+          shellRenderMode: widget.shellRenderMode,
+          onBack: () => context.go(snapshot.parentRoute),
+          children: [
+            VitSegmentedChoice<String>(
+              key: P2PLimitTrackerPage.periodTabsKey,
+              selected: _period,
+              height: AppSpacing.buttonCompact,
+              padding: P2PSpacingTokens.p2pLimitTrackerPeriodTabPadding,
+              options: [
+                for (final usage in snapshot.usages)
+                  VitSegmentedChoiceOption(
+                    value: usage.period,
+                    label: usage.label,
+                    key: P2PLimitTrackerPage.periodKey(usage.period),
+                    accentColor: AppModuleAccents.p2p,
+                  ),
+              ],
+              onChanged: (period) {
+                HapticFeedback.selectionClick();
+                setState(() => _period = period);
+              },
+            ),
+            _UsageHero(usage: usage),
+            _LimitBreakdownList(items: snapshot.breakdown),
+            const VitCard(
+              variant: VitCardVariant.inner,
+              padding: P2PSpacingTokens.p2pLimitTrackerCompactPadding,
+              child: VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'P2P limit review',
+                message:
+                    'Selected period, used volume, remaining limit, history breakdown and next limit-management step are reviewed before more P2P activity.',
+                contractId: 'p2p-limit-tracker-review',
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -46,9 +46,9 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getOrderReceipt(receiptId);
+    final receiptAsync = ref.watch(
+      predictionsOrderReceiptSnapshotProvider(receiptId),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -76,12 +76,23 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: snapshot.found
-                    ? _ReceiptContent(
-                        snapshot: snapshot,
-                        scrollEndPadding: scrollEndPadding,
-                      )
-                    : _MissingReceipt(scrollEndPadding: scrollEndPadding),
+                child: receiptAsync.when(
+                  loading: () => const VitSkeletonList(),
+                  error: (error, stackTrace) => VitErrorState(
+                    title: 'Không tải được biên lai',
+                    message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () => ref.invalidate(
+                      predictionsOrderReceiptSnapshotProvider(receiptId),
+                    ),
+                  ),
+                  data: (snapshot) => snapshot.found
+                      ? _ReceiptContent(
+                          snapshot: snapshot,
+                          scrollEndPadding: scrollEndPadding,
+                        )
+                      : _MissingReceipt(scrollEndPadding: scrollEndPadding),
+                ),
               ),
             ],
           ),

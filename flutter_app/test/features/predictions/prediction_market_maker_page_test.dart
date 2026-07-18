@@ -31,9 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-037 mock repository exposes the market maker BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getMarketMaker();
+  test('SC-037 mock repository exposes the market maker BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getMarketMaker();
 
     expect(snapshot.defaultEventName, 'BTC > \$100K by Dec 2026?');
     expect(snapshot.defaultSpreadBps, 50);

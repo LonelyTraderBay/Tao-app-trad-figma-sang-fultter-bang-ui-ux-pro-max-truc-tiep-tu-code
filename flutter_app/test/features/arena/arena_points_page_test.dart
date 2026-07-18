@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-196 mock repository exposes Arena Points BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaPoints();
+  test('SC-196 mock repository exposes Arena Points BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaPoints();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-points');
     expect(

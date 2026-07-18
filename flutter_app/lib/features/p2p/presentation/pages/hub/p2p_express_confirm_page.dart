@@ -63,7 +63,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       p2pExpressConfirmProvider((
         tradeType: widget.tradeType,
         asset: widget.asset,
@@ -73,9 +73,6 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
         paymentMethod: widget.paymentMethod,
       )),
     );
-    final controller = P2PExpressConfirmController(
-      state: P2PExpressConfirmViewState(snapshot: snapshot),
-    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -84,7 +81,6 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
             : _p2pExpressConfirmNativeNavClearance +
                   _p2pExpressConfirmNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final accent = snapshot.isBuy ? AppColors.buy : AppColors.sell;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -92,72 +88,112 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
       semanticIdentifier: 'SC-210',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: controller.confirmationTitle,
-            subtitle: 'Express - P2P',
-            showBack: true,
-            onBack: () => _close(context),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              subtitle: 'Express - P2P',
+              showBack: true,
+              onBack: () => _close(context),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PExpressConfirmPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _Hero(snapshot: snapshot, accent: accent),
-                        _SummaryCard(snapshot: snapshot, accent: accent),
-                        _MerchantCard(ad: snapshot.ad),
-                        P2PNoticeCard(
-                          icon: Icons.lock_outline_rounded,
-                          title: 'Escrow bảo vệ',
-                          message:
-                              '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
-                          iconColor: AppColors.buy,
-                          titleColor: AppColors.buy,
-                          messageColor: AppColors.text2,
-                          borderColor: AppColors.buy20,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              subtitle: 'Express - P2P',
+              showBack: true,
+              onBack: () => _close(context),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pExpressConfirmProvider((
+                  tradeType: widget.tradeType,
+                  asset: widget.asset,
+                  fiatAmount: widget.fiatAmount,
+                  cryptoAmount: widget.cryptoAmount,
+                  adId: widget.adId,
+                  paymentMethod: widget.paymentMethod,
+                )),
+              ),
+            ),
+          ),
+          data: (snapshot) {
+            final controller = P2PExpressConfirmController(
+              state: P2PExpressConfirmViewState(snapshot: snapshot),
+            );
+            final accent = snapshot.isBuy ? AppColors.buy : AppColors.sell;
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: controller.confirmationTitle,
+                subtitle: 'Express - P2P',
+                showBack: true,
+                onBack: () => _close(context),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PExpressConfirmPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsetsDirectional.only(
+                          bottom: scrollEndPadding,
                         ),
-                        P2PNoticeCard(
-                          icon: Icons.warning_amber_rounded,
-                          message: snapshot.warningNote,
-                          iconColor: AppColors.warn,
-                          messageColor: AppColors.warn,
-                          borderColor: AppColors.warningBorder,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.compact,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _Hero(snapshot: snapshot, accent: accent),
+                            _SummaryCard(snapshot: snapshot, accent: accent),
+                            _MerchantCard(ad: snapshot.ad),
+                            P2PNoticeCard(
+                              icon: Icons.lock_outline_rounded,
+                              title: 'Escrow bảo vệ',
+                              message:
+                                  '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
+                              iconColor: AppColors.buy,
+                              titleColor: AppColors.buy,
+                              messageColor: AppColors.text2,
+                              borderColor: AppColors.buy20,
+                            ),
+                            P2PNoticeCard(
+                              icon: Icons.warning_amber_rounded,
+                              message: snapshot.warningNote,
+                              iconColor: AppColors.warn,
+                              messageColor: AppColors.warn,
+                              borderColor: AppColors.warningBorder,
+                            ),
+                            _ActionRow(
+                              processing: _processing,
+                              isBuy: snapshot.isBuy,
+                              onCancel: () => _close(context),
+                              onConfirm: () => _confirm(context, controller),
+                            ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Express order confirmation review',
+                              message:
+                                  'Trade direction, fiat amount, crypto amount, merchant, payment method, escrow note, fee, warning, cancel and confirm actions are reviewed before order creation.',
+                              contractId: 'SC-210',
+                            ),
+                          ],
                         ),
-                        _ActionRow(
-                          processing: _processing,
-                          isBuy: snapshot.isBuy,
-                          onCancel: () => _close(context),
-                          onConfirm: () => _confirm(context, controller),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Express order confirmation review',
-                          message:
-                              'Trade direction, fiat amount, crypto amount, merchant, payment method, escrow note, fee, warning, cancel and confirm actions are reviewed before order creation.',
-                          contractId: 'SC-210',
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

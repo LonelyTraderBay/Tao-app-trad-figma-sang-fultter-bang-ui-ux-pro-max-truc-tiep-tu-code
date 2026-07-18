@@ -3,9 +3,9 @@ import 'package:vit_trade_flutter/features/support/domain/entities/support_entit
 /// Data source contract for the Support feature: read snapshots for the
 /// support hub, help center, and announcements screens.
 abstract interface class SupportRepository {
-  SupportHubSnapshot getSupportHub();
+  Future<SupportHubSnapshot> getSupportHub();
 
-  HelpCenterSnapshot getHelpCenter();
+  Future<HelpCenterSnapshot> getHelpCenter();
 
-  AnnouncementsSnapshot getAnnouncements();
+  Future<AnnouncementsSnapshot> getAnnouncements();
 }

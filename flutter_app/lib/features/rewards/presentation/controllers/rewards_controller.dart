@@ -10,7 +10,7 @@ final class RewardsController implements RewardsRepository {
   final RewardsRepository _repository;
 
   @override
-  RewardsHubSnapshot getHub() {
+  Future<RewardsHubSnapshot> getHub() {
     return _repository.getHub();
   }
 }

@@ -2,111 +2,131 @@ part of 'p2p_claim_detail_page.dart';
 
 class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
   _ClaimDetailSection _section = _ClaimDetailSection.timeline;
-  late bool _notificationsEnabled;
+  // GD4 bẫy 14: initState-seed từ getter giờ-đã-async — bỏ initState, dùng
+  // field nullable + `??=` trong nhánh data:.
+  bool? _notificationsEnabled;
   String? _feedback;
 
   @override
-  void initState() {
-    super.initState();
-    final snapshot = ref.read(p2pClaimDetailProvider(widget.claimId));
-    _notificationsEnabled = snapshot.claim.notificationsEnabled;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pClaimDetailProvider(widget.claimId));
-    final claim = snapshot.claim;
+    final snapshotAsync = ref.watch(p2pClaimDetailProvider(widget.claimId));
 
-    return VitP2PFlowScaffold(
-      title: claim.claimCode,
-      subtitle: 'Bảo hiểm · P2P',
-      semanticLabel: 'Chi tiết yêu cầu bảo hiểm P2P',
-      semanticIdentifier: 'SC-243',
-      shellRenderMode: widget.shellRenderMode,
-      onBack: () => context.go(snapshot.parentRoute),
-      headerActions: [
-        VitHeaderActionItem(
-          type: VitHeaderActionType.notifications,
-          tooltip: 'Thông báo claim P2P',
-          active: _notificationsEnabled,
-          onPressed: () {
-            HapticFeedback.selectionClick();
-            setState(() {
-              _notificationsEnabled = !_notificationsEnabled;
-              _feedback = _notificationsEnabled
-                  ? 'Đã bật thông báo claim'
-                  : 'Đã tắt thông báo claim';
-            });
-          },
-        ),
-      ],
-      children: [
-        _ClaimHeroCard(claim: claim),
-        _ClaimBenchmarksCard(snapshot: snapshot),
-        _DescriptionCard(description: claim.description),
-        _ClaimSectionTabs(
-          active: _section,
-          claim: claim,
-          onChanged: (section) {
-            HapticFeedback.selectionClick();
-            setState(() => _section = section);
-          },
-        ),
-        _ClaimSectionBody(section: _section, claim: claim),
-        _NotificationsCard(
-          enabled: _notificationsEnabled,
-          onChanged: (value) {
-            HapticFeedback.selectionClick();
-            setState(() {
-              _notificationsEnabled = value;
-              _feedback = value
-                  ? 'Đã bật thông báo claim'
-                  : 'Đã tắt thông báo claim';
-            });
-          },
-        ),
-        _ActionRow(
-          key: P2PClaimDetailPage.orderLinkKey,
-          icon: Icons.open_in_new_rounded,
-          title: 'Xem đơn hàng gốc',
-          onTap: () {
-            HapticFeedback.selectionClick();
-            context.go(snapshot.orderRoute);
-          },
-        ),
-        _ActionRow(
-          key: P2PClaimDetailPage.supportLinkKey,
-          icon: Icons.help_outline_rounded,
-          title: 'Liên hệ hỗ trợ',
-          onTap: () {
-            HapticFeedback.selectionClick();
-            context.go(snapshot.supportRoute);
-          },
-        ),
-        if (_feedback != null) _FeedbackBanner(message: _feedback!),
-        if (claim.status == P2PInsuranceClaimStatus.paid)
-          VitCtaButton(
-            key: P2PClaimDetailPage.receiptKey,
-            variant: VitCtaButtonVariant.success,
-            density: VitDensity.compact,
-            leading: const Icon(Icons.download_rounded),
-            onPressed: () {
-              HapticFeedback.selectionClick();
-              setState(
-                () => _feedback = 'Đã chuẩn bị biên lai ${claim.claimCode}',
-              );
-            },
-            child: const Text('Tải biên lai'),
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        onBack: () => context.go(AppRoutePaths.p2pInsurance),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        onBack: () => context.go(AppRoutePaths.p2pInsurance),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(p2pClaimDetailProvider(widget.claimId)),
           ),
-        const VitHighRiskStatePanel(
-          density: VitDensity.compact,
-          state: VitHighRiskUiState.riskReview,
-          title: 'Xem lại chi tiết claim',
-          message:
-              'Trạng thái claim, số tiền bảo hiểm, bằng chứng, thông báo, biên lai và bước hỗ trợ tiếp theo được xem lại trước thao tác tiếp.',
-          contractId: 'p2p-claim-detail-review',
-        ),
-      ],
+        ],
+      ),
+      data: (snapshot) {
+        _notificationsEnabled ??= snapshot.claim.notificationsEnabled;
+        final notificationsEnabled = _notificationsEnabled!;
+        final claim = snapshot.claim;
+
+        return VitP2PFlowScaffold(
+          title: claim.claimCode,
+          subtitle: 'Bảo hiểm · P2P',
+          semanticLabel: 'Chi tiết yêu cầu bảo hiểm P2P',
+          semanticIdentifier: 'SC-243',
+          shellRenderMode: widget.shellRenderMode,
+          onBack: () => context.go(snapshot.parentRoute),
+          headerActions: [
+            VitHeaderActionItem(
+              type: VitHeaderActionType.notifications,
+              tooltip: 'Thông báo claim P2P',
+              active: notificationsEnabled,
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                setState(() {
+                  _notificationsEnabled = !notificationsEnabled;
+                  _feedback = !notificationsEnabled
+                      ? 'Đã bật thông báo claim'
+                      : 'Đã tắt thông báo claim';
+                });
+              },
+            ),
+          ],
+          children: [
+            _ClaimHeroCard(claim: claim),
+            _ClaimBenchmarksCard(snapshot: snapshot),
+            _DescriptionCard(description: claim.description),
+            _ClaimSectionTabs(
+              active: _section,
+              claim: claim,
+              onChanged: (section) {
+                HapticFeedback.selectionClick();
+                setState(() => _section = section);
+              },
+            ),
+            _ClaimSectionBody(section: _section, claim: claim),
+            _NotificationsCard(
+              enabled: notificationsEnabled,
+              onChanged: (value) {
+                HapticFeedback.selectionClick();
+                setState(() {
+                  _notificationsEnabled = value;
+                  _feedback = value
+                      ? 'Đã bật thông báo claim'
+                      : 'Đã tắt thông báo claim';
+                });
+              },
+            ),
+            _ActionRow(
+              key: P2PClaimDetailPage.orderLinkKey,
+              icon: Icons.open_in_new_rounded,
+              title: 'Xem đơn hàng gốc',
+              onTap: () {
+                HapticFeedback.selectionClick();
+                context.go(snapshot.orderRoute);
+              },
+            ),
+            _ActionRow(
+              key: P2PClaimDetailPage.supportLinkKey,
+              icon: Icons.help_outline_rounded,
+              title: 'Liên hệ hỗ trợ',
+              onTap: () {
+                HapticFeedback.selectionClick();
+                context.go(snapshot.supportRoute);
+              },
+            ),
+            if (_feedback != null) _FeedbackBanner(message: _feedback!),
+            if (claim.status == P2PInsuranceClaimStatus.paid)
+              VitCtaButton(
+                key: P2PClaimDetailPage.receiptKey,
+                variant: VitCtaButtonVariant.success,
+                density: VitDensity.compact,
+                leading: const Icon(Icons.download_rounded),
+                onPressed: () {
+                  HapticFeedback.selectionClick();
+                  setState(
+                    () => _feedback = 'Đã chuẩn bị biên lai ${claim.claimCode}',
+                  );
+                },
+                child: const Text('Tải biên lai'),
+              ),
+            const VitHighRiskStatePanel(
+              density: VitDensity.compact,
+              state: VitHighRiskUiState.riskReview,
+              title: 'Xem lại chi tiết claim',
+              message:
+                  'Trạng thái claim, số tiền bảo hiểm, bằng chứng, thông báo, biên lai và bước hỗ trợ tiếp theo được xem lại trước thao tác tiếp.',
+              contractId: 'p2p-claim-detail-review',
+            ),
+          ],
+        );
+      },
     );
   }
 }

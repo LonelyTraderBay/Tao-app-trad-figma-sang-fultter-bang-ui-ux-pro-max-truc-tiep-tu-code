@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-265 mock repository exposes limit tracker BE draft', () {
-    final snapshot = const MockP2PRepository().getLimitTracker();
+  test('SC-265 mock repository exposes limit tracker BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getLimitTracker();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-limits-tracker');
     expect(

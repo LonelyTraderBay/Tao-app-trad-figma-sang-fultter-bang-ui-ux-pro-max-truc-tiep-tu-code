@@ -7,3 +7,10 @@ export 'package:vit_trade_flutter/features/rewards/presentation/controllers/rewa
 final rewardsControllerProvider = Provider<RewardsController>((ref) {
   return RewardsController(ref.watch(rewardsRepositoryProvider));
 });
+
+// GD4-F5 (mục 3+4 GD4-Async-Playbook): provider trung gian cho rewards hub —
+// trang `.watch()` provider này thay vì gọi `rewardsControllerProvider.getHub()`
+// trực tiếp trong build() (repo giờ trả Future<T>).
+final rewardsHubSnapshotProvider = FutureProvider<RewardsHubSnapshot>(
+  (ref) => ref.watch(rewardsControllerProvider).getHub(),
+);

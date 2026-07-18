@@ -10,12 +10,12 @@ final class ReferralController implements ReferralRepository {
   final ReferralRepository _repository;
 
   @override
-  ReferralHomeSnapshot getHome() {
+  Future<ReferralHomeSnapshot> getHome() {
     return _repository.getHome();
   }
 
   @override
-  ReferralHistorySnapshot getHistory({
+  Future<ReferralHistorySnapshot> getHistory({
     ReferralFriendFilter filter = ReferralFriendFilter.all,
     ReferralHistorySort sort = ReferralHistorySort.date,
     String query = '',
@@ -24,7 +24,7 @@ final class ReferralController implements ReferralRepository {
   }
 
   @override
-  ReferralRewardsSnapshot getRewards({
+  Future<ReferralRewardsSnapshot> getRewards({
     ReferralRewardFilter filter = ReferralRewardFilter.all,
     ReferralRewardSort sort = ReferralRewardSort.date,
   }) {
@@ -32,12 +32,12 @@ final class ReferralController implements ReferralRepository {
   }
 
   @override
-  ReferralRulesSnapshot getRules() {
+  Future<ReferralRulesSnapshot> getRules() {
     return _repository.getRules();
   }
 
   @override
-  ReferralFriendDetailSnapshot getFriendDetail(String friendId) {
+  Future<ReferralFriendDetailSnapshot> getFriendDetail(String friendId) {
     return _repository.getFriendDetail(friendId);
   }
 }

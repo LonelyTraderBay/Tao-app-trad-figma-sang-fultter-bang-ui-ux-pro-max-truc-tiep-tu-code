@@ -10,8 +10,8 @@ import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart'
 /// `test/features/rewards/mock_rewards_repository_test.dart`. This file
 /// complements that coverage by pinning concrete, hand-verified values from
 /// `lib/features/rewards/data/repositories/mock_rewards_repository.dart` so
-/// a silent fixture edit shows up as a failing assertion. getHub is a plain
-/// synchronous getter — no write/action methods exist on this repository.
+/// a silent fixture edit shows up as a failing assertion. getHub is now
+/// async (GD4) — no write/action methods exist on this repository.
 ///
 /// Product boundary: Rewards Hub is Arena-Points-only, never wallet
 /// balance/payout/PnL — the mock's own disclaimer says as much, so this
@@ -20,11 +20,11 @@ import 'package:vit_trade_flutter/features/rewards/data/rewards_repository.dart'
 /// `expectNoArenaFinancialBoundaryCopyRegression`, which needs a pumped
 /// widget tree this plain repository test does not have).
 void main() {
-  const repository = MockRewardsRepository();
+  const repository = MockRewardsRepository(loadDelay: Duration.zero);
 
   group('MockRewardsRepository data smoke test', () {
-    test('getHub pins the endpoint, routes, and screen state', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the endpoint, routes, and screen state', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.endpoint, '/api/mobile/rewards/rewards');
       expect(snapshot.title, 'Trung tâm Phần thưởng');
@@ -35,8 +35,8 @@ void main() {
       expect(snapshot.screenState, RewardsScreenState.ready);
     });
 
-    test('getHub pins the summary headline figures', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the summary headline figures', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.summary.bonusPointsClaimed, '3,500');
       expect(snapshot.summary.currentPoints, 2220);
@@ -49,8 +49,8 @@ void main() {
       expect(snapshot.summary.tierLabel, 'Bạc');
     });
 
-    test('getHub pins the 6 category cards with done/total counts', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the 6 category cards with done/total counts', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.categories, hasLength(6));
       expect(snapshot.categories.first.id, 'daily');
@@ -61,8 +61,8 @@ void main() {
       expect(snapshot.categories.last.total, 3);
     });
 
-    test('getHub pins the 7-day check-in strip with day 5 as today', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the 7-day check-in strip with day 5 as today', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.checkIns, hasLength(7));
       expect(snapshot.checkIns[4].day, 5);
@@ -72,8 +72,8 @@ void main() {
       expect(snapshot.checkIns.where((c) => c.today), hasLength(1));
     });
 
-    test('getHub pins the filter chip list', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the filter chip list', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.filters, [
         'Tất cả',
@@ -85,8 +85,8 @@ void main() {
       ]);
     });
 
-    test('getHub pins the task list count and a known task by id', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the task list count and a known task by id', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.tasks, hasLength(24));
       final volumeTask = snapshot.tasks.firstWhere(
@@ -97,16 +97,16 @@ void main() {
       expect(volumeTask.rewardLabel, '+120 Arena Points');
     });
 
-    test('getHub pins the 3 bonus rows', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the 3 bonus rows', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.bonusRows, hasLength(3));
       expect(snapshot.bonusRows.first.title, 'Vòng quay may mắn');
       expect(snapshot.bonusRows.first.rewardLabel, '1 lượt');
     });
 
-    test('getHub pins the rank-ordered leaderboard', () {
-      final snapshot = repository.getHub();
+    test('getHub pins the rank-ordered leaderboard', () async {
+      final snapshot = await repository.getHub();
 
       expect(snapshot.leaderboard, hasLength(3));
       expect(snapshot.leaderboard.first.rank, 1);
@@ -114,20 +114,23 @@ void main() {
       expect(snapshot.leaderboard.first.pointsLabel, '15.9K');
     });
 
-    test('getHub pins the Arena-Points-only disclaimer and contract notes', () {
-      final snapshot = repository.getHub();
+    test(
+      'getHub pins the Arena-Points-only disclaimer and contract notes',
+      () async {
+        final snapshot = await repository.getHub();
 
-      expect(
-        snapshot.disclaimer,
-        'Arena Points duoc tinh dua tren hoat dong thuc te va khong phai tai '
-        'san tai chinh, vi giao dich hoac PnL.',
-      );
-      expect(
-        snapshot.contractNotes,
-        'Rewards Hub is read-only for reference data. Claim, referral, '
-        'leaderboard, and redeem buttons remain local navigation or local '
-        'state until backend confirms action APIs.',
-      );
-    });
+        expect(
+          snapshot.disclaimer,
+          'Arena Points duoc tinh dua tren hoat dong thuc te va khong phai tai '
+          'san tai chinh, vi giao dich hoac PnL.',
+        );
+        expect(
+          snapshot.contractNotes,
+          'Rewards Hub is read-only for reference data. Claim, referral, '
+          'leaderboard, and redeem buttons remain local navigation or local '
+          'state until backend confirms action APIs.',
+        );
+      },
+    );
   });
 }

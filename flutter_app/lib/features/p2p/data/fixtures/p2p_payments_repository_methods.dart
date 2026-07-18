@@ -13,7 +13,8 @@ const _p2pPaymentMethodContractId = 'p2p_payment_method_onboarding';
 
 mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   @override
-  P2PPaymentMethodAddSnapshot getPaymentMethodAdd() {
+  Future<P2PPaymentMethodAddSnapshot> getPaymentMethodAdd() async {
+    await _simulateNetwork();
     return const P2PPaymentMethodAddSnapshot(
       endpoint: '/api/mobile/p2p/p2p-payment-method-add',
       actionDraft:
@@ -43,9 +44,10 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PPaymentMethodVerificationSnapshot getPaymentMethodVerification(
+  Future<P2PPaymentMethodVerificationSnapshot> getPaymentMethodVerification(
     String methodId,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return P2PPaymentMethodVerificationSnapshot(
       endpoint: '/api/mobile/p2p/p2p-payment-method-verification-$methodId',
       actionDraft:
@@ -77,7 +79,10 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PPaymentMethodOwnershipSnapshot getPaymentMethodOwnership(String methodId) {
+  Future<P2PPaymentMethodOwnershipSnapshot> getPaymentMethodOwnership(
+    String methodId,
+  ) async {
+    await _simulateNetwork();
     return P2PPaymentMethodOwnershipSnapshot(
       endpoint: '/api/mobile/p2p/p2p-payment-method-ownership-$methodId',
       actionDraft:
@@ -102,7 +107,9 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PPaymentMethodCoolingPeriodSnapshot getPaymentMethodCoolingPeriod() {
+  Future<P2PPaymentMethodCoolingPeriodSnapshot>
+  getPaymentMethodCoolingPeriod() async {
+    await _simulateNetwork();
     return const P2PPaymentMethodCoolingPeriodSnapshot(
       endpoint: '/api/mobile/p2p/p2p-payment-method-cooling-period',
       actionDraft:
@@ -134,7 +141,8 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PPaymentMethodHistorySnapshot getPaymentMethodHistory() {
+  Future<P2PPaymentMethodHistorySnapshot> getPaymentMethodHistory() async {
+    await _simulateNetwork();
     return const P2PPaymentMethodHistorySnapshot(
       endpoint: '/api/mobile/p2p/p2p-payment-method-history',
       actionDraft:
@@ -156,7 +164,8 @@ mixin _MockP2PRepositoryPaymentsMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PPaymentMethodsSnapshot getPaymentMethods() {
+  Future<P2PPaymentMethodsSnapshot> getPaymentMethods() async {
+    await _simulateNetwork();
     return const P2PPaymentMethodsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-payment-methods',
       actionDraft:

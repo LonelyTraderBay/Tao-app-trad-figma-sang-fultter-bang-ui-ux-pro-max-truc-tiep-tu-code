@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-231 mock repository exposes P2P reviews BE draft', () {
-    final snapshot = const MockP2PRepository().getReviews();
+  test('SC-231 mock repository exposes P2P reviews BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getReviews();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-reviews');
     expect(

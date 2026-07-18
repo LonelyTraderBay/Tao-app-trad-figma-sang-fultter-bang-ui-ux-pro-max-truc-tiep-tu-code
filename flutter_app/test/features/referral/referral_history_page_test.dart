@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-286 mock repository exposes referral history BE draft', () {
-    final snapshot = const MockReferralRepository().getHistory();
+  test('SC-286 mock repository exposes referral history BE draft', () async {
+    final snapshot = await const MockReferralRepository(
+      loadDelay: Duration.zero,
+    ).getHistory();
 
     expect(snapshot.endpoint, '/api/mobile/referral/referral-history');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

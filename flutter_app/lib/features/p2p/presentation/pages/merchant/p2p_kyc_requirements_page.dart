@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -47,7 +48,7 @@ class P2PKycRequirementsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pKycRequirementsProvider);
+    final snapshotAsync = ref.watch(p2pKycRequirementsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -61,79 +62,103 @@ class P2PKycRequirementsPage extends ConsumerWidget {
       semanticIdentifier: 'SC-247',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Yêu cầu KYC',
-            subtitle: 'KYC · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pKycRequirementsScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _KycHero(snapshot: snapshot),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _KycNotice(snapshot: snapshot),
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        for (final tier in snapshot.tiers) ...[
-                          _KycTierCard(
-                            tier: tier,
-                            onUpgrade: tier.status == P2PKycTierStatus.available
-                                ? () {
-                                    HapticFeedback.selectionClick();
-                                    context.go(
-                                      snapshot.verifyRouteFor(tier.id),
-                                    );
-                                  }
-                                : null,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pKycRequirementsProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Yêu cầu KYC',
+              subtitle: 'KYC · P2P',
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pKycRequirementsScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _KycHero(snapshot: snapshot),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
                           ),
-                          if (tier != snapshot.tiers.last)
-                            const SizedBox(
-                              height: AppSpacing.pageRhythmStandardInnerGap,
+                          _KycNotice(snapshot: snapshot),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
+                          for (final tier in snapshot.tiers) ...[
+                            _KycTierCard(
+                              tier: tier,
+                              onUpgrade:
+                                  tier.status == P2PKycTierStatus.available
+                                  ? () {
+                                      HapticFeedback.selectionClick();
+                                      context.go(
+                                        snapshot.verifyRouteFor(tier.id),
+                                      );
+                                    }
+                                  : null,
                             ),
-                        ],
-                        const SizedBox(
-                          height: AppSpacing.pageRhythmStandardInnerGap,
-                        ),
-                        _KycSupportCard(snapshot: snapshot),
-                        const VitPageContent(
-                          rhythm: VitPageRhythm.form,
-                          padding: VitContentPadding.compact,
-                          density: VitDensity.compact,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'KYC requirement state review',
-                              message:
-                                  'Current tier, locked requirements, available upgrade action, support path, and P2P limit impact remain visible before starting verification.',
-                              contractId: 'SC-247',
-                              density: VitDensity.compact,
-                            ),
+                            if (tier != snapshot.tiers.last)
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmStandardInnerGap,
+                              ),
                           ],
-                        ),
-                      ],
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
+                          _KycSupportCard(snapshot: snapshot),
+                          const VitPageContent(
+                            rhythm: VitPageRhythm.form,
+                            padding: VitContentPadding.compact,
+                            density: VitDensity.compact,
+                            children: [
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'KYC requirement state review',
+                                message:
+                                    'Current tier, locked requirements, available upgrade action, support path, and P2P limit impact remain visible before starting verification.',
+                                contractId: 'SC-247',
+                                density: VitDensity.compact,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

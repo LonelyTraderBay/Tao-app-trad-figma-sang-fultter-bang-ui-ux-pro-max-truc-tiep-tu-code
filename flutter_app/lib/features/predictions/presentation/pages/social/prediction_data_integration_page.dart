@@ -84,9 +84,9 @@ class _PredictionDataIntegrationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getDataIntegration();
+    final dataIntegrationAsync = ref.watch(
+      predictionsDataIntegrationSnapshotProvider,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -131,60 +131,74 @@ class _PredictionDataIntegrationPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: switch (_activeTab) {
-                        _DataIntegrationTab.sources => [
-                          _SourcesOverview(snapshot: snapshot),
-                          _SourceSection(sources: snapshot.sources),
-                          _PrimaryBlueButton(
-                            key: PredictionDataIntegrationPage.addSourceKey,
-                            icon: Icons.add_rounded,
-                            label: 'Add Data Source',
-                            onPressed: () => _showComingSoon(
-                              'Thêm nguồn dữ liệu sẽ sớm ra mắt',
+                      children: dataIntegrationAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được tích hợp dữ liệu',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsDataIntegrationSnapshotProvider,
                             ),
                           ),
-                          const _InfoCard(
-                            icon: Icons.shield_outlined,
-                            message:
-                                'Oracle data sources are used for automatic event resolution. All sources are verified and monitored.',
-                          ),
                         ],
-                        _DataIntegrationTab.apiKeys => [
-                          _ApiKeysSection(
-                            apiKeys: snapshot.apiKeys,
-                            revealedKeys: _revealedKeys,
-                            copiedKeyId: _copiedKeyId,
-                            onReveal: _toggleKey,
-                            onCopy: _copyKey,
-                          ),
-                          _PrimaryBlueButton(
-                            key: PredictionDataIntegrationPage.createApiKeyKey,
-                            icon: Icons.add_rounded,
-                            label: 'Create API Key',
-                            onPressed: () =>
-                                _showComingSoon('Tạo API Key sẽ sớm ra mắt'),
-                          ),
-                          const _WarningCard(
-                            message:
-                                'Keep your API keys secret. Never share them or commit to version control. Revoke immediately if compromised.',
-                          ),
-                        ],
-                        _DataIntegrationTab.webhooks => [
-                          _WebhookSection(webhooks: snapshot.webhooks),
-                          _PrimaryBlueButton(
-                            key: PredictionDataIntegrationPage.addWebhookKey,
-                            icon: Icons.add_rounded,
-                            label: 'Add Webhook',
-                            onPressed: () =>
-                                _showComingSoon('Thêm Webhook sẽ sớm ra mắt'),
-                          ),
-                          const _InfoCard(
-                            icon: Icons.info_outline_rounded,
-                            message:
-                                'Webhooks allow you to receive real-time notifications when events occur. Configure your endpoint to handle POST requests.',
-                          ),
-                        ],
-                      },
+                        data: (snapshot) => switch (_activeTab) {
+                          _DataIntegrationTab.sources => [
+                            _SourcesOverview(snapshot: snapshot),
+                            _SourceSection(sources: snapshot.sources),
+                            _PrimaryBlueButton(
+                              key: PredictionDataIntegrationPage.addSourceKey,
+                              icon: Icons.add_rounded,
+                              label: 'Add Data Source',
+                              onPressed: () => _showComingSoon(
+                                'Thêm nguồn dữ liệu sẽ sớm ra mắt',
+                              ),
+                            ),
+                            const _InfoCard(
+                              icon: Icons.shield_outlined,
+                              message:
+                                  'Oracle data sources are used for automatic event resolution. All sources are verified and monitored.',
+                            ),
+                          ],
+                          _DataIntegrationTab.apiKeys => [
+                            _ApiKeysSection(
+                              apiKeys: snapshot.apiKeys,
+                              revealedKeys: _revealedKeys,
+                              copiedKeyId: _copiedKeyId,
+                              onReveal: _toggleKey,
+                              onCopy: _copyKey,
+                            ),
+                            _PrimaryBlueButton(
+                              key:
+                                  PredictionDataIntegrationPage.createApiKeyKey,
+                              icon: Icons.add_rounded,
+                              label: 'Create API Key',
+                              onPressed: () =>
+                                  _showComingSoon('Tạo API Key sẽ sớm ra mắt'),
+                            ),
+                            const _WarningCard(
+                              message:
+                                  'Keep your API keys secret. Never share them or commit to version control. Revoke immediately if compromised.',
+                            ),
+                          ],
+                          _DataIntegrationTab.webhooks => [
+                            _WebhookSection(webhooks: snapshot.webhooks),
+                            _PrimaryBlueButton(
+                              key: PredictionDataIntegrationPage.addWebhookKey,
+                              icon: Icons.add_rounded,
+                              label: 'Add Webhook',
+                              onPressed: () =>
+                                  _showComingSoon('Thêm Webhook sẽ sớm ra mắt'),
+                            ),
+                            const _InfoCard(
+                              icon: Icons.info_outline_rounded,
+                              message:
+                                  'Webhooks allow you to receive real-time notifications when events occur. Configure your endpoint to handle POST requests.',
+                            ),
+                          ],
+                        },
+                      ),
                     ),
                   ),
                 ),

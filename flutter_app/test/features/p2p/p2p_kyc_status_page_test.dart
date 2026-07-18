@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-248 mock repository exposes P2P KYC status BE draft', () {
-    final snapshot = const MockP2PRepository().getKycStatus();
+  test('SC-248 mock repository exposes P2P KYC status BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getKycStatus();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-kyc-status');
     expect(

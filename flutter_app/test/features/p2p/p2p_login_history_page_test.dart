@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-257 mock repository exposes login history BE draft', () {
-    final snapshot = const MockP2PRepository().getLoginHistory();
+  test('SC-257 mock repository exposes login history BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getLoginHistory();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-security-login-history');
     expect(

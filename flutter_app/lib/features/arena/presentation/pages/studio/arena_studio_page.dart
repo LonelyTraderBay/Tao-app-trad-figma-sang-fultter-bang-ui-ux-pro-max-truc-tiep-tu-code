@@ -61,9 +61,7 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaStudio();
+    final snapshotAsync = ref.watch(arenaStudioSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -103,33 +101,46 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        _StudioStepper(steps: snapshot.steps, step: _step),
-                        _PlatformFeeBanner(
-                          platformFeePct: snapshot.platformFeePct,
-                        ),
-                        _StepBody(
-                          step: _step,
-                          snapshot: snapshot,
-                          selectedTemplateId: _templateId,
-                          onTemplateSelected: _selectTemplate,
-                          onOpenSmartRules: () =>
-                              context.go(AppRoutePaths.arenaStudioSmartRules),
-                        ),
-                        _InlineStudioActions(
-                          step: _step,
-                          totalSteps: snapshot.steps.length,
-                          canContinue: _canContinue,
-                          statusLabel: _statusLabel,
-                          onBack: _step > 1 ? _backStep : null,
-                          onContinue: _continue,
-                          onSave: () => _markSecondaryAction('Đã lưu bản nháp'),
-                          onExport: () =>
-                              _markSecondaryAction('Đã chuẩn bị file xuất'),
-                          onImport: () =>
-                              _markSecondaryAction('Đã sẵn sàng nhập JSON'),
-                        ),
-                      ],
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Arena Studio',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(arenaStudioSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _StudioStepper(steps: snapshot.steps, step: _step),
+                          _PlatformFeeBanner(
+                            platformFeePct: snapshot.platformFeePct,
+                          ),
+                          _StepBody(
+                            step: _step,
+                            snapshot: snapshot,
+                            selectedTemplateId: _templateId,
+                            onTemplateSelected: _selectTemplate,
+                            onOpenSmartRules: () =>
+                                context.go(AppRoutePaths.arenaStudioSmartRules),
+                          ),
+                          _InlineStudioActions(
+                            step: _step,
+                            totalSteps: snapshot.steps.length,
+                            canContinue: _canContinue,
+                            statusLabel: _statusLabel,
+                            onBack: _step > 1 ? _backStep : null,
+                            onContinue: _continue,
+                            onSave: () =>
+                                _markSecondaryAction('Đã lưu bản nháp'),
+                            onExport: () =>
+                                _markSecondaryAction('Đã chuẩn bị file xuất'),
+                            onImport: () =>
+                                _markSecondaryAction('Đã sẵn sàng nhập JSON'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

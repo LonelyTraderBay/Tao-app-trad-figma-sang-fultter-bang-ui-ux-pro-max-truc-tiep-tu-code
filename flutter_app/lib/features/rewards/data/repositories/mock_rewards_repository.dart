@@ -2,10 +2,24 @@ import 'package:vit_trade_flutter/features/rewards/domain/entities/rewards_entit
 import 'package:vit_trade_flutter/features/rewards/domain/repositories/rewards_repository.dart';
 
 final class MockRewardsRepository implements RewardsRepository {
-  const MockRewardsRepository();
+  const MockRewardsRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('rewards_mock_fetch_failed');
+  }
 
   @override
-  RewardsHubSnapshot getHub() {
+  Future<RewardsHubSnapshot> getHub() async {
+    await _simulateNetwork();
     return const RewardsHubSnapshot(
       endpoint: '/api/mobile/rewards/rewards',
       actionDraft: 'read-only or local navigation action',

@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-260 mock repository exposes fraud prevention BE draft', () {
-    final snapshot = const MockP2PRepository().getFraudPrevention();
+  test('SC-260 mock repository exposes fraud prevention BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getFraudPrevention();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-fraud-prevention');
     expect(

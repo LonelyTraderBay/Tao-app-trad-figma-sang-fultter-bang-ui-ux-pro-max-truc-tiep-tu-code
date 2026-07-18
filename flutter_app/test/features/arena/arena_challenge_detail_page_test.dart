@@ -31,10 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-190 mock repository exposes Challenge Detail BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaChallengeDetail(
-      'ch003',
-    );
+  test('SC-190 mock repository exposes Challenge Detail BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaChallengeDetail('ch003');
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-challenge-ch003');
     expect(

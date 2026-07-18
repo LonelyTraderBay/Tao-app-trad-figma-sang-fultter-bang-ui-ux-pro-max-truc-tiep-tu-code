@@ -100,8 +100,10 @@ void main() {
     );
   }
 
-  test('SC-186 mock repository exposes Smart Rule BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaSmartRules();
+  test('SC-186 mock repository exposes Smart Rule BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaSmartRules();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-studio-smart-rules');
     expect(

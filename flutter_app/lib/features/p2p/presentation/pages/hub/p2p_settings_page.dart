@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -67,8 +68,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pSettingsProvider);
-    _ensureState(snapshot);
+    final snapshotAsync = ref.watch(p2pSettingsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -82,121 +82,149 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
       semanticIdentifier: 'SC-279',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pSettingsPageScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        const VitSectionHeader(
-                          title: 'Tùy chọn giao dịch',
-                          icon: Icons.tune_rounded,
-                          iconColor: AppColors.primary,
-                          iconSize: AppSpacing.iconSm,
-                          titleColor: AppColors.text2,
-                          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pSettingsProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _ensureState(snapshot);
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: snapshot.subtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pSettingsPageScrollPadding(
+                          scrollEndPadding,
                         ),
-                        _TradeOptionsCard(
-                          snapshot: snapshot,
-                          asset: _asset,
-                          currency: _currency,
-                          paymentWindow: _paymentWindow,
-                          autoConfirm: _toggles['auto_confirm'] ?? false,
-                          onAsset: (value) => setState(() => _asset = value),
-                          onCurrency: (value) =>
-                              setState(() => _currency = value),
-                          onPaymentWindow: (value) =>
-                              setState(() => _paymentWindow = value),
-                          onToggleAutoConfirm: () => _toggle('auto_confirm'),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            const VitSectionHeader(
+                              title: 'Tùy chọn giao dịch',
+                              icon: Icons.tune_rounded,
+                              iconColor: AppColors.primary,
+                              iconSize: AppSpacing.iconSm,
+                              titleColor: AppColors.text2,
+                              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
+                            _TradeOptionsCard(
+                              snapshot: snapshot,
+                              asset: _asset,
+                              currency: _currency,
+                              paymentWindow: _paymentWindow,
+                              autoConfirm: _toggles['auto_confirm'] ?? false,
+                              onAsset: (value) =>
+                                  setState(() => _asset = value),
+                              onCurrency: (value) =>
+                                  setState(() => _currency = value),
+                              onPaymentWindow: (value) =>
+                                  setState(() => _paymentWindow = value),
+                              onToggleAutoConfirm: () =>
+                                  _toggle('auto_confirm'),
+                            ),
+                            _ToggleSection(
+                              key: P2PSettingsPage.notificationsKey,
+                              icon: Icons.notifications_none_rounded,
+                              label: 'Thông báo',
+                              color: AppColors.warn,
+                              toggles: snapshot.notificationToggles,
+                              values: _toggles,
+                              onToggle: _toggle,
+                            ),
+                            _ToggleSection(
+                              key: P2PSettingsPage.privacyKey,
+                              icon: Icons.visibility_outlined,
+                              label: 'Quyền riêng tư',
+                              color: AppColors.accent,
+                              toggles: snapshot.privacyToggles,
+                              values: _toggles,
+                              onToggle: _toggle,
+                            ),
+                            _SecuritySection(
+                              snapshot: snapshot,
+                              values: _toggles,
+                              onToggle: _toggle,
+                            ),
+                            _HoursSection(
+                              mode: _hoursMode,
+                              onChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _hoursMode = value);
+                              },
+                            ),
+                            _AutoReplySection(
+                              autoReply: snapshot.autoReply,
+                              enabled: _toggles['auto_reply'] ?? true,
+                              onToggle: () => _toggle('auto_reply'),
+                            ),
+                            VitCtaButton(
+                              key: P2PSettingsPage.saveKey,
+                              variant: _saved
+                                  ? VitCtaButtonVariant.success
+                                  : VitCtaButtonVariant.primary,
+                              onPressed: () {
+                                HapticFeedback.mediumImpact();
+                                setState(() => _saved = true);
+                              },
+                              child: Text(
+                                _saved ? 'Đã lưu thành công!' : 'Lưu cài đặt',
+                              ),
+                            ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Xem lại cài đặt P2P',
+                              message:
+                                  'Mặc định giao dịch, thông báo, quyền riêng tư, bảo mật, giờ hoạt động, tin nhắn tự động và trạng thái lưu được xem lại trước khi áp dụng.',
+                              contractId: 'SC-279',
+                            ),
+                            Text(
+                              snapshot.contractNotes,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
                         ),
-                        _ToggleSection(
-                          key: P2PSettingsPage.notificationsKey,
-                          icon: Icons.notifications_none_rounded,
-                          label: 'Thông báo',
-                          color: AppColors.warn,
-                          toggles: snapshot.notificationToggles,
-                          values: _toggles,
-                          onToggle: _toggle,
-                        ),
-                        _ToggleSection(
-                          key: P2PSettingsPage.privacyKey,
-                          icon: Icons.visibility_outlined,
-                          label: 'Quyền riêng tư',
-                          color: AppColors.accent,
-                          toggles: snapshot.privacyToggles,
-                          values: _toggles,
-                          onToggle: _toggle,
-                        ),
-                        _SecuritySection(
-                          snapshot: snapshot,
-                          values: _toggles,
-                          onToggle: _toggle,
-                        ),
-                        _HoursSection(
-                          mode: _hoursMode,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _hoursMode = value);
-                          },
-                        ),
-                        _AutoReplySection(
-                          autoReply: snapshot.autoReply,
-                          enabled: _toggles['auto_reply'] ?? true,
-                          onToggle: () => _toggle('auto_reply'),
-                        ),
-                        VitCtaButton(
-                          key: P2PSettingsPage.saveKey,
-                          variant: _saved
-                              ? VitCtaButtonVariant.success
-                              : VitCtaButtonVariant.primary,
-                          onPressed: () {
-                            HapticFeedback.mediumImpact();
-                            setState(() => _saved = true);
-                          },
-                          child: Text(
-                            _saved ? 'Đã lưu thành công!' : 'Lưu cài đặt',
-                          ),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Xem lại cài đặt P2P',
-                          message:
-                              'Mặc định giao dịch, thông báo, quyền riêng tư, bảo mật, giờ hoạt động, tin nhắn tự động và trạng thái lưu được xem lại trước khi áp dụng.',
-                          contractId: 'SC-279',
-                        ),
-                        Text(
-                          snapshot.contractNotes,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

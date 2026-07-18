@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   @override
-  P2PDashboardSnapshot getDashboard({String timeFilter = '30d'}) {
+  Future<P2PDashboardSnapshot> getDashboard({String timeFilter = '30d'}) async {
+    await _simulateNetwork();
     final selectedFilter = _p2pDashboardFilters.firstWhere(
       (item) => item.id == timeFilter,
       orElse: () => _p2pDashboardFilters[1],
@@ -40,7 +41,8 @@ mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PAchievementsSnapshot getAchievements() {
+  Future<P2PAchievementsSnapshot> getAchievements() async {
+    await _simulateNetwork();
     return const P2PAchievementsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-achievements',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -63,7 +65,8 @@ mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PBlacklistAddSnapshot getBlacklistAdd() {
+  Future<P2PBlacklistAddSnapshot> getBlacklistAdd() async {
+    await _simulateNetwork();
     return const P2PBlacklistAddSnapshot(
       endpoint: '/api/mobile/p2p/p2p-blacklist-add',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -95,7 +98,8 @@ mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PBlacklistSnapshot getBlacklist() {
+  Future<P2PBlacklistSnapshot> getBlacklist() async {
+    await _simulateNetwork();
     return const P2PBlacklistSnapshot(
       endpoint: '/api/mobile/p2p/p2p-blacklist',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -123,7 +127,8 @@ mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PNotificationSettingsSnapshot getNotificationSettings() {
+  Future<P2PNotificationSettingsSnapshot> getNotificationSettings() async {
+    await _simulateNetwork();
     return const P2PNotificationSettingsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-settings-notifications',
       actionDraft:
@@ -148,7 +153,8 @@ mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PSettingsSnapshot getSettings() {
+  Future<P2PSettingsSnapshot> getSettings() async {
+    await _simulateNetwork();
     return const P2PSettingsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-settings',
       actionDraft:
@@ -183,7 +189,8 @@ mixin _MockP2PRepositoryDashboardUxMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PGuideSnapshot getGuide() {
+  Future<P2PGuideSnapshot> getGuide() async {
+    await _simulateNetwork();
     return P2PGuideSnapshot(
       endpoint: '/api/mobile/p2p/p2p-guide',
       actionDraft: 'POST /p2p/* workflow action where applicable',

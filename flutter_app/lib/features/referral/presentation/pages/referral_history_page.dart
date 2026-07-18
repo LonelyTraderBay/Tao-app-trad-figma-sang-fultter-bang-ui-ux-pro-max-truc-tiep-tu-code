@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -60,13 +61,13 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(referralControllerProvider)
-        .getHistory(
-          filter: _filter,
-          sort: _sort,
-          query: _searchController.text,
-        );
+    final historyAsync = ref.watch(
+      referralHistorySnapshotProvider((
+        filter: _filter,
+        sort: _sort,
+        query: _searchController.text,
+      )),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -82,10 +83,12 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Lịch sử giới thiệu',
+            subtitle: 'Lịch sử · Referral',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(
+              historyAsync.value?.backRoute ?? AppRoutePaths.referral,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,75 +105,92 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
-                      children: [
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Padding(
-                                padding:
-                                    ReferralSpacingTokens.referralCardPadding,
-                                child: _StatsRow(stats: snapshot.stats),
-                              ),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.divider,
-                              ),
-                              VitSearchBar(
-                                key: ReferralHistoryPage.searchKey,
-                                controller: _searchController,
-                                placeholder: snapshot.searchHint,
-                                variant: VitSearchBarVariant.compact,
-                                onChanged: (_) => setState(() {}),
-                              ),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.divider,
-                              ),
-                              Padding(
-                                padding:
-                                    ReferralSpacingTokens.referralCardPadding,
-                                child: _ReferralFriendFilters(
-                                  filters: snapshot.filters,
-                                  active: snapshot.filter,
-                                  onChanged: (value) {
-                                    HapticFeedback.selectionClick();
-                                    setState(() => _filter = value);
-                                  },
+                      children: historyAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được lịch sử',
+                            message: 'Thử lại sau hoặc quay lại trang chủ.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              referralHistorySnapshotProvider((
+                                filter: _filter,
+                                sort: _sort,
+                                query: _searchController.text,
+                              )),
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          VitCard(
+                            padding: AppSpacing.zeroInsets,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Padding(
+                                  padding:
+                                      ReferralSpacingTokens.referralCardPadding,
+                                  child: _StatsRow(stats: snapshot.stats),
                                 ),
+                                const Divider(
+                                  height: 1,
+                                  color: AppColors.divider,
+                                ),
+                                VitSearchBar(
+                                  key: ReferralHistoryPage.searchKey,
+                                  controller: _searchController,
+                                  placeholder: snapshot.searchHint,
+                                  variant: VitSearchBarVariant.compact,
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                                const Divider(
+                                  height: 1,
+                                  color: AppColors.divider,
+                                ),
+                                Padding(
+                                  padding:
+                                      ReferralSpacingTokens.referralCardPadding,
+                                  child: _ReferralFriendFilters(
+                                    filters: snapshot.filters,
+                                    active: snapshot.filter,
+                                    onChanged: (value) {
+                                      HapticFeedback.selectionClick();
+                                      setState(() => _filter = value);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          _SortRail(
+                            options: snapshot.sortOptions,
+                            active: snapshot.sort,
+                            onChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _sort = value);
+                            },
+                          ),
+                          if (snapshot.friends.isEmpty)
+                            const VitEmptyState(
+                              key: ReferralHistoryPage.emptyKey,
+                              title: 'Không tìm thấy',
+                              message: 'Thử thay đổi bộ lọc hoặc từ khóa',
+                              icon: Icons.search_rounded,
+                            )
+                          else
+                            for (final friend in snapshot.friends) ...[
+                              _FriendCard(
+                                friend: friend,
+                                reminded: _remindedFriend == friend.id,
+                                onOpen: () => context.go(friend.route),
+                                onRemind: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _remindedFriend = friend.id);
+                                },
                               ),
                             ],
-                          ),
-                        ),
-                        _SortRail(
-                          options: snapshot.sortOptions,
-                          active: snapshot.sort,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _sort = value);
-                          },
-                        ),
-                        if (snapshot.friends.isEmpty)
-                          const VitEmptyState(
-                            key: ReferralHistoryPage.emptyKey,
-                            title: 'Không tìm thấy',
-                            message: 'Thử thay đổi bộ lọc hoặc từ khóa',
-                            icon: Icons.search_rounded,
-                          )
-                        else
-                          for (final friend in snapshot.friends) ...[
-                            _FriendCard(
-                              friend: friend,
-                              reminded: _remindedFriend == friend.id,
-                              onOpen: () => context.go(friend.route),
-                              onRemind: () {
-                                HapticFeedback.selectionClick();
-                                setState(() => _remindedFriend = friend.id);
-                              },
-                            ),
-                          ],
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

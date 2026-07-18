@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-229 mock repository exposes P2P report merchant BE draft', () {
-    final snapshot = const MockP2PRepository().getReportMerchant('mc001');
+  test('SC-229 mock repository exposes P2P report merchant BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getReportMerchant('mc001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-report-mc001');
     expect(

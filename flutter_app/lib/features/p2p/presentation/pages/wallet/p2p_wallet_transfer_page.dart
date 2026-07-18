@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -102,22 +103,15 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       p2pWalletTransferProvider((asset: _asset, type: _type)),
     );
-    if (!snapshot.assets.any((item) => item.symbol == _asset)) {
-      _asset = snapshot.defaultAsset;
-    }
-
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? _p2pTransferVisualNavClearance + _p2pTransferVisualClearance
             : _p2pTransferNativeNavClearance + _p2pTransferNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final source = snapshot.sourceBalance(_type, _asset);
-    final destination = snapshot.destinationBalance(_type, _asset);
-    final canTransfer = _amount > 0 && _amount <= source.available;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -125,81 +119,117 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
       semanticIdentifier: 'SC-261',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: _showConfirm ? 'Xác nhận chuyển tiền' : 'Chuyển tiền',
-            subtitle: 'Ví · P2P',
-            showBack: true,
-            onBack: () {
-              if (_showConfirm) {
-                setState(() => _showConfirm = false);
-                return;
-              }
-              context.go(snapshot.parentRoute);
-            },
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pWallet),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pWalletTransferScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        if (_showConfirm)
-                          _ConfirmTransferView(
-                            snapshot: snapshot,
-                            source: source,
-                            destination: destination,
-                            amount: _amount,
-                            asset: _asset,
-                            onEdit: () => setState(() => _showConfirm = false),
-                            onConfirm: () {
-                              HapticFeedback.mediumImpact();
-                              context.go(snapshot.parentRoute);
-                            },
-                          )
-                        else
-                          _TransferForm(
-                            snapshot: snapshot,
-                            source: source,
-                            destination: destination,
-                            type: _type,
-                            asset: _asset,
-                            amountController: _amountController,
-                            amount: _amount,
-                            canTransfer: canTransfer,
-                            onSwitch: _switchDirection,
-                            onAssetChanged: _setAsset,
-                            onMax: () => _setAmount(source.available),
-                            onPercent: (percent) =>
-                                _setAmount(source.available * percent / 100),
-                            onAmountChanged: () => setState(() {}),
-                            onSubmit: canTransfer
-                                ? () {
-                                    HapticFeedback.mediumImpact();
-                                    setState(() => _showConfirm = true);
-                                  }
-                                : null,
-                          ),
-                      ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pWallet),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pWalletTransferProvider((asset: _asset, type: _type)),
+              ),
+            ),
+          ),
+          data: (snapshot) {
+            if (!snapshot.assets.any((item) => item.symbol == _asset)) {
+              _asset = snapshot.defaultAsset;
+            }
+            final source = snapshot.sourceBalance(_type, _asset);
+            final destination = snapshot.destinationBalance(_type, _asset);
+            final canTransfer = _amount > 0 && _amount <= source.available;
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: _showConfirm ? 'Xác nhận chuyển tiền' : 'Chuyển tiền',
+                subtitle: 'Ví · P2P',
+                showBack: true,
+                onBack: () {
+                  if (_showConfirm) {
+                    setState(() => _showConfirm = false);
+                    return;
+                  }
+                  context.go(snapshot.parentRoute);
+                },
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pWalletTransferScrollPadding(
+                              scrollEndPadding,
+                            ),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            if (_showConfirm)
+                              _ConfirmTransferView(
+                                snapshot: snapshot,
+                                source: source,
+                                destination: destination,
+                                amount: _amount,
+                                asset: _asset,
+                                onEdit: () =>
+                                    setState(() => _showConfirm = false),
+                                onConfirm: () {
+                                  HapticFeedback.mediumImpact();
+                                  context.go(snapshot.parentRoute);
+                                },
+                              )
+                            else
+                              _TransferForm(
+                                snapshot: snapshot,
+                                source: source,
+                                destination: destination,
+                                type: _type,
+                                asset: _asset,
+                                amountController: _amountController,
+                                amount: _amount,
+                                canTransfer: canTransfer,
+                                onSwitch: _switchDirection,
+                                onAssetChanged: _setAsset,
+                                onMax: () => _setAmount(source.available),
+                                onPercent: (percent) => _setAmount(
+                                  source.available * percent / 100,
+                                ),
+                                onAmountChanged: () => setState(() {}),
+                                onSubmit: canTransfer
+                                    ? () {
+                                        HapticFeedback.mediumImpact();
+                                        setState(() => _showConfirm = true);
+                                      }
+                                    : null,
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   @override
-  P2PLimitTrackerSnapshot getLimitTracker() {
+  Future<P2PLimitTrackerSnapshot> getLimitTracker() async {
+    await _simulateNetwork();
     return const P2PLimitTrackerSnapshot(
       endpoint: '/api/mobile/p2p/p2p-limits-tracker',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -23,7 +24,8 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PTransactionLimitsSnapshot getTransactionLimits() {
+  Future<P2PTransactionLimitsSnapshot> getTransactionLimits() async {
+    await _simulateNetwork();
     return const P2PTransactionLimitsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-limits',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -49,7 +51,8 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PComplianceOverviewSnapshot getComplianceOverview() {
+  Future<P2PComplianceOverviewSnapshot> getComplianceOverview() async {
+    await _simulateNetwork();
     return const P2PComplianceOverviewSnapshot(
       endpoint: '/api/mobile/p2p/p2p-compliance-overview',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -71,7 +74,8 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PAmlScreeningSnapshot getAmlScreening() {
+  Future<P2PAmlScreeningSnapshot> getAmlScreening() async {
+    await _simulateNetwork();
     return const P2PAmlScreeningSnapshot(
       endpoint: '/api/mobile/p2p/p2p-compliance-aml-screening',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -100,7 +104,8 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PSourceOfFundsSnapshot getSourceOfFunds() {
+  Future<P2PSourceOfFundsSnapshot> getSourceOfFunds() async {
+    await _simulateNetwork();
     return const P2PSourceOfFundsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-compliance-source-of-funds',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -128,9 +133,9 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PLargeTransactionJustificationSnapshot getLargeTransactionJustification({
-    double amount = 100000000,
-  }) {
+  Future<P2PLargeTransactionJustificationSnapshot>
+  getLargeTransactionJustification({double amount = 100000000}) async {
+    await _simulateNetwork();
     return P2PLargeTransactionJustificationSnapshot(
       endpoint: '/api/mobile/p2p/p2p-compliance-large-transaction',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -161,7 +166,8 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PRiskAssessmentSnapshot getRiskAssessment() {
+  Future<P2PRiskAssessmentSnapshot> getRiskAssessment() async {
+    await _simulateNetwork();
     return const P2PRiskAssessmentSnapshot(
       endpoint: '/api/mobile/p2p/p2p-compliance-risk-assessment',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -188,10 +194,11 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PTaxReportingSnapshot getTaxReporting({
+  Future<P2PTaxReportingSnapshot> getTaxReporting({
     int selectedYear = 2025,
     String selectedJurisdiction = 'US',
-  }) {
+  }) async {
+    await _simulateNetwork();
     final jurisdiction = _p2pTaxJurisdictions.firstWhere(
       (item) => item.code == selectedJurisdiction,
       orElse: () => _p2pTaxJurisdictions.first,
@@ -225,7 +232,10 @@ mixin _MockP2PRepositoryComplianceRiskMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2POrderBookSnapshot getOrderBook({String selectedAsset = 'USDT'}) {
+  Future<P2POrderBookSnapshot> getOrderBook({
+    String selectedAsset = 'USDT',
+  }) async {
+    await _simulateNetwork();
     final selected = _p2pOrderBookMarkets.firstWhere(
       (item) => item.asset == selectedAsset,
       orElse: () => _p2pOrderBookMarkets.first,

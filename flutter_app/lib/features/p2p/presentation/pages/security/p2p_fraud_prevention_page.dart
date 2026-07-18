@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -65,17 +66,15 @@ class _P2PFraudPreventionPageState
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(p2pFraudPreventionStateControllerProvider);
-    final snapshot = viewState.snapshot;
-    final checklist = viewState.checklist;
+    // GD4 bẫy 21: trang chỉ watch Notifier — bọc .when() trên snapshot
+    // provider gốc để tránh render fallback rỗng trong cửa sổ loading.
+    final snapshotAsync = ref.watch(p2pFraudPreventionProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + _p2pFraudVisualClearance
             : DeviceMetrics.nativeBottomChrome + _p2pFraudNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final checkedCount = checklist.where((item) => item.checked).length;
-    final score = (checkedCount / checklist.length * 100).round();
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,68 +82,100 @@ class _P2PFraudPreventionPageState
       semanticIdentifier: 'SC-260',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Phòng chống gian lận',
-            subtitle: 'An toàn · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pFraudScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _SafetyScoreCard(
-                          score: score,
-                          checkedCount: checkedCount,
-                          totalCount: checklist.length,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pFraudPreventionProvider),
+            ),
+          ),
+          data: (_) {
+            final viewState = ref.watch(
+              p2pFraudPreventionStateControllerProvider,
+            );
+            final snapshot = viewState.snapshot;
+            final checklist = viewState.checklist;
+            final checkedCount = checklist.where((item) => item.checked).length;
+            final score = (checkedCount / checklist.length * 100).round();
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Phòng chống gian lận',
+                subtitle: 'An toàn · P2P',
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pFraudScrollPadding(
+                          scrollEndPadding,
                         ),
-                        _PatternSection(
-                          patterns: snapshot.patterns,
-                          expandedPatternId: _expandedPatternId,
-                          onToggle: _togglePattern,
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _SafetyScoreCard(
+                              score: score,
+                              checkedCount: checkedCount,
+                              totalCount: checklist.length,
+                            ),
+                            _PatternSection(
+                              patterns: snapshot.patterns,
+                              expandedPatternId: _expandedPatternId,
+                              onToggle: _togglePattern,
+                            ),
+                            _ChecklistCard(
+                              checklist: checklist,
+                              activeCategory: _activeCategory,
+                              onCategoryChanged: _setCategory,
+                              onToggle: _toggleChecklist,
+                            ),
+                            _EmergencyActions(snapshot: snapshot),
+                            _Disclosure(text: snapshot.disclosure),
+                            const VitCard(
+                              variant: VitCardVariant.inner,
+                              padding: P2PSpacingTokens.p2pFraudInnerPadding,
+                              child: VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Rà soát phòng chống gian lận',
+                                message:
+                                    'Chỉ số an toàn, checklist, mẫu gian lận, hành động khẩn cấp và cảnh báo pháp lý vẫn hiển thị trước khi tiếp tục giao dịch P2P.',
+                                contractId: 'SC-260',
+                              ),
+                            ),
+                          ],
                         ),
-                        _ChecklistCard(
-                          checklist: checklist,
-                          activeCategory: _activeCategory,
-                          onCategoryChanged: _setCategory,
-                          onToggle: _toggleChecklist,
-                        ),
-                        _EmergencyActions(snapshot: snapshot),
-                        _Disclosure(text: snapshot.disclosure),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: P2PSpacingTokens.p2pFraudInnerPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Rà soát phòng chống gian lận',
-                            message:
-                                'Chỉ số an toàn, checklist, mẫu gian lận, hành động khẩn cấp và cảnh báo pháp lý vẫn hiển thị trước khi tiếp tục giao dịch P2P.',
-                            contractId: 'SC-260',
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

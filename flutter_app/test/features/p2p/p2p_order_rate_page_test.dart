@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-213 mock repository exposes P2P order rate BE draft', () {
-    final snapshot = const MockP2PRepository().getOrderRate('p2p001');
+  test('SC-213 mock repository exposes P2P order rate BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrderRate('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-rate-p2p001');
     expect(

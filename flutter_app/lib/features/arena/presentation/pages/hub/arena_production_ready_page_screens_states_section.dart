@@ -6,9 +6,7 @@ class _ArenaProductionReadyPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaProductionReady();
+    final snapshotAsync = ref.watch(arenaProductionReadySnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -50,22 +48,35 @@ class _ArenaProductionReadyPageState
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        const _ProductionHero(),
-                        _SectionTabs(
-                          active: _activeSection,
-                          onChanged: (section) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeSection = section);
-                          },
-                        ),
-                        _ActiveSection(
-                          section: _activeSection,
-                          snapshot: snapshot,
-                          onRoute: (route) => _go(context, route),
-                        ),
-                        _InternalOnlyFooter(text: snapshot.disclaimer),
-                      ],
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Release Readiness',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaProductionReadySnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          const _ProductionHero(),
+                          _SectionTabs(
+                            active: _activeSection,
+                            onChanged: (section) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeSection = section);
+                            },
+                          ),
+                          _ActiveSection(
+                            section: _activeSection,
+                            snapshot: snapshot,
+                            onRoute: (route) => _go(context, route),
+                          ),
+                          _InternalOnlyFooter(text: snapshot.disclaimer),
+                        ],
+                      ),
                     ),
                   ),
                 ),

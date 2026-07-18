@@ -67,8 +67,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pEscrowDetailProvider(widget.orderId));
-    final order = snapshot.order;
+    final snapshotAsync = ref.watch(p2pEscrowDetailProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -76,55 +75,84 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
             : _p2pEscrowNativeNavClearance + _p2pEscrowNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitP2PFlowScaffold(
-      semanticLabel: 'Chi tiết Escrow',
-      semanticIdentifier: 'SC-246',
-      title: 'Chi tiết Escrow',
-      subtitle: 'Escrow · P2P',
-      onBack: () => context.go(snapshot.parentRoute),
-      shellRenderMode: mode,
-      bottomInset: scrollEndPadding,
-      children: [
-        _EscrowStatusHero(snapshot: snapshot),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        semanticLabel: 'Chi tiết Escrow',
+        semanticIdentifier: 'SC-246',
+        title: 'Đang tải…',
+        onBack: () => context.go(AppRoutePaths.p2pOrder(widget.orderId)),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        semanticLabel: 'Chi tiết Escrow',
+        semanticIdentifier: 'SC-246',
+        title: 'Không tải được',
+        onBack: () => context.go(AppRoutePaths.p2pOrder(widget.orderId)),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () =>
+                ref.invalidate(p2pEscrowDetailProvider(widget.orderId)),
+          ),
+        ],
+      ),
+      data: (snapshot) {
+        final order = snapshot.order;
+        return VitP2PFlowScaffold(
+          semanticLabel: 'Chi tiết Escrow',
+          semanticIdentifier: 'SC-246',
+          title: 'Chi tiết Escrow',
+          subtitle: 'Escrow · P2P',
+          onBack: () => context.go(snapshot.parentRoute),
+          shellRenderMode: mode,
+          bottomInset: scrollEndPadding,
           children: [
-            _EscrowAddressCard(
-              snapshot: snapshot,
-              showFullAddress: _showFullAddress,
-              onReveal: () {
-                HapticFeedback.selectionClick();
-                setState(() => _showFullAddress = !_showFullAddress);
-              },
-              onCopy: () {
-                HapticFeedback.selectionClick();
-                Clipboard.setData(ClipboardData(text: snapshot.escrowAddress));
-                setState(() => _feedback = 'Đã copy địa chỉ escrow');
-              },
-              onExplorer: () {
-                HapticFeedback.selectionClick();
-                setState(() => _feedback = 'Đã mở Blockchain Explorer');
-              },
+            _EscrowStatusHero(snapshot: snapshot),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _EscrowAddressCard(
+                  snapshot: snapshot,
+                  showFullAddress: _showFullAddress,
+                  onReveal: () {
+                    HapticFeedback.selectionClick();
+                    setState(() => _showFullAddress = !_showFullAddress);
+                  },
+                  onCopy: () {
+                    HapticFeedback.selectionClick();
+                    Clipboard.setData(
+                      ClipboardData(text: snapshot.escrowAddress),
+                    );
+                    setState(() => _feedback = 'Đã copy địa chỉ escrow');
+                  },
+                  onExplorer: () {
+                    HapticFeedback.selectionClick();
+                    setState(() => _feedback = 'Đã mở Blockchain Explorer');
+                  },
+                ),
+                if (_feedback != null) ...[
+                  const SizedBox(height: _p2pEscrowTightGap),
+                  _FeedbackBanner(message: _feedback!),
+                ],
+              ],
             ),
-            if (_feedback != null) ...[
-              const SizedBox(height: _p2pEscrowTightGap),
-              _FeedbackBanner(message: _feedback!),
-            ],
+            _MultiSigCard(snapshot: snapshot),
+            _OrderInfoCard(order: order),
+            _EscrowTimelineCard(events: snapshot.timeline),
+            _SecurityNotice(snapshot: snapshot),
+            _OrderLink(orderId: widget.orderId),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Xem lại chi tiết escrow',
+              message:
+                  'Địa chỉ escrow đã che, thao tác hiện/copy, trạng thái multisig, liên kết đơn, timeline và bước an toàn tiếp theo được xem lại trước thao tác tiền.',
+              contractId: 'p2p-escrow-detail-review',
+            ),
           ],
-        ),
-        _MultiSigCard(snapshot: snapshot),
-        _OrderInfoCard(order: order),
-        _EscrowTimelineCard(events: snapshot.timeline),
-        _SecurityNotice(snapshot: snapshot),
-        _OrderLink(orderId: widget.orderId),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Xem lại chi tiết escrow',
-          message:
-              'Địa chỉ escrow đã che, thao tác hiện/copy, trạng thái multisig, liên kết đơn, timeline và bước an toàn tiếp theo được xem lại trước thao tác tiền.',
-          contractId: 'p2p-escrow-detail-review',
-        ),
-      ],
+        );
+      },
     );
   }
 }

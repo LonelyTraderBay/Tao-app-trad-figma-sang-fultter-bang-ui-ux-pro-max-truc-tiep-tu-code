@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-271 mock repository exposes risk assessment BE draft', () {
-    final snapshot = const MockP2PRepository().getRiskAssessment();
+  test('SC-271 mock repository exposes risk assessment BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getRiskAssessment();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-compliance-risk-assessment');
     expect(

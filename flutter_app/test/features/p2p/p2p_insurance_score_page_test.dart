@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-240 mock repository exposes insurance score BE draft', () {
-    final snapshot = const MockP2PRepository().getInsuranceScore();
+  test('SC-240 mock repository exposes insurance score BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getInsuranceScore();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-insurance-score');
     expect(

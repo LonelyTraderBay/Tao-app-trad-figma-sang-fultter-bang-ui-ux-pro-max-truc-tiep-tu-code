@@ -15,10 +15,7 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getTournaments();
-    final tournament = _findTournament(snapshot.tournaments, tournamentId);
+    final tournamentsAsync = ref.watch(predictionsTournamentsSnapshotProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final footerPadding =
         (mode.usesVisualQaFrame
@@ -26,6 +23,69 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
+    // GD4-F5 (mục 5, biến thể 2): tiêu đề header = tên giải đấu, suy ra từ
+    // snapshot chứ không phải chỉ từ tham số trang — bọc TOÀN BỘ scaffold
+    // trong `.when()`, mỗi nhánh dựng header fallback hợp lý riêng.
+    return tournamentsAsync.when(
+      loading: () => const _TournamentDetailScaffold(
+        title: 'Tournament',
+        child: VitSkeletonList(),
+      ),
+      error: (error, stackTrace) => _TournamentDetailScaffold(
+        title: 'Tournament',
+        child: VitErrorState(
+          title: 'Không tải được giải đấu',
+          message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+          actionLabel: 'Thử lại',
+          onAction: () =>
+              ref.invalidate(predictionsTournamentsSnapshotProvider),
+        ),
+      ),
+      data: (snapshot) {
+        final tournament = _findTournament(snapshot.tournaments, tournamentId);
+        return _TournamentDetailScaffold(
+          title: tournament?.name ?? 'Tournament',
+          child: SingleChildScrollView(
+            key: contentKey,
+            physics: const ClampingScrollPhysics(),
+            padding: PredictionsSpacingTokens.predictionTournamentScrollPadding(
+              footerPadding,
+            ),
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
+              density: VitDensity.compact,
+              children: [
+                if (tournament == null)
+                  const _EmptyStateCard(
+                    key: missingKey,
+                    icon: Icons.emoji_events_outlined,
+                    title: 'Tournament not found',
+                    message: 'Return to the tournament list to continue.',
+                  )
+                else ...[
+                  _TournamentDetailHero(tournament: tournament),
+                  _TournamentStatsGrid(tournament: tournament),
+                  const _TournamentInfoCard(),
+                  if (tournament.isJoined)
+                    _FinalLeaderboard(entries: snapshot.leaderboard),
+                ],
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _TournamentDetailScaffold extends StatelessWidget {
+  const _TournamentDetailScaffold({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'Chi tiết giải đấu dự đoán',
@@ -34,45 +94,14 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: tournament?.name ?? 'Tournament',
+            title: title,
             showBack: true,
             onBack: () =>
                 context.go(AppRoutePaths.marketsPredictionsTournaments),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding:
-                      PredictionsSpacingTokens.predictionTournamentScrollPadding(
-                        footerPadding,
-                      ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    density: VitDensity.compact,
-                    children: [
-                      if (tournament == null)
-                        const _EmptyStateCard(
-                          key: missingKey,
-                          icon: Icons.emoji_events_outlined,
-                          title: 'Tournament not found',
-                          message: 'Return to the tournament list to continue.',
-                        )
-                      else ...[
-                        _TournamentDetailHero(tournament: tournament),
-                        _TournamentStatsGrid(tournament: tournament),
-                        const _TournamentInfoCard(),
-                        if (tournament.isJoined)
-                          _FinalLeaderboard(entries: snapshot.leaderboard),
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            children: [Expanded(child: child)],
           ),
         ),
       ),

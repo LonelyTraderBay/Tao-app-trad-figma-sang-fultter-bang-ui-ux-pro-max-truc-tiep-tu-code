@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-264 mock repository exposes P2P wallet BE draft', () {
-    final snapshot = const MockP2PRepository().getWallet();
+  test('SC-264 mock repository exposes P2P wallet BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getWallet();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-wallet');
     expect(

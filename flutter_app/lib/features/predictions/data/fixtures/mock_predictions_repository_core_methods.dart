@@ -3,11 +3,12 @@ part of '../repositories/mock_predictions_repository.dart';
 mixin _MockPredictionsRepositoryMethodsPart01
     on _MockPredictionsRepositoryBase {
   @override
-  PredictionHomeSnapshot getHome({
+  Future<PredictionHomeSnapshot> getHome({
     PredictionFilterTab filter = PredictionFilterTab.trending,
     String? category,
     String searchQuery = '',
-  }) {
+  }) async {
+    await _simulateNetwork();
     var events = _applyFilter(_predictionEvents, filter);
     if (category != null && category.isNotEmpty) {
       events = events.where((event) => event.category == category).toList();
@@ -60,12 +61,13 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionSearchSnapshot getSearch({
+  Future<PredictionSearchSnapshot> getSearch({
     PredictionSearchSort sort = PredictionSearchSort.trending,
     PredictionStatusFilter status = PredictionStatusFilter.active,
     String? category,
     String searchQuery = '',
-  }) {
+  }) async {
+    await _simulateNetwork();
     var events = _predictionEvents.toList();
 
     switch (status) {
@@ -120,7 +122,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionBreakingSnapshot getBreaking({String? category}) {
+  Future<PredictionBreakingSnapshot> getBreaking({String? category}) async {
+    await _simulateNetwork();
     var movers = _predictionEvents
         .where(
           (event) =>
@@ -162,7 +165,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionEventDetailSnapshot getEventDetail(String eventId) {
+  Future<PredictionEventDetailSnapshot> getEventDetail(String eventId) async {
+    await _simulateNetwork();
     final event = _predictionEvents.firstWhere(
       (item) => item.id == eventId,
       orElse: () => _predictionEvents.first,
@@ -328,7 +332,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionPortfolioSnapshot getPortfolio() {
+  Future<PredictionPortfolioSnapshot> getPortfolio() async {
+    await _simulateNetwork();
     final totalCurrent = _predictionPortfolioPositions.fold<double>(
       0,
       (sum, position) => sum + position.currentValue,
@@ -367,7 +372,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionRewardsSnapshot getRewards() {
+  Future<PredictionRewardsSnapshot> getRewards() async {
+    await _simulateNetwork();
     final totalDailyPool = _predictionRewardOpportunities.fold<double>(
       0,
       (sum, reward) => sum + reward.dailyReward,
@@ -391,11 +397,12 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionLeaderboardSnapshot getLeaderboard({
+  Future<PredictionLeaderboardSnapshot> getLeaderboard({
     PredictionLeaderboardTimeFilter timeFilter =
         PredictionLeaderboardTimeFilter.weekly,
     PredictionLeaderboardMetric metric = PredictionLeaderboardMetric.pnl,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final base =
         (_predictionLeaderboardData[timeFilter] ??
                 _predictionLeaderboardData[PredictionLeaderboardTimeFilter
@@ -433,7 +440,10 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionGlobalActivitySnapshot getGlobalActivity({double minAmount = 0}) {
+  Future<PredictionGlobalActivitySnapshot> getGlobalActivity({
+    double minAmount = 0,
+  }) async {
+    await _simulateNetwork();
     final allActivity = _generatePredictionGlobalActivity();
     final filtered = minAmount <= 0
         ? allActivity
@@ -473,7 +483,10 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionOrderReceiptSnapshot getOrderReceipt(String receiptId) {
+  Future<PredictionOrderReceiptSnapshot> getOrderReceipt(
+    String receiptId,
+  ) async {
+    await _simulateNetwork();
     PredictionPortfolioReceiptDraft? receipt;
     for (final candidate in _predictionPortfolioReceipts) {
       if (candidate.id == receiptId) {
@@ -518,7 +531,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionRiskCalculatorSnapshot getRiskCalculator() {
+  Future<PredictionRiskCalculatorSnapshot> getRiskCalculator() async {
+    await _simulateNetwork();
     return PredictionRiskCalculatorSnapshot(
       defaultEventName: 'BTC > \$100K by Dec 2026?',
       defaultOutcome: 'yes',
@@ -542,7 +556,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionMarketMakerSnapshot getMarketMaker() {
+  Future<PredictionMarketMakerSnapshot> getMarketMaker() async {
+    await _simulateNetwork();
     return PredictionMarketMakerSnapshot(
       defaultEventName: 'BTC > \$100K by Dec 2026?',
       defaultSpreadBps: 50,
@@ -565,7 +580,8 @@ mixin _MockPredictionsRepositoryMethodsPart01
   }
 
   @override
-  PredictionPortfolioAnalyzerSnapshot getPortfolioAnalyzer() {
+  Future<PredictionPortfolioAnalyzerSnapshot> getPortfolioAnalyzer() async {
+    await _simulateNetwork();
     return PredictionPortfolioAnalyzerSnapshot(
       positions: _predictionAnalyzerPositions,
       pnlHistory: _predictionAnalyzerPnlHistory,

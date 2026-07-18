@@ -18,22 +18,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pExpressProvider);
-    final selectedAsset = snapshot.assetBySymbol(_asset);
-    final bestAd = snapshot.bestAd(
-      tradeType: _tradeType,
-      asset: selectedAsset.symbol,
-      fiatAmount: _fiatAmount,
-      paymentMethod: _paymentMethod,
-    );
-    final topAds = snapshot.topAds(
-      tradeType: _tradeType,
-      asset: selectedAsset.symbol,
-      fiatAmount: _fiatAmount,
-    );
-    final cryptoAmount = bestAd == null || _fiatAmount <= 0
-        ? 0.0
-        : _fiatAmount / bestAd.price;
+    final snapshotAsync = ref.watch(p2pExpressProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -61,93 +46,121 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
               ),
             ],
           ),
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(
-              context,
-            ).copyWith(scrollbars: false),
-            child: VitInsetScrollView(
-              key: P2PExpressPage.contentKey,
-              physics: const ClampingScrollPhysics(),
-              bottomInset: scrollEndPadding,
-              child: VitPageContent(
-                rhythm: VitPageRhythm.standard,
-                padding: VitContentPadding.compact,
-                density: VitDensity.compact,
-                children: [
-                  _ExpressHero(tradeType: _tradeType),
-                  _ExpressTradeTabs(
-                    tradeType: _tradeType,
-                    onChanged: _setTradeType,
-                  ),
-                  _AssetCard(
-                    tradeType: _tradeType,
-                    selectedAsset: selectedAsset,
-                    assets: snapshot.assets,
-                    onAssetChanged: _setAsset,
-                  ),
-                  _AmountCard(
-                    controller: _amountController,
-                    tradeType: _tradeType,
-                    amount: _fiatAmount,
-                    bestAd: bestAd,
-                    cryptoAmount: cryptoAmount,
-                    quickAmounts: snapshot.quickAmountsVnd,
-                    onChanged: () => setState(() {}),
-                    onQuickAmount: _setAmount,
-                  ),
-                  _PaymentCard(
-                    selectedPayment: _paymentMethod,
-                    paymentMethods: snapshot.paymentMethods,
-                    onChanged: _setPayment,
-                  ),
-                  if (_fiatAmount > 0 && bestAd != null)
-                    _BestOfferCard(
-                      tradeType: _tradeType,
-                      ad: bestAd,
-                      topOfferCount: topAds.length,
-                      marketPrice: selectedAsset.marketPriceVnd,
-                      cryptoAmount: cryptoAmount,
-                      onMerchant: () =>
-                          context.go('/p2p/merchant/${bestAd.merchantId}'),
-                      onMarketplace: () => context.go(AppRoutePaths.p2p),
-                    ),
-                  if (_fiatAmount > 0 && bestAd == null) const _NoOfferCard(),
-                  VitCtaButton(
-                    key: P2PExpressPage.ctaKey,
-                    onPressed: bestAd == null
-                        ? null
-                        : () => _openConfirm(
-                            context,
-                            selectedAsset.symbol,
-                            bestAd,
-                            cryptoAmount,
-                          ),
-                    variant: _tradeType == P2PTradeType.buy
-                        ? VitCtaButtonVariant.success
-                        : VitCtaButtonVariant.danger,
-                    leading: const Icon(Icons.bolt_outlined),
-                    child: Text(
-                      '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
-                    ),
-                  ),
-                  _EscrowCard(
-                    title: snapshot.escrowTitle,
-                    note: _tradeType == P2PTradeType.buy
-                        ? snapshot.escrowBuyNote
-                        : snapshot.escrowSellNote,
-                  ),
-                  _HowItWorksCard(steps: snapshot.steps),
-                  const VitHighRiskStatePanel(
-                    state: VitHighRiskUiState.riskReview,
-                    title: 'Express trade state review',
-                    message:
-                        'Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.',
-                    contractId: 'SC-211',
-                    density: VitDensity.compact,
-                  ),
-                ],
-              ),
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pExpressProvider),
             ),
+            data: (snapshot) {
+              final selectedAsset = snapshot.assetBySymbol(_asset);
+              final bestAd = snapshot.bestAd(
+                tradeType: _tradeType,
+                asset: selectedAsset.symbol,
+                fiatAmount: _fiatAmount,
+                paymentMethod: _paymentMethod,
+              );
+              final topAds = snapshot.topAds(
+                tradeType: _tradeType,
+                asset: selectedAsset.symbol,
+                fiatAmount: _fiatAmount,
+              );
+              final cryptoAmount = bestAd == null || _fiatAmount <= 0
+                  ? 0.0
+                  : _fiatAmount / bestAd.price;
+              return ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: VitInsetScrollView(
+                  key: P2PExpressPage.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  bottomInset: scrollEndPadding,
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.standard,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    children: [
+                      _ExpressHero(tradeType: _tradeType),
+                      _ExpressTradeTabs(
+                        tradeType: _tradeType,
+                        onChanged: _setTradeType,
+                      ),
+                      _AssetCard(
+                        tradeType: _tradeType,
+                        selectedAsset: selectedAsset,
+                        assets: snapshot.assets,
+                        onAssetChanged: _setAsset,
+                      ),
+                      _AmountCard(
+                        controller: _amountController,
+                        tradeType: _tradeType,
+                        amount: _fiatAmount,
+                        bestAd: bestAd,
+                        cryptoAmount: cryptoAmount,
+                        quickAmounts: snapshot.quickAmountsVnd,
+                        onChanged: () => setState(() {}),
+                        onQuickAmount: _setAmount,
+                      ),
+                      _PaymentCard(
+                        selectedPayment: _paymentMethod,
+                        paymentMethods: snapshot.paymentMethods,
+                        onChanged: _setPayment,
+                      ),
+                      if (_fiatAmount > 0 && bestAd != null)
+                        _BestOfferCard(
+                          tradeType: _tradeType,
+                          ad: bestAd,
+                          topOfferCount: topAds.length,
+                          marketPrice: selectedAsset.marketPriceVnd,
+                          cryptoAmount: cryptoAmount,
+                          onMerchant: () => context.go(
+                            AppRoutePaths.p2pMerchant(bestAd.merchantId),
+                          ),
+                          onMarketplace: () => context.go(AppRoutePaths.p2p),
+                        ),
+                      if (_fiatAmount > 0 && bestAd == null)
+                        const _NoOfferCard(),
+                      VitCtaButton(
+                        key: P2PExpressPage.ctaKey,
+                        onPressed: bestAd == null
+                            ? null
+                            : () => _openConfirm(
+                                context,
+                                selectedAsset.symbol,
+                                bestAd,
+                                cryptoAmount,
+                              ),
+                        variant: _tradeType == P2PTradeType.buy
+                            ? VitCtaButtonVariant.success
+                            : VitCtaButtonVariant.danger,
+                        leading: const Icon(Icons.bolt_outlined),
+                        child: Text(
+                          '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
+                        ),
+                      ),
+                      _EscrowCard(
+                        title: snapshot.escrowTitle,
+                        note: _tradeType == P2PTradeType.buy
+                            ? snapshot.escrowBuyNote
+                            : snapshot.escrowSellNote,
+                      ),
+                      _HowItWorksCard(steps: snapshot.steps),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Express trade state review',
+                        message:
+                            'Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.',
+                        contractId: 'SC-211',
+                        density: VitDensity.compact,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),

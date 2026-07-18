@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-245 mock repository exposes escrow balance BE draft', () {
-    final snapshot = const MockP2PRepository().getEscrowBalance();
+  test('SC-245 mock repository exposes escrow balance BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getEscrowBalance();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-escrow-balance');
     expect(

@@ -50,52 +50,79 @@ class _P2PPaymentMethodOwnershipPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
+    final controllerAsync = ref.watch(
       p2pPaymentMethodOwnershipControllerProvider(widget.methodId),
     );
-    final snapshot = controller.state.snapshot;
-    final canSubmit = controller.canSubmit(_uploaded) && !_submitting;
 
-    return VitP2PFlowScaffold(
-      title: 'Xác minh sở hữu',
-      subtitle: 'Thanh toán · P2P',
-      semanticLabel: 'Xác minh sở hữu',
-      semanticIdentifier: 'SC-234',
-      contentKey: P2PPaymentMethodOwnershipPage.contentKey,
-      shellRenderMode: widget.shellRenderMode,
-      rhythm: VitPageRhythm.form,
-      onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
-      children: [
-        const _OwnershipHero(),
-        Text(
-          'Tài liệu cần thiết',
-          style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-        ),
-        for (final document in snapshot.documents)
-          _OwnershipDocumentCard(
-            document: document,
-            uploaded: _uploaded.contains(document.id),
-            onUpload: () => _markUploaded(document.id),
-            onRemove: () => _removeUpload(document.id),
+    return controllerAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Xác minh sở hữu',
+        semanticIdentifier: 'SC-234',
+        onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Xác minh sở hữu',
+        semanticIdentifier: 'SC-234',
+        onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(
+              p2pPaymentMethodOwnershipControllerProvider(widget.methodId),
+            ),
           ),
-        if (snapshot.highRiskContractId != null)
-          VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Payment ownership submission review',
-            message:
-                'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
-            contractId: snapshot.highRiskContractId,
-          ),
-        VitCtaButton(
-          key: P2PPaymentMethodOwnershipPage.submitButtonKey,
-          loading: _submitting,
-          onPressed: canSubmit
-              ? () => _confirmSubmit(context, controller)
-              : null,
-          trailing: const Icon(Icons.chevron_right_rounded),
-          child: const Text('Gửi xác minh'),
-        ),
-      ],
+        ],
+      ),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        final canSubmit = controller.canSubmit(_uploaded) && !_submitting;
+        return VitP2PFlowScaffold(
+          title: 'Xác minh sở hữu',
+          subtitle: 'Thanh toán · P2P',
+          semanticLabel: 'Xác minh sở hữu',
+          semanticIdentifier: 'SC-234',
+          contentKey: P2PPaymentMethodOwnershipPage.contentKey,
+          shellRenderMode: widget.shellRenderMode,
+          rhythm: VitPageRhythm.form,
+          onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+          children: [
+            const _OwnershipHero(),
+            Text(
+              'Tài liệu cần thiết',
+              style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
+            ),
+            for (final document in snapshot.documents)
+              _OwnershipDocumentCard(
+                document: document,
+                uploaded: _uploaded.contains(document.id),
+                onUpload: () => _markUploaded(document.id),
+                onRemove: () => _removeUpload(document.id),
+              ),
+            if (snapshot.highRiskContractId != null)
+              VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Payment ownership submission review',
+                message:
+                    'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
+                contractId: snapshot.highRiskContractId,
+              ),
+            VitCtaButton(
+              key: P2PPaymentMethodOwnershipPage.submitButtonKey,
+              loading: _submitting,
+              onPressed: canSubmit
+                  ? () => _confirmSubmit(context, controller)
+                  : null,
+              trailing: const Icon(Icons.chevron_right_rounded),
+              child: const Text('Gửi xác minh'),
+            ),
+          ],
+        );
+      },
     );
   }
 

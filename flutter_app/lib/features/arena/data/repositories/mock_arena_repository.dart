@@ -15,8 +15,40 @@ part '../fixtures/arena_safety_reports_repository_methods.dart';
 // Product boundary sentinels used by copy guardrails:
 // Open Arena = Points only. Prediction Markets = Real positions.
 // Disallowed bridge shortcut: no_wallet_link. Never merge Points + PnL.
+//
+// GD4 Cụm F5: base class owns [simulateError] / [loadDelay] + the shared
+// [_simulateNetwork] helper — khuôn `_MockTradeRegulatoryRepositoryBase`
+// (10 mixin thật sự, không phải 1 mixin duy nhất như wallet's Part01) nên
+// helper phải nằm trên kiểu constraint chung để mọi mixin đều thấy được
+// (GD4-Async-Playbook.md mục 9, bẫy 12).
 abstract class _MockArenaRepositoryBase implements ArenaRepository {
-  const _MockArenaRepositoryBase();
+  const _MockArenaRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  /// When `true`, every method throws a [StateError] after [loadDelay] —
+  /// used to exercise error/retry UI states in tests.
+  final bool simulateError;
+
+  /// Simulated network latency before a method resolves. Tests should pass
+  /// [Duration.zero] to avoid slowing down the suite.
+  final Duration loadDelay;
+
+  /// Shared network simulation for every method: awaits [loadDelay], then
+  /// throws when [simulateError] is set.
+  ///
+  /// Delay 0 thì KHÔNG tạo timer — `Future.delayed(Duration.zero)` vẫn là
+  /// timer và `tester.pump()` không-duration không đẩy fake clock (GD4
+  /// Async Playbook mục 9, bẫy 9.10).
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('arena_mock_fetch_failed');
+    }
+  }
 }
 
 final class MockArenaRepository extends _MockArenaRepositoryBase
@@ -31,7 +63,7 @@ final class MockArenaRepository extends _MockArenaRepositoryBase
         _MockArenaRepositoryProductionEcosystemMethods,
         _MockArenaRepositoryRuleBuilderMethods,
         _MockArenaRepositorySafetyReportsMethods {
-  const MockArenaRepository();
+  const MockArenaRepository({super.simulateError, super.loadDelay});
 }
 
 String formatArenaPoints(int value) {

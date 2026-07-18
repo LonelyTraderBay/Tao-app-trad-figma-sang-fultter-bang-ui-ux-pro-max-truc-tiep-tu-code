@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-261 mock repository exposes P2P wallet transfer BE draft', () {
-    final snapshot = const MockP2PRepository().getWalletTransfer();
+  test('SC-261 mock repository exposes P2P wallet transfer BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getWalletTransfer();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-wallet-transfer');
     expect(

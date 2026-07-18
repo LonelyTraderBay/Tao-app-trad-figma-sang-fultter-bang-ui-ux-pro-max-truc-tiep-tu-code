@@ -76,106 +76,131 @@ class _P2PPaymentMethodAddPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pPaymentMethodAddProvider);
-    final controller = P2PPaymentMethodAddController(
-      state: P2PPaymentMethodAddViewState(snapshot: snapshot),
-    );
-    final options = controller.optionsFor(
-      bankType: _type == P2PPaymentAddType.bank,
-    );
+    final snapshotAsync = ref.watch(p2pPaymentMethodAddProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    return VitP2PFlowScaffold(
-      title:
-          'Thêm ${_type == P2PPaymentAddType.bank ? 'ngân hàng' : 'ví điện tử'}',
-      subtitle: 'Thanh toán · P2P',
-      semanticLabel: 'Thêm phương thức thanh toán',
-      semanticIdentifier: 'SC-232',
-      contentKey: P2PPaymentMethodAddPage.contentKey,
-      shellRenderMode: mode,
-      rhythm: VitPageRhythm.form,
-      bottomInset: p2pFlowScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-        visualClearance: 0,
-        nativeClearance: 0,
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        title: 'Đang tải…',
+        semanticLabel: 'Thêm phương thức thanh toán',
+        semanticIdentifier: 'SC-232',
+        onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+        children: const [VitSkeletonList()],
       ),
-      onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
-      children: [
-        _TypeSelector(value: _type, onChanged: _changeType),
-        VitSectionHeader(
-          title: _type == P2PPaymentAddType.bank
-              ? 'Chọn ngân hàng'
-              : 'Chọn ví điện tử',
-          titleColor: AppColors.text2,
-        ),
-        _PaymentOptionWrap(
-          options: options,
-          selected: _selectedMethod,
-          onSelected: (value) {
-            HapticFeedback.selectionClick();
-            setState(() => _selectedMethod = value);
-          },
-        ),
-        VitInput(
-          controller: _accountController,
-          fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
-          semanticLabel: 'Số tài khoản thanh toán P2P',
-          label: _type == P2PPaymentAddType.bank
-              ? 'Số tài khoản'
-              : 'Số điện thoại / tài khoản ví',
-          hintText: _type == P2PPaymentAddType.bank
-              ? snapshot.defaultBankAccountHint
-              : snapshot.defaultEwalletAccountHint,
-          prefix: const Icon(Icons.account_balance_wallet_outlined),
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.next,
-          onChanged: (_) => setState(() {}),
-        ),
-        VitInput(
-          controller: _ownerController,
-          fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
-          semanticLabel: 'Tên chủ tài khoản thanh toán P2P',
-          label: 'Tên chủ tài khoản',
-          hintText: snapshot.ownerNameHint,
-          prefix: const Icon(Icons.person_outline_rounded),
-          textCapitalization: TextCapitalization.characters,
-          inputFormatters: [_UppercaseTextFormatter()],
-          textInputAction: TextInputAction.done,
-          onChanged: (_) => setState(() {}),
-        ),
-        _SecurityNote(note: snapshot.securityNote),
-        if (_isValidFor(controller))
-          _PaymentPreview(
-            preview: controller.preview(
-              selectedMethod: _selectedMethod!,
-              account: _accountController.text,
-              ownerName: _ownerController.text,
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        title: 'Không tải được',
+        semanticLabel: 'Thêm phương thức thanh toán',
+        semanticIdentifier: 'SC-232',
+        onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pPaymentMethodAddProvider),
+          ),
+        ],
+      ),
+      data: (snapshot) {
+        final controller = P2PPaymentMethodAddController(
+          state: P2PPaymentMethodAddViewState(snapshot: snapshot),
+        );
+        final options = controller.optionsFor(
+          bankType: _type == P2PPaymentAddType.bank,
+        );
+        return VitP2PFlowScaffold(
+          title:
+              'Thêm ${_type == P2PPaymentAddType.bank ? 'ngân hàng' : 'ví điện tử'}',
+          subtitle: 'Thanh toán · P2P',
+          semanticLabel: 'Thêm phương thức thanh toán',
+          semanticIdentifier: 'SC-232',
+          contentKey: P2PPaymentMethodAddPage.contentKey,
+          shellRenderMode: mode,
+          rhythm: VitPageRhythm.form,
+          bottomInset: p2pFlowScrollBottomInset(
+            context,
+            shellRenderMode: mode,
+            visualClearance: 0,
+            nativeClearance: 0,
+          ),
+          onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
+          children: [
+            _TypeSelector(value: _type, onChanged: _changeType),
+            VitSectionHeader(
+              title: _type == P2PPaymentAddType.bank
+                  ? 'Chọn ngân hàng'
+                  : 'Chọn ví điện tử',
+              titleColor: AppColors.text2,
             ),
-            type: _type,
-          ),
-        if (snapshot.highRiskContractId != null)
-          VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Payment method add state review',
-            message:
-                'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
-            contractId: snapshot.highRiskContractId,
-          ),
-        Semantics(
-          label: 'Xem trước và thêm phương thức thanh toán P2P',
-          button: true,
-          enabled: _isValidFor(controller) && !_submitting,
-          child: VitCtaButton(
-            key: P2PPaymentMethodAddPage.saveButtonKey,
-            loading: _submitting,
-            onPressed: _isValidFor(controller) && !_submitting
-                ? () => _confirmSave(context, controller)
-                : null,
-            child: Text(_submitting ? 'Đang lưu...' : 'Thêm phương thức'),
-          ),
-        ),
-      ],
+            _PaymentOptionWrap(
+              options: options,
+              selected: _selectedMethod,
+              onSelected: (value) {
+                HapticFeedback.selectionClick();
+                setState(() => _selectedMethod = value);
+              },
+            ),
+            VitInput(
+              controller: _accountController,
+              fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
+              semanticLabel: 'Số tài khoản thanh toán P2P',
+              label: _type == P2PPaymentAddType.bank
+                  ? 'Số tài khoản'
+                  : 'Số điện thoại / tài khoản ví',
+              hintText: _type == P2PPaymentAddType.bank
+                  ? snapshot.defaultBankAccountHint
+                  : snapshot.defaultEwalletAccountHint,
+              prefix: const Icon(Icons.account_balance_wallet_outlined),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              onChanged: (_) => setState(() {}),
+            ),
+            VitInput(
+              controller: _ownerController,
+              fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
+              semanticLabel: 'Tên chủ tài khoản thanh toán P2P',
+              label: 'Tên chủ tài khoản',
+              hintText: snapshot.ownerNameHint,
+              prefix: const Icon(Icons.person_outline_rounded),
+              textCapitalization: TextCapitalization.characters,
+              inputFormatters: [_UppercaseTextFormatter()],
+              textInputAction: TextInputAction.done,
+              onChanged: (_) => setState(() {}),
+            ),
+            _SecurityNote(note: snapshot.securityNote),
+            if (_isValidFor(controller))
+              _PaymentPreview(
+                preview: controller.preview(
+                  selectedMethod: _selectedMethod!,
+                  account: _accountController.text,
+                  ownerName: _ownerController.text,
+                ),
+                type: _type,
+              ),
+            if (snapshot.highRiskContractId != null)
+              VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Payment method add state review',
+                message:
+                    'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
+                contractId: snapshot.highRiskContractId,
+              ),
+            Semantics(
+              label: 'Xem trước và thêm phương thức thanh toán P2P',
+              button: true,
+              enabled: _isValidFor(controller) && !_submitting,
+              child: VitCtaButton(
+                key: P2PPaymentMethodAddPage.saveButtonKey,
+                loading: _submitting,
+                onPressed: _isValidFor(controller) && !_submitting
+                    ? () => _confirmSave(context, controller)
+                    : null,
+                child: Text(_submitting ? 'Đang lưu...' : 'Thêm phương thức'),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

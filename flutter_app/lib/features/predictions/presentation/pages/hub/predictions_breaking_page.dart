@@ -66,9 +66,9 @@ class _PredictionsBreakingPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getBreaking(category: _category);
+    final breakingAsync = ref.watch(
+      predictionsBreakingSnapshotProvider(_category),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -110,49 +110,62 @@ class _PredictionsBreakingPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _MovementSummary(snapshot: snapshot),
-                        _CategoryTabs(
-                          categories: snapshot.categories,
-                          activeCategory: _category,
-                          onSelected: (value) => setState(() {
-                            _category = value;
-                          }),
-                        ),
-                        if (snapshot.movers.isEmpty)
-                          _BreakingEmptyState(
-                            onShowAll: () => setState(() {
-                              _category = null;
+                      children: breakingAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được biến động',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsBreakingSnapshotProvider(_category),
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          _MovementSummary(snapshot: snapshot),
+                          _CategoryTabs(
+                            categories: snapshot.categories,
+                            activeCategory: _category,
+                            onSelected: (value) => setState(() {
+                              _category = value;
                             }),
-                          )
-                        else
-                          for (
-                            var index = 0;
-                            index < snapshot.movers.length;
-                            index += 1
-                          )
-                            _MoverCard(
-                              key: PredictionsBreakingPage.moverKey(
-                                snapshot.movers[index].id,
-                              ),
-                              event: snapshot.movers[index],
-                              rank: index + 1,
-                              onTap: () => context.go(
-                                AppRoutePaths.marketsPredictionEvent(
+                          ),
+                          if (snapshot.movers.isEmpty)
+                            _BreakingEmptyState(
+                              onShowAll: () => setState(() {
+                                _category = null;
+                              }),
+                            )
+                          else
+                            for (
+                              var index = 0;
+                              index < snapshot.movers.length;
+                              index += 1
+                            )
+                              _MoverCard(
+                                key: PredictionsBreakingPage.moverKey(
                                   snapshot.movers[index].id,
                                 ),
+                                event: snapshot.movers[index],
+                                rank: index + 1,
+                                onTap: () => context.go(
+                                  AppRoutePaths.marketsPredictionEvent(
+                                    snapshot.movers[index].id,
+                                  ),
+                                ),
                               ),
-                            ),
-                        _EmailCta(
-                          controller: _emailController,
-                          subscribed: _subscribed,
-                          onSubscribe: () => setState(() {
-                            if (_emailController.text.contains('@')) {
-                              _subscribed = true;
-                            }
-                          }),
-                        ),
-                      ],
+                          _EmailCta(
+                            controller: _emailController,
+                            subscribed: _subscribed,
+                            onSubscribe: () => setState(() {
+                              if (_emailController.text.contains('@')) {
+                                _subscribed = true;
+                              }
+                            }),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

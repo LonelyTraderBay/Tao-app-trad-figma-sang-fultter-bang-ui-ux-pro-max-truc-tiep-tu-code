@@ -33,8 +33,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-168 mock repository exposes My Arena BE draft', () {
-    final snapshot = const MockArenaRepository().getMyArena();
+  test('SC-168 mock repository exposes My Arena BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getMyArena();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-arena');
     expect(
@@ -60,8 +62,10 @@ void main() {
     );
   });
 
-  test('SC-205 mock repository exposes Arena My BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaMy();
+  test('SC-205 mock repository exposes Arena My BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaMy();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-my');
     expect(

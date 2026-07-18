@@ -27,29 +27,37 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-220 mock repository exposes P2P dispute resolution BE draft', () {
-    final snapshot = const MockP2PRepository().getDisputeResolution('sample');
+  test(
+    'SC-220 mock repository exposes P2P dispute resolution BE draft',
+    () async {
+      final snapshot = await const MockP2PRepository(
+        loadDelay: Duration.zero,
+      ).getDisputeResolution('sample');
 
-    expect(snapshot.endpoint, '/api/mobile/p2p/p2p-dispute-resolution-sample');
-    expect(
-      snapshot.actionDraft,
-      'POST /p2p/* workflow action where applicable; POST /p2p/disputes/:id/evidence|resolve',
-    );
-    expect(snapshot.disputeId, 'sample');
-    expect(snapshot.resultTitle, 'Quyết định: Bên mua thắng');
-    expect(snapshot.refundAmountLabel, '24.000.000');
-    expect(snapshot.mediator, 'Support Team #A5');
-    expect(snapshot.contractNotes, contains('escrow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        P2PScreenState.loading,
-        P2PScreenState.empty,
-        P2PScreenState.error,
-        P2PScreenState.offline,
-      ]),
-    );
-  });
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/p2p/p2p-dispute-resolution-sample',
+      );
+      expect(
+        snapshot.actionDraft,
+        'POST /p2p/* workflow action where applicable; POST /p2p/disputes/:id/evidence|resolve',
+      );
+      expect(snapshot.disputeId, 'sample');
+      expect(snapshot.resultTitle, 'Quyết định: Bên mua thắng');
+      expect(snapshot.refundAmountLabel, '24.000.000');
+      expect(snapshot.mediator, 'Support Team #A5');
+      expect(snapshot.contractNotes, contains('escrow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          P2PScreenState.loading,
+          P2PScreenState.empty,
+          P2PScreenState.error,
+          P2PScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-220 renders P2P dispute resolution baseline', (tester) async {
     await pumpP2PDisputeResolution(tester);

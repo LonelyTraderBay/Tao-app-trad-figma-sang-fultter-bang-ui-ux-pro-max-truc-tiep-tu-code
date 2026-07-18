@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-256 mock repository exposes anti-phishing BE draft', () {
-    final snapshot = const MockP2PRepository().getAntiPhishingCode();
+  test('SC-256 mock repository exposes anti-phishing BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getAntiPhishingCode();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-security-anti-phishing');
     expect(

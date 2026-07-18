@@ -29,37 +29,42 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-228 mock repository exposes P2P merchant profile BE draft', () {
-    final snapshot = const MockP2PRepository().getMerchantProfile('mc001');
+  test(
+    'SC-228 mock repository exposes P2P merchant profile BE draft',
+    () async {
+      final snapshot = await const MockP2PRepository(
+        loadDelay: Duration.zero,
+      ).getMerchantProfile('mc001');
 
-    expect(snapshot.endpoint, '/api/mobile/p2p/p2p-merchant-mc001');
-    expect(
-      snapshot.actionDraft,
-      'POST /p2p/* workflow action where applicable',
-    );
-    expect(snapshot.merchantId, 'mc001');
-    expect(snapshot.merchant.name, 'CryptoKing_VN');
-    expect(snapshot.merchant.totalTrades, 1243);
-    expect(snapshot.merchant.completionRate, 98.5);
-    expect(snapshot.merchant.totalVolume30dUsd, 850000);
-    expect(snapshot.merchant.positiveRate, 97.8);
-    expect(snapshot.positiveReviewCount, 1216);
-    expect(snapshot.ads, hasLength(3));
-    expect(snapshot.ads.map((ad) => ad.asset), ['USDT', 'ETH', 'SOL']);
-    expect(snapshot.reviews, hasLength(4));
-    expect(snapshot.reportRoute, '/p2p/report/mc001');
-    expect(snapshot.blacklistAddRoute, '/p2p/blacklist/add');
-    expect(snapshot.contractNotes, contains('escrow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        P2PScreenState.loading,
-        P2PScreenState.empty,
-        P2PScreenState.error,
-        P2PScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/p2p/p2p-merchant-mc001');
+      expect(
+        snapshot.actionDraft,
+        'POST /p2p/* workflow action where applicable',
+      );
+      expect(snapshot.merchantId, 'mc001');
+      expect(snapshot.merchant.name, 'CryptoKing_VN');
+      expect(snapshot.merchant.totalTrades, 1243);
+      expect(snapshot.merchant.completionRate, 98.5);
+      expect(snapshot.merchant.totalVolume30dUsd, 850000);
+      expect(snapshot.merchant.positiveRate, 97.8);
+      expect(snapshot.positiveReviewCount, 1216);
+      expect(snapshot.ads, hasLength(3));
+      expect(snapshot.ads.map((ad) => ad.asset), ['USDT', 'ETH', 'SOL']);
+      expect(snapshot.reviews, hasLength(4));
+      expect(snapshot.reportRoute, '/p2p/report/mc001');
+      expect(snapshot.blacklistAddRoute, '/p2p/blacklist/add');
+      expect(snapshot.contractNotes, contains('escrow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          P2PScreenState.loading,
+          P2PScreenState.empty,
+          P2PScreenState.error,
+          P2PScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-228 renders merchant profile baseline', (tester) async {
     await pumpP2PMerchantProfile(tester);

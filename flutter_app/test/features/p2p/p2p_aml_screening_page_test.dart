@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-268 mock repository exposes AML screening BE draft', () {
-    final snapshot = const MockP2PRepository().getAmlScreening();
+  test('SC-268 mock repository exposes AML screening BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getAmlScreening();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-compliance-aml-screening');
     expect(

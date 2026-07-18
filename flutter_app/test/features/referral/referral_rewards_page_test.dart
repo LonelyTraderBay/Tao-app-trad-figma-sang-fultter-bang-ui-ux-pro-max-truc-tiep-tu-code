@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-287 mock repository exposes referral rewards BE draft', () {
-    final snapshot = const MockReferralRepository().getRewards();
+  test('SC-287 mock repository exposes referral rewards BE draft', () async {
+    final snapshot = await const MockReferralRepository(
+      loadDelay: Duration.zero,
+    ).getRewards();
 
     expect(snapshot.endpoint, '/api/mobile/referral/referral-rewards');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

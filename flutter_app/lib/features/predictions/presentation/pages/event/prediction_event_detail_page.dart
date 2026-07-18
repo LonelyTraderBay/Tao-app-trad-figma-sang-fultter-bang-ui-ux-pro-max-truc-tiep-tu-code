@@ -123,14 +123,9 @@ class _PredictionEventDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(
-      predictionEventDetailControllerProvider(widget.eventId),
+    final eventDetailAsync = ref.watch(
+      predictionsEventDetailSnapshotProvider(widget.eventId),
     );
-    final controller = ref.read(
-      predictionEventDetailControllerProvider(widget.eventId).notifier,
-    );
-    final snapshot = viewState.snapshot;
-    final event = snapshot.event;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -139,16 +134,6 @@ class _PredictionEventDetailPageState
         footerChrome +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
-
-    if (!event.outcomes.any((outcome) => outcome.label == _selectedOutcome)) {
-      _selectedOutcome = event.outcomes.first.label;
-    }
-    final orderPreview = controller.previewOrder(
-      outcome: _selectedOutcome,
-      isBuy: _isBuy,
-      isMarket: _isMarket,
-      amountText: _amount,
-    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -197,110 +182,152 @@ class _PredictionEventDetailPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: [
-                        _EventHeader(
-                          event: event,
-                          selectedOutcome: _selectedOutcome,
-                          onOutcomeSelected: (value) => setState(() {
-                            _selectedOutcome = value;
-                          }),
-                        ),
-                        _StatsGrid(event: event),
-                        if (snapshot.highRiskContractId != null)
-                          VitHighRiskStatePanel(
-                            state: switch (viewState.status) {
-                              PredictionHighRiskFlowStatus.submitting ||
-                              PredictionHighRiskFlowStatus.submitted =>
-                                VitHighRiskUiState.submitting,
-                              PredictionHighRiskFlowStatus.success =>
-                                VitHighRiskUiState.success,
-                              PredictionHighRiskFlowStatus.error =>
-                                VitHighRiskUiState.error,
-                              PredictionHighRiskFlowStatus.offline =>
-                                VitHighRiskUiState.offline,
-                              _ => VitHighRiskUiState.riskReview,
-                            },
-                            title: switch (viewState.status) {
-                              PredictionHighRiskFlowStatus.submitting ||
-                              PredictionHighRiskFlowStatus.submitted =>
-                                'Đang gửi lệnh dự đoán',
-                              PredictionHighRiskFlowStatus.error =>
-                                'Gửi lệnh thất bại',
-                              PredictionHighRiskFlowStatus.offline =>
-                                'Mất kết nối',
-                              _ => 'Order risk states active',
-                            },
-                            message: switch (viewState.status) {
-                              PredictionHighRiskFlowStatus.submitting ||
-                              PredictionHighRiskFlowStatus.submitted =>
-                                'Đang gửi lệnh tới thị trường dự đoán. Vui lòng chờ trong giây lát.',
-                              PredictionHighRiskFlowStatus.error ||
-                              PredictionHighRiskFlowStatus.offline =>
-                                viewState.errorMessage ??
-                                    'Không gửi được lệnh. Vui lòng thử lại.',
-                              _ =>
-                                'Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.',
-                            },
-                            contractId: snapshot.highRiskContractId,
-                            density: VitDensity.compact,
+                      children: eventDetailAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được chi tiết sự kiện',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsEventDetailSnapshotProvider(
+                                widget.eventId,
+                              ),
+                            ),
                           ),
-                        if (snapshot.position != null)
-                          _PositionBanner(position: snapshot.position!),
-                        _ChartSection(snapshot: snapshot),
-                        _OrderBookSection(
-                          snapshot: snapshot,
-                          expanded: _showOrderBook,
-                          onToggle: () => setState(() {
-                            _showOrderBook = !_showOrderBook;
-                          }),
-                        ),
-                        if (event.status == PredictionEventStatus.active) ...[
-                          _TradeSection(
-                            event: event,
-                            preview: orderPreview,
-                            selectedOutcome: _selectedOutcome,
+                        ],
+                        data: (_) {
+                          final viewState = ref.watch(
+                            predictionEventDetailControllerProvider(
+                              widget.eventId,
+                            ),
+                          );
+                          final controller = ref.read(
+                            predictionEventDetailControllerProvider(
+                              widget.eventId,
+                            ).notifier,
+                          );
+                          final snapshot = viewState.snapshot;
+                          final event = snapshot.event;
+                          if (!event.outcomes.any(
+                            (outcome) => outcome.label == _selectedOutcome,
+                          )) {
+                            _selectedOutcome = event.outcomes.first.label;
+                          }
+                          final orderPreview = controller.previewOrder(
+                            outcome: _selectedOutcome,
                             isBuy: _isBuy,
                             isMarket: _isMarket,
-                            amount: _amount,
-                            submitting: viewState.status.isBusy,
-                            errorMessage: viewState.errorMessage,
-                            onSubmit: _submitOrder,
-                            onSideChanged: (value) => setState(() {
-                              _isBuy = value;
-                            }),
-                            onOrderTypeChanged: (value) => setState(() {
-                              _isMarket = value;
-                            }),
-                            onAmountChanged: (value) => setState(() {
-                              _amount = value;
-                            }),
-                            onOutcomeChanged: (value) => setState(() {
-                              _selectedOutcome = value;
-                            }),
-                          ),
-                          _RiskLink(onTap: _showComingSoon),
-                        ],
-                        _DetailTabs(
-                          activeTab: _activeTab,
-                          onChanged: (value) => setState(() {
-                            _activeTab = value;
-                          }),
-                        ),
-                        _TabCard(snapshot: snapshot, activeTab: _activeTab),
-                        _RelatedMarketsSection(snapshot: snapshot),
-                        _ArenaBridgeSection(
-                          snapshot: snapshot,
-                          onCreate: () => context.go(AppRoutePaths.arenaStudio),
-                        ),
-                        _QuickLinks(
-                          onRewards: () => context.go(
-                            AppRoutePaths.marketsPredictionsRewards,
-                          ),
-                          onActivity: () => context.go(
-                            AppRoutePaths.marketsPredictionsActivity,
-                          ),
-                        ),
-                      ],
+                            amountText: _amount,
+                          );
+                          return [
+                            _EventHeader(
+                              event: event,
+                              selectedOutcome: _selectedOutcome,
+                              onOutcomeSelected: (value) => setState(() {
+                                _selectedOutcome = value;
+                              }),
+                            ),
+                            _StatsGrid(event: event),
+                            if (snapshot.highRiskContractId != null)
+                              VitHighRiskStatePanel(
+                                state: switch (viewState.status) {
+                                  PredictionHighRiskFlowStatus.submitting ||
+                                  PredictionHighRiskFlowStatus.submitted =>
+                                    VitHighRiskUiState.submitting,
+                                  PredictionHighRiskFlowStatus.success =>
+                                    VitHighRiskUiState.success,
+                                  PredictionHighRiskFlowStatus.error =>
+                                    VitHighRiskUiState.error,
+                                  PredictionHighRiskFlowStatus.offline =>
+                                    VitHighRiskUiState.offline,
+                                  _ => VitHighRiskUiState.riskReview,
+                                },
+                                title: switch (viewState.status) {
+                                  PredictionHighRiskFlowStatus.submitting ||
+                                  PredictionHighRiskFlowStatus.submitted =>
+                                    'Đang gửi lệnh dự đoán',
+                                  PredictionHighRiskFlowStatus.error =>
+                                    'Gửi lệnh thất bại',
+                                  PredictionHighRiskFlowStatus.offline =>
+                                    'Mất kết nối',
+                                  _ => 'Order risk states active',
+                                },
+                                message: switch (viewState.status) {
+                                  PredictionHighRiskFlowStatus.submitting ||
+                                  PredictionHighRiskFlowStatus.submitted =>
+                                    'Đang gửi lệnh tới thị trường dự đoán. Vui lòng chờ trong giây lát.',
+                                  PredictionHighRiskFlowStatus.error ||
+                                  PredictionHighRiskFlowStatus.offline =>
+                                    viewState.errorMessage ??
+                                        'Không gửi được lệnh. Vui lòng thử lại.',
+                                  _ =>
+                                    'Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.',
+                                },
+                                contractId: snapshot.highRiskContractId,
+                                density: VitDensity.compact,
+                              ),
+                            if (snapshot.position != null)
+                              _PositionBanner(position: snapshot.position!),
+                            _ChartSection(snapshot: snapshot),
+                            _OrderBookSection(
+                              snapshot: snapshot,
+                              expanded: _showOrderBook,
+                              onToggle: () => setState(() {
+                                _showOrderBook = !_showOrderBook;
+                              }),
+                            ),
+                            if (event.status ==
+                                PredictionEventStatus.active) ...[
+                              _TradeSection(
+                                event: event,
+                                preview: orderPreview,
+                                selectedOutcome: _selectedOutcome,
+                                isBuy: _isBuy,
+                                isMarket: _isMarket,
+                                amount: _amount,
+                                submitting: viewState.status.isBusy,
+                                errorMessage: viewState.errorMessage,
+                                onSubmit: _submitOrder,
+                                onSideChanged: (value) => setState(() {
+                                  _isBuy = value;
+                                }),
+                                onOrderTypeChanged: (value) => setState(() {
+                                  _isMarket = value;
+                                }),
+                                onAmountChanged: (value) => setState(() {
+                                  _amount = value;
+                                }),
+                                onOutcomeChanged: (value) => setState(() {
+                                  _selectedOutcome = value;
+                                }),
+                              ),
+                              _RiskLink(onTap: _showComingSoon),
+                            ],
+                            _DetailTabs(
+                              activeTab: _activeTab,
+                              onChanged: (value) => setState(() {
+                                _activeTab = value;
+                              }),
+                            ),
+                            _TabCard(snapshot: snapshot, activeTab: _activeTab),
+                            _RelatedMarketsSection(snapshot: snapshot),
+                            _ArenaBridgeSection(
+                              snapshot: snapshot,
+                              onCreate: () =>
+                                  context.go(AppRoutePaths.arenaStudio),
+                            ),
+                            _QuickLinks(
+                              onRewards: () => context.go(
+                                AppRoutePaths.marketsPredictionsRewards,
+                              ),
+                              onActivity: () => context.go(
+                                AppRoutePaths.marketsPredictionsActivity,
+                              ),
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

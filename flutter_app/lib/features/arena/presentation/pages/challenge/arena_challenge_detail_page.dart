@@ -98,11 +98,9 @@ class _ArenaChallengeDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
+    final controllerAsync = ref.watch(
       arenaChallengeDetailControllerProvider(widget.challengeId),
     );
-    final snapshot = controller.state.snapshot;
-    final pointsReview = controller.pointsReview();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _challengeScrollBottomInset(context, mode);
 
@@ -138,71 +136,97 @@ class _ArenaChallengeDetailPageState
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: [
-                        _ChallengeIntro(
-                          snapshot: snapshot,
-                          onMode: () => context.goHaptic(
-                            AppRoutePaths.arenaMode(snapshot.challenge.modeId),
-                          ),
-                        ),
-                        _LiveStatusCard(challenge: snapshot.challenge),
-                        ArenaChallengePointsReviewCard(review: pointsReview),
-                        const _PoolFeeCard(),
-                        _RewardCard(tiers: snapshot.rewardTiers),
-                        _RefundCard(text: snapshot.challenge.refundPolicy),
-                        _TeamsSection(teams: snapshot.teams),
-                        _RuleSummaryCard(rows: snapshot.ruleRows),
-                        _GovernanceCard(
-                          challenge: snapshot.challenge,
-                          rows: snapshot.governanceRows,
-                        ),
-                        _ClarityCard(score: snapshot.challenge.clarityScore),
-                        _CreatorCard(
-                          creator: snapshot.creator,
-                          onTap: () => context.goHaptic(
-                            AppRoutePaths.arenaCreator(snapshot.creator.id),
-                          ),
-                        ),
-                        _SafetyLinkCard(
-                          onTap: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                        _Tabs(
-                          active: _activeTab,
-                          onChanged: (tab) => setState(() => _activeTab = tab),
-                        ),
-                        _TabContent(snapshot: snapshot, active: _activeTab),
-                        const _WarningStack(
-                          warnings: [
-                            'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính.',
-                            'Không thỏa thuận giao dịch ngoài nền tảng.',
-                          ],
-                        ),
-                        _PredictionBridgeCard(
-                          contextDraft: snapshot.predictionContext,
-                          onTap: () => context.goHaptic(
-                            AppRoutePaths.marketsPredictionEvent(
-                              snapshot.predictionContext.eventId,
+                      children: controllerAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được chi tiết challenge',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              arenaChallengeDetailControllerProvider(
+                                widget.challengeId,
+                              ),
                             ),
                           ),
-                        ),
-                        _SafetySnapshotCard(
-                          rows: snapshot.safetyRows,
-                          onSafety: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                        _ActionStack(
-                          onEvidence: _showEvidenceSheet,
-                          onReport: _showReportSheet,
-                          onBlock: _showBlockSheet,
-                          onLeave: _showLeaveSheet,
-                        ),
-                        VitCommunityRulesLink(
-                          onTap: () =>
-                              context.goHaptic(AppRoutePaths.arenaSafety),
-                        ),
-                        const _ArenaFooterNotice(),
-                      ],
+                        ],
+                        data: (controller) {
+                          final snapshot = controller.state.snapshot;
+                          final pointsReview = controller.pointsReview();
+                          return [
+                            _ChallengeIntro(
+                              snapshot: snapshot,
+                              onMode: () => context.goHaptic(
+                                AppRoutePaths.arenaMode(
+                                  snapshot.challenge.modeId,
+                                ),
+                              ),
+                            ),
+                            _LiveStatusCard(challenge: snapshot.challenge),
+                            ArenaChallengePointsReviewCard(
+                              review: pointsReview,
+                            ),
+                            const _PoolFeeCard(),
+                            _RewardCard(tiers: snapshot.rewardTiers),
+                            _RefundCard(text: snapshot.challenge.refundPolicy),
+                            _TeamsSection(teams: snapshot.teams),
+                            _RuleSummaryCard(rows: snapshot.ruleRows),
+                            _GovernanceCard(
+                              challenge: snapshot.challenge,
+                              rows: snapshot.governanceRows,
+                            ),
+                            _ClarityCard(
+                              score: snapshot.challenge.clarityScore,
+                            ),
+                            _CreatorCard(
+                              creator: snapshot.creator,
+                              onTap: () => context.goHaptic(
+                                AppRoutePaths.arenaCreator(snapshot.creator.id),
+                              ),
+                            ),
+                            _SafetyLinkCard(
+                              onTap: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
+                            ),
+                            _Tabs(
+                              active: _activeTab,
+                              onChanged: (tab) =>
+                                  setState(() => _activeTab = tab),
+                            ),
+                            _TabContent(snapshot: snapshot, active: _activeTab),
+                            const _WarningStack(
+                              warnings: [
+                                'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính.',
+                                'Không thỏa thuận giao dịch ngoài nền tảng.',
+                              ],
+                            ),
+                            _PredictionBridgeCard(
+                              contextDraft: snapshot.predictionContext,
+                              onTap: () => context.goHaptic(
+                                AppRoutePaths.marketsPredictionEvent(
+                                  snapshot.predictionContext.eventId,
+                                ),
+                              ),
+                            ),
+                            _SafetySnapshotCard(
+                              rows: snapshot.safetyRows,
+                              onSafety: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
+                            ),
+                            _ActionStack(
+                              onEvidence: _showEvidenceSheet,
+                              onReport: _showReportSheet,
+                              onBlock: _showBlockSheet,
+                              onLeave: _showLeaveSheet,
+                            ),
+                            VitCommunityRulesLink(
+                              onTap: () =>
+                                  context.goHaptic(AppRoutePaths.arenaSafety),
+                            ),
+                            const _ArenaFooterNotice(),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

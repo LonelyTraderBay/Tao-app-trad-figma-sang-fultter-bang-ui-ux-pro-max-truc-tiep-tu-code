@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryFlowMapMethods on _MockArenaRepositoryBase {
   @override
-  ArenaFlowMapSnapshot getArenaFlowMap() {
+  Future<ArenaFlowMapSnapshot> getArenaFlowMap() async {
+    await _simulateNetwork();
     return const ArenaFlowMapSnapshot(
       endpoint: '/api/mobile/arena/arena-flow-map',
       actionDraft:

@@ -49,10 +49,7 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getMyArenaReports();
-    final reports = _filteredReports(snapshot);
+    final snapshotAsync = ref.watch(myArenaReportsSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -92,35 +89,50 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      children: [
-                        _ReportsSummary(summary: snapshot.summary),
-                        _ReportsFilterRow(
-                          filters: snapshot.filters,
-                          activeFilter: _activeFilter,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _activeFilter = id);
-                          },
-                        ),
-                        _ProcessBanner(snapshot: snapshot),
-                        if (reports.isEmpty)
-                          VitEmptyState(
-                            key: MyArenaReportsPage.emptyKey,
-                            icon: Icons.flag_outlined,
-                            title: snapshot.emptyTitle,
-                            message: _emptyMessage(snapshot),
-                          )
-                        else
-                          _ReportsCard(reports: reports),
-                        if (reports.isNotEmpty)
-                          Text(
-                            _countLabel(reports.length, snapshot.filters),
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text3,
-                            ),
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được báo cáo của tôi',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(myArenaReportsSnapshotProvider),
                           ),
-                      ],
+                        ],
+                        data: (snapshot) {
+                          final reports = _filteredReports(snapshot);
+                          return [
+                            _ReportsSummary(summary: snapshot.summary),
+                            _ReportsFilterRow(
+                              filters: snapshot.filters,
+                              activeFilter: _activeFilter,
+                              onChanged: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _activeFilter = id);
+                              },
+                            ),
+                            _ProcessBanner(snapshot: snapshot),
+                            if (reports.isEmpty)
+                              VitEmptyState(
+                                key: MyArenaReportsPage.emptyKey,
+                                icon: Icons.flag_outlined,
+                                title: snapshot.emptyTitle,
+                                message: _emptyMessage(snapshot),
+                              )
+                            else
+                              _ReportsCard(reports: reports),
+                            if (reports.isNotEmpty)
+                              Text(
+                                _countLabel(reports.length, snapshot.filters),
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.text3,
+                                ),
+                              ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

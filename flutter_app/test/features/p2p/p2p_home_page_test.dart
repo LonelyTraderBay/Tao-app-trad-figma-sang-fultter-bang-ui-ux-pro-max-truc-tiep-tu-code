@@ -32,8 +32,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-282 mock repository exposes P2P home BE draft', () {
-    final snapshot = const MockP2PRepository().getHome();
+  test('SC-282 mock repository exposes P2P home BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getHome();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p');
     expect(
@@ -140,10 +142,13 @@ void main() {
   testWidgets('SC-282 shows cached-data banner below header when offline', (
     tester,
   ) async {
-    final offlineSnapshot = const MockP2PRepository().getHome().copyWith(
-      currentState: P2PScreenState.offline,
-      lastUpdatedLabel: '2 ph\u00FAt tr\u01B0\u1EDBc',
-    );
+    final offlineSnapshot =
+        (await const MockP2PRepository(
+          loadDelay: Duration.zero,
+        ).getHome()).copyWith(
+          currentState: P2PScreenState.offline,
+          lastUpdatedLabel: '2 ph\u00FAt tr\u01B0\u1EDBc',
+        );
 
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);

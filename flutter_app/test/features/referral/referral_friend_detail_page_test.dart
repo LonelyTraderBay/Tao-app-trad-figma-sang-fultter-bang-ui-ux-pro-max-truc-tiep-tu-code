@@ -26,10 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-289 mock repository exposes friend detail BE draft', () {
-    final snapshot = const MockReferralRepository().getFriendDetail(
-      'friend001',
-    );
+  test('SC-289 mock repository exposes friend detail BE draft', () async {
+    final snapshot = await const MockReferralRepository(
+      loadDelay: Duration.zero,
+    ).getFriendDetail('friend001');
 
     expect(snapshot.endpoint, '/api/mobile/referral/referral-friend-friend001');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

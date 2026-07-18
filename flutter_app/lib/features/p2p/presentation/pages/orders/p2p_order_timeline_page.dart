@@ -34,7 +34,7 @@ class P2POrderTimelinePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pOrderTimelineProvider(orderId));
+    final snapshotAsync = ref.watch(p2pOrderTimelineProvider(orderId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -55,57 +55,67 @@ class P2POrderTimelinePage extends ConsumerWidget {
             showBack: true,
             onBack: () => _close(context, orderId),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: RefreshIndicator(
-                    color: AppColors.primary,
-                    backgroundColor: AppColors.surface,
-                    onRefresh: () async {
-                      HapticFeedback.selectionClick();
-                      await Future<void>.delayed(
-                        const Duration(milliseconds: 80),
-                      );
-                    },
-                    child: SingleChildScrollView(
-                      key: contentKey,
-                      physics: const ClampingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics(),
-                      ),
-                      padding: P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
-                        bottomInset,
-                      ),
-                      child: snapshot.events.isEmpty
-                          ? VitPageContent(
-                              rhythm: VitPageRhythm.standard,
-                              key: emptyKey,
-                              padding: VitContentPadding.none,
-                              children: [
-                                VitEmptyState(
-                                  icon: Icons.timeline_rounded,
-                                  title: snapshot.emptyTitle,
-                                  message: snapshot.emptySubtitle,
-                                ),
-                              ],
-                            )
-                          : VitPageContent(
-                              padding: VitContentPadding.compact,
-                              gap: VitContentGap.tight,
-                              children: [
-                                const _TimelineHeroCard(),
-                                _TimelineList(events: snapshot.events),
-                              ],
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pOrderTimelineProvider(orderId)),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: RefreshIndicator(
+                      color: AppColors.primary,
+                      backgroundColor: AppColors.surface,
+                      onRefresh: () async {
+                        HapticFeedback.selectionClick();
+                        await Future<void>.delayed(
+                          const Duration(milliseconds: 80),
+                        );
+                      },
+                      child: SingleChildScrollView(
+                        key: contentKey,
+                        physics: const ClampingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics(),
+                        ),
+                        padding:
+                            P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
+                              bottomInset,
                             ),
+                        child: snapshot.events.isEmpty
+                            ? VitPageContent(
+                                rhythm: VitPageRhythm.standard,
+                                key: emptyKey,
+                                padding: VitContentPadding.none,
+                                children: [
+                                  VitEmptyState(
+                                    icon: Icons.timeline_rounded,
+                                    title: snapshot.emptyTitle,
+                                    message: snapshot.emptySubtitle,
+                                  ),
+                                ],
+                              )
+                            : VitPageContent(
+                                padding: VitContentPadding.compact,
+                                gap: VitContentGap.tight,
+                                children: [
+                                  const _TimelineHeroCard(),
+                                  _TimelineList(events: snapshot.events),
+                                ],
+                              ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

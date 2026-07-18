@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -58,7 +59,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pLoginHistoryProvider);
+    final snapshotAsync = ref.watch(p2pLoginHistoryProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -67,13 +68,6 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
             : _p2pLoginHistoryNativeNavClearance +
                   _p2pLoginHistoryNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final filteredEvents = snapshot.events
-        .where((event) {
-          if (_filter == 'success') return event.status == 'success';
-          if (_filter == 'suspicious') return event.isRiskEvent;
-          return true;
-        })
-        .toList(growable: false);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,129 +75,163 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
       semanticIdentifier: 'SC-257',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Lịch sử đăng nhập',
-            subtitle: 'Bảo mật · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
-            actions: [
-              VitHeaderActionItem(
-                key: P2PLoginHistoryPage.downloadKey,
-                type: VitHeaderActionType.export,
-                onPressed: () => HapticFeedback.selectionClick(),
-              ),
-            ],
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: RefreshIndicator(
-                  color: AppModuleAccents.p2p,
-                  backgroundColor: AppColors.surface2,
-                  onRefresh: () async {
-                    HapticFeedback.selectionClick();
-                    await Future<void>.delayed(
-                      const Duration(milliseconds: 120),
-                    );
-                  },
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(
-                        parent: ClampingScrollPhysics(),
-                      ),
-                      padding:
-                          P2PSpacingTokens.p2pLoginHistoryPageScrollPadding(
-                            scrollEndPadding,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pSecurityCenter),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pLoginHistoryProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final filteredEvents = snapshot.events
+                .where((event) {
+                  if (_filter == 'success') return event.status == 'success';
+                  if (_filter == 'suspicious') return event.isRiskEvent;
+                  return true;
+                })
+                .toList(growable: false);
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Lịch sử đăng nhập',
+                subtitle: 'Bảo mật · P2P',
+                showBack: true,
+                onBack: () => context.go(snapshot.parentRoute),
+                actions: [
+                  VitHeaderActionItem(
+                    key: P2PLoginHistoryPage.downloadKey,
+                    type: VitHeaderActionType.export,
+                    onPressed: () => HapticFeedback.selectionClick(),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: RefreshIndicator(
+                      color: AppModuleAccents.p2p,
+                      backgroundColor: AppColors.surface2,
+                      onRefresh: () async {
+                        HapticFeedback.selectionClick();
+                        await Future<void>.delayed(
+                          const Duration(milliseconds: 120),
+                        );
+                      },
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(
+                          context,
+                        ).copyWith(scrollbars: false),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(
+                            parent: ClampingScrollPhysics(),
                           ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _LoginStats(snapshot: snapshot),
-                          const SizedBox(
-                            height: AppSpacing.pageRhythmCompactInnerGap,
-                          ),
-                          VitSegmentedChoice<String>(
-                            key: P2PLoginHistoryPage.filtersKey,
-                            selected: _filter,
-                            onChanged: (value) {
-                              HapticFeedback.selectionClick();
-                              setState(() {
-                                _filter = value;
-                                _expandedEventId = null;
-                              });
-                            },
-                            options: [
-                              VitSegmentedChoiceOption(
-                                value: 'all',
-                                label: 'Tất cả',
-                                key: P2PLoginHistoryPage.filterKey('all'),
-                                accentColor: AppModuleAccents.p2p,
+                          padding:
+                              P2PSpacingTokens.p2pLoginHistoryPageScrollPadding(
+                                scrollEndPadding,
                               ),
-                              VitSegmentedChoiceOption(
-                                value: 'success',
-                                label: 'Thành công',
-                                key: P2PLoginHistoryPage.filterKey('success'),
-                                accentColor: AppModuleAccents.p2p,
-                              ),
-                              VitSegmentedChoiceOption(
-                                value: 'suspicious',
-                                label: 'Đáng ngờ',
-                                key: P2PLoginHistoryPage.filterKey(
-                                  'suspicious',
-                                ),
-                                accentColor: AppModuleAccents.p2p,
-                              ),
-                            ],
-                          ),
-                          if (snapshot.riskEventCount > 0 &&
-                              _filter != 'success') ...[
-                            const SizedBox(
-                              height: AppSpacing.pageRhythmCompactInnerGap,
-                            ),
-                            _RiskWarning(snapshot: snapshot),
-                          ],
-                          const SizedBox(
-                            height: AppSpacing.pageRhythmCompactInnerGap,
-                          ),
-                          if (filteredEvents.isEmpty)
-                            _EmptyState(snapshot: snapshot)
-                          else
-                            _LoginEventList(
-                              events: filteredEvents,
-                              expandedEventId: _expandedEventId,
-                              onToggle: _toggleExpanded,
-                            ),
-                          const SizedBox(
-                            height: AppSpacing.pageRhythmStandardInnerGap,
-                          ),
-                          _SecurityInfo(snapshot: snapshot),
-                          const VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            padding: VitContentPadding.none,
-                            fullBleed: true,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Rà soát lịch sử đăng nhập',
-                                message:
-                                    'Bộ lọc rủi ro, sự kiện đáng ngờ, chi tiết phiên mở rộng, xuất dữ liệu và hướng dẫn bảo mật vẫn hiển thị trước khi thao tác truy cập P2P.',
-                                contractId: 'SC-257',
+                              _LoginStats(snapshot: snapshot),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
+                              VitSegmentedChoice<String>(
+                                key: P2PLoginHistoryPage.filtersKey,
+                                selected: _filter,
+                                onChanged: (value) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    _filter = value;
+                                    _expandedEventId = null;
+                                  });
+                                },
+                                options: [
+                                  VitSegmentedChoiceOption(
+                                    value: 'all',
+                                    label: 'Tất cả',
+                                    key: P2PLoginHistoryPage.filterKey('all'),
+                                    accentColor: AppModuleAccents.p2p,
+                                  ),
+                                  VitSegmentedChoiceOption(
+                                    value: 'success',
+                                    label: 'Thành công',
+                                    key: P2PLoginHistoryPage.filterKey(
+                                      'success',
+                                    ),
+                                    accentColor: AppModuleAccents.p2p,
+                                  ),
+                                  VitSegmentedChoiceOption(
+                                    value: 'suspicious',
+                                    label: 'Đáng ngờ',
+                                    key: P2PLoginHistoryPage.filterKey(
+                                      'suspicious',
+                                    ),
+                                    accentColor: AppModuleAccents.p2p,
+                                  ),
+                                ],
+                              ),
+                              if (snapshot.riskEventCount > 0 &&
+                                  _filter != 'success') ...[
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmCompactInnerGap,
+                                ),
+                                _RiskWarning(snapshot: snapshot),
+                              ],
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
+                              if (filteredEvents.isEmpty)
+                                _EmptyState(snapshot: snapshot)
+                              else
+                                _LoginEventList(
+                                  events: filteredEvents,
+                                  expandedEventId: _expandedEventId,
+                                  onToggle: _toggleExpanded,
+                                ),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmStandardInnerGap,
+                              ),
+                              _SecurityInfo(snapshot: snapshot),
+                              const VitPageContent(
+                                rhythm: VitPageRhythm.standard,
+                                padding: VitContentPadding.none,
+                                fullBleed: true,
+                                children: [
+                                  VitHighRiskStatePanel(
+                                    state: VitHighRiskUiState.riskReview,
+                                    title: 'Rà soát lịch sử đăng nhập',
+                                    message:
+                                        'Bộ lọc rủi ro, sự kiện đáng ngờ, chi tiết phiên mở rộng, xuất dữ liệu và hướng dẫn bảo mật vẫn hiển thị trước khi thao tác truy cập P2P.',
+                                    contractId: 'SC-257',
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -2,11 +2,12 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryHomeMethods on _MockP2PRepositoryBase {
   @override
-  P2PHomeSnapshot getHome({
+  Future<P2PHomeSnapshot> getHome({
     P2PTradeType tradeType = P2PTradeType.buy,
     String asset = 'USDT',
     String fiat = 'VND',
-  }) {
+  }) async {
+    await _simulateNetwork();
     final ads =
         _p2pAds
             .where(
@@ -58,7 +59,8 @@ mixin _MockP2PRepositoryHomeMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PExpressSnapshot getExpress() {
+  Future<P2PExpressSnapshot> getExpress() async {
+    await _simulateNetwork();
     return const P2PExpressSnapshot(
       endpoint: '/api/mobile/p2p/p2p-express',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -103,14 +105,15 @@ mixin _MockP2PRepositoryHomeMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PExpressConfirmSnapshot getExpressConfirm({
+  Future<P2PExpressConfirmSnapshot> getExpressConfirm({
     P2PTradeType tradeType = P2PTradeType.buy,
     String asset = 'USDT',
     double fiatAmount = 0,
     double cryptoAmount = 0,
     String? adId,
     String? paymentMethod,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final ad = _p2pAds.firstWhere(
       (item) => item.id == adId,
       orElse: () => _p2pAds.first,

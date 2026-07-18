@@ -4,10 +4,12 @@ import 'package:vit_trade_flutter/features/rewards/presentation/controllers/rewa
 
 void main() {
   group('RewardsController', () {
-    test('exposes rewards hub through repository contract', () {
-      final controller = const RewardsController(MockRewardsRepository());
+    test('exposes rewards hub through repository contract', () async {
+      final controller = const RewardsController(
+        MockRewardsRepository(loadDelay: Duration.zero),
+      );
 
-      final snapshot = controller.getHub();
+      final snapshot = await controller.getHub();
 
       expect(snapshot.endpoint, '/api/mobile/rewards/rewards');
       expect(snapshot.summary.currentPoints, 2220);

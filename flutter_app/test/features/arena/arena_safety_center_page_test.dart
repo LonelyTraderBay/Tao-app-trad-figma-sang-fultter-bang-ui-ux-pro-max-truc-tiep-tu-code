@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-198 mock repository exposes Arena Safety BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaSafetyCenter();
+  test('SC-198 mock repository exposes Arena Safety BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaSafetyCenter();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-safety');
     expect(

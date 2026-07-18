@@ -2,15 +2,15 @@ import 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart
 
 /// Abstract data-access contract every P2P screen depends on; implemented by mock and remote repositories.
 abstract interface class P2PRepository {
-  P2PHomeSnapshot getHome({
+  Future<P2PHomeSnapshot> getHome({
     P2PTradeType tradeType = P2PTradeType.buy,
     String asset = 'USDT',
     String fiat = 'VND',
   });
 
-  P2PExpressSnapshot getExpress();
+  Future<P2PExpressSnapshot> getExpress();
 
-  P2PExpressConfirmSnapshot getExpressConfirm({
+  Future<P2PExpressConfirmSnapshot> getExpressConfirm({
     P2PTradeType tradeType = P2PTradeType.buy,
     String asset = 'USDT',
     double fiatAmount = 0,
@@ -19,151 +19,152 @@ abstract interface class P2PRepository {
     String? paymentMethod,
   });
 
-  P2POrderTimelineSnapshot getOrderTimeline(String orderId);
+  Future<P2POrderTimelineSnapshot> getOrderTimeline(String orderId);
 
-  P2POrderRateSnapshot getOrderRate(String orderId);
+  Future<P2POrderRateSnapshot> getOrderRate(String orderId);
 
-  P2POrderCancelSnapshot getOrderCancel(String orderId);
+  Future<P2POrderCancelSnapshot> getOrderCancel(String orderId);
 
-  P2POrderProofSnapshot getOrderProof(String orderId);
+  Future<P2POrderProofSnapshot> getOrderProof(String orderId);
 
-  P2POrderSnapshot getOrder(String orderId);
+  Future<P2POrderSnapshot> getOrder(String orderId);
 
-  P2PChatSnapshot getChat(String orderId);
+  Future<P2PChatSnapshot> getChat(String orderId);
 
-  P2PDisputeDetailSnapshot getDisputeDetail(String disputeId);
+  Future<P2PDisputeDetailSnapshot> getDisputeDetail(String disputeId);
 
-  P2PDisputeEvidenceSnapshot getDisputeEvidence(String disputeId);
+  Future<P2PDisputeEvidenceSnapshot> getDisputeEvidence(String disputeId);
 
-  P2PDisputeResolutionSnapshot getDisputeResolution(String disputeId);
+  Future<P2PDisputeResolutionSnapshot> getDisputeResolution(String disputeId);
 
-  P2PDisputeOpenSnapshot getDisputeOpen(String orderId);
+  Future<P2PDisputeOpenSnapshot> getDisputeOpen(String orderId);
 
-  P2PDisputesSnapshot getDisputes();
+  Future<P2PDisputesSnapshot> getDisputes();
 
-  P2PAdAnalyticsSnapshot getAdAnalytics(String adId);
+  Future<P2PAdAnalyticsSnapshot> getAdAnalytics(String adId);
 
-  P2PAdDetailSnapshot getAdDetail(String adId);
+  Future<P2PAdDetailSnapshot> getAdDetail(String adId);
 
-  P2PMyAdsSnapshot getMyAds();
+  Future<P2PMyAdsSnapshot> getMyAds();
 
-  P2PCreateAdSnapshot getCreateAd();
+  Future<P2PCreateAdSnapshot> getCreateAd();
 
-  P2PMerchantApplySnapshot getMerchantApply();
+  Future<P2PMerchantApplySnapshot> getMerchantApply();
 
-  P2PMerchantProfileSnapshot getMerchantProfile(String merchantId);
+  Future<P2PMerchantProfileSnapshot> getMerchantProfile(String merchantId);
 
-  P2PReportMerchantSnapshot getReportMerchant(String merchantId);
+  Future<P2PReportMerchantSnapshot> getReportMerchant(String merchantId);
 
-  P2PTradingLevelSnapshot getTradingLevel();
+  Future<P2PTradingLevelSnapshot> getTradingLevel();
 
-  P2PReviewsSnapshot getReviews();
+  Future<P2PReviewsSnapshot> getReviews();
 
-  P2PPaymentMethodAddSnapshot getPaymentMethodAdd();
+  Future<P2PPaymentMethodAddSnapshot> getPaymentMethodAdd();
 
-  P2PPaymentMethodVerificationSnapshot getPaymentMethodVerification(
+  Future<P2PPaymentMethodVerificationSnapshot> getPaymentMethodVerification(
     String methodId,
   );
 
-  P2PPaymentMethodOwnershipSnapshot getPaymentMethodOwnership(String methodId);
+  Future<P2PPaymentMethodOwnershipSnapshot> getPaymentMethodOwnership(
+    String methodId,
+  );
 
-  P2PPaymentMethodCoolingPeriodSnapshot getPaymentMethodCoolingPeriod();
+  Future<P2PPaymentMethodCoolingPeriodSnapshot> getPaymentMethodCoolingPeriod();
 
-  P2PPaymentMethodHistorySnapshot getPaymentMethodHistory();
+  Future<P2PPaymentMethodHistorySnapshot> getPaymentMethodHistory();
 
-  P2PPaymentMethodsSnapshot getPaymentMethods();
+  Future<P2PPaymentMethodsSnapshot> getPaymentMethods();
 
-  P2PInsuranceFundSnapshot getInsuranceFund();
+  Future<P2PInsuranceFundSnapshot> getInsuranceFund();
 
-  P2PInsuranceCertificateSnapshot getInsuranceCertificate();
+  Future<P2PInsuranceCertificateSnapshot> getInsuranceCertificate();
 
-  P2PInsuranceScoreSnapshot getInsuranceScore();
+  Future<P2PInsuranceScoreSnapshot> getInsuranceScore();
 
-  P2PInsurancePolicySnapshot getInsurancePolicy();
+  Future<P2PInsurancePolicySnapshot> getInsurancePolicy();
 
-  P2PContributionHistorySnapshot getContributionHistory();
+  Future<P2PContributionHistorySnapshot> getContributionHistory();
 
-  P2PClaimDetailSnapshot getClaimDetail(String claimId);
+  Future<P2PClaimDetailSnapshot> getClaimDetail(String claimId);
 
-  P2PEscrowBalanceSnapshot getEscrowBalance({String asset = 'USDT'});
+  Future<P2PEscrowBalanceSnapshot> getEscrowBalance({String asset = 'USDT'});
 
-  P2PEscrowDetailSnapshot getEscrowDetail(String orderId);
+  Future<P2PEscrowDetailSnapshot> getEscrowDetail(String orderId);
 
-  P2PKycRequirementsSnapshot getKycRequirements();
+  Future<P2PKycRequirementsSnapshot> getKycRequirements();
 
-  P2PKycStatusSnapshot getKycStatus();
+  Future<P2PKycStatusSnapshot> getKycStatus();
 
-  P2PIdentityVerificationSnapshot getIdentityVerification();
+  Future<P2PIdentityVerificationSnapshot> getIdentityVerification();
 
-  P2PAddressProofSnapshot getAddressProof();
+  Future<P2PAddressProofSnapshot> getAddressProof();
 
-  P2PSelfieVerificationSnapshot getSelfieVerification();
+  Future<P2PSelfieVerificationSnapshot> getSelfieVerification();
 
-  P2PVideoVerificationSnapshot getVideoVerification();
+  Future<P2PVideoVerificationSnapshot> getVideoVerification();
 
-  P2PSecurityCenterSnapshot getSecurityCenter();
+  Future<P2PSecurityCenterSnapshot> getSecurityCenter();
 
-  P2PTwoFactorSettingsSnapshot getTwoFactorSettings();
+  Future<P2PTwoFactorSettingsSnapshot> getTwoFactorSettings();
 
-  P2PDeviceManagementSnapshot getDeviceManagement();
+  Future<P2PDeviceManagementSnapshot> getDeviceManagement();
 
-  P2PAntiPhishingCodeSnapshot getAntiPhishingCode();
+  Future<P2PAntiPhishingCodeSnapshot> getAntiPhishingCode();
 
-  P2PLoginHistorySnapshot getLoginHistory();
+  Future<P2PLoginHistorySnapshot> getLoginHistory();
 
-  P2PSuspiciousActivitySnapshot getSuspiciousActivity();
+  Future<P2PSuspiciousActivitySnapshot> getSuspiciousActivity();
 
-  P2PE2EInfoSnapshot getE2EInfo();
+  Future<P2PE2EInfoSnapshot> getE2EInfo();
 
-  P2PFraudPreventionSnapshot getFraudPrevention();
+  Future<P2PFraudPreventionSnapshot> getFraudPrevention();
 
-  P2PWalletTransferSnapshot getWalletTransfer({
+  Future<P2PWalletTransferSnapshot> getWalletTransfer({
     String asset = 'USDT',
     String type = 'deposit',
   });
 
-  P2PFundLockHistorySnapshot getFundLockHistory({
+  Future<P2PFundLockHistorySnapshot> getFundLockHistory({
     bool walletHistoryAlias = false,
   });
 
-  P2PWalletSnapshot getWallet();
+  Future<P2PWalletSnapshot> getWallet();
 
-  P2PLimitTrackerSnapshot getLimitTracker();
+  Future<P2PLimitTrackerSnapshot> getLimitTracker();
 
-  P2PTransactionLimitsSnapshot getTransactionLimits();
+  Future<P2PTransactionLimitsSnapshot> getTransactionLimits();
 
-  P2PComplianceOverviewSnapshot getComplianceOverview();
+  Future<P2PComplianceOverviewSnapshot> getComplianceOverview();
 
-  P2PAmlScreeningSnapshot getAmlScreening();
+  Future<P2PAmlScreeningSnapshot> getAmlScreening();
 
-  P2PSourceOfFundsSnapshot getSourceOfFunds();
+  Future<P2PSourceOfFundsSnapshot> getSourceOfFunds();
 
-  P2PLargeTransactionJustificationSnapshot getLargeTransactionJustification({
-    double amount = 100000000,
-  });
+  Future<P2PLargeTransactionJustificationSnapshot>
+  getLargeTransactionJustification({double amount = 100000000});
 
-  P2PRiskAssessmentSnapshot getRiskAssessment();
+  Future<P2PRiskAssessmentSnapshot> getRiskAssessment();
 
-  P2PTaxReportingSnapshot getTaxReporting({
+  Future<P2PTaxReportingSnapshot> getTaxReporting({
     int selectedYear = 2025,
     String selectedJurisdiction = 'US',
   });
 
-  P2POrderBookSnapshot getOrderBook({String selectedAsset = 'USDT'});
+  Future<P2POrderBookSnapshot> getOrderBook({String selectedAsset = 'USDT'});
 
-  P2PDashboardSnapshot getDashboard({String timeFilter = '30d'});
+  Future<P2PDashboardSnapshot> getDashboard({String timeFilter = '30d'});
 
-  P2PAchievementsSnapshot getAchievements();
+  Future<P2PAchievementsSnapshot> getAchievements();
 
-  P2PBlacklistAddSnapshot getBlacklistAdd();
+  Future<P2PBlacklistAddSnapshot> getBlacklistAdd();
 
-  P2PBlacklistSnapshot getBlacklist();
+  Future<P2PBlacklistSnapshot> getBlacklist();
 
-  P2PNotificationSettingsSnapshot getNotificationSettings();
+  Future<P2PNotificationSettingsSnapshot> getNotificationSettings();
 
-  P2PSettingsSnapshot getSettings();
+  Future<P2PSettingsSnapshot> getSettings();
 
-  P2PGuideSnapshot getGuide();
+  Future<P2PGuideSnapshot> getGuide();
 
-  P2PMyOrdersSnapshot getMyOrders();
+  Future<P2PMyOrdersSnapshot> getMyOrders();
 }

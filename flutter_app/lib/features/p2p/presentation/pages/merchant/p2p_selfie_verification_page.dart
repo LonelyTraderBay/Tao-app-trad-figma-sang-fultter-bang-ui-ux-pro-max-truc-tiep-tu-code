@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -64,7 +65,7 @@ class _P2PSelfieVerificationPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pSelfieVerificationProvider);
+    final snapshotAsync = ref.watch(p2pSelfieVerificationProvider);
     final routePath = GoRouterState.of(context).uri.path;
     final isFaceMatchRoute = routePath.startsWith('/p2p/kyc/face-match');
     final screenContract = isFaceMatchRoute ? 'SC-403' : 'SC-251';
@@ -82,18 +83,41 @@ class _P2PSelfieVerificationPageState
       semanticIdentifier: screenContract,
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: title,
-            subtitle: 'KYC · P2P',
-            showBack: _step != _SelfieStep.liveness,
-            onBack: () => _step == _SelfieStep.guide
-                ? context.go(snapshot.parentRoute)
-                : setState(() => _resetToGuide()),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: title,
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycStatus),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [Expanded(child: _buildStep(context, snapshot))],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycStatus),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pSelfieVerificationProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: title,
+              subtitle: 'KYC · P2P',
+              showBack: _step != _SelfieStep.liveness,
+              onBack: () => _step == _SelfieStep.guide
+                  ? context.go(snapshot.parentRoute)
+                  : setState(() => _resetToGuide()),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [Expanded(child: _buildStep(context, snapshot))],
+            ),
           ),
         ),
       ),

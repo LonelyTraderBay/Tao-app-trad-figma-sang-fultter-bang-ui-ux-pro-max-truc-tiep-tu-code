@@ -41,9 +41,9 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaTrustBreakdown(entityId);
+    final snapshotAsync = ref.watch(
+      arenaTrustBreakdownSnapshotProvider(entityId),
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -79,32 +79,43 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
                     padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       footerPadding,
                     ),
-                    child: snapshot.creator == null
-                        ? VitPageContent(
-                            rhythm: VitPageRhythm.standard,
-                            padding: VitContentPadding.none,
-                            children: [
-                              VitEmptyState(
-                                icon: Icons.warning_amber_rounded,
-                                title: snapshot.emptyTitle,
-                                message: snapshot.emptySubtitle,
-                              ),
-                            ],
-                          )
-                        : VitPageContent(
-                            padding: VitContentPadding.compact,
-                            gap: VitContentGap.tight,
-                            children: [
-                              _TrustBreakdownCard(snapshot: snapshot),
-                              _CreatorProfileLink(snapshot: snapshot),
-                              _SafetyLink(snapshot: snapshot),
-                              VitCtaButton(
-                                key: closeKey,
-                                onPressed: () => _close(context),
-                                child: const Text('Đóng'),
-                              ),
-                            ],
-                          ),
+                    child: snapshotAsync.when(
+                      loading: () => const VitSkeletonList(),
+                      error: (error, stackTrace) => VitErrorState(
+                        title: 'Không tải được Trust Score',
+                        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () => ref.invalidate(
+                          arenaTrustBreakdownSnapshotProvider(entityId),
+                        ),
+                      ),
+                      data: (snapshot) => snapshot.creator == null
+                          ? VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.none,
+                              children: [
+                                VitEmptyState(
+                                  icon: Icons.warning_amber_rounded,
+                                  title: snapshot.emptyTitle,
+                                  message: snapshot.emptySubtitle,
+                                ),
+                              ],
+                            )
+                          : VitPageContent(
+                              padding: VitContentPadding.compact,
+                              gap: VitContentGap.tight,
+                              children: [
+                                _TrustBreakdownCard(snapshot: snapshot),
+                                _CreatorProfileLink(snapshot: snapshot),
+                                _SafetyLink(snapshot: snapshot),
+                                VitCtaButton(
+                                  key: closeKey,
+                                  onPressed: () => _close(context),
+                                  child: const Text('Đóng'),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
                 ),
               ),

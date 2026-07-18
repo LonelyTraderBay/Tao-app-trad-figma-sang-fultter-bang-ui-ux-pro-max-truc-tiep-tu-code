@@ -52,10 +52,9 @@ class _P2PDisputeEvidencePageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(
+    final controllerAsync = ref.watch(
       p2pDisputeEvidenceControllerProvider(widget.disputeId),
     );
-    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -64,7 +63,6 @@ class _P2PDisputeEvidencePageState
             : _p2pDisputeEvidenceNativeNavClearance +
                   _p2pDisputeEvidenceNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final documents = controller.documents(_uploaded);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,69 +78,86 @@ class _P2PDisputeEvidencePageState
             onBack: () =>
                 context.go(AppRoutePaths.p2pDisputeDetail(widget.disputeId)),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PDisputeEvidencePage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pDisputeEvidenceScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _HeroCard(
-                          title: snapshot.title,
-                          subtitle: snapshot.subtitle,
+          child: controllerAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pDisputeEvidenceControllerProvider(widget.disputeId),
+              ),
+            ),
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              final documents = controller.documents(_uploaded);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PDisputeEvidencePage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding:
+                            P2PSpacingTokens.p2pDisputeEvidenceScrollPadding(
+                              scrollEndPadding,
+                            ),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.form,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            _HeroCard(
+                              title: snapshot.title,
+                              subtitle: snapshot.subtitle,
+                            ),
+                            const _MockActionNote(
+                              text:
+                                  'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
+                            ),
+                            for (final document in documents)
+                              _EvidenceRow(
+                                document: document,
+                                onUpload: () =>
+                                    _markUploaded(document.source.id),
+                              ),
+                            VitCtaButton(
+                              key: P2PDisputeEvidencePage.submitKey,
+                              onPressed: controller.canSubmit(_uploaded)
+                                  ? () {
+                                      HapticFeedback.mediumImpact();
+                                      final preview = controller.submitPreview(
+                                        _uploaded,
+                                      );
+                                      context.go(
+                                        AppRoutePaths.p2pDisputeDetail(
+                                          preview.disputeId,
+                                        ),
+                                      );
+                                    }
+                                  : null,
+                              child: const Text('Gửi bằng chứng'),
+                            ),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Evidence submission review',
+                              message:
+                                  'Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.',
+                              contractId: 'p2p-dispute-evidence-review',
+                            ),
+                          ],
                         ),
-                        const _MockActionNote(
-                          text:
-                              'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
-                        ),
-                        for (final document in documents)
-                          _EvidenceRow(
-                            document: document,
-                            onUpload: () => _markUploaded(document.source.id),
-                          ),
-                        VitCtaButton(
-                          key: P2PDisputeEvidencePage.submitKey,
-                          onPressed: controller.canSubmit(_uploaded)
-                              ? () {
-                                  HapticFeedback.mediumImpact();
-                                  final preview = controller.submitPreview(
-                                    _uploaded,
-                                  );
-                                  context.go(
-                                    AppRoutePaths.p2pDisputeDetail(
-                                      preview.disputeId,
-                                    ),
-                                  );
-                                }
-                              : null,
-                          child: const Text('Gửi bằng chứng'),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Evidence submission review',
-                          message:
-                              'Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.',
-                          contractId: 'p2p-dispute-evidence-review',
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),

@@ -35,7 +35,7 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pPaymentMethodHistoryProvider);
+    final snapshotAsync = ref.watch(p2pPaymentMethodHistoryProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -57,50 +57,59 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PPaymentMethodHistoryPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pPaymentHistoryScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _StatsCard(snapshot: snapshot),
-                        if (snapshot.transactions.isEmpty)
-                          VitEmptyState(title: snapshot.emptyTitle)
-                        else
-                          VitPageSection(
-                            gap: VitContentGap.tight,
-                            children: [
-                              for (final transaction in snapshot.transactions)
-                                _TransactionCard(transaction: transaction),
-                            ],
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pPaymentMethodHistoryProvider),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PPaymentMethodHistoryPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pPaymentHistoryScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _StatsCard(snapshot: snapshot),
+                          if (snapshot.transactions.isEmpty)
+                            VitEmptyState(title: snapshot.emptyTitle)
+                          else
+                            VitPageSection(
+                              gap: VitContentGap.tight,
+                              children: [
+                                for (final transaction in snapshot.transactions)
+                                  _TransactionCard(transaction: transaction),
+                              ],
+                            ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Payment method history review',
+                            message:
+                                'P2P payment history keeps order direction, cancelled status, total volume, success rate, and next review context visible before users reuse or change a payment method.',
+                            contractId: 'SC-236',
                           ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Payment method history review',
-                          message:
-                              'P2P payment history keeps order direction, cancelled status, total volume, success rate, and next review context visible before users reuse or change a payment method.',
-                          contractId: 'SC-236',
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

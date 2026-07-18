@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-273 mock repository exposes order book BE draft', () {
-    final snapshot = const MockP2PRepository().getOrderBook();
+  test('SC-273 mock repository exposes order book BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getOrderBook();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-order-book');
     expect(

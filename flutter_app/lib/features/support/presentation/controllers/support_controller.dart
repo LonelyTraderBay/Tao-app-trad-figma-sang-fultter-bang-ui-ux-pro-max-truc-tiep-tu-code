@@ -10,17 +10,17 @@ final class SupportController implements SupportRepository {
   final SupportRepository _repository;
 
   @override
-  SupportHubSnapshot getSupportHub() {
+  Future<SupportHubSnapshot> getSupportHub() {
     return _repository.getSupportHub();
   }
 
   @override
-  HelpCenterSnapshot getHelpCenter() {
+  Future<HelpCenterSnapshot> getHelpCenter() {
     return _repository.getHelpCenter();
   }
 
   @override
-  AnnouncementsSnapshot getAnnouncements() {
+  Future<AnnouncementsSnapshot> getAnnouncements() {
     return _repository.getAnnouncements();
   }
 }

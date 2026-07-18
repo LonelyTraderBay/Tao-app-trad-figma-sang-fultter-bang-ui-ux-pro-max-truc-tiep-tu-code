@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryInsuranceMethods on _MockP2PRepositoryBase {
   @override
-  P2PInsuranceCertificateSnapshot getInsuranceCertificate() {
+  Future<P2PInsuranceCertificateSnapshot> getInsuranceCertificate() async {
+    await _simulateNetwork();
     return const P2PInsuranceCertificateSnapshot(
       endpoint: '/api/mobile/p2p/p2p-insurance-certificate',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -40,7 +41,8 @@ mixin _MockP2PRepositoryInsuranceMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PInsuranceScoreSnapshot getInsuranceScore() {
+  Future<P2PInsuranceScoreSnapshot> getInsuranceScore() async {
+    await _simulateNetwork();
     return const P2PInsuranceScoreSnapshot(
       endpoint: '/api/mobile/p2p/p2p-insurance-score',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -68,7 +70,8 @@ mixin _MockP2PRepositoryInsuranceMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PInsurancePolicySnapshot getInsurancePolicy() {
+  Future<P2PInsurancePolicySnapshot> getInsurancePolicy() async {
+    await _simulateNetwork();
     return const P2PInsurancePolicySnapshot(
       endpoint: '/api/mobile/p2p/p2p-insurance-policy',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -94,7 +97,8 @@ mixin _MockP2PRepositoryInsuranceMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PContributionHistorySnapshot getContributionHistory() {
+  Future<P2PContributionHistorySnapshot> getContributionHistory() async {
+    await _simulateNetwork();
     return const P2PContributionHistorySnapshot(
       endpoint: '/api/mobile/p2p/p2p-insurance-contribution-history',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -113,7 +117,8 @@ mixin _MockP2PRepositoryInsuranceMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PClaimDetailSnapshot getClaimDetail(String claimId) {
+  Future<P2PClaimDetailSnapshot> getClaimDetail(String claimId) async {
+    await _simulateNetwork();
     final claim =
         _p2pClaimDetails[claimId] ??
         _p2pClaimDetails[claimId == 'sample' ? 'ic001' : 'ic001']!;
@@ -146,7 +151,8 @@ mixin _MockP2PRepositoryInsuranceMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PInsuranceFundSnapshot getInsuranceFund() {
+  Future<P2PInsuranceFundSnapshot> getInsuranceFund() async {
+    await _simulateNetwork();
     return const P2PInsuranceFundSnapshot(
       endpoint: '/api/mobile/p2p/p2p-insurance',
       legacyEndpoint: '/api/mobile/p2p/p2p-insurance-fund',

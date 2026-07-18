@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-185 mock repository exposes Arena Studio BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaStudio();
+  test('SC-185 mock repository exposes Arena Studio BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaStudio();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-studio');
     expect(

@@ -33,7 +33,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-211 keeps the Home-standard page foundation contract', () {
+  test('SC-211 keeps the Home-standard page foundation contract', () async {
     final pageSource = File(
       'lib/features/p2p/presentation/widgets/hub/p2p_express_page_state.dart',
     ).readAsStringSync();
@@ -44,8 +44,10 @@ void main() {
     expect(pageSource, isNot(contains('SingleChildScrollView')));
   });
 
-  test('SC-211 mock repository exposes P2P Express BE draft', () {
-    final snapshot = const MockP2PRepository().getExpress();
+  test('SC-211 mock repository exposes P2P Express BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getExpress();
     final bestAd = snapshot.bestAd(
       tradeType: P2PTradeType.buy,
       asset: 'USDT',

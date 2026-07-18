@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-275 mock repository exposes achievements BE draft', () {
-    final snapshot = const MockP2PRepository().getAchievements();
+  test('SC-275 mock repository exposes achievements BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getAchievements();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-achievements');
     expect(

@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-246 mock repository exposes escrow detail BE draft', () {
-    final snapshot = const MockP2PRepository().getEscrowDetail('p2p001');
+  test('SC-246 mock repository exposes escrow detail BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getEscrowDetail('p2p001');
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-escrow-p2p001');
     expect(

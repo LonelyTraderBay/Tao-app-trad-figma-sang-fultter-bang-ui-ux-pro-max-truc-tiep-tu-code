@@ -26,8 +26,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-272 mock repository exposes tax reporting BE draft', () {
-    final snapshot = const MockP2PRepository().getTaxReporting();
+  test('SC-272 mock repository exposes tax reporting BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getTaxReporting();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-tax-reporting');
     expect(

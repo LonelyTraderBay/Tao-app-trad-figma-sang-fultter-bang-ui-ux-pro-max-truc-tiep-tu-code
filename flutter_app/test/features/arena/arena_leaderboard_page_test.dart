@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-194 mock repository exposes Arena Leaderboard BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaLeaderboard();
+  test('SC-194 mock repository exposes Arena Leaderboard BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaLeaderboard();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-leaderboard');
     expect(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -71,7 +72,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       p2pTaxReportingProvider((
         selectedYear: _selectedYear,
         selectedJurisdiction: _jurisdiction,
@@ -90,66 +91,94 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
       semanticIdentifier: 'SC-272',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pTaxScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _TaxHero(snapshot: snapshot),
-                        _YearSelector(
-                          years: snapshot.years,
-                          selectedYear: _selectedYear,
-                          onChanged: (year) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedYear = year);
-                          },
-                        ),
-                        _JurisdictionSelector(
-                          jurisdictions: snapshot.jurisdictions,
-                          selectedCode: _jurisdiction,
-                          onChanged: (code) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _jurisdiction = code);
-                          },
-                        ),
-                        _TaxSummary(snapshot: snapshot),
-                        _TaxDocuments(snapshot: snapshot),
-                        _TaxDisclaimer(snapshot: snapshot),
-                        VitCtaButton(
-                          key: P2PTaxReportingPage.detailCtaKey,
-                          onPressed: () {
-                            HapticFeedback.selectionClick();
-                            context.go(snapshot.detailRoute);
-                          },
-                          child: const Text('View Detailed Tax Report'),
-                        ),
-                      ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2p),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pTaxReportingProvider((
+                  selectedYear: _selectedYear,
+                  selectedJurisdiction: _jurisdiction,
+                )),
+              ),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.title,
+              subtitle: snapshot.subtitle,
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pTaxScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _TaxHero(snapshot: snapshot),
+                          _YearSelector(
+                            years: snapshot.years,
+                            selectedYear: _selectedYear,
+                            onChanged: (year) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selectedYear = year);
+                            },
+                          ),
+                          _JurisdictionSelector(
+                            jurisdictions: snapshot.jurisdictions,
+                            selectedCode: _jurisdiction,
+                            onChanged: (code) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _jurisdiction = code);
+                            },
+                          ),
+                          _TaxSummary(snapshot: snapshot),
+                          _TaxDocuments(snapshot: snapshot),
+                          _TaxDisclaimer(snapshot: snapshot),
+                          VitCtaButton(
+                            key: P2PTaxReportingPage.detailCtaKey,
+                            onPressed: () {
+                              HapticFeedback.selectionClick();
+                              context.go(snapshot.detailRoute);
+                            },
+                            child: const Text('View Detailed Tax Report'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

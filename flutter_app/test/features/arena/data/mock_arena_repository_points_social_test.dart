@@ -10,7 +10,8 @@ import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 /// This file complements that coverage by pinning concrete, hand-verified
 /// values from `lib/features/arena/data/fixtures/arena_*_repository_methods.dart`
 /// so a silent fixture edit shows up as a failing assertion. All methods on
-/// [ArenaRepository] are plain synchronous getters.
+/// [ArenaRepository] return `Future<T>` (GD4 async contract) — every test
+/// awaits its call.
 ///
 /// Split by behavior group (mirrors the production `_MockArenaRepository*
 /// Methods` mixin split): this file covers points, creator trust, safety,
@@ -25,13 +26,13 @@ import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 /// or wallet value — the assertions below pin that copy rather than
 /// introducing new copy assumptions that would blur the boundary.
 void main() {
-  const repository = MockArenaRepository();
+  const repository = MockArenaRepository(loadDelay: Duration.zero);
 
   group('MockArenaRepository points/social data smoke test', () {
     test(
       'getArenaPoints pins the summary balance and 7-day check-in strip',
-      () {
-        final snapshot = repository.getArenaPoints();
+      () async {
+        final snapshot = await repository.getArenaPoints();
 
         expect(snapshot.endpoint, '/api/mobile/arena/arena-points');
         expect(snapshot.summary.currentBalance, 2220);
@@ -45,23 +46,26 @@ void main() {
       },
     );
 
-    test('getArenaPointsLedger pins the running balance and entry count', () {
-      final snapshot = repository.getArenaPointsLedger();
+    test(
+      'getArenaPointsLedger pins the running balance and entry count',
+      () async {
+        final snapshot = await repository.getArenaPointsLedger();
 
-      expect(snapshot.endpoint, '/api/mobile/arena/arena-ledger');
-      expect(snapshot.summary.currentBalance, 2220);
-      expect(snapshot.summary.pointsEarned, 4520);
-      expect(snapshot.summary.pointsSpent, 2300);
-      expect(snapshot.filters, hasLength(7));
-      expect(snapshot.entries, hasLength(15));
-      expect(snapshot.entries.first.id, 'le001');
-      expect(snapshot.entries.first.amount, 30);
-    });
+        expect(snapshot.endpoint, '/api/mobile/arena/arena-ledger');
+        expect(snapshot.summary.currentBalance, 2220);
+        expect(snapshot.summary.pointsEarned, 4520);
+        expect(snapshot.summary.pointsSpent, 2300);
+        expect(snapshot.filters, hasLength(7));
+        expect(snapshot.entries, hasLength(15));
+        expect(snapshot.entries.first.id, 'le001');
+        expect(snapshot.entries.first.amount, 30);
+      },
+    );
 
     test(
       'getArenaPointsEntryDetail returns le001 with its amount and balance',
-      () {
-        final snapshot = repository.getArenaPointsEntryDetail('le001');
+      () async {
+        final snapshot = await repository.getArenaPointsEntryDetail('le001');
 
         expect(snapshot.entryId, 'le001');
         expect(snapshot.entry, isNotNull);
@@ -71,22 +75,25 @@ void main() {
       },
     );
 
-    test('getArenaCreator pins the cr001 trust score and metric count', () {
-      final snapshot = repository.getArenaCreator('cr001');
+    test(
+      'getArenaCreator pins the cr001 trust score and metric count',
+      () async {
+        final snapshot = await repository.getArenaCreator('cr001');
 
-      expect(snapshot.endpoint, '/api/mobile/arena/arena-creator-cr001');
-      expect(snapshot.creator.id, 'cr001');
-      expect(snapshot.creator.name, 'CryptoMaster_VN');
-      expect(snapshot.creator.trustScore, 95);
-      expect(snapshot.creator.badge, 'Gold');
-      expect(snapshot.trustMetrics, hasLength(4));
-      expect(snapshot.aboutRows, hasLength(4));
-    });
+        expect(snapshot.endpoint, '/api/mobile/arena/arena-creator-cr001');
+        expect(snapshot.creator.id, 'cr001');
+        expect(snapshot.creator.name, 'CryptoMaster_VN');
+        expect(snapshot.creator.trustScore, 95);
+        expect(snapshot.creator.badge, 'Gold');
+        expect(snapshot.trustMetrics, hasLength(4));
+        expect(snapshot.aboutRows, hasLength(4));
+      },
+    );
 
     test(
       'getArenaTrustBreakdown pins the matched creator and metric count',
-      () {
-        final snapshot = repository.getArenaTrustBreakdown('cr001');
+      () async {
+        final snapshot = await repository.getArenaTrustBreakdown('cr001');
 
         expect(snapshot.entityId, 'cr001');
         expect(snapshot.creator?.id, 'cr001');
@@ -100,8 +107,8 @@ void main() {
       },
     );
 
-    test('getArenaLeaderboard pins the podium and myRank', () {
-      final snapshot = repository.getArenaLeaderboard();
+    test('getArenaLeaderboard pins the podium and myRank', () async {
+      final snapshot = await repository.getArenaLeaderboard();
 
       expect(snapshot.endpoint, '/api/mobile/arena/arena-leaderboard');
       expect(snapshot.myRank.rank, 142);
@@ -111,8 +118,8 @@ void main() {
       expect(snapshot.risingCreators, hasLength(2));
     });
 
-    test('getVerifiedChallenges pins the release-gated preview copy', () {
-      final snapshot = repository.getVerifiedChallenges();
+    test('getVerifiedChallenges pins the release-gated preview copy', () async {
+      final snapshot = await repository.getVerifiedChallenges();
 
       expect(snapshot.endpoint, '/api/mobile/arena/arena-verified');
       expect(snapshot.title, 'Verified Challenges');
@@ -120,19 +127,22 @@ void main() {
       expect(snapshot.features, hasLength(4));
     });
 
-    test('getArenaSafetyCenter pins the community rules and quick links', () {
-      final snapshot = repository.getArenaSafetyCenter();
+    test(
+      'getArenaSafetyCenter pins the community rules and quick links',
+      () async {
+        final snapshot = await repository.getArenaSafetyCenter();
 
-      expect(snapshot.endpoint, '/api/mobile/arena/arena-safety');
-      expect(snapshot.communityRules, hasLength(4));
-      expect(snapshot.bannedContent, hasLength(6));
-      expect(snapshot.violationProcess, hasLength(4));
-      expect(snapshot.quickLinks, hasLength(2));
-      expect(snapshot.quickLinks.first.route, '/arena/blocked');
-    });
+        expect(snapshot.endpoint, '/api/mobile/arena/arena-safety');
+        expect(snapshot.communityRules, hasLength(4));
+        expect(snapshot.bannedContent, hasLength(6));
+        expect(snapshot.violationProcess, hasLength(4));
+        expect(snapshot.quickLinks, hasLength(2));
+        expect(snapshot.quickLinks.first.route, '/arena/blocked');
+      },
+    );
 
-    test('getArenaBlockedUsers pins the blocked-user count', () {
-      final snapshot = repository.getArenaBlockedUsers();
+    test('getArenaBlockedUsers pins the blocked-user count', () async {
+      final snapshot = await repository.getArenaBlockedUsers();
 
       expect(snapshot.endpoint, '/api/mobile/arena/arena-blocked');
       expect(snapshot.users, hasLength(2));
@@ -140,8 +150,8 @@ void main() {
       expect(snapshot.users.first.name, 'SpamBot_X');
     });
 
-    test('getArenaReportCase returns rpt001 with its resolution', () {
-      final snapshot = repository.getArenaReportCase('rpt001');
+    test('getArenaReportCase returns rpt001 with its resolution', () async {
+      final snapshot = await repository.getArenaReportCase('rpt001');
 
       expect(snapshot.endpoint, '/api/mobile/arena/arena-report-rpt001');
       expect(snapshot.caseId, 'rpt001');
@@ -151,19 +161,22 @@ void main() {
       expect(snapshot.relatedReports, hasLength(2));
     });
 
-    test('getMyArenaReports pins the 4-case totals and filter counts', () {
-      final snapshot = repository.getMyArenaReports();
+    test(
+      'getMyArenaReports pins the 4-case totals and filter counts',
+      () async {
+        final snapshot = await repository.getMyArenaReports();
 
-      expect(snapshot.endpoint, '/api/mobile/arena/arena-my-reports');
-      expect(snapshot.summary.total, 4);
-      expect(snapshot.reports, hasLength(4));
-      expect(snapshot.filters, hasLength(6));
-      expect(snapshot.filters.first.id, 'all');
-      expect(snapshot.filters.first.count, 4);
-    });
+        expect(snapshot.endpoint, '/api/mobile/arena/arena-my-reports');
+        expect(snapshot.summary.total, 4);
+        expect(snapshot.reports, hasLength(4));
+        expect(snapshot.filters, hasLength(6));
+        expect(snapshot.filters.first.id, 'all');
+        expect(snapshot.filters.first.count, 4);
+      },
+    );
 
-    test('getMyArena pins the balance stat and room/draft counts', () {
-      final snapshot = repository.getMyArena();
+    test('getMyArena pins the balance stat and room/draft counts', () async {
+      final snapshot = await repository.getMyArena();
 
       expect(snapshot.endpoint, '/api/mobile/profile/profile-arena');
       expect(snapshot.stats.currentBalance, 2220);
@@ -176,12 +189,15 @@ void main() {
       expect(snapshot.rewardHistory.totalReceipts, 12);
     });
 
-    test('getArenaMy mirrors getMyArena data on the arena-scoped endpoint', () {
-      final snapshot = repository.getArenaMy();
+    test(
+      'getArenaMy mirrors getMyArena data on the arena-scoped endpoint',
+      () async {
+        final snapshot = await repository.getArenaMy();
 
-      expect(snapshot.endpoint, '/api/mobile/arena/arena-my');
-      expect(snapshot.stats.currentBalance, 2220);
-      expect(snapshot.myRooms, hasLength(3));
-    });
+        expect(snapshot.endpoint, '/api/mobile/arena/arena-my');
+        expect(snapshot.stats.currentBalance, 2220);
+        expect(snapshot.myRooms, hasLength(3));
+      },
+    );
   });
 }

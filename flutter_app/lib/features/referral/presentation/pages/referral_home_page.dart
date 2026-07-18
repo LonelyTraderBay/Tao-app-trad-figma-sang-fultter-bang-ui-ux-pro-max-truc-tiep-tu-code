@@ -65,7 +65,7 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(referralControllerProvider).getHome();
+    final homeAsync = ref.watch(referralHomeSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -81,10 +81,11 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Giới thiệu bạn bè',
+            subtitle: 'Chương trình · Referral',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () =>
+                context.go(homeAsync.value?.backRoute ?? AppRoutePaths.home),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -104,70 +105,82 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        _CampaignBanner(campaign: snapshot.campaign),
-                        const _SafetyNotice(),
-                        _PendingKycBanner(
-                          count:
-                              snapshot.stats.totalFriends -
-                              snapshot.stats.kycCompleted,
-                          bonus: snapshot.currentTier.kycBonus,
-                          onTap: () =>
-                              context.go(AppRoutePaths.referralHistory),
-                        ),
-                        _ReferralHero(
-                          snapshot: snapshot,
-                          copied: _copiedLink,
-                          onCopyCode: () => _copy(snapshot.referralCode),
-                          onCopyLink: () => _copy(snapshot.referralLink),
-                          onShare: () => _showShareSheet(context, snapshot),
-                        ),
-                        _SocialProofRail(items: snapshot.socialProof),
-                        _MilestoneSection(
-                          stats: snapshot.stats,
-                          milestones: snapshot.milestones,
-                        ),
-                        _TierProgress(
-                          stats: snapshot.stats,
-                          currentTier: snapshot.currentTier,
-                          nextTier: snapshot.nextTier,
-                        ),
-                        _EarningCalculator(
-                          friends: _calculatorFriends,
-                          currentTier: snapshot.currentTier,
-                          onChanged: (value) =>
-                              setState(() => _calculatorFriends = value),
-                        ),
-                        if (snapshot.pendingCommissions.isNotEmpty)
-                          _PendingCommissionSection(
-                            items: snapshot.pendingCommissions,
+                      children: homeAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được trang giới thiệu',
+                            message: 'Thử lại sau hoặc quay lại trang chủ.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(referralHomeSnapshotProvider),
                           ),
-                        _RewardHighlights(
-                          currentTier: snapshot.currentTier,
-                          campaign: snapshot.campaign,
-                        ),
-                        _LeaderboardSection(items: snapshot.leaderboard),
-                        _TransparencyNote(
-                          commissionPercent:
-                              snapshot.currentTier.commissionPercent,
-                        ),
-                        _DetailLinks(
-                          links: snapshot.detailLinks,
-                          onOpen: (route) => context.go(route),
-                        ),
-                        _HowItWorksSection(steps: snapshot.howItWorks),
-                        _MonthStats(stats: snapshot.stats),
-                        _CampaignHistorySection(
-                          items: snapshot.campaignHistory,
-                        ),
-                        VitCtaButton(
-                          key: ReferralHomePage.inviteKey,
-                          onPressed: () => _showShareSheet(context, snapshot),
-                          leading: const Icon(Icons.group_add_rounded),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          child: const Text('Mời bạn bè ngay'),
-                        ),
-                      ],
+                        ],
+                        data: (snapshot) => [
+                          _CampaignBanner(campaign: snapshot.campaign),
+                          const _SafetyNotice(),
+                          _PendingKycBanner(
+                            count:
+                                snapshot.stats.totalFriends -
+                                snapshot.stats.kycCompleted,
+                            bonus: snapshot.currentTier.kycBonus,
+                            onTap: () =>
+                                context.go(AppRoutePaths.referralHistory),
+                          ),
+                          _ReferralHero(
+                            snapshot: snapshot,
+                            copied: _copiedLink,
+                            onCopyCode: () => _copy(snapshot.referralCode),
+                            onCopyLink: () => _copy(snapshot.referralLink),
+                            onShare: () => _showShareSheet(context, snapshot),
+                          ),
+                          _SocialProofRail(items: snapshot.socialProof),
+                          _MilestoneSection(
+                            stats: snapshot.stats,
+                            milestones: snapshot.milestones,
+                          ),
+                          _TierProgress(
+                            stats: snapshot.stats,
+                            currentTier: snapshot.currentTier,
+                            nextTier: snapshot.nextTier,
+                          ),
+                          _EarningCalculator(
+                            friends: _calculatorFriends,
+                            currentTier: snapshot.currentTier,
+                            onChanged: (value) =>
+                                setState(() => _calculatorFriends = value),
+                          ),
+                          if (snapshot.pendingCommissions.isNotEmpty)
+                            _PendingCommissionSection(
+                              items: snapshot.pendingCommissions,
+                            ),
+                          _RewardHighlights(
+                            currentTier: snapshot.currentTier,
+                            campaign: snapshot.campaign,
+                          ),
+                          _LeaderboardSection(items: snapshot.leaderboard),
+                          _TransparencyNote(
+                            commissionPercent:
+                                snapshot.currentTier.commissionPercent,
+                          ),
+                          _DetailLinks(
+                            links: snapshot.detailLinks,
+                            onOpen: (route) => context.go(route),
+                          ),
+                          _HowItWorksSection(steps: snapshot.howItWorks),
+                          _MonthStats(stats: snapshot.stats),
+                          _CampaignHistorySection(
+                            items: snapshot.campaignHistory,
+                          ),
+                          VitCtaButton(
+                            key: ReferralHomePage.inviteKey,
+                            onPressed: () => _showShareSheet(context, snapshot),
+                            leading: const Icon(Icons.group_add_rounded),
+                            trailing: const Icon(Icons.chevron_right_rounded),
+                            child: const Text('Mời bạn bè ngay'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

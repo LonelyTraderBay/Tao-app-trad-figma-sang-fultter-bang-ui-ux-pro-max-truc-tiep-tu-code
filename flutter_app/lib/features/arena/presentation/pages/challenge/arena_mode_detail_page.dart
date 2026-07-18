@@ -24,6 +24,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 class ArenaModeDetailPage extends ConsumerStatefulWidget {
@@ -55,9 +58,9 @@ class ArenaModeDetailPage extends ConsumerStatefulWidget {
 class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaModeDetail(widget.modeId);
+    final snapshotAsync = ref.watch(
+      arenaModeDetailSnapshotProvider(widget.modeId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -73,96 +76,126 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
       semanticIdentifier: 'SC-189',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.mode.title,
-            subtitle: 'Chế độ chơi · Open Arena',
-            showBack: true,
-            onBack: _close,
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Chế độ chơi',
+              subtitle: 'Chế độ chơi · Open Arena',
+              showBack: true,
+              onBack: _close,
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: ArenaModeDetailPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
-                      footerPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
-                      children: [
-                        ArenaModeHero(
-                          creatorKey: ArenaModeDetailPage.creatorKey,
-                          trustKey: ArenaModeDetailPage.trustKey,
-                          snapshot: snapshot,
-                          onCreator: () => context.goHaptic(
-                            AppRoutePaths.arenaCreator(snapshot.creator.id),
-                          ),
-                          onTrust: () => context.goHaptic(
-                            AppRoutePaths.arenaTrust(snapshot.creator.id),
-                          ),
-                        ),
-                        ArenaModeActions(
-                          useModeKey: ArenaModeDetailPage.useModeKey,
-                          createRoomKey: ArenaModeDetailPage.createRoomKey,
-                          onUseMode: () =>
-                              context.goHaptic(AppRoutePaths.arenaStudio),
-                          onCreateRoom: () =>
-                              context.goHaptic(AppRoutePaths.arenaStudio),
-                        ),
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: ArenaModeDescriptionCard(
-                            description: snapshot.mode.description,
-                          ),
-                        ),
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: ArenaModeRulesSummary(rows: snapshot.ruleRows),
-                        ),
-                        ArenaModeQualitySection(
-                          infoKey: ArenaModeDetailPage.infoKey,
-                          metrics: snapshot.qualityMetrics,
-                          onInfo: _showTrustSheet,
-                        ),
-                        if (snapshot.relatedRooms.isNotEmpty)
-                          ArenaModeRelatedRooms(
-                            roomKey: ArenaModeDetailPage.roomKey,
-                            rooms: snapshot.relatedRooms,
-                            onRoom: (id) => context.goHaptic(
-                              AppRoutePaths.arenaChallenge(id),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Chế độ chơi',
+              subtitle: 'Chế độ chơi · Open Arena',
+              showBack: true,
+              onBack: _close,
+            ),
+            child: VitErrorState(
+              title: 'Không tải được chế độ chơi',
+              message: 'Vui lòng kiểm tra kết nối và thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                arenaModeDetailSnapshotProvider(widget.modeId),
+              ),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: snapshot.mode.title,
+              subtitle: 'Chế độ chơi · Open Arena',
+              showBack: true,
+              onBack: _close,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: ArenaModeDetailPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                        footerPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          ArenaModeHero(
+                            creatorKey: ArenaModeDetailPage.creatorKey,
+                            trustKey: ArenaModeDetailPage.trustKey,
+                            snapshot: snapshot,
+                            onCreator: () => context.goHaptic(
+                              AppRoutePaths.arenaCreator(snapshot.creator.id),
+                            ),
+                            onTrust: () => context.goHaptic(
+                              AppRoutePaths.arenaTrust(snapshot.creator.id),
                             ),
                           ),
-                        if (snapshot.relatedModes.isNotEmpty)
-                          ArenaModeRelatedModes(
-                            relatedModeKey: ArenaModeDetailPage.relatedModeKey,
-                            modes: snapshot.relatedModes,
-                            onMode: (id) =>
-                                context.goHaptic(AppRoutePaths.arenaMode(id)),
+                          ArenaModeActions(
+                            useModeKey: ArenaModeDetailPage.useModeKey,
+                            createRoomKey: ArenaModeDetailPage.createRoomKey,
+                            onUseMode: () =>
+                                context.goHaptic(AppRoutePaths.arenaStudio),
+                            onCreateRoom: () =>
+                                context.goHaptic(AppRoutePaths.arenaStudio),
                           ),
-                        ArenaModePredictionContext(
-                          predictionKey: ArenaModeDetailPage.predictionKey,
-                          contextDraft: snapshot.predictionContext,
-                          onTap: () => context.goHaptic(
-                            AppRoutePaths.marketsPredictionEvent(
-                              snapshot.predictionContext.eventId,
+                          VitCard(
+                            padding: AppSpacing.zeroInsets,
+                            child: ArenaModeDescriptionCard(
+                              description: snapshot.mode.description,
                             ),
                           ),
-                        ),
-                      ],
+                          VitCard(
+                            padding: AppSpacing.zeroInsets,
+                            child: ArenaModeRulesSummary(
+                              rows: snapshot.ruleRows,
+                            ),
+                          ),
+                          ArenaModeQualitySection(
+                            infoKey: ArenaModeDetailPage.infoKey,
+                            metrics: snapshot.qualityMetrics,
+                            onInfo: () => _showTrustSheet(snapshot),
+                          ),
+                          if (snapshot.relatedRooms.isNotEmpty)
+                            ArenaModeRelatedRooms(
+                              roomKey: ArenaModeDetailPage.roomKey,
+                              rooms: snapshot.relatedRooms,
+                              onRoom: (id) => context.goHaptic(
+                                AppRoutePaths.arenaChallenge(id),
+                              ),
+                            ),
+                          if (snapshot.relatedModes.isNotEmpty)
+                            ArenaModeRelatedModes(
+                              relatedModeKey:
+                                  ArenaModeDetailPage.relatedModeKey,
+                              modes: snapshot.relatedModes,
+                              onMode: (id) =>
+                                  context.goHaptic(AppRoutePaths.arenaMode(id)),
+                            ),
+                          ArenaModePredictionContext(
+                            predictionKey: ArenaModeDetailPage.predictionKey,
+                            contextDraft: snapshot.predictionContext,
+                            onTap: () => context.goHaptic(
+                              AppRoutePaths.marketsPredictionEvent(
+                                snapshot.predictionContext.eventId,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -177,11 +210,8 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
     );
   }
 
-  void _showTrustSheet() {
+  void _showTrustSheet(ArenaModeDetailSnapshot snapshot) {
     HapticFeedback.selectionClick();
-    final snapshot = ref
-        .read(arenaReadModelControllerProvider)
-        .getArenaModeDetail(widget.modeId);
 
     showVitBottomSheet<void>(
       context: context,

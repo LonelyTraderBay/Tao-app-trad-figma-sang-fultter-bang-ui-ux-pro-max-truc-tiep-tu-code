@@ -27,8 +27,10 @@ void main() {
     return router;
   }
 
-  test('SC-203 mock repository exposes blocked users BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaBlockedUsers();
+  test('SC-203 mock repository exposes blocked users BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaBlockedUsers();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-blocked');
     expect(

@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-197 mock repository exposes Arena Flow Map BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaFlowMap();
+  test('SC-197 mock repository exposes Arena Flow Map BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaFlowMap();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-flow-map');
     expect(

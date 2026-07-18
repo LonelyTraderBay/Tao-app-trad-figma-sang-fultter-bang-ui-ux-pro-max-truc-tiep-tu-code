@@ -2,7 +2,9 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryConnectedGuideMethods on _MockArenaRepositoryBase {
   @override
-  ConnectedEcosystemProductionSnapshot getConnectedEcosystemProduction() {
+  Future<ConnectedEcosystemProductionSnapshot>
+  getConnectedEcosystemProduction() async {
+    await _simulateNetwork();
     return const ConnectedEcosystemProductionSnapshot(
       endpoint: '/api/mobile/arena/arena-ecosystem',
       actionDraft:
@@ -545,7 +547,8 @@ mixin _MockArenaRepositoryConnectedGuideMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaGuideSnapshot getArenaGuide() {
+  Future<ArenaGuideSnapshot> getArenaGuide() async {
+    await _simulateNetwork();
     return const ArenaGuideSnapshot(
       endpoint: '/api/mobile/arena/arena-guide',
       actionDraft:

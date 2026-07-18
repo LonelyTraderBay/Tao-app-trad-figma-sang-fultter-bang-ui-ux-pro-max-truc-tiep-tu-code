@@ -18,22 +18,15 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(
+    final snapshotAsync = ref.watch(
       p2pHomeProvider((tradeType: _tradeType, asset: _asset, fiat: _fiat)),
     );
-    final ads = _filteredAds(snapshot.ads);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? _p2pHomeVisualNavClearance + _p2pHomeVisualClearance
             : _p2pHomeNativeNavClearance + _p2pHomeNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
-    final showOfflineWithCache =
-        snapshot.currentState == P2PScreenState.offline &&
-        snapshot.ads.isNotEmpty;
-    final offlineDetail = snapshot.lastUpdatedLabel.isEmpty
-        ? 'C\u1EADp nh\u1EADt l\u1EA7n cu\u1ED1i: d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t'
-        : 'C\u1EADp nh\u1EADt l\u1EA7n cu\u1ED1i: ${snapshot.lastUpdatedLabel}';
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -41,12 +34,49 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
       semanticIdentifier: 'SC-282',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox.shrink() /*
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.home),
+            ),
+            child: const VitSkeletonList(),
+          ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.home),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                p2pHomeProvider((
+                  tradeType: _tradeType,
+                  asset: _asset,
+                  fiat: _fiat,
+                )),
+              ),
+            ),
+          ),
+          data: (snapshot) {
+            final ads = _filteredAds(snapshot.ads);
+            final showOfflineWithCache =
+                snapshot.currentState == P2PScreenState.offline &&
+                snapshot.ads.isNotEmpty;
+            final offlineDetail = snapshot.lastUpdatedLabel.isEmpty
+                ? 'C\u1EADp nh\u1EADt l\u1EA7n cu\u1ED1i: d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t'
+                : 'C\u1EADp nh\u1EADt l\u1EA7n cu\u1ED1i: ${snapshot.lastUpdatedLabel}';
+
+            return VitAutoHideHeaderScaffold(
+              header: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox.shrink() /*
                 key: P2PHomePage.offlineKey,
                 padding: P2PSpacingTokens.p2pHomeOfflinePadding,
                 child: const SizedBox.shrink(
@@ -55,153 +85,156 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                 ),
               ),
               */,
-              VitTopChrome(
-                type: VitTopChromeType.rootModule,
-                title: snapshot.title,
-                subtitle: snapshot.subtitle,
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.home),
-                actions: [
-                  VitHeaderActionItem(
-                    key: P2PHomePage.createKey,
-                    type: VitHeaderActionType.add,
-                    tooltip: 'Đăng offer',
-                    onPressed: () => context.go(snapshot.createRoute),
-                  ),
-                  VitHeaderActionItem(
-                    key: P2PHomePage.myOrdersKey,
-                    type: VitHeaderActionType.history,
-                    tooltip: 'Đơn P2P của tôi',
-                    onPressed: () => context.go(snapshot.myOrdersRoute),
+                  VitTopChrome(
+                    type: VitTopChromeType.rootModule,
+                    title: snapshot.title,
+                    subtitle: snapshot.subtitle,
+                    showBack: true,
+                    onBack: () => context.go(AppRoutePaths.home),
+                    actions: [
+                      VitHeaderActionItem(
+                        key: P2PHomePage.createKey,
+                        type: VitHeaderActionType.add,
+                        tooltip: 'Đăng offer',
+                        onPressed: () => context.go(snapshot.createRoute),
+                      ),
+                      VitHeaderActionItem(
+                        key: P2PHomePage.myOrdersKey,
+                        type: VitHeaderActionType.history,
+                        tooltip: 'Đơn P2P của tôi',
+                        onPressed: () => context.go(snapshot.myOrdersRoute),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PHomePage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pHomeScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.standard,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        if (snapshot.highRiskContractId != null)
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'P2P escrow states active',
-                            message:
-                                'Offer browse, order placement, payment proof, and dispute flows are tracked as one P2P escrow contract.',
-                            contractId: snapshot.highRiskContractId,
-                          ),
-                        if (showOfflineWithCache) ...[
-                          Padding(
-                            key: P2PHomePage.offlineKey,
-                            padding: P2PSpacingTokens.p2pHomeOfflinePadding,
-                            child: VitOfflineBanner(
-                              message:
-                                  'M\u1EA5t k\u1EBFt n\u1ED1i. \u0110ang hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t.',
-                              detail: offlineDetail,
-                            ),
-                          ),
-                        ],
-                        _KycComplianceBanner(snapshot: snapshot),
-                        _QuickHub(snapshot: snapshot),
-                        _AssetFiatRail(
-                          snapshot: snapshot,
-                          selectedAsset: _asset,
-                          selectedFiat: _fiat,
-                          onAsset: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _asset = value);
-                          },
-                          onFiat: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _fiat = value);
-                          },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: P2PHomePage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: P2PSpacingTokens.p2pHomeScrollPadding(
+                          scrollEndPadding,
                         ),
-                        _TradeTabs(
-                          active: _tradeType,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tradeType = value);
-                          },
-                        ),
-                        VitSearchBar(
-                          key: P2PHomePage.searchKey,
-                          controller: _searchController,
-                          placeholder: snapshot.searchHint,
-                          variant: VitSearchBarVariant.compact,
-                          filterActive: _filtersOpen,
-                          onFilterTap: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filtersOpen = !_filtersOpen);
-                          },
-                          onChanged: (value) => setState(() => _query = value),
-                        ),
-                        if (_filtersOpen) ...[
-                          _HomeFilterSection(
-                            merchantFilter: _merchantFilter,
-                            paymentFilter: _paymentFilter,
-                            paymentMethods: _paymentMethods(snapshot.ads),
-                            onMerchant: (value) =>
-                                setState(() => _merchantFilter = value),
-                            onPayment: (value) =>
-                                setState(() => _paymentFilter = value),
-                            onClear: () => setState(() {
-                              _merchantFilter = 'all';
-                              _paymentFilter = '';
-                            }),
-                          ),
-                        ],
-                        _ResultsHeader(count: ads.length),
-                        if (ads.isEmpty)
-                          _EmptyOffers(snapshot: snapshot)
-                        else
-                          for (final ad in ads)
-                            _OfferCard(
-                              ad: ad,
-                              tradeType: _tradeType,
-                              onOpen: () =>
-                                  context.go(AppRoutePaths.p2pAd(ad.id)),
-                              onMerchant: () => context.go(
-                                AppRoutePaths.p2pMerchant(ad.merchantId),
+                        child: VitPageContent(
+                          rhythm: VitPageRhythm.standard,
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          gap: VitContentGap.tight,
+                          children: [
+                            if (snapshot.highRiskContractId != null)
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'P2P escrow states active',
+                                message:
+                                    'Offer browse, order placement, payment proof, and dispute flows are tracked as one P2P escrow contract.',
+                                contractId: snapshot.highRiskContractId,
                               ),
-                              onReport: () => context.go(
-                                AppRoutePaths.p2pReport(ad.merchantId),
+                            if (showOfflineWithCache) ...[
+                              Padding(
+                                key: P2PHomePage.offlineKey,
+                                padding: P2PSpacingTokens.p2pHomeOfflinePadding,
+                                child: VitOfflineBanner(
+                                  message:
+                                      'M\u1EA5t k\u1EBFt n\u1ED1i. \u0110ang hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t.',
+                                  detail: offlineDetail,
+                                ),
+                              ),
+                            ],
+                            _KycComplianceBanner(snapshot: snapshot),
+                            _QuickHub(snapshot: snapshot),
+                            _AssetFiatRail(
+                              snapshot: snapshot,
+                              selectedAsset: _asset,
+                              selectedFiat: _fiat,
+                              onAsset: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _asset = value);
+                              },
+                              onFiat: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _fiat = value);
+                              },
+                            ),
+                            _TradeTabs(
+                              active: _tradeType,
+                              onChanged: (value) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _tradeType = value);
+                              },
+                            ),
+                            VitSearchBar(
+                              key: P2PHomePage.searchKey,
+                              controller: _searchController,
+                              placeholder: snapshot.searchHint,
+                              variant: VitSearchBarVariant.compact,
+                              filterActive: _filtersOpen,
+                              onFilterTap: () {
+                                HapticFeedback.selectionClick();
+                                setState(() => _filtersOpen = !_filtersOpen);
+                              },
+                              onChanged: (value) =>
+                                  setState(() => _query = value),
+                            ),
+                            if (_filtersOpen) ...[
+                              _HomeFilterSection(
+                                merchantFilter: _merchantFilter,
+                                paymentFilter: _paymentFilter,
+                                paymentMethods: _paymentMethods(snapshot.ads),
+                                onMerchant: (value) =>
+                                    setState(() => _merchantFilter = value),
+                                onPayment: (value) =>
+                                    setState(() => _paymentFilter = value),
+                                onClear: () => setState(() {
+                                  _merchantFilter = 'all';
+                                  _paymentFilter = '';
+                                }),
+                              ),
+                            ],
+                            _ResultsHeader(count: ads.length),
+                            if (ads.isEmpty)
+                              _EmptyOffers(snapshot: snapshot)
+                            else
+                              for (final ad in ads)
+                                _OfferCard(
+                                  ad: ad,
+                                  tradeType: _tradeType,
+                                  onOpen: () =>
+                                      context.go(AppRoutePaths.p2pAd(ad.id)),
+                                  onMerchant: () => context.go(
+                                    AppRoutePaths.p2pMerchant(ad.merchantId),
+                                  ),
+                                  onReport: () => context.go(
+                                    AppRoutePaths.p2pReport(ad.merchantId),
+                                  ),
+                                ),
+                            Padding(
+                              key: P2PHomePage.escrowDisclaimerKey,
+                              padding: const EdgeInsetsDirectional.only(
+                                top: AppSpacing.x2,
+                              ),
+                              child: Text(
+                                snapshot.contractNotes,
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text3,
+                                ),
                               ),
                             ),
-                        Padding(
-                          key: P2PHomePage.escrowDisclaimerKey,
-                          padding: const EdgeInsetsDirectional.only(
-                            top: AppSpacing.x2,
-                          ),
-                          child: Text(
-                            snapshot.contractNotes,
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

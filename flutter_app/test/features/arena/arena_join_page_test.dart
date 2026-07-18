@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-191 mock repository exposes Arena Join BE draft', () {
-    final snapshot = const MockArenaRepository().getArenaJoin('ch003');
+  test('SC-191 mock repository exposes Arena Join BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getArenaJoin('ch003');
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-join-ch003');
     expect(

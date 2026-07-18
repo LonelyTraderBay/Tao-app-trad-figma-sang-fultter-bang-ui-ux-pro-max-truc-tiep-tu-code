@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryMerchantMethods on _MockP2PRepositoryBase {
   @override
-  P2PMerchantApplySnapshot getMerchantApply() {
+  Future<P2PMerchantApplySnapshot> getMerchantApply() async {
+    await _simulateNetwork();
     return const P2PMerchantApplySnapshot(
       endpoint: '/api/mobile/p2p/p2p-merchant-apply',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -45,7 +46,10 @@ mixin _MockP2PRepositoryMerchantMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PMerchantProfileSnapshot getMerchantProfile(String merchantId) {
+  Future<P2PMerchantProfileSnapshot> getMerchantProfile(
+    String merchantId,
+  ) async {
+    await _simulateNetwork();
     final resolvedMerchantId = merchantId.isEmpty ? 'mc001' : merchantId;
     final merchant = _p2pMerchants.firstWhere(
       (item) => item.id == resolvedMerchantId,
@@ -79,7 +83,8 @@ mixin _MockP2PRepositoryMerchantMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PReportMerchantSnapshot getReportMerchant(String merchantId) {
+  Future<P2PReportMerchantSnapshot> getReportMerchant(String merchantId) async {
+    await _simulateNetwork();
     final resolvedMerchantId = merchantId.isEmpty ? 'mc001' : merchantId;
     final merchant = _p2pMerchants.firstWhere(
       (item) => item.id == resolvedMerchantId,
@@ -112,7 +117,8 @@ mixin _MockP2PRepositoryMerchantMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PTradingLevelSnapshot getTradingLevel() {
+  Future<P2PTradingLevelSnapshot> getTradingLevel() async {
+    await _simulateNetwork();
     final userLevel = _p2pUserTradingLevel;
     final currentLevel = _p2pTradingLevels.firstWhere(
       (level) => level.id == userLevel.currentLevel,
@@ -138,7 +144,8 @@ mixin _MockP2PRepositoryMerchantMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PReviewsSnapshot getReviews() {
+  Future<P2PReviewsSnapshot> getReviews() async {
+    await _simulateNetwork();
     final received = _p2pReviews
         .where((review) => review.toUserId == 'user001')
         .toList(growable: false);

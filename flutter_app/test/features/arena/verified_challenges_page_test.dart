@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-195 mock repository exposes Verified Challenges BE draft', () {
-    final snapshot = const MockArenaRepository().getVerifiedChallenges();
+  test('SC-195 mock repository exposes Verified Challenges BE draft', () async {
+    final snapshot = await const MockArenaRepository(
+      loadDelay: Duration.zero,
+    ).getVerifiedChallenges();
 
     expect(snapshot.endpoint, '/api/mobile/arena/arena-verified');
     expect(

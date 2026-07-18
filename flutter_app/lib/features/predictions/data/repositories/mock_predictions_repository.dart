@@ -12,12 +12,25 @@ part '../fixtures/mock_predictions_repository_fixtures_leaderboard_and_activity.
 part '../fixtures/mock_predictions_repository_fixtures_home_receipts_rewards.dart';
 
 mixin _MockPredictionsRepositoryBase implements PredictionsRepository {
-  /// Độ trễ mô phỏng cho đường ghi async (ADR-001); test truyền
-  /// `Duration.zero`.
+  /// Độ trễ mô phỏng cho mọi đường đọc/ghi async (GD4-F5 + ADR-001); test
+  /// truyền `Duration.zero`.
   Duration get loadDelay;
 
-  /// Khi bật, đường ghi async ném [StateError] để test nhánh lỗi.
+  /// Khi bật, đường đọc/ghi async ném [StateError] để test nhánh lỗi.
   bool get simulateError;
+
+  /// Helper dùng chung cho mọi method đọc — cả hai mixin phần method (Part01
+  /// và Part02) đều thấy được vì chúng khai báo `on _MockPredictionsRepositoryBase`.
+  Future<void> _simulateNetwork() async {
+    // BẮT BUỘC guard delay 0 — Future.delayed(Duration.zero) vẫn là timer,
+    // guard này giữ đường microtask thuần khi test truyền loadDelay: zero.
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('predictions_mock_fetch_failed');
+    }
+  }
 }
 
 final class MockPredictionsRepository

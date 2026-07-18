@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-236 mock repository exposes payment history BE draft', () {
-    final snapshot = const MockP2PRepository().getPaymentMethodHistory();
+  test('SC-236 mock repository exposes payment history BE draft', () async {
+    final snapshot = await const MockP2PRepository(
+      loadDelay: Duration.zero,
+    ).getPaymentMethodHistory();
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-payment-method-history');
     expect(

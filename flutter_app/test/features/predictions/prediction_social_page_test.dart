@@ -28,9 +28,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-040 mock repository exposes the social BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getSocial();
+  test('SC-040 mock repository exposes the social BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getSocial();
 
     expect(snapshot.eventTitle, 'BTC > \$100K by Dec 2026?');
     expect(snapshot.comments, hasLength(3));

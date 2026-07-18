@@ -2,7 +2,8 @@ part of '../repositories/mock_arena_repository.dart';
 
 mixin _MockArenaRepositoryRuleBuilderMethods on _MockArenaRepositoryBase {
   @override
-  ArenaSmartRulesSnapshot getArenaSmartRules() {
+  Future<ArenaSmartRulesSnapshot> getArenaSmartRules() async {
+    await _simulateNetwork();
     return const ArenaSmartRulesSnapshot(
       endpoint: '/api/mobile/arena/arena-studio-smart-rules',
       actionDraft:
@@ -139,7 +140,8 @@ mixin _MockArenaRepositoryRuleBuilderMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaPresetLibrarySnapshot getArenaPresetLibrary() {
+  Future<ArenaPresetLibrarySnapshot> getArenaPresetLibrary() async {
+    await _simulateNetwork();
     return const ArenaPresetLibrarySnapshot(
       endpoint: '/api/mobile/arena/arena-studio-presets',
       actionDraft:
@@ -460,7 +462,8 @@ mixin _MockArenaRepositoryRuleBuilderMethods on _MockArenaRepositoryBase {
   }
 
   @override
-  ArenaGovernanceSnapshot getArenaGovernance() {
+  Future<ArenaGovernanceSnapshot> getArenaGovernance() async {
+    await _simulateNetwork();
     return const ArenaGovernanceSnapshot(
       endpoint: '/api/mobile/arena/arena-studio-governance',
       actionDraft:

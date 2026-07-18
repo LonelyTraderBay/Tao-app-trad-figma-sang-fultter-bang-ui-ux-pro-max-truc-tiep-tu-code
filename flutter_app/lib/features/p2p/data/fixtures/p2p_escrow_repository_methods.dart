@@ -2,7 +2,10 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryEscrowMethods on _MockP2PRepositoryBase {
   @override
-  P2PEscrowBalanceSnapshot getEscrowBalance({String asset = 'USDT'}) {
+  Future<P2PEscrowBalanceSnapshot> getEscrowBalance({
+    String asset = 'USDT',
+  }) async {
+    await _simulateNetwork();
     final selectedAsset = _p2pEscrowOrders.containsKey(asset) ? asset : 'USDT';
     return P2PEscrowBalanceSnapshot(
       endpoint: '/api/mobile/p2p/p2p-escrow-balance',
@@ -32,10 +35,12 @@ mixin _MockP2PRepositoryEscrowMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PEscrowDetailSnapshot getEscrowDetail(String orderId) {
+  Future<P2PEscrowDetailSnapshot> getEscrowDetail(String orderId) async {
     // Cross-domain: reuses Orders' getOrder() for order context. Safe
     // because MockP2PRepository composes both mixins; no import needed.
-    final order = getOrder(orderId).order;
+    // GD4 bẫy 18: getOrder() đã tự simulateNetwork — không gọi lại ở đây
+    // để tránh double delay/error.
+    final order = (await getOrder(orderId)).order;
     return P2PEscrowDetailSnapshot(
       endpoint: '/api/mobile/p2p/p2p-escrow-$orderId',
       actionDraft: 'POST /p2p/* workflow action where applicable',

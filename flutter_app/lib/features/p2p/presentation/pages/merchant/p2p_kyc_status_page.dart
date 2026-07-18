@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -45,7 +46,7 @@ class P2PKycStatusPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(p2pKycStatusProvider);
+    final snapshotAsync = ref.watch(p2pKycStatusProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -59,74 +60,97 @@ class P2PKycStatusPage extends ConsumerWidget {
       semanticIdentifier: 'SC-248',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Trạng thái KYC',
-            subtitle: 'KYC · P2P',
-            showBack: true,
-            onBack: () => context.go(snapshot.parentRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycRequirements),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: RefreshIndicator(
-                  color: AppModuleAccents.p2p,
-                  backgroundColor: AppColors.surface2,
-                  onRefresh: () async {
-                    HapticFeedback.selectionClick();
-                    await Future<void>.delayed(
-                      const Duration(milliseconds: 120),
-                    );
-                  },
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(
-                      context,
-                    ).copyWith(scrollbars: false),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(
-                        parent: ClampingScrollPhysics(),
-                      ),
-                      padding: P2PSpacingTokens.p2pKycStatusScrollPadding(
-                        scrollEndPadding,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _OverallStatusCard(snapshot: snapshot),
-                          const SizedBox(height: _p2pKycSectionGap),
-                          Text(
-                            'Chi tiết các bước',
-                            style: AppTextStyles.baseMedium.copyWith(
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          const SizedBox(height: _p2pKycTightGap),
-                          _StatusTimeline(steps: snapshot.steps),
-                          const SizedBox(height: _p2pKycSectionGap),
-                          _SupportCard(snapshot: snapshot),
-                          const VitPageContent(
-                            rhythm: VitPageRhythm.form,
-                            padding: VitContentPadding.none,
-                            fullBleed: true,
-                            customGap: P2PSpacingTokens.p2pKycContentGap,
-                            children: [
-                              VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'KYC status state review',
-                                message:
-                                    'Overall status, refresh state, timeline actions, support path, and P2P trading impact remain visible while verification is reviewed.',
-                                contractId: 'SC-248',
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.p2pKycRequirements),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(p2pKycStatusProvider),
+            ),
+          ),
+          data: (snapshot) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Trạng thái KYC',
+              subtitle: 'KYC · P2P',
+              showBack: true,
+              onBack: () => context.go(snapshot.parentRoute),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: RefreshIndicator(
+                    color: AppModuleAccents.p2p,
+                    backgroundColor: AppColors.surface2,
+                    onRefresh: () async {
+                      HapticFeedback.selectionClick();
+                      await Future<void>.delayed(
+                        const Duration(milliseconds: 120),
+                      );
+                    },
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(
+                          parent: ClampingScrollPhysics(),
+                        ),
+                        padding: P2PSpacingTokens.p2pKycStatusScrollPadding(
+                          scrollEndPadding,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _OverallStatusCard(snapshot: snapshot),
+                            const SizedBox(height: _p2pKycSectionGap),
+                            Text(
+                              'Chi tiết các bước',
+                              style: AppTextStyles.baseMedium.copyWith(
+                                fontWeight: AppTextStyles.bold,
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            const SizedBox(height: _p2pKycTightGap),
+                            _StatusTimeline(steps: snapshot.steps),
+                            const SizedBox(height: _p2pKycSectionGap),
+                            _SupportCard(snapshot: snapshot),
+                            const VitPageContent(
+                              rhythm: VitPageRhythm.form,
+                              padding: VitContentPadding.none,
+                              fullBleed: true,
+                              customGap: P2PSpacingTokens.p2pKycContentGap,
+                              children: [
+                                VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'KYC status state review',
+                                  message:
+                                      'Overall status, refresh state, timeline actions, support path, and P2P trading impact remain visible while verification is reviewed.',
+                                  contractId: 'SC-248',
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -29,9 +29,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-030 mock repository exposes the event detail BE draft', () {
-    final repo = const MockPredictionsRepository();
-    final snapshot = repo.getEventDetail('pred-1');
+  test('SC-030 mock repository exposes the event detail BE draft', () async {
+    final repo = const MockPredictionsRepository(loadDelay: Duration.zero);
+    final snapshot = await repo.getEventDetail('pred-1');
 
     expect(snapshot.event.id, 'pred-1');
     expect(snapshot.position?.outcome, 'Yes');

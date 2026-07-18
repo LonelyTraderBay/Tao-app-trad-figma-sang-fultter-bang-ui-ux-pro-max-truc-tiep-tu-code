@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_cont
 export 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
 
 final p2pHomeProvider =
-    Provider.family<
+    FutureProvider.family<
       P2PHomeSnapshot,
       ({P2PTradeType tradeType, String asset, String fiat})
     >((ref, request) {
@@ -19,12 +19,12 @@ final p2pHomeProvider =
           );
     });
 
-final p2pExpressProvider = Provider<P2PExpressSnapshot>(
+final p2pExpressProvider = FutureProvider<P2PExpressSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getExpress(),
 );
 
 final p2pExpressConfirmProvider =
-    Provider.family<
+    FutureProvider.family<
       P2PExpressConfirmSnapshot,
       ({
         P2PTradeType tradeType,
@@ -48,309 +48,337 @@ final p2pExpressConfirmProvider =
     });
 
 final p2pOrderTimelineProvider =
-    Provider.family<P2POrderTimelineSnapshot, String>(
+    FutureProvider.family<P2POrderTimelineSnapshot, String>(
       (ref, orderId) =>
           ref.watch(p2pRepositoryProvider).getOrderTimeline(orderId),
     );
 
-final p2pOrderRateProvider = Provider.family<P2POrderRateSnapshot, String>(
-  (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderRate(orderId),
-);
+final p2pOrderRateProvider =
+    FutureProvider.family<P2POrderRateSnapshot, String>(
+      (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderRate(orderId),
+    );
 
-final p2pOrderCancelProvider = Provider.family<P2POrderCancelSnapshot, String>(
-  (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderCancel(orderId),
-);
+final p2pOrderCancelProvider =
+    FutureProvider.family<P2POrderCancelSnapshot, String>(
+      (ref, orderId) =>
+          ref.watch(p2pRepositoryProvider).getOrderCancel(orderId),
+    );
 
-final p2pOrderProofProvider = Provider.family<P2POrderProofSnapshot, String>(
-  (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderProof(orderId),
-);
+final p2pOrderProofProvider =
+    FutureProvider.family<P2POrderProofSnapshot, String>(
+      (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrderProof(orderId),
+    );
 
-final p2pOrderProvider = Provider.family<P2POrderSnapshot, String>(
+final p2pOrderProvider = FutureProvider.family<P2POrderSnapshot, String>(
   (ref, orderId) => ref.watch(p2pRepositoryProvider).getOrder(orderId),
 );
 
-final p2pChatProvider = Provider.family<P2PChatSnapshot, String>(
+final p2pChatProvider = FutureProvider.family<P2PChatSnapshot, String>(
   (ref, orderId) => ref.watch(p2pRepositoryProvider).getChat(orderId),
 );
 
 final p2pDisputeDetailProvider =
-    Provider.family<P2PDisputeDetailSnapshot, String>(
+    FutureProvider.family<P2PDisputeDetailSnapshot, String>(
       (ref, disputeId) =>
           ref.watch(p2pRepositoryProvider).getDisputeDetail(disputeId),
     );
 
 final p2pDisputeEvidenceProvider =
-    Provider.family<P2PDisputeEvidenceSnapshot, String>(
+    FutureProvider.family<P2PDisputeEvidenceSnapshot, String>(
       (ref, disputeId) =>
           ref.watch(p2pRepositoryProvider).getDisputeEvidence(disputeId),
     );
 
+// GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>> — .whenData()
+// map dong bo tu snapshot da FutureProvider-hoa, tranh 1 tang Future/
+// microtask thua so voi FutureProvider<Controller>. Trang van goi .when()
+// nhu moi snapshot provider khac.
 final p2pDisputeEvidenceControllerProvider =
-    Provider.family<P2PDisputeEvidenceController, String>((ref, disputeId) {
-      final snapshot = ref
-          .watch(p2pRepositoryProvider)
-          .getDisputeEvidence(disputeId);
-      return P2PDisputeEvidenceController(
-        state: P2PDisputeEvidenceViewState(snapshot: snapshot),
-      );
+    Provider.family<AsyncValue<P2PDisputeEvidenceController>, String>((
+      ref,
+      disputeId,
+    ) {
+      return ref
+          .watch(p2pDisputeEvidenceProvider(disputeId))
+          .whenData(
+            (snapshot) => P2PDisputeEvidenceController(
+              state: P2PDisputeEvidenceViewState(snapshot: snapshot),
+            ),
+          );
     });
 
 final p2pDisputeResolutionProvider =
-    Provider.family<P2PDisputeResolutionSnapshot, String>(
+    FutureProvider.family<P2PDisputeResolutionSnapshot, String>(
       (ref, disputeId) =>
           ref.watch(p2pRepositoryProvider).getDisputeResolution(disputeId),
     );
 
-final p2pDisputeOpenProvider = Provider.family<P2PDisputeOpenSnapshot, String>(
-  (ref, orderId) => ref.watch(p2pRepositoryProvider).getDisputeOpen(orderId),
-);
+final p2pDisputeOpenProvider =
+    FutureProvider.family<P2PDisputeOpenSnapshot, String>(
+      (ref, orderId) =>
+          ref.watch(p2pRepositoryProvider).getDisputeOpen(orderId),
+    );
 
-final p2pDisputesProvider = Provider<P2PDisputesSnapshot>(
+final p2pDisputesProvider = FutureProvider<P2PDisputesSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getDisputes(),
 );
 
-final p2pAdAnalyticsProvider = Provider.family<P2PAdAnalyticsSnapshot, String>(
-  (ref, adId) => ref.watch(p2pRepositoryProvider).getAdAnalytics(adId),
-);
+final p2pAdAnalyticsProvider =
+    FutureProvider.family<P2PAdAnalyticsSnapshot, String>(
+      (ref, adId) => ref.watch(p2pRepositoryProvider).getAdAnalytics(adId),
+    );
 
-final p2pAdDetailProvider = Provider.family<P2PAdDetailSnapshot, String>(
+final p2pAdDetailProvider = FutureProvider.family<P2PAdDetailSnapshot, String>(
   (ref, adId) => ref.watch(p2pRepositoryProvider).getAdDetail(adId),
 );
 
-final p2pMyAdsProvider = Provider<P2PMyAdsSnapshot>(
+final p2pMyAdsProvider = FutureProvider<P2PMyAdsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getMyAds(),
 );
 
-final p2pCreateAdProvider = Provider<P2PCreateAdSnapshot>(
+final p2pCreateAdProvider = FutureProvider<P2PCreateAdSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getCreateAd(),
 );
 
-final p2pMerchantApplyProvider = Provider<P2PMerchantApplySnapshot>(
+final p2pMerchantApplyProvider = FutureProvider<P2PMerchantApplySnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getMerchantApply(),
 );
 
 final p2pMerchantProfileProvider =
-    Provider.family<P2PMerchantProfileSnapshot, String>(
+    FutureProvider.family<P2PMerchantProfileSnapshot, String>(
       (ref, merchantId) =>
           ref.watch(p2pRepositoryProvider).getMerchantProfile(merchantId),
     );
 
 final p2pReportMerchantProvider =
-    Provider.family<P2PReportMerchantSnapshot, String>(
+    FutureProvider.family<P2PReportMerchantSnapshot, String>(
       (ref, merchantId) =>
           ref.watch(p2pRepositoryProvider).getReportMerchant(merchantId),
     );
 
-final p2pTradingLevelProvider = Provider<P2PTradingLevelSnapshot>(
+final p2pTradingLevelProvider = FutureProvider<P2PTradingLevelSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getTradingLevel(),
 );
 
-final p2pReviewsProvider = Provider<P2PReviewsSnapshot>(
+final p2pReviewsProvider = FutureProvider<P2PReviewsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getReviews(),
 );
 
-final p2pPaymentMethodAddProvider = Provider<P2PPaymentMethodAddSnapshot>(
+final p2pPaymentMethodAddProvider = FutureProvider<P2PPaymentMethodAddSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodAdd(),
 );
 
 final p2pPaymentMethodVerificationProvider =
-    Provider.family<P2PPaymentMethodVerificationSnapshot, String>(
+    FutureProvider.family<P2PPaymentMethodVerificationSnapshot, String>(
       (ref, methodId) => ref
           .watch(p2pRepositoryProvider)
           .getPaymentMethodVerification(methodId),
     );
 
 final p2pPaymentMethodOwnershipProvider =
-    Provider.family<P2PPaymentMethodOwnershipSnapshot, String>(
+    FutureProvider.family<P2PPaymentMethodOwnershipSnapshot, String>(
       (ref, methodId) =>
           ref.watch(p2pRepositoryProvider).getPaymentMethodOwnership(methodId),
     );
 
+// GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>>.
 final p2pPaymentMethodOwnershipControllerProvider =
-    Provider.family<P2PPaymentMethodOwnershipController, String>((
+    Provider.family<AsyncValue<P2PPaymentMethodOwnershipController>, String>((
       ref,
       methodId,
     ) {
-      final snapshot = ref
-          .watch(p2pRepositoryProvider)
-          .getPaymentMethodOwnership(methodId);
-      return P2PPaymentMethodOwnershipController(
-        state: P2PPaymentMethodOwnershipViewState(snapshot: snapshot),
-      );
+      return ref
+          .watch(p2pPaymentMethodOwnershipProvider(methodId))
+          .whenData(
+            (snapshot) => P2PPaymentMethodOwnershipController(
+              state: P2PPaymentMethodOwnershipViewState(snapshot: snapshot),
+            ),
+          );
     });
 
 final p2pPaymentMethodCoolingPeriodProvider =
-    Provider<P2PPaymentMethodCoolingPeriodSnapshot>(
+    FutureProvider<P2PPaymentMethodCoolingPeriodSnapshot>(
       (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodCoolingPeriod(),
     );
 
+// GD4-F5 (STATE-S25 khuôn): Provider<AsyncValue<Controller>>.
 final p2pPaymentMethodCoolingPeriodControllerProvider =
-    Provider<P2PPaymentMethodCoolingPeriodController>((ref) {
-      final snapshot = ref
-          .watch(p2pRepositoryProvider)
-          .getPaymentMethodCoolingPeriod();
-      return P2PPaymentMethodCoolingPeriodController(
-        state: P2PPaymentMethodCoolingPeriodViewState(snapshot: snapshot),
-      );
+    Provider<AsyncValue<P2PPaymentMethodCoolingPeriodController>>((ref) {
+      return ref
+          .watch(p2pPaymentMethodCoolingPeriodProvider)
+          .whenData(
+            (snapshot) => P2PPaymentMethodCoolingPeriodController(
+              state: P2PPaymentMethodCoolingPeriodViewState(snapshot: snapshot),
+            ),
+          );
     });
 
 final p2pPaymentMethodHistoryProvider =
-    Provider<P2PPaymentMethodHistorySnapshot>(
+    FutureProvider<P2PPaymentMethodHistorySnapshot>(
       (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethodHistory(),
     );
 
-final p2pPaymentMethodsProvider = Provider<P2PPaymentMethodsSnapshot>(
+final p2pPaymentMethodsProvider = FutureProvider<P2PPaymentMethodsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getPaymentMethods(),
 );
 
-final p2pInsuranceFundProvider = Provider<P2PInsuranceFundSnapshot>(
+final p2pInsuranceFundProvider = FutureProvider<P2PInsuranceFundSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getInsuranceFund(),
 );
 
 final p2pInsuranceCertificateProvider =
-    Provider<P2PInsuranceCertificateSnapshot>(
+    FutureProvider<P2PInsuranceCertificateSnapshot>(
       (ref) => ref.watch(p2pRepositoryProvider).getInsuranceCertificate(),
     );
 
-final p2pInsuranceScoreProvider = Provider<P2PInsuranceScoreSnapshot>(
+final p2pInsuranceScoreProvider = FutureProvider<P2PInsuranceScoreSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getInsuranceScore(),
 );
 
-final p2pInsurancePolicyProvider = Provider<P2PInsurancePolicySnapshot>(
+final p2pInsurancePolicyProvider = FutureProvider<P2PInsurancePolicySnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getInsurancePolicy(),
 );
 
-final p2pContributionHistoryProvider = Provider<P2PContributionHistorySnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getContributionHistory(),
-);
+final p2pContributionHistoryProvider =
+    FutureProvider<P2PContributionHistorySnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getContributionHistory(),
+    );
 
-final p2pClaimDetailProvider = Provider.family<P2PClaimDetailSnapshot, String>(
-  (ref, claimId) => ref.watch(p2pRepositoryProvider).getClaimDetail(claimId),
-);
+final p2pClaimDetailProvider =
+    FutureProvider.family<P2PClaimDetailSnapshot, String>(
+      (ref, claimId) =>
+          ref.watch(p2pRepositoryProvider).getClaimDetail(claimId),
+    );
 
 final p2pEscrowBalanceProvider =
-    Provider.family<P2PEscrowBalanceSnapshot, String>(
+    FutureProvider.family<P2PEscrowBalanceSnapshot, String>(
       (ref, asset) =>
           ref.watch(p2pRepositoryProvider).getEscrowBalance(asset: asset),
     );
 
 final p2pEscrowDetailProvider =
-    Provider.family<P2PEscrowDetailSnapshot, String>(
+    FutureProvider.family<P2PEscrowDetailSnapshot, String>(
       (ref, orderId) =>
           ref.watch(p2pRepositoryProvider).getEscrowDetail(orderId),
     );
 
-final p2pKycRequirementsProvider = Provider<P2PKycRequirementsSnapshot>(
+final p2pKycRequirementsProvider = FutureProvider<P2PKycRequirementsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getKycRequirements(),
 );
 
-final p2pKycStatusProvider = Provider<P2PKycStatusSnapshot>(
+final p2pKycStatusProvider = FutureProvider<P2PKycStatusSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getKycStatus(),
 );
 
 final p2pIdentityVerificationProvider =
-    Provider<P2PIdentityVerificationSnapshot>(
+    FutureProvider<P2PIdentityVerificationSnapshot>(
       (ref) => ref.watch(p2pRepositoryProvider).getIdentityVerification(),
     );
 
-final p2pAddressProofProvider = Provider<P2PAddressProofSnapshot>(
+final p2pAddressProofProvider = FutureProvider<P2PAddressProofSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getAddressProof(),
 );
 
-final p2pSelfieVerificationProvider = Provider<P2PSelfieVerificationSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getSelfieVerification(),
-);
+final p2pSelfieVerificationProvider =
+    FutureProvider<P2PSelfieVerificationSnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getSelfieVerification(),
+    );
 
-final p2pVideoVerificationProvider = Provider<P2PVideoVerificationSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getVideoVerification(),
-);
+final p2pVideoVerificationProvider =
+    FutureProvider<P2PVideoVerificationSnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getVideoVerification(),
+    );
 
-final p2pSecurityCenterProvider = Provider<P2PSecurityCenterSnapshot>(
+final p2pSecurityCenterProvider = FutureProvider<P2PSecurityCenterSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getSecurityCenter(),
 );
 
-final p2pTwoFactorSettingsProvider = Provider<P2PTwoFactorSettingsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getTwoFactorSettings(),
-);
+final p2pTwoFactorSettingsProvider =
+    FutureProvider<P2PTwoFactorSettingsSnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getTwoFactorSettings(),
+    );
 
-final p2pDeviceManagementProvider = Provider<P2PDeviceManagementSnapshot>(
+final p2pDeviceManagementProvider = FutureProvider<P2PDeviceManagementSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getDeviceManagement(),
 );
 
-final p2pAntiPhishingCodeProvider = Provider<P2PAntiPhishingCodeSnapshot>(
+final p2pAntiPhishingCodeProvider = FutureProvider<P2PAntiPhishingCodeSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getAntiPhishingCode(),
 );
 
-final p2pLoginHistoryProvider = Provider<P2PLoginHistorySnapshot>(
+final p2pLoginHistoryProvider = FutureProvider<P2PLoginHistorySnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getLoginHistory(),
 );
 
-final p2pSuspiciousActivityProvider = Provider<P2PSuspiciousActivitySnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getSuspiciousActivity(),
-);
+final p2pSuspiciousActivityProvider =
+    FutureProvider<P2PSuspiciousActivitySnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getSuspiciousActivity(),
+    );
 
-final p2pE2EInfoProvider = Provider<P2PE2EInfoSnapshot>(
+final p2pE2EInfoProvider = FutureProvider<P2PE2EInfoSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getE2EInfo(),
 );
 
-final p2pFraudPreventionProvider = Provider<P2PFraudPreventionSnapshot>(
+final p2pFraudPreventionProvider = FutureProvider<P2PFraudPreventionSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getFraudPrevention(),
 );
 
 final p2pWalletTransferProvider =
-    Provider.family<P2PWalletTransferSnapshot, ({String asset, String type})>((
-      ref,
-      request,
-    ) {
+    FutureProvider.family<
+      P2PWalletTransferSnapshot,
+      ({String asset, String type})
+    >((ref, request) {
       return ref
           .watch(p2pRepositoryProvider)
           .getWalletTransfer(asset: request.asset, type: request.type);
     });
 
 final p2pFundLockHistoryProvider =
-    Provider.family<P2PFundLockHistorySnapshot, bool>(
+    FutureProvider.family<P2PFundLockHistorySnapshot, bool>(
       (ref, walletHistoryAlias) => ref
           .watch(p2pRepositoryProvider)
           .getFundLockHistory(walletHistoryAlias: walletHistoryAlias),
     );
 
-final p2pWalletProvider = Provider<P2PWalletSnapshot>(
+final p2pWalletProvider = FutureProvider<P2PWalletSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getWallet(),
 );
 
-final p2pLimitTrackerProvider = Provider<P2PLimitTrackerSnapshot>(
+final p2pLimitTrackerProvider = FutureProvider<P2PLimitTrackerSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getLimitTracker(),
 );
 
-final p2pTransactionLimitsProvider = Provider<P2PTransactionLimitsSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getTransactionLimits(),
-);
+final p2pTransactionLimitsProvider =
+    FutureProvider<P2PTransactionLimitsSnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getTransactionLimits(),
+    );
 
-final p2pComplianceOverviewProvider = Provider<P2PComplianceOverviewSnapshot>(
-  (ref) => ref.watch(p2pRepositoryProvider).getComplianceOverview(),
-);
+final p2pComplianceOverviewProvider =
+    FutureProvider<P2PComplianceOverviewSnapshot>(
+      (ref) => ref.watch(p2pRepositoryProvider).getComplianceOverview(),
+    );
 
-final p2pAmlScreeningProvider = Provider<P2PAmlScreeningSnapshot>(
+final p2pAmlScreeningProvider = FutureProvider<P2PAmlScreeningSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getAmlScreening(),
 );
 
-final p2pSourceOfFundsProvider = Provider<P2PSourceOfFundsSnapshot>(
+final p2pSourceOfFundsProvider = FutureProvider<P2PSourceOfFundsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getSourceOfFunds(),
 );
 
 final p2pLargeTransactionJustificationProvider =
-    Provider.family<P2PLargeTransactionJustificationSnapshot, double>(
+    FutureProvider.family<P2PLargeTransactionJustificationSnapshot, double>(
       (ref, amount) => ref
           .watch(p2pRepositoryProvider)
           .getLargeTransactionJustification(amount: amount),
     );
 
-final p2pRiskAssessmentProvider = Provider<P2PRiskAssessmentSnapshot>(
+final p2pRiskAssessmentProvider = FutureProvider<P2PRiskAssessmentSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getRiskAssessment(),
 );
 
 final p2pTaxReportingProvider =
-    Provider.family<
+    FutureProvider.family<
       P2PTaxReportingSnapshot,
       ({int selectedYear, String selectedJurisdiction})
     >((ref, request) {
@@ -362,43 +390,45 @@ final p2pTaxReportingProvider =
           );
     });
 
-final p2pOrderBookProvider = Provider.family<P2POrderBookSnapshot, String>(
-  (ref, selectedAsset) => ref
-      .watch(p2pRepositoryProvider)
-      .getOrderBook(selectedAsset: selectedAsset),
-);
+final p2pOrderBookProvider =
+    FutureProvider.family<P2POrderBookSnapshot, String>(
+      (ref, selectedAsset) => ref
+          .watch(p2pRepositoryProvider)
+          .getOrderBook(selectedAsset: selectedAsset),
+    );
 
-final p2pDashboardProvider = Provider.family<P2PDashboardSnapshot, String>(
-  (ref, timeFilter) =>
-      ref.watch(p2pRepositoryProvider).getDashboard(timeFilter: timeFilter),
-);
+final p2pDashboardProvider =
+    FutureProvider.family<P2PDashboardSnapshot, String>(
+      (ref, timeFilter) =>
+          ref.watch(p2pRepositoryProvider).getDashboard(timeFilter: timeFilter),
+    );
 
-final p2pAchievementsProvider = Provider<P2PAchievementsSnapshot>(
+final p2pAchievementsProvider = FutureProvider<P2PAchievementsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getAchievements(),
 );
 
-final p2pBlacklistAddProvider = Provider<P2PBlacklistAddSnapshot>(
+final p2pBlacklistAddProvider = FutureProvider<P2PBlacklistAddSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getBlacklistAdd(),
 );
 
-final p2pBlacklistProvider = Provider<P2PBlacklistSnapshot>(
+final p2pBlacklistProvider = FutureProvider<P2PBlacklistSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getBlacklist(),
 );
 
 final p2pNotificationSettingsProvider =
-    Provider<P2PNotificationSettingsSnapshot>(
+    FutureProvider<P2PNotificationSettingsSnapshot>(
       (ref) => ref.watch(p2pRepositoryProvider).getNotificationSettings(),
     );
 
-final p2pSettingsProvider = Provider<P2PSettingsSnapshot>(
+final p2pSettingsProvider = FutureProvider<P2PSettingsSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getSettings(),
 );
 
-final p2pGuideProvider = Provider<P2PGuideSnapshot>(
+final p2pGuideProvider = FutureProvider<P2PGuideSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getGuide(),
 );
 
-final p2pMyOrdersProvider = Provider<P2PMyOrdersSnapshot>(
+final p2pMyOrdersProvider = FutureProvider<P2PMyOrdersSnapshot>(
   (ref) => ref.watch(p2pRepositoryProvider).getMyOrders(),
 );
 
@@ -439,16 +469,20 @@ final class P2PTwoFactorSettingsViewState {
   }
 }
 
-/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
-/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state cài đặt
-/// 2FA giữ nguyên khi điều hướng đi/về trong phiên.
+/// STATE-S23 (khuôn NotificationsStateController) + GD4-F5 biến thể A
+/// (async playbook mục 6): Notifier vẫn SYNC, build() unwrap AsyncValue qua
+/// `.value` (nullable) với fallback rỗng tường minh. Trang gate qua
+/// `p2pTwoFactorSettingsProvider.when()` trước khi đọc Notifier này nên
+/// `.value` luôn có dữ liệu thật trong luồng UI; fallback rỗng chỉ chạm khi
+/// test đọc Notifier trực tiếp trước khi provider async resolve.
 final class P2P2FASettingsStateController
     extends Notifier<P2PTwoFactorSettingsViewState> {
   @override
   P2PTwoFactorSettingsViewState build() {
-    return P2PTwoFactorSettingsViewState.fromSnapshot(
-      ref.watch(p2pTwoFactorSettingsProvider),
-    );
+    final snapshot =
+        ref.watch(p2pTwoFactorSettingsProvider).value ??
+        _emptyTwoFactorSettingsSnapshot;
+    return P2PTwoFactorSettingsViewState.fromSnapshot(snapshot);
   }
 
   void toggleMethod(String methodId) {
@@ -488,6 +522,18 @@ final class P2P2FASettingsStateController
   }
 }
 
+const _emptyTwoFactorSettingsSnapshot = P2PTwoFactorSettingsSnapshot(
+  endpoint: '/api/mobile/p2p/p2p-security-2fa',
+  actionDraft: 'POST /p2p/* workflow action where applicable',
+  supportedStates: [P2PScreenState.loading],
+  methods: [],
+  thresholds: [],
+  recommendation: '',
+  parentRoute: '/p2p/security',
+  emptyTitle: '',
+  contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+);
+
 final p2p2FASettingsStateControllerProvider =
     NotifierProvider<
       P2P2FASettingsStateController,
@@ -524,16 +570,18 @@ final class P2PDeviceManagementViewState {
   }
 }
 
-/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
-/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state thiết bị
-/// tin cậy giữ nguyên khi điều hướng đi/về trong phiên.
+/// STATE-S23 (khuôn NotificationsStateController) + GD4-F5 biến thể A:
+/// Notifier vẫn SYNC, build() unwrap AsyncValue qua `.value` (nullable) với
+/// fallback rỗng. Trang gate qua `p2pDeviceManagementProvider.when()` nên
+/// `.value` luôn có dữ liệu thật trong luồng UI thật.
 final class P2PDeviceManagementStateController
     extends Notifier<P2PDeviceManagementViewState> {
   @override
   P2PDeviceManagementViewState build() {
-    return P2PDeviceManagementViewState.fromSnapshot(
-      ref.watch(p2pDeviceManagementProvider),
-    );
+    final snapshot =
+        ref.watch(p2pDeviceManagementProvider).value ??
+        _emptyDeviceManagementSnapshot;
+    return P2PDeviceManagementViewState.fromSnapshot(snapshot);
   }
 
   void trustDevice(String deviceId) {
@@ -568,6 +616,19 @@ final class P2PDeviceManagementStateController
     );
   }
 }
+
+const _emptyDeviceManagementSnapshot = P2PDeviceManagementSnapshot(
+  endpoint: '/api/mobile/p2p/p2p-security-devices',
+  actionDraft: 'POST /p2p/* workflow action where applicable',
+  supportedStates: [P2PScreenState.loading],
+  devices: [],
+  infoTitle: '',
+  infoBody: '',
+  securityTips: [],
+  parentRoute: '/p2p/security',
+  emptyTitle: '',
+  contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+);
 
 final p2pDeviceManagementStateControllerProvider =
     NotifierProvider<
@@ -607,16 +668,18 @@ final class P2PFraudPreventionViewState {
   }
 }
 
-/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
-/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state checklist
-/// an toàn giữ nguyên khi điều hướng đi/về trong phiên.
+/// STATE-S23 (khuôn NotificationsStateController) + GD4-F5 biến thể A:
+/// Notifier vẫn SYNC, build() unwrap AsyncValue qua `.value` (nullable) với
+/// fallback rỗng. Trang gate qua `p2pFraudPreventionProvider.when()` nên
+/// `.value` luôn có dữ liệu thật trong luồng UI thật.
 final class P2PFraudPreventionStateController
     extends Notifier<P2PFraudPreventionViewState> {
   @override
   P2PFraudPreventionViewState build() {
-    return P2PFraudPreventionViewState.fromSnapshot(
-      ref.watch(p2pFraudPreventionProvider),
-    );
+    final snapshot =
+        ref.watch(p2pFraudPreventionProvider).value ??
+        _emptyFraudPreventionSnapshot;
+    return P2PFraudPreventionViewState.fromSnapshot(snapshot);
   }
 
   void toggleChecklistItem(String itemId) {
@@ -631,6 +694,29 @@ final class P2PFraudPreventionStateController
     );
   }
 }
+
+// checklist giữ 1 placeholder (không rỗng): P2PFraudPreventionSnapshot.
+// safetyScore chia cho checklist.length — rỗng sẽ tạo NaN.round() throw.
+const _emptyFraudPreventionSnapshot = P2PFraudPreventionSnapshot(
+  endpoint: '/api/mobile/p2p/p2p-fraud-prevention',
+  actionDraft: 'POST /p2p/* workflow action where applicable',
+  supportedStates: [P2PScreenState.loading],
+  patterns: [],
+  checklist: [
+    P2PSafetyChecklistItemDraft(
+      id: 'placeholder',
+      label: '',
+      description: '',
+      checked: false,
+      category: '',
+    ),
+  ],
+  emergencyActions: [],
+  disclosure: '',
+  parentRoute: '/p2p/security',
+  emptyTitle: '',
+  contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+);
 
 final p2pFraudPreventionStateControllerProvider =
     NotifierProvider<
@@ -668,16 +754,18 @@ final class P2PSuspiciousActivityViewState {
   }
 }
 
-/// STATE-S23 (khuôn NotificationsStateController): build() seed từ repo,
-/// method mutate `state = copyWith(...)`. KHÔNG autoDispose — state cảnh
-/// báo giữ nguyên khi điều hướng đi/về trong phiên.
+/// STATE-S23 (khuôn NotificationsStateController) + GD4-F5 biến thể A:
+/// Notifier vẫn SYNC, build() unwrap AsyncValue qua `.value` (nullable) với
+/// fallback rỗng. Trang gate qua `p2pSuspiciousActivityProvider.when()` nên
+/// `.value` luôn có dữ liệu thật trong luồng UI thật.
 final class P2PSuspiciousActivityStateController
     extends Notifier<P2PSuspiciousActivityViewState> {
   @override
   P2PSuspiciousActivityViewState build() {
-    return P2PSuspiciousActivityViewState.fromSnapshot(
-      ref.watch(p2pSuspiciousActivityProvider),
-    );
+    final snapshot =
+        ref.watch(p2pSuspiciousActivityProvider).value ??
+        _emptySuspiciousActivitySnapshot;
+    return P2PSuspiciousActivityViewState.fromSnapshot(snapshot);
   }
 
   void markReviewed(String alertId) {
@@ -689,6 +777,17 @@ final class P2PSuspiciousActivityStateController
     );
   }
 }
+
+const _emptySuspiciousActivitySnapshot = P2PSuspiciousActivitySnapshot(
+  endpoint: '/api/mobile/p2p/p2p-security-suspicious-activity',
+  actionDraft: 'POST /p2p/* workflow action where applicable',
+  supportedStates: [P2PScreenState.loading],
+  alerts: [],
+  summarySubtitle: '',
+  parentRoute: '/p2p/security',
+  emptyTitle: '',
+  contractNotes: 'P2P requires escrow, fraud, KYC, payment-state clarity.',
+);
 
 final p2pSuspiciousActivityStateControllerProvider =
     NotifierProvider<

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
+import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/hub/prediction_enum_tab_bar.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
@@ -52,18 +53,17 @@ class _PredictionRiskCalculatorPageState
     extends ConsumerState<PredictionRiskCalculatorPage> {
   _RiskTab _activeTab = _RiskTab.calculator;
   String _outcome = 'yes';
-  late final TextEditingController _eventController;
-  late final TextEditingController _sharesController;
-  late final TextEditingController _entryPriceController;
-  late final TextEditingController _currentPriceController;
-  late final TextEditingController _riskBudgetController;
+  // GD4-F5 (bẫy 14): controller giờ dựng lười trong nhánh `data:` (thay
+  // initState đọc repo giờ đã async) — nullable, `_ensureControllers` chỉ
+  // seed 1 lần, không ghi đè khi user đã chỉnh.
+  TextEditingController? _eventController;
+  TextEditingController? _sharesController;
+  TextEditingController? _entryPriceController;
+  TextEditingController? _currentPriceController;
+  TextEditingController? _riskBudgetController;
 
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(predictionsReadModelControllerProvider)
-        .getRiskCalculator();
+  void _ensureControllers(PredictionRiskCalculatorSnapshot snapshot) {
+    if (_eventController != null) return;
     _outcome = snapshot.defaultOutcome;
     _eventController = TextEditingController(text: snapshot.defaultEventName);
     _sharesController = TextEditingController(
@@ -80,11 +80,11 @@ class _PredictionRiskCalculatorPageState
     );
 
     for (final controller in [
-      _eventController,
-      _sharesController,
-      _entryPriceController,
-      _currentPriceController,
-      _riskBudgetController,
+      _eventController!,
+      _sharesController!,
+      _entryPriceController!,
+      _currentPriceController!,
+      _riskBudgetController!,
     ]) {
       controller.addListener(_refresh);
     }
@@ -99,9 +99,8 @@ class _PredictionRiskCalculatorPageState
       _currentPriceController,
       _riskBudgetController,
     ]) {
-      controller
-        ..removeListener(_refresh)
-        ..dispose();
+      controller?.removeListener(_refresh);
+      controller?.dispose();
     }
     super.dispose();
   }
@@ -112,7 +111,9 @@ class _PredictionRiskCalculatorPageState
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(predictionsReadModelControllerProvider).getRiskCalculator();
+    final riskCalculatorAsync = ref.watch(
+      predictionsRiskCalculatorSnapshotProvider,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -121,13 +122,6 @@ class _PredictionRiskCalculatorPageState
         navClearance +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
-    final inputs = _RiskInputs(
-      shares: _parse(_sharesController.text),
-      entryPrice: _parse(_entryPriceController.text),
-      currentPrice: _parse(_currentPriceController.text),
-      riskBudget: _parse(_riskBudgetController.text, fallback: 1),
-    );
-    final metrics = _calculate(inputs);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -163,39 +157,72 @@ class _PredictionRiskCalculatorPageState
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
-                      children: [
-                        ...(_activeTab == _RiskTab.calculator
-                            ? [
-                                _PositionInfoCard(
-                                  eventController: _eventController,
-                                  sharesController: _sharesController,
-                                  entryPriceController: _entryPriceController,
-                                  currentPriceController:
-                                      _currentPriceController,
-                                  riskBudgetController: _riskBudgetController,
-                                  outcome: _outcome,
-                                  onOutcomeChanged: (value) =>
-                                      setState(() => _outcome = value),
-                                ),
-                                _PositionSummary(inputs: inputs),
-                                _RiskAnalysis(metrics: metrics),
-                                _KellyRecommendation(
-                                  metrics: metrics,
-                                  riskBudget: inputs.riskBudget,
-                                ),
-                                const _RiskWarning(),
-                              ]
-                            : _activeTab == _RiskTab.scenarios
-                            ? [_ScenariosTab(inputs: inputs, metrics: metrics)]
-                            : const [_GuideTab()]),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Prediction risk-calculator review',
-                          message:
-                              'Outcome side, shares, entry/current probability, risk budget, max loss, result range, scenario table, and guidance states are reviewed before sizing a prediction position.',
-                          contractId: 'SC-036',
-                        ),
-                      ],
+                      children: riskCalculatorAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được máy tính rủi ro',
+                            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () => ref.invalidate(
+                              predictionsRiskCalculatorSnapshotProvider,
+                            ),
+                          ),
+                        ],
+                        data: (snapshot) {
+                          _ensureControllers(snapshot);
+                          final inputs = _RiskInputs(
+                            shares: _parse(_sharesController!.text),
+                            entryPrice: _parse(_entryPriceController!.text),
+                            currentPrice: _parse(_currentPriceController!.text),
+                            riskBudget: _parse(
+                              _riskBudgetController!.text,
+                              fallback: 1,
+                            ),
+                          );
+                          final metrics = _calculate(inputs);
+                          return [
+                            ...(_activeTab == _RiskTab.calculator
+                                ? [
+                                    _PositionInfoCard(
+                                      eventController: _eventController!,
+                                      sharesController: _sharesController!,
+                                      entryPriceController:
+                                          _entryPriceController!,
+                                      currentPriceController:
+                                          _currentPriceController!,
+                                      riskBudgetController:
+                                          _riskBudgetController!,
+                                      outcome: _outcome,
+                                      onOutcomeChanged: (value) =>
+                                          setState(() => _outcome = value),
+                                    ),
+                                    _PositionSummary(inputs: inputs),
+                                    _RiskAnalysis(metrics: metrics),
+                                    _KellyRecommendation(
+                                      metrics: metrics,
+                                      riskBudget: inputs.riskBudget,
+                                    ),
+                                    const _RiskWarning(),
+                                  ]
+                                : _activeTab == _RiskTab.scenarios
+                                ? [
+                                    _ScenariosTab(
+                                      inputs: inputs,
+                                      metrics: metrics,
+                                    ),
+                                  ]
+                                : const [_GuideTab()]),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Prediction risk-calculator review',
+                              message:
+                                  'Outcome side, shares, entry/current probability, risk budget, max loss, result range, scenario table, and guidance states are reviewed before sizing a prediction position.',
+                              contractId: 'SC-036',
+                            ),
+                          ];
+                        },
+                      ),
                     ),
                   ),
                 ),

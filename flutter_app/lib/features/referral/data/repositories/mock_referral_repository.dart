@@ -6,10 +6,24 @@ part 'mock_referral_repository_reward_fixtures.dart';
 part 'mock_referral_repository_social_fixtures.dart';
 
 final class MockReferralRepository implements ReferralRepository {
-  const MockReferralRepository();
+  const MockReferralRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('referral_mock_fetch_failed');
+  }
 
   @override
-  ReferralHomeSnapshot getHome() {
+  Future<ReferralHomeSnapshot> getHome() async {
+    await _simulateNetwork();
     final stats = ReferralHomeStatsDraft(
       totalFriends: _friends.length,
       kycCompleted: _friends.where((friend) => friend.kycCompleted).length,
@@ -99,11 +113,12 @@ final class MockReferralRepository implements ReferralRepository {
   }
 
   @override
-  ReferralHistorySnapshot getHistory({
+  Future<ReferralHistorySnapshot> getHistory({
     ReferralFriendFilter filter = ReferralFriendFilter.all,
     ReferralHistorySort sort = ReferralHistorySort.date,
     String query = '',
-  }) {
+  }) async {
+    await _simulateNetwork();
     final normalizedQuery = query.trim().toLowerCase();
     final filtered = _friends
         .where((friend) => _matchesFilter(friend, filter))
@@ -171,10 +186,11 @@ final class MockReferralRepository implements ReferralRepository {
   }
 
   @override
-  ReferralRewardsSnapshot getRewards({
+  Future<ReferralRewardsSnapshot> getRewards({
     ReferralRewardFilter filter = ReferralRewardFilter.all,
     ReferralRewardSort sort = ReferralRewardSort.date,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final records = _rewardRecords
         .where((record) => _matchesRewardFilter(record, filter))
         .toList();
@@ -251,7 +267,8 @@ final class MockReferralRepository implements ReferralRepository {
   }
 
   @override
-  ReferralRulesSnapshot getRules() {
+  Future<ReferralRulesSnapshot> getRules() async {
+    await _simulateNetwork();
     return const ReferralRulesSnapshot(
       endpoint: '/api/mobile/referral/referral-rules',
       actionDraft: 'read-only or local navigation action',
@@ -277,7 +294,8 @@ final class MockReferralRepository implements ReferralRepository {
   }
 
   @override
-  ReferralFriendDetailSnapshot getFriendDetail(String friendId) {
+  Future<ReferralFriendDetailSnapshot> getFriendDetail(String friendId) async {
+    await _simulateNetwork();
     return ReferralFriendDetailSnapshot(
       endpoint: '/api/mobile/referral/referral-friend-$friendId',
       actionDraft: 'read-only or local navigation action',

@@ -3,36 +3,38 @@ import 'package:vit_trade_flutter/features/predictions/domain/entities/predictio
 /// Data source contract for the Prediction Markets feature: read snapshots
 /// for every prediction screen and submit orders.
 abstract interface class PredictionsRepository {
-  PredictionHomeSnapshot getHome({
+  Future<PredictionHomeSnapshot> getHome({
     PredictionFilterTab filter = PredictionFilterTab.trending,
     String? category,
     String searchQuery = '',
   });
 
-  PredictionSearchSnapshot getSearch({
+  Future<PredictionSearchSnapshot> getSearch({
     PredictionSearchSort sort = PredictionSearchSort.trending,
     PredictionStatusFilter status = PredictionStatusFilter.active,
     String? category,
     String searchQuery = '',
   });
 
-  PredictionBreakingSnapshot getBreaking({String? category});
+  Future<PredictionBreakingSnapshot> getBreaking({String? category});
 
-  PredictionEventDetailSnapshot getEventDetail(String eventId);
+  Future<PredictionEventDetailSnapshot> getEventDetail(String eventId);
 
-  PredictionPortfolioSnapshot getPortfolio();
+  Future<PredictionPortfolioSnapshot> getPortfolio();
 
-  PredictionRewardsSnapshot getRewards();
+  Future<PredictionRewardsSnapshot> getRewards();
 
-  PredictionLeaderboardSnapshot getLeaderboard({
+  Future<PredictionLeaderboardSnapshot> getLeaderboard({
     PredictionLeaderboardTimeFilter timeFilter =
         PredictionLeaderboardTimeFilter.weekly,
     PredictionLeaderboardMetric metric = PredictionLeaderboardMetric.pnl,
   });
 
-  PredictionGlobalActivitySnapshot getGlobalActivity({double minAmount = 0});
+  Future<PredictionGlobalActivitySnapshot> getGlobalActivity({
+    double minAmount = 0,
+  });
 
-  PredictionOrderReceiptSnapshot getOrderReceipt(String receiptId);
+  Future<PredictionOrderReceiptSnapshot> getOrderReceipt(String receiptId);
 
   /// Đường ghi tài chính là async theo ADR-001 — trả về `receiptId` để view
   /// điều hướng trang biên lai (biên lai tự load qua [getOrderReceipt]).
@@ -44,19 +46,19 @@ abstract interface class PredictionsRepository {
     required double amount,
   });
 
-  PredictionRiskCalculatorSnapshot getRiskCalculator();
+  Future<PredictionRiskCalculatorSnapshot> getRiskCalculator();
 
-  PredictionMarketMakerSnapshot getMarketMaker();
+  Future<PredictionMarketMakerSnapshot> getMarketMaker();
 
-  PredictionPortfolioAnalyzerSnapshot getPortfolioAnalyzer();
+  Future<PredictionPortfolioAnalyzerSnapshot> getPortfolioAnalyzer();
 
-  PredictionEventCalendarSnapshot getEventCalendar({String? category});
+  Future<PredictionEventCalendarSnapshot> getEventCalendar({String? category});
 
-  PredictionSocialSnapshot getSocial();
+  Future<PredictionSocialSnapshot> getSocial();
 
-  PredictionAdvancedChartSnapshot getAdvancedChart(String eventId);
+  Future<PredictionAdvancedChartSnapshot> getAdvancedChart(String eventId);
 
-  PredictionTournamentsSnapshot getTournaments();
+  Future<PredictionTournamentsSnapshot> getTournaments();
 
-  PredictionDataIntegrationSnapshot getDataIntegration();
+  Future<PredictionDataIntegrationSnapshot> getDataIntegration();
 }

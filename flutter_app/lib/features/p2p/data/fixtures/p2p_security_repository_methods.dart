@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   @override
-  P2PSecurityCenterSnapshot getSecurityCenter() {
+  Future<P2PSecurityCenterSnapshot> getSecurityCenter() async {
+    await _simulateNetwork();
     return const P2PSecurityCenterSnapshot(
       endpoint: '/api/mobile/p2p/p2p-security-center',
       actionDraft:
@@ -30,7 +31,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PTwoFactorSettingsSnapshot getTwoFactorSettings() {
+  Future<P2PTwoFactorSettingsSnapshot> getTwoFactorSettings() async {
+    await _simulateNetwork();
     return const P2PTwoFactorSettingsSnapshot(
       endpoint: '/api/mobile/p2p/p2p-security-2fa',
       actionDraft:
@@ -53,7 +55,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PDeviceManagementSnapshot getDeviceManagement() {
+  Future<P2PDeviceManagementSnapshot> getDeviceManagement() async {
+    await _simulateNetwork();
     return const P2PDeviceManagementSnapshot(
       endpoint: '/api/mobile/p2p/p2p-security-devices',
       actionDraft:
@@ -77,7 +80,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PAntiPhishingCodeSnapshot getAntiPhishingCode() {
+  Future<P2PAntiPhishingCodeSnapshot> getAntiPhishingCode() async {
+    await _simulateNetwork();
     return const P2PAntiPhishingCodeSnapshot(
       endpoint: '/api/mobile/p2p/p2p-security-anti-phishing',
       actionDraft:
@@ -106,7 +110,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PLoginHistorySnapshot getLoginHistory() {
+  Future<P2PLoginHistorySnapshot> getLoginHistory() async {
+    await _simulateNetwork();
     return const P2PLoginHistorySnapshot(
       endpoint: '/api/mobile/p2p/p2p-security-login-history',
       actionDraft:
@@ -130,7 +135,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PSuspiciousActivitySnapshot getSuspiciousActivity() {
+  Future<P2PSuspiciousActivitySnapshot> getSuspiciousActivity() async {
+    await _simulateNetwork();
     return const P2PSuspiciousActivitySnapshot(
       endpoint: '/api/mobile/p2p/p2p-security-suspicious-activity',
       actionDraft:
@@ -150,7 +156,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PE2EInfoSnapshot getE2EInfo() {
+  Future<P2PE2EInfoSnapshot> getE2EInfo() async {
+    await _simulateNetwork();
     return const P2PE2EInfoSnapshot(
       endpoint: '/api/mobile/p2p/p2p-e2e-info',
       actionDraft: 'POST /p2p/* workflow action where applicable',
@@ -178,7 +185,8 @@ mixin _MockP2PRepositorySecurityMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PFraudPreventionSnapshot getFraudPrevention() {
+  Future<P2PFraudPreventionSnapshot> getFraudPrevention() async {
+    await _simulateNetwork();
     return const P2PFraudPreventionSnapshot(
       endpoint: '/api/mobile/p2p/p2p-fraud-prevention',
       actionDraft: 'POST /p2p/* workflow action where applicable',

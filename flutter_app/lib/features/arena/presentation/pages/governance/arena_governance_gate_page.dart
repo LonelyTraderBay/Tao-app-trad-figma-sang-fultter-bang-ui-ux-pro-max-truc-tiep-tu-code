@@ -95,8 +95,7 @@ class _ArenaGovernanceGatePageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(arenaGovernanceControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(arenaGovernanceControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -105,11 +104,6 @@ class _ArenaGovernanceGatePageState
       nativeExtra: AppSpacing.x2,
     );
     final result = _governanceResult();
-    final actionState = controller.actionState(
-      canProceed: result.canProceed,
-      nextAction: result.nextAction,
-      statusLabel: _statusLabel,
-    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -125,155 +119,185 @@ class _ArenaGovernanceGatePageState
             showBack: true,
             onBack: _close,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: ArenaGovernanceGatePage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
-                      footerPadding,
-                    ),
-                    child: Column(
-                      children: [
-                        VitPageContent(
-                          rhythm: VitPageRhythm.form,
-                          padding: VitContentPadding.compact,
-                          gap: VitContentGap.tight,
-                          children: [
-                            ArenaWizardStepper(
-                              steps: snapshot.steps,
-                              activeStep: 3,
-                              style: ArenaWizardStepperStyle.governance,
-                            ),
-                            const ArenaGovernanceGateHeader(),
-                            ArenaGovernanceStateBanner(state: actionState),
-                            _PrivacyCard(
-                              options: snapshot.privacyOptions,
-                              privacy: _privacy,
-                              onSelected: _setPrivacy,
-                              onCompare: _showGuidance,
-                            ),
-                            _ClarityScoreCard(result: result),
-                            _TitleField(
-                              title: _title,
-                              onChanged: (value) =>
-                                  setState(() => _title = value),
-                            ),
-                            _DomainGrid(
-                              domains: snapshot.domains,
-                              selectedId: _domainId,
-                              publicRoom: _privacy == 'public',
-                              onSelected: _selectDomain,
-                            ),
-                            _ChallengeTypeGrid(
-                              types: snapshot.challengeTypes,
-                              selectedId: _challengeTypeId,
-                              publicRoom: _privacy == 'public',
-                              onSelected: _selectChallengeType,
-                            ),
-                            _WinConditionCard(
-                              snapshot: snapshot,
-                              subject: _subject,
-                              action: _action,
-                              metric: _metric,
-                              winType: _winType,
-                              deadlineContext: _deadlineContext,
-                              customWinCondition: _customWinCondition,
-                              publicRoom: _privacy == 'public',
-                              onSubject: () => setState(
-                                () => _subject = snapshot.subjects.first,
-                              ),
-                              onAction: () => setState(
-                                () => _action = snapshot.actions.first,
-                              ),
-                              onMetric: () => setState(
-                                () => _metric = snapshot.metrics.first,
-                              ),
-                              onWinType: () => setState(
-                                () => _winType = snapshot.winTypes.first,
-                              ),
-                              onDeadlineContext: () => setState(
-                                () => _deadlineContext =
-                                    snapshot.deadlineContexts.first,
-                              ),
-                              onCustomWinChanged: (value) =>
-                                  setState(() => _customWinCondition = value),
-                            ),
-                            _DescriptionField(
-                              value: _description,
-                              onChanged: (value) =>
-                                  setState(() => _description = value),
-                            ),
-                            _ResolutionSourceField(
-                              publicRoom: _privacy == 'public',
-                              value: _resolutionSource,
-                              options: snapshot.resolutionSources,
-                              onTap: () => setState(
-                                () => _resolutionSource =
-                                    snapshot.resolutionSources.first,
-                              ),
-                            ),
-                            _TimingRulesCard(
-                              snapshot: snapshot,
-                              endDate: _endDate,
-                              tieRule: _tieRule,
-                              voidRule: _voidRule,
-                              resultDeadline: _resultDeadline,
-                              rematchEnabled: _rematchEnabled,
-                              saveAsMode: _saveAsMode,
-                              publicRoom: _privacy == 'public',
-                              onDate: (value) =>
-                                  setState(() => _endDate = value),
-                              onTieRule: () => setState(
-                                () => _tieRule = snapshot.tieRules.first,
-                              ),
-                              onVoidRule: () => setState(
-                                () => _voidRule = snapshot.voidRules.first,
-                              ),
-                              onResultDeadline: () => setState(
-                                () => _resultDeadline =
-                                    snapshot.resultDeadlines.first,
-                              ),
-                              onRematch: () => setState(
-                                () => _rematchEnabled = !_rematchEnabled,
-                              ),
-                              onSaveAsMode: () =>
-                                  setState(() => _saveAsMode = !_saveAsMode),
-                            ),
-                            _WarningStack(result: result),
-                            _SuggestedFallbackCard(
-                              suggestions: snapshot.suggestionActions,
-                              onTap: _applySuggestion,
-                            ),
-                            _EligibilityPanel(result: result),
-                            _GovernanceSummary(
-                              result: result,
-                              privacy: _privacy,
-                              resolutionSource: _resolutionSource,
-                            ),
-                            const _ModerationNote(),
-                          ],
-                        ),
-                        _GovernanceFooter(
-                          canContinue: actionState.canContinue,
-                          result: result,
-                          statusLabel: actionState.footerLabel,
-                          onBack: _close,
-                          onSave: _saveDraft,
-                          onContinue: _continue,
-                        ),
-                      ],
-                    ),
+          child: controllerAsync.when(
+            loading: () => const Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [Expanded(child: VitSkeletonList())],
+            ),
+            error: (error, stackTrace) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: VitErrorState(
+                    title: 'Không tải được Governance Gate',
+                    message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                    actionLabel: 'Thử lại',
+                    onAction: () =>
+                        ref.invalidate(arenaGovernanceControllerProvider),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              final actionState = controller.actionState(
+                canProceed: result.canProceed,
+                nextAction: result.nextAction,
+                statusLabel: _statusLabel,
+              );
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: ArenaGovernanceGatePage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                          footerPadding,
+                        ),
+                        child: Column(
+                          children: [
+                            VitPageContent(
+                              rhythm: VitPageRhythm.form,
+                              padding: VitContentPadding.compact,
+                              gap: VitContentGap.tight,
+                              children: [
+                                ArenaWizardStepper(
+                                  steps: snapshot.steps,
+                                  activeStep: 3,
+                                  style: ArenaWizardStepperStyle.governance,
+                                ),
+                                const ArenaGovernanceGateHeader(),
+                                ArenaGovernanceStateBanner(state: actionState),
+                                _PrivacyCard(
+                                  options: snapshot.privacyOptions,
+                                  privacy: _privacy,
+                                  onSelected: _setPrivacy,
+                                  onCompare: _showGuidance,
+                                ),
+                                _ClarityScoreCard(result: result),
+                                _TitleField(
+                                  title: _title,
+                                  onChanged: (value) =>
+                                      setState(() => _title = value),
+                                ),
+                                _DomainGrid(
+                                  domains: snapshot.domains,
+                                  selectedId: _domainId,
+                                  publicRoom: _privacy == 'public',
+                                  onSelected: _selectDomain,
+                                ),
+                                _ChallengeTypeGrid(
+                                  types: snapshot.challengeTypes,
+                                  selectedId: _challengeTypeId,
+                                  publicRoom: _privacy == 'public',
+                                  onSelected: _selectChallengeType,
+                                ),
+                                _WinConditionCard(
+                                  snapshot: snapshot,
+                                  subject: _subject,
+                                  action: _action,
+                                  metric: _metric,
+                                  winType: _winType,
+                                  deadlineContext: _deadlineContext,
+                                  customWinCondition: _customWinCondition,
+                                  publicRoom: _privacy == 'public',
+                                  onSubject: () => setState(
+                                    () => _subject = snapshot.subjects.first,
+                                  ),
+                                  onAction: () => setState(
+                                    () => _action = snapshot.actions.first,
+                                  ),
+                                  onMetric: () => setState(
+                                    () => _metric = snapshot.metrics.first,
+                                  ),
+                                  onWinType: () => setState(
+                                    () => _winType = snapshot.winTypes.first,
+                                  ),
+                                  onDeadlineContext: () => setState(
+                                    () => _deadlineContext =
+                                        snapshot.deadlineContexts.first,
+                                  ),
+                                  onCustomWinChanged: (value) => setState(
+                                    () => _customWinCondition = value,
+                                  ),
+                                ),
+                                _DescriptionField(
+                                  value: _description,
+                                  onChanged: (value) =>
+                                      setState(() => _description = value),
+                                ),
+                                _ResolutionSourceField(
+                                  publicRoom: _privacy == 'public',
+                                  value: _resolutionSource,
+                                  options: snapshot.resolutionSources,
+                                  onTap: () => setState(
+                                    () => _resolutionSource =
+                                        snapshot.resolutionSources.first,
+                                  ),
+                                ),
+                                _TimingRulesCard(
+                                  snapshot: snapshot,
+                                  endDate: _endDate,
+                                  tieRule: _tieRule,
+                                  voidRule: _voidRule,
+                                  resultDeadline: _resultDeadline,
+                                  rematchEnabled: _rematchEnabled,
+                                  saveAsMode: _saveAsMode,
+                                  publicRoom: _privacy == 'public',
+                                  onDate: (value) =>
+                                      setState(() => _endDate = value),
+                                  onTieRule: () => setState(
+                                    () => _tieRule = snapshot.tieRules.first,
+                                  ),
+                                  onVoidRule: () => setState(
+                                    () => _voidRule = snapshot.voidRules.first,
+                                  ),
+                                  onResultDeadline: () => setState(
+                                    () => _resultDeadline =
+                                        snapshot.resultDeadlines.first,
+                                  ),
+                                  onRematch: () => setState(
+                                    () => _rematchEnabled = !_rematchEnabled,
+                                  ),
+                                  onSaveAsMode: () => setState(
+                                    () => _saveAsMode = !_saveAsMode,
+                                  ),
+                                ),
+                                _WarningStack(result: result),
+                                _SuggestedFallbackCard(
+                                  suggestions: snapshot.suggestionActions,
+                                  onTap: _applySuggestion,
+                                ),
+                                _EligibilityPanel(result: result),
+                                _GovernanceSummary(
+                                  result: result,
+                                  privacy: _privacy,
+                                  resolutionSource: _resolutionSource,
+                                ),
+                                const _ModerationNote(),
+                              ],
+                            ),
+                            _GovernanceFooter(
+                              canContinue: actionState.canContinue,
+                              result: result,
+                              statusLabel: actionState.footerLabel,
+                              onBack: _close,
+                              onSave: _saveDraft,
+                              onContinue: _continue,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

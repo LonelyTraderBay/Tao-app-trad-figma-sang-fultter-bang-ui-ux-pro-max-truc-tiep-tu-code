@@ -2,7 +2,8 @@ part of '../repositories/mock_p2p_repository.dart';
 
 mixin _MockP2PRepositoryDisputesMethods on _MockP2PRepositoryBase {
   @override
-  P2PDisputeDetailSnapshot getDisputeDetail(String disputeId) {
+  Future<P2PDisputeDetailSnapshot> getDisputeDetail(String disputeId) async {
+    await _simulateNetwork();
     return P2PDisputeDetailSnapshot(
       endpoint: '/api/mobile/p2p/p2p-dispute-detail-$disputeId',
       actionDraft:
@@ -35,7 +36,10 @@ mixin _MockP2PRepositoryDisputesMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PDisputeEvidenceSnapshot getDisputeEvidence(String disputeId) {
+  Future<P2PDisputeEvidenceSnapshot> getDisputeEvidence(
+    String disputeId,
+  ) async {
+    await _simulateNetwork();
     return P2PDisputeEvidenceSnapshot(
       endpoint: '/api/mobile/p2p/p2p-dispute-evidence-$disputeId',
       actionDraft:
@@ -59,7 +63,10 @@ mixin _MockP2PRepositoryDisputesMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PDisputeResolutionSnapshot getDisputeResolution(String disputeId) {
+  Future<P2PDisputeResolutionSnapshot> getDisputeResolution(
+    String disputeId,
+  ) async {
+    await _simulateNetwork();
     return P2PDisputeResolutionSnapshot(
       endpoint: '/api/mobile/p2p/p2p-dispute-resolution-$disputeId',
       actionDraft:
@@ -86,7 +93,8 @@ mixin _MockP2PRepositoryDisputesMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PDisputeOpenSnapshot getDisputeOpen(String orderId) {
+  Future<P2PDisputeOpenSnapshot> getDisputeOpen(String orderId) async {
+    await _simulateNetwork();
     return P2PDisputeOpenSnapshot(
       endpoint: '/api/mobile/p2p/p2p-dispute-$orderId',
       actionDraft:
@@ -116,7 +124,8 @@ mixin _MockP2PRepositoryDisputesMethods on _MockP2PRepositoryBase {
   }
 
   @override
-  P2PDisputesSnapshot getDisputes() {
+  Future<P2PDisputesSnapshot> getDisputes() async {
+    await _simulateNetwork();
     return const P2PDisputesSnapshot(
       endpoint: '/api/mobile/p2p/p2p-disputes',
       actionDraft:

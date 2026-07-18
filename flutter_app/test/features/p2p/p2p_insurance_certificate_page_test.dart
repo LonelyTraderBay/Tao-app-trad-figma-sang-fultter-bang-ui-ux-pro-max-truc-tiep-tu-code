@@ -27,33 +27,38 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-239 mock repository exposes insurance certificate BE draft', () {
-    final snapshot = const MockP2PRepository().getInsuranceCertificate();
+  test(
+    'SC-239 mock repository exposes insurance certificate BE draft',
+    () async {
+      final snapshot = await const MockP2PRepository(
+        loadDelay: Duration.zero,
+      ).getInsuranceCertificate();
 
-    expect(snapshot.endpoint, '/api/mobile/p2p/p2p-insurance-certificate');
-    expect(
-      snapshot.actionDraft,
-      'POST /p2p/* workflow action where applicable',
-    );
-    expect(snapshot.certId, 'CERT-PRO-2026-78400');
-    expect(snapshot.holderName, 'Nguyễn Văn Minh');
-    expect(snapshot.tierName, 'Pro');
-    expect(snapshot.coveragePct, 85);
-    expect(snapshot.maxCoveragePerClaim, 100000000);
-    expect(snapshot.claimWindowDays, 7);
-    expect(snapshot.coveredCases, hasLength(4));
-    expect(snapshot.parentRoute, AppRoutePaths.p2pInsurance);
-    expect(snapshot.contractNotes, contains('P2P requires escrow'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        P2PScreenState.loading,
-        P2PScreenState.empty,
-        P2PScreenState.error,
-        P2PScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/p2p/p2p-insurance-certificate');
+      expect(
+        snapshot.actionDraft,
+        'POST /p2p/* workflow action where applicable',
+      );
+      expect(snapshot.certId, 'CERT-PRO-2026-78400');
+      expect(snapshot.holderName, 'Nguyễn Văn Minh');
+      expect(snapshot.tierName, 'Pro');
+      expect(snapshot.coveragePct, 85);
+      expect(snapshot.maxCoveragePerClaim, 100000000);
+      expect(snapshot.claimWindowDays, 7);
+      expect(snapshot.coveredCases, hasLength(4));
+      expect(snapshot.parentRoute, AppRoutePaths.p2pInsurance);
+      expect(snapshot.contractNotes, contains('P2P requires escrow'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          P2PScreenState.loading,
+          P2PScreenState.empty,
+          P2PScreenState.error,
+          P2PScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-239 renders certificate baseline in P2P shell', (
     tester,

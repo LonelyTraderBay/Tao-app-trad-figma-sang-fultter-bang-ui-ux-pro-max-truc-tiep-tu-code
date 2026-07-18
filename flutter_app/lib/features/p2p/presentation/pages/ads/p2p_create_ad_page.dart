@@ -97,17 +97,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pCreateAdProvider);
-    final formController = P2PCreateAdController(
-      state: P2PCreateAdViewState(snapshot: snapshot),
-    );
-    final draft = _draft();
-    final preview = formController.preview(draft);
-    final publishBlockers = [
-      ...formController.publishBlockers(draft),
-      if (_submitting) 'Đang đăng quảng cáo',
-    ];
-    final canPublish = preview.canPublish && !_submitting;
+    final snapshotAsync = ref.watch(p2pCreateAdProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -115,233 +105,271 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             : _p2pCreateNativeNavClearance + _p2pCreateNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitP2PFlowScaffold(
-      semanticLabel: 'Đăng quảng cáo P2P',
-      semanticIdentifier: 'SC-226',
-      title: 'Đăng quảng cáo P2P',
-      subtitle: 'Tạo mới · P2P',
-      onBack: () => context.go(AppRoutePaths.p2pMyAds),
-      contentKey: P2PCreateAdPage.contentKey,
-      shellRenderMode: mode,
-      bottomInset: scrollEndPadding,
-      rhythm: VitPageRhythm.form,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return snapshotAsync.when(
+      loading: () => VitP2PFlowScaffold(
+        semanticLabel: 'Đăng quảng cáo P2P',
+        semanticIdentifier: 'SC-226',
+        title: 'Đang tải…',
+        onBack: () => context.go(AppRoutePaths.p2pMyAds),
+        children: const [VitSkeletonList()],
+      ),
+      error: (error, stackTrace) => VitP2PFlowScaffold(
+        semanticLabel: 'Đăng quảng cáo P2P',
+        semanticIdentifier: 'SC-226',
+        title: 'Không tải được',
+        onBack: () => context.go(AppRoutePaths.p2pMyAds),
+        children: [
+          VitErrorState(
+            title: 'Không tải được',
+            message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(p2pCreateAdProvider),
+          ),
+        ],
+      ),
+      data: (snapshot) {
+        final formController = P2PCreateAdController(
+          state: P2PCreateAdViewState(snapshot: snapshot),
+        );
+        final draft = _draft();
+        final preview = formController.preview(draft);
+        final publishBlockers = [
+          ...formController.publishBlockers(draft),
+          if (_submitting) 'Đang đăng quảng cáo',
+        ];
+        final canPublish = preview.canPublish && !_submitting;
+        return VitP2PFlowScaffold(
+          semanticLabel: 'Đăng quảng cáo P2P',
+          semanticIdentifier: 'SC-226',
+          title: 'Đăng quảng cáo P2P',
+          subtitle: 'Tạo mới · P2P',
+          onBack: () => context.go(AppRoutePaths.p2pMyAds),
+          contentKey: P2PCreateAdPage.contentKey,
+          shellRenderMode: mode,
+          bottomInset: scrollEndPadding,
+          rhythm: VitPageRhythm.form,
           children: [
-            const Padding(
-              padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
-              child: VitSectionHeader(
-                title: 'Loại quảng cáo',
-                titleColor: AppColors.text2,
-                titleFontWeight: AppTextStyles.normal,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Padding(
+                  padding:
+                      P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
+                  child: VitSectionHeader(
+                    title: 'Loại quảng cáo',
+                    titleColor: AppColors.text2,
+                    titleFontWeight: AppTextStyles.normal,
+                  ),
+                ),
+                _TradeTypePicker(
+                  value: _adType,
+                  onChanged: (type) => setState(() => _adType = type),
+                ),
+              ],
             ),
-            _TradeTypePicker(
-              value: _adType,
-              onChanged: (type) => setState(() => _adType = type),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: _ChipGroup(
+                    label: 'Tài sản',
+                    values: snapshot.assets,
+                    selected: _asset,
+                    keyBuilder: P2PCreateAdPage.assetKey,
+                    onSelected: (value) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _asset = value);
+                    },
+                  ),
+                ),
+                const SizedBox(width: _p2pCreateColumnGap),
+                Expanded(
+                  child: _ChipGroup(
+                    label: 'Tiền tệ',
+                    values: snapshot.currencies,
+                    selected: _currency,
+                    keyBuilder: P2PCreateAdPage.currencyKey,
+                    onSelected: (value) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _currency = value);
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _ChipGroup(
-                label: 'Tài sản',
-                values: snapshot.assets,
-                selected: _asset,
-                keyBuilder: P2PCreateAdPage.assetKey,
-                onSelected: (value) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _asset = value);
-                },
-              ),
-            ),
-            const SizedBox(width: _p2pCreateColumnGap),
-            Expanded(
-              child: _ChipGroup(
-                label: 'Tiền tệ',
-                values: snapshot.currencies,
-                selected: _currency,
-                keyBuilder: P2PCreateAdPage.currencyKey,
-                onSelected: (value) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _currency = value);
-                },
-              ),
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Padding(
-              padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
-              child: VitSectionHeader(
-                title: 'Loại giá',
-                titleColor: AppColors.text2,
-                titleFontWeight: AppTextStyles.normal,
-              ),
-            ),
-            _PriceTypePicker(
-              value: _priceType,
-              onChanged: (value) {
-                HapticFeedback.selectionClick();
-                setState(() => _priceType = value);
-              },
-            ),
-            const SizedBox(height: _p2pCreateGroupGap),
-            if (_priceType == 'fixed')
-              _InputBlock(
-                label: 'Giá ($_currency/$_asset) *',
-                hint: 'Giá thị trường: ${preview.marketPriceLabel} $_currency',
-                child: VitInput(
-                  controller: _priceController,
-                  fieldKey: P2PCreateAdPage.priceFieldKey,
-                  hintText: preview.marketPriceLabel,
-                  keyboardType: TextInputType.number,
-                  suffix: Text(
-                    _currency,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Padding(
+                  padding:
+                      P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
+                  child: VitSectionHeader(
+                    title: 'Loại giá',
+                    titleColor: AppColors.text2,
+                    titleFontWeight: AppTextStyles.normal,
+                  ),
+                ),
+                _PriceTypePicker(
+                  value: _priceType,
+                  onChanged: (value) {
+                    HapticFeedback.selectionClick();
+                    setState(() => _priceType = value);
+                  },
+                ),
+                const SizedBox(height: _p2pCreateGroupGap),
+                if (_priceType == 'fixed')
+                  _InputBlock(
+                    label: 'Giá ($_currency/$_asset) *',
+                    hint:
+                        'Giá thị trường: ${preview.marketPriceLabel} $_currency',
+                    child: VitInput(
+                      controller: _priceController,
+                      fieldKey: P2PCreateAdPage.priceFieldKey,
+                      hintText: preview.marketPriceLabel,
+                      keyboardType: TextInputType.number,
+                      suffix: Text(
+                        _currency,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                      onChanged: (_) => setState(() {}),
+                    ),
+                  )
+                else
+                  P2PCreateAdFloatingPriceBlock(
+                    controller: _marginController,
+                    preview: preview,
+                    onChanged: () => setState(() {}),
+                  ),
+                if (preview.effectivePrice > 0) ...[
+                  const SizedBox(height: _p2pCreateFieldGap),
+                  Text(
+                    preview.priceDiffLabel,
+                    style: AppTextStyles.micro.copyWith(
+                      color: preview.priceDiffPercent >= 0
+                          ? AppColors.buy
+                          : AppColors.sell,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  onChanged: (_) => setState(() {}),
+                ],
+              ],
+            ),
+            _InputBlock(
+              label: 'Tổng $_asset giao dịch *',
+              child: VitInput(
+                controller: _totalController,
+                fieldKey: P2PCreateAdPage.totalFieldKey,
+                hintText: '0.00',
+                keyboardType: TextInputType.number,
+                suffix: Text(
+                  _asset,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-              )
-            else
-              P2PCreateAdFloatingPriceBlock(
-                controller: _marginController,
-                preview: preview,
-                onChanged: () => setState(() {}),
+                onChanged: (_) => setState(() {}),
               ),
-            if (preview.effectivePrice > 0) ...[
-              const SizedBox(height: _p2pCreateFieldGap),
-              Text(
-                preview.priceDiffLabel,
-                style: AppTextStyles.micro.copyWith(
-                  color: preview.priceDiffPercent >= 0
-                      ? AppColors.buy
-                      : AppColors.sell,
-                  fontWeight: AppTextStyles.bold,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: _InputBlock(
+                    label: 'Tối thiểu ($_currency) *',
+                    child: VitInput(
+                      controller: _minController,
+                      fieldKey: P2PCreateAdPage.minFieldKey,
+                      hintText: '500,000',
+                      keyboardType: TextInputType.number,
+                      onChanged: (_) => setState(() {}),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(width: _p2pCreateColumnGap),
+                Expanded(
+                  child: _InputBlock(
+                    label: 'Tối đa ($_currency) *',
+                    child: VitInput(
+                      controller: _maxController,
+                      fieldKey: P2PCreateAdPage.maxFieldKey,
+                      hintText: '50,000,000',
+                      keyboardType: TextInputType.number,
+                      onChanged: (_) => setState(() {}),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            P2PCreateAdPaymentsBlock(
+              options: snapshot.paymentOptions,
+              selected: _selectedPayments,
+              onToggle: _togglePayment,
+            ),
+            P2PCreateAdPaymentWindowBlock(
+              values: snapshot.paymentWindows,
+              selected: _paymentWindow,
+              onSelected: (value) {
+                HapticFeedback.selectionClick();
+                setState(() => _paymentWindow = value);
+              },
+            ),
+            _ChipGroup(
+              label: 'Giờ giao dịch',
+              values: snapshot.tradingHours,
+              selected: _tradingHours,
+              keyBuilder: (value) => Key('sc226_hours_$value'),
+              onSelected: (value) {
+                HapticFeedback.selectionClick();
+                setState(() => _tradingHours = value);
+              },
+            ),
+            P2PCreateAdRequirementCard(
+              requireKyc: _requireKyc,
+              requiredKycLevel: _requiredKycLevel,
+              minTradesController: _minTradesController,
+              minDaysController: _minDaysController,
+              onKycChanged: (value) {
+                HapticFeedback.selectionClick();
+                setState(() => _requireKyc = value);
+              },
+              onLevelChanged: (value) {
+                HapticFeedback.selectionClick();
+                setState(() => _requiredKycLevel = value);
+              },
+            ),
+            P2PCreateAdMultilineBlock(
+              label: 'Điều kiện giao dịch (tuỳ chọn)',
+              controller: _termsController,
+              hintText: 'VD: Chỉ giao dịch với tài khoản đã xác minh KYC...',
+            ),
+            P2PCreateAdMultilineBlock(
+              label: 'Tin nhắn tự động (tuỳ chọn)',
+              controller: _autoReplyController,
+              hintText:
+                  'VD: Cảm ơn bạn! Vui lòng chuyển khoản theo thông tin bên dưới.',
+              hint: 'Gửi tự động khi đối tác tạo đơn.',
+            ),
+            P2PCreateAdWarningCard(text: snapshot.warningNote),
+            P2PCreateAdLivePreviewCard(
+              expanded: _previewExpanded,
+              onTap: () => setState(() => _previewExpanded = !_previewExpanded),
+              preview: preview,
+            ),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'P2P ad publish review',
+              message:
+                  'Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.',
+              contractId: 'p2p-create-ad-review',
+            ),
+            _buildPublishActionSection(
+              context: context,
+              preview: preview,
+              blockers: publishBlockers,
+              canPublish: canPublish,
+            ),
           ],
-        ),
-        _InputBlock(
-          label: 'Tổng $_asset giao dịch *',
-          child: VitInput(
-            controller: _totalController,
-            fieldKey: P2PCreateAdPage.totalFieldKey,
-            hintText: '0.00',
-            keyboardType: TextInputType.number,
-            suffix: Text(
-              _asset,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-            onChanged: (_) => setState(() {}),
-          ),
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: _InputBlock(
-                label: 'Tối thiểu ($_currency) *',
-                child: VitInput(
-                  controller: _minController,
-                  fieldKey: P2PCreateAdPage.minFieldKey,
-                  hintText: '500,000',
-                  keyboardType: TextInputType.number,
-                  onChanged: (_) => setState(() {}),
-                ),
-              ),
-            ),
-            const SizedBox(width: _p2pCreateColumnGap),
-            Expanded(
-              child: _InputBlock(
-                label: 'Tối đa ($_currency) *',
-                child: VitInput(
-                  controller: _maxController,
-                  fieldKey: P2PCreateAdPage.maxFieldKey,
-                  hintText: '50,000,000',
-                  keyboardType: TextInputType.number,
-                  onChanged: (_) => setState(() {}),
-                ),
-              ),
-            ),
-          ],
-        ),
-        P2PCreateAdPaymentsBlock(
-          options: snapshot.paymentOptions,
-          selected: _selectedPayments,
-          onToggle: _togglePayment,
-        ),
-        P2PCreateAdPaymentWindowBlock(
-          values: snapshot.paymentWindows,
-          selected: _paymentWindow,
-          onSelected: (value) {
-            HapticFeedback.selectionClick();
-            setState(() => _paymentWindow = value);
-          },
-        ),
-        _ChipGroup(
-          label: 'Giờ giao dịch',
-          values: snapshot.tradingHours,
-          selected: _tradingHours,
-          keyBuilder: (value) => Key('sc226_hours_$value'),
-          onSelected: (value) {
-            HapticFeedback.selectionClick();
-            setState(() => _tradingHours = value);
-          },
-        ),
-        P2PCreateAdRequirementCard(
-          requireKyc: _requireKyc,
-          requiredKycLevel: _requiredKycLevel,
-          minTradesController: _minTradesController,
-          minDaysController: _minDaysController,
-          onKycChanged: (value) {
-            HapticFeedback.selectionClick();
-            setState(() => _requireKyc = value);
-          },
-          onLevelChanged: (value) {
-            HapticFeedback.selectionClick();
-            setState(() => _requiredKycLevel = value);
-          },
-        ),
-        P2PCreateAdMultilineBlock(
-          label: 'Điều kiện giao dịch (tuỳ chọn)',
-          controller: _termsController,
-          hintText: 'VD: Chỉ giao dịch với tài khoản đã xác minh KYC...',
-        ),
-        P2PCreateAdMultilineBlock(
-          label: 'Tin nhắn tự động (tuỳ chọn)',
-          controller: _autoReplyController,
-          hintText:
-              'VD: Cảm ơn bạn! Vui lòng chuyển khoản theo thông tin bên dưới.',
-          hint: 'Gửi tự động khi đối tác tạo đơn.',
-        ),
-        P2PCreateAdWarningCard(text: snapshot.warningNote),
-        P2PCreateAdLivePreviewCard(
-          expanded: _previewExpanded,
-          onTap: () => setState(() => _previewExpanded = !_previewExpanded),
-          preview: preview,
-        ),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'P2P ad publish review',
-          message:
-              'Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.',
-          contractId: 'p2p-create-ad-review',
-        ),
-        _buildPublishActionSection(
-          context: context,
-          preview: preview,
-          blockers: publishBlockers,
-          canPublish: canPublish,
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -398,8 +426,12 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
 
   void _togglePayment(String payment) {
     HapticFeedback.selectionClick();
+    // GD4 bẫy 15: repo trong event handler — đọc lười qua `.value` (đã có
+    // sẵn vì nút này chỉ render trong nhánh data:).
+    final snapshot = ref.read(p2pCreateAdProvider).value;
+    if (snapshot == null) return;
     final formController = P2PCreateAdController(
-      state: P2PCreateAdViewState(snapshot: ref.read(p2pCreateAdProvider)),
+      state: P2PCreateAdViewState(snapshot: snapshot),
     );
     final nextPayments = formController.toggledPayments(
       _selectedPayments,

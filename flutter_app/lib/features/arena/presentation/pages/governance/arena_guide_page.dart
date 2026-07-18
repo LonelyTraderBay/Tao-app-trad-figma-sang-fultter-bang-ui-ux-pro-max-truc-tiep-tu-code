@@ -70,9 +70,7 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaGuide();
+    final snapshotAsync = ref.watch(arenaGuideSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final footerPadding = arenaFooterPadding(
       context,
@@ -115,7 +113,19 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
-                      children: _tabChildren(context, snapshot),
+                      children: snapshotAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được Hướng dẫn Arena',
+                            message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(arenaGuideSnapshotProvider),
+                          ),
+                        ],
+                        data: (snapshot) => _tabChildren(context, snapshot),
+                      ),
                     ),
                   ),
                 ),

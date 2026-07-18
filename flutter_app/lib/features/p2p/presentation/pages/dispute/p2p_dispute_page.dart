@@ -63,7 +63,7 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(p2pDisputeOpenProvider(widget.orderId));
+    final snapshotAsync = ref.watch(p2pDisputeOpenProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -86,88 +86,98 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pOrder(widget.orderId)),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PDisputePage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: P2PSpacingTokens.p2pDisputeScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.form,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        _DisputeHero(snapshot: snapshot),
-                        const VitSectionHeader(
-                          title: 'Lý do tranh chấp',
-                          bottomGap: AppSpacing.pageRhythmFormInnerGap,
-                        ),
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            final tileWidth =
-                                (constraints.maxWidth - AppSpacing.x2) / 2;
-                            return Wrap(
-                              spacing: AppSpacing.x2,
-                              runSpacing: AppSpacing.x2,
-                              children: [
-                                for (final reason in snapshot.reasons)
-                                  SizedBox(
-                                    width: tileWidth,
-                                    child: _ReasonTile(
-                                      key: P2PDisputePage.reasonKey(reason),
-                                      reason: reason,
-                                      selected: reason == _selectedReason,
-                                      onTap: () => _selectReason(reason),
+          child: snapshotAsync.when(
+            loading: () => const VitSkeletonList(),
+            error: (error, stackTrace) => VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(p2pDisputeOpenProvider(widget.orderId)),
+            ),
+            data: (snapshot) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: P2PDisputePage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      padding: P2PSpacingTokens.p2pDisputeScrollPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.form,
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _DisputeHero(snapshot: snapshot),
+                          const VitSectionHeader(
+                            title: 'Lý do tranh chấp',
+                            bottomGap: AppSpacing.pageRhythmFormInnerGap,
+                          ),
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              final tileWidth =
+                                  (constraints.maxWidth - AppSpacing.x2) / 2;
+                              return Wrap(
+                                spacing: AppSpacing.x2,
+                                runSpacing: AppSpacing.x2,
+                                children: [
+                                  for (final reason in snapshot.reasons)
+                                    SizedBox(
+                                      width: tileWidth,
+                                      child: _ReasonTile(
+                                        key: P2PDisputePage.reasonKey(reason),
+                                        reason: reason,
+                                        selected: reason == _selectedReason,
+                                        onTap: () => _selectReason(reason),
+                                      ),
                                     ),
-                                  ),
-                              ],
-                            );
-                          },
-                        ),
-                        VitInput(
-                          controller: _descriptionController,
-                          fieldKey: P2PDisputePage.descriptionKey,
-                          label: snapshot.descriptionLabel,
-                          hintText: snapshot.descriptionPlaceholder,
-                          textCapitalization: TextCapitalization.sentences,
-                          onChanged: (_) => setState(() {}),
-                        ),
-                        _EvidenceUploadBox(
-                          title: snapshot.uploadTitle,
-                          subtitle: snapshot.uploadSubtitle,
-                          uploaded: _evidenceUploaded,
-                          onTap: _markEvidenceUploaded,
-                        ),
-                        VitCtaButton(
-                          key: P2PDisputePage.submitKey,
-                          onPressed: _canSubmit
-                              ? () => _submit(snapshot.targetDisputeId)
-                              : null,
-                          variant: VitCtaButtonVariant.danger,
-                          child: const Text('Gửi tranh chấp'),
-                        ),
-                        const VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Dispute submission review',
-                          message:
-                              'Reason, description, uploaded evidence, escrow impact, case target and next dispute step are reviewed before submission.',
-                          contractId: 'p2p-dispute-open-review',
-                        ),
-                      ],
+                                ],
+                              );
+                            },
+                          ),
+                          VitInput(
+                            controller: _descriptionController,
+                            fieldKey: P2PDisputePage.descriptionKey,
+                            label: snapshot.descriptionLabel,
+                            hintText: snapshot.descriptionPlaceholder,
+                            textCapitalization: TextCapitalization.sentences,
+                            onChanged: (_) => setState(() {}),
+                          ),
+                          _EvidenceUploadBox(
+                            title: snapshot.uploadTitle,
+                            subtitle: snapshot.uploadSubtitle,
+                            uploaded: _evidenceUploaded,
+                            onTap: _markEvidenceUploaded,
+                          ),
+                          VitCtaButton(
+                            key: P2PDisputePage.submitKey,
+                            onPressed: _canSubmit
+                                ? () => _submit(snapshot.targetDisputeId)
+                                : null,
+                            variant: VitCtaButtonVariant.danger,
+                            child: const Text('Gửi tranh chấp'),
+                          ),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Dispute submission review',
+                            message:
+                                'Reason, description, uploaded evidence, escrow impact, case target and next dispute step are reviewed before submission.',
+                            contractId: 'p2p-dispute-open-review',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
