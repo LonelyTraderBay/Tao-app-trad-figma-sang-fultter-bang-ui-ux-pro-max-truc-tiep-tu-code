@@ -13,6 +13,7 @@ part '../fixtures/trade_core_spot_repository_methods.dart';
 part '../fixtures/trade_core_spot_repository_fixtures.dart';
 part '../fixtures/trade_futures_leverage_repository_methods.dart';
 part '../fixtures/trade_futures_leverage_repository_fixtures.dart';
+part '../fixtures/trade_realtime_repository_methods.dart';
 
 mixin _MockTradeTerminalRepositoryBase
     implements SpotTradeRepository, TradeFuturesMarginRepository {
@@ -22,6 +23,13 @@ mixin _MockTradeTerminalRepositoryBase
 
   /// Khi bật, các đường ghi/đọc async ném [StateError] để test nhánh lỗi.
   bool get simulateError;
+
+  /// GD4 Cụm F7 (REALTIME): khoảng cách giữa 2 tick của `watchCandles`
+  /// (`Stream.periodic`) — xem dartdoc đầy đủ ở
+  /// `_MockMarketRepositoryBase.tickInterval` (mặc định 30s, không phải
+  /// 800ms, để an toàn với test hiện có gọi `pumpAndSettle()` nhiều lần
+  /// trong cùng một test).
+  Duration get tickInterval;
 
   /// GD4 Cụm F3: helper dùng chung cho các method đọc async hoá (advanced
   /// tools + advanced trading demo/analytics) — 3 đường ghi tài chính có sẵn
@@ -78,10 +86,12 @@ final class MockTradeTerminalRepository
         _MockTradeTerminalRepositoryAdvancedToolsMethods,
         _MockTradeTerminalRepositoryConversionsUtilitiesMethods,
         _MockTradeTerminalRepositoryCoreSpotMethods,
-        _MockTradeTerminalRepositoryFuturesLeverageMethods {
+        _MockTradeTerminalRepositoryFuturesLeverageMethods,
+        _MockTradeTerminalRepositoryRealtimeMethods {
   const MockTradeTerminalRepository({
     this.loadDelay = const Duration(milliseconds: 300),
     this.simulateError = false,
+    this.tickInterval = const Duration(seconds: 30),
   });
 
   @override
@@ -89,4 +99,7 @@ final class MockTradeTerminalRepository
 
   @override
   final bool simulateError;
+
+  @override
+  final Duration tickInterval;
 }

@@ -86,6 +86,12 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
     final snapshotAsync = ref.watch(
       tradeAdvancedChartSnapshotProvider(widget.pairId),
     );
+    // GD4 Cụm F7 (REALTIME): lớp cập-nhật-đè — chỉ dùng khi tick đầu tiên
+    // đã tới; nếu chưa, `data:` bên dưới vẫn hiển thị snapshot Future như
+    // cũ (mục 3 GD4-Async-Playbook).
+    final liveSnapshot = ref
+        .watch(tradeCandleStreamProvider(widget.pairId))
+        .value;
     final indicators = ref
         .watch(advancedChartStateControllerProvider(widget.pairId))
         .indicators;
@@ -113,7 +119,11 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                   ),
                 ),
                 data: (snapshot) {
-                  final pair = snapshot.pair;
+                  // GD4 Cụm F7 (REALTIME): stream đè lên snapshot Future
+                  // khi đã có tick (nến đang hình thành) — pair/ohlcv/
+                  // timeframes/candles đều đọc qua `effective`.
+                  final effective = liveSnapshot ?? snapshot;
+                  final pair = effective.pair;
                   final enabledIndicators = indicators
                       .where((indicator) => indicator.enabled)
                       .toList(growable: false);
@@ -142,9 +152,9 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                             changePct: pair.changePct,
                           ),
                           ...productTabs,
-                          _OhlcvBar(ohlcv: snapshot.ohlcv),
+                          _OhlcvBar(ohlcv: effective.ohlcv),
                           _ChartToolbar(
-                            timeframes: snapshot.timeframes,
+                            timeframes: effective.timeframes,
                             activeTimeframe: _timeframe,
                             activeChartType: _chartType,
                             activeIndicatorCount: enabledIndicators.length,
@@ -156,7 +166,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                                 setState(() => _showIndicators = true),
                           ),
                           _ChartArea(
-                            candles: _expandedCandlesFor(snapshot.candles),
+                            candles: _expandedCandlesFor(effective.candles),
                             indicators: indicators,
                             chartType: _chartType,
                           ),

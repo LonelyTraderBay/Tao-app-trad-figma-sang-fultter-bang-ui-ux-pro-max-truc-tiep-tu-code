@@ -185,4 +185,12 @@ final class MockTradeRepository implements TradeRepository {
   Future<TradeFuturesLeverageReceipt> submitFuturesLeverage(
     TradeFuturesLeverageRequest request,
   ) => _terminal.submitFuturesLeverage(request);
+
+  // GD4 Cụm F7 (REALTIME): trade_terminal thêm watchCandles (Stream<T>) —
+  // delegate không đổi logic, cùng khuôn với mọi method Future ở trên.
+  @override
+  Stream<TradeAdvancedChartSnapshot> watchCandles(
+    String pairId, {
+    String timeframe = '1h',
+  }) => _terminal.watchCandles(pairId, timeframe: timeframe);
 }

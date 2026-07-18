@@ -73,4 +73,18 @@ abstract interface class SpotTradeRepository {
   Future<TradeExportResult> createTradeExport(TradeExportRequest request);
   Future<TradeConvertQuote> previewConvert(TradeConvertRequest request);
   Future<TradeConvertReceipt> submitConvert(TradeConvertRequest request);
+
+  /// GD4 Cụm F7 (REALTIME): nến realtime cho Biểu đồ giao dịch nâng cao —
+  /// additive, không đổi method Future nào ở trên. Mock phát tick giả lập
+  /// DETERMINISTIC (không Random/DateTime.now) qua `Stream.periodic`, cập
+  /// nhật nến CUỐI CÙNG của [getAdvancedChart] mỗi tick (mô phỏng nến đang
+  /// hình thành) — [timeframe] chỉ đổi biên độ dao động mô phỏng, không đổi
+  /// tập nến trả về (khớp `getAdvancedChart` vốn cũng không nhận
+  /// timeframe: bộ lọc khung thời gian ở UI chỉ là cosmetic phía client).
+  /// UI dùng stream này làm lớp "cập-nhật-đè" trên snapshot Future đã có
+  /// (xem `app/providers/trade_terminal_controller_providers.dart`).
+  Stream<TradeAdvancedChartSnapshot> watchCandles(
+    String pairId, {
+    String timeframe = '1h',
+  });
 }

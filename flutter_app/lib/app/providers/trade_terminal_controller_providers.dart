@@ -68,6 +68,19 @@ final tradeAdvancedChartSnapshotProvider = FutureProvider.autoDispose
           .getAdvancedChart(pairId: pairId),
     );
 
+/// GD4 Cụm F7 (REALTIME): lớp "cập-nhật-đè" trên
+/// [tradeAdvancedChartSnapshotProvider] — xem dartdoc
+/// [SpotTradeRepository.watchCandles]. Family theo `pairId` (khớp
+/// snapshot Future ở trên; timeframe của mock chỉ đổi biên độ mô phỏng,
+/// không đổi tập nến — không cần vào key). `.autoDispose` vì
+/// `watchCandles()` là `Stream.periodic` — timer sống mãi nếu không giải
+/// phóng khi rời trang Biểu đồ giao dịch nâng cao.
+final tradeCandleStreamProvider = StreamProvider.autoDispose
+    .family<TradeAdvancedChartSnapshot, String>(
+      (ref, pairId) =>
+          ref.watch(tradeReadModelControllerProvider).watchCandles(pairId),
+    );
+
 final tradeAdvancedTradingDemoSnapshotProvider =
     FutureProvider<TradeAdvancedTradingDemoSnapshot>(
       (ref) =>

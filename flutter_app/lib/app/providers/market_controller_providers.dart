@@ -23,6 +23,40 @@ final marketListSnapshotProvider = FutureProvider<MarketListSnapshot>(
   (ref) => ref.watch(marketControllerProvider).getMarketList(),
 );
 
+// GD4 Cụm F7 (REALTIME): lớp "cập-nhật-đè" trên `marketListSnapshotProvider`
+// — `getMarketList()` (Future) vẫn cấp phần tĩnh (filters/alerts/watchlist/
+// chartSeries) và trạng thái loading/error/empty cho trang; 2 provider dưới
+// đây chỉ đẩy PHẦN GIÁ SỐNG, không thay thế snapshot Future ở trên.
+
+/// Ticker giá realtime — xem dartdoc [MarketRepository.watchTicker] cho lý
+/// do chọn `Stream<List<MarketPair>>` (không phải `MarketListSnapshot`
+/// nặng hơn). `.autoDispose`: `watchTicker()` là `Stream.periodic` — timer
+/// sống mãi nếu không giải phóng khi không còn trang nào theo dõi.
+final marketTickerStreamProvider = StreamProvider.autoDispose<List<MarketPair>>(
+  (ref) => ref.watch(marketControllerProvider).watchTicker(),
+);
+
+/// Giá sống của MỘT pair, tách khỏi [marketTickerStreamProvider] qua
+/// `.select()` — mỗi hàng trong danh sách/thẻ chỉ watch provider này với
+/// `id` của chính nó nên chỉ hàng có giá đổi mới rebuild (không rebuild cả
+/// danh sách mỗi tick). Trả `null` khi tick đầu tiên chưa tới hoặc pair
+/// không có trong ticker — call site tự fallback về giá tĩnh
+/// (`snapshot`/`pair.price`). `.autoDispose` để không giữ
+/// [marketTickerStreamProvider] sống khi hàng cuối cùng rời màn hình.
+final marketPairLivePriceProvider = Provider.autoDispose
+    .family<double?, String>((ref, pairId) {
+      return ref.watch(
+        marketTickerStreamProvider.select((async) {
+          final pairs = async.value;
+          if (pairs == null) return null;
+          for (final pair in pairs) {
+            if (pair.id == pairId) return pair.price;
+          }
+          return null;
+        }),
+      );
+    });
+
 final marketOverviewSnapshotProvider = FutureProvider<MarketOverviewSnapshot>(
   (ref) => ref.watch(marketControllerProvider).getMarketOverview(),
 );
@@ -79,6 +113,17 @@ final marketDepthSnapshotProvider =
       (ref, query) => ref
           .watch(marketControllerProvider)
           .getMarketDepth(pairId: query.pairId, levels: query.levels),
+    );
+
+/// GD4 Cụm F7 (REALTIME): lớp "cập-nhật-đè" trên [marketDepthSnapshotProvider]
+/// — cùng family key ([MarketDepthQuery]) để trang chọn đúng số levels đang
+/// xem. `.autoDispose` vì `watchDepth()` là `Stream.periodic` — timer sống
+/// mãi nếu không giải phóng khi rời trang Độ sâu thị trường.
+final marketDepthStreamProvider = StreamProvider.autoDispose
+    .family<MarketDepthSnapshot, MarketDepthQuery>(
+      (ref, query) => ref
+          .watch(marketControllerProvider)
+          .watchDepth(query.pairId, levels: query.levels),
     );
 
 final marketSocialSentimentSnapshotProvider =

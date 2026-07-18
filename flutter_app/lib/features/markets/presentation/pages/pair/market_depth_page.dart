@@ -48,9 +48,13 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
 
   @override
   Widget build(BuildContext context) {
-    final depthAsync = ref.watch(
-      marketDepthSnapshotProvider((pairId: widget.pairId, levels: _levels)),
-    );
+    final depthQuery = (pairId: widget.pairId, levels: _levels);
+    final depthAsync = ref.watch(marketDepthSnapshotProvider(depthQuery));
+    // GD4 Cụm F7 (REALTIME): lớp cập-nhật-đè — chỉ dùng khi tick đầu tiên
+    // đã tới (`.value` khác null); nếu chưa, `data:` bên dưới vẫn hiển thị
+    // snapshot Future như cũ (mục 3 GD4-Async-Playbook: "seed từ Future
+    // snapshot, stream chỉ đè lên").
+    final liveDepth = ref.watch(marketDepthStreamProvider(depthQuery)).value;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -90,42 +94,50 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
             title: 'Không tải được độ sâu thị trường',
             message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
             actionLabel: 'Thử lại',
-            onAction: () => ref.invalidate(
-              marketDepthSnapshotProvider((
-                pairId: widget.pairId,
+            onAction: () =>
+                ref.invalidate(marketDepthSnapshotProvider(depthQuery)),
+          ),
+        ],
+      ),
+      data: (snapshot) {
+        // GD4 Cụm F7 (REALTIME): stream đè lên snapshot Future khi đã có
+        // tick — chỉ áp dụng nếu số levels khớp lựa chọn hiện tại (stream
+        // family cùng key `depthQuery` nên luôn khớp, giữ guard tường minh
+        // để không đè nhầm dữ liệu levels cũ trong khung hình chuyển tiếp).
+        final effective =
+            (liveDepth != null &&
+                liveDepth.depth.bids.length == snapshot.depth.bids.length)
+            ? liveDepth
+            : snapshot;
+        return _MarketDepthScaffold(
+          title: 'Độ sâu ${effective.pair.baseAsset}',
+          onBack: () =>
+              goBackOrFallback(context, fallbackPath: resolvedBackPath),
+          tab: _tab,
+          onTabChanged: (value) => setState(() => _tab = value),
+          scrollEndClearance: scrollEndClearance,
+          children: [
+            MarketDepthPairSummary(pair: effective.pair),
+            if (_tab == 'depth')
+              MarketDepthChartView(
+                snapshot: effective,
                 levels: _levels,
-              )),
+                onLevelSelected: (level) => setState(() => _levels = level),
+              )
+            else if (_tab == 'orderBook')
+              MarketDepthOrderBookView(snapshot: effective)
+            else
+              MarketDepthWhaleAlertsView(snapshot: effective),
+            const VitBanner(
+              variant: VitBannerVariant.info,
+              icon: Icons.info_outline_rounded,
+              message: 'Dữ liệu depth chỉ mang tính tham khảo',
+              detail:
+                  'Không phải tín hiệu giao dịch. Giá và sổ lệnh có thể trễ so với thị trường thực.',
             ),
-          ),
-        ],
-      ),
-      data: (snapshot) => _MarketDepthScaffold(
-        title: 'Độ sâu ${snapshot.pair.baseAsset}',
-        onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
-        tab: _tab,
-        onTabChanged: (value) => setState(() => _tab = value),
-        scrollEndClearance: scrollEndClearance,
-        children: [
-          MarketDepthPairSummary(pair: snapshot.pair),
-          if (_tab == 'depth')
-            MarketDepthChartView(
-              snapshot: snapshot,
-              levels: _levels,
-              onLevelSelected: (level) => setState(() => _levels = level),
-            )
-          else if (_tab == 'orderBook')
-            MarketDepthOrderBookView(snapshot: snapshot)
-          else
-            MarketDepthWhaleAlertsView(snapshot: snapshot),
-          const VitBanner(
-            variant: VitBannerVariant.info,
-            icon: Icons.info_outline_rounded,
-            message: 'Dữ liệu depth chỉ mang tính tham khảo',
-            detail:
-                'Không phải tín hiệu giao dịch. Giá và sổ lệnh có thể trễ so với thị trường thực.',
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }
