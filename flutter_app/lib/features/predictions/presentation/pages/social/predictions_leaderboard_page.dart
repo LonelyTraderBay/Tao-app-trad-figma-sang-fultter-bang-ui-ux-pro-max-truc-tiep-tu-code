@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -155,20 +157,22 @@ class _PredictionsLeaderboardPageState
   }
 
   void _showPnlInfo(BuildContext context) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) => Padding(
-        padding: AppSpacing.cardPaddingCompact,
-        child: Text(
-          'P/L (Profit/Loss) shows how much a trader has gained or lost. '
-          'A positive P/L means profit, negative means loss.',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            height: _boardLineTight,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) => Padding(
+          padding: AppSpacing.cardPaddingCompact,
+          child: Text(
+            'P/L (Profit/Loss) shows how much a trader has gained or lost. '
+            'A positive P/L means profit, negative means loss.',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              height: _boardLineTight,
+            ),
           ),
         ),
       ),

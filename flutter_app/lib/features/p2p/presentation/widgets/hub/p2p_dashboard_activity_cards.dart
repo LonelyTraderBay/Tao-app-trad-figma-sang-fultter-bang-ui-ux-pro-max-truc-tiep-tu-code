@@ -128,7 +128,7 @@ class _TopMerchantsCard extends StatelessWidget {
               rank: index + 1,
               merchant: snapshot.topMerchants[index],
               onTap: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 context.go(
                   AppRoutePaths.p2pMerchant(snapshot.topMerchants[index].id),
                 );
@@ -169,7 +169,7 @@ class _RecentActivityCard extends StatelessWidget {
                 key: P2PDashboardPage.myOrdersKey,
                 label: 'Xem tất cả',
                 onTap: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   context.go(snapshot.myOrdersRoute);
                 },
               ),
@@ -233,7 +233,7 @@ class _QuickActionTile extends StatelessWidget {
       background: const ColoredBox(color: AppColors.surface),
       padding: P2PSpacingTokens.p2pDashboardQuickActionPadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(action.route);
       },
       clip: true,

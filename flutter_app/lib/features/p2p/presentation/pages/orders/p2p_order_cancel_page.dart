@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -137,7 +139,7 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
   }
 
   void _setReason(String reason) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _cancelReason = reason);
   }
 
@@ -146,7 +148,7 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
     P2POrderCancelDraft order,
   ) async {
     if (_cancelReason.isEmpty || _isSubmitting) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _isSubmitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 360));
     if (!context.mounted) return;
@@ -154,7 +156,7 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     goBackOrFallback(
       context,
       fallbackPath: AppRoutePaths.p2pOrder(widget.orderId),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -103,7 +105,7 @@ class StakingProposalsPage extends ConsumerWidget {
                           VitCtaButton(
                             key: StakingProposalsPage.createKey,
                             onPressed: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Tạo đề xuất sẽ sớm ra mắt'),

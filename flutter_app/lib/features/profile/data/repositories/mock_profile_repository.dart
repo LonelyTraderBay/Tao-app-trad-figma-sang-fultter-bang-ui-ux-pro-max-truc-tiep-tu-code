@@ -15,10 +15,24 @@ part 'mock_profile_repository_vip_fixtures.dart';
 const _profileSecurityReviewContractId = 'profile_security_review';
 
 final class MockProfileRepository implements ProfileRepository {
-  const MockProfileRepository();
+  const MockProfileRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('profile_mock_fetch_failed');
+  }
 
   @override
-  ProfileSnapshot getProfile() {
+  Future<ProfileSnapshot> getProfile() async {
+    await _simulateNetwork();
     return const ProfileSnapshot(
       user: _profileUser,
       vip: _profileVip,
@@ -38,7 +52,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileEditSnapshot getEditProfile() {
+  Future<ProfileEditSnapshot> getEditProfile() async {
+    await _simulateNetwork();
     return const ProfileEditSnapshot(
       user: _profileUser,
       endpoint: '/api/mobile/profile/profile-edit',
@@ -55,7 +70,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileSecuritySnapshot getSecurity() {
+  Future<ProfileSecuritySnapshot> getSecurity() async {
+    await _simulateNetwork();
     return ProfileSecuritySnapshot(
       score: 3,
       scoreLabel: 'Cao',
@@ -84,7 +100,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileKycSnapshot getKyc() {
+  Future<ProfileKycSnapshot> getKyc() async {
+    await _simulateNetwork();
     return const ProfileKycSnapshot(
       currentLevel: 2,
       statusTitle: 'KYC C\u1EA5p 2 \u2014 \u0110\u00E3 x\u00E1c minh',
@@ -105,7 +122,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileSettingsSnapshot getSettings() {
+  Future<ProfileSettingsSnapshot> getSettings() async {
+    await _simulateNetwork();
     return const ProfileSettingsSnapshot(
       currencyOptions: ['USD', 'VND', 'EUR', 'BTC'],
       selectedCurrency: 'USD',
@@ -128,7 +146,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileActivitySnapshot getActivity() {
+  Future<ProfileActivitySnapshot> getActivity() async {
+    await _simulateNetwork();
     return const ProfileActivitySnapshot(
       filters: _activityFilters,
       logs: _activityLogs,
@@ -144,7 +163,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileApiKeyCreateSnapshot getApiKeyCreate() {
+  Future<ProfileApiKeyCreateSnapshot> getApiKeyCreate() async {
+    await _simulateNetwork();
     return const ProfileApiKeyCreateSnapshot(
       permissions: _apiCreatePermissions,
       expiryOptions: _apiCreateExpiryOptions,
@@ -163,7 +183,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileApiManagementSnapshot getApiManagement() {
+  Future<ProfileApiManagementSnapshot> getApiManagement() async {
+    await _simulateNetwork();
     return const ProfileApiManagementSnapshot(
       keys: _apiManagementKeys,
       endpoint: '/api/mobile/profile/profile-api',
@@ -181,7 +202,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileVipSnapshot getVip() {
+  Future<ProfileVipSnapshot> getVip() async {
+    await _simulateNetwork();
     return const ProfileVipSnapshot(
       currentLevel: 1,
       monthlyVolume: 12450,
@@ -201,7 +223,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileDeviceManagementSnapshot getDeviceManagement() {
+  Future<ProfileDeviceManagementSnapshot> getDeviceManagement() async {
+    await _simulateNetwork();
     return const ProfileDeviceManagementSnapshot(
       devices: _managedDevices,
       endpoint: '/api/mobile/profile/profile-devices',
@@ -216,7 +239,8 @@ final class MockProfileRepository implements ProfileRepository {
   }
 
   @override
-  ProfileSubAccountsSnapshot getSubAccounts() {
+  Future<ProfileSubAccountsSnapshot> getSubAccounts() async {
+    await _simulateNetwork();
     return const ProfileSubAccountsSnapshot(
       accounts: _subAccounts,
       endpoint: '/api/mobile/profile/profile-sub-accounts',

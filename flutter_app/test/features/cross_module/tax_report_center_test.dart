@@ -29,8 +29,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-324 mock repository exposes tax report BE draft', () {
-    final snapshot = const MockTaxReportRepository().getCenter();
+  test('SC-324 mock repository exposes tax report BE draft', () async {
+    final snapshot = await const MockTaxReportRepository().getCenter();
 
     expect(snapshot.endpoint, '/api/mobile/cross-module/tax-reports');
     expect(

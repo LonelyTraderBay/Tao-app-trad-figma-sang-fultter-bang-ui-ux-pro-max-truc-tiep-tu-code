@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -331,24 +333,28 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
   void _openNetworkPicker(WithdrawController controller) {
     final networks = controller.state.snapshot.networks;
 
-    showVitBottomSheet<void>(
-      context: context,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
 
-      isScrollControlled: true,
+        isScrollControlled: true,
 
-      builder: (context) {
-        return WithdrawNetworkPicker(
-          networks: networks,
+        builder: (context) {
+          return WithdrawNetworkPicker(
+            networks: networks,
 
-          selectedNetworkId: controller.selectedNetwork(_selectedNetworkId).id,
+            selectedNetworkId: controller
+                .selectedNetwork(_selectedNetworkId)
+                .id,
 
-          onSelected: (network) {
-            setState(() => _selectedNetworkId = network.id);
+            onSelected: (network) {
+              setState(() => _selectedNetworkId = network.id);
 
-            Navigator.of(context).pop();
-          },
-        );
-      },
+              Navigator.of(context).pop();
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -383,12 +389,14 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
       network: network,
     );
 
-    showVitBottomSheet<void>(
-      context: context,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
 
-      isScrollControlled: true,
+        isScrollControlled: true,
 
-      builder: (context) => WithdrawPreviewSheet(preview: preview),
+        builder: (context) => WithdrawPreviewSheet(preview: preview),
+      ),
     );
   }
 }

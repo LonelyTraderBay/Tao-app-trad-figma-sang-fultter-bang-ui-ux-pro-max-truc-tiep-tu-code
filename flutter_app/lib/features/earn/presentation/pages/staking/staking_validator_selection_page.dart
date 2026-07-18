@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -143,7 +145,7 @@ class _StakingValidatorSelectionPageState
                               _selected = null;
                             }),
                             onFilter: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _showFilters = !_showFilters);
                             },
                           ),
@@ -153,11 +155,11 @@ class _StakingValidatorSelectionPageState
                               sort: _sort,
                               tier: _tierFilter,
                               onSortChanged: (sort) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _sort = sort);
                               },
                               onTierChanged: (tier) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _tierFilter = tier);
                               },
                               onClear: _clearFilters,
@@ -182,7 +184,7 @@ class _StakingValidatorSelectionPageState
                           StakingValidatorSelectionValidatorList(
                             validators: validators,
                             onTap: (validator) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _selected = validator);
                             },
                           ),
@@ -227,7 +229,7 @@ class _StakingValidatorSelectionPageState
   }
 
   void _confirmSelection(StakingValidatorDraft validator) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _selected = null);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Đã chọn ${validator.name} làm validator')),
@@ -235,7 +237,7 @@ class _StakingValidatorSelectionPageState
   }
 
   void _clearFilters() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _searchController.clear();
     setState(() {
       _query = '';

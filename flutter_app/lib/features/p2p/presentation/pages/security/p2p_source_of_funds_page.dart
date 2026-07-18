@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -132,7 +134,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                             sources: snapshot.sources,
                             selectedSource: _selectedSource,
                             onSelected: (source) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _selectedSource = source.id);
                             },
                           ),
@@ -148,7 +150,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                             key: P2PSourceOfFundsPage.ctaKey,
                             onPressed: canSubmit
                                 ? () {
-                                    HapticFeedback.mediumImpact();
+                                    unawaited(HapticFeedback.mediumImpact());
                                     context.go(snapshot.successRoute);
                                   }
                                 : null,

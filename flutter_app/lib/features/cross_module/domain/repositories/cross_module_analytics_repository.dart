@@ -2,5 +2,5 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/cross_mo
 
 /// Data source contract for the cross-module analytics screen.
 abstract interface class CrossModuleAnalyticsRepository {
-  CrossModuleAnalyticsSnapshot getAnalytics();
+  Future<CrossModuleAnalyticsSnapshot> getAnalytics();
 }

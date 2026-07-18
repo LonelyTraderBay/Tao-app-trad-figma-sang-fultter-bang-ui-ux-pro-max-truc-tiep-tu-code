@@ -3,12 +3,9 @@ import 'package:vit_trade_flutter/features/trade_bots/domain/entities/trade_bots
 /// Data contract for bot backtesting, strategy comparison/optimization,
 /// portfolio analytics, and tax-reporting/API-documentation screens.
 ///
-/// GD4-F3: every READ method is `Future<T>` (ADR-001's read idiom — see
-/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md). Mock
-/// implementations simulate network latency via `loadDelay`; production
-/// implementations will be real network calls with the same signature.
-/// Write/mutation methods (run/create) stay synchronous — see
-/// [TradingBotsRepository]'s doc comment for why.
+/// GD4-F6: mọi method — kể cả method GHI (run/create) — giờ đều là
+/// `Future<T>` (xem doc comment của [TradingBotsRepository] và
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md bẫy 19).
 abstract interface class TradeBotAnalyticsRepository {
   Future<TradeBotBacktestingSnapshot> getBotBacktesting();
   Future<TradeBotStrategyCompareSnapshot> getBotStrategyCompare();
@@ -20,11 +17,13 @@ abstract interface class TradeBotAnalyticsRepository {
   Future<TradeBotFaqSnapshot> getBotFaq();
   Future<TradeBotTaxReportingSnapshot> getBotTaxReporting();
   Future<TradeBotApiDocumentationSnapshot> getBotApiDocumentation();
-  TradeBotBacktestResult runBotBacktest(TradeBotBacktestRequest request);
-  TradeBotOptimizationResult runBotOptimization(
+  Future<TradeBotBacktestResult> runBotBacktest(
+    TradeBotBacktestRequest request,
+  );
+  Future<TradeBotOptimizationResult> runBotOptimization(
     TradeBotOptimizationRequest request,
   );
-  TradeBotTaxReportExportResult createBotTaxReportExport(
+  Future<TradeBotTaxReportExportResult> createBotTaxReportExport(
     TradeBotTaxReportExportRequest request,
   );
 }

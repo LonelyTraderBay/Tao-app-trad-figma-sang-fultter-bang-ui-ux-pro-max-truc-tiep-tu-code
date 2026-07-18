@@ -34,8 +34,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-156 mock repository exposes profile BE draft', () {
-    final snapshot = const MockProfileRepository().getProfile();
+  test('SC-156 mock repository exposes profile BE draft', () async {
+    final snapshot = await const MockProfileRepository().getProfile();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile');
     expect(snapshot.actionDraft, 'read-only + local navigation actions');

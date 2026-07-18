@@ -32,8 +32,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-163 mock repository exposes API management BE draft', () {
-    final snapshot = const MockProfileRepository().getApiManagement();
+  test('SC-163 mock repository exposes API management BE draft', () async {
+    final snapshot = await const MockProfileRepository().getApiManagement();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-api');
     expect(

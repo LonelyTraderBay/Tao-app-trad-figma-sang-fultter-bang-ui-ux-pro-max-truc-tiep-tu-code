@@ -347,8 +347,8 @@ class _ActionRow extends StatelessWidget {
     BuildContext context,
     P2PInsuranceCertificateSnapshot snapshot,
   ) {
-    HapticFeedback.mediumImpact();
-    Clipboard.setData(ClipboardData(text: snapshot.exportText));
+    unawaited(HapticFeedback.mediumImpact());
+    unawaited(Clipboard.setData(ClipboardData(text: snapshot.exportText)));
     onFeedback('Đã chuẩn bị chứng nhận ${snapshot.certId}');
   }
 
@@ -356,8 +356,8 @@ class _ActionRow extends StatelessWidget {
     BuildContext context,
     P2PInsuranceCertificateSnapshot snapshot,
   ) {
-    HapticFeedback.selectionClick();
-    Clipboard.setData(ClipboardData(text: snapshot.shareText));
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(Clipboard.setData(ClipboardData(text: snapshot.shareText)));
     onFeedback('Đã sao chép thông tin chứng nhận');
   }
 }

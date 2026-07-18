@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -168,7 +170,7 @@ class _StakingRiskAssessmentPageState
   }
 
   void _selectOption(StakingRiskQuestionDraft question, int value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
     // `.value` (đã có sẵn vì câu hỏi chỉ render trong nhánh data:).
     final questionsLength = ref
@@ -188,14 +190,14 @@ class _StakingRiskAssessmentPageState
   }
 
   void _previous() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_currentQuestion > 0) _currentQuestion -= 1;
     });
   }
 
   void _reset() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _currentQuestion = 0;
       _showResult = false;

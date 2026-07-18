@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -189,7 +191,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
   }
 
   void _removeProduct(String productId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
     // `.value` (đã có sẵn vì nút này chỉ render trong nhánh data:).
     final snapshot = ref.read(savingsComparisonSnapshotProvider).value;
@@ -208,7 +210,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
     List<SavingsProductDraft> availableProducts,
     int selectedCount,
   ) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -240,7 +242,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
   }
 
   void _addProduct(BuildContext sheetContext, String productId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     // Bẫy 15: xem _removeProduct ở trên.
     final snapshot = ref.read(savingsComparisonSnapshotProvider).value;
     if (snapshot == null) return;

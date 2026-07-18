@@ -307,7 +307,7 @@ class _StartStakingCard extends StatelessWidget {
             width: AppSpacing.buttonHero * 1.55,
             child: VitCtaButton(
               onPressed: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 context.go(snapshot.stakingRoute);
               },
               trailing: const Icon(Icons.arrow_forward_rounded),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -149,7 +151,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                               snapshot: snapshot,
                               active: _tab,
                               onChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _tab = value);
                               },
                             ),
@@ -160,7 +162,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                               onQueryChanged: (value) =>
                                   setState(() => _query = value),
                               onSort: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _sort = _sort == _OrdersSort.date
                                       ? _OrdersSort.amount
@@ -239,7 +241,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
   }
 
   void _openOrder(BuildContext context, P2PMyOrderDraft order) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (order.status == 'disputed') {
       context.go(AppRoutePaths.p2pDisputeDetail(order.id));
       return;

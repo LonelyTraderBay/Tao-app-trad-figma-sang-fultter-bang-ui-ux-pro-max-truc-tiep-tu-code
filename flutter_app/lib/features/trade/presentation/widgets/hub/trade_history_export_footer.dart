@@ -142,11 +142,13 @@ class _ExportFooter extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: 'Tải file xuất',
-      message: 'Tải file xuất sẽ sớm ra mắt',
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Tải file xuất',
+        message: 'Tải file xuất sẽ sớm ra mắt',
+      ),
     );
   }
 }

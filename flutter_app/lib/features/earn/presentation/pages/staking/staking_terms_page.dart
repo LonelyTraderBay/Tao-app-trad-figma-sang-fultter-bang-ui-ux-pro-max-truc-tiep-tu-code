@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -127,7 +129,7 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
                             accepted: _accepted,
                             snapshot: snapshot,
                             onTap: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _accepted = !_accepted);
                             },
                           ),
@@ -146,7 +148,7 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
   }
 
   void _toggleSection(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_expandedSections.contains(id)) {
         _expandedSections.remove(id);
@@ -157,7 +159,7 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
   }
 
   void _setAction(String message) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _actionMessage = message);
   }
 }

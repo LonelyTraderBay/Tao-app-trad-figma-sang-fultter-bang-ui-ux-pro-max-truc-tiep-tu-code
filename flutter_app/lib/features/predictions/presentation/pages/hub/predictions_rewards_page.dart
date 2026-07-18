@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -164,35 +166,37 @@ class _PredictionsRewardsPageState
   }
 
   void _showRiskSheet(BuildContext context) {
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) {
-        return Padding(
-          padding: PredictionsSpacingTokens.predictionRewardsSheetPadding,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Reward không phải lợi nhuận đảm bảo',
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: AppColors.text1,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) {
+          return Padding(
+            padding: PredictionsSpacingTokens.predictionRewardsSheetPadding,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Reward không phải lợi nhuận đảm bảo',
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-              Text(
-                'Daily rewards phụ thuộc điều kiện spread, min shares, thời '
-                'gian giữ lệnh và thanh khoản thị trường.',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-            ],
-          ),
-        );
-      },
+                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                Text(
+                  'Daily rewards phụ thuộc điều kiện spread, min shares, thời '
+                  'gian giữ lệnh và thanh khoản thị trường.',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

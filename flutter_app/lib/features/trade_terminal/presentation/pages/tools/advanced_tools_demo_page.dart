@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -180,16 +182,16 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
   void _onFeatureTap(TradeAdvancedToolFeature feature) {
     if (feature.id == 'bulk') {
       setState(() => _tab = _ToolsTab.bulk);
-      _openBulkSheet();
+      unawaited(_openBulkSheet());
       return;
     }
     if (feature.id == 'shortcuts') {
       setState(() => _tab = _ToolsTab.shortcuts);
-      _openShortcutsSheet();
+      unawaited(_openShortcutsSheet());
       return;
     }
     setState(() => _tab = _ToolsTab.ladder);
-    _openLadderSheet();
+    unawaited(_openLadderSheet());
   }
 
   Future<void> _openLadderSheet() async {

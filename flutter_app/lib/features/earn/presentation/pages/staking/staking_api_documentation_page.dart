@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -144,7 +146,7 @@ class _StakingApiDocumentationPageState
                           StakingApiDocumentationTabs(
                             active: _tab!,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -154,7 +156,7 @@ class _StakingApiDocumentationPageState
                               selectedIndex: _selectedEndpoint,
                               responseCopied: _responseCopied,
                               onSelect: (index) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _selectedEndpoint = index;
                                   _responseCopied = false;
@@ -175,7 +177,7 @@ class _StakingApiDocumentationPageState
                               language: _language!,
                               copied: _exampleCopied,
                               onLanguageChanged: (language) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _language = language;
                                   _exampleCopied = false;
@@ -205,6 +207,6 @@ class _StakingApiDocumentationPageState
   }
 
   void _copy(String text) {
-    Clipboard.setData(ClipboardData(text: text));
+    unawaited(Clipboard.setData(ClipboardData(text: text)));
   }
 }

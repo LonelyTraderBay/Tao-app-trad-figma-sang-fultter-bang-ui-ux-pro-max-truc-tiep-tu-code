@@ -120,7 +120,7 @@ class _OptionGroup extends StatelessWidget {
           items: children,
           selectedValue: selected,
           onTap: (value) {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             onChanged(value);
           },
           fullWidth: expanded,
@@ -334,7 +334,7 @@ class _NavigationRow extends StatelessWidget {
       children: [
         VitCard(
           onTap: () {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             onTap();
           },
           variant: VitCardVariant.ghost,

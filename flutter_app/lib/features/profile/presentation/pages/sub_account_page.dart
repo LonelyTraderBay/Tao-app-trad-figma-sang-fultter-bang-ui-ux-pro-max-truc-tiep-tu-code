@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,7 +58,7 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getSubAccounts();
+    final snapshotAsync = ref.watch(profileSubAccountsSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -87,15 +89,30 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
           padding: VitContentPadding.none,
           density: VitDensity.compact,
           fullBleed: true,
-          children: _subAccountPageChildren(
-            context: context,
-            snapshot: snapshot,
-            isBalanceHidden: _isBalanceHidden,
-            showCreate: _showCreate,
-            expandedId: _expandedId,
-            onToggleBalance: _toggleBalance,
-            onToggleCreateForm: _toggleCreateForm,
-            onToggleExpanded: _toggleExpanded,
+          children: snapshotAsync.when(
+            loading: () => const [
+              VitSkeletonList(key: SubAccountPage.loadingKey),
+            ],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                key: SubAccountPage.errorKey,
+                title: 'Không tải được dữ liệu',
+                message: 'Vui lòng thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () =>
+                    ref.invalidate(profileSubAccountsSnapshotProvider),
+              ),
+            ],
+            data: (snapshot) => _subAccountPageChildren(
+              context: context,
+              snapshot: snapshot,
+              isBalanceHidden: _isBalanceHidden,
+              showCreate: _showCreate,
+              expandedId: _expandedId,
+              onToggleBalance: _toggleBalance,
+              onToggleCreateForm: _toggleCreateForm,
+              onToggleExpanded: _toggleExpanded,
+            ),
           ),
         ),
       ),
@@ -103,17 +120,17 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
   }
 
   void _toggleBalance() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _isBalanceHidden = !_isBalanceHidden);
   }
 
   void _toggleCreateForm() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _showCreate = !_showCreate);
   }
 
   void _toggleExpanded(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _expandedId = _expandedId == id ? null : id);
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -184,10 +186,12 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
   }
 
   void _handleExport() {
-    ref
-        .read(tradingBotsRepositoryProvider)
-        .createBotHistoryExport(
-          const TradeBotHistoryExportRequest(format: 'csv'),
-        );
+    unawaited(
+      ref
+          .read(tradingBotsRepositoryProvider)
+          .createBotHistoryExport(
+            const TradeBotHistoryExportRequest(format: 'csv'),
+          ),
+    );
   }
 }

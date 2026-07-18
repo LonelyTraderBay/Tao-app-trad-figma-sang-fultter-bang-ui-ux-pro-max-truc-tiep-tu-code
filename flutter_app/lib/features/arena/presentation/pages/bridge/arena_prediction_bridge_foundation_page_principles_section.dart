@@ -66,7 +66,7 @@ class _ArenaPredictionBridgeFoundationPageState
                           _SectionTabs(
                             active: _activeSection,
                             onChanged: (section) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeSection = section);
                             },
                           ),
@@ -75,7 +75,7 @@ class _ArenaPredictionBridgeFoundationPageState
                             snapshot: snapshot,
                             selectedTopicId: _selectedTopicId,
                             onTopicSelected: (id) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() {
                                 _selectedTopicId = _selectedTopicId == id
                                     ? null
@@ -102,12 +102,12 @@ class _ArenaPredictionBridgeFoundationPageState
   }
 
   void _go(BuildContext context, String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(route);
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

@@ -94,7 +94,7 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
   }
 
   void _submitCreate() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text(

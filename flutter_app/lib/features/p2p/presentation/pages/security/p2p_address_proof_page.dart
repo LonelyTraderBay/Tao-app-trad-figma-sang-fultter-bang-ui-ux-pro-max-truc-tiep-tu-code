@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,7 +138,7 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                               _DocumentTypePicker(
                                 documents: snapshot.documentTypes,
                                 onSelected: (document) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _selectedTypeId = document.id);
                                 },
                               )
@@ -145,7 +147,7 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                                 selectedDocument: selectedDocument,
                                 uploaded: _uploaded,
                                 onChangeType: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _selectedTypeId = null;
                                     _uploaded = false;
@@ -153,14 +155,14 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                                   });
                                 },
                                 onUpload: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _uploaded = true;
                                     _manualAddress = snapshot.extractedAddress;
                                   });
                                 },
                                 onRemove: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _uploaded = false;
                                     _manualAddress = '';
@@ -177,7 +179,9 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                                 onPressed:
                                     _uploaded && _manualAddress.isNotEmpty
                                     ? () {
-                                        HapticFeedback.selectionClick();
+                                        unawaited(
+                                          HapticFeedback.selectionClick(),
+                                        );
                                         context.go(snapshot.submitRoute);
                                       }
                                     : null,

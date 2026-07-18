@@ -30,8 +30,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-161 mock repository exposes activity BE draft', () {
-    final snapshot = const MockProfileRepository().getActivity();
+  test('SC-161 mock repository exposes activity BE draft', () async {
+    final snapshot = await const MockProfileRepository().getActivity();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-activity');
     expect(snapshot.actionDraft, 'read-only + local filter actions');

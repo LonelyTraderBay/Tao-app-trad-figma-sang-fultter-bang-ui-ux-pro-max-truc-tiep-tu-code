@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -144,7 +146,11 @@ class _TransactionReportingPageState
                             onCopy: (report) {
                               final messageId = report.messageId;
                               if (messageId == null) return;
-                              Clipboard.setData(ClipboardData(text: messageId));
+                              unawaited(
+                                Clipboard.setData(
+                                  ClipboardData(text: messageId),
+                                ),
+                              );
                               setState(() => _notice = 'Message ID copied');
                             },
                           ),

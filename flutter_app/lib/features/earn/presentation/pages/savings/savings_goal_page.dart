@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -170,7 +172,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
   }
 
   Future<void> _openCreateSheet(SavingsGoalsSnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -183,10 +185,10 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
             snapshot: snapshot,
             selectedTemplateId: selected,
             onTemplate: (id) {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _selectedTemplateId = id);
               Navigator.of(context).pop();
-              _openCreateSheet(snapshot);
+              unawaited(_openCreateSheet(snapshot));
             },
           ),
         );
@@ -195,7 +197,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
   }
 
   Future<void> _openGoalDetail(SavingsGoalDraft goal) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

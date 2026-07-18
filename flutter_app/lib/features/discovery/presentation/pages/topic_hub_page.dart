@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,12 +75,11 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(discoveryControllerProvider)
-        .topicHub(
-          topicId: _selectedTopicId,
-          detailEndpoint: widget.useDetailEndpoint,
-        );
+    final query = (
+      topicId: _selectedTopicId,
+      detailEndpoint: widget.useDetailEndpoint,
+    );
+    final snapshotAsync = ref.watch(topicHubSnapshotProvider(query));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -86,6 +87,79 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
+    return snapshotAsync.when(
+      loading: () => _TopicHubScaffold(
+        title: 'Topic Hub',
+        rail: const SizedBox.shrink(),
+        offlineBanner: null,
+        bottomInset: bottomInset,
+        body: const VitSkeletonList(key: TopicHubPage.loadingKey),
+      ),
+      error: (error, stackTrace) => _TopicHubScaffold(
+        title: 'Topic Hub',
+        rail: const SizedBox.shrink(),
+        offlineBanner: null,
+        bottomInset: bottomInset,
+        body: VitErrorState(
+          key: TopicHubPage.errorKey,
+          title: 'Không tải được dữ liệu khám phá',
+          message: 'Vui lòng thử lại.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(topicHubSnapshotProvider(query)),
+        ),
+      ),
+      data: (snapshot) => _TopicHubScaffold(
+        title: snapshot.title,
+        rail: _TopicRail(
+          topics: snapshot.topics,
+          selectedTopicId: snapshot.selectedTopic.id,
+          onSelect: (topicId) {
+            unawaited(HapticFeedback.selectionClick());
+            setState(() => _selectedTopicId = topicId);
+          },
+        ),
+        offlineBanner: snapshot.showOfflineBanner
+            ? Padding(
+                key: TopicHubPage.offlineKey,
+                padding: LaunchpadSpacingTokens.discoveryOfflineBannerPadding,
+                child: VitOfflineBanner(
+                  message: snapshot.staleMessage,
+                  detail: snapshot.staleDetail,
+                ),
+              )
+            : null,
+        bottomInset: bottomInset,
+        body: VitPageContent(
+          rhythm: VitPageRhythm.compact,
+          padding: VitContentPadding.none,
+          fullBleed: true,
+          children: _topicHubPageChildren(
+            snapshot: snapshot,
+            onRetry: () => ref.invalidate(topicHubSnapshotProvider(query)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TopicHubScaffold extends StatelessWidget {
+  const _TopicHubScaffold({
+    required this.title,
+    required this.rail,
+    required this.offlineBanner,
+    required this.bottomInset,
+    required this.body,
+  });
+
+  final String title;
+  final Widget rail;
+  final Widget? offlineBanner;
+  final double bottomInset;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'Trung tâm chủ đề',
@@ -94,37 +168,22 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
+            title: title,
             showBack: true,
             onBack: () => context.go(AppRoutePaths.home),
             actions: [
               VitHeaderActionItem(
                 key: TopicHubPage.searchActionKey,
                 type: VitHeaderActionType.search,
-                onPressed: () => context.go(snapshot.searchRoute),
+                onPressed: () => context.go(AppRoutePaths.search),
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _TopicRail(
-                topics: snapshot.topics,
-                selectedTopicId: snapshot.selectedTopic.id,
-                onSelect: (topicId) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _selectedTopicId = topicId);
-                },
-              ),
-              if (snapshot.showOfflineBanner)
-                Padding(
-                  key: TopicHubPage.offlineKey,
-                  padding: LaunchpadSpacingTokens.discoveryOfflineBannerPadding,
-                  child: VitOfflineBanner(
-                    message: snapshot.staleMessage,
-                    detail: snapshot.staleDetail,
-                  ),
-                ),
+              rail,
+              ?offlineBanner,
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -137,15 +196,7 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                         LaunchpadSpacingTokens.discoveryContentScrollPadding(
                           bottomInset,
                         ),
-                    child: VitPageContent(
-                      rhythm: VitPageRhythm.compact,
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      children: _topicHubPageChildren(
-                        snapshot: snapshot,
-                        onRetry: () => setState(() {}),
-                      ),
-                    ),
+                    child: body,
                   ),
                 ),
               ),

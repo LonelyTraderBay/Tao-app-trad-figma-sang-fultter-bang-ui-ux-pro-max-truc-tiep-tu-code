@@ -3,10 +3,26 @@ import 'package:vit_trade_flutter/features/cross_module/domain/repositories/unif
 
 final class MockUnifiedPortfolioRepository
     implements UnifiedPortfolioRepository {
-  const MockUnifiedPortfolioRepository();
+  const MockUnifiedPortfolioRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) {
+      throw StateError('unified_portfolio_mock_fetch_failed');
+    }
+  }
 
   @override
-  UnifiedPortfolioSnapshot getDashboard() {
+  Future<UnifiedPortfolioSnapshot> getDashboard() async {
+    await _simulateNetwork();
     return const UnifiedPortfolioSnapshot(
       endpoint: '/api/mobile/cross-module/unified-portfolio',
       actionDraft: 'read-only or local navigation action',

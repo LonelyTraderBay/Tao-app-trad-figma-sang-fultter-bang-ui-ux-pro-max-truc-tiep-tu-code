@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,7 +61,7 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
 
   Future<void> _submit(P2PBlacklistAddSnapshot snapshot) async {
     if (_usernameController.text.trim().isEmpty || _isSubmitting) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _isSubmitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 250));
     if (!mounted) return;
@@ -150,7 +152,7 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                             reasons: snapshot.reasons,
                             selectedReasonId: _reasonId,
                             onChanged: (id) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _reasonId = id);
                             },
                           ),

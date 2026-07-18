@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -137,7 +139,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
                           _InsuranceTabs(
                             active: _tab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -152,7 +154,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
                             _PositionsTab(
                               snapshot: snapshot,
                               onAddInsurance: (position) {
-                                HapticFeedback.lightImpact();
+                                unawaited(HapticFeedback.lightImpact());
                                 setState(() => _tab = _InsuranceTab.plans);
                               },
                             ),
@@ -175,7 +177,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
   }
 
   Future<void> _showPlan(StakingInsurancePlanDraft plan) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -185,7 +187,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
   }
 
   Future<void> _showClaimForm(StakingInsuranceSnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

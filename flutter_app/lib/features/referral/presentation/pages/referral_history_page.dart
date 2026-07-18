@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -154,7 +156,9 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                                     filters: snapshot.filters,
                                     active: snapshot.filter,
                                     onChanged: (value) {
-                                      HapticFeedback.selectionClick();
+                                      unawaited(
+                                        HapticFeedback.selectionClick(),
+                                      );
                                       setState(() => _filter = value);
                                     },
                                   ),
@@ -166,7 +170,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             options: snapshot.sortOptions,
                             active: snapshot.sort,
                             onChanged: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _sort = value);
                             },
                           ),
@@ -184,7 +188,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                                 reminded: _remindedFriend == friend.id,
                                 onOpen: () => context.go(friend.route),
                                 onRemind: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _remindedFriend = friend.id);
                                 },
                               ),

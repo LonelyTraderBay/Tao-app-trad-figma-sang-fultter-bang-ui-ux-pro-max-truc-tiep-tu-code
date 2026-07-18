@@ -22,52 +22,56 @@ void main() {
 
   // Toàn bộ bootstrap (kể cả ensureInitialized) nằm TRONG zone để binding
   // và runApp cùng zone — tránh cảnh báo "Zone mismatch" của framework.
-  runZonedGuarded(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
-      _disableDebugVisualOverlays();
+  // Fire-and-forget: bootstrap chạy trong zone tới khi app đóng, không có
+  // điểm nào trong main() cần đợi Future này hoàn tất.
+  unawaited(
+    runZonedGuarded(
+      () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        _disableDebugVisualOverlays();
 
-      FlutterError.onError = (FlutterErrorDetails details) {
-        errorReporter.report(
-          details.exception,
-          details.stack ?? StackTrace.empty,
-          context: 'FlutterError.onError: ${details.context}',
+        FlutterError.onError = (FlutterErrorDetails details) {
+          errorReporter.report(
+            details.exception,
+            details.stack ?? StackTrace.empty,
+            context: 'FlutterError.onError: ${details.context}',
+          );
+          FlutterError.presentError(details);
+        };
+
+        ErrorWidget.builder = (FlutterErrorDetails details) =>
+            const VitErrorFallbackScreen();
+
+        PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+          errorReporter.report(
+            error,
+            stack,
+            context: 'PlatformDispatcher.onError',
+          );
+          return true;
+        };
+
+        // Persistence khởi tạo TRƯỚC runApp để mọi phép đọc KeyValueStore
+        // trong app là đồng bộ (SharedPreferences cache sẵn vào bộ nhớ).
+        final SharedPreferences preferences =
+            await SharedPreferences.getInstance();
+
+        runApp(
+          VitTradeApp(
+            overrides: [
+              errorReporterProvider.overrideWithValue(errorReporter),
+              keyValueStoreProvider.overrideWithValue(
+                SharedPreferencesKeyValueStore(preferences),
+              ),
+              secureStoreProvider.overrideWithValue(const FlutterSecureStore()),
+            ],
+          ),
         );
-        FlutterError.presentError(details);
-      };
-
-      ErrorWidget.builder = (FlutterErrorDetails details) =>
-          const VitErrorFallbackScreen();
-
-      PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
-        errorReporter.report(
-          error,
-          stack,
-          context: 'PlatformDispatcher.onError',
-        );
-        return true;
-      };
-
-      // Persistence khởi tạo TRƯỚC runApp để mọi phép đọc KeyValueStore
-      // trong app là đồng bộ (SharedPreferences cache sẵn vào bộ nhớ).
-      final SharedPreferences preferences =
-          await SharedPreferences.getInstance();
-
-      runApp(
-        VitTradeApp(
-          overrides: [
-            errorReporterProvider.overrideWithValue(errorReporter),
-            keyValueStoreProvider.overrideWithValue(
-              SharedPreferencesKeyValueStore(preferences),
-            ),
-            secureStoreProvider.overrideWithValue(const FlutterSecureStore()),
-          ],
-        ),
-      );
-    },
-    (Object error, StackTrace stack) {
-      errorReporter.report(error, stack, context: 'runZonedGuarded');
-    },
+      },
+      (Object error, StackTrace stack) {
+        errorReporter.report(error, stack, context: 'runZonedGuarded');
+      },
+    ),
   );
 }
 

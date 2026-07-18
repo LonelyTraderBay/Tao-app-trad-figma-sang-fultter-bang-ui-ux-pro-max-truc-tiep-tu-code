@@ -49,8 +49,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getSettings();
-    _initializeFrom(snapshot);
+    final snapshotAsync = ref.watch(profileSettingsSnapshotProvider);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
@@ -80,74 +79,89 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           padding: VitContentPadding.none,
           density: VitDensity.compact,
           fullBleed: true,
-          children: [
-            const VitSectionHeader(
-              title: 'GIAO DI\u1EC6N',
-              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-              variant: VitSectionHeaderVariant.accentBar,
-              accentColor: AppColors.primary,
-              density: VitDensity.compact,
-            ),
-            _CurrencyCard(
-              currencies: snapshot.currencyOptions,
-              selectedCurrency: _selectedCurrency,
-              onChanged: _setCurrency,
-            ),
-            const VitSectionHeader(
-              title: 'NG\u00D4N NG\u1EEE',
-              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-              variant: VitSectionHeaderVariant.accentBar,
-              accentColor: AppColors.primary,
-              density: VitDensity.compact,
-            ),
-            _LanguageCard(
-              languages: snapshot.languages,
-              selectedId: _selectedLanguageId,
-              onChanged: _setLanguage,
-            ),
-            const VitSectionHeader(
-              title: 'B\u1EA2O M\u1EACT GIAO D\u1ECACH',
-              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-              variant: VitSectionHeaderVariant.accentBar,
-              accentColor: AppColors.primary,
-              density: VitDensity.compact,
-            ),
-            if (snapshot.tradeSecurity.isEmpty)
-              const VitEmptyState(
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
                 title:
-                    'Ch\u01B0a c\u00F3 c\u00E0i \u0111\u1EB7t giao d\u1ECBch',
-                message:
-                    'C\u00E1c tu\u1EF3 ch\u1ECDn b\u1EA3o m\u1EADt s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
-                icon: Icons.shield_outlined,
-              )
-            else
-              _SettingsListCard(
-                rows: snapshot.tradeSecurity,
-                toggles: _toggles,
-                onToggle: _setToggle,
+                    'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c d\u1EEF li\u1EC7u',
+                message: 'Vui l\u00F2ng th\u1EED l\u1EA1i.',
+                actionLabel: 'Th\u1EED l\u1EA1i',
+                onAction: () => ref.invalidate(profileSettingsSnapshotProvider),
               ),
-            const VitSectionHeader(
-              title: 'TH\u00D4NG B\u00C1O',
-              bottomGap: AppSpacing.pageRhythmStandardInnerGap,
-              variant: VitSectionHeaderVariant.accentBar,
-              accentColor: AppColors.primary,
-              density: VitDensity.compact,
-            ),
-            if (snapshot.notifications.isEmpty)
-              const VitEmptyState(
-                title: 'Ch\u01B0a c\u00F3 th\u00F4ng b\u00E1o',
-                message:
-                    'C\u00E0i \u0111\u1EB7t th\u00F4ng b\u00E1o s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
-                icon: Icons.notifications_none_rounded,
-              )
-            else
-              _SettingsListCard(
-                rows: snapshot.notifications,
-                toggles: _toggles,
-                onToggle: _setToggle,
-              ),
-            _AppInfoCard(rows: snapshot.appInfo),
-          ],
+            ],
+            data: (snapshot) {
+              _initializeFrom(snapshot);
+              return [
+                const VitSectionHeader(
+                  title: 'GIAO DI\u1EC6N',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: AppColors.primary,
+                  density: VitDensity.compact,
+                ),
+                _CurrencyCard(
+                  currencies: snapshot.currencyOptions,
+                  selectedCurrency: _selectedCurrency,
+                  onChanged: _setCurrency,
+                ),
+                const VitSectionHeader(
+                  title: 'NG\u00D4N NG\u1EEE',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: AppColors.primary,
+                  density: VitDensity.compact,
+                ),
+                _LanguageCard(
+                  languages: snapshot.languages,
+                  selectedId: _selectedLanguageId,
+                  onChanged: _setLanguage,
+                ),
+                const VitSectionHeader(
+                  title: 'B\u1EA2O M\u1EACT GIAO D\u1ECACH',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: AppColors.primary,
+                  density: VitDensity.compact,
+                ),
+                if (snapshot.tradeSecurity.isEmpty)
+                  const VitEmptyState(
+                    title:
+                        'Ch\u01B0a c\u00F3 c\u00E0i \u0111\u1EB7t giao d\u1ECBch',
+                    message:
+                        'C\u00E1c tu\u1EF3 ch\u1ECDn b\u1EA3o m\u1EADt s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
+                    icon: Icons.shield_outlined,
+                  )
+                else
+                  _SettingsListCard(
+                    rows: snapshot.tradeSecurity,
+                    toggles: _toggles,
+                    onToggle: _setToggle,
+                  ),
+                const VitSectionHeader(
+                  title: 'TH\u00D4NG B\u00C1O',
+                  bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: AppColors.primary,
+                  density: VitDensity.compact,
+                ),
+                if (snapshot.notifications.isEmpty)
+                  const VitEmptyState(
+                    title: 'Ch\u01B0a c\u00F3 th\u00F4ng b\u00E1o',
+                    message:
+                        'C\u00E0i \u0111\u1EB7t th\u00F4ng b\u00E1o s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
+                    icon: Icons.notifications_none_rounded,
+                  )
+                else
+                  _SettingsListCard(
+                    rows: snapshot.notifications,
+                    toggles: _toggles,
+                    onToggle: _setToggle,
+                  ),
+                _AppInfoCard(rows: snapshot.appInfo),
+              ];
+            },
+          ),
         ),
       ),
     );
@@ -173,7 +187,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   void _setCurrency(String currency) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _selectedCurrency = currency);
     // persist GĐ4-F1: giữ đơn vị tiền hiển thị qua phiên.
     unawaited(
@@ -184,7 +198,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   void _setLanguage(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _selectedLanguageId = id);
     // persist GĐ4-F1: giữ ngôn ngữ đã chọn qua phiên.
     unawaited(
@@ -195,7 +209,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   void _setToggle(String id, bool value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _toggles = {..._toggles, id: value});
     // persist GĐ4-F1: giữ trạng thái toggle qua phiên.
     unawaited(

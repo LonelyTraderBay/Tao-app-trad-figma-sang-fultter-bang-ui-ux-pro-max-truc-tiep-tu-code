@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,7 +140,7 @@ class _SavingsRecommendationsPageState
                             onAmountChanged: (value) =>
                                 setState(() => _amountText = value),
                             onQuickAmount: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               _setAmountText('$value');
                             },
                           ),
@@ -208,7 +210,7 @@ class _SavingsRecommendationsPageState
     SavingsStrategyDraft strategy,
     String savingsRoute,
   ) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -239,7 +241,7 @@ class _SavingsRecommendationsPageState
   }
 
   Future<void> _openCompareSheet(List<SavingsStrategyDraft> strategies) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

@@ -37,8 +37,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-160 mock repository exposes profile settings BE draft', () {
-    final snapshot = const MockProfileRepository().getSettings();
+  test('SC-160 mock repository exposes profile settings BE draft', () async {
+    final snapshot = await const MockProfileRepository().getSettings();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-settings');
     expect(snapshot.actionDraft, 'PATCH /user/settings or module settings');

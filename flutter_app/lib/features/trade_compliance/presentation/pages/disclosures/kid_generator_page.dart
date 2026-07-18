@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -311,12 +313,14 @@ class _Actions extends StatelessWidget {
   const _Actions();
 
   void _showComingSoon(BuildContext context, String message) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: 'Sắp ra mắt',
-      message: message,
-      variant: VitBannerVariant.info,
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Sắp ra mắt',
+        message: message,
+        variant: VitBannerVariant.info,
+      ),
     );
   }
 

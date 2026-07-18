@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,13 +140,13 @@ class _P2PSelfieVerificationPageState
       _SelfieStep.guide => _GuideStep(
         snapshot: snapshot,
         onStart: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _step = _SelfieStep.capture);
         },
       ),
       _SelfieStep.capture => _CaptureStep(
         onCapture: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _step = _SelfieStep.liveness);
         },
       ),
@@ -153,7 +155,7 @@ class _P2PSelfieVerificationPageState
         currentActionIndex: _currentActionIndex,
         completedActions: _completedActions,
         onConfirmAction: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             final action = snapshot.livenessActions[_currentActionIndex];
             _completedActions.add(action.id);
@@ -168,11 +170,11 @@ class _P2PSelfieVerificationPageState
       _SelfieStep.result => _ResultStep(
         snapshot: snapshot,
         onComplete: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           context.go(snapshot.statusRoute);
         },
         onSupport: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           context.go(snapshot.supportRoute);
         },
       ),

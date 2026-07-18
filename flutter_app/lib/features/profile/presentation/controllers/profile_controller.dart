@@ -10,57 +10,57 @@ final class ProfileController implements ProfileRepository {
   final ProfileRepository _repository;
 
   @override
-  ProfileSnapshot getProfile() {
+  Future<ProfileSnapshot> getProfile() {
     return _repository.getProfile();
   }
 
   @override
-  ProfileEditSnapshot getEditProfile() {
+  Future<ProfileEditSnapshot> getEditProfile() {
     return _repository.getEditProfile();
   }
 
   @override
-  ProfileSecuritySnapshot getSecurity() {
+  Future<ProfileSecuritySnapshot> getSecurity() {
     return _repository.getSecurity();
   }
 
   @override
-  ProfileKycSnapshot getKyc() {
+  Future<ProfileKycSnapshot> getKyc() {
     return _repository.getKyc();
   }
 
   @override
-  ProfileSettingsSnapshot getSettings() {
+  Future<ProfileSettingsSnapshot> getSettings() {
     return _repository.getSettings();
   }
 
   @override
-  ProfileActivitySnapshot getActivity() {
+  Future<ProfileActivitySnapshot> getActivity() {
     return _repository.getActivity();
   }
 
   @override
-  ProfileApiKeyCreateSnapshot getApiKeyCreate() {
+  Future<ProfileApiKeyCreateSnapshot> getApiKeyCreate() {
     return _repository.getApiKeyCreate();
   }
 
   @override
-  ProfileApiManagementSnapshot getApiManagement() {
+  Future<ProfileApiManagementSnapshot> getApiManagement() {
     return _repository.getApiManagement();
   }
 
   @override
-  ProfileVipSnapshot getVip() {
+  Future<ProfileVipSnapshot> getVip() {
     return _repository.getVip();
   }
 
   @override
-  ProfileDeviceManagementSnapshot getDeviceManagement() {
+  Future<ProfileDeviceManagementSnapshot> getDeviceManagement() {
     return _repository.getDeviceManagement();
   }
 
   @override
-  ProfileSubAccountsSnapshot getSubAccounts() {
+  Future<ProfileSubAccountsSnapshot> getSubAccounts() {
     return _repository.getSubAccounts();
   }
 }

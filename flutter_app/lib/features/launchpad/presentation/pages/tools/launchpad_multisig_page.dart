@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -320,7 +322,7 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
   }
 
   void _copyField(String text, String field) {
-    Clipboard.setData(ClipboardData(text: text));
+    unawaited(Clipboard.setData(ClipboardData(text: text)));
     setState(() => _copiedField = field);
   }
 

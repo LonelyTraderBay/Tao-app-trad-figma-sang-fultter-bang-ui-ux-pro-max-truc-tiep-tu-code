@@ -29,8 +29,7 @@ class AdminSettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(adminHomeControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(adminHomeControllerProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -58,69 +57,85 @@ class AdminSettingsPage extends ConsumerWidget {
                 padding: AdminSpacingTokens.adminScrollPadding(bottomInset),
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
-                  children: [
-                    VitCard(
-                      key: routingKey,
-                      padding: AdminSpacingTokens.adminCardPadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const _SettingsSectionTitle(
-                            icon: Icons.route_outlined,
-                            title: 'Dashboard routing',
-                          ),
-                          for (final dashboard in snapshot.dashboards) ...[
-                            _AdminSettingsRow(
-                              icon: _settingsMetricIcon(dashboard.icon),
-                              title: dashboard.title,
-                              subtitle: dashboard.description,
-                              trailing: dashboard.stat,
-                              onTap: () => context.go(dashboard.route),
-                            ),
-                            if (dashboard != snapshot.dashboards.last)
-                              const Divider(color: AppColors.divider),
-                          ],
-                        ],
+                  children: controllerAsync.when(
+                    loading: () => const [VitSkeletonList()],
+                    error: (error, stackTrace) => [
+                      VitErrorState(
+                        title: 'Không tải được dữ liệu',
+                        message: 'Vui lòng thử lại.',
+                        actionLabel: 'Thử lại',
+                        onAction: () =>
+                            ref.invalidate(adminHomeSnapshotProvider),
                       ),
-                    ),
-                    VitCard(
-                      padding: AdminSpacingTokens.adminCardPadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const _SettingsSectionTitle(
-                            icon: Icons.health_and_safety_outlined,
-                            title: 'Operational health',
+                    ],
+                    data: (controller) {
+                      final snapshot = controller.state.snapshot;
+                      return [
+                        VitCard(
+                          key: routingKey,
+                          padding: AdminSpacingTokens.adminCardPadding,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const _SettingsSectionTitle(
+                                icon: Icons.route_outlined,
+                                title: 'Dashboard routing',
+                              ),
+                              for (final dashboard in snapshot.dashboards) ...[
+                                _AdminSettingsRow(
+                                  icon: _settingsMetricIcon(dashboard.icon),
+                                  title: dashboard.title,
+                                  subtitle: dashboard.description,
+                                  trailing: dashboard.stat,
+                                  onTap: () => context.go(dashboard.route),
+                                ),
+                                if (dashboard != snapshot.dashboards.last)
+                                  const Divider(color: AppColors.divider),
+                              ],
+                            ],
                           ),
-                          _AdminSettingsRow(
-                            icon: Icons.bolt_rounded,
-                            title: 'Event stream',
-                            subtitle:
-                                snapshot.adminMetrics.liveEventWindowLabel,
-                            trailing: snapshot.adminMetrics.eventsPerMinute,
+                        ),
+                        VitCard(
+                          padding: AdminSpacingTokens.adminCardPadding,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const _SettingsSectionTitle(
+                                icon: Icons.health_and_safety_outlined,
+                                title: 'Operational health',
+                              ),
+                              _AdminSettingsRow(
+                                icon: Icons.bolt_rounded,
+                                title: 'Event stream',
+                                subtitle:
+                                    snapshot.adminMetrics.liveEventWindowLabel,
+                                trailing: snapshot.adminMetrics.eventsPerMinute,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    VitCard(
-                      padding: AdminSpacingTokens.adminCardPadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const _SettingsSectionTitle(
-                            icon: Icons.verified_outlined,
-                            title: 'System health',
+                        ),
+                        VitCard(
+                          padding: AdminSpacingTokens.adminCardPadding,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const _SettingsSectionTitle(
+                                icon: Icons.verified_outlined,
+                                title: 'System health',
+                              ),
+                              _AdminSettingsRow(
+                                icon: Icons.verified_outlined,
+                                title: 'System health',
+                                subtitle:
+                                    snapshot.adminMetrics.footerUpdatedLabel,
+                                trailing: snapshot.adminMetrics.healthLabel,
+                              ),
+                            ],
                           ),
-                          _AdminSettingsRow(
-                            icon: Icons.verified_outlined,
-                            title: 'System health',
-                            subtitle: snapshot.adminMetrics.footerUpdatedLabel,
-                            trailing: snapshot.adminMetrics.healthLabel,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                      ];
+                    },
+                  ),
                 ),
               ),
             ),

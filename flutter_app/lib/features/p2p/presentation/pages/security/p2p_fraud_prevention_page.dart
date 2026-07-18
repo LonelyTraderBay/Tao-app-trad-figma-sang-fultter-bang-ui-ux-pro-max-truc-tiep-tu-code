@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -182,17 +184,17 @@ class _P2PFraudPreventionPageState
   }
 
   void _togglePattern(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _expandedPatternId = _expandedPatternId == id ? null : id);
   }
 
   void _setCategory(String category) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _activeCategory = category);
   }
 
   void _toggleChecklist(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(p2pFraudPreventionStateControllerProvider.notifier)
         .toggleChecklistItem(id);

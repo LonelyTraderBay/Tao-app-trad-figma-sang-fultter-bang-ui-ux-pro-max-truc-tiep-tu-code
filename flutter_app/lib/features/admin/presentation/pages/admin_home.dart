@@ -44,8 +44,7 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(adminHomeControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(adminHomeControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -73,20 +72,36 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         children: [
-          AdminDashboardStateContent(
-            status: controller.state.status,
-            title: 'Admin dashboard',
-            message: controller.state.message,
-            children: [
-              _MetricGrid(metrics: snapshot.quickStats),
-              _RealTimeMetricsSection(
-                snapshot: snapshot,
-                isLive: _isLive,
-                onToggleLive: () => setState(() => _isLive = !_isLive),
+          ...controllerAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'Admin dashboard',
+                message: 'Không tải được dữ liệu.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(adminHomeSnapshotProvider),
               ),
-              _DashboardsSection(dashboards: snapshot.dashboards),
-              _FooterCard(snapshot: snapshot),
             ],
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              return [
+                AdminDashboardStateContent(
+                  status: controller.state.status,
+                  title: 'Admin dashboard',
+                  message: controller.state.message,
+                  children: [
+                    _MetricGrid(metrics: snapshot.quickStats),
+                    _RealTimeMetricsSection(
+                      snapshot: snapshot,
+                      isLive: _isLive,
+                      onToggleLive: () => setState(() => _isLive = !_isLive),
+                    ),
+                    _DashboardsSection(dashboards: snapshot.dashboards),
+                    _FooterCard(snapshot: snapshot),
+                  ],
+                ),
+              ];
+            },
           ),
         ],
       ),

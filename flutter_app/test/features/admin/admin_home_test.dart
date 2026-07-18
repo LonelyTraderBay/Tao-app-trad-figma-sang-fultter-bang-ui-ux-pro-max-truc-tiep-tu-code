@@ -26,8 +26,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-180 mock repository exposes admin BE draft', () {
-    final snapshot = const MockAdminRepository().getHome();
+  test('SC-180 mock repository exposes admin BE draft', () async {
+    final snapshot = await const MockAdminRepository().getHome();
 
     expect(snapshot.endpoint, '/api/mobile/admin/admin');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

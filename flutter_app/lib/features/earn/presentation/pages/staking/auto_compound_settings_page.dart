@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -205,12 +207,12 @@ class _AutoCompoundSettingsPageState
   }
 
   void _toggle(AutoCompoundPositionDraft position) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _enabled[position.id] = !position.autoCompound);
   }
 
   Future<void> _openInfo(AutoCompoundSettingsSnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -225,7 +227,7 @@ class _AutoCompoundSettingsPageState
     AutoCompoundSettingsSnapshot snapshot,
     AutoCompoundPositionDraft position,
   ) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _editingId = position.id);
     await showVitBottomSheet<void>(
       context: context,
@@ -239,22 +241,22 @@ class _AutoCompoundSettingsPageState
             onToggle: () {
               _toggle(_resolved(position));
               Navigator.of(context).pop();
-              _openSettings(snapshot, position);
+              unawaited(_openSettings(snapshot, position));
             },
             onFrequency: (frequency) {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _frequencies[position.id] = frequency);
               Navigator.of(context).pop();
-              _openSettings(snapshot, position);
+              unawaited(_openSettings(snapshot, position));
             },
             onThreshold: (threshold) {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _thresholds[position.id] = threshold);
               Navigator.of(context).pop();
-              _openSettings(snapshot, position);
+              unawaited(_openSettings(snapshot, position));
             },
             onSave: () {
-              HapticFeedback.lightImpact();
+              unawaited(HapticFeedback.lightImpact());
               Navigator.of(context).pop();
               setState(() {
                 _editingId = null;

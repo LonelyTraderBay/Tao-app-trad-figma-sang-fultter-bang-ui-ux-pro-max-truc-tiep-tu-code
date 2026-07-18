@@ -226,11 +226,13 @@ class _FaqButton extends StatelessWidget {
 }
 
 void _showComingSoon(BuildContext context, String message) {
-  HapticFeedback.selectionClick();
-  showVitNoticeSheet(
-    context: context,
-    title: 'Sắp ra mắt',
-    message: message,
-    variant: VitBannerVariant.info,
+  unawaited(HapticFeedback.selectionClick());
+  unawaited(
+    showVitNoticeSheet(
+      context: context,
+      title: 'Sắp ra mắt',
+      message: message,
+      variant: VitBannerVariant.info,
+    ),
   );
 }

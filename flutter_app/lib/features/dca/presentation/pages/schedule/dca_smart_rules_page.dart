@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -202,7 +204,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
   }
 
   void _showApplyTemplateNotice() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Áp dụng mẫu quy tắc sẽ sớm ra mắt')),
     );

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -42,8 +45,7 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(smartAlertsControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(smartAlertsControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -51,38 +53,68 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
-    return CrossModuleTabbedPageShell(
-      semanticLabel: 'Trung tâm cảnh báo thông minh',
-      semanticIdentifier: 'SC-323',
-      contentKey: SmartAlertCenter.contentKey,
-      title: snapshot.title,
-      onBack: () => context.go(snapshot.backRoute),
-      scrollEndClearance: bottomInset,
-      tabs: _SmartAlertTabs(
-        tabs: snapshot.tabs,
-        active: _activeTab,
-        onChanged: (tab) {
-          HapticFeedback.selectionClick();
-          setState(() => _activeTab = tab);
-        },
+    return controllerAsync.when(
+      loading: () => CrossModuleTabbedPageShell(
+        semanticLabel: 'Trung tâm cảnh báo thông minh',
+        semanticIdentifier: 'SC-323',
+        contentKey: SmartAlertCenter.contentKey,
+        title: 'Smart Alerts',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: bottomInset,
+        tabs: const SizedBox.shrink(),
+        body: const VitSkeletonList(),
       ),
-      body: _activeTab == SmartAlertTab.active
-          ? _ActiveAlertsTab(snapshot: snapshot)
-          : _activeTab == SmartAlertTab.history
-          ? _AlertHistoryTab(snapshot: snapshot)
-          : _AlertSettingsTab(
-              snapshot: snapshot,
-              isChannelEnabled: (channel) =>
-                  _channelOverrides[channel.id] ?? channel.enabled,
-              onToggleChannel: (channel) {
-                HapticFeedback.selectionClick();
-                setState(() {
-                  final current =
-                      _channelOverrides[channel.id] ?? channel.enabled;
-                  _channelOverrides[channel.id] = !current;
-                });
-              },
-            ),
+      error: (error, stackTrace) => CrossModuleTabbedPageShell(
+        semanticLabel: 'Trung tâm cảnh báo thông minh',
+        semanticIdentifier: 'SC-323',
+        contentKey: SmartAlertCenter.contentKey,
+        title: 'Smart Alerts',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: bottomInset,
+        tabs: const SizedBox.shrink(),
+        body: VitErrorState(
+          title: 'Smart Alerts',
+          message: 'Không tải được dữ liệu.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(smartAlertsSnapshotProvider),
+        ),
+      ),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        return CrossModuleTabbedPageShell(
+          semanticLabel: 'Trung tâm cảnh báo thông minh',
+          semanticIdentifier: 'SC-323',
+          contentKey: SmartAlertCenter.contentKey,
+          title: snapshot.title,
+          onBack: () => context.go(snapshot.backRoute),
+          scrollEndClearance: bottomInset,
+          tabs: _SmartAlertTabs(
+            tabs: snapshot.tabs,
+            active: _activeTab,
+            onChanged: (tab) {
+              unawaited(HapticFeedback.selectionClick());
+              setState(() => _activeTab = tab);
+            },
+          ),
+          body: _activeTab == SmartAlertTab.active
+              ? _ActiveAlertsTab(snapshot: snapshot)
+              : _activeTab == SmartAlertTab.history
+              ? _AlertHistoryTab(snapshot: snapshot)
+              : _AlertSettingsTab(
+                  snapshot: snapshot,
+                  isChannelEnabled: (channel) =>
+                      _channelOverrides[channel.id] ?? channel.enabled,
+                  onToggleChannel: (channel) {
+                    unawaited(HapticFeedback.selectionClick());
+                    setState(() {
+                      final current =
+                          _channelOverrides[channel.id] ?? channel.enabled;
+                      _channelOverrides[channel.id] = !current;
+                    });
+                  },
+                ),
+        );
+      },
     );
   }
 }

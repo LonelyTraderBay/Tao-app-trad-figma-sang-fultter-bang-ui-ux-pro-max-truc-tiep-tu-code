@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -148,7 +150,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                             tabs: snapshot.tabs,
                             active: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -211,7 +213,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
         amountUsd: amountUsd,
         quickAmounts: snapshot.quickAmounts,
         onChanged: (value) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() => _amountUsd = value);
         },
       ),
@@ -221,7 +223,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
         selected: selectedPreset,
         amountUsd: amountUsd,
         onChanged: (preset) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             _preset = preset;
             _customRungs = preset == SavingsLadderPreset.custom
@@ -262,7 +264,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
   }
 
   void _goToBuilderTab() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _tab = 'builder');
   }
 
@@ -280,7 +282,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
             savingsLadderTemplateById(snapshot, preset),
             amountUsd,
           );
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() {
       _preset = SavingsLadderPreset.custom;
       _customRungs = current.where((rung) => rung.id != id).toList();
@@ -299,7 +301,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
             savingsLadderTemplateById(snapshot, preset),
             amountUsd,
           );
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _preset = SavingsLadderPreset.custom;
       _customRungs = [
@@ -330,7 +332,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     final amountUsd = _amountUsd ?? 10000;
     final allocated = savingsLadderTotalAllocated(current);
     final amount = math.max(100, amountUsd - allocated).toDouble();
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() {
       _preset = SavingsLadderPreset.custom;
       _customRungs = [
@@ -359,79 +361,81 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     List<SavingsLadderRungDraft> rungs,
     int amountUsd,
   ) {
-    HapticFeedback.mediumImpact();
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.transparent,
-      builder: (context) {
-        return SafeArea(
-          child: Material(
-            color: AppColors.surface,
-            borderRadius: AppRadii.sheetTopLargeRadius,
-            child: Padding(
-              padding: EarnSpacingTokens.earnPaddingX5,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      const RoundIcon(
-                        icon: Icons.layers_rounded,
-                        color: AppColors.primary,
-                      ),
-                      const SizedBox(width: AppSpacing.x3),
-                      Expanded(
-                        child: Text(
-                          'Xác nhận ladder',
-                          style: savingsLadderCaptionBoldStyle,
+    unawaited(HapticFeedback.mediumImpact());
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.transparent,
+        builder: (context) {
+          return SafeArea(
+            child: Material(
+              color: AppColors.surface,
+              borderRadius: AppRadii.sheetTopLargeRadius,
+              child: Padding(
+                padding: EarnSpacingTokens.earnPaddingX5,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        const RoundIcon(
+                          icon: Icons.layers_rounded,
+                          color: AppColors.primary,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: AppSpacing.pageRhythmStandardSectionGap,
-                  ),
-                  DetailRow(
-                    label: 'Tổng vốn',
-                    value: savingsLadderMoney(amountUsd),
-                  ),
-                  DetailRow(label: 'Số bậc', value: '${rungs.length}'),
-                  DetailRow(
-                    label: 'APY bình quân',
-                    value:
-                        '${savingsLadderWeightedApy(rungs).toStringAsFixed(1)}%',
-                    color: AppColors.buy,
-                  ),
-                  DetailRow(
-                    label: 'Lãi dự kiến/năm',
-                    value:
-                        '+${savingsLadderMoney(savingsLadderAnnualInterest(rungs))}',
-                    color: AppColors.buy,
-                  ),
-                  const SizedBox(
-                    height: AppSpacing.pageRhythmStandardSectionGap,
-                  ),
-                  EarnDisclaimerBanner(
-                    text: snapshot.disclaimer,
-                    lineHeight: _disclaimerLineHeight,
-                  ),
-                  const SizedBox(
-                    height: AppSpacing.pageRhythmStandardSectionGap,
-                  ),
-                  VitCtaButton(
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Xác nhận tạo ladder'),
-                  ),
-                ],
+                        const SizedBox(width: AppSpacing.x3),
+                        Expanded(
+                          child: Text(
+                            'Xác nhận ladder',
+                            style: savingsLadderCaptionBoldStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
+                    DetailRow(
+                      label: 'Tổng vốn',
+                      value: savingsLadderMoney(amountUsd),
+                    ),
+                    DetailRow(label: 'Số bậc', value: '${rungs.length}'),
+                    DetailRow(
+                      label: 'APY bình quân',
+                      value:
+                          '${savingsLadderWeightedApy(rungs).toStringAsFixed(1)}%',
+                      color: AppColors.buy,
+                    ),
+                    DetailRow(
+                      label: 'Lãi dự kiến/năm',
+                      value:
+                          '+${savingsLadderMoney(savingsLadderAnnualInterest(rungs))}',
+                      color: AppColors.buy,
+                    ),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
+                    EarnDisclaimerBanner(
+                      text: snapshot.disclaimer,
+                      lineHeight: _disclaimerLineHeight,
+                    ),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
+                    VitCtaButton(
+                      onPressed: () {
+                        unawaited(HapticFeedback.lightImpact());
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Xác nhận tạo ladder'),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

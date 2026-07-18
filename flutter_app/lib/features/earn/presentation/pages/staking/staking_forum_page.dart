@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -313,7 +315,7 @@ class _ThreadCard extends StatelessWidget {
 }
 
 void _showComingSoon(BuildContext context, String message) {
-  HapticFeedback.selectionClick();
+  unawaited(HapticFeedback.selectionClick());
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
 

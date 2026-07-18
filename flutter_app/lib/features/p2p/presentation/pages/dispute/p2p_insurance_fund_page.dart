@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -129,7 +130,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                       tooltip: 'Hướng dẫn sử dụng',
                       tone: VitHeaderActionTone.primary,
                       onPressed: () {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         setState(() => _showTour = true);
                       },
                     ),
@@ -144,7 +145,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                         variant: VitTabBarVariant.segment,
                         activeKey: _tab.name,
                         onChanged: (key) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() {
                             _tab = key == _InsuranceTab.claims.name
                                 ? _InsuranceTab.claims
@@ -215,11 +216,11 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
             _InsuranceTourOverlay(
               snapshot: snapshot,
               onClose: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _showTour = false);
               },
               onContinue: () {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _showTour = false);
               },
             ),

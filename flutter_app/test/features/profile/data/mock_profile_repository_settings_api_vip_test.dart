@@ -25,39 +25,45 @@ import 'package:vit_trade_flutter/features/profile/data/repositories/mock_profil
 /// placeholder markers (low-entropy, clearly-fake) — this is the current,
 /// correct fixture shape, not a real credential.
 void main() {
-  const repository = MockProfileRepository();
+  const repository = MockProfileRepository(loadDelay: Duration.zero);
 
   group('MockProfileRepository settings/api/vip data smoke test', () {
-    test('getSettings pins the currency/language defaults and list sizes', () {
-      final snapshot = repository.getSettings();
+    test(
+      'getSettings pins the currency/language defaults and list sizes',
+      () async {
+        final snapshot = await repository.getSettings();
 
-      expect(snapshot.endpoint, '/api/mobile/profile/profile-settings');
-      expect(snapshot.currencyOptions, ['USD', 'VND', 'EUR', 'BTC']);
-      expect(snapshot.selectedCurrency, 'USD');
-      expect(snapshot.languages, hasLength(2));
-      expect(snapshot.selectedLanguageId, 'vi');
-      expect(snapshot.tradeSecurity, hasLength(3));
-      expect(snapshot.notifications, hasLength(6));
-      expect(snapshot.appInfo, hasLength(3));
-      expect(snapshot.appInfo.first.value, '2.4.1 (Build 241)');
-    });
+        expect(snapshot.endpoint, '/api/mobile/profile/profile-settings');
+        expect(snapshot.currencyOptions, ['USD', 'VND', 'EUR', 'BTC']);
+        expect(snapshot.selectedCurrency, 'USD');
+        expect(snapshot.languages, hasLength(2));
+        expect(snapshot.selectedLanguageId, 'vi');
+        expect(snapshot.tradeSecurity, hasLength(3));
+        expect(snapshot.notifications, hasLength(6));
+        expect(snapshot.appInfo, hasLength(3));
+        expect(snapshot.appInfo.first.value, '2.4.1 (Build 241)');
+      },
+    );
 
-    test('getApiKeyCreate pins the permission and expiry option counts', () {
-      final snapshot = repository.getApiKeyCreate();
+    test(
+      'getApiKeyCreate pins the permission and expiry option counts',
+      () async {
+        final snapshot = await repository.getApiKeyCreate();
 
-      expect(snapshot.endpoint, '/api/mobile/profile/profile-api-create');
-      expect(snapshot.permissions, hasLength(3));
-      expect(snapshot.permissions.first.id, 'read');
-      expect(snapshot.permissions.first.required, isTrue);
-      expect(snapshot.permissions.last.id, 'withdraw');
-      expect(snapshot.expiryOptions, hasLength(4));
-      expect(snapshot.securityTips, hasLength(4));
-    });
+        expect(snapshot.endpoint, '/api/mobile/profile/profile-api-create');
+        expect(snapshot.permissions, hasLength(3));
+        expect(snapshot.permissions.first.id, 'read');
+        expect(snapshot.permissions.first.required, isTrue);
+        expect(snapshot.permissions.last.id, 'withdraw');
+        expect(snapshot.expiryOptions, hasLength(4));
+        expect(snapshot.securityTips, hasLength(4));
+      },
+    );
 
     test(
       'getApiManagement pins the SEC-S41 placeholder key/secret markers',
-      () {
-        final snapshot = repository.getApiManagement();
+      () async {
+        final snapshot = await repository.getApiManagement();
 
         expect(snapshot.endpoint, '/api/mobile/profile/profile-api');
         expect(snapshot.keys, hasLength(3));
@@ -76,24 +82,27 @@ void main() {
       },
     );
 
-    test('getVip pins the current tier, fee, and tier/history counts', () {
-      final snapshot = repository.getVip();
+    test(
+      'getVip pins the current tier, fee, and tier/history counts',
+      () async {
+        final snapshot = await repository.getVip();
 
-      expect(snapshot.endpoint, '/api/mobile/profile/profile-vip');
-      expect(snapshot.currentLevel, 1);
-      expect(snapshot.monthlyVolume, 12450);
-      expect(snapshot.tiers, hasLength(6));
-      expect(snapshot.tiers[1].name, 'VIP 1');
-      expect(snapshot.tiers[1].makerFee, .09);
-      expect(snapshot.history, hasLength(5));
-      expect(snapshot.currentTier.level, 1);
-      expect(snapshot.nextTier?.level, 2);
-    });
+        expect(snapshot.endpoint, '/api/mobile/profile/profile-vip');
+        expect(snapshot.currentLevel, 1);
+        expect(snapshot.monthlyVolume, 12450);
+        expect(snapshot.tiers, hasLength(6));
+        expect(snapshot.tiers[1].name, 'VIP 1');
+        expect(snapshot.tiers[1].makerFee, .09);
+        expect(snapshot.history, hasLength(5));
+        expect(snapshot.currentTier.level, 1);
+        expect(snapshot.nextTier?.level, 2);
+      },
+    );
 
     test(
       'getSubAccounts pins the account/balance totals and a known account',
-      () {
-        final snapshot = repository.getSubAccounts();
+      () async {
+        final snapshot = await repository.getSubAccounts();
 
         expect(snapshot.endpoint, '/api/mobile/profile/profile-sub-accounts');
         expect(snapshot.accounts, hasLength(5));

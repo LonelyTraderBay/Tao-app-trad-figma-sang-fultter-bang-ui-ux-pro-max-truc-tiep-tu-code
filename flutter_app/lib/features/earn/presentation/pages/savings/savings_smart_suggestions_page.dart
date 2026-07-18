@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -113,7 +115,7 @@ class _SavingsSmartSuggestionsPageState
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() => _tab = tab);
                         },
                       ),
@@ -146,7 +148,7 @@ class _SavingsSmartSuggestionsPageState
                               filters: snapshot.filters,
                               active: _filter,
                               onChanged: (filter) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _filter = filter);
                               },
                             ),
@@ -188,7 +190,7 @@ class _SavingsSmartSuggestionsPageState
   }
 
   void _markHelpful(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_helpful.contains(id)) {
         _helpful.remove(id);
@@ -199,7 +201,7 @@ class _SavingsSmartSuggestionsPageState
   }
 
   void _dismissSuggestion(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _dismissed.add(id));
   }
 }

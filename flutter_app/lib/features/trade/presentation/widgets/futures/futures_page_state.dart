@@ -50,7 +50,7 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       });
       return;
     }
-    showVitNoticeSheet(
+    await showVitNoticeSheet(
       context: context,
       title: 'Gửi lệnh thất bại',
       message:

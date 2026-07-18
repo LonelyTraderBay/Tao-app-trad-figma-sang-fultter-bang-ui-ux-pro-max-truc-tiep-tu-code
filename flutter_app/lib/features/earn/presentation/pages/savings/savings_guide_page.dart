@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -101,7 +103,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                     tabs: snapshot.tabs,
                     active: _activeTab!,
                     onChanged: (tab) {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       setState(() => _activeTab = tab);
                     },
                   ),
@@ -151,7 +153,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
   }
 
   Future<void> _openTutorialSheet(SavingsGuideTutorialDraft tutorial) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -222,7 +224,9 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                                 onPressed: stepIndex == 0
                                     ? null
                                     : () {
-                                        HapticFeedback.selectionClick();
+                                        unawaited(
+                                          HapticFeedback.selectionClick(),
+                                        );
                                         setSheetState(() => stepIndex--);
                                       },
                                 child: const Text('Trước'),
@@ -238,7 +242,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                                     ? VitCtaButtonVariant.success
                                     : VitCtaButtonVariant.primary,
                                 onPressed: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   if (stepIndex < tutorial.steps.length - 1) {
                                     setSheetState(() => stepIndex++);
                                     return;

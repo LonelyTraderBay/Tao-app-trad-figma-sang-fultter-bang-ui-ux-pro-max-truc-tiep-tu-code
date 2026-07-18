@@ -5,11 +5,11 @@ import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
 /// [AdminRepository] and asserts each call succeeds without throwing and
 /// returns a plausible, correctly-typed result.
 void main() {
-  const repository = MockAdminRepository();
+  const repository = MockAdminRepository(loadDelay: Duration.zero);
 
   group('MockAdminRepository smoke test', () {
-    test('getHome returns a populated snapshot', () {
-      final snapshot = repository.getHome();
+    test('getHome returns a populated snapshot', () async {
+      final snapshot = await repository.getHome();
 
       expect(snapshot, isA<AdminHomeSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -23,8 +23,8 @@ void main() {
       expect(snapshot.adminMetrics.totalFunnels, 5);
     });
 
-    test('getAnalytics returns a populated snapshot', () {
-      final snapshot = repository.getAnalytics();
+    test('getAnalytics returns a populated snapshot', () async {
+      final snapshot = await repository.getAnalytics();
 
       expect(snapshot, isA<AdminAnalyticsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -37,8 +37,8 @@ void main() {
       expect(snapshot.adminMetrics, isA<AdminMetrics>());
     });
 
-    test('getAbTests returns a populated snapshot', () {
-      final snapshot = repository.getAbTests();
+    test('getAbTests returns a populated snapshot', () async {
+      final snapshot = await repository.getAbTests();
 
       expect(snapshot, isA<AdminAbTestsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -54,8 +54,8 @@ void main() {
       expect(firstTest.variants.first.isControl, isTrue);
     });
 
-    test('getFunnels returns a populated snapshot', () {
-      final snapshot = repository.getFunnels();
+    test('getFunnels returns a populated snapshot', () async {
+      final snapshot = await repository.getFunnels();
 
       expect(snapshot, isA<AdminFunnelsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -70,13 +70,13 @@ void main() {
     });
 
     test('MockAdminRepository satisfies AdminRepository for every method '
-        'without throwing', () {
+        'without throwing', () async {
       const AdminRepository asInterface = MockAdminRepository();
 
-      expect(asInterface.getHome, returnsNormally);
-      expect(asInterface.getAnalytics, returnsNormally);
-      expect(asInterface.getAbTests, returnsNormally);
-      expect(asInterface.getFunnels, returnsNormally);
+      await asInterface.getHome();
+      await asInterface.getAnalytics();
+      await asInterface.getAbTests();
+      await asInterface.getFunnels();
     });
   });
 }

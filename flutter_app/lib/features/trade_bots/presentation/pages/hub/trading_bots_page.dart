@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -156,15 +158,19 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
   }
 
   void _toggleBot(String botId) {
-    ref
-        .read(tradeBotsControllerProvider.notifier)
-        .submitAction(botId: botId, action: 'toggle');
+    unawaited(
+      ref
+          .read(tradeBotsControllerProvider.notifier)
+          .submitAction(botId: botId, action: 'toggle'),
+    );
   }
 
   void _deleteBot(String botId) {
-    ref
-        .read(tradeBotsControllerProvider.notifier)
-        .submitAction(botId: botId, action: 'delete');
+    unawaited(
+      ref
+          .read(tradeBotsControllerProvider.notifier)
+          .submitAction(botId: botId, action: 'delete'),
+    );
   }
 
   Future<void> _confirmDeleteBot(String botId) async {
@@ -195,7 +201,7 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
       builder: (context) => _CreateBotSheet(strategy: strategy),
     );
     if (created != true || !mounted) return;
-    ref
+    await ref
         .read(tradeBotsControllerProvider.notifier)
         .createBot(
           TradeBotCreateRequest(
@@ -206,6 +212,7 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
             },
           ),
         );
+    if (!mounted) return;
     setState(() => _showSuccess = true);
   }
 }

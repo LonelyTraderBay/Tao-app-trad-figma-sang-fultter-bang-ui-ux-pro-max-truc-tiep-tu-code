@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -279,57 +281,59 @@ class _ArenaChallengeDetailPageState
     required IconData icon,
     required String body,
   }) {
-    HapticFeedback.selectionClick();
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
-      builder: (context) => SafeArea(
-        top: false,
-        child: VitSheetSurface(
-          color: AppColors.surface,
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
+        shape: const RoundedRectangleBorder(
           borderRadius: AppRadii.sheetTopRadius,
-          padding: _challengeSheetPadding,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  VitAccentIconBox(
-                    icon: icon,
-                    color: _arenaAccent,
-                    iconSize: _challengeIconBubbleIcon,
-                  ),
-                  const SizedBox(width: _challengeInlineGap),
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
+        ),
+        builder: (context) => SafeArea(
+          top: false,
+          child: VitSheetSurface(
+            color: AppColors.surface,
+            borderRadius: AppRadii.sheetTopRadius,
+            padding: _challengeSheetPadding,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    VitAccentIconBox(
+                      icon: icon,
+                      color: _arenaAccent,
+                      iconSize: _challengeIconBubbleIcon,
+                    ),
+                    const SizedBox(width: _challengeInlineGap),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: _challengeGap),
-              Text(
-                body,
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.text2,
-                  height: AppTextStyles.numericMicro.height,
+                  ],
                 ),
-              ),
-              const SizedBox(height: _challengeGap),
-              VitCtaButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Đã hiểu'),
-              ),
-            ],
+                const SizedBox(height: _challengeGap),
+                Text(
+                  body,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text2,
+                    height: AppTextStyles.numericMicro.height,
+                  ),
+                ),
+                const SizedBox(height: _challengeGap),
+                VitCtaButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Đã hiểu'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

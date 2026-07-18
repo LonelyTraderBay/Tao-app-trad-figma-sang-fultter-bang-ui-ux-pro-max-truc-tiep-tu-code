@@ -6,11 +6,11 @@ import 'package:vit_trade_flutter/features/profile/data/repositories/mock_profil
 import 'package:vit_trade_flutter/features/profile/domain/entities/profile_entities.dart';
 
 void main() {
-  const repository = MockProfileRepository();
+  const repository = MockProfileRepository(loadDelay: Duration.zero);
 
   group('MockProfileRepository smoke test', () {
-    test('getProfile returns a populated snapshot', () {
-      final snapshot = repository.getProfile();
+    test('getProfile returns a populated snapshot', () async {
+      final snapshot = await repository.getProfile();
 
       expect(snapshot, isA<ProfileSnapshot>());
       expect(snapshot.user.id, 'USR001');
@@ -22,8 +22,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getEditProfile returns a populated snapshot', () {
-      final snapshot = repository.getEditProfile();
+    test('getEditProfile returns a populated snapshot', () async {
+      final snapshot = await repository.getEditProfile();
 
       expect(snapshot, isA<ProfileEditSnapshot>());
       expect(snapshot.user.email, 'nguyenvana@email.com');
@@ -31,8 +31,8 @@ void main() {
     });
 
     test('getSecurity returns a populated snapshot with a high-risk '
-        'contract id', () {
-      final snapshot = repository.getSecurity();
+        'contract id', () async {
+      final snapshot = await repository.getSecurity();
 
       expect(snapshot, isA<ProfileSecuritySnapshot>());
       expect(snapshot.score, 3);
@@ -43,8 +43,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getKyc returns a populated snapshot', () {
-      final snapshot = repository.getKyc();
+    test('getKyc returns a populated snapshot', () async {
+      final snapshot = await repository.getKyc();
 
       expect(snapshot, isA<ProfileKycSnapshot>());
       expect(snapshot.currentLevel, 2);
@@ -52,8 +52,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getSettings returns a populated snapshot', () {
-      final snapshot = repository.getSettings();
+    test('getSettings returns a populated snapshot', () async {
+      final snapshot = await repository.getSettings();
 
       expect(snapshot, isA<ProfileSettingsSnapshot>());
       expect(snapshot.currencyOptions, hasLength(4));
@@ -65,8 +65,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getActivity returns a populated snapshot', () {
-      final snapshot = repository.getActivity();
+    test('getActivity returns a populated snapshot', () async {
+      final snapshot = await repository.getActivity();
 
       expect(snapshot, isA<ProfileActivitySnapshot>());
       expect(snapshot.filters, hasLength(3));
@@ -74,8 +74,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getApiKeyCreate returns a populated snapshot', () {
-      final snapshot = repository.getApiKeyCreate();
+    test('getApiKeyCreate returns a populated snapshot', () async {
+      final snapshot = await repository.getApiKeyCreate();
 
       expect(snapshot, isA<ProfileApiKeyCreateSnapshot>());
       expect(snapshot.permissions, hasLength(3));
@@ -84,8 +84,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getApiManagement returns a populated snapshot', () {
-      final snapshot = repository.getApiManagement();
+    test('getApiManagement returns a populated snapshot', () async {
+      final snapshot = await repository.getApiManagement();
 
       expect(snapshot, isA<ProfileApiManagementSnapshot>());
       expect(snapshot.keys, hasLength(3));
@@ -93,8 +93,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getVip returns a populated snapshot', () {
-      final snapshot = repository.getVip();
+    test('getVip returns a populated snapshot', () async {
+      final snapshot = await repository.getVip();
 
       expect(snapshot, isA<ProfileVipSnapshot>());
       expect(snapshot.currentLevel, 1);
@@ -105,8 +105,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getDeviceManagement returns a populated snapshot', () {
-      final snapshot = repository.getDeviceManagement();
+    test('getDeviceManagement returns a populated snapshot', () async {
+      final snapshot = await repository.getDeviceManagement();
 
       expect(snapshot, isA<ProfileDeviceManagementSnapshot>());
       expect(snapshot.devices, hasLength(4));
@@ -116,8 +116,8 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test('getSubAccounts returns a populated snapshot', () {
-      final snapshot = repository.getSubAccounts();
+    test('getSubAccounts returns a populated snapshot', () async {
+      final snapshot = await repository.getSubAccounts();
 
       expect(snapshot, isA<ProfileSubAccountsSnapshot>());
       expect(snapshot.accounts, hasLength(5));

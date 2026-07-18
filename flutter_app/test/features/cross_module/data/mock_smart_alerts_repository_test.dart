@@ -9,32 +9,35 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/smart_al
 /// which test/features/cross_module/mock_smart_alerts_repository_test.dart
 /// only asserts the shape of (greaterThan(0)/hasLength).
 void main() {
-  const repository = MockSmartAlertsRepository();
+  const repository = MockSmartAlertsRepository(loadDelay: Duration.zero);
 
   group('MockSmartAlertsRepository smoke test', () {
-    test('getCenter pins the endpoint and alert/history/channel fixture', () {
-      final snapshot = repository.getCenter();
+    test(
+      'getCenter pins the endpoint and alert/history/channel fixture',
+      () async {
+        final snapshot = await repository.getCenter();
 
-      expect(snapshot, isA<SmartAlertsSnapshot>());
-      expect(snapshot.endpoint, '/api/mobile/cross-module/smart-alerts');
-      expect(snapshot.backRoute, '/home');
-      expect(snapshot.tabs, hasLength(3));
-      expect(snapshot.alerts, hasLength(7));
-      expect(snapshot.alerts.first.id, 'a1');
-      expect(snapshot.alerts.last.status, SmartAlertStatus.paused);
+        expect(snapshot, isA<SmartAlertsSnapshot>());
+        expect(snapshot.endpoint, '/api/mobile/cross-module/smart-alerts');
+        expect(snapshot.backRoute, '/home');
+        expect(snapshot.tabs, hasLength(3));
+        expect(snapshot.alerts, hasLength(7));
+        expect(snapshot.alerts.first.id, 'a1');
+        expect(snapshot.alerts.last.status, SmartAlertStatus.paused);
 
-      expect(snapshot.history, hasLength(3));
-      expect(snapshot.history.first.id, 'h1');
+        expect(snapshot.history, hasLength(3));
+        expect(snapshot.history.first.id, 'h1');
 
-      expect(snapshot.channels, hasLength(3));
-      expect(snapshot.channels.last.enabled, isFalse);
+        expect(snapshot.channels, hasLength(3));
+        expect(snapshot.channels.last.enabled, isFalse);
 
-      expect(snapshot.templates, hasLength(7));
-      expect(snapshot.templates.first.id, 't1');
-    });
+        expect(snapshot.templates, hasLength(7));
+        expect(snapshot.templates.first.id, 't1');
+      },
+    );
 
-    test('getCenter pins the derived aggregate stats', () {
-      final snapshot = repository.getCenter();
+    test('getCenter pins the derived aggregate stats', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot.activeCount, 6);
       expect(snapshot.totalTriggers, 36);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -128,7 +130,7 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                             snapshot: snapshot,
                             openIndex: _openFaqIndex,
                             onToggle: (index) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() {
                                 _openFaqIndex = _openFaqIndex == index
                                     ? null

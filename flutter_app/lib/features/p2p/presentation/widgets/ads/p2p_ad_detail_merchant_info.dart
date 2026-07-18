@@ -10,7 +10,7 @@ class _MerchantCard extends StatelessWidget {
     final ad = snapshot.ad;
     return VitCard(
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.p2pMerchant(ad.merchantId));
       },
       padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,

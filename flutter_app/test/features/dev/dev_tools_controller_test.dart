@@ -4,42 +4,48 @@ import 'package:vit_trade_flutter/features/dev/presentation/controllers/dev_tool
 
 void main() {
   group('dev tools controllers', () {
-    test('route checker exposes a route snapshot from repository contract', () {
-      final controller = const RouteCheckerController(
-        MockRouteCheckerRepository(),
-      );
+    test(
+      'route checker exposes a route snapshot from repository contract',
+      () async {
+        final controller = const RouteCheckerController(
+          MockRouteCheckerRepository(loadDelay: Duration.zero),
+        );
 
-      final snapshot = controller.snapshot();
+        final snapshot = await controller.snapshot();
 
-      expect(snapshot.endpoint, '/api/mobile/dev/dev-route-checker');
-      expect(snapshot.totalRoutes, 43);
-      expect(snapshot.supportedStates, contains(DevScreenState.offline));
-    });
+        expect(snapshot.endpoint, '/api/mobile/dev/dev-route-checker');
+        expect(snapshot.totalRoutes, 43);
+        expect(snapshot.supportedStates, contains(DevScreenState.offline));
+      },
+    );
 
-    test('performance monitor exposes mock read model', () {
+    test('performance monitor exposes mock read model', () async {
       final controller = const PerformanceMonitorController(
-        MockPerformanceMonitorRepository(),
+        MockPerformanceMonitorRepository(loadDelay: Duration.zero),
       );
 
-      final snapshot = controller.snapshot();
+      final snapshot = await controller.snapshot();
 
       expect(snapshot.endpoint, '/api/mobile/dev/dev-performance-monitor');
       expect(snapshot.summaryMetrics, hasLength(3));
       expect(snapshot.targets, contains('FCP < 1.8s (Good)'));
     });
 
-    test('showcase and design system controllers expose static drafts', () {
-      final showcase = const MissingScreensShowcaseController(
-        MockMissingScreensShowcaseRepository(),
-      ).snapshot();
-      final designSystem = const DesignSystemController(
-        MockDesignSystemRepository(),
-      ).snapshot();
+    test(
+      'showcase and design system controllers expose static drafts',
+      () async {
+        final showcase = await const MissingScreensShowcaseController(
+          MockMissingScreensShowcaseRepository(loadDelay: Duration.zero),
+        ).snapshot();
+        final designSystem = await const DesignSystemController(
+          MockDesignSystemRepository(loadDelay: Duration.zero),
+        ).snapshot();
 
-      expect(showcase.newScreens, hasLength(3));
-      expect(showcase.flowConnections, isNotEmpty);
-      expect(designSystem.swatches, isNotEmpty);
-      expect(designSystem.playgroundControls, contains('variant'));
-    });
+        expect(showcase.newScreens, hasLength(3));
+        expect(showcase.flowConnections, isNotEmpty);
+        expect(designSystem.swatches, isNotEmpty);
+        expect(designSystem.playgroundControls, contains('variant'));
+      },
+    );
   });
 }

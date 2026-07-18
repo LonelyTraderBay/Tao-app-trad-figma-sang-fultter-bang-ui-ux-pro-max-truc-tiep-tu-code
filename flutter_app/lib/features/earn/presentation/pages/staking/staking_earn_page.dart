@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -139,7 +141,7 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                         activeTab: _tab,
                         positionCount: snapshot.positions.length,
                         onChanged: (tab) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() => _tab = tab);
                         },
                       ),
@@ -147,7 +149,7 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                         _FilterRow(
                           activeFilter: _filter,
                           onChanged: (filter) {
-                            HapticFeedback.selectionClick();
+                            unawaited(HapticFeedback.selectionClick());
                             setState(() => _filter = filter);
                           },
                         ),
@@ -156,7 +158,7 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                         _PositionsList(
                           snapshot: snapshot,
                           onExploreProducts: () {
-                            HapticFeedback.selectionClick();
+                            unawaited(HapticFeedback.selectionClick());
                             setState(() => _tab = _EarnTab.products);
                           },
                         ),

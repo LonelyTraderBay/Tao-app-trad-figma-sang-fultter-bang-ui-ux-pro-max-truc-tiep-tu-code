@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -219,7 +221,7 @@ class _P2PAntiPhishingCodePageState
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
                 onTap: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   setState(() => _showCode = !_showCode);
                 },
               ),
@@ -258,8 +260,8 @@ class _P2PAntiPhishingCodePageState
                   icon: Icons.copy_rounded,
                   color: AppModuleAccents.p2p,
                   onTap: () {
-                    HapticFeedback.selectionClick();
-                    Clipboard.setData(ClipboardData(text: _code!));
+                    unawaited(HapticFeedback.selectionClick());
+                    unawaited(Clipboard.setData(ClipboardData(text: _code!)));
                   },
                 ),
               ),
@@ -271,7 +273,7 @@ class _P2PAntiPhishingCodePageState
                   icon: Icons.edit_outlined,
                   color: AppColors.text2,
                   onTap: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     _codeController!.text = _code!;
                     setState(() => _editing = true);
                   },
@@ -319,7 +321,7 @@ class _P2PAntiPhishingCodePageState
             icon: Icons.refresh_rounded,
             color: AppColors.text1,
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               _codeController!.text = 'SEC8F2K9';
             },
           ),
@@ -330,7 +332,7 @@ class _P2PAntiPhishingCodePageState
             onPressed: _codeController!.text.trim().length < 6
                 ? null
                 : () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     setState(() {
                       _code = _codeController!.text.trim().toUpperCase();
                       _showCode = true;

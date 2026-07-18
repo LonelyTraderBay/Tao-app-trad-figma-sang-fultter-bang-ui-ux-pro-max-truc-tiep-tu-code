@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -308,7 +310,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
   }
 
   void _copyField(String value, String field) {
-    Clipboard.setData(ClipboardData(text: value));
+    unawaited(Clipboard.setData(ClipboardData(text: value)));
     setState(() => _copiedField = field);
   }
 

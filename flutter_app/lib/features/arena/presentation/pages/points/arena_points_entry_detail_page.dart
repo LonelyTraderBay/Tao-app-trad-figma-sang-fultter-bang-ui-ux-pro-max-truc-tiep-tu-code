@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -143,7 +145,7 @@ class _ArenaPointsEntryDetailPageState
                                 _EntryActions(
                                   entry: snapshot.entry!,
                                   onSupport: () {
-                                    HapticFeedback.selectionClick();
+                                    unawaited(HapticFeedback.selectionClick());
                                     setState(() => _supportOpened = true);
                                   },
                                 ),
@@ -161,13 +163,13 @@ class _ArenaPointsEntryDetailPageState
   }
 
   void _copyReference(ArenaPointsEntryDraft entry) {
-    HapticFeedback.selectionClick();
-    Clipboard.setData(ClipboardData(text: entry.refId));
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(Clipboard.setData(ClipboardData(text: entry.refId)));
     setState(() => _copied = true);
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

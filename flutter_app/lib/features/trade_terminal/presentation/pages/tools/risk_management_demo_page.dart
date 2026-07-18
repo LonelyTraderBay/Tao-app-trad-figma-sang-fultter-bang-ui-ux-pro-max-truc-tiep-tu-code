@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -166,11 +168,11 @@ class _RiskManagementDemoPageState
     }
     if (feature.id == 'calculator') {
       setState(() => _tab = _RiskTab.calculator);
-      _openCalculatorSheet();
+      unawaited(_openCalculatorSheet());
       return;
     }
     setState(() => _tab = _RiskTab.oco);
-    _openOcoSheet();
+    unawaited(_openOcoSheet());
   }
 
   Future<void> _openOcoSheet() async {

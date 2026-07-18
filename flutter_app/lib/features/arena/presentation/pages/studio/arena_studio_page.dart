@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -155,7 +157,7 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
   bool get _canContinue => _step == 1 ? _templateId != null : true;
 
   void _selectTemplate(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _templateId = id;
       _statusLabel = null;
@@ -164,7 +166,7 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
 
   void _continue() {
     if (!_canContinue) return;
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_step < 6) {
         _step += 1;
@@ -176,7 +178,7 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
   }
 
   void _backStep() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_step > 1) _step -= 1;
       _statusLabel = null;
@@ -184,7 +186,7 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
   }
 
   void _markSecondaryAction(String label) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _statusLabel = label);
   }
 

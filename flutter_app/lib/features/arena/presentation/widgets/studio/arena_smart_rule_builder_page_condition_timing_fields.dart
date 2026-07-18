@@ -186,7 +186,7 @@ class _BuilderBox extends StatelessWidget {
                 : AppColors.accent20,
             padding: ArenaSpacingTokens.arenaSmartRuleCompactSelectorPadding,
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               onTap();
             },
             child: Row(
@@ -421,7 +421,7 @@ class _EdgeRuleField extends StatelessWidget {
           borderColor: value.isEmpty ? AppColors.borderSolid : AppColors.buy20,
           padding: ArenaSpacingTokens.arenaSmartRuleSelectorPadding,
           onTap: () {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             onTap();
           },
           child: Row(
@@ -468,7 +468,7 @@ class _SwitchRow extends StatelessWidget {
       radius: VitCardRadius.standard,
       padding: ArenaSpacingTokens.arenaSmartRuleSwitchRowPadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         onTap();
       },
       child: Row(

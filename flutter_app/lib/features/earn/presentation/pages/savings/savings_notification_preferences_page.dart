@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -135,7 +137,7 @@ class _SavingsNotificationPreferencesPageState
                       tabs: snapshot.tabs,
                       active: activeTab,
                       onChanged: (tab) {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         setState(() => _tab = tab);
                       },
                     ),
@@ -165,7 +167,7 @@ class _SavingsNotificationPreferencesPageState
                               enabledAlerts: enabledAlerts,
                               totalAlerts: viewState.alerts.length,
                               onChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 ref
                                     .read(
                                       savingsNotificationPreferencesStateControllerProvider
@@ -213,14 +215,14 @@ class _SavingsNotificationPreferencesPageState
   }
 
   void _toggleAlert(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(savingsNotificationPreferencesStateControllerProvider.notifier)
         .toggleAlert(id);
   }
 
   void _toggleChannel(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(savingsNotificationPreferencesStateControllerProvider.notifier)
         .toggleChannel(id);

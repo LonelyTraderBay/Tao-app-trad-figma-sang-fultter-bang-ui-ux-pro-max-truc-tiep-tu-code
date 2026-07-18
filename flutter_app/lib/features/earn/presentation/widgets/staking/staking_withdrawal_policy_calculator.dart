@@ -111,7 +111,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 onPressed: result == null
                     ? null
                     : () {
-                        HapticFeedback.mediumImpact();
+                        unawaited(HapticFeedback.mediumImpact());
                         setState(() => _previewRequested = true);
                       },
                 leading: const Icon(Icons.fact_check_rounded),

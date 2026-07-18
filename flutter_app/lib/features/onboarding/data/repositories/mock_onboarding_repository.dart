@@ -3,10 +3,24 @@ import 'package:vit_trade_flutter/features/onboarding/domain/entities/onboarding
 import 'package:vit_trade_flutter/features/onboarding/domain/repositories/onboarding_repository.dart';
 
 final class MockOnboardingRepository implements OnboardingRepository {
-  const MockOnboardingRepository();
+  const MockOnboardingRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('onboarding_mock_fetch_failed');
+  }
 
   @override
-  OnboardingSnapshot getFlow() {
+  Future<OnboardingSnapshot> getFlow() async {
+    await _simulateNetwork();
     return const OnboardingSnapshot(
       endpoint: '/api/mobile/onboarding/onboarding',
       screenState: OnboardingScreenState.ready,

@@ -28,8 +28,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-398 mock repository exposes dev showcase BE draft', () {
-    final snapshot = const MockMissingScreensShowcaseRepository().getShowcase();
+  test('SC-398 mock repository exposes dev showcase BE draft', () async {
+    final snapshot = await const MockMissingScreensShowcaseRepository()
+        .getShowcase();
 
     expect(snapshot.endpoint, '/api/mobile/dev/dev-showcase');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

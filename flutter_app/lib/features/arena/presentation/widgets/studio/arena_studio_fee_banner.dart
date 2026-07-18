@@ -86,7 +86,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
             radius: VitCardRadius.standard,
             padding: ArenaSpacingTokens.arenaStudioFeeTogglePadding,
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _expanded = !_expanded);
             },
             child: Row(

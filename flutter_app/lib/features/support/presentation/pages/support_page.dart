@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -176,7 +178,7 @@ class _SupportPageState extends ConsumerState<SupportPage> {
   }
 
   void _setFaq(bool value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _showFaq = value;
       _expandedFaqIndex = null;
@@ -184,7 +186,7 @@ class _SupportPageState extends ConsumerState<SupportPage> {
   }
 
   void _toggleFaq(int index) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _expandedFaqIndex = _expandedFaqIndex == index ? null : index;
     });

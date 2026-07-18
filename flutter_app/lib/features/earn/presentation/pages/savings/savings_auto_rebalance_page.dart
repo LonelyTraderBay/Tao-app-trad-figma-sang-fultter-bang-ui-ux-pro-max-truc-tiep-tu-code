@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -149,7 +151,7 @@ class _SavingsAutoRebalancePageState
                                 variant: VitTabBarVariant.underline,
                                 activeKey: activeTab,
                                 onChanged: (tab) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _tab = tab);
                                 },
                                 tabs: [
@@ -206,7 +208,7 @@ class _SavingsAutoRebalancePageState
                                   snapshot: snapshot,
                                   activeId: strategy.id,
                                   onChanged: (id) {
-                                    HapticFeedback.selectionClick();
+                                    unawaited(HapticFeedback.selectionClick());
                                     setState(() => _strategyId = id);
                                   },
                                 ),
@@ -268,7 +270,7 @@ class _SavingsAutoRebalancePageState
   }
 
   void _openPreview() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _showPreview = true);
   }
 }

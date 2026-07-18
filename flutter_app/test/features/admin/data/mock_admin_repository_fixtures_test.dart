@@ -10,11 +10,11 @@ import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
 /// the shared `adminMetrics` block — so a silent content regression in the
 /// mock data fails a test instead of only a visual diff.
 void main() {
-  const repository = MockAdminRepository();
+  const repository = MockAdminRepository(loadDelay: Duration.zero);
 
   group('MockAdminRepository fixture pins', () {
-    test('getHome dashboards pin ids, routes, and stat labels', () {
-      final dashboards = repository.getHome().dashboards;
+    test('getHome dashboards pin ids, routes, and stat labels', () async {
+      final dashboards = (await repository.getHome()).dashboards;
 
       expect(dashboards, hasLength(3));
       expect(dashboards[0].id, 'analytics');
@@ -28,8 +28,8 @@ void main() {
       expect(dashboards[2].stat, '0 completed');
     });
 
-    test('getHome adminMetrics pins the shared health snapshot', () {
-      final metrics = repository.getHome().adminMetrics;
+    test('getHome adminMetrics pins the shared health snapshot', () async {
+      final metrics = (await repository.getHome()).adminMetrics;
 
       expect(metrics.totalTests, 5);
       expect(metrics.totalFunnels, 5);
@@ -37,8 +37,8 @@ void main() {
       expect(metrics.liveEventWindowLabel, '0 sự kiện (5 phút)');
     });
 
-    test('getAnalytics ranges pin the selectable date-range options', () {
-      final snapshot = repository.getAnalytics();
+    test('getAnalytics ranges pin the selectable date-range options', () async {
+      final snapshot = await repository.getAnalytics();
 
       expect(snapshot.activeRange, AdminAnalyticsRange.sevenDays);
       expect(snapshot.ranges, hasLength(3));
@@ -50,8 +50,8 @@ void main() {
       expect(snapshot.ranges[2].label, '90 ngày');
     });
 
-    test('getAbTests pins every test id, status, and variant count', () {
-      final tests = repository.getAbTests().tests;
+    test('getAbTests pins every test id, status, and variant count', () async {
+      final tests = (await repository.getAbTests()).tests;
 
       expect(tests, hasLength(5));
       expect(
@@ -74,8 +74,8 @@ void main() {
       expect(tests.every((test) => test.variants.first.isControl), isTrue);
     });
 
-    test('getFunnels pins every funnel id and step count', () {
-      final funnels = repository.getFunnels().funnels;
+    test('getFunnels pins every funnel id and step count', () async {
+      final funnels = (await repository.getFunnels()).funnels;
 
       expect(funnels, hasLength(5));
       expect(

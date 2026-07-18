@@ -65,7 +65,7 @@ class _ArenaProductionReadyPageState
                           _SectionTabs(
                             active: _activeSection,
                             onChanged: (section) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _activeSection = section);
                             },
                           ),
@@ -89,12 +89,12 @@ class _ArenaProductionReadyPageState
   }
 
   void _go(BuildContext context, String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(_resolvedRoute(route));
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

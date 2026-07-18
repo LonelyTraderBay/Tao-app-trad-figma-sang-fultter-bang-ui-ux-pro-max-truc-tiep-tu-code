@@ -2,10 +2,24 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/tax_repo
 import 'package:vit_trade_flutter/features/cross_module/domain/repositories/tax_report_repository.dart';
 
 final class MockTaxReportRepository implements TaxReportRepository {
-  const MockTaxReportRepository();
+  const MockTaxReportRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('tax_report_mock_fetch_failed');
+  }
 
   @override
-  TaxReportSnapshot getCenter() {
+  Future<TaxReportSnapshot> getCenter() async {
+    await _simulateNetwork();
     return const TaxReportSnapshot(
       endpoint: '/api/mobile/cross-module/tax-reports',
       exportEndpoint: '/api/mobile/cross-module/tax-reports/exports',

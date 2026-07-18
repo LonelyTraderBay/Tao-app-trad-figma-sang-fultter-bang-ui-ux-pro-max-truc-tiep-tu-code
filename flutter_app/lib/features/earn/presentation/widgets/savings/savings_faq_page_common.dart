@@ -88,7 +88,7 @@ class _SupportCard extends StatelessWidget {
             height: AppSpacing.buttonCompact,
             padding: EarnSpacingTokens.earnHorizontalPaddingX3,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.supportRoute);
             },
             trailing: const Icon(Icons.open_in_new_rounded),

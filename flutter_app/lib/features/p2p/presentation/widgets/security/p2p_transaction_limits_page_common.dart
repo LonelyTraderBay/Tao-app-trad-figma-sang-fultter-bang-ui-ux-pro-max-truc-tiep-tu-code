@@ -160,7 +160,7 @@ class _UpgradeCard extends StatelessWidget {
               VitCtaButton(
                 key: P2PTransactionLimitsPage.upgradeCtaKey,
                 onPressed: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   context.go(snapshot.kycRequirementsRoute);
                 },
                 height: AppSpacing.ctaHeight,

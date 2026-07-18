@@ -181,7 +181,7 @@ class _EscrowOrderCard extends StatelessWidget {
       radius: VitCardRadius.standard,
       padding: P2PSpacingTokens.p2pEscrowBalanceCardPadding,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(AppRoutePaths.p2pOrder(order.canonicalOrderId));
       },
       child: Column(

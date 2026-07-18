@@ -7,11 +7,11 @@ import 'package:vit_trade_flutter/features/enterprise_states/domain/repositories
 /// on [EnterpriseStatesRepository] and asserts each call succeeds without
 /// throwing and returns a plausible, non-empty result.
 void main() {
-  const repository = MockEnterpriseStatesRepository();
+  const repository = MockEnterpriseStatesRepository(loadDelay: Duration.zero);
 
   group('MockEnterpriseStatesRepository smoke test', () {
-    test('getReference returns a populated snapshot', () {
-      final snapshot = repository.getReference();
+    test('getReference returns a populated snapshot', () async {
+      final snapshot = await repository.getReference();
 
       expect(snapshot, isA<EnterpriseStatesSnapshot>());
       expect(
@@ -40,9 +40,9 @@ void main() {
       );
     });
 
-    test('getReference does not throw across repeated calls', () {
-      expect(repository.getReference, returnsNormally);
-      expect(repository.getReference, returnsNormally);
+    test('getReference does not throw across repeated calls', () async {
+      await repository.getReference();
+      await repository.getReference();
     });
   });
 }

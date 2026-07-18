@@ -15,7 +15,7 @@ class _QuickLinks extends StatelessWidget {
                 ? ArenaSafetyCenterPage.blockedLinkKey
                 : ArenaSafetyCenterPage.reportsLinkKey,
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(link.route);
             },
             density: VitDensity.compact,

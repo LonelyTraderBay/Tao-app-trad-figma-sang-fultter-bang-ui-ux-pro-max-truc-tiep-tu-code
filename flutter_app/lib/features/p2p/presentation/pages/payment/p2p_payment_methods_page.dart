@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,7 +195,7 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
   }
 
   void _openEdit(P2PPaymentListMethodDraft method) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final type = method.type == P2PPaymentListMethodType.bank
         ? 'bank'
         : 'ewallet';
@@ -201,17 +203,17 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
   }
 
   void _requestDelete(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _pendingDeleteId = id);
   }
 
   void _cancelDelete() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _pendingDeleteId = null);
   }
 
   void _confirmDelete(String id) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() {
       _methods = _methods.where((item) => item.id != id).toList();
       _pendingDeleteId = null;
@@ -219,7 +221,7 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
   }
 
   void _setDefault(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _methods = _methods
           .map((item) => item.copyWith(isDefault: item.id == id))

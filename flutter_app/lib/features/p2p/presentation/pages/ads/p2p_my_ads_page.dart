@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,7 +138,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               variant: VitTabBarVariant.segment,
               activeKey: _filter.name,
               onChanged: (key) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _filter = _filterFromKey(key));
               },
               tabs: [
@@ -196,7 +198,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
   }
 
   void _toggleStatus(P2PMyAdDraft ad) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final nextStatus = ad.status == P2PMyAdStatus.active
         ? P2PMyAdStatus.paused
         : P2PMyAdStatus.active;
@@ -204,7 +206,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
   }
 
   Future<void> _confirmDelete(BuildContext context, P2PMyAdDraft ad) async {
-    HapticFeedback.lightImpact();
+    unawaited(HapticFeedback.lightImpact());
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {

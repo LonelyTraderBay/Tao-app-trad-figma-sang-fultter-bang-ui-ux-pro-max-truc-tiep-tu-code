@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -225,61 +227,65 @@ class _TransferPageState extends ConsumerState<TransferPage> {
         .where((wallet) => wallet.id != excludedWalletId)
         .toList(growable: false);
 
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return VitSheetPanel(
-          title: title,
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: eligibleWallets.length,
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
-            itemBuilder: (context, index) {
-              final wallet = eligibleWallets[index];
-              return TransferWalletPickerRow(
-                wallet: wallet,
-                selected: wallet.id == selectedWalletId,
-                onTap: () {
-                  onSelected(wallet.id);
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
-        );
-      },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return VitSheetPanel(
+            title: title,
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: eligibleWallets.length,
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
+              itemBuilder: (context, index) {
+                final wallet = eligibleWallets[index];
+                return TransferWalletPickerRow(
+                  wallet: wallet,
+                  selected: wallet.id == selectedWalletId,
+                  onTap: () {
+                    onSelected(wallet.id);
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
   void _showAssetPicker(WalletTransferSnapshot snapshot) {
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return VitSheetPanel(
-          title: 'Ch\u1ecdn t\u00e0i s\u1ea3n',
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: snapshot.assets.length,
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
-            itemBuilder: (context, index) {
-              final asset = snapshot.assets[index];
-              return TransferAssetPickerRow(
-                asset: asset,
-                selected: asset.id == _assetId,
-                onTap: () {
-                  setState(() {
-                    _assetId = asset.id;
-                    _amountController.clear();
-                  });
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
-        );
-      },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return VitSheetPanel(
+            title: 'Ch\u1ecdn t\u00e0i s\u1ea3n',
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: snapshot.assets.length,
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
+              itemBuilder: (context, index) {
+                final asset = snapshot.assets[index];
+                return TransferAssetPickerRow(
+                  asset: asset,
+                  selected: asset.id == _assetId,
+                  onTap: () {
+                    setState(() {
+                      _assetId = asset.id;
+                      _amountController.clear();
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -290,22 +296,24 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     required double amount,
     required double usdValue,
   }) {
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => TransferConfirmSheet(
-        fromWallet: fromWallet,
-        toWallet: toWallet,
-        asset: asset,
-        amount: amount,
-        usdValue: usdValue,
-        onConfirm: () {
-          Navigator.of(context).pop();
-          setState(() {
-            _showSuccess = true;
-            _amountController.clear();
-          });
-        },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => TransferConfirmSheet(
+          fromWallet: fromWallet,
+          toWallet: toWallet,
+          asset: asset,
+          amount: amount,
+          usdValue: usdValue,
+          onConfirm: () {
+            Navigator.of(context).pop();
+            setState(() {
+              _showSuccess = true;
+              _amountController.clear();
+            });
+          },
+        ),
       ),
     );
   }

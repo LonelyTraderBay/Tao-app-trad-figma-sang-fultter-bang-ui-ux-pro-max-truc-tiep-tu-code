@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -155,7 +157,7 @@ class _StakingTransactionReportingPageState
                             year: _year!,
                             costBasis: _costBasis!,
                             onYearChanged: (year) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _year = year);
                             },
                             onOpenCostBasis: () => _openMethodSheet(snapshot),
@@ -163,7 +165,7 @@ class _StakingTransactionReportingPageState
                           _ReportingTabs(
                             active: _tab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -196,7 +198,7 @@ class _StakingTransactionReportingPageState
   Future<void> _openMethodSheet(
     StakingTransactionReportingSnapshot snapshot,
   ) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -217,7 +219,7 @@ class _StakingTransactionReportingPageState
   Future<void> _openExportSheet(
     StakingTransactionReportingSnapshot snapshot,
   ) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

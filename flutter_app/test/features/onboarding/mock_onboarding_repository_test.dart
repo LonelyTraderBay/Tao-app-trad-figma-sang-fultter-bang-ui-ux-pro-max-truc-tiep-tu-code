@@ -6,11 +6,11 @@ import 'package:vit_trade_flutter/features/onboarding/domain/entities/onboarding
 /// [OnboardingRepository] and asserts the call succeeds without throwing and
 /// returns a plausible, fully-populated snapshot.
 void main() {
-  const repository = MockOnboardingRepository();
+  const repository = MockOnboardingRepository(loadDelay: Duration.zero);
 
   group('MockOnboardingRepository smoke test', () {
-    test('getFlow returns a populated snapshot', () {
-      final snapshot = repository.getFlow();
+    test('getFlow returns a populated snapshot', () async {
+      final snapshot = await repository.getFlow();
 
       expect(snapshot, isA<OnboardingSnapshot>());
       expect(snapshot.endpoint, '/api/mobile/onboarding/onboarding');
@@ -30,36 +30,38 @@ void main() {
       );
     });
 
-    test('getFlow does not throw and is safe to call repeatedly', () {
-      late final OnboardingSnapshot snapshot;
+    test('getFlow does not throw and is safe to call repeatedly', () async {
+      final snapshot = await repository.getFlow();
 
-      expect(() => snapshot = repository.getFlow(), returnsNormally);
       expect(snapshot, isA<OnboardingSnapshot>());
     });
 
-    test('getFlow steps cover the full onboarding sequence in order', () {
-      final snapshot = repository.getFlow();
+    test('getFlow steps cover the full onboarding sequence in order', () async {
+      final snapshot = await repository.getFlow();
 
       expect(snapshot.steps, hasLength(6));
       expect(snapshot.steps.first, OnboardingStepDraft.welcome);
       expect(snapshot.steps.last, OnboardingStepDraft.complete);
     });
 
-    test('getFlow welcome draft is populated with intro copy and features', () {
-      final welcome = repository.getFlow().welcome;
+    test(
+      'getFlow welcome draft is populated with intro copy and features',
+      () async {
+        final welcome = (await repository.getFlow()).welcome;
 
-      expect(welcome, isA<OnboardingWelcomeDraft>());
-      expect(welcome.skipLabel, isNotEmpty);
-      expect(welcome.title, isNotEmpty);
-      expect(welcome.subtitle, isNotEmpty);
-      expect(welcome.ctaLabel, isNotEmpty);
-      expect(welcome.helperText, isNotEmpty);
-      expect(welcome.features, hasLength(3));
-      expect(welcome.features.first, isA<OnboardingFeatureDraft>());
-    });
+        expect(welcome, isA<OnboardingWelcomeDraft>());
+        expect(welcome.skipLabel, isNotEmpty);
+        expect(welcome.title, isNotEmpty);
+        expect(welcome.subtitle, isNotEmpty);
+        expect(welcome.ctaLabel, isNotEmpty);
+        expect(welcome.helperText, isNotEmpty);
+        expect(welcome.features, hasLength(3));
+        expect(welcome.features.first, isA<OnboardingFeatureDraft>());
+      },
+    );
 
-    test('getFlow modules cover every top-level product area', () {
-      final modules = repository.getFlow().modules;
+    test('getFlow modules cover every top-level product area', () async {
+      final modules = (await repository.getFlow()).modules;
 
       expect(modules, hasLength(5));
       expect(modules.map((module) => module.id), contains('trading'));
@@ -70,27 +72,28 @@ void main() {
 
     test(
       'getFlow boundaries distinguish value-based and points-only areas',
-      () {
-        final boundaries = repository.getFlow().boundaries;
+      () async {
+        final snapshot = await repository.getFlow();
+        final boundaries = snapshot.boundaries;
 
         expect(boundaries, hasLength(2));
         expect(boundaries.first, isA<OnboardingBoundaryDraft>());
         expect(boundaries.last.title, 'Open Arena');
         expect(boundaries.last.examples, isNotEmpty);
-        expect(repository.getFlow().separationRules, isNotEmpty);
+        expect(snapshot.separationRules, isNotEmpty);
       },
     );
 
-    test('getFlow trust pillars and commitments are populated', () {
-      final snapshot = repository.getFlow();
+    test('getFlow trust pillars and commitments are populated', () async {
+      final snapshot = await repository.getFlow();
 
       expect(snapshot.trustPillars, isNotEmpty);
       expect(snapshot.trustPillars.first, isA<OnboardingTrustDraft>());
       expect(snapshot.commitments, isNotEmpty);
     });
 
-    test('getFlow goals include the arena challenges disclosure', () {
-      final goals = repository.getFlow().goals;
+    test('getFlow goals include the arena challenges disclosure', () async {
+      final goals = (await repository.getFlow()).goals;
 
       expect(goals, hasLength(6));
       expect(goals.first, isA<OnboardingGoalDraft>());
@@ -102,8 +105,8 @@ void main() {
       expect(arenaGoal.disclosure, contains('Arena Points'));
     });
 
-    test('getFlow recommendations cover every user goal', () {
-      final snapshot = repository.getFlow();
+    test('getFlow recommendations cover every user goal', () async {
+      final snapshot = await repository.getFlow();
 
       expect(snapshot.recommendations, hasLength(snapshot.goals.length));
       for (final goal in snapshot.goals) {

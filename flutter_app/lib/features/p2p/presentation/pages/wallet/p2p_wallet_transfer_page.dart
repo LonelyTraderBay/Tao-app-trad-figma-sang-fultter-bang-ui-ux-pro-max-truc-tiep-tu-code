@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,7 +195,7 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                                 onEdit: () =>
                                     setState(() => _showConfirm = false),
                                 onConfirm: () {
-                                  HapticFeedback.mediumImpact();
+                                  unawaited(HapticFeedback.mediumImpact());
                                   context.go(snapshot.parentRoute);
                                 },
                               )
@@ -216,7 +218,9 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                                 onAmountChanged: () => setState(() {}),
                                 onSubmit: canTransfer
                                     ? () {
-                                        HapticFeedback.mediumImpact();
+                                        unawaited(
+                                          HapticFeedback.mediumImpact(),
+                                        );
                                         setState(() => _showConfirm = true);
                                       }
                                     : null,
@@ -236,7 +240,7 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
   }
 
   void _switchDirection() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _type = _type == 'deposit' ? 'withdraw' : 'deposit';
       _amountController.clear();
@@ -245,7 +249,7 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
   }
 
   void _setAsset(String symbol) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _asset = symbol;
       _amountController.clear();
@@ -254,7 +258,7 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
   }
 
   void _setAmount(double value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _amountController.text = _formatTransferAmount(value, _asset);
     setState(() {});
   }

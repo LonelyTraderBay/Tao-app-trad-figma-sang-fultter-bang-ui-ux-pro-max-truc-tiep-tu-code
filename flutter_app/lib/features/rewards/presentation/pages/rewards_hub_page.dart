@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,7 +195,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                                 summary: snapshot.summary,
                                 claimedAll: _claimedAll,
                                 onClaimAll: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _claimedAll = true);
                                 },
                               ),
@@ -205,7 +207,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                               _CheckInSection(checkIns: snapshot.checkIns),
                               _ReferralBanner(
                                 onTap: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   context.go(snapshot.referralRoute);
                                 },
                               ),
@@ -216,7 +218,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                                 activeFilter: _activeFilter,
                                 tasks: visibleTasks,
                                 onFilter: (filter) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _activeFilter = filter);
                                 },
                               ),
@@ -225,7 +227,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                                 summary: snapshot.summary,
                                 leaderboard: snapshot.leaderboard,
                                 onLeaderboardTap: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   context.go(snapshot.leaderboardRoute);
                                 },
                               ),
@@ -246,7 +248,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
   }
 
   void _close(BuildContext context, String backRoute) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

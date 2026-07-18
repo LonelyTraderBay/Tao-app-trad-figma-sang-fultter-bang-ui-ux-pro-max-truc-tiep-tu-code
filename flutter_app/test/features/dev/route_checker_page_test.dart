@@ -27,8 +27,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-325 mock repository exposes route checker BE draft', () {
-    final snapshot = const MockRouteCheckerRepository().getRouteChecker();
+  test('SC-325 mock repository exposes route checker BE draft', () async {
+    final snapshot = await const MockRouteCheckerRepository().getRouteChecker();
 
     expect(snapshot.endpoint, '/api/mobile/dev/dev-route-checker');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

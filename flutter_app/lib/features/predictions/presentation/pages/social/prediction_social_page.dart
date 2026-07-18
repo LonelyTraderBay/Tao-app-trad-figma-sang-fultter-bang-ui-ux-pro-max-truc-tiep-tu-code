@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -154,8 +156,10 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
                                 snapshot: snapshot,
                                 copied: _copied,
                                 onCopy: () {
-                                  Clipboard.setData(
-                                    ClipboardData(text: snapshot.shareUrl),
+                                  unawaited(
+                                    Clipboard.setData(
+                                      ClipboardData(text: snapshot.shareUrl),
+                                    ),
                                   );
                                   setState(() => _copied = true);
                                 },

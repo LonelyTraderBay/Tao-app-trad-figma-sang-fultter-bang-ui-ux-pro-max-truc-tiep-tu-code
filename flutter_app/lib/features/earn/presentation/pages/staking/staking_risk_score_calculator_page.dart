@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -142,15 +144,15 @@ class _StakingRiskScoreCalculatorPageState
                             validators: _validators,
                             onAmountChanged: (_) => setState(() {}),
                             onAssetChanged: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _asset = value);
                             },
                             onDurationChanged: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _duration = value);
                             },
                             onValidatorsChanged: (value) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _validators = value);
                             },
                           ),
@@ -167,7 +169,7 @@ class _StakingRiskScoreCalculatorPageState
                             key: StakingRiskScoreCalculatorPage.footerButtonKey,
                             height: AppSpacing.buttonStandard,
                             onPressed: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Tiếp tục sẽ sớm ra mắt'),

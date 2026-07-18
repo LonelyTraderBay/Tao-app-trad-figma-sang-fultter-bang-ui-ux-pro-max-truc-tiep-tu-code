@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -163,12 +165,12 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
   }
 
   void _setRating(int value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _rating = value);
   }
 
   void _toggleTag(String label) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (!_selectedTags.add(label)) {
         _selectedTags.remove(label);
@@ -178,7 +180,7 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
 
   Future<void> _submit() async {
     if (_rating == 0 || _isSubmitting) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _isSubmitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 320));
     if (!mounted) return;
@@ -189,7 +191,7 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
   }
 
   void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

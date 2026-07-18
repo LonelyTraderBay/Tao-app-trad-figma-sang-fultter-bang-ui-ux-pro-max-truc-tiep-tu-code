@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -119,7 +121,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                           _DifficultyTabs(
                             active: _difficulty,
                             onChanged: (difficulty) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _difficulty = difficulty);
                             },
                           ),
@@ -152,7 +154,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
   }
 
   Future<void> _openTutorialSheet(StakingGuideTutorialDraft tutorial) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -222,7 +224,9 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                                 onPressed: stepIndex == 0
                                     ? null
                                     : () {
-                                        HapticFeedback.selectionClick();
+                                        unawaited(
+                                          HapticFeedback.selectionClick(),
+                                        );
                                         setSheetState(() => stepIndex--);
                                       },
                                 child: const Text('Trước'),
@@ -238,7 +242,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                                     ? VitCtaButtonVariant.success
                                     : VitCtaButtonVariant.primary,
                                 onPressed: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   if (stepIndex < tutorial.steps.length - 1) {
                                     setSheetState(() => stepIndex++);
                                     return;

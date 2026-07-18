@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -237,43 +239,45 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
   }
 
   void _confirmDelete(WalletSavedAddress address) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: AppColors.surface,
-          title: const Text('Xóa địa chỉ'),
-          content: Text(
-            'Bạn có chắc muốn xóa địa chỉ "${address.label}" (${_maskAddress(address.address)})?',
-          ),
-          actions: [
-            VitCtaButton(
-              onPressed: () => Navigator.of(context).pop(),
-              variant: VitCtaButtonVariant.ghost,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              child: const Text('Hủy'),
+    unawaited(
+      showDialog<void>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: AppColors.surface,
+            title: const Text('Xóa địa chỉ'),
+            content: Text(
+              'Bạn có chắc muốn xóa địa chỉ "${address.label}" (${_maskAddress(address.address)})?',
             ),
-            VitCtaButton(
-              onPressed: () {
-                ref
-                    .read(addressBookStateControllerProvider.notifier)
-                    .deleteAddress(address.id);
-                Navigator.of(context).pop();
-              },
-              variant: VitCtaButtonVariant.destructive,
-              fullWidth: false,
-              height: AppSpacing.buttonCompact,
-              child: Text(
-                'Xóa',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
+            actions: [
+              VitCtaButton(
+                onPressed: () => Navigator.of(context).pop(),
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                child: const Text('Hủy'),
+              ),
+              VitCtaButton(
+                onPressed: () {
+                  ref
+                      .read(addressBookStateControllerProvider.notifier)
+                      .deleteAddress(address.id);
+                  Navigator.of(context).pop();
+                },
+                variant: VitCtaButtonVariant.destructive,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                child: Text(
+                  'Xóa',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.onAccent,
+                  ),
                 ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -40,8 +40,7 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(adminAbTestsControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(adminAbTestsControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -64,38 +63,54 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         children: [
-          AdminDashboardStateContent(
-            status: controller.state.status,
-            title: 'A/B test dashboard',
-            message: controller.state.message,
-            gap: AppSpacing.x4,
-            children: [
-              _SummaryGrid(snapshot: snapshot),
-              const VitSectionHeader(
-                title: 'Tất cả A/B Tests',
-                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          ...controllerAsync.when(
+            loading: () => const [VitSkeletonList()],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                title: 'A/B test dashboard',
+                message: 'Không tải được dữ liệu.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(adminAbTestsSnapshotProvider),
               ),
-              if (snapshot.tests.isEmpty)
-                const AdminInlineEmptyState(
-                  icon: Icons.science_outlined,
-                  title: 'Chưa có A/B test nào',
-                  message: 'Tạo test mới để bắt đầu thử nghiệm',
-                )
-              else
-                for (final test in snapshot.tests) ...[
-                  _ABTestCard(
-                    test: test,
-                    selected: test.id == _selectedTestId,
-                    onTap: () {
-                      setState(() {
-                        _selectedTestId = test.id == _selectedTestId
-                            ? null
-                            : test.id;
-                      });
-                    },
-                  ),
-                ],
             ],
+            data: (controller) {
+              final snapshot = controller.state.snapshot;
+              return [
+                AdminDashboardStateContent(
+                  status: controller.state.status,
+                  title: 'A/B test dashboard',
+                  message: controller.state.message,
+                  gap: AppSpacing.x4,
+                  children: [
+                    _SummaryGrid(snapshot: snapshot),
+                    const VitSectionHeader(
+                      title: 'Tất cả A/B Tests',
+                      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
+                    if (snapshot.tests.isEmpty)
+                      const AdminInlineEmptyState(
+                        icon: Icons.science_outlined,
+                        title: 'Chưa có A/B test nào',
+                        message: 'Tạo test mới để bắt đầu thử nghiệm',
+                      )
+                    else
+                      for (final test in snapshot.tests) ...[
+                        _ABTestCard(
+                          test: test,
+                          selected: test.id == _selectedTestId,
+                          onTap: () {
+                            setState(() {
+                              _selectedTestId = test.id == _selectedTestId
+                                  ? null
+                                  : test.id;
+                            });
+                          },
+                        ),
+                      ],
+                  ],
+                ),
+              ];
+            },
           ),
         ],
       ),

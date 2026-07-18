@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -116,7 +118,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
                             variant: VitTabBarVariant.segment,
                             activeKey: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                             tabs: [
@@ -129,7 +131,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
                               ranges: snapshot.timeRanges,
                               activeRange: activeRange,
                               onChanged: (range) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _range = range);
                               },
                             ),

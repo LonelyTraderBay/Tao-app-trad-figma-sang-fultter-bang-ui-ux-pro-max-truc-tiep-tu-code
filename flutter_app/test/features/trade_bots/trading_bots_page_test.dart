@@ -34,10 +34,10 @@ void main() {
   test('SC-059 mock repository exposes trading bot BE draft', () async {
     final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
     final snapshot = await repo.getTradingBots();
-    final action = repo.submitBotAction(
+    final action = await repo.submitBotAction(
       const TradeBotActionRequest(botId: 'bot1', action: 'pause'),
     );
-    final created = repo.createTradingBot(
+    final created = await repo.createTradingBot(
       const TradeBotCreateRequest(
         strategyId: 'dca',
         params: {'pair': 'BTC/USDT'},

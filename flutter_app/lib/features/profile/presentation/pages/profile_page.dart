@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,7 +66,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getProfile();
+    final snapshotAsync = ref.watch(profileSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -88,26 +90,40 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           padding: VitContentPadding.none,
           density: VitDensity.compact,
           fullBleed: true,
-          children: _profilePageChildren(
-            context: context,
-            snapshot: snapshot,
-            copiedReferral: _copiedReferral,
-            onEdit: () => context.go(AppRoutePaths.profileEdit),
-            onCopyReferral: () {
-              Clipboard.setData(
-                ClipboardData(text: snapshot.user.referralCode),
-              );
-              setState(() => _copiedReferral = true);
-            },
-            onOpenVip: () => context.go(AppRoutePaths.profileVip),
-            onOpenPredictions: () =>
-                context.go(AppRoutePaths.profilePredictions),
-            onOpenArena: () => context.go(AppRoutePaths.profileArena),
-            onOpenActivity: () => context.go(AppRoutePaths.profileActivity),
-            onLogout: () async {
-              await ref.read(authSessionControllerProvider.notifier).logout();
-              if (context.mounted) context.go(AppRoutePaths.authLogin);
-            },
+          children: snapshotAsync.when(
+            loading: () => const [VitSkeletonList(key: ProfilePage.loadingKey)],
+            error: (error, stackTrace) => [
+              VitErrorState(
+                key: ProfilePage.errorKey,
+                title: 'Không tải được dữ liệu',
+                message: 'Vui lòng thử lại.',
+                actionLabel: 'Thử lại',
+                onAction: () => ref.invalidate(profileSnapshotProvider),
+              ),
+            ],
+            data: (snapshot) => _profilePageChildren(
+              context: context,
+              snapshot: snapshot,
+              copiedReferral: _copiedReferral,
+              onEdit: () => context.go(AppRoutePaths.profileEdit),
+              onCopyReferral: () {
+                unawaited(
+                  Clipboard.setData(
+                    ClipboardData(text: snapshot.user.referralCode),
+                  ),
+                );
+                setState(() => _copiedReferral = true);
+              },
+              onOpenVip: () => context.go(AppRoutePaths.profileVip),
+              onOpenPredictions: () =>
+                  context.go(AppRoutePaths.profilePredictions),
+              onOpenArena: () => context.go(AppRoutePaths.profileArena),
+              onOpenActivity: () => context.go(AppRoutePaths.profileActivity),
+              onLogout: () async {
+                await ref.read(authSessionControllerProvider.notifier).logout();
+                if (context.mounted) context.go(AppRoutePaths.authLogin);
+              },
+            ),
           ),
         ),
       ),

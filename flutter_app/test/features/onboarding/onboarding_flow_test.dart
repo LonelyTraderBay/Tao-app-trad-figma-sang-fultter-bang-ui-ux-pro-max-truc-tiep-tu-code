@@ -35,8 +35,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-397 mock repository exposes onboarding BE draft', () {
-    final snapshot = const MockOnboardingRepository().getFlow();
+  test('SC-397 mock repository exposes onboarding BE draft', () async {
+    final snapshot = await const MockOnboardingRepository().getFlow();
 
     expect(snapshot.endpoint, '/api/mobile/onboarding/onboarding');
     expect(snapshot.actionDraft, contains('local navigation actions'));

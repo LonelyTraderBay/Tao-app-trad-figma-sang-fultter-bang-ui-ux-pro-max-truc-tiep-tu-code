@@ -111,7 +111,7 @@ class _StrategyDetailSheet extends StatelessWidget {
         VitCtaButton(
           key: SavingsRecommendationsPage.detailCtaKey,
           onPressed: () {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             Navigator.of(context).pop();
             context.go(savingsRoute);
           },

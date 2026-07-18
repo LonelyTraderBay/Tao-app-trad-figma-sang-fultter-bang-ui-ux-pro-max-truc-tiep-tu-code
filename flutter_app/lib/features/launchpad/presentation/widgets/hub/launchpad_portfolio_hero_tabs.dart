@@ -175,7 +175,7 @@ class _PortfolioTabs extends StatelessWidget {
       variant: VitTabBarVariant.segment,
       activeKey: activeTab.id,
       onChanged: (id) {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         final tab = _PortfolioTab.values.firstWhere((tab) => tab.id == id);
         onChanged(tab);
       },

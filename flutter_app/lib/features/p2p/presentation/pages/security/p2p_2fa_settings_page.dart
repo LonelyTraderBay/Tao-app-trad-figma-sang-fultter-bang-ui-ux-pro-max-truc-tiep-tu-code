@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -160,7 +162,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     );
     if (!mounted || !confirmed) return;
 
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(p2p2FASettingsStateControllerProvider.notifier)
         .toggleMethod(methodId);
@@ -178,7 +180,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     );
     if (!mounted || !confirmed) return;
 
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(p2p2FASettingsStateControllerProvider.notifier)
         .setPrimaryMethod(methodId);
@@ -207,7 +209,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
     );
     if (!mounted || !confirmed) return;
 
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     ref
         .read(p2p2FASettingsStateControllerProvider.notifier)
         .toggleThreshold(thresholdId);

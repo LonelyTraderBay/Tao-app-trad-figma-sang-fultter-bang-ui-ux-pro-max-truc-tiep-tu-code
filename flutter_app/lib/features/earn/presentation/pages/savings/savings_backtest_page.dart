@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -152,7 +154,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
                             tabs: snapshot.tabs,
                             active: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -209,7 +211,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
         quickAmounts: snapshot.quickAmounts,
         amountUsd: _amountUsd,
         onAmountChanged: (amount) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             _amountUsd = amount;
             _amountController.text = '$amount';
@@ -222,7 +224,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
         periods: snapshot.periods,
         selected: selectedPeriod,
         onChanged: (period) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             _period = period;
             _hasRun = false;
@@ -234,7 +236,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
         presets: snapshot.presets,
         selected: preset.id,
         onChanged: (preset) {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           setState(() {
             _preset = preset;
             _hasRun = false;
@@ -254,7 +256,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
       VitCtaButton(
         key: SavingsBacktestPage.runKey,
         onPressed: () {
-          HapticFeedback.mediumImpact();
+          unawaited(HapticFeedback.mediumImpact());
           setState(() {
             _hasRun = true;
             _tab = 'results';
@@ -267,7 +269,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
   }
 
   void _reset() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _hasRun = false;
       _tab = 'setup';

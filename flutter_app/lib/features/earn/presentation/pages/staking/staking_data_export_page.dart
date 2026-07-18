@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -326,7 +328,7 @@ class _CustomExport extends StatelessWidget {
               VitCtaButton(
                 key: StakingDataExportPage.exportKey,
                 onPressed: () {
-                  HapticFeedback.selectionClick();
+                  unawaited(HapticFeedback.selectionClick());
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Xuất dữ liệu sẽ sớm ra mắt')),
                   );

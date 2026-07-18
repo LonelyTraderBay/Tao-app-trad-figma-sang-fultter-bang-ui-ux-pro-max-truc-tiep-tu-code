@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,7 +97,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
             tooltip: 'Loading demo',
             active: _showLoading,
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _showLoading = !_showLoading);
             },
           ),
@@ -117,7 +119,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                       supportedStates: snapshot.supportedStates,
                       active: _uiMode,
                       onChanged: (mode) {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         setState(() => _uiMode = mode);
                       },
                     ),

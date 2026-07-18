@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -249,12 +251,12 @@ class _StakingSuitabilityAssessmentPageState
   }
 
   void _selectAnswer(String questionId, int value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _answers[questionId] = value);
   }
 
   void _selectQuizAnswer(int questionIndex, int optionIndex) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _quizAnswers[questionIndex] = optionIndex);
   }
 
@@ -270,7 +272,7 @@ class _StakingSuitabilityAssessmentPageState
   }
 
   void _next(StakingSuitabilityAssessmentSnapshot snapshot) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_step < snapshot.questions.length - 1) {
         _step += 1;
@@ -282,14 +284,14 @@ class _StakingSuitabilityAssessmentPageState
   }
 
   void _previous() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_step > 0) _step -= 1;
     });
   }
 
   void _reset() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _step = 0;
       _showResult = false;

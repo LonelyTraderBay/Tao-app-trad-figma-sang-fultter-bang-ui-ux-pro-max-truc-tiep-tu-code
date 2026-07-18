@@ -203,18 +203,20 @@ final class TradeBotsController extends Notifier<TradeBotsViewState> {
     return TradeBotsViewState(snapshot: snapshot);
   }
 
-  TradeBotActionResult submitAction({
+  /// Áp mutation local optimistic NGAY (đồng bộ, không phụ thuộc kết quả
+  /// repo — xem GD4-Async-Playbook.md bẫy 19) rồi mới gọi repo, để UI phản
+  /// hồi tức thời trong lúc await network.
+  Future<TradeBotActionResult> submitAction({
     required String botId,
     required String action,
   }) {
-    final result = ref
+    _applyBotAction(botId: botId, action: action);
+    return ref
         .read(tradingBotsRepositoryProvider)
         .submitBotAction(TradeBotActionRequest(botId: botId, action: action));
-    _applyBotAction(botId: botId, action: action);
-    return result;
   }
 
-  TradeBotCreateResult createBot(TradeBotCreateRequest request) {
+  Future<TradeBotCreateResult> createBot(TradeBotCreateRequest request) {
     return ref.read(tradingBotsRepositoryProvider).createTradingBot(request);
   }
 

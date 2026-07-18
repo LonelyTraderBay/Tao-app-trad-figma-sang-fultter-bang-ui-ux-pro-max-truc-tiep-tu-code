@@ -459,3 +459,18 @@ thấp hơn) — không được để nguyên baseline cũ (ratchet không tự
     seed async vừa mutation async: test ProviderContainer phải
     `await container.read(xSnapshotProvider.future)` TRƯỚC khi listen
     (tránh build() re-run giữa mutation).
+30. **Gọi mock repo trực tiếp trong `testWidgets()` không ép
+    `loadDelay: Duration.zero` = treo VÔ THỜI HẠN** — testWidgets chạy
+    FakeAsync zone, `await mock.getY()` (delay 300ms) đứng trước mọi
+    pump(duration) không có gì đẩy fake clock (khác `test()` thường chạy
+    async thật). Không phải assert fail — dart test kill sau 10 phút.
+31. **Quy tắc quyết định cho `unawaited_futures`/`discarded_futures`** (bật
+    ở F6): (a) fire-and-forget không có code sau phụ thuộc hoàn thành →
+    `unawaited(...)`; (b) có code sau phụ thuộc → closure `async` + `await`
+    + guard `mounted`; (c) đường DỮ LIỆU trong thân hàm async → `await`
+    thẳng; (d) cấm `// ignore:`. TINH CHỈNH sau 730 site thực chiến: với
+    HapticFeedback/Clipboard, tiêu chí là "có phụ thuộc hoàn thành không"
+    chứ KHÔNG phải "thân hàm có async không" — `await` haptic tạo async-gap
+    thật làm vỡ use_build_context_synchronously + ~30 widget test timing;
+    (a) áp cho haptic/clipboard VÔ ĐIỀU KIỆN (429/730 site là loại này).
+    Import dart:async đặt ở file library gốc khi site nằm trong part file.

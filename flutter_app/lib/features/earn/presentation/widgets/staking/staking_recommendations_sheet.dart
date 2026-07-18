@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -104,7 +106,7 @@ class StakingRecommendationsStrategyDetailSheet extends StatelessWidget {
         VitCtaButton(
           key: StakingRecommendationsKeys.detailCta,
           onPressed: () {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             Navigator.of(context).pop();
             context.go(stakingRoute);
           },

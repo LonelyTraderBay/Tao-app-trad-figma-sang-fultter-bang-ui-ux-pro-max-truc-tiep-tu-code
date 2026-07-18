@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -352,12 +354,14 @@ class _VisitButton extends StatelessWidget {
     return VitCtaButton(
       key: OmbudsmanReferralPage.ctaKey,
       onPressed: () {
-        HapticFeedback.selectionClick();
-        showVitNoticeSheet(
-          context: context,
-          title: 'Sắp ra mắt',
-          message: 'Trang khiếu nại sẽ sớm ra mắt',
-          variant: VitBannerVariant.info,
+        unawaited(HapticFeedback.selectionClick());
+        unawaited(
+          showVitNoticeSheet(
+            context: context,
+            title: 'Sắp ra mắt',
+            message: 'Trang khiếu nại sẽ sớm ra mắt',
+            variant: VitBannerVariant.info,
+          ),
         );
       },
       leading: const Icon(

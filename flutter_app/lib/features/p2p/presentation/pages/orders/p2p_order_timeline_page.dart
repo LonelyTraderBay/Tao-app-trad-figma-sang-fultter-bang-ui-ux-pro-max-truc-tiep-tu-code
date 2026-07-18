@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,7 +77,7 @@ class P2POrderTimelinePage extends ConsumerWidget {
                       color: AppColors.primary,
                       backgroundColor: AppColors.surface,
                       onRefresh: () async {
-                        HapticFeedback.selectionClick();
+                        unawaited(HapticFeedback.selectionClick());
                         await Future<void>.delayed(
                           const Duration(milliseconds: 80),
                         );
@@ -123,7 +125,7 @@ class P2POrderTimelinePage extends ConsumerWidget {
   }
 
   static void _close(BuildContext context, String orderId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     goBackOrFallback(
       context,
       fallbackPath: AppRoutePaths.p2pOrder(orderId),

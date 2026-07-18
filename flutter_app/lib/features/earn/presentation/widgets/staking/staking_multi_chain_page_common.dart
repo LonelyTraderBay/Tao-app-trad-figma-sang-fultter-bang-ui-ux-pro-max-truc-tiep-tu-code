@@ -77,7 +77,7 @@ class _ChainPositionCard extends StatelessWidget {
             height: AppSpacing.buttonCompact,
             trailing: const Icon(Icons.arrow_forward_rounded),
             onPressed: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(dashboardRoute);
             },
             child: const Text('Manage Position'),

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -78,7 +81,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(designSystemControllerProvider).snapshot();
+    final snapshotAsync = ref.watch(designSystemSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -86,75 +89,69 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'Hệ thống thiết kế (công cụ nội bộ)',
-      semanticIdentifier: 'SC-399',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: DesignSystemPage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.flush,
-                    gap: VitContentGap.loose,
-                    children: [
-                      DevStateBar(
-                        key: DesignSystemPage.statesKey,
-                        supportedStates: snapshot.supportedStates,
-                        active: _uiMode,
-                        onChanged: (mode) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _uiMode = mode);
-                        },
-                      ),
-                      switch (_uiMode) {
-                        DevUiMode.loading => const _DesignSystemLoading(),
-                        DevUiMode.empty => const VitEmptyState(
-                          title: 'Design tokens unavailable',
-                          message:
-                              'Token registry is empty. Reload when the dev catalog syncs.',
-                        ),
-                        DevUiMode.error => VitErrorState(
-                          title: 'Design system unavailable',
-                          message:
-                              'Could not load token catalog. Retry when back online.',
-                          onAction: () =>
-                              setState(() => _uiMode = DevUiMode.live),
-                        ),
-                        DevUiMode.offline => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const VitOfflineBanner(
-                              detail: 'Showing cached token reference.',
-                            ),
-                            const SizedBox(height: AppSpacing.x4),
-                            ..._liveSections(snapshot),
-                          ],
-                        ),
-                        DevUiMode.live => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: _liveSections(snapshot),
-                        ),
-                      },
-                    ],
-                  ),
-                ),
+    return snapshotAsync.when(
+      loading: () => _DesignSystemScaffold(
+        title: 'Design System',
+        subtitle: 'Dev · Design System',
+        bottomInset: bottomInset,
+        body: const _DesignSystemLoading(),
+      ),
+      error: (error, stackTrace) => _DesignSystemScaffold(
+        title: 'Design System',
+        subtitle: 'Dev · Design System',
+        bottomInset: bottomInset,
+        body: VitErrorState(
+          title: 'Design system unavailable',
+          message: 'Could not load token catalog. Retry when back online.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(designSystemSnapshotProvider),
+        ),
+      ),
+      data: (snapshot) => _DesignSystemScaffold(
+        title: snapshot.title,
+        subtitle: snapshot.subtitle,
+        bottomInset: bottomInset,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DevStateBar(
+              key: DesignSystemPage.statesKey,
+              supportedStates: snapshot.supportedStates,
+              active: _uiMode,
+              onChanged: (mode) {
+                unawaited(HapticFeedback.selectionClick());
+                setState(() => _uiMode = mode);
+              },
+            ),
+            switch (_uiMode) {
+              DevUiMode.loading => const _DesignSystemLoading(),
+              DevUiMode.empty => const VitEmptyState(
+                title: 'Design tokens unavailable',
+                message:
+                    'Token registry is empty. Reload when the dev catalog syncs.',
               ),
-            ],
-          ),
+              DevUiMode.error => VitErrorState(
+                title: 'Design system unavailable',
+                message:
+                    'Could not load token catalog. Retry when back online.',
+                onAction: () => setState(() => _uiMode = DevUiMode.live),
+              ),
+              DevUiMode.offline => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitOfflineBanner(
+                    detail: 'Showing cached token reference.',
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  ..._liveSections(snapshot),
+                ],
+              ),
+              DevUiMode.live => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _liveSections(snapshot),
+              ),
+            },
+          ],
         ),
       ),
     );
@@ -234,30 +231,30 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
             labelController: _playgroundLabelController,
             errorController: _playgroundErrorController,
             onVariantChanged: (variant) {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _playgroundVariant = variant);
             },
             onLabelChanged: (label) {
               setState(() => _playgroundLabel = label);
             },
             onToggleDisabled: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _playgroundDisabled = !_playgroundDisabled);
             },
             onToggleLoading: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _playgroundLoading = !_playgroundLoading);
             },
             onToggleFullWidth: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _playgroundFullWidth = !_playgroundFullWidth);
             },
             onTogglePrefix: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _inputPrefix = !_inputPrefix);
             },
             onToggleSuffix: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _inputSuffix = !_inputSuffix);
             },
             onErrorChanged: (value) => setState(() => _inputError = value),
@@ -275,5 +272,56 @@ class _DesignSystemLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitSkeletonList(rows: 6);
+  }
+}
+
+class _DesignSystemScaffold extends StatelessWidget {
+  const _DesignSystemScaffold({
+    required this.title,
+    required this.subtitle,
+    required this.bottomInset,
+    required this.body,
+  });
+
+  final String title;
+  final String subtitle;
+  final double bottomInset;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'Hệ thống thiết kế (công cụ nội bộ)',
+      semanticIdentifier: 'SC-399',
+      child: Material(
+        type: MaterialType.transparency,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: title,
+            subtitle: subtitle,
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.home),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: DesignSystemPage.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.flush,
+                    gap: VitContentGap.loose,
+                    children: [body],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

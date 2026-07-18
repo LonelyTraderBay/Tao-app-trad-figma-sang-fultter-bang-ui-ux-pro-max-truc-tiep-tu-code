@@ -112,7 +112,7 @@ class _ResultView extends StatelessWidget {
         VitCtaButton(
           key: StakingRiskAssessmentPage.exploreButtonKey,
           onPressed: () {
-            HapticFeedback.selectionClick();
+            unawaited(HapticFeedback.selectionClick());
             context.go(snapshot.stakingRoute);
           },
           trailing: const Icon(Icons.arrow_forward_rounded),

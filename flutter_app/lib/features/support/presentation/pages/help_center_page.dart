@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,7 +195,7 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
   }
 
   void _selectCategory(String categoryId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _selectedCategoryId = _selectedCategoryId == categoryId
           ? null
@@ -203,7 +205,7 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
   }
 
   void _toggleArticle(String articleId) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _expandedArticleId = _expandedArticleId == articleId ? null : articleId;
     });

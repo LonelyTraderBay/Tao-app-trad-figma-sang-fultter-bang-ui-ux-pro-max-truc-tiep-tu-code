@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -204,7 +206,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
     P2PExpressConfirmController controller,
   ) async {
     if (_processing) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _processing = true);
     await Future<void>.delayed(const Duration(milliseconds: 350));
     if (!context.mounted) return;
@@ -212,7 +214,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

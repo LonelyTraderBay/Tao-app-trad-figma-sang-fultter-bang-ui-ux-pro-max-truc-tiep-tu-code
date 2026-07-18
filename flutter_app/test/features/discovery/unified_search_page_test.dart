@@ -25,8 +25,10 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (repository != null)
-            discoveryRepositoryProvider.overrideWithValue(repository),
+          discoveryRepositoryProvider.overrideWithValue(
+            repository ??
+                const MockDiscoveryRepository(loadDelay: Duration.zero),
+          ),
         ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.search),
@@ -36,8 +38,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-283 mock repository exposes discovery search BE draft', () {
-    final snapshot = const MockDiscoveryRepository().getUnifiedSearch();
+  test('SC-283 mock repository exposes discovery search BE draft', () async {
+    final snapshot = await const MockDiscoveryRepository().getUnifiedSearch();
 
     expect(snapshot.endpoint, '/api/mobile/discovery/search');
     expect(snapshot.actionDraft, 'GET with query filters');
@@ -66,7 +68,7 @@ void main() {
       ]),
     );
 
-    final bitcoin = const MockDiscoveryRepository().getUnifiedSearch(
+    final bitcoin = await const MockDiscoveryRepository().getUnifiedSearch(
       query: 'bitcoin',
     );
     expect(bitcoin.results.predictions.map((event) => event.id), ['pred-1']);
@@ -187,22 +189,23 @@ void main() {
 final class _OfflineDiscoveryRepository implements DiscoveryRepository {
   const _OfflineDiscoveryRepository();
 
-  static const _base = MockDiscoveryRepository();
+  static const _base = MockDiscoveryRepository(loadDelay: Duration.zero);
 
   @override
-  UnifiedSearchSnapshot getUnifiedSearch({String query = ''}) {
-    return _base
-        .getUnifiedSearch(query: query)
-        .copyWith(currentState: DiscoveryScreenState.offline);
+  Future<UnifiedSearchSnapshot> getUnifiedSearch({String query = ''}) async {
+    return (await _base.getUnifiedSearch(
+      query: query,
+    )).copyWith(currentState: DiscoveryScreenState.offline);
   }
 
   @override
-  TopicHubSnapshot getTopicHub({
+  Future<TopicHubSnapshot> getTopicHub({
     String topicId = 'crypto',
     bool detailEndpoint = false,
-  }) {
-    return _base
-        .getTopicHub(topicId: topicId, detailEndpoint: detailEndpoint)
-        .copyWith(currentState: DiscoveryScreenState.offline);
+  }) async {
+    return (await _base.getTopicHub(
+      topicId: topicId,
+      detailEndpoint: detailEndpoint,
+    )).copyWith(currentState: DiscoveryScreenState.offline);
   }
 }

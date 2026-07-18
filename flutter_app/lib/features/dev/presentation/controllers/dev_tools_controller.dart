@@ -9,7 +9,7 @@ final class RouteCheckerController {
 
   final RouteCheckerRepository _repository;
 
-  RouteCheckerSnapshot snapshot() => _repository.getRouteChecker();
+  Future<RouteCheckerSnapshot> snapshot() => _repository.getRouteChecker();
 }
 
 final class PerformanceMonitorController {
@@ -17,7 +17,8 @@ final class PerformanceMonitorController {
 
   final PerformanceMonitorRepository _repository;
 
-  PerformanceMonitorSnapshot snapshot() => _repository.getPerformanceMonitor();
+  Future<PerformanceMonitorSnapshot> snapshot() =>
+      _repository.getPerformanceMonitor();
 }
 
 final class MissingScreensShowcaseController {
@@ -25,7 +26,8 @@ final class MissingScreensShowcaseController {
 
   final MissingScreensShowcaseRepository _repository;
 
-  MissingScreensShowcaseSnapshot snapshot() => _repository.getShowcase();
+  Future<MissingScreensShowcaseSnapshot> snapshot() =>
+      _repository.getShowcase();
 }
 
 final class DesignSystemController {
@@ -33,5 +35,5 @@ final class DesignSystemController {
 
   final DesignSystemRepository _repository;
 
-  DesignSystemSnapshot snapshot() => _repository.getDesignSystem();
+  Future<DesignSystemSnapshot> snapshot() => _repository.getDesignSystem();
 }

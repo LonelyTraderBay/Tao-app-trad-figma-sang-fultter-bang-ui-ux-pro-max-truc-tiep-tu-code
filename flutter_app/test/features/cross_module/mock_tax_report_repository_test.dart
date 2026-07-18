@@ -6,11 +6,11 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/tax_repo
 /// [MockTaxReportRepository.getCenter] and asserts the call succeeds
 /// without throwing and returns a plausible, non-empty result.
 void main() {
-  const repository = MockTaxReportRepository();
+  const repository = MockTaxReportRepository(loadDelay: Duration.zero);
 
   group('MockTaxReportRepository smoke test', () {
-    test('getCenter returns a populated snapshot', () {
-      final snapshot = repository.getCenter();
+    test('getCenter returns a populated snapshot', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot, isA<TaxReportSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -25,8 +25,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getCenter derived stats can be computed without throwing', () {
-      final snapshot = repository.getCenter();
+    test('getCenter derived stats can be computed without throwing', () async {
+      final snapshot = await repository.getCenter();
 
       expect(snapshot.taxableActivities, isNotEmpty);
       expect(snapshot.totalGainLoss, greaterThan(0));

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -40,8 +43,7 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(crossModuleAnalyticsControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(crossModuleAnalyticsControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -49,27 +51,59 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
-    return CrossModuleTabbedPageShell(
-      semanticLabel: 'Phân tích liên module',
-      semanticIdentifier: 'SC-322',
-      contentKey: CrossModuleAnalytics.contentKey,
-      title: snapshot.title,
-      onBack: () => context.go(snapshot.backRoute),
-      scrollEndClearance: scrollEndClearance,
-      tabs: _AnalyticsTabs(
-        tabs: snapshot.tabs,
-        active: _activeTab,
-        onChanged: (tab) {
-          HapticFeedback.selectionClick();
-          setState(() => _activeTab = tab);
-        },
+    return controllerAsync.when(
+      loading: () => CrossModuleTabbedPageShell(
+        semanticLabel: 'Phân tích liên module',
+        semanticIdentifier: 'SC-322',
+        contentKey: CrossModuleAnalytics.contentKey,
+        title: 'Cross-Module Analytics',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: scrollEndClearance,
+        tabs: const SizedBox.shrink(),
+        contentGap: VitContentGap.tight,
+        body: const VitSkeletonList(),
       ),
-      contentGap: VitContentGap.tight,
-      body: _activeTab == CrossModuleAnalyticsTab.performance
-          ? _PerformanceTab(snapshot: snapshot)
-          : _activeTab == CrossModuleAnalyticsTab.metrics
-          ? _MetricsTab(snapshot: snapshot)
-          : _ComparisonTab(snapshot: snapshot),
+      error: (error, stackTrace) => CrossModuleTabbedPageShell(
+        semanticLabel: 'Phân tích liên module',
+        semanticIdentifier: 'SC-322',
+        contentKey: CrossModuleAnalytics.contentKey,
+        title: 'Cross-Module Analytics',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: scrollEndClearance,
+        tabs: const SizedBox.shrink(),
+        contentGap: VitContentGap.tight,
+        body: VitErrorState(
+          title: 'Cross-Module Analytics',
+          message: 'Không tải được dữ liệu.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(crossModuleAnalyticsSnapshotProvider),
+        ),
+      ),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        return CrossModuleTabbedPageShell(
+          semanticLabel: 'Phân tích liên module',
+          semanticIdentifier: 'SC-322',
+          contentKey: CrossModuleAnalytics.contentKey,
+          title: snapshot.title,
+          onBack: () => context.go(snapshot.backRoute),
+          scrollEndClearance: scrollEndClearance,
+          tabs: _AnalyticsTabs(
+            tabs: snapshot.tabs,
+            active: _activeTab,
+            onChanged: (tab) {
+              unawaited(HapticFeedback.selectionClick());
+              setState(() => _activeTab = tab);
+            },
+          ),
+          contentGap: VitContentGap.tight,
+          body: _activeTab == CrossModuleAnalyticsTab.performance
+              ? _PerformanceTab(snapshot: snapshot)
+              : _activeTab == CrossModuleAnalyticsTab.metrics
+              ? _MetricsTab(snapshot: snapshot)
+              : _ComparisonTab(snapshot: snapshot),
+        );
+      },
     );
   }
 }

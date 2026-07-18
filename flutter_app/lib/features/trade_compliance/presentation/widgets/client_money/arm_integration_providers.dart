@@ -323,11 +323,13 @@ class _LogsButton extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: 'Logs',
-      message: 'Nhật ký kết nối sẽ sớm ra mắt',
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Logs',
+        message: 'Nhật ký kết nối sẽ sớm ra mắt',
+      ),
     );
   }
 }

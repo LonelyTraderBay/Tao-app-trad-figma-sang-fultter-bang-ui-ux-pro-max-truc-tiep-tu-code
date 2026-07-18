@@ -1,10 +1,12 @@
 part of 'mock_dev_tools_repository.dart';
 
-final class MockRouteCheckerRepository implements RouteCheckerRepository {
-  const MockRouteCheckerRepository();
+final class MockRouteCheckerRepository extends _MockDevToolsRepositoryBase
+    implements RouteCheckerRepository {
+  const MockRouteCheckerRepository({super.simulateError, super.loadDelay});
 
   @override
-  RouteCheckerSnapshot getRouteChecker() {
+  Future<RouteCheckerSnapshot> getRouteChecker() async {
+    await _simulateNetwork();
     return const RouteCheckerSnapshot(
       endpoint: '/api/mobile/dev/dev-route-checker',
       actionDraft: 'read-only or local navigation action',

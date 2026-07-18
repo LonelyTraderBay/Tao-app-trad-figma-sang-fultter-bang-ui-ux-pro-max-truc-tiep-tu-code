@@ -33,7 +33,7 @@ void main() {
   test('SC-133 mock repository exposes bot tax reporting BE draft', () async {
     final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
     final snapshot = await repo.getBotTaxReporting();
-    final exportResult = repo.createBotTaxReportExport(
+    final exportResult = await repo.createBotTaxReportExport(
       const TradeBotTaxReportExportRequest(
         year: '2025',
         reportTypeIds: ['irs-8949', 'turbotax'],

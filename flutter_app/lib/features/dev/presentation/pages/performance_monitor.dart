@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -39,7 +42,7 @@ class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(performanceMonitorControllerProvider).snapshot();
+    final snapshotAsync = ref.watch(performanceMonitorSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -47,75 +50,70 @@ class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'Công cụ theo dõi hiệu năng ứng dụng (nội bộ)',
-      semanticIdentifier: 'SC-326',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: PerformanceMonitor.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.flush,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      DevStateBar(
-                        key: PerformanceMonitor.statesKey,
-                        supportedStates: snapshot.supportedStates,
-                        active: _uiMode,
-                        onChanged: (mode) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _uiMode = mode);
-                        },
-                      ),
-                      switch (_uiMode) {
-                        DevUiMode.loading => const _PerformanceLoading(),
-                        DevUiMode.empty => const VitEmptyState(
-                          title: 'No performance samples',
-                          message:
-                              'Run a profiling session to populate vitals and resource timings.',
-                        ),
-                        DevUiMode.error => VitErrorState(
-                          title: 'Monitor unavailable',
-                          message:
-                              'Performance metrics could not be loaded. Retry when back online.',
-                          onAction: () =>
-                              setState(() => _uiMode = DevUiMode.live),
-                        ),
-                        DevUiMode.offline => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const VitOfflineBanner(
-                              detail: 'Showing last captured session.',
-                            ),
-                            const SizedBox(height: AppSpacing.x4),
-                            ..._liveSections(snapshot),
-                          ],
-                        ),
-                        DevUiMode.live => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: _liveSections(snapshot),
-                        ),
-                      },
-                    ],
-                  ),
-                ),
+    return snapshotAsync.when(
+      loading: () => _PerformanceMonitorScaffold(
+        title: 'Performance Monitor',
+        subtitle: 'Based on Core Web Vitals',
+        bottomInset: bottomInset,
+        body: const _PerformanceLoading(),
+      ),
+      error: (error, stackTrace) => _PerformanceMonitorScaffold(
+        title: 'Performance Monitor',
+        subtitle: 'Based on Core Web Vitals',
+        bottomInset: bottomInset,
+        body: VitErrorState(
+          title: 'Monitor unavailable',
+          message:
+              'Performance metrics could not be loaded. Retry when back online.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(performanceMonitorSnapshotProvider),
+        ),
+      ),
+      data: (snapshot) => _PerformanceMonitorScaffold(
+        title: snapshot.title,
+        subtitle: snapshot.subtitle,
+        bottomInset: bottomInset,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DevStateBar(
+              key: PerformanceMonitor.statesKey,
+              supportedStates: snapshot.supportedStates,
+              active: _uiMode,
+              onChanged: (mode) {
+                unawaited(HapticFeedback.selectionClick());
+                setState(() => _uiMode = mode);
+              },
+            ),
+            switch (_uiMode) {
+              DevUiMode.loading => const _PerformanceLoading(),
+              DevUiMode.empty => const VitEmptyState(
+                title: 'No performance samples',
+                message:
+                    'Run a profiling session to populate vitals and resource timings.',
               ),
-            ],
-          ),
+              DevUiMode.error => VitErrorState(
+                title: 'Monitor unavailable',
+                message:
+                    'Performance metrics could not be loaded. Retry when back online.',
+                onAction: () => setState(() => _uiMode = DevUiMode.live),
+              ),
+              DevUiMode.offline => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitOfflineBanner(
+                    detail: 'Showing last captured session.',
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  ..._liveSections(snapshot),
+                ],
+              ),
+              DevUiMode.live => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _liveSections(snapshot),
+              ),
+            },
+          ],
         ),
       ),
     );
@@ -156,5 +154,56 @@ class _PerformanceLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitSkeletonList(rows: 5);
+  }
+}
+
+class _PerformanceMonitorScaffold extends StatelessWidget {
+  const _PerformanceMonitorScaffold({
+    required this.title,
+    required this.subtitle,
+    required this.bottomInset,
+    required this.body,
+  });
+
+  final String title;
+  final String subtitle;
+  final double bottomInset;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'Công cụ theo dõi hiệu năng ứng dụng (nội bộ)',
+      semanticIdentifier: 'SC-326',
+      child: Material(
+        type: MaterialType.transparency,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: title,
+            subtitle: subtitle,
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.home),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: PerformanceMonitor.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.flush,
+                    gap: VitContentGap.defaultGap,
+                    children: [body],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

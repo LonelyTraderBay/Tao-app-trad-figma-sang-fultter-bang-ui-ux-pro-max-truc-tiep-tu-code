@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-165 mock repository exposes device management BE draft', () {
-    final snapshot = const MockProfileRepository().getDeviceManagement();
+  test('SC-165 mock repository exposes device management BE draft', () async {
+    final snapshot = await const MockProfileRepository().getDeviceManagement();
 
     expect(snapshot.endpoint, '/api/mobile/profile/profile-devices');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

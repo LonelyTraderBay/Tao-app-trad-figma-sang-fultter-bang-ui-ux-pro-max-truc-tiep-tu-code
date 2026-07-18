@@ -66,7 +66,7 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
                       VitSegmentedTabBar(
                         activeKey: _tab.name,
                         onChanged: (key) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(
                             () => _tab = _PortfolioTab.values.byName(key),
                           );
@@ -86,7 +86,7 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
                           snapshot: snapshot,
                           hideBalance: _hideBalance,
                           onToggleBalance: () {
-                            HapticFeedback.selectionClick();
+                            unawaited(HapticFeedback.selectionClick());
                             setState(() => _hideBalance = !_hideBalance);
                           },
                         )
@@ -95,7 +95,7 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
                           snapshot: snapshot,
                           activeFilter: _filter,
                           onFilterChanged: (filter) {
-                            HapticFeedback.selectionClick();
+                            unawaited(HapticFeedback.selectionClick());
                             setState(() => _filter = filter);
                           },
                         )

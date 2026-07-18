@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +14,7 @@ import 'package:go_router/go_router.dart';
 extension ArenaNavigationActions on BuildContext {
   /// Selection-click haptic feedback followed by `context.go(route)`.
   void goHaptic(String route) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     go(route);
   }
 }

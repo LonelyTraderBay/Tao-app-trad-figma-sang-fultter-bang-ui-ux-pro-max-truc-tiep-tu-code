@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -111,7 +113,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() => _tab = tab);
                         },
                       ),
@@ -163,7 +165,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
   }
 
   void _togglePlan(SavingsDcaPlanDraft plan) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       if (_locallyPaused.contains(plan.id)) {
         _locallyPaused.remove(plan.id);
@@ -174,7 +176,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
   }
 
   Future<void> _openCreateSheet(SavingsDcaSnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

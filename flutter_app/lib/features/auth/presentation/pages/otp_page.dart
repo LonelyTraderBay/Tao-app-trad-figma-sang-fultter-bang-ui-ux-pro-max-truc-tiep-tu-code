@@ -126,7 +126,7 @@ class _OTPPageState extends ConsumerState<OTPPage> {
       _focusNodes[index + 1].requestFocus();
     }
     if (_filledCount == 6) {
-      _handleVerify();
+      unawaited(_handleVerify());
     } else {
       setState(() {});
     }

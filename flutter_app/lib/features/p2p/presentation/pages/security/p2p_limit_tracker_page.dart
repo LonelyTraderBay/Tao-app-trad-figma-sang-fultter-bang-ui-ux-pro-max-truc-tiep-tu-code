@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -91,7 +93,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                   ),
               ],
               onChanged: (period) {
-                HapticFeedback.selectionClick();
+                unawaited(HapticFeedback.selectionClick());
                 setState(() => _period = period);
               },
             ),

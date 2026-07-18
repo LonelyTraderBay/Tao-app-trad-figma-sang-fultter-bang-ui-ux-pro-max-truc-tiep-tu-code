@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -81,11 +83,13 @@ class _DatePickerHost extends StatelessWidget {
       body: Center(
         child: TextButton(
           onPressed: () {
-            showDatePicker(
-              context: context,
-              initialDate: DateTime(2026, 7, 17),
-              firstDate: DateTime(2026),
-              lastDate: DateTime(2027),
+            unawaited(
+              showDatePicker(
+                context: context,
+                initialDate: DateTime(2026, 7, 17),
+                firstDate: DateTime(2026),
+                lastDate: DateTime(2027),
+              ),
             );
           },
           child: const Text('Mở lịch'),

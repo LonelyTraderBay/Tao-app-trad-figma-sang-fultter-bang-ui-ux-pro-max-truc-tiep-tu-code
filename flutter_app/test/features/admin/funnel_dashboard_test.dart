@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-183 mock repository exposes funnel BE draft', () {
-    final snapshot = const MockAdminRepository().getFunnels();
+  test('SC-183 mock repository exposes funnel BE draft', () async {
+    final snapshot = await const MockAdminRepository().getFunnels();
 
     expect(snapshot.endpoint, '/api/mobile/admin/admin-funnels');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

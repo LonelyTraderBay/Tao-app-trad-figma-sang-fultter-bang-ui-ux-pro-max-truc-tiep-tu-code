@@ -94,7 +94,7 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                                 warningTitle: snapshot.transferWarningTitle,
                                 warning: snapshot.transferWarning,
                                 onToggleQr: () {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _showQr = !_showQr);
                                 },
                                 onCopyAll: () => _markCopied('all'),
@@ -163,7 +163,7 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
   }
 
   void _markCopied(String field) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _copiedField = field);
     Future<void>.delayed(const Duration(milliseconds: 900), () {
       if (!mounted || _copiedField != field) return;
@@ -172,7 +172,7 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
   }
 
   void _markPaid() {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _step = _P2POrderUiStep.confirm);
   }
 }

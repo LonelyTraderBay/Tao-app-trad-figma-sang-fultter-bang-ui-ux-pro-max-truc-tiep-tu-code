@@ -19,7 +19,7 @@ class _QuickActionRow extends StatelessWidget {
       ),
       onTap: enabled
           ? () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(action.route!);
             }
           : null,

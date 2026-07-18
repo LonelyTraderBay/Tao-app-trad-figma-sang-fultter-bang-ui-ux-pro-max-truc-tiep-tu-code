@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -193,30 +195,32 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
   }
 
   void _showCryptoPicker(WalletBuyCryptoSnapshot snapshot) {
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return VitSheetPanel(
-          title: 'Chọn loại Crypto',
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: snapshot.cryptoOptions.length,
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
-            itemBuilder: (context, index) {
-              final option = snapshot.cryptoOptions[index];
-              return BuyCryptoOptionRow(
-                option: option,
-                selected: option.symbol == _selectedCrypto,
-                onTap: () {
-                  setState(() => _selectedCrypto = option.symbol);
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
-        );
-      },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return VitSheetPanel(
+            title: 'Chọn loại Crypto',
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: snapshot.cryptoOptions.length,
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
+              itemBuilder: (context, index) {
+                final option = snapshot.cryptoOptions[index];
+                return BuyCryptoOptionRow(
+                  option: option,
+                  selected: option.symbol == _selectedCrypto,
+                  onTap: () {
+                    setState(() => _selectedCrypto = option.symbol);
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

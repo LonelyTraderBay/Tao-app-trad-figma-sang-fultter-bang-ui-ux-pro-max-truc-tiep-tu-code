@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -211,16 +213,18 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
   }
 
   void _showTrustSheet(ArenaModeDetailSnapshot snapshot) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
 
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.surface,
-      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.surface,
+        barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.sheetTopRadius,
+        ),
+        builder: (context) => ArenaModeTrustSheet(snapshot: snapshot),
       ),
-      builder: (context) => ArenaModeTrustSheet(snapshot: snapshot),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -146,13 +148,15 @@ class _NewsPageState extends ConsumerState<NewsPage> {
   }
 
   void _showArticleSheet(BuildContext context, NewsArticle article) {
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .80),
-      backgroundColor: AppColors.transparent,
-      builder: (context) => _ArticleSheet(article: article),
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .80),
+        backgroundColor: AppColors.transparent,
+        builder: (context) => _ArticleSheet(article: article),
+      ),
     );
   }
 }

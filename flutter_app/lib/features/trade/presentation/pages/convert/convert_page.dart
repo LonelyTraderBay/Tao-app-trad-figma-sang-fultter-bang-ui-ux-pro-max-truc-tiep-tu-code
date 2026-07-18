@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -270,7 +272,7 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
   }
 
   void _openSettings() {
-    context.push(AppRoutePaths.tradeSettings);
+    unawaited(context.push(AppRoutePaths.tradeSettings));
   }
 
   Future<void> _submitWithConfirm(
@@ -312,7 +314,7 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
     if (!mounted) return;
     setState(() => _receipt = receipt);
     if (!mounted) return;
-    showVitNoticeSheet(
+    await showVitNoticeSheet(
       context: context,
       title: 'Đã gửi chuyển đổi',
       message: 'Đã tạo ${receipt.convertId}',

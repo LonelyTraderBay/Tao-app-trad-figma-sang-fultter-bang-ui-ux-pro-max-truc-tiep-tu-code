@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -139,7 +141,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                             tabs: snapshot.tabs,
                             active: activeTab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -176,23 +178,23 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                                   snapshot.config.notificationsEnabled,
                               moduleEnabled: _moduleEnabled,
                               onModeChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _mode = value);
                               },
                               onBudgetChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _monthlyBudgetUsd = value);
                               },
                               onModuleChanged: (id, enabled) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _moduleStates[id] = enabled);
                               },
                               onApprovalChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _approvalRequired = value);
                               },
                               onNotificationChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _notificationsEnabled = value);
                               },
                             ),
@@ -210,7 +212,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
   }
 
   void _toggleStatus() {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
     // `.value` (đã có sẵn vì nút này chỉ render trong nhánh data:).
     final current =
@@ -227,12 +229,12 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
   }
 
   void _approveAction(String id) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _actionStates[id] = SavingsAutoPilotActionStatus.executed);
   }
 
   void _skipAction(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _actionStates[id] = SavingsAutoPilotActionStatus.skipped);
   }
 
@@ -269,26 +271,28 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
     BuildContext context,
     SavingsAutoPilotActionDraft action,
   ) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final status = _actionStatus(action);
-    showVitBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.transparent,
-      builder: (context) => ActionDetailSheet(
-        action: action,
-        status: status,
-        onApprove: status == SavingsAutoPilotActionStatus.needsApproval
-            ? () {
-                Navigator.of(context).pop();
-                _approveAction(action.id);
-              }
-            : null,
-        onSkip: status == SavingsAutoPilotActionStatus.needsApproval
-            ? () {
-                Navigator.of(context).pop();
-                _skipAction(action.id);
-              }
-            : null,
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        backgroundColor: AppColors.transparent,
+        builder: (context) => ActionDetailSheet(
+          action: action,
+          status: status,
+          onApprove: status == SavingsAutoPilotActionStatus.needsApproval
+              ? () {
+                  Navigator.of(context).pop();
+                  _approveAction(action.id);
+                }
+              : null,
+          onSkip: status == SavingsAutoPilotActionStatus.needsApproval
+              ? () {
+                  Navigator.of(context).pop();
+                  _skipAction(action.id);
+                }
+              : null,
+        ),
       ),
     );
   }

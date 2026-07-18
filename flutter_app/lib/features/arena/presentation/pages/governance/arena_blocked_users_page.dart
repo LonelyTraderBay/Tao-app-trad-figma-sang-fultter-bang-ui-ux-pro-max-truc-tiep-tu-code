@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -127,7 +129,9 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                                     users: viewState.users,
                                     onUnblock: (user) => _requestUnblock(user),
                                     onViewProfile: (user) {
-                                      HapticFeedback.selectionClick();
+                                      unawaited(
+                                        HapticFeedback.selectionClick(),
+                                      );
                                       context.go(
                                         AppRoutePaths.arenaCreator(user.id),
                                       );
@@ -155,7 +159,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
   }
 
   Future<void> _requestUnblock(ArenaBlockedUserDraft user) async {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     final confirmed = await showVitConfirmDialog(
       context: context,
       title: 'Bỏ chặn ${user.name}?',
@@ -174,7 +178,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
   }
 
   static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     if (context.canPop()) {
       context.pop();
       return;

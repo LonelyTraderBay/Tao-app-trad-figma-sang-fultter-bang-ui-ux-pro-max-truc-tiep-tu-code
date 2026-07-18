@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -152,7 +154,7 @@ class _StakingNotificationsPageState
                           _DoNotDisturbCard(
                             enabled: _dndEnabled,
                             onToggle: () {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _dndEnabled = !_dndEnabled);
                             },
                           ),
@@ -171,7 +173,7 @@ class _StakingNotificationsPageState
   }
 
   void _toggleSetting(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _settings = [
         for (final setting in _settings!)
@@ -183,7 +185,7 @@ class _StakingNotificationsPageState
   }
 
   void _toggleChannel(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _channels = [
         for (final channel in _channels!)
@@ -195,7 +197,7 @@ class _StakingNotificationsPageState
   }
 
   void _markRead(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _history = [
         for (final notification in _history!)
@@ -207,7 +209,7 @@ class _StakingNotificationsPageState
   }
 
   void _markAllRead() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _history = [
         for (final notification in _history!) notification.copyWith(read: true),

@@ -65,11 +65,13 @@ class _HelpButton extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: label,
-      message: '$label sẽ sớm ra mắt',
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: label,
+        message: '$label sẽ sớm ra mắt',
+      ),
     );
   }
 }

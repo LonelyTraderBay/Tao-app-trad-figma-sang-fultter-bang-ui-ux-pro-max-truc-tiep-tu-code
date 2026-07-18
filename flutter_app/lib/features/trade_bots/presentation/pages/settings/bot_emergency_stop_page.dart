@@ -172,7 +172,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
     );
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final controller = ref.read(tradeBotEmergencyStopControllerProvider).value;
     if (controller == null ||
         !controller.canSubmit(reasonId: _reasonId, confirmed: _confirmed) ||
@@ -180,13 +180,14 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
       return;
     }
     setState(() => _stopping = true);
-    final result = controller.submit(
+    final result = await controller.submit(
       TradeBotEmergencyStopDraft(
         reasonId: _reasonId!,
         closePositions: _closePositions,
         confirmed: _confirmed,
       ),
     );
+    if (!mounted) return;
     context.go(result.redirectPath);
   }
 }

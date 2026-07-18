@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -391,7 +393,7 @@ class _ArenaSmartRuleBuilderPageState
   }
 
   Future<void> _selectDomain(ArenaSmartRulesSnapshot snapshot) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     FocusScope.of(context).unfocus();
     final selected = await showVitBottomSheet<ArenaSmartOptionDraft>(
       context: context,
@@ -418,7 +420,7 @@ class _ArenaSmartRuleBuilderPageState
     required String selectedValue,
     required ValueChanged<String> onSelected,
   }) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     FocusScope.of(context).unfocus();
     final selected = await showVitBottomSheet<String>(
       context: context,
@@ -456,7 +458,7 @@ class _ArenaSmartRuleBuilderPageState
   }
 
   void _showGuidance() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _statusLabel = 'Public room cần rule rõ ràng hơn');
   }
 
@@ -471,7 +473,7 @@ class _ArenaSmartRuleBuilderPageState
       );
       return;
     }
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _statusLabel = 'Rule đã hoàn chỉnh');
   }
 
@@ -479,7 +481,7 @@ class _ArenaSmartRuleBuilderPageState
     ArenaSmartRulesSnapshot snapshot,
     _ClarityResult clarity,
   ) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final draft = ArenaSmartRuleBuilderController(
       state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
     ).buildCreationDraft(_formDraft(), clarity.score);
@@ -491,7 +493,7 @@ class _ArenaSmartRuleBuilderPageState
     ArenaSmartRulesSnapshot snapshot,
     _ClarityResult clarity,
   ) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     final draft = ArenaSmartRuleBuilderController(
       state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
     ).buildCreationDraft(_formDraft(), clarity.score);
@@ -503,7 +505,7 @@ class _ArenaSmartRuleBuilderPageState
     ArenaSmartRulesSnapshot snapshot,
     _ClarityResult clarity,
   ) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     FocusScope.of(context).unfocus();
     final draft = ArenaSmartRuleBuilderController(
       state: ArenaSmartRuleBuilderViewState(snapshot: snapshot),
@@ -537,7 +539,7 @@ class _ArenaSmartRuleBuilderPageState
   }
 
   void _resetForm() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _titleController.clear();
     _customWinController.clear();
     _descriptionController.clear();

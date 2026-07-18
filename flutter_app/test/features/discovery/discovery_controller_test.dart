@@ -4,23 +4,34 @@ import 'package:vit_trade_flutter/features/discovery/presentation/controllers/di
 
 void main() {
   group('DiscoveryController', () {
-    test('returns unified search snapshots through repository contract', () {
-      final controller = const DiscoveryController(MockDiscoveryRepository());
+    test(
+      'returns unified search snapshots through repository contract',
+      () async {
+        final controller = const DiscoveryController(
+          MockDiscoveryRepository(loadDelay: Duration.zero),
+        );
 
-      final empty = controller.unifiedSearch();
-      final bitcoin = controller.unifiedSearch(query: ' bitcoin ');
+        final empty = await controller.unifiedSearch();
+        final bitcoin = await controller.unifiedSearch(query: ' bitcoin ');
 
-      expect(empty.hasQuery, isFalse);
-      expect(bitcoin.query, 'bitcoin');
-      expect(bitcoin.results.predictions.map((event) => event.id), ['pred-1']);
-      expect(bitcoin.results.tradingPairs.map((pair) => pair.id), ['btcusdt']);
-      expect(bitcoin.supportedStates, contains(DiscoveryScreenState.offline));
-    });
+        expect(empty.hasQuery, isFalse);
+        expect(bitcoin.query, 'bitcoin');
+        expect(bitcoin.results.predictions.map((event) => event.id), [
+          'pred-1',
+        ]);
+        expect(bitcoin.results.tradingPairs.map((pair) => pair.id), [
+          'btcusdt',
+        ]);
+        expect(bitcoin.supportedStates, contains(DiscoveryScreenState.offline));
+      },
+    );
 
-    test('returns topic snapshots without mixing product boundaries', () {
-      final controller = const DiscoveryController(MockDiscoveryRepository());
+    test('returns topic snapshots without mixing product boundaries', () async {
+      final controller = const DiscoveryController(
+        MockDiscoveryRepository(loadDelay: Duration.zero),
+      );
 
-      final snapshot = controller.topicHub(
+      final snapshot = await controller.topicHub(
         topicId: 'crypto',
         detailEndpoint: true,
       );

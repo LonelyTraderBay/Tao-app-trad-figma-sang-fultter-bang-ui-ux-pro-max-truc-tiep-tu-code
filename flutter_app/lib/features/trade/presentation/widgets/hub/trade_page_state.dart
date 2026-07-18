@@ -24,7 +24,7 @@ class _TradePageState extends ConsumerState<TradePage> {
     if (orderState.status == TradeHighRiskFlowStatus.success) {
       context.go(AppRoutePaths.tradeOrderReceipt);
       if (context.mounted) {
-        showVitNoticeSheet(
+        await showVitNoticeSheet(
           context: context,
           title: 'Lệnh đã gửi',
           message: 'Đã gửi ${orderState.receipt?.orderId ?? 'lệnh'}',
@@ -35,7 +35,7 @@ class _TradePageState extends ConsumerState<TradePage> {
     }
     // Nhánh error/offline: ở lại trang, panel rủi ro hiển thị trạng thái;
     // sheet thông báo cho phép người dùng biết ngay lý do.
-    showVitNoticeSheet(
+    await showVitNoticeSheet(
       context: context,
       title: 'Gửi lệnh thất bại',
       message:
@@ -63,11 +63,13 @@ class _TradePageState extends ConsumerState<TradePage> {
         statusLabel: 'Mới',
         ctaLabel: 'Bắt đầu',
         onTap: () {
-          HapticFeedback.selectionClick();
-          showVitNoticeSheet(
-            context: context,
-            title: 'Bắt đầu giao dịch',
-            message: 'Tính năng bắt đầu giao dịch sẽ sớm ra mắt',
+          unawaited(HapticFeedback.selectionClick());
+          unawaited(
+            showVitNoticeSheet(
+              context: context,
+              title: 'Bắt đầu giao dịch',
+              message: 'Tính năng bắt đầu giao dịch sẽ sớm ra mắt',
+            ),
           );
         },
       );

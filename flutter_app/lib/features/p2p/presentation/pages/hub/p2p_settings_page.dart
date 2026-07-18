@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -181,7 +183,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                             _HoursSection(
                               mode: _hoursMode,
                               onChanged: (value) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _hoursMode = value);
                               },
                             ),
@@ -196,7 +198,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                                   ? VitCtaButtonVariant.success
                                   : VitCtaButtonVariant.primary,
                               onPressed: () {
-                                HapticFeedback.mediumImpact();
+                                unawaited(HapticFeedback.mediumImpact());
                                 setState(() => _saved = true);
                               },
                               child: Text(
@@ -248,7 +250,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
   }
 
   void _toggle(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _toggles[id] = !(_toggles[id] ?? false));
   }
 }

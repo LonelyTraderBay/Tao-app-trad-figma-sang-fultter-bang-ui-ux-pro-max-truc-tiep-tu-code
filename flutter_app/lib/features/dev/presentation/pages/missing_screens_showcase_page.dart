@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -48,9 +51,7 @@ class _MissingScreensShowcasePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(missingScreensShowcaseControllerProvider)
-        .snapshot();
+    final snapshotAsync = ref.watch(missingScreensShowcaseSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -58,76 +59,70 @@ class _MissingScreensShowcasePageState
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel:
-          'Danh sách màn hình bổ sung và điểm vào v2 (công cụ nội bộ)',
-      semanticIdentifier: 'SC-398',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: MissingScreensShowcasePage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.flush,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      DevStateBar(
-                        key: MissingScreensShowcasePage.statesKey,
-                        supportedStates: snapshot.supportedStates,
-                        active: _uiMode,
-                        onChanged: (mode) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _uiMode = mode);
-                        },
-                      ),
-                      switch (_uiMode) {
-                        DevUiMode.loading => const _ShowcaseLoading(),
-                        DevUiMode.empty => const VitEmptyState(
-                          title: 'No showcase entries',
-                          message:
-                              'Add missing screens to the dev registry to preview flows here.',
-                        ),
-                        DevUiMode.error => VitErrorState(
-                          title: 'Showcase unavailable',
-                          message:
-                              'Could not load screen catalog. Retry when back online.',
-                          onAction: () =>
-                              setState(() => _uiMode = DevUiMode.live),
-                        ),
-                        DevUiMode.offline => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const VitOfflineBanner(
-                              detail: 'Cached routes remain navigable offline.',
-                            ),
-                            const SizedBox(height: AppSpacing.x4),
-                            ..._liveSections(snapshot),
-                          ],
-                        ),
-                        DevUiMode.live => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: _liveSections(snapshot),
-                        ),
-                      },
-                    ],
-                  ),
-                ),
+    return snapshotAsync.when(
+      loading: () => _ShowcaseScaffold(
+        title: '03 – Missing Screens & Flow Fix',
+        subtitle: 'No redesign • Chỉ tạo mới + v2 entry points',
+        bottomInset: bottomInset,
+        body: const _ShowcaseLoading(),
+      ),
+      error: (error, stackTrace) => _ShowcaseScaffold(
+        title: '03 – Missing Screens & Flow Fix',
+        subtitle: 'No redesign • Chỉ tạo mới + v2 entry points',
+        bottomInset: bottomInset,
+        body: VitErrorState(
+          title: 'Showcase unavailable',
+          message: 'Could not load screen catalog. Retry when back online.',
+          actionLabel: 'Thử lại',
+          onAction: () =>
+              ref.invalidate(missingScreensShowcaseSnapshotProvider),
+        ),
+      ),
+      data: (snapshot) => _ShowcaseScaffold(
+        title: snapshot.title,
+        subtitle: snapshot.subtitle,
+        bottomInset: bottomInset,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DevStateBar(
+              key: MissingScreensShowcasePage.statesKey,
+              supportedStates: snapshot.supportedStates,
+              active: _uiMode,
+              onChanged: (mode) {
+                unawaited(HapticFeedback.selectionClick());
+                setState(() => _uiMode = mode);
+              },
+            ),
+            switch (_uiMode) {
+              DevUiMode.loading => const _ShowcaseLoading(),
+              DevUiMode.empty => const VitEmptyState(
+                title: 'No showcase entries',
+                message:
+                    'Add missing screens to the dev registry to preview flows here.',
               ),
-            ],
-          ),
+              DevUiMode.error => VitErrorState(
+                title: 'Showcase unavailable',
+                message:
+                    'Could not load screen catalog. Retry when back online.',
+                onAction: () => setState(() => _uiMode = DevUiMode.live),
+              ),
+              DevUiMode.offline => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const VitOfflineBanner(
+                    detail: 'Cached routes remain navigable offline.',
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  ..._liveSections(snapshot),
+                ],
+              ),
+              DevUiMode.live => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _liveSections(snapshot),
+              ),
+            },
+          ],
         ),
       ),
     );
@@ -146,7 +141,7 @@ class _MissingScreensShowcasePageState
             ],
             activeKey: _activeTab,
             onChanged: (tab) {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               setState(() => _activeTab = tab);
             },
             variant: VitTabBarVariant.segment,
@@ -167,5 +162,57 @@ class _ShowcaseLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitSkeletonList(rows: 3);
+  }
+}
+
+class _ShowcaseScaffold extends StatelessWidget {
+  const _ShowcaseScaffold({
+    required this.title,
+    required this.subtitle,
+    required this.bottomInset,
+    required this.body,
+  });
+
+  final String title;
+  final String subtitle;
+  final double bottomInset;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel:
+          'Danh sách màn hình bổ sung và điểm vào v2 (công cụ nội bộ)',
+      semanticIdentifier: 'SC-398',
+      child: Material(
+        type: MaterialType.transparency,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: title,
+            subtitle: subtitle,
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.home),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: MissingScreensShowcasePage.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
+                  child: VitPageContent(
+                    rhythm: VitPageRhythm.flush,
+                    gap: VitContentGap.defaultGap,
+                    children: [body],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

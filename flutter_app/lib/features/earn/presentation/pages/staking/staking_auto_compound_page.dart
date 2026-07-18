@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -185,12 +187,16 @@ class _StakingAutoCompoundPageState
                                     thresholdController: _thresholdController,
                                     gasOptimization: _gasOptimization,
                                     onFrequencyChanged: (frequency) {
-                                      HapticFeedback.selectionClick();
+                                      unawaited(
+                                        HapticFeedback.selectionClick(),
+                                      );
                                       setState(() => _frequency = frequency);
                                     },
                                     onThresholdChanged: (_) => setState(() {}),
                                     onGasOptimizationChanged: () {
-                                      HapticFeedback.selectionClick();
+                                      unawaited(
+                                        HapticFeedback.selectionClick(),
+                                      );
                                       setState(() {
                                         _gasOptimization = !_gasOptimization;
                                       });
@@ -228,7 +234,7 @@ class _StakingAutoCompoundPageState
                                 variant: VitCtaButtonVariant.primary,
                                 leading: const Icon(Icons.settings_outlined),
                                 onPressed: () {
-                                  HapticFeedback.lightImpact();
+                                  unawaited(HapticFeedback.lightImpact());
                                   setState(() => _showSuccess = true);
                                 },
                                 child: const Text('Lưu cài đặt'),
@@ -271,7 +277,7 @@ class _StakingAutoCompoundPageState
   }
 
   void _toggle(StakingAutoCompoundPositionDraft position) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _enabled[position.id] = !position.autoCompound);
   }
 

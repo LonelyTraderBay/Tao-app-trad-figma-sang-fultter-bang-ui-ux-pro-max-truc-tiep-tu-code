@@ -24,8 +24,10 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (repository != null)
-            discoveryRepositoryProvider.overrideWithValue(repository),
+          discoveryRepositoryProvider.overrideWithValue(
+            repository ??
+                const MockDiscoveryRepository(loadDelay: Duration.zero),
+          ),
         ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.topics),
@@ -47,8 +49,10 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (repository != null)
-            discoveryRepositoryProvider.overrideWithValue(repository),
+          discoveryRepositoryProvider.overrideWithValue(
+            repository ??
+                const MockDiscoveryRepository(loadDelay: Duration.zero),
+          ),
         ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
@@ -60,8 +64,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-284 mock repository exposes Topic Hub BE draft', () {
-    final snapshot = const MockDiscoveryRepository().getTopicHub();
+  test('SC-284 mock repository exposes Topic Hub BE draft', () async {
+    final snapshot = await const MockDiscoveryRepository().getTopicHub();
 
     expect(snapshot.endpoint, '/api/mobile/discovery/topics');
     expect(snapshot.actionDraft, 'read-only or local navigation action');
@@ -87,8 +91,8 @@ void main() {
     );
   });
 
-  test('SC-285 mock repository exposes Topic Crypto BE draft', () {
-    final snapshot = const MockDiscoveryRepository().getTopicHub(
+  test('SC-285 mock repository exposes Topic Crypto BE draft', () async {
+    final snapshot = await const MockDiscoveryRepository().getTopicHub(
       topicId: 'crypto',
       detailEndpoint: true,
     );
@@ -198,22 +202,23 @@ void main() {
 final class _OfflineDiscoveryRepository implements DiscoveryRepository {
   const _OfflineDiscoveryRepository();
 
-  static const _base = MockDiscoveryRepository();
+  static const _base = MockDiscoveryRepository(loadDelay: Duration.zero);
 
   @override
-  UnifiedSearchSnapshot getUnifiedSearch({String query = ''}) {
-    return _base
-        .getUnifiedSearch(query: query)
-        .copyWith(currentState: DiscoveryScreenState.offline);
+  Future<UnifiedSearchSnapshot> getUnifiedSearch({String query = ''}) async {
+    return (await _base.getUnifiedSearch(
+      query: query,
+    )).copyWith(currentState: DiscoveryScreenState.offline);
   }
 
   @override
-  TopicHubSnapshot getTopicHub({
+  Future<TopicHubSnapshot> getTopicHub({
     String topicId = 'crypto',
     bool detailEndpoint = false,
-  }) {
-    return _base
-        .getTopicHub(topicId: topicId, detailEndpoint: detailEndpoint)
-        .copyWith(currentState: DiscoveryScreenState.offline);
+  }) async {
+    return (await _base.getTopicHub(
+      topicId: topicId,
+      detailEndpoint: detailEndpoint,
+    )).copyWith(currentState: DiscoveryScreenState.offline);
   }
 }

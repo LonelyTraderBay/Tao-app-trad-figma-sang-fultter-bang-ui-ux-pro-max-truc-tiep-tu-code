@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -135,7 +137,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
-                          HapticFeedback.selectionClick();
+                          unawaited(HapticFeedback.selectionClick());
                           setState(() => _tab = tab);
                         },
                       ),
@@ -169,7 +171,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                               reports: snapshot.reportTypes,
                               selected: selectedReport,
                               onChanged: (report) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _reportType = report;
                                   _previewReady = false;
@@ -186,7 +188,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                               formats: snapshot.formats,
                               selected: selectedFormat,
                               onChanged: (format) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _format = format;
                                   _previewReady = false;
@@ -203,7 +205,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                               periods: snapshot.periods,
                               selected: selectedPeriod,
                               onChanged: (period) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _period = period;
                                   _previewReady = false;
@@ -220,7 +222,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                               scopes: snapshot.scopes,
                               selected: selectedScope,
                               onChanged: (scope) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   _scope = scope;
                                   _previewReady = false;
@@ -287,7 +289,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
   }
 
   void _toggleOption(String id) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
     // `.value` thay vì gọi lại repo.
     final snapshot = ref.read(savingsExportSnapshotProvider).value;
@@ -305,7 +307,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
   }
 
   void _previewExport(SavingsExportFormat format) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _previewReady = true);
   }
 }

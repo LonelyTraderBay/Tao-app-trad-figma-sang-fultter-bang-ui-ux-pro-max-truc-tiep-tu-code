@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,7 +60,7 @@ class _VIPPageState extends ConsumerState<VIPPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(profileControllerProvider).getVip();
+    final snapshotAsync = ref.watch(profileVipSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -94,12 +96,28 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    children: _vipPageChildren(
-                      context: context,
-                      snapshot: snapshot,
-                      selectedTab: _selectedTab,
-                      onTabChanged: (tab) => setState(() => _selectedTab = tab),
-                      onTrade: _openTrade,
+                    children: snapshotAsync.when(
+                      loading: () => const [
+                        VitSkeletonList(key: VIPPage.loadingKey),
+                      ],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
+                          key: VIPPage.errorKey,
+                          title: 'Không tải được dữ liệu',
+                          message: 'Vui lòng thử lại.',
+                          actionLabel: 'Thử lại',
+                          onAction: () =>
+                              ref.invalidate(profileVipSnapshotProvider),
+                        ),
+                      ],
+                      data: (snapshot) => _vipPageChildren(
+                        context: context,
+                        snapshot: snapshot,
+                        selectedTab: _selectedTab,
+                        onTabChanged: (tab) =>
+                            setState(() => _selectedTab = tab),
+                        onTrade: _openTrade,
+                      ),
                     ),
                   ),
                 ),
@@ -112,7 +130,7 @@ class _VIPPageState extends ConsumerState<VIPPage> {
   }
 
   void _openTrade() {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     context.go(AppRoutePaths.tradePair('btcusdt'));
   }
 

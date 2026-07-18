@@ -6,10 +6,12 @@ import 'package:vit_trade_flutter/features/onboarding/data/repositories/mock_onb
 
 void main() {
   group('OnboardingController', () {
-    test('exposes onboarding flow through repository contract', () {
-      final controller = const OnboardingController(MockOnboardingRepository());
+    test('exposes onboarding flow through repository contract', () async {
+      final controller = const OnboardingController(
+        MockOnboardingRepository(loadDelay: Duration.zero),
+      );
 
-      final snapshot = controller.getFlow();
+      final snapshot = await controller.getFlow();
 
       expect(snapshot.endpoint, '/api/mobile/onboarding/onboarding');
       expect(snapshot.steps, contains(OnboardingStepDraft.complete));

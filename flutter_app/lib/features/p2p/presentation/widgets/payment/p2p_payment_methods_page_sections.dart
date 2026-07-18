@@ -49,7 +49,7 @@ class _AddMethodRow extends StatelessWidget {
             label: 'Thêm ngân hàng',
             color: AppModuleAccents.p2p,
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.addBankRoute);
             },
           ),
@@ -62,7 +62,7 @@ class _AddMethodRow extends StatelessWidget {
             label: 'Thêm ví điện tử',
             color: AppColors.accent,
             onTap: () {
-              HapticFeedback.selectionClick();
+              unawaited(HapticFeedback.selectionClick());
               context.go(snapshot.addEwalletRoute);
             },
           ),

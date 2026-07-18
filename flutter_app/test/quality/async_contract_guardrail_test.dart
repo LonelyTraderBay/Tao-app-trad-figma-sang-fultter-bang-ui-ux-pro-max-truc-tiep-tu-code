@@ -24,7 +24,7 @@ final _syncMethodPattern = RegExp(r'^\s+(?!Future<|Stream<)\S.*\s[a-z]\w*\(');
 /// không phải suy ra bằng phép trừ thủ công 29 khỏi baseline cũ.
 /// Fan-out: mỗi cụm xong thì trừ đúng số method đã async-hoá khỏi baseline
 /// này (không hạ thấp hơn actual đo được — xem reason message bên dưới).
-const _baseline = 35;
+const _baseline = 0;
 
 List<String> _syncRepositoryMethods() {
   final findings = <String>[];

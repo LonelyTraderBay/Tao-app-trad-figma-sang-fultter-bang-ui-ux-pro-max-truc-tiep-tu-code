@@ -2,10 +2,24 @@ import 'package:vit_trade_flutter/features/cross_module/domain/entities/smart_al
 import 'package:vit_trade_flutter/features/cross_module/domain/repositories/smart_alerts_repository.dart';
 
 final class MockSmartAlertsRepository implements SmartAlertsRepository {
-  const MockSmartAlertsRepository();
+  const MockSmartAlertsRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('smart_alerts_mock_fetch_failed');
+  }
 
   @override
-  SmartAlertsSnapshot getCenter() {
+  Future<SmartAlertsSnapshot> getCenter() async {
+    await _simulateNetwork();
     return const SmartAlertsSnapshot(
       endpoint: '/api/mobile/cross-module/smart-alerts',
       actionDraft: 'read-only or local navigation action',

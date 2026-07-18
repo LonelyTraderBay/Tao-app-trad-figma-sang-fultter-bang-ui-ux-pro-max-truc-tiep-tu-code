@@ -1,11 +1,16 @@
 part of 'mock_dev_tools_repository.dart';
 
 final class MockMissingScreensShowcaseRepository
+    extends _MockDevToolsRepositoryBase
     implements MissingScreensShowcaseRepository {
-  const MockMissingScreensShowcaseRepository();
+  const MockMissingScreensShowcaseRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  MissingScreensShowcaseSnapshot getShowcase() {
+  Future<MissingScreensShowcaseSnapshot> getShowcase() async {
+    await _simulateNetwork();
     return const MissingScreensShowcaseSnapshot(
       endpoint: '/api/mobile/dev/dev-showcase',
       actionDraft: 'read-only or local navigation action',

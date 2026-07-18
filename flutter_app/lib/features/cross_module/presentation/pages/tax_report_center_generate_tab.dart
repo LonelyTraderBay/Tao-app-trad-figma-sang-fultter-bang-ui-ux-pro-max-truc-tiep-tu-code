@@ -11,8 +11,7 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(taxReportControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(taxReportControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -20,59 +19,91 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
-    return CrossModuleTabbedPageShell(
-      semanticLabel: 'Trung tâm báo cáo thuế',
-      semanticIdentifier: 'SC-324',
-      contentKey: TaxReportCenter.contentKey,
-      title: snapshot.title,
-      onBack: () => context.go(snapshot.backRoute),
-      scrollEndClearance: scrollEndClearance,
-      tabs: _TaxTabs(
-        tabs: snapshot.tabs,
-        active: _activeTab,
-        onChanged: (tab) {
-          HapticFeedback.selectionClick();
-          setState(() => _activeTab = tab);
-        },
+    return controllerAsync.when(
+      loading: () => CrossModuleTabbedPageShell(
+        semanticLabel: 'Trung tâm báo cáo thuế',
+        semanticIdentifier: 'SC-324',
+        contentKey: TaxReportCenter.contentKey,
+        title: 'Tax Report Center',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: scrollEndClearance,
+        tabs: const SizedBox.shrink(),
+        contentGap: VitContentGap.tight,
+        body: const VitSkeletonList(),
       ),
-      contentGap: VitContentGap.tight,
-      body: _activeTab == TaxReportTab.generate
-          ? _GenerateTaxReportTab(
-              snapshot: snapshot,
-              startDate: _startDate,
-              endDate: _endDate,
-              format: _format,
-              jurisdictionId: _jurisdictionId,
-              exportQueued: _exportQueued,
-              onPresetSelected: (start, end) {
-                HapticFeedback.selectionClick();
-                setState(() {
-                  _startDate = start;
-                  _endDate = end;
-                });
-              },
-              onFormatChanged: (format) {
-                HapticFeedback.selectionClick();
-                setState(() => _format = format);
-              },
-              onJurisdictionChanged: (id) {
-                HapticFeedback.selectionClick();
-                setState(() => _jurisdictionId = id);
-              },
-              onGenerate: () {
-                HapticFeedback.mediumImpact();
-                setState(() => _exportQueued = true);
-              },
-            )
-          : _activeTab == TaxReportTab.reports
-          ? _ReportsTab(snapshot: snapshot)
-          : _TaxSettingsTab(
-              includeArena: _includeArena,
-              onToggleArena: () {
-                HapticFeedback.selectionClick();
-                setState(() => _includeArena = !_includeArena);
-              },
-            ),
+      error: (error, stackTrace) => CrossModuleTabbedPageShell(
+        semanticLabel: 'Trung tâm báo cáo thuế',
+        semanticIdentifier: 'SC-324',
+        contentKey: TaxReportCenter.contentKey,
+        title: 'Tax Report Center',
+        onBack: () => context.go(AppRoutePaths.home),
+        scrollEndClearance: scrollEndClearance,
+        tabs: const SizedBox.shrink(),
+        contentGap: VitContentGap.tight,
+        body: VitErrorState(
+          title: 'Tax Report Center',
+          message: 'Không tải được dữ liệu.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(taxReportSnapshotProvider),
+        ),
+      ),
+      data: (controller) {
+        final snapshot = controller.state.snapshot;
+        return CrossModuleTabbedPageShell(
+          semanticLabel: 'Trung tâm báo cáo thuế',
+          semanticIdentifier: 'SC-324',
+          contentKey: TaxReportCenter.contentKey,
+          title: snapshot.title,
+          onBack: () => context.go(snapshot.backRoute),
+          scrollEndClearance: scrollEndClearance,
+          tabs: _TaxTabs(
+            tabs: snapshot.tabs,
+            active: _activeTab,
+            onChanged: (tab) {
+              unawaited(HapticFeedback.selectionClick());
+              setState(() => _activeTab = tab);
+            },
+          ),
+          contentGap: VitContentGap.tight,
+          body: _activeTab == TaxReportTab.generate
+              ? _GenerateTaxReportTab(
+                  snapshot: snapshot,
+                  startDate: _startDate,
+                  endDate: _endDate,
+                  format: _format,
+                  jurisdictionId: _jurisdictionId,
+                  exportQueued: _exportQueued,
+                  onPresetSelected: (start, end) {
+                    unawaited(HapticFeedback.selectionClick());
+                    setState(() {
+                      _startDate = start;
+                      _endDate = end;
+                    });
+                  },
+                  onFormatChanged: (format) {
+                    unawaited(HapticFeedback.selectionClick());
+                    setState(() => _format = format);
+                  },
+                  onJurisdictionChanged: (id) {
+                    unawaited(HapticFeedback.selectionClick());
+                    setState(() => _jurisdictionId = id);
+                  },
+                  onGenerate: () {
+                    unawaited(HapticFeedback.mediumImpact());
+                    setState(() => _exportQueued = true);
+                  },
+                )
+              : _activeTab == TaxReportTab.reports
+              ? _ReportsTab(snapshot: snapshot)
+              : _TaxSettingsTab(
+                  includeArena: _includeArena,
+                  onToggleArena: () {
+                    unawaited(HapticFeedback.selectionClick());
+                    setState(() => _includeArena = !_includeArena);
+                  },
+                ),
+        );
+      },
     );
   }
 }

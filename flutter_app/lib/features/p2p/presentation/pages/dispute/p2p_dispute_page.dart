@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -185,17 +187,17 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
   }
 
   void _selectReason(String reason) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _selectedReason = reason);
   }
 
   void _markEvidenceUploaded() {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     setState(() => _evidenceUploaded = true);
   }
 
   void _submit(String disputeId) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     context.go(AppRoutePaths.p2pDisputeDetail(disputeId));
   }
 }

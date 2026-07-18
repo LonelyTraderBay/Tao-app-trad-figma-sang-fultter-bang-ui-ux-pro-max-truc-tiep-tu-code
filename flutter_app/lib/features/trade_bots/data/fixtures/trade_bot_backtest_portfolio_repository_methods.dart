@@ -249,7 +249,10 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotBacktestResult runBotBacktest(TradeBotBacktestRequest request) {
+  Future<TradeBotBacktestResult> runBotBacktest(
+    TradeBotBacktestRequest request,
+  ) async {
+    await _simulateNetwork();
     return const TradeBotBacktestResult(
       status: 'queued',
       reportId: 'BOT-BACKTEST-125',
@@ -258,9 +261,10 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotOptimizationResult runBotOptimization(
+  Future<TradeBotOptimizationResult> runBotOptimization(
     TradeBotOptimizationRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return const TradeBotOptimizationResult(
       status: 'queued',
       jobId: 'BOT-OPT-127',
@@ -269,9 +273,10 @@ mixin _MockTradeBotsRepositoryBacktestPortfolioMethods
   }
 
   @override
-  TradeBotTaxReportExportResult createBotTaxReportExport(
+  Future<TradeBotTaxReportExportResult> createBotTaxReportExport(
     TradeBotTaxReportExportRequest request,
-  ) {
+  ) async {
+    await _simulateNetwork();
     return TradeBotTaxReportExportResult(
       status: request.reportTypeIds.isEmpty ? 'blocked' : 'ready',
       year: request.year,

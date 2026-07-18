@@ -223,11 +223,13 @@ class _VideoTutorialsCard extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context) {
-    HapticFeedback.selectionClick();
-    showVitNoticeSheet(
-      context: context,
-      title: 'Video Tutorials',
-      message: 'Danh sách hướng dẫn đầy đủ sẽ sớm ra mắt',
+    unawaited(HapticFeedback.selectionClick());
+    unawaited(
+      showVitNoticeSheet(
+        context: context,
+        title: 'Video Tutorials',
+        message: 'Danh sách hướng dẫn đầy đủ sẽ sớm ra mắt',
+      ),
     );
   }
 }

@@ -168,7 +168,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
   }
 
   void _setTradeType(P2PTradeType value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _tradeType = value;
       _paymentMethod = '';
@@ -176,7 +176,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
   }
 
   void _setAsset(String value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() {
       _asset = value;
       _paymentMethod = '';
@@ -184,12 +184,12 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
   }
 
   void _setPayment(String value) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     setState(() => _paymentMethod = _paymentMethod == value ? '' : value);
   }
 
   void _setAmount(int amount) {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     _amountController.text = amount.toString();
     setState(() {});
   }
@@ -200,7 +200,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
     P2PAdDraft ad,
     double cryptoAmount,
   ) {
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     final params = Uri(
       queryParameters: {
         'type': _tradeType.name,

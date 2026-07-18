@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -146,7 +148,7 @@ class _StakingLiquidStakingPageState
                           _LiquidTabs(
                             active: _tab,
                             onChanged: (tab) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _tab = tab);
                             },
                           ),
@@ -155,7 +157,7 @@ class _StakingLiquidStakingPageState
                               snapshot: snapshot,
                               onDetail: _showTokenDetail,
                               onStake: (token) {
-                                HapticFeedback.lightImpact();
+                                unawaited(HapticFeedback.lightImpact());
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -177,7 +179,7 @@ class _StakingLiquidStakingPageState
                                   setState(() => _swapTo = value),
                               onAmountChanged: (_) => setState(() {}),
                               onReverse: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   final oldFrom = _swapFrom;
                                   _swapFrom = _swapTo;
@@ -189,7 +191,7 @@ class _StakingLiquidStakingPageState
                             _HoldingsTab(
                               snapshot: snapshot,
                               onStakeNow: () {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() => _tab = _LiquidTab.stake);
                               },
                             ),
@@ -208,7 +210,7 @@ class _StakingLiquidStakingPageState
   }
 
   Future<void> _showTokenDetail(StakingLiquidTokenDraft token) async {
-    HapticFeedback.selectionClick();
+    unawaited(HapticFeedback.selectionClick());
     await showVitBottomSheet<void>(
       context: context,
       isScrollControlled: true,

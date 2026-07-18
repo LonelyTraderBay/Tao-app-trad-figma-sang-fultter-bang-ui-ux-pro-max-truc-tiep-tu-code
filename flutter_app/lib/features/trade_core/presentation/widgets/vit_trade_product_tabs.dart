@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
@@ -62,41 +64,43 @@ class VitTradeProductTabs extends StatelessWidget {
 
   void _openMoreSheet(BuildContext context) {
     if (overflowItems.isEmpty) return;
-    showVitBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: AppColors.bg,
-      builder: (sheetContext) {
-        return VitSheetPanel(
-          title: moreSheetTitle,
-          child: Wrap(
-            spacing: AppSpacing.x3,
-            runSpacing: AppSpacing.x3,
-            children: [
-              for (final item in overflowItems)
-                SizedBox(
-                  width:
-                      (MediaQuery.sizeOf(sheetContext).width -
-                          AppSpacing.contentPad * 2 -
-                          AppSpacing.x3) /
-                      2,
-                  child: VitServiceTile(
-                    key: item.tileKey,
-                    density: VitServiceTileDensity.compact,
-                    icon: item.icon,
-                    label: item.label,
-                    accentColor: item.accentColor,
-                    badgeLabel: item.badge,
-                    onTap: () {
-                      Navigator.of(sheetContext).pop();
-                      item.onTap();
-                    },
+    unawaited(
+      showVitBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: AppColors.bg,
+        builder: (sheetContext) {
+          return VitSheetPanel(
+            title: moreSheetTitle,
+            child: Wrap(
+              spacing: AppSpacing.x3,
+              runSpacing: AppSpacing.x3,
+              children: [
+                for (final item in overflowItems)
+                  SizedBox(
+                    width:
+                        (MediaQuery.sizeOf(sheetContext).width -
+                            AppSpacing.contentPad * 2 -
+                            AppSpacing.x3) /
+                        2,
+                    child: VitServiceTile(
+                      key: item.tileKey,
+                      density: VitServiceTileDensity.compact,
+                      icon: item.icon,
+                      label: item.label,
+                      accentColor: item.accentColor,
+                      badgeLabel: item.badge,
+                      onTap: () {
+                        Navigator.of(sheetContext).pop();
+                        item.onTap();
+                      },
+                    ),
                   ),
-                ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 

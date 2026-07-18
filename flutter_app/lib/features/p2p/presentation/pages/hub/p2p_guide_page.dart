@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -104,7 +106,7 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
                     tabs: snapshot.tabs,
                     active: _tab,
                     onChanged: (value) {
-                      HapticFeedback.selectionClick();
+                      unawaited(HapticFeedback.selectionClick());
                       setState(() => _tab = value);
                     },
                   ),
@@ -128,7 +130,7 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
                                 snapshot: snapshot,
                                 mode: _mode,
                                 onModeChanged: (value) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() => _mode = value);
                                 },
                               ),
@@ -138,7 +140,7 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
                                 snapshot: snapshot,
                                 expandedFaqId: _expandedFaqId,
                                 onFaqToggle: (faqId) {
-                                  HapticFeedback.selectionClick();
+                                  unawaited(HapticFeedback.selectionClick());
                                   setState(() {
                                     _expandedFaqId = _expandedFaqId == faqId
                                         ? null

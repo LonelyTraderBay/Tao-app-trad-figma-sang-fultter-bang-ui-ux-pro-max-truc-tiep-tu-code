@@ -33,7 +33,7 @@ void main() {
   test('SC-123 mock repository exposes bot history BE draft', () async {
     final repo = const MockTradeBotsRepository(loadDelay: Duration.zero);
     final snapshot = await repo.getBotHistory();
-    final export = repo.createBotHistoryExport(
+    final export = await repo.createBotHistoryExport(
       const TradeBotHistoryExportRequest(format: 'csv'),
     );
 

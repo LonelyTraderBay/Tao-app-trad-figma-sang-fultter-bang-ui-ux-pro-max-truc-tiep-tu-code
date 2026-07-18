@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,8 +26,11 @@ class _SessionBootstrapState extends ConsumerState<SessionBootstrap> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => ref.read(authSessionControllerProvider.notifier).restore(),
+    // Fire-and-forget: khôi phục phiên chạy nền, không chặn frame đầu tiên.
+    unawaited(
+      Future.microtask(
+        () => ref.read(authSessionControllerProvider.notifier).restore(),
+      ),
     );
   }
 

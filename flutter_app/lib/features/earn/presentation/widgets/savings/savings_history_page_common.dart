@@ -18,7 +18,7 @@ class _TransactionCard extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(receiptRoute);
       },
       child: Padding(

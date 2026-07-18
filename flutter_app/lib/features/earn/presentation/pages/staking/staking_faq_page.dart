@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -115,7 +117,7 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
                           _CategoryTabs(
                             active: _category,
                             onChanged: (category) {
-                              HapticFeedback.selectionClick();
+                              unawaited(HapticFeedback.selectionClick());
                               setState(() => _category = category);
                             },
                           ),
@@ -135,7 +137,7 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
                               items: filtered,
                               expandedIds: _expandedIds,
                               onToggle: (id) {
-                                HapticFeedback.selectionClick();
+                                unawaited(HapticFeedback.selectionClick());
                                 setState(() {
                                   if (!_expandedIds.add(id)) {
                                     _expandedIds.remove(id);
@@ -365,7 +367,7 @@ class _SupportPanel extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   onPressed: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     context.go(snapshot.supportRoute);
                   },
                   child: const Text('Live Chat'),
@@ -376,7 +378,7 @@ class _SupportPanel extends StatelessWidget {
                 child: VitCtaButton(
                   variant: VitCtaButtonVariant.secondary,
                   onPressed: () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     context.go(snapshot.supportRoute);
                   },
                   child: const Text('Email Support'),

@@ -4,10 +4,24 @@ import 'package:vit_trade_flutter/features/discovery/domain/repositories/discove
 part 'mock_discovery_repository_fixtures.dart';
 
 final class MockDiscoveryRepository implements DiscoveryRepository {
-  const MockDiscoveryRepository();
+  const MockDiscoveryRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('discovery_mock_fetch_failed');
+  }
 
   @override
-  UnifiedSearchSnapshot getUnifiedSearch({String query = ''}) {
+  Future<UnifiedSearchSnapshot> getUnifiedSearch({String query = ''}) async {
+    await _simulateNetwork();
     final normalizedQuery = query.trim();
     return UnifiedSearchSnapshot(
       endpoint: '/api/mobile/discovery/search',
@@ -33,10 +47,11 @@ final class MockDiscoveryRepository implements DiscoveryRepository {
   }
 
   @override
-  TopicHubSnapshot getTopicHub({
+  Future<TopicHubSnapshot> getTopicHub({
     String topicId = 'crypto',
     bool detailEndpoint = false,
-  }) {
+  }) async {
+    await _simulateNetwork();
     final matches = _topics.where((item) => item.id == topicId);
     final topic = matches.isEmpty ? _topics.first : matches.first;
     final content = _topicContent[topic.id] ?? _topicContent['crypto']!;

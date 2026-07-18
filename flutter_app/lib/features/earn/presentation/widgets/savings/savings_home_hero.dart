@@ -172,7 +172,7 @@ class _InsightList extends StatelessWidget {
             onTap: insight.route == null
                 ? null
                 : () {
-                    HapticFeedback.selectionClick();
+                    unawaited(HapticFeedback.selectionClick());
                     context.go(insight.route!);
                   },
             child: Row(
@@ -244,7 +244,7 @@ class _ToolboxButton extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: EarnSpacingTokens.earnVerticalPaddingX3,
       onTap: () {
-        HapticFeedback.selectionClick();
+        unawaited(HapticFeedback.selectionClick());
         context.go(guideRoute);
       },
       child: Row(
