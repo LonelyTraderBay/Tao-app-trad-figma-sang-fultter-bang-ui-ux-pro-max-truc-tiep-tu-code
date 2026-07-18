@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockAutoCompoundSettingsRepository
+final class MockAutoCompoundSettingsRepository extends _MockEarnRepositoryBase
     implements AutoCompoundSettingsRepository {
-  const MockAutoCompoundSettingsRepository();
+  const MockAutoCompoundSettingsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  AutoCompoundSettingsSnapshot getSettings() {
+  Future<AutoCompoundSettingsSnapshot> getSettings() async {
+    await _simulateNetwork();
     return const AutoCompoundSettingsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-auto-compound',
       actionDraft: 'PATCH /earn/savings/auto-compound-settings',
@@ -117,11 +121,13 @@ final class MockAutoCompoundSettingsRepository
   }
 }
 
-final class MockSavingsGoalsRepository implements SavingsGoalsRepository {
-  const MockSavingsGoalsRepository();
+final class MockSavingsGoalsRepository extends _MockEarnRepositoryBase
+    implements SavingsGoalsRepository {
+  const MockSavingsGoalsRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsGoalsSnapshot getGoals() {
+  Future<SavingsGoalsSnapshot> getGoals() async {
+    await _simulateNetwork();
     return const SavingsGoalsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-goals',
       actionDraft:
@@ -411,12 +417,13 @@ final class MockSavingsGoalsRepository implements SavingsGoalsRepository {
   }
 }
 
-final class MockSavingsAnalyticsRepository
+final class MockSavingsAnalyticsRepository extends _MockEarnRepositoryBase
     implements SavingsAnalyticsRepository {
-  const MockSavingsAnalyticsRepository();
+  const MockSavingsAnalyticsRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsAnalyticsSnapshot getAnalytics() {
+  Future<SavingsAnalyticsSnapshot> getAnalytics() async {
+    await _simulateNetwork();
     return const SavingsAnalyticsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-analytics',
       actionDraft:

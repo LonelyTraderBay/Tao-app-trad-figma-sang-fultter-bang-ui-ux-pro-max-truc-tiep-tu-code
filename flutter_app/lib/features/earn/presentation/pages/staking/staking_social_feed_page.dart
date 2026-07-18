@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -45,17 +46,7 @@ class _StakingSocialFeedPageState extends ConsumerState<StakingSocialFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(stakingSocialFeedRepositoryProvider).getFeed();
-    final activeTab = snapshot.tabs.firstWhere(
-      (tab) => tab.id == (_activeTabId ?? snapshot.defaultTabId),
-      orElse: () => snapshot.tabs.first,
-    );
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingSocialFeedSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -63,54 +54,93 @@ class _StakingSocialFeedPageState extends ConsumerState<StakingSocialFeedPage> {
       semanticIdentifier: 'SC-387',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Cộng đồng stake — thông tin tham khảo',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earn),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingSocialFeedPage.infoKey,
-                        title: snapshot.infoTitle,
-                        message: snapshot.infoBody,
-                        icon: Icons.chat_bubble_outline_rounded,
-                        accentColor: AppModuleAccents.earn,
-                        padding: EarnSpacingTokens.earnCardPaddingX3,
-                      ),
-                      _Composer(placeholder: snapshot.composerPlaceholder),
-                      _FeedTabs(
-                        tabs: snapshot.tabs,
-                        activeTabId: activeTab.id,
-                        onChanged: (id) => setState(() => _activeTabId = id),
-                      ),
-                      _PostsSection(
-                        title: activeTab.sectionTitle,
-                        posts: snapshot.posts,
-                      ),
-                      _CommunityStats(stats: snapshot.stats),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earn),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingSocialFeedSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = snapshot.tabs.firstWhere(
+              (tab) => tab.id == (_activeTabId ?? snapshot.defaultTabId),
+              orElse: () => snapshot.tabs.first,
+            );
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Cộng đồng stake — thông tin tham khảo',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitInfoCallout(
+                            key: StakingSocialFeedPage.infoKey,
+                            title: snapshot.infoTitle,
+                            message: snapshot.infoBody,
+                            icon: Icons.chat_bubble_outline_rounded,
+                            accentColor: AppModuleAccents.earn,
+                            padding: EarnSpacingTokens.earnCardPaddingX3,
+                          ),
+                          _Composer(placeholder: snapshot.composerPlaceholder),
+                          _FeedTabs(
+                            tabs: snapshot.tabs,
+                            activeTabId: activeTab.id,
+                            onChanged: (id) =>
+                                setState(() => _activeTabId = id),
+                          ),
+                          _PostsSection(
+                            title: activeTab.sectionTitle,
+                            posts: snapshot.posts,
+                          ),
+                          _CommunityStats(stats: snapshot.stats),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

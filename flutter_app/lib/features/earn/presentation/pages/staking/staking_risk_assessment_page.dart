@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -48,14 +49,9 @@ class _StakingRiskAssessmentPageState
   bool _showResult = false;
   final Map<String, int> _answers = {};
 
-  int get _score {
-    return ref.read(stakingRiskAssessmentControllerProvider).score(_answers);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(stakingRiskAssessmentControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(stakingRiskAssessmentControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -69,73 +65,103 @@ class _StakingRiskAssessmentPageState
       semanticIdentifier: 'SC-357',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: _showResult ? snapshot.resultTitle : snapshot.title,
-            subtitle: _showResult
-                ? snapshot.footerDisclaimer
-                : 'Đánh giá trước khi chọn sản phẩm stake',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: controllerAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    scrollTailReserve,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: _showResult
-                        ? [
-                            _ResultView(
-                              snapshot: snapshot,
-                              result: controller.resultForAnswers(_answers),
-                              score: _score,
-                              maxScore: controller.state.maxScore,
-                              onReset: _reset,
-                            ),
-                          ]
-                        : [
-                            _ProgressHeader(
-                              currentQuestion: _currentQuestion,
-                              totalQuestions: snapshot.questions.length,
-                            ),
-                            const VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Đánh giá rủi ro staking',
-                              message:
-                                  'Câu trả lời phân loại kiến thức, nhu cầu thanh khoản, phản ứng rủi ro và giới hạn phân bổ trước khi chọn sản phẩm.',
-                              contractId: 'staking-risk-assessment',
-                            ),
-                            _QuestionCard(
-                              question: snapshot.questions[_currentQuestion],
-                              index: _currentQuestion,
-                              selectedValue:
-                                  _answers[snapshot
-                                      .questions[_currentQuestion]
-                                      .id],
-                              onSelected: _selectOption,
-                              onPrevious: _previous,
-                            ),
-                            VitInfoCallout(
-                              message: snapshot.infoText,
-                              icon: Icons.info_outline_rounded,
-                              accentColor: AppColors.primary,
-                              padding: EarnSpacingTokens.earnCardPaddingX3,
-                            ),
-                          ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingRiskAssessmentSnapshotProvider),
+            ),
+          ),
+          data: (controller) {
+            final snapshot = controller.state.snapshot;
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: _showResult ? snapshot.resultTitle : snapshot.title,
+                subtitle: _showResult
+                    ? snapshot.footerDisclaimer
+                    : 'Đánh giá trước khi chọn sản phẩm stake',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        scrollTailReserve,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: _showResult
+                            ? [
+                                _ResultView(
+                                  snapshot: snapshot,
+                                  result: controller.resultForAnswers(_answers),
+                                  score: controller.score(_answers),
+                                  maxScore: controller.state.maxScore,
+                                  onReset: _reset,
+                                ),
+                              ]
+                            : [
+                                _ProgressHeader(
+                                  currentQuestion: _currentQuestion,
+                                  totalQuestions: snapshot.questions.length,
+                                ),
+                                const VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Đánh giá rủi ro staking',
+                                  message:
+                                      'Câu trả lời phân loại kiến thức, nhu cầu thanh khoản, phản ứng rủi ro và giới hạn phân bổ trước khi chọn sản phẩm.',
+                                  contractId: 'staking-risk-assessment',
+                                ),
+                                _QuestionCard(
+                                  question:
+                                      snapshot.questions[_currentQuestion],
+                                  index: _currentQuestion,
+                                  selectedValue:
+                                      _answers[snapshot
+                                          .questions[_currentQuestion]
+                                          .id],
+                                  onSelected: _selectOption,
+                                  onPrevious: _previous,
+                                ),
+                                VitInfoCallout(
+                                  message: snapshot.infoText,
+                                  icon: Icons.info_outline_rounded,
+                                  accentColor: AppColors.primary,
+                                  padding: EarnSpacingTokens.earnCardPaddingX3,
+                                ),
+                              ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -143,23 +169,22 @@ class _StakingRiskAssessmentPageState
 
   void _selectOption(StakingRiskQuestionDraft question, int value) {
     HapticFeedback.selectionClick();
+    // Bẫy 15 (GD4 playbook): repo trong event handler — đọc lười qua
+    // `.value` (đã có sẵn vì câu hỏi chỉ render trong nhánh data:).
+    final questionsLength = ref
+        .read(stakingRiskAssessmentSnapshotProvider)
+        .value
+        ?.questions
+        .length;
+    if (questionsLength == null) return;
     setState(() {
       _answers[question.id] = value;
-      if (_currentQuestion < _questionsLength - 1) {
+      if (_currentQuestion < questionsLength - 1) {
         _currentQuestion += 1;
       } else {
         _showResult = true;
       }
     });
-  }
-
-  int get _questionsLength {
-    return ref
-        .read(stakingRiskAssessmentControllerProvider)
-        .state
-        .snapshot
-        .questions
-        .length;
   }
 
   void _previous() {

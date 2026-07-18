@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsRiskAssessmentRepository
+final class MockSavingsRiskAssessmentRepository extends _MockEarnRepositoryBase
     implements SavingsRiskAssessmentRepository {
-  const MockSavingsRiskAssessmentRepository();
+  const MockSavingsRiskAssessmentRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsRiskAssessmentSnapshot getRiskAssessment() {
+  Future<SavingsRiskAssessmentSnapshot> getRiskAssessment() async {
+    await _simulateNetwork();
     return const SavingsRiskAssessmentSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-risk-assessment',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

@@ -1,7 +1,8 @@
 part of '../repositories/mock_dca_repository.dart';
 
-mixin _DcaRepositoryMethodsPart02 {
-  DcaDynamicAmountSnapshot getDynamicAmount() {
+mixin _DcaRepositoryMethodsPart02 on _MockDcaRepositoryBase {
+  Future<DcaDynamicAmountSnapshot> getDynamicAmount() async {
+    await _simulateNetwork();
     return const DcaDynamicAmountSnapshot(
       endpoint: '/api/mobile/dca/dca-dynamic-amount',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -218,7 +219,8 @@ mixin _DcaRepositoryMethodsPart02 {
     );
   }
 
-  DcaBacktesterSnapshot getBacktester() {
+  Future<DcaBacktesterSnapshot> getBacktester() async {
+    await _simulateNetwork();
     return const DcaBacktesterSnapshot(
       endpoint: '/api/mobile/dca/dca-backtester',
       actionDraft: 'POST /dca/plans|rebalance|schedule',
@@ -378,7 +380,8 @@ mixin _DcaRepositoryMethodsPart02 {
     );
   }
 
-  DcaMultiAssetSnapshot getMultiAsset() {
+  Future<DcaMultiAssetSnapshot> getMultiAsset() async {
+    await _simulateNetwork();
     return const DcaMultiAssetSnapshot(
       endpoint: '/api/mobile/dca/dca-multi-asset',
       actionDraft: 'POST /dca/plans|rebalance|schedule',

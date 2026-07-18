@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -80,7 +81,7 @@ class _LaunchpadDcaBuilderPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getDcaBuilder();
+    final dcaBuilderAsync = ref.watch(launchpadDcaBuilderSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -107,10 +108,10 @@ class _LaunchpadDcaBuilderPageState
               semanticLabel: 'Xây dựng chiến lược đầu tư định kỳ DCA',
               semanticIdentifier: 'SC-316',
               header: VitHeader(
-                title: snapshot.title,
+                title: 'DCA Builder',
                 subtitle: 'Chiến lược DCA · Không cam kết lợi nhuận',
                 showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+                onBack: () => context.go(AppRoutePaths.launchpad),
                 actions: [
                   VitHeaderActionItem(
                     key: LaunchpadDcaBuilderPage.headerCreateKey,
@@ -137,53 +138,73 @@ class _LaunchpadDcaBuilderPageState
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.tight,
                         children: [
-                          if (_activeTab ==
-                              LaunchpadDcaBuilderTab.strategies) ...[
-                            LaunchpadDcaSummaryCard(
-                              key: LaunchpadDcaBuilderPage.summaryKey,
-                              snapshot: snapshot,
-                            ),
-                            LaunchpadDcaStrategiesSection(
-                              sectionKey: LaunchpadDcaBuilderPage.strategiesKey,
-                              strategyKey: LaunchpadDcaBuilderPage.strategyKey,
-                              strategies: snapshot.strategies,
-                            ),
-                          ] else if (_activeTab ==
-                              LaunchpadDcaBuilderTab.history) ...[
-                            LaunchpadDcaHistorySection(
-                              sectionKey: LaunchpadDcaBuilderPage.historyKey,
-                              chartKey: LaunchpadDcaBuilderPage.chartKey,
-                              executions: snapshot.executions,
-                            ),
-                          ] else ...[
-                            LaunchpadDcaCreateSection(
-                              sectionKey: LaunchpadDcaBuilderPage.createKey,
-                              tokenFieldKey:
-                                  LaunchpadDcaBuilderPage.tokenFieldKey,
-                              amountFieldKey:
-                                  LaunchpadDcaBuilderPage.amountFieldKey,
-                              budgetFieldKey:
-                                  LaunchpadDcaBuilderPage.budgetFieldKey,
-                              startDateFieldKey:
-                                  LaunchpadDcaBuilderPage.startDateFieldKey,
-                              previewKey: LaunchpadDcaBuilderPage.previewKey,
-                              reviewStateKey:
-                                  LaunchpadDcaBuilderPage.reviewStateKey,
-                              frequencyKey:
-                                  LaunchpadDcaBuilderPage.frequencyKey,
-                              tokenController: _tokenController,
-                              amountController: _amountController,
-                              budgetController: _budgetController,
-                              startDateController: _startDateController,
-                              frequency: _frequency,
-                              submissionMessage: _submissionMessage,
-                              onFrequencyChanged: (frequency) =>
-                                  setState(() => _frequency = frequency),
-                              onInputChanged: () => setState(() {
-                                _submissionMessage = null;
-                              }),
-                            ),
-                          ],
+                          ...dcaBuilderAsync.when(
+                            loading: () => const [VitSkeletonList()],
+                            error: (error, stackTrace) => [
+                              VitErrorState(
+                                title: 'Không tải được DCA builder',
+                                message:
+                                    'Vui lòng kiểm tra kết nối và thử lại.',
+                                actionLabel: 'Thử lại',
+                                onAction: () => ref.invalidate(
+                                  launchpadDcaBuilderSnapshotProvider,
+                                ),
+                              ),
+                            ],
+                            data: (snapshot) => [
+                              if (_activeTab ==
+                                  LaunchpadDcaBuilderTab.strategies) ...[
+                                LaunchpadDcaSummaryCard(
+                                  key: LaunchpadDcaBuilderPage.summaryKey,
+                                  snapshot: snapshot,
+                                ),
+                                LaunchpadDcaStrategiesSection(
+                                  sectionKey:
+                                      LaunchpadDcaBuilderPage.strategiesKey,
+                                  strategyKey:
+                                      LaunchpadDcaBuilderPage.strategyKey,
+                                  strategies: snapshot.strategies,
+                                ),
+                              ] else if (_activeTab ==
+                                  LaunchpadDcaBuilderTab.history) ...[
+                                LaunchpadDcaHistorySection(
+                                  sectionKey:
+                                      LaunchpadDcaBuilderPage.historyKey,
+                                  chartKey: LaunchpadDcaBuilderPage.chartKey,
+                                  executions: snapshot.executions,
+                                ),
+                              ] else ...[
+                                LaunchpadDcaCreateSection(
+                                  sectionKey: LaunchpadDcaBuilderPage.createKey,
+                                  tokenFieldKey:
+                                      LaunchpadDcaBuilderPage.tokenFieldKey,
+                                  amountFieldKey:
+                                      LaunchpadDcaBuilderPage.amountFieldKey,
+                                  budgetFieldKey:
+                                      LaunchpadDcaBuilderPage.budgetFieldKey,
+                                  startDateFieldKey:
+                                      LaunchpadDcaBuilderPage.startDateFieldKey,
+                                  previewKey:
+                                      LaunchpadDcaBuilderPage.previewKey,
+                                  reviewStateKey:
+                                      LaunchpadDcaBuilderPage.reviewStateKey,
+                                  frequencyKey:
+                                      LaunchpadDcaBuilderPage.frequencyKey,
+                                  tokenController: _tokenController,
+                                  amountController: _amountController,
+                                  budgetController: _budgetController,
+                                  startDateController: _startDateController,
+                                  frequency: _frequency,
+                                  submissionMessage: _submissionMessage,
+                                  onFrequencyChanged: (frequency) =>
+                                      setState(() => _frequency = frequency),
+                                  onInputChanged: () => setState(() {
+                                    _submissionMessage = null;
+                                  }),
+                                ),
+                              ],
+                            ],
+                          ),
                         ],
                       ),
                     ),

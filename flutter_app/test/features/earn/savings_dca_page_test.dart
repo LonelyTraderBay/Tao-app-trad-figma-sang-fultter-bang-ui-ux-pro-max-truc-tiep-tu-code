@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-346 mock repository exposes savings DCA BE draft', () {
-    final snapshot = const MockSavingsDcaRepository().getDca();
+  test('SC-346 mock repository exposes savings DCA BE draft', () async {
+    final snapshot = await const MockSavingsDcaRepository().getDca();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-dca');
     expect(snapshot.actionDraft, contains('POST /dca/plans'));

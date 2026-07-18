@@ -48,8 +48,9 @@ void main() {
     expect(pageSource, isNot(contains('EdgeInsetsDirectional.fromSTEB')));
   });
 
-  test('SC-333 mock repository exposes savings portfolio BE draft', () {
-    final snapshot = const MockSavingsPortfolioRepository().getPortfolio();
+  test('SC-333 mock repository exposes savings portfolio BE draft', () async {
+    final snapshot = await const MockSavingsPortfolioRepository()
+        .getPortfolio();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-portfolio');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

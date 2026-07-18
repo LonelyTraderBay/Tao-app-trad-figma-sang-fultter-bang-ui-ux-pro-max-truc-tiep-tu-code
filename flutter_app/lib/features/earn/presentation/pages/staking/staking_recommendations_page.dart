@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -23,6 +24,8 @@ import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class StakingRecommendationsPage extends ConsumerStatefulWidget {
   const StakingRecommendationsPage({super.key, this.shellRenderMode});
@@ -52,15 +55,7 @@ class _StakingRecommendationsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingRecommendationsRepositoryProvider)
-        .getRecommendations();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingRecommendationsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -68,87 +63,122 @@ class _StakingRecommendationsPageState
       semanticIdentifier: 'SC-372',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Gợi ý chiến lược — không cam kết lợi nhuận',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: StakingRecommendationsHeroCard(
-                          snapshot: snapshot,
-                        ),
-                      ),
-                      StakingRecommendationsProfileCard(snapshot: snapshot),
-                      StakingRecommendationsAmountSimulator(
-                        amountText: _amountText,
-                        onAmountChanged: (value) =>
-                            setState(() => _amountText = value),
-                      ),
-                      VitPageSection(
-                        label: 'Chiến lược được Đề xuất',
-                        accentColor: AppModuleAccents.earn,
-                        children: [
-                          Column(
-                            key: StakingRecommendationsKeys.strategyList,
-                            children: [
-                              for (final strategy in snapshot.strategies)
-                                StakingRecommendationsStrategyCard(
-                                  key: StakingRecommendationsKeys.strategy(
-                                    strategy.id,
-                                  ),
-                                  strategy: strategy,
-                                  amount: _amount,
-                                  onTap: () => _openStrategySheet(
-                                    strategy,
-                                    snapshot.stakingRoute,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        key: StakingRecommendationsKeys.tips,
-                        label: 'Tips Cá nhân hóa',
-                        accentColor: AppModuleAccents.earn,
-                        children: [
-                          Column(
-                            children: [
-                              for (final tip in snapshot.tips)
-                                StakingRecommendationsTipCard(tip: tip),
-                            ],
-                          ),
-                        ],
-                      ),
-                      StakingRecommendationsDisclaimer(
-                        text: snapshot.disclaimer,
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingRecommendationsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Gợi ý chiến lược — không cam kết lợi nhuận',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitCard(
+                            variant: VitCardVariant.standard,
+                            radius: VitCardRadius.standard,
+                            padding: AppSpacing.zeroInsets,
+                            child: StakingRecommendationsHeroCard(
+                              snapshot: snapshot,
+                            ),
+                          ),
+                          StakingRecommendationsProfileCard(snapshot: snapshot),
+                          StakingRecommendationsAmountSimulator(
+                            amountText: _amountText,
+                            onAmountChanged: (value) =>
+                                setState(() => _amountText = value),
+                          ),
+                          VitPageSection(
+                            label: 'Chiến lược được Đề xuất',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              Column(
+                                key: StakingRecommendationsKeys.strategyList,
+                                children: [
+                                  for (final strategy in snapshot.strategies)
+                                    StakingRecommendationsStrategyCard(
+                                      key: StakingRecommendationsKeys.strategy(
+                                        strategy.id,
+                                      ),
+                                      strategy: strategy,
+                                      amount: _amount,
+                                      onTap: () => _openStrategySheet(
+                                        strategy,
+                                        snapshot.stakingRoute,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          VitPageSection(
+                            key: StakingRecommendationsKeys.tips,
+                            label: 'Tips Cá nhân hóa',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              Column(
+                                children: [
+                                  for (final tip in snapshot.tips)
+                                    StakingRecommendationsTipCard(tip: tip),
+                                ],
+                              ),
+                            ],
+                          ),
+                          StakingRecommendationsDisclaimer(
+                            text: snapshot.disclaimer,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

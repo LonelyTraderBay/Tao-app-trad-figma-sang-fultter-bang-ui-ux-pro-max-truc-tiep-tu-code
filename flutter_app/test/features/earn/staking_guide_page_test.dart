@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-369 mock repository exposes staking guide BE draft', () {
-    final snapshot = const MockStakingGuideRepository().getGuide();
+  test('SC-369 mock repository exposes staking guide BE draft', () async {
+    final snapshot = await const MockStakingGuideRepository().getGuide();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-guide');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

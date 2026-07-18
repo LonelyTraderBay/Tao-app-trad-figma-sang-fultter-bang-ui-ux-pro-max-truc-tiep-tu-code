@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-353 mock repository exposes staking terms BE draft', () {
-    final snapshot = const MockStakingTermsRepository().getTerms();
+  test('SC-353 mock repository exposes staking terms BE draft', () async {
+    final snapshot = await const MockStakingTermsRepository().getTerms();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-staking-terms');
     expect(snapshot.actionDraft, contains('terms/accept'));

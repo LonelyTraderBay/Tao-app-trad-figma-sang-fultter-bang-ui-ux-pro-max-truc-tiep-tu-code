@@ -31,8 +31,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-400 mock repository exposes DCA overview demo BE draft', () {
-    final snapshot = const MockDcaRepository().getOverviewDemo();
+  test('SC-400 mock repository exposes DCA overview demo BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getOverviewDemo();
 
     expect(snapshot.endpoint, '/api/mobile/dev/dev-dca-overview');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

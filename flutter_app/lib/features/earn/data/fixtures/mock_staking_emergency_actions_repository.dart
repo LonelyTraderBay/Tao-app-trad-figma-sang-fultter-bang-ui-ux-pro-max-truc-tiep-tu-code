@@ -1,11 +1,16 @@
 part of '../repositories/mock_earn_repository.dart';
 
 final class MockStakingEmergencyActionsRepository
+    extends _MockEarnRepositoryBase
     implements StakingEmergencyActionsRepository {
-  const MockStakingEmergencyActionsRepository();
+  const MockStakingEmergencyActionsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingEmergencyActionsSnapshot getEmergencyActions() {
+  Future<StakingEmergencyActionsSnapshot> getEmergencyActions() async {
+    await _simulateNetwork();
     return const StakingEmergencyActionsSnapshot(
       endpoint: '/api/mobile/earn/earn-emergency-actions',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -111,12 +116,16 @@ final class MockStakingEmergencyActionsRepository
   }
 }
 
-final class MockStakingContingencyPlanRepository
+final class MockStakingContingencyPlanRepository extends _MockEarnRepositoryBase
     implements StakingContingencyPlanRepository {
-  const MockStakingContingencyPlanRepository();
+  const MockStakingContingencyPlanRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingContingencyPlanSnapshot getContingencyPlan() {
+  Future<StakingContingencyPlanSnapshot> getContingencyPlan() async {
+    await _simulateNetwork();
     return const StakingContingencyPlanSnapshot(
       endpoint: '/api/mobile/earn/earn-contingency-plan',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -262,12 +271,13 @@ final class MockStakingContingencyPlanRepository
   }
 }
 
-final class MockStakingSocialFeedRepository
+final class MockStakingSocialFeedRepository extends _MockEarnRepositoryBase
     implements StakingSocialFeedRepository {
-  const MockStakingSocialFeedRepository();
+  const MockStakingSocialFeedRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingSocialFeedSnapshot getFeed() {
+  Future<StakingSocialFeedSnapshot> getFeed() async {
+    await _simulateNetwork();
     return const StakingSocialFeedSnapshot(
       endpoint: '/api/mobile/earn/earn-social-feed',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -379,11 +389,16 @@ final class MockStakingSocialFeedRepository
 }
 
 final class MockStakingCommunityGovernanceRepository
+    extends _MockEarnRepositoryBase
     implements StakingCommunityGovernanceRepository {
-  const MockStakingCommunityGovernanceRepository();
+  const MockStakingCommunityGovernanceRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingCommunityGovernanceSnapshot getGovernance() {
+  Future<StakingCommunityGovernanceSnapshot> getGovernance() async {
+    await _simulateNetwork();
     return const StakingCommunityGovernanceSnapshot(
       endpoint: '/api/mobile/earn/earn-community-governance',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -486,12 +501,13 @@ final class MockStakingCommunityGovernanceRepository
   }
 }
 
-final class MockStakingProposalsRepository
+final class MockStakingProposalsRepository extends _MockEarnRepositoryBase
     implements StakingProposalsRepository {
-  const MockStakingProposalsRepository();
+  const MockStakingProposalsRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingProposalsSnapshot getProposals() {
+  Future<StakingProposalsSnapshot> getProposals() async {
+    await _simulateNetwork();
     return const StakingProposalsSnapshot(
       endpoint: '/api/mobile/earn/earn-proposals',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

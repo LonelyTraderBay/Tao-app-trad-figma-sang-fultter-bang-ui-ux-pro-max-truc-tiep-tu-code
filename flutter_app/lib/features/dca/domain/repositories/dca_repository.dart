@@ -3,27 +3,27 @@ import 'package:vit_trade_flutter/features/dca/domain/entities/dca_entities.dart
 /// Data source contract for the DCA (Dollar Cost Averaging) feature: read
 /// snapshots for every DCA tool/screen.
 abstract interface class DcaRepository {
-  DcaDashboardSnapshot getDashboard();
+  Future<DcaDashboardSnapshot> getDashboard();
 
-  DcaRebalanceConfigSnapshot getRebalanceConfig();
+  Future<DcaRebalanceConfigSnapshot> getRebalanceConfig();
 
-  DcaRebalanceDashboardSnapshot getRebalanceDashboard(String configId);
+  Future<DcaRebalanceDashboardSnapshot> getRebalanceDashboard(String configId);
 
-  DcaScheduleConfigSnapshot getScheduleConfig();
+  Future<DcaScheduleConfigSnapshot> getScheduleConfig();
 
-  DcaScheduleAnalyticsSnapshot getScheduleAnalytics(String configId);
+  Future<DcaScheduleAnalyticsSnapshot> getScheduleAnalytics(String configId);
 
-  DcaPortfolioOptimizerSnapshot getPortfolioOptimizer();
+  Future<DcaPortfolioOptimizerSnapshot> getPortfolioOptimizer();
 
-  DcaDynamicAmountSnapshot getDynamicAmount();
+  Future<DcaDynamicAmountSnapshot> getDynamicAmount();
 
-  DcaBacktesterSnapshot getBacktester();
+  Future<DcaBacktesterSnapshot> getBacktester();
 
-  DcaMultiAssetSnapshot getMultiAsset();
+  Future<DcaMultiAssetSnapshot> getMultiAsset();
 
-  DcaPerformanceCompareSnapshot getPerformanceCompare();
+  Future<DcaPerformanceCompareSnapshot> getPerformanceCompare();
 
-  DcaSmartRulesSnapshot getSmartRules();
+  Future<DcaSmartRulesSnapshot> getSmartRules();
 
-  DcaOverviewDemoSnapshot getOverviewDemo();
+  Future<DcaOverviewDemoSnapshot> getOverviewDemo();
 }

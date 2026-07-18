@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-342 mock repository exposes savings goals BE draft', () {
-    final snapshot = const MockSavingsGoalsRepository().getGoals();
+  test('SC-342 mock repository exposes savings goals BE draft', () async {
+    final snapshot = await const MockSavingsGoalsRepository().getGoals();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-goals');
     expect(snapshot.actionDraft, contains('POST /earn/savings/goals'));

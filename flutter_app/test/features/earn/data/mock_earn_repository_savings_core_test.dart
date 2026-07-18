@@ -17,8 +17,8 @@ void main() {
   const goalsRepo = MockSavingsGoalsRepository();
 
   group('Earn savings core mocks smoke test', () {
-    test('getSavings returns a populated snapshot', () {
-      final snapshot = savingsRepo.getSavings();
+    test('getSavings returns a populated snapshot', () async {
+      final snapshot = await savingsRepo.getSavings();
 
       expect(snapshot, isA<SavingsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -40,30 +40,33 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getProductDetail returns the matching product for a known id', () {
-      final snapshot = productDetailRepo.getProductDetail(productId: 'sav001');
+    test(
+      'getProductDetail returns the matching product for a known id',
+      () async {
+        final snapshot = await productDetailRepo.getProductDetail(
+          productId: 'sav001',
+        );
 
-      expect(snapshot, isA<SavingsProductDetailSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, isNotEmpty);
-      expect(snapshot.backRoute, isNotEmpty);
-      expect(snapshot.productId, 'sav001');
-      expect(snapshot.product, isNotNull);
-      expect(snapshot.product?.name, 'USDT Linh hoạt');
-      expect(snapshot.notFoundMessage, isNotEmpty);
-      expect(snapshot.contractNotes, isNotEmpty);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<SavingsProductDetailSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, isNotEmpty);
+        expect(snapshot.backRoute, isNotEmpty);
+        expect(snapshot.productId, 'sav001');
+        expect(snapshot.product, isNotNull);
+        expect(snapshot.product?.name, 'USDT Linh hoạt');
+        expect(snapshot.notFoundMessage, isNotEmpty);
+        expect(snapshot.contractNotes, isNotEmpty);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
     test('getProductDetail does not throw for an unknown id and falls back '
-        'to a null product', () {
-      late final SavingsProductDetailSnapshot snapshot;
-
-      expect(
-        () => snapshot = productDetailRepo.getProductDetail(
-          productId: 'does-not-exist',
-        ),
-        returnsNormally,
+        'to a null product', () async {
+      // GD4 playbook mục 7: repo giờ trả Future — await trực tiếp thay vì
+      // bọc `returnsNormally` (await tự propagate lỗi nếu có, đạt cùng mục
+      // đích "không throw").
+      final snapshot = await productDetailRepo.getProductDetail(
+        productId: 'does-not-exist',
       );
       expect(snapshot, isA<SavingsProductDetailSnapshot>());
       expect(snapshot.productId, 'does-not-exist');
@@ -71,8 +74,8 @@ void main() {
       expect(snapshot.notFoundMessage, isNotEmpty);
     });
 
-    test('getRedeem returns the matching position for a known id', () {
-      final snapshot = redeemRepo.getRedeem(positionId: 'ms1');
+    test('getRedeem returns the matching position for a known id', () async {
+      final snapshot = await redeemRepo.getRedeem(positionId: 'ms1');
 
       expect(snapshot, isA<SavingsRedeemSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -88,21 +91,17 @@ void main() {
     });
 
     test('getRedeem does not throw for an unknown id and falls back to a '
-        'null position', () {
-      late final SavingsRedeemSnapshot snapshot;
-
-      expect(
-        () => snapshot = redeemRepo.getRedeem(positionId: 'does-not-exist'),
-        returnsNormally,
-      );
+        'null position', () async {
+      // Bẫy 7 tương tự: await trực tiếp thay vì `returnsNormally`.
+      final snapshot = await redeemRepo.getRedeem(positionId: 'does-not-exist');
       expect(snapshot, isA<SavingsRedeemSnapshot>());
       expect(snapshot.positionId, 'does-not-exist');
       expect(snapshot.position, isNull);
       expect(snapshot.notFoundMessage, isNotEmpty);
     });
 
-    test('getReceipt returns the empty-state receipt snapshot', () {
-      final snapshot = receiptRepo.getReceipt();
+    test('getReceipt returns the empty-state receipt snapshot', () async {
+      final snapshot = await receiptRepo.getReceipt();
 
       expect(snapshot, isA<SavingsReceiptSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -115,8 +114,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getPortfolio returns a populated snapshot', () {
-      final snapshot = portfolioRepo.getPortfolio();
+    test('getPortfolio returns a populated snapshot', () async {
+      final snapshot = await portfolioRepo.getPortfolio();
 
       expect(snapshot, isA<SavingsPortfolioSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -139,8 +138,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getHistory returns a populated snapshot', () {
-      final snapshot = historyRepo.getHistory();
+    test('getHistory returns a populated snapshot', () async {
+      final snapshot = await historyRepo.getHistory();
 
       expect(snapshot, isA<SavingsHistorySnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -157,8 +156,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getGoals returns a populated snapshot', () {
-      final snapshot = goalsRepo.getGoals();
+    test('getGoals returns a populated snapshot', () async {
+      final snapshot = await goalsRepo.getGoals();
 
       expect(snapshot, isA<SavingsGoalsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);

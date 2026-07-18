@@ -45,8 +45,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-301 mock repository exposes launchpad receipt BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getReceipt('sub001');
+  test('SC-301 mock repository exposes launchpad receipt BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getReceipt('sub001');
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-receipt-sub001');
     expect(
@@ -71,8 +73,10 @@ void main() {
     );
   });
 
-  test('SC-301 mock repository hydrates known subscription receipts', () {
-    final snapshot = const MockLaunchpadRepository().getReceipt('sub1');
+  test('SC-301 mock repository hydrates known subscription receipts', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getReceipt('sub1');
 
     expect(snapshot.subscription, isNotNull);
     expect(snapshot.subscription!.projectName, 'NexaAI Protocol');

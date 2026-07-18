@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/tools/launchpad_event_log_filter_widgets.dart';
@@ -78,7 +79,7 @@ class _LaunchpadEventLogPageState extends ConsumerState<LaunchpadEventLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getEventLog();
+    final eventLogAsync = ref.watch(launchpadEventLogSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -86,13 +87,6 @@ class _LaunchpadEventLogPageState extends ConsumerState<LaunchpadEventLogPage> {
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom +
         AppSpacing.x3;
-    final filteredEvents = _filteredEvents(snapshot.events);
-    final exportEvents = _selectedEventIds.isEmpty
-        ? filteredEvents
-        : filteredEvents
-              .where((event) => _selectedEventIds.contains(event.id))
-              .toList();
-    final sources = _sources(snapshot.events);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -100,113 +94,163 @@ class _LaunchpadEventLogPageState extends ConsumerState<LaunchpadEventLogPage> {
       semanticIdentifier: 'SC-307',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              bottomInset: scrollTailReserve,
-              semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
-              semanticIdentifier: 'SC-307',
-              header: VitHeader(
-                title: snapshot.title,
-                subtitle: 'Nhật ký sự kiện on-chain · Tham khảo rủi ro',
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+        child: eventLogAsync.when(
+          loading: () => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: scrollTailReserve,
+                semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
+                semanticIdentifier: 'SC-307',
+                header: VitHeader(
+                  title: 'Event Log',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: LaunchpadEventLogPage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _SearchField(
-                        controller: _searchController,
-                        query: _searchQuery,
-                        onChanged: (value) => setState(() {
-                          _searchQuery = value;
-                          _selectedEventIds.clear();
-                        }),
-                        onClear: () => setState(() {
-                          _searchController.clear();
-                          _searchQuery = '';
-                          _selectedEventIds.clear();
-                        }),
+            ],
+          ),
+          error: (error, stackTrace) => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: scrollTailReserve,
+                semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
+                semanticIdentifier: 'SC-307',
+                header: VitHeader(
+                  title: 'Event Log',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(launchpadEventLogSnapshotProvider),
+                ),
+              ),
+            ],
+          ),
+          data: (snapshot) {
+            final filteredEvents = _filteredEvents(snapshot.events);
+            final exportEvents = _selectedEventIds.isEmpty
+                ? filteredEvents
+                : filteredEvents
+                      .where((event) => _selectedEventIds.contains(event.id))
+                      .toList();
+            final sources = _sources(snapshot.events);
+
+            return Stack(
+              children: [
+                VitAutoHideHeaderScaffold(
+                  bottomInset: scrollTailReserve,
+                  semanticLabel: 'Nhật ký sự kiện trên chuỗi của Launchpad',
+                  semanticIdentifier: 'SC-307',
+                  header: VitHeader(
+                    title: snapshot.title,
+                    subtitle: 'Nhật ký sự kiện on-chain · Tham khảo rủi ro',
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
+                  ),
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      key: LaunchpadEventLogPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _SearchField(
+                            controller: _searchController,
+                            query: _searchQuery,
+                            onChanged: (value) => setState(() {
+                              _searchQuery = value;
+                              _selectedEventIds.clear();
+                            }),
+                            onClear: () => setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                              _selectedEventIds.clear();
+                            }),
+                          ),
+                          _LevelFilterBar(
+                            events: snapshot.events,
+                            activeValue: _levelFilter,
+                            onChanged: (value) => setState(() {
+                              _levelFilter = value;
+                              _selectedEventIds.clear();
+                            }),
+                          ),
+                          _ActionBar(
+                            sourceLabel: _sourceFilter == 'all'
+                                ? 'Nguon'
+                                : _sourceFilter,
+                            sourceOpen: _showSourceFilters,
+                            selectedAll:
+                                filteredEvents.isNotEmpty &&
+                                _selectedEventIds.length ==
+                                    filteredEvents.length,
+                            exportCount: exportEvents.length,
+                            onToggleSources: () => setState(
+                              () => _showSourceFilters = !_showSourceFilters,
+                            ),
+                            onToggleSelectAll: () =>
+                                _toggleSelectAll(filteredEvents),
+                            onExport: () =>
+                                setState(() => _showExportSheet = true),
+                          ),
+                          if (_showSourceFilters)
+                            _SourceFilterCard(
+                              sources: sources,
+                              activeValue: _sourceFilter,
+                              onChanged: (value) => setState(() {
+                                _sourceFilter = value;
+                                _showSourceFilters = false;
+                                _selectedEventIds.clear();
+                              }),
+                            ),
+                          if (filteredEvents.isEmpty)
+                            const _EmptyEvents()
+                          else
+                            _EventList(
+                              events: filteredEvents,
+                              selectedIds: _selectedEventIds,
+                              expandedId: _expandedEventId,
+                              onSelect: _toggleEventSelection,
+                              onExpand: (id) => setState(() {
+                                _expandedEventId = _expandedEventId == id
+                                    ? null
+                                    : id;
+                              }),
+                            ),
+                        ],
                       ),
-                      _LevelFilterBar(
-                        events: snapshot.events,
-                        activeValue: _levelFilter,
-                        onChanged: (value) => setState(() {
-                          _levelFilter = value;
-                          _selectedEventIds.clear();
-                        }),
-                      ),
-                      _ActionBar(
-                        sourceLabel: _sourceFilter == 'all'
-                            ? 'Nguon'
-                            : _sourceFilter,
-                        sourceOpen: _showSourceFilters,
-                        selectedAll:
-                            filteredEvents.isNotEmpty &&
-                            _selectedEventIds.length == filteredEvents.length,
-                        exportCount: exportEvents.length,
-                        onToggleSources: () => setState(
-                          () => _showSourceFilters = !_showSourceFilters,
-                        ),
-                        onToggleSelectAll: () =>
-                            _toggleSelectAll(filteredEvents),
-                        onExport: () => setState(() => _showExportSheet = true),
-                      ),
-                      if (_showSourceFilters)
-                        _SourceFilterCard(
-                          sources: sources,
-                          activeValue: _sourceFilter,
-                          onChanged: (value) => setState(() {
-                            _sourceFilter = value;
-                            _showSourceFilters = false;
-                            _selectedEventIds.clear();
-                          }),
-                        ),
-                      if (filteredEvents.isEmpty)
-                        const _EmptyEvents()
-                      else
-                        _EventList(
-                          events: filteredEvents,
-                          selectedIds: _selectedEventIds,
-                          expandedId: _expandedEventId,
-                          onSelect: _toggleEventSelection,
-                          onExpand: (id) => setState(() {
-                            _expandedEventId = _expandedEventId == id
-                                ? null
-                                : id;
-                          }),
-                        ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            if (_showExportSheet)
-              Positioned.fill(
-                child: _ExportSheet(
-                  formats: snapshot.exportFormats,
-                  activeFormat: _exportFormat,
-                  count: exportEvents.length,
-                  copied: _copied,
-                  onFormatChanged: (value) =>
-                      setState(() => _exportFormat = value),
-                  onClose: () => setState(() {
-                    _showExportSheet = false;
-                    _copied = false;
-                  }),
-                  onCopy: () => _copyEvents(exportEvents),
-                ),
-              ),
-          ],
+                if (_showExportSheet)
+                  Positioned.fill(
+                    child: _ExportSheet(
+                      formats: snapshot.exportFormats,
+                      activeFormat: _exportFormat,
+                      count: exportEvents.length,
+                      copied: _copied,
+                      onFormatChanged: (value) =>
+                          setState(() => _exportFormat = value),
+                      onClose: () => setState(() {
+                        _showExportSheet = false;
+                        _copied = false;
+                      }),
+                      onCopy: () => _copyEvents(exportEvents),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

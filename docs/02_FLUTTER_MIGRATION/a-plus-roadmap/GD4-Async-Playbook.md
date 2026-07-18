@@ -417,3 +417,28 @@ thấp hơn) — không được để nguyên baseline cũ (ratchet không tự
 19. **Mutation cần dữ liệu async**: method controller GHI phải thành
     `Future<void>`, giữ preview cũ hiển thị trong lúc await + guard
     out-of-order `if (state.request == request)` trước khi áp kết quả.
+20. **Mock N-class độc lập (không mixin, kiểu earn 68 class)**: dựng
+    `_MockXRepositoryBase` trong file thư viện chính; mọi directive
+    `part` phải đứng TRƯỚC mọi declaration — chèn class base xen giữa các
+    dòng `part` là lỗi biên dịch.
+21. **Biến thể A vẫn cần trang gate `.when()`**: trang chỉ watch Notifier
+    (không watch provider async trực tiếp) sẽ render fallback RỖNG suốt
+    cửa sổ loading nếu không tự bọc `.when()` trên snapshot provider gốc —
+    bọc ở trang, giữ nguyên Notifier.
+22. **Stack overlay dùng biến suy từ snapshot**: chuyển CẢ Stack vào nhánh
+    `data:`, không chỉ scaffold. Trang import widget lẻ (không qua barrel)
+    phải grep bổ sung import vit_error_state/vit_skeleton khi thêm nhánh.
+23. **Quét call-site phải bắt cả biến thể xuống dòng** (`ref.read(\n
+    provider\n)`) — regex một dòng bỏ sót initState-seed/event-handler.
+24. **Test `expect(() => x = repo.getY(), returnsNormally)`** không giữ
+    được với Future — thay bằng `await` trực tiếp (exception tự fail
+    test, cùng mục đích). Trang demo/admin có backRoute literal cố định
+    trong fixture: hardcode literal đó làm fallback loading/error thay vì
+    import AppRoutePaths cho một chuỗi.
+25. **Fallback backRoute/onAction trong nhánh loading/error KHÔNG được
+    hardcode literal route** (`context.go('/home')`) — guardrail
+    navigation_route đếm mọi `context.go('/...')` literal trong
+    presentation (ngưỡng nợ cũ 28, không tăng). Luôn dùng
+    `AppRoutePaths.*`/helper hàm; bài học F4: 110 site fallback literal
+    làm nợ nhảy 28→138, phải sửa lại toàn bộ. (Sửa lại chỉ dẫn sai ở
+    bẫy 24 về hardcode backRoute.)

@@ -29,8 +29,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-351 mock repository exposes savings ladder BE draft', () {
-    final snapshot = const MockSavingsLadderRepository().getLadder();
+  test('SC-351 mock repository exposes savings ladder BE draft', () async {
+    final snapshot = await const MockSavingsLadderRepository().getLadder();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-ladder');
     expect(snapshot.actionDraft, contains('ladder/create'));

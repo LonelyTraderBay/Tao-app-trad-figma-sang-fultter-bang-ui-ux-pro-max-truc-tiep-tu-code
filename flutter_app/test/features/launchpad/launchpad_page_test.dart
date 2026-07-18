@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-295 mock repository exposes launchpad BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getHome();
+  test('SC-295 mock repository exposes launchpad BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getHome();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad');
     expect(

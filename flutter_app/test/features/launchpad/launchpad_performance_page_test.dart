@@ -29,32 +29,37 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-297 mock repository exposes launchpad performance BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getPerformance();
+  test(
+    'SC-297 mock repository exposes launchpad performance BE draft',
+    () async {
+      final snapshot = await const MockLaunchpadRepository(
+        loadDelay: Duration.zero,
+      ).getPerformance();
 
-    expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-performance');
-    expect(
-      snapshot.actionDraft,
-      'POST /launchpad/subscribe|claim|bridge where applicable',
-    );
-    expect(snapshot.title, 'Hiệu suất Launchpad');
-    expect(snapshot.subtitle, 'Lịch sử · Thống kê');
-    expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.summary.averageRoiAth, 193);
-    expect(snapshot.summary.bestProjectName, 'MetaPay');
-    expect(snapshot.projects, hasLength(8));
-    expect(snapshot.chartPoints, hasLength(7));
-    expect(snapshot.contractNotes, contains('performanceSummary'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        LaunchpadScreenState.loading,
-        LaunchpadScreenState.empty,
-        LaunchpadScreenState.error,
-        LaunchpadScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-performance');
+      expect(
+        snapshot.actionDraft,
+        'POST /launchpad/subscribe|claim|bridge where applicable',
+      );
+      expect(snapshot.title, 'Hiệu suất Launchpad');
+      expect(snapshot.subtitle, 'Lịch sử · Thống kê');
+      expect(snapshot.backRoute, AppRoutePaths.launchpad);
+      expect(snapshot.summary.averageRoiAth, 193);
+      expect(snapshot.summary.bestProjectName, 'MetaPay');
+      expect(snapshot.projects, hasLength(8));
+      expect(snapshot.chartPoints, hasLength(7));
+      expect(snapshot.contractNotes, contains('performanceSummary'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          LaunchpadScreenState.loading,
+          LaunchpadScreenState.empty,
+          LaunchpadScreenState.error,
+          LaunchpadScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-297 renders performance overview baseline', (tester) async {
     await pumpPerformance(tester);

@@ -1,11 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingAnalyticsRepository
+final class MockStakingAnalyticsRepository extends _MockEarnRepositoryBase
     implements StakingAnalyticsRepository {
-  const MockStakingAnalyticsRepository();
+  const MockStakingAnalyticsRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingAnalyticsSnapshot getAnalytics() {
+  Future<StakingAnalyticsSnapshot> getAnalytics() async {
+    await _simulateNetwork();
     return const StakingAnalyticsSnapshot(
       endpoint: '/api/mobile/earn/earn-analytics',
       actionDraft:
@@ -200,11 +201,13 @@ final class MockStakingAnalyticsRepository
   }
 }
 
-final class MockStakingHistoryRepository implements StakingHistoryRepository {
-  const MockStakingHistoryRepository();
+final class MockStakingHistoryRepository extends _MockEarnRepositoryBase
+    implements StakingHistoryRepository {
+  const MockStakingHistoryRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingHistorySnapshot getHistory() {
+  Future<StakingHistorySnapshot> getHistory() async {
+    await _simulateNetwork();
     return const StakingHistorySnapshot(
       endpoint: '/api/mobile/earn/earn-history',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -375,11 +378,16 @@ final class MockStakingHistoryRepository implements StakingHistoryRepository {
 }
 
 final class MockStakingEarningsCalendarRepository
+    extends _MockEarnRepositoryBase
     implements StakingEarningsCalendarRepository {
-  const MockStakingEarningsCalendarRepository();
+  const MockStakingEarningsCalendarRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingEarningsCalendarSnapshot getCalendar() {
+  Future<StakingEarningsCalendarSnapshot> getCalendar() async {
+    await _simulateNetwork();
     return const StakingEarningsCalendarSnapshot(
       endpoint: '/api/mobile/earn/earn-calendar',
       actionDraft:

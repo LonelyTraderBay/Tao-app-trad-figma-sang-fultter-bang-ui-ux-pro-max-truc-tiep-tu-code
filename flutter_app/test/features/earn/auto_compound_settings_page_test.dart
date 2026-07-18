@@ -29,8 +29,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-341 mock repository exposes auto-compound BE draft', () {
-    final snapshot = const MockAutoCompoundSettingsRepository().getSettings();
+  test('SC-341 mock repository exposes auto-compound BE draft', () async {
+    final snapshot = await const MockAutoCompoundSettingsRepository()
+        .getSettings();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-auto-compound');
     expect(snapshot.actionDraft, contains('PATCH /earn/savings/auto-compound'));

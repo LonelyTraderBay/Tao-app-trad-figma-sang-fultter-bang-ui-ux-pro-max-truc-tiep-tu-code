@@ -28,8 +28,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-367 mock repository exposes multi-chain BE draft', () {
-    final snapshot = const MockStakingMultiChainRepository().getMultiChain();
+  test('SC-367 mock repository exposes multi-chain BE draft', () async {
+    final snapshot = await const MockStakingMultiChainRepository()
+        .getMultiChain();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-multi-chain');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

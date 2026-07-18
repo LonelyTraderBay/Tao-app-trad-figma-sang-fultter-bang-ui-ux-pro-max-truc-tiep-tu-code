@@ -20,8 +20,8 @@ void main() {
   const assessmentRepo = MockStakingSuitabilityAssessmentRepository();
 
   group('Earn staking support/compliance mocks smoke test', () {
-    test('getGuide returns a populated guide snapshot', () {
-      final snapshot = guideRepo.getGuide();
+    test('getGuide returns a populated guide snapshot', () async {
+      final snapshot = await guideRepo.getGuide();
 
       expect(snapshot, isA<StakingGuideSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -35,8 +35,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getFAQ returns a populated FAQ snapshot', () {
-      final snapshot = faqRepo.getFAQ();
+    test('getFAQ returns a populated FAQ snapshot', () async {
+      final snapshot = await faqRepo.getFAQ();
 
       expect(snapshot, isA<StakingFAQSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -48,66 +48,78 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getNotifications returns a populated notifications snapshot', () {
-      final snapshot = notificationsRepo.getNotifications();
+    test(
+      'getNotifications returns a populated notifications snapshot',
+      () async {
+        final snapshot = await notificationsRepo.getNotifications();
 
-      expect(snapshot, isA<StakingNotificationsSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, 'Thông báo');
-      expect(snapshot.settings, hasLength(8));
-      expect(snapshot.settings.first.id, 'maturity');
-      expect(snapshot.channels, hasLength(3));
-      expect(snapshot.history, hasLength(5));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingNotificationsSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, 'Thông báo');
+        expect(snapshot.settings, hasLength(8));
+        expect(snapshot.settings.first.id, 'maturity');
+        expect(snapshot.channels, hasLength(3));
+        expect(snapshot.history, hasLength(5));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getRecommendations returns a populated recommendations snapshot', () {
-      final snapshot = recommendationsRepo.getRecommendations();
+    test(
+      'getRecommendations returns a populated recommendations snapshot',
+      () async {
+        final snapshot = await recommendationsRepo.getRecommendations();
 
-      expect(snapshot, isA<StakingRecommendationsSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, isNotEmpty);
-      expect(snapshot.profile, isA<StakingRecommendationProfileDraft>());
-      expect(snapshot.strategies, hasLength(3));
-      expect(snapshot.strategies[1].id, 'balanced');
-      expect(snapshot.strategies[1].recommended, isTrue);
-      expect(snapshot.tips, hasLength(3));
-      expect(snapshot.disclaimer, isNotEmpty);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingRecommendationsSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, isNotEmpty);
+        expect(snapshot.profile, isA<StakingRecommendationProfileDraft>());
+        expect(snapshot.strategies, hasLength(3));
+        expect(snapshot.strategies[1].id, 'balanced');
+        expect(snapshot.strategies[1].recommended, isTrue);
+        expect(snapshot.tips, hasLength(3));
+        expect(snapshot.disclaimer, isNotEmpty);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getFramework returns a populated regulatory framework snapshot', () {
-      final snapshot = frameworkRepo.getFramework();
+    test(
+      'getFramework returns a populated regulatory framework snapshot',
+      () async {
+        final snapshot = await frameworkRepo.getFramework();
 
-      expect(snapshot, isA<StakingRegulatoryFrameworkSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, 'Regulatory Framework');
-      expect(snapshot.tabs, hasLength(3));
-      expect(snapshot.defaultTabId, 'licenses');
-      expect(snapshot.licenses, hasLength(5));
-      expect(snapshot.protectionSchemes, hasLength(3));
-      expect(snapshot.complaintSteps, hasLength(3));
-      expect(snapshot.authorityContacts, hasLength(3));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingRegulatoryFrameworkSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, 'Regulatory Framework');
+        expect(snapshot.tabs, hasLength(3));
+        expect(snapshot.defaultTabId, 'licenses');
+        expect(snapshot.licenses, hasLength(5));
+        expect(snapshot.protectionSchemes, hasLength(3));
+        expect(snapshot.complaintSteps, hasLength(3));
+        expect(snapshot.authorityContacts, hasLength(3));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getAuditReports returns a populated audit reports snapshot', () {
-      final snapshot = auditReportsRepo.getAuditReports();
+    test(
+      'getAuditReports returns a populated audit reports snapshot',
+      () async {
+        final snapshot = await auditReportsRepo.getAuditReports();
 
-      expect(snapshot, isA<StakingAuditReportsSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, 'Audit Reports');
-      expect(snapshot.tabs, hasLength(4));
-      expect(snapshot.defaultTabId, 'all');
-      expect(snapshot.stats, hasLength(3));
-      expect(snapshot.reports, hasLength(5));
-      expect(snapshot.bugBounty, isA<StakingBugBountyDraft>());
-      expect(snapshot.bugBounty.payouts, hasLength(4));
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingAuditReportsSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, 'Audit Reports');
+        expect(snapshot.tabs, hasLength(4));
+        expect(snapshot.defaultTabId, 'all');
+        expect(snapshot.stats, hasLength(3));
+        expect(snapshot.reports, hasLength(5));
+        expect(snapshot.bugBounty, isA<StakingBugBountyDraft>());
+        expect(snapshot.bugBounty.payouts, hasLength(4));
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getCustody returns a populated custody snapshot', () {
-      final snapshot = custodyRepo.getCustody();
+    test('getCustody returns a populated custody snapshot', () async {
+      final snapshot = await custodyRepo.getCustody();
 
       expect(snapshot, isA<StakingCustodySnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -123,8 +135,8 @@ void main() {
 
     test(
       'getAssessment returns a populated suitability assessment snapshot',
-      () {
-        final snapshot = assessmentRepo.getAssessment();
+      () async {
+        final snapshot = await assessmentRepo.getAssessment();
 
         expect(snapshot, isA<StakingSuitabilityAssessmentSnapshot>());
         expect(snapshot.endpoint, isNotEmpty);

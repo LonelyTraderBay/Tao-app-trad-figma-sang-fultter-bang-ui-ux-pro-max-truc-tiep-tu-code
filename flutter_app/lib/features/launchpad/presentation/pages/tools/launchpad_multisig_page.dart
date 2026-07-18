@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/tools/launchpad_multisig_page_chrome.dart';
@@ -65,25 +66,17 @@ class LaunchpadMultisigPage extends ConsumerStatefulWidget {
 class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
   // STATE-S23: transactions sống ở LaunchpadMultisigStateController (một
   // nguồn sự thật) — hết `late List` seed từ ref.read + setState.
-  late String _selectedSafeAddress;
+  // GD4-F4 bẫy 14: initState() không còn seed từ getter đồng bộ — hạt
+  // giống 1 lần trong nhánh `data:` qua `_selectedSafeAddress ??= ...`.
+  String? _selectedSafeAddress;
   var _activeTab = _MultisigTab.queue;
   String? _expandedTxId;
   String? _copiedField;
   var _showCreate = false;
 
   @override
-  void initState() {
-    super.initState();
-    _selectedSafeAddress = ref
-        .read(launchpadControllerProvider)
-        .getMultisig()
-        .defaultSafeAddress;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(launchpadMultisigStateControllerProvider);
-    final snapshot = viewState.snapshot;
+    final multisigAsync = ref.watch(launchpadMultisigSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -91,15 +84,6 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom +
         AppSpacing.x3;
-    final selectedSafe = snapshot.safes.firstWhere(
-      (safe) => safe.address == _selectedSafeAddress,
-      orElse: () => snapshot.safes.first,
-    );
-    final queueTxs = _queueTxs(viewState.transactions, selectedSafe.address);
-    final historyTxs = _historyTxs(
-      viewState.transactions,
-      selectedSafe.address,
-    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -107,126 +91,190 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
       semanticIdentifier: 'SC-313',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              bottomInset: scrollTailReserve,
-              semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
-              semanticIdentifier: 'SC-313',
-              header: VitHeader(
-                title: snapshot.title,
-                subtitle: 'Hàng đợi multisig · Xác nhận đa chữ ký',
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+        child: multisigAsync.when(
+          loading: () => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: scrollTailReserve,
+                semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
+                semanticIdentifier: 'SC-313',
+                header: VitHeader(
+                  title: 'Multi-sig',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: Column(
-                children: [
-                  _SafeSelector(
-                    safes: snapshot.safes,
-                    selectedAddress: _selectedSafeAddress,
-                    onChanged: (address) {
-                      setState(() {
-                        _selectedSafeAddress = address;
-                        _expandedTxId = null;
-                      });
-                    },
+            ],
+          ),
+          error: (error, stackTrace) => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: scrollTailReserve,
+                semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
+                semanticIdentifier: 'SC-313',
+                header: VitHeader(
+                  title: 'Multi-sig',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(launchpadMultisigSnapshotProvider),
+                ),
+              ),
+            ],
+          ),
+          data: (_) {
+            final viewState = ref.watch(
+              launchpadMultisigStateControllerProvider,
+            );
+            final snapshot = viewState.snapshot;
+            final selectedSafeAddress = _selectedSafeAddress ??=
+                snapshot.defaultSafeAddress;
+            final selectedSafe = snapshot.safes.firstWhere(
+              (safe) => safe.address == selectedSafeAddress,
+              orElse: () => snapshot.safes.first,
+            );
+            final queueTxs = _queueTxs(
+              viewState.transactions,
+              selectedSafe.address,
+            );
+            final historyTxs = _historyTxs(
+              viewState.transactions,
+              selectedSafe.address,
+            );
+
+            return Stack(
+              children: [
+                VitAutoHideHeaderScaffold(
+                  bottomInset: scrollTailReserve,
+                  semanticLabel: 'Quản lý giao dịch đa chữ ký multisig',
+                  semanticIdentifier: 'SC-313',
+                  header: VitHeader(
+                    title: snapshot.title,
+                    subtitle: 'Hàng đợi multisig · Xác nhận đa chữ ký',
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
                   ),
-                  _StatsStrip(safe: selectedSafe, pending: queueTxs.length),
-                  ColoredBox(
-                    key: LaunchpadMultisigPage.tabsKey,
-                    color: AppColors.surface,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Divider(height: AppSpacing.hairlineStroke),
-                        Padding(
-                          padding: LaunchpadSpacingTokens
-                              .launchpadHorizontalContentPadding,
-                          child: VitTabBar(
-                            tabs: const [
-                              VitTabItem(key: 'queue', label: 'Hàng đợi'),
-                              VitTabItem(key: 'history', label: 'Lịch sử'),
-                              VitTabItem(key: 'safes', label: 'Safes'),
-                            ],
-                            activeKey: _activeTab.name,
-                            onChanged: (key) => setState(
-                              () =>
-                                  _activeTab = _MultisigTab.values.byName(key),
-                            ),
-                            variant: VitTabBarVariant.underline,
-                          ),
-                        ),
-                        const Divider(height: AppSpacing.hairlineStroke),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: LaunchpadMultisigPage.contentKey,
-                        physics: const ClampingScrollPhysics(),
-                        child: VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.compact,
-                          gap: VitContentGap.tight,
+                  child: Column(
+                    children: [
+                      _SafeSelector(
+                        safes: snapshot.safes,
+                        selectedAddress: selectedSafeAddress,
+                        onChanged: (address) {
+                          setState(() {
+                            _selectedSafeAddress = address;
+                            _expandedTxId = null;
+                          });
+                        },
+                      ),
+                      _StatsStrip(safe: selectedSafe, pending: queueTxs.length),
+                      ColoredBox(
+                        key: LaunchpadMultisigPage.tabsKey,
+                        color: AppColors.surface,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (_activeTab == _MultisigTab.queue) ...[
-                              _CreateTxCard(
-                                onTap: () => setState(() => _showCreate = true),
+                            const Divider(height: AppSpacing.hairlineStroke),
+                            Padding(
+                              padding: LaunchpadSpacingTokens
+                                  .launchpadHorizontalContentPadding,
+                              child: VitTabBar(
+                                tabs: const [
+                                  VitTabItem(key: 'queue', label: 'Hàng đợi'),
+                                  VitTabItem(key: 'history', label: 'Lịch sử'),
+                                  VitTabItem(key: 'safes', label: 'Safes'),
+                                ],
+                                activeKey: _activeTab.name,
+                                onChanged: (key) => setState(
+                                  () => _activeTab = _MultisigTab.values.byName(
+                                    key,
+                                  ),
+                                ),
+                                variant: VitTabBarVariant.underline,
                               ),
-                              _QueueSection(
-                                txs: queueTxs,
-                                expandedTxId: _expandedTxId,
-                                copiedField: _copiedField,
-                                onToggle: _toggleTx,
-                                onCopy: _copyField,
-                                onSign: _signTx,
-                                onExecute: _executeTx,
-                              ),
-                            ] else if (_activeTab == _MultisigTab.history) ...[
-                              _HistorySection(
-                                txs: historyTxs,
-                                expandedTxId: _expandedTxId,
-                                copiedField: _copiedField,
-                                onToggle: _toggleTx,
-                                onCopy: _copyField,
-                              ),
-                            ] else ...[
-                              _OwnersSection(
-                                safe: selectedSafe,
-                                copiedField: _copiedField,
-                                onCopy: _copyField,
-                              ),
-                            ],
-                            _SecurityNotice(safe: selectedSafe),
+                            ),
+                            const Divider(height: AppSpacing.hairlineStroke),
                           ],
                         ),
                       ),
+                      Expanded(
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(
+                            context,
+                          ).copyWith(scrollbars: false),
+                          child: SingleChildScrollView(
+                            key: LaunchpadMultisigPage.contentKey,
+                            physics: const ClampingScrollPhysics(),
+                            child: VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.compact,
+                              gap: VitContentGap.tight,
+                              children: [
+                                if (_activeTab == _MultisigTab.queue) ...[
+                                  _CreateTxCard(
+                                    onTap: () =>
+                                        setState(() => _showCreate = true),
+                                  ),
+                                  _QueueSection(
+                                    txs: queueTxs,
+                                    expandedTxId: _expandedTxId,
+                                    copiedField: _copiedField,
+                                    onToggle: _toggleTx,
+                                    onCopy: _copyField,
+                                    onSign: _signTx,
+                                    onExecute: _executeTx,
+                                  ),
+                                ] else if (_activeTab ==
+                                    _MultisigTab.history) ...[
+                                  _HistorySection(
+                                    txs: historyTxs,
+                                    expandedTxId: _expandedTxId,
+                                    copiedField: _copiedField,
+                                    onToggle: _toggleTx,
+                                    onCopy: _copyField,
+                                  ),
+                                ] else ...[
+                                  _OwnersSection(
+                                    safe: selectedSafe,
+                                    copiedField: _copiedField,
+                                    onCopy: _copyField,
+                                  ),
+                                ],
+                                _SecurityNotice(safe: selectedSafe),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (_showCreate)
+                  Positioned.fill(
+                    child: _CreateTxSheet(
+                      safe: selectedSafe,
+                      onClose: () => setState(() => _showCreate = false),
+                      onCreate: (tx) {
+                        ref
+                            .read(
+                              launchpadMultisigStateControllerProvider.notifier,
+                            )
+                            .createTx(tx);
+                        setState(() {
+                          _expandedTxId = tx.id;
+                          _showCreate = false;
+                        });
+                      },
                     ),
                   ),
-                ],
-              ),
-            ),
-            if (_showCreate)
-              Positioned.fill(
-                child: _CreateTxSheet(
-                  safe: selectedSafe,
-                  onClose: () => setState(() => _showCreate = false),
-                  onCreate: (tx) {
-                    ref
-                        .read(launchpadMultisigStateControllerProvider.notifier)
-                        .createTx(tx);
-                    setState(() {
-                      _expandedTxId = tx.id;
-                      _showCreate = false;
-                    });
-                  },
-                ),
-              ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

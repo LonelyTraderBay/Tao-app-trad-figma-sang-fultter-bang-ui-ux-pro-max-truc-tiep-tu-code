@@ -72,11 +72,7 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getHome();
-    final projects = _projectsFor(snapshot.projects, _activeTab);
-    final activeCount = snapshot.projects
-        .where((project) => project.status == LaunchpadProjectStatus.active)
-        .length;
+    final homeAsync = ref.watch(launchpadHomeSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -95,10 +91,10 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
           semanticIdentifier: 'SC-295',
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: 'Launchpad',
+            subtitle: 'Dự án mới · Token Launch',
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: () => context.go(AppRoutePaths.home),
             actions: [
               VitHeaderActionItem(
                 key: LaunchpadPage.filterActionKey,
@@ -113,13 +109,13 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
                 key: LaunchpadPage.performanceActionKey,
                 type: VitHeaderActionType.analytics,
                 tooltip: 'Hiệu suất',
-                onPressed: () => context.go(snapshot.performanceRoute),
+                onPressed: () => context.go(AppRoutePaths.launchpadPerformance),
               ),
               VitHeaderActionItem(
                 key: LaunchpadPage.portfolioActionKey,
                 type: VitHeaderActionType.portfolio,
                 tooltip: 'Portfolio',
-                onPressed: () => context.go(snapshot.portfolioRoute),
+                onPressed: () => context.go(AppRoutePaths.launchpadPortfolio),
               ),
             ],
           ),
@@ -136,32 +132,60 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [
-                  _HeroCard(activeCount: activeCount),
-                  _LaunchpadTabs(
-                    activeTab: _activeTab,
-                    onChanged: (tab) => setState(() => _activeTab = tab),
+                  ...homeAsync.when(
+                    loading: () => const [VitSkeletonList()],
+                    error: (error, stackTrace) => [
+                      VitErrorState(
+                        title:
+                            'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c Launchpad',
+                        message:
+                            'Vui l\u00F2ng ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+                        actionLabel: 'Th\u1EED l\u1EA1i',
+                        onAction: () =>
+                            ref.invalidate(launchpadHomeSnapshotProvider),
+                      ),
+                    ],
+                    data: (snapshot) {
+                      final projects = _projectsFor(
+                        snapshot.projects,
+                        _activeTab,
+                      );
+                      final activeCount = snapshot.projects
+                          .where(
+                            (project) =>
+                                project.status == LaunchpadProjectStatus.active,
+                          )
+                          .length;
+                      return [
+                        _HeroCard(activeCount: activeCount),
+                        _LaunchpadTabs(
+                          activeTab: _activeTab,
+                          onChanged: (tab) => setState(() => _activeTab = tab),
+                        ),
+                        if (projects.isEmpty)
+                          _ProjectsEmptyState(
+                            filtered: _activeTab != _LaunchpadTab.all,
+                            onShowAll: () =>
+                                setState(() => _activeTab = _LaunchpadTab.all),
+                          )
+                        else
+                          for (final project in projects)
+                            _ProjectCard(project: project),
+                        _StakingEntry(route: snapshot.stakingRoute),
+                        _ToolSection(
+                          key: LaunchpadPage.advancedToolsKey,
+                          title: 'C\u00F4ng c\u1EE5 n\u00E2ng cao',
+                          tools: snapshot.advancedTools,
+                        ),
+                        _ToolSection(
+                          key: LaunchpadPage.riskToolsKey,
+                          title: 'Trading & Risk Management',
+                          tools: snapshot.riskTools,
+                        ),
+                        const _SafetyWarning(),
+                      ];
+                    },
                   ),
-                  if (projects.isEmpty)
-                    _ProjectsEmptyState(
-                      filtered: _activeTab != _LaunchpadTab.all,
-                      onShowAll: () =>
-                          setState(() => _activeTab = _LaunchpadTab.all),
-                    )
-                  else
-                    for (final project in projects)
-                      _ProjectCard(project: project),
-                  _StakingEntry(route: snapshot.stakingRoute),
-                  _ToolSection(
-                    key: LaunchpadPage.advancedToolsKey,
-                    title: 'C\u00F4ng c\u1EE5 n\u00E2ng cao',
-                    tools: snapshot.advancedTools,
-                  ),
-                  _ToolSection(
-                    key: LaunchpadPage.riskToolsKey,
-                    title: 'Trading & Risk Management',
-                    tools: snapshot.riskTools,
-                  ),
-                  const _SafetyWarning(),
                 ],
               ),
             ),

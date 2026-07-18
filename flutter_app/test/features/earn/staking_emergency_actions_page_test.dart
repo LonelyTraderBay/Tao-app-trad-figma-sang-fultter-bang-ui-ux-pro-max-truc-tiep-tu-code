@@ -30,8 +30,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-385 mock repository exposes emergency actions BE draft', () {
-    final snapshot = const MockStakingEmergencyActionsRepository()
+  test('SC-385 mock repository exposes emergency actions BE draft', () async {
+    final snapshot = await const MockStakingEmergencyActionsRepository()
         .getEmergencyActions();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-emergency-actions');

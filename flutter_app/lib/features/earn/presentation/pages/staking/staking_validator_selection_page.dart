@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -19,6 +20,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/sta
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_validator_selection_list.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking/staking_validator_selection_summary.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class StakingValidatorSelectionPage extends ConsumerStatefulWidget {
   const StakingValidatorSelectionPage({super.key, this.shellRenderMode});
@@ -59,16 +62,7 @@ class _StakingValidatorSelectionPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingValidatorSelectionRepositoryProvider)
-        .getSelection();
-    final validators = _filtered(snapshot.validators);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingValidatorSelectionSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -76,90 +70,133 @@ class _StakingValidatorSelectionPageState
       semanticIdentifier: 'SC-362',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: snapshot.infoTitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      StakingValidatorSelectionInfoBanner(snapshot: snapshot),
-                      StakingValidatorSelectionStatsSummary(snapshot: snapshot),
-                      StakingValidatorSelectionSearchAndFilter(
-                        controller: _searchController,
-                        filterActive:
-                            _showFilters ||
-                            _tierFilter != null ||
-                            _sort != StakingValidatorSort.apy,
-                        onQueryChanged: (query) => setState(() {
-                          _query = query;
-                          _selected = null;
-                        }),
-                        onFilter: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _showFilters = !_showFilters);
-                        },
-                      ),
-                      if (_showFilters)
-                        StakingValidatorSelectionFilterPanel(
-                          key: StakingValidatorSelectionPage.filterPanelKey,
-                          sort: _sort,
-                          tier: _tierFilter,
-                          onSortChanged: (sort) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _sort = sort);
-                          },
-                          onTierChanged: (tier) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tierFilter = tier);
-                          },
-                          onClear: _clearFilters,
-                        ),
-                      StakingValidatorSelectionResultsHeader(
-                        count: validators.length,
-                        total: snapshot.validators.length,
-                        filtered:
-                            validators.length != snapshot.validators.length ||
-                            _query.isNotEmpty,
-                        sort: _sort,
-                        onClear: _clearFilters,
-                      ),
-                      if (_selected != null)
-                        StakingValidatorSelectionDetailCard(
-                          key: StakingValidatorSelectionPage.detailKey,
-                          validator: _selected!,
-                          onClose: () => setState(() => _selected = null),
-                          onSelect: () => _confirmSelection(_selected!),
-                        ),
-                      StakingValidatorSelectionValidatorList(
-                        validators: validators,
-                        onTap: (validator) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _selected = validator);
-                        },
-                      ),
-                      StakingValidatorSelectionFooterNote(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingValidatorSelectionSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final validators = _filtered(snapshot.validators);
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: snapshot.infoTitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          StakingValidatorSelectionInfoBanner(
+                            snapshot: snapshot,
+                          ),
+                          StakingValidatorSelectionStatsSummary(
+                            snapshot: snapshot,
+                          ),
+                          StakingValidatorSelectionSearchAndFilter(
+                            controller: _searchController,
+                            filterActive:
+                                _showFilters ||
+                                _tierFilter != null ||
+                                _sort != StakingValidatorSort.apy,
+                            onQueryChanged: (query) => setState(() {
+                              _query = query;
+                              _selected = null;
+                            }),
+                            onFilter: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _showFilters = !_showFilters);
+                            },
+                          ),
+                          if (_showFilters)
+                            StakingValidatorSelectionFilterPanel(
+                              key: StakingValidatorSelectionPage.filterPanelKey,
+                              sort: _sort,
+                              tier: _tierFilter,
+                              onSortChanged: (sort) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _sort = sort);
+                              },
+                              onTierChanged: (tier) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _tierFilter = tier);
+                              },
+                              onClear: _clearFilters,
+                            ),
+                          StakingValidatorSelectionResultsHeader(
+                            count: validators.length,
+                            total: snapshot.validators.length,
+                            filtered:
+                                validators.length !=
+                                    snapshot.validators.length ||
+                                _query.isNotEmpty,
+                            sort: _sort,
+                            onClear: _clearFilters,
+                          ),
+                          if (_selected != null)
+                            StakingValidatorSelectionDetailCard(
+                              key: StakingValidatorSelectionPage.detailKey,
+                              validator: _selected!,
+                              onClose: () => setState(() => _selected = null),
+                              onSelect: () => _confirmSelection(_selected!),
+                            ),
+                          StakingValidatorSelectionValidatorList(
+                            validators: validators,
+                            onTap: (validator) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _selected = validator);
+                            },
+                          ),
+                          StakingValidatorSelectionFooterNote(
+                            snapshot: snapshot,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

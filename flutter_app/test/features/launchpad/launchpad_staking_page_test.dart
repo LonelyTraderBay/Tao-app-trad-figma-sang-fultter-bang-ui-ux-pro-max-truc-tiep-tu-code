@@ -30,8 +30,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-298 mock repository exposes launchpad staking BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getStaking();
+  test('SC-298 mock repository exposes launchpad staking BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getStaking();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-staking');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

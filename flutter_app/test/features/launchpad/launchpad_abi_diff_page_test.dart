@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-308 mock repository exposes ABI diff BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getAbiDiff('contract001');
+  test('SC-308 mock repository exposes ABI diff BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getAbiDiff('contract001');
 
     expect(
       snapshot.endpoint,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -41,31 +42,15 @@ class StakingThirdPartyIntegrationsPage extends ConsumerStatefulWidget {
 
 class _StakingThirdPartyIntegrationsPageState
     extends ConsumerState<StakingThirdPartyIntegrationsPage> {
-  late final Set<String> _connectedIds;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(stakingThirdPartyIntegrationsRepositoryProvider)
-        .getIntegrations();
-    _connectedIds = {
-      for (final integration in snapshot.integrations)
-        if (integration.connected) integration.id,
-    };
-  }
+  // Bẫy 14 (GD4 playbook): repo giờ đã async — seed 1 lần trong nhánh
+  // data: bên dưới thay vì initState.
+  Set<String>? _connectedIds;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingThirdPartyIntegrationsRepositoryProvider)
-        .getIntegrations();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(
+      stakingThirdPartyIntegrationsSnapshotProvider,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -73,43 +58,82 @@ class _StakingThirdPartyIntegrationsPageState
       semanticIdentifier: 'SC-395',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Tích hợp bên thứ ba — rủi ro tự đánh giá',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _IntegrationsHero(snapshot: snapshot),
-                      _IntegrationsList(
-                        snapshot: snapshot,
-                        connectedIds: _connectedIds,
-                        onConnect: (id) {
-                          setState(() => _connectedIds.add(id));
-                        },
-                      ),
-                      _ApiAccess(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingThirdPartyIntegrationsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _connectedIds ??= {
+              for (final integration in snapshot.integrations)
+                if (integration.connected) integration.id,
+            };
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Tích hợp bên thứ ba — rủi ro tự đánh giá',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.defaultPadding,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _IntegrationsHero(snapshot: snapshot),
+                          _IntegrationsList(
+                            snapshot: snapshot,
+                            connectedIds: _connectedIds!,
+                            onConnect: (id) {
+                              setState(() => _connectedIds!.add(id));
+                            },
+                          ),
+                          _ApiAccess(snapshot: snapshot),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

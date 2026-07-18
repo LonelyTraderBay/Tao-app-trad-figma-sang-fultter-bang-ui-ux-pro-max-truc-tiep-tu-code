@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -73,8 +74,7 @@ class _StakingSuitabilityAssessmentPageState
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(stakingSuitabilityControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(stakingSuitabilityControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final safeAreaEnd = MediaQuery.paddingOf(context).bottom;
     final bottomInset =
@@ -95,121 +95,157 @@ class _StakingSuitabilityAssessmentPageState
       semanticIdentifier: 'SC-376',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: _showResult ? snapshot.resultTitle : snapshot.title,
-            subtitle: 'Đánh giá phù hợp trước khi stake',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: controllerAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    scrollEndPadding,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: _showResult
-                        ? [
-                            _ResultView(
-                              snapshot: snapshot,
-                              profile: controller.profileForScore(_score),
-                              score: _score,
-                              onReset: _reset,
-                            ),
-                          ]
-                        : [
-                            _ProgressHeader(
-                              current: _step,
-                              total: snapshot.questions.length,
-                            ),
-                            const VitHighRiskStatePanel(
-                              density: VitDensity.compact,
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Đánh giá phù hợp sản phẩm',
-                              message:
-                                  'Câu trả lời được đối chiếu với kinh nghiệm, thanh khoản, thu nhập, phân bổ và giới hạn kiến thức trước khi stake.',
-                              contractId: 'staking-suitability-assessment',
-                            ),
-                            _QuestionCard(
-                              question: snapshot.questions[_step],
-                              selected: _answers[snapshot.questions[_step].id],
-                              quizAnswers: _quizAnswers,
-                              onSelect: _selectAnswer,
-                              onQuizSelect: _selectQuizAnswer,
-                            ),
-                            if (_step == 0)
-                              VitInfoCallout(
-                                key: StakingSuitabilityAssessmentPage.infoKey,
-                                title: snapshot.infoTitle,
-                                message: snapshot.infoBody,
-                                icon: Icons.shield_outlined,
-                                accentColor: AppColors.primarySoft,
-                                padding: _stakingSuitabilityCardPadding,
-                              ),
-                          ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingSuitabilityAssessmentSnapshotProvider),
+            ),
+          ),
+          data: (controller) {
+            final snapshot = controller.state.snapshot;
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: _showResult ? snapshot.resultTitle : snapshot.title,
+                subtitle: 'Đánh giá phù hợp trước khi stake',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-              if (!_showResult)
-                Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: footerEndPadding),
-                  child: VitStickyFooter(
-                    child: Row(
-                      children: [
-                        if (_step > 0) ...[
-                          Expanded(
-                            child: VitCtaButton(
-                              key: StakingSuitabilityAssessmentPage
-                                  .previousButtonKey,
-                              variant: VitCtaButtonVariant.secondary,
-                              density: VitDensity.compact,
-                              onPressed: _previous,
-                              child: const Text('Previous'),
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.x3),
-                        ],
-                        Expanded(
-                          child: VitCtaButton(
-                            key: StakingSuitabilityAssessmentPage.nextButtonKey,
-                            density: VitDensity.compact,
-                            onPressed:
-                                _isAnswered(
-                                  controller,
-                                  snapshot.questions[_step],
-                                )
-                                ? () => _next(snapshot)
-                                : null,
-                            child: Text(
-                              _step == snapshot.questions.length - 1
-                                  ? 'Submit'
-                                  : 'Next',
-                            ),
-                          ),
-                        ),
-                      ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        scrollEndPadding,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: _showResult
+                            ? [
+                                _ResultView(
+                                  snapshot: snapshot,
+                                  profile: controller.profileForScore(
+                                    controller.score(
+                                      answers: _answers,
+                                      quizAnswers: _quizAnswers,
+                                    ),
+                                  ),
+                                  score: controller.score(
+                                    answers: _answers,
+                                    quizAnswers: _quizAnswers,
+                                  ),
+                                  onReset: _reset,
+                                ),
+                              ]
+                            : [
+                                _ProgressHeader(
+                                  current: _step,
+                                  total: snapshot.questions.length,
+                                ),
+                                const VitHighRiskStatePanel(
+                                  density: VitDensity.compact,
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Đánh giá phù hợp sản phẩm',
+                                  message:
+                                      'Câu trả lời được đối chiếu với kinh nghiệm, thanh khoản, thu nhập, phân bổ và giới hạn kiến thức trước khi stake.',
+                                  contractId: 'staking-suitability-assessment',
+                                ),
+                                _QuestionCard(
+                                  question: snapshot.questions[_step],
+                                  selected:
+                                      _answers[snapshot.questions[_step].id],
+                                  quizAnswers: _quizAnswers,
+                                  onSelect: _selectAnswer,
+                                  onQuizSelect: _selectQuizAnswer,
+                                ),
+                                if (_step == 0)
+                                  VitInfoCallout(
+                                    key: StakingSuitabilityAssessmentPage
+                                        .infoKey,
+                                    title: snapshot.infoTitle,
+                                    message: snapshot.infoBody,
+                                    icon: Icons.shield_outlined,
+                                    accentColor: AppColors.primarySoft,
+                                    padding: _stakingSuitabilityCardPadding,
+                                  ),
+                              ],
+                      ),
                     ),
                   ),
-                ),
-            ],
-          ),
+                  if (!_showResult)
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: footerEndPadding,
+                      ),
+                      child: VitStickyFooter(
+                        child: Row(
+                          children: [
+                            if (_step > 0) ...[
+                              Expanded(
+                                child: VitCtaButton(
+                                  key: StakingSuitabilityAssessmentPage
+                                      .previousButtonKey,
+                                  variant: VitCtaButtonVariant.secondary,
+                                  density: VitDensity.compact,
+                                  onPressed: _previous,
+                                  child: const Text('Previous'),
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.x3),
+                            ],
+                            Expanded(
+                              child: VitCtaButton(
+                                key: StakingSuitabilityAssessmentPage
+                                    .nextButtonKey,
+                                density: VitDensity.compact,
+                                onPressed:
+                                    _isAnswered(
+                                      controller,
+                                      snapshot.questions[_step],
+                                    )
+                                    ? () => _next(snapshot)
+                                    : null,
+                                child: Text(
+                                  _step == snapshot.questions.length - 1
+                                      ? 'Submit'
+                                      : 'Next',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
-  }
-
-  int get _score {
-    return ref
-        .read(stakingSuitabilityControllerProvider)
-        .score(answers: _answers, quizAnswers: _quizAnswers);
   }
 
   void _selectAnswer(String questionId, int value) {

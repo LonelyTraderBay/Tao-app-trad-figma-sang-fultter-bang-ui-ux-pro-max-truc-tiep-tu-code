@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -54,15 +55,10 @@ class _StakingRiskScoreCalculatorPageState
   @override
   void initState() {
     super.initState();
-    final snapshot = ref
-        .read(stakingRiskScoreCalculatorRepositoryProvider)
-        .getCalculator();
-    _amountController = TextEditingController(
-      text: snapshot.defaultAmountUsd.toStringAsFixed(0),
-    );
-    _asset = snapshot.defaultAsset;
-    _duration = snapshot.defaultDuration;
-    _validators = snapshot.defaultValidators;
+    // Bẫy 14 (GD4 playbook): repo giờ đã async — không seed từ initState
+    // nữa; các field literal ở trên đã khớp
+    // MockStakingRiskScoreCalculatorRepository.getCalculator() defaults.
+    _amountController = TextEditingController(text: '10000');
   }
 
   @override
@@ -73,17 +69,7 @@ class _StakingRiskScoreCalculatorPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingRiskScoreCalculatorRepositoryProvider)
-        .getCalculator();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
-    final riskScore = _riskScore;
-    final riskColor = _riskColor(riskScore);
+    final snapshotAsync = ref.watch(stakingRiskScoreCalculatorSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -91,76 +77,113 @@ class _StakingRiskScoreCalculatorPageState
       semanticIdentifier: 'SC-384',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Điểm rủi ro ước tính — không cam kết',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _ScenarioInputs(
-                        snapshot: snapshot,
-                        amountController: _amountController,
-                        asset: _asset,
-                        duration: _duration,
-                        validators: _validators,
-                        onAmountChanged: (_) => setState(() {}),
-                        onAssetChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _asset = value);
-                        },
-                        onDurationChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _duration = value);
-                        },
-                        onValidatorsChanged: (value) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _validators = value);
-                        },
-                      ),
-                      _RiskScoreCard(
-                        score: riskScore,
-                        label: _riskLabel(riskScore),
-                        color: riskColor,
-                        axes: _radarAxes,
-                      ),
-                      _RecommendationsSection(
-                        recommendations: _activeRecommendations(snapshot),
-                      ),
-                      VitCtaButton(
-                        key: StakingRiskScoreCalculatorPage.footerButtonKey,
-                        height: AppSpacing.buttonStandard,
-                        onPressed: () {
-                          HapticFeedback.selectionClick();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Tiếp tục sẽ sớm ra mắt'),
-                            ),
-                          );
-                        },
-                        child: Text(snapshot.proceedLabel),
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingRiskScoreCalculatorSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+            final riskScore = _riskScore;
+            final riskColor = _riskColor(riskScore);
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Điểm rủi ro ước tính — không cam kết',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _ScenarioInputs(
+                            snapshot: snapshot,
+                            amountController: _amountController,
+                            asset: _asset,
+                            duration: _duration,
+                            validators: _validators,
+                            onAmountChanged: (_) => setState(() {}),
+                            onAssetChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _asset = value);
+                            },
+                            onDurationChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _duration = value);
+                            },
+                            onValidatorsChanged: (value) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _validators = value);
+                            },
+                          ),
+                          _RiskScoreCard(
+                            score: riskScore,
+                            label: _riskLabel(riskScore),
+                            color: riskColor,
+                            axes: _radarAxes,
+                          ),
+                          _RecommendationsSection(
+                            recommendations: _activeRecommendations(snapshot),
+                          ),
+                          VitCtaButton(
+                            key: StakingRiskScoreCalculatorPage.footerButtonKey,
+                            height: AppSpacing.buttonStandard,
+                            onPressed: () {
+                              HapticFeedback.selectionClick();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Tiếp tục sẽ sớm ra mắt'),
+                                ),
+                              );
+                            },
+                            child: Text(snapshot.proceedLabel),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

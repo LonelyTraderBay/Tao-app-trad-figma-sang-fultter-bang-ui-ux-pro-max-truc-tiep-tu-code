@@ -29,8 +29,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-389 mock repository exposes proposals BE draft', () {
-    final snapshot = const MockStakingProposalsRepository().getProposals();
+  test('SC-389 mock repository exposes proposals BE draft', () async {
+    final snapshot = await const MockStakingProposalsRepository()
+        .getProposals();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-proposals');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

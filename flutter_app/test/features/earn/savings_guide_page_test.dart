@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-335 mock repository exposes savings guide BE draft', () {
-    final snapshot = const MockSavingsGuideRepository().getGuide();
+  test('SC-335 mock repository exposes savings guide BE draft', () async {
+    final snapshot = await const MockSavingsGuideRepository().getGuide();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-guide');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

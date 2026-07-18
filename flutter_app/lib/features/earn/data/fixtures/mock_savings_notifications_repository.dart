@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsNotificationsRepository
+final class MockSavingsNotificationsRepository extends _MockEarnRepositoryBase
     implements SavingsNotificationsRepository {
-  const MockSavingsNotificationsRepository();
+  const MockSavingsNotificationsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsNotificationsSnapshot getNotifications() {
+  Future<SavingsNotificationsSnapshot> getNotifications() async {
+    await _simulateNetwork();
     return const SavingsNotificationsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-notifications',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -181,12 +185,16 @@ final class MockSavingsNotificationsRepository
   }
 }
 
-final class MockSavingsRecommendationsRepository
+final class MockSavingsRecommendationsRepository extends _MockEarnRepositoryBase
     implements SavingsRecommendationsRepository {
-  const MockSavingsRecommendationsRepository();
+  const MockSavingsRecommendationsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  SavingsRecommendationsSnapshot getRecommendations() {
+  Future<SavingsRecommendationsSnapshot> getRecommendations() async {
+    await _simulateNetwork();
     return const SavingsRecommendationsSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-recommendations',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',

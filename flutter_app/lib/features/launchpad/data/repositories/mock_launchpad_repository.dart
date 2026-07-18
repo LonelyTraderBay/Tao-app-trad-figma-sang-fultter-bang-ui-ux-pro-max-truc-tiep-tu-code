@@ -15,12 +15,27 @@ part '../fixtures/mock_launchpad_repository_risk_tools_fixtures.dart';
 part '../fixtures/mock_launchpad_repository_tx_simulation_fixtures.dart';
 
 abstract class _MockLaunchpadRepositoryBase implements LaunchpadRepository {
-  const _MockLaunchpadRepositoryBase();
+  const _MockLaunchpadRepositoryBase({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
+
+  Future<void> _simulateNetwork() async {
+    // Bẫy 9.10 (GD4-Async-Playbook.md): guard delay 0 — Future.delayed(zero)
+    // vẫn là timer, tester.pump() không-duration không đẩy fake clock.
+    if (loadDelay > Duration.zero) {
+      await Future<void>.delayed(loadDelay);
+    }
+    if (simulateError) throw StateError('launchpad_mock_fetch_failed');
+  }
 }
 
 final class MockLaunchpadRepository extends _MockLaunchpadRepositoryBase
     with
         _MockLaunchpadRepositoryMethodsPart01,
         _MockLaunchpadRepositoryMethodsPart02 {
-  const MockLaunchpadRepository();
+  const MockLaunchpadRepository({super.simulateError, super.loadDelay});
 }

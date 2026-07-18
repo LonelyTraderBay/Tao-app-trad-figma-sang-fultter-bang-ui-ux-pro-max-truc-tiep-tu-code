@@ -25,8 +25,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-370 mock repository exposes staking FAQ BE draft', () {
-    final snapshot = const MockStakingFAQRepository().getFAQ();
+  test('SC-370 mock repository exposes staking FAQ BE draft', () async {
+    final snapshot = await const MockStakingFAQRepository().getFAQ();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-faq');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

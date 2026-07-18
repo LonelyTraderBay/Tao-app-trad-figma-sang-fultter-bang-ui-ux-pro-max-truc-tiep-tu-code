@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-382 mock repository exposes slashing history BE draft', () {
-    final snapshot = const MockStakingSlashingHistoryRepository()
+  test('SC-382 mock repository exposes slashing history BE draft', () async {
+    final snapshot = await const MockStakingSlashingHistoryRepository()
         .getSlashingHistory();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-slashing-history');

@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-356 mock repository exposes staking tax guide BE draft', () {
-    final snapshot = const MockStakingTaxGuideRepository().getGuide();
+  test('SC-356 mock repository exposes staking tax guide BE draft', () async {
+    final snapshot = await const MockStakingTaxGuideRepository().getGuide();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-staking-tax-guide');
     expect(snapshot.actionDraft, contains('POST /exports'));

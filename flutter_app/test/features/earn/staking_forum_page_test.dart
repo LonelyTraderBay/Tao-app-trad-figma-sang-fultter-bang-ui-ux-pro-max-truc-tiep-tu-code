@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-392 mock repository exposes forum BE draft', () {
-    final snapshot = const MockStakingForumRepository().getForum();
+  test('SC-392 mock repository exposes forum BE draft', () async {
+    final snapshot = await const MockStakingForumRepository().getForum();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-forum');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

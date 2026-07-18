@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-316 mock repository exposes launchpad DCA builder BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getDcaBuilder();
+  test('SC-316 mock repository exposes launchpad DCA builder BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getDcaBuilder();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-dca-builder');
     expect(

@@ -37,36 +37,41 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-315 mock repository exposes launchpad limit orders BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getLimitOrders();
+  test(
+    'SC-315 mock repository exposes launchpad limit orders BE draft',
+    () async {
+      final snapshot = await const MockLaunchpadRepository(
+        loadDelay: Duration.zero,
+      ).getLimitOrders();
 
-    expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-limit-orders');
-    expect(
-      snapshot.actionDraft,
-      'POST /orders/:id/action where applicable; POST /launchpad/subscribe|claim|bridge where applicable',
-    );
-    expect(snapshot.title, 'Limit Orders');
-    expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.tabs, ['Hoat dong', 'Lich su', 'Tao lenh']);
-    expect(snapshot.orders, hasLength(4));
-    expect(snapshot.activeOrders, hasLength(3));
-    expect(snapshot.historyOrders, hasLength(1));
-    expect(snapshot.activeOrders.first.symbol, 'ARB');
-    expect(snapshot.filled24h, 3);
-    expect(snapshot.totalValueLabel, r'$4.2K');
-    expect(snapshot.contractNotes, contains('active/history orders'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        LaunchpadScreenState.loading,
-        LaunchpadScreenState.empty,
-        LaunchpadScreenState.error,
-        LaunchpadScreenState.offline,
-        LaunchpadScreenState.submitting,
-        LaunchpadScreenState.success,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-limit-orders');
+      expect(
+        snapshot.actionDraft,
+        'POST /orders/:id/action where applicable; POST /launchpad/subscribe|claim|bridge where applicable',
+      );
+      expect(snapshot.title, 'Limit Orders');
+      expect(snapshot.backRoute, AppRoutePaths.launchpad);
+      expect(snapshot.tabs, ['Hoat dong', 'Lich su', 'Tao lenh']);
+      expect(snapshot.orders, hasLength(4));
+      expect(snapshot.activeOrders, hasLength(3));
+      expect(snapshot.historyOrders, hasLength(1));
+      expect(snapshot.activeOrders.first.symbol, 'ARB');
+      expect(snapshot.filled24h, 3);
+      expect(snapshot.totalValueLabel, r'$4.2K');
+      expect(snapshot.contractNotes, contains('active/history orders'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          LaunchpadScreenState.loading,
+          LaunchpadScreenState.empty,
+          LaunchpadScreenState.error,
+          LaunchpadScreenState.offline,
+          LaunchpadScreenState.submitting,
+          LaunchpadScreenState.success,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-315 renders active limit orders baseline', (tester) async {
     await pumpLimitOrders(tester);
@@ -245,7 +250,7 @@ final class _EmptyLimitOrdersRepository implements LaunchpadRepository {
   const _EmptyLimitOrdersRepository();
 
   @override
-  LaunchpadLimitOrdersSnapshot getLimitOrders() {
+  Future<LaunchpadLimitOrdersSnapshot> getLimitOrders() async {
     return const LaunchpadLimitOrdersSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-limit-orders',
       actionDraft:

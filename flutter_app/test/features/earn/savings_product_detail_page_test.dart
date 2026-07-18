@@ -28,8 +28,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-330 mock repository exposes product-detail BE draft', () {
-    final snapshot = const MockSavingsProductDetailRepository()
+  test('SC-330 mock repository exposes product-detail BE draft', () async {
+    final snapshot = await const MockSavingsProductDetailRepository()
         .getProductDetail(productId: 'sample');
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-product-sample');

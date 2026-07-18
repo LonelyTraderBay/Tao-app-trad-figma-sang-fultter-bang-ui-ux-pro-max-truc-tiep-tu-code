@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -69,15 +70,7 @@ class _SavingsRecommendationsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(savingsRecommendationsRepositoryProvider)
-        .getRecommendations();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsRecommendationsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -85,85 +78,119 @@ class _SavingsRecommendationsPageState
       semanticIdentifier: 'SC-338',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _HeroCard(snapshot: snapshot),
-                      _ProfileCard(snapshot: snapshot),
-                      _AmountSimulator(
-                        controller: _amountController,
-                        amountText: _amountText,
-                        onAmountChanged: (value) =>
-                            setState(() => _amountText = value),
-                        onQuickAmount: (value) {
-                          HapticFeedback.selectionClick();
-                          _setAmountText('$value');
-                        },
-                      ),
-                      _CompareButton(
-                        onTap: () => _openCompareSheet(snapshot.strategies),
-                      ),
-                      VitPageSection(
-                        label: 'Chiến lược được Đề xuất',
-                        accentColor: AppColors.accent,
-                        children: [
-                          Column(
-                            key: SavingsRecommendationsPage.strategyListKey,
-                            children: [
-                              for (final strategy in snapshot.strategies)
-                                _StrategyCard(
-                                  key: SavingsRecommendationsPage.strategyKey(
-                                    strategy.id,
-                                  ),
-                                  strategy: strategy,
-                                  amount: _amount,
-                                  onTap: () => _openStrategySheet(
-                                    strategy,
-                                    snapshot.savingsRoute,
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Gợi ý Cá nhân hóa',
-                        accentColor: AppColors.buy,
-                        children: [
-                          Column(
-                            children: [
-                              for (final insight in snapshot.insights)
-                                _InsightCard(insight: insight),
-                            ],
-                          ),
-                        ],
-                      ),
-                      _QuickLinks(snapshot: snapshot),
-                      const SavingsToolsYieldFooter(),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(savingsRecommendationsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _HeroCard(snapshot: snapshot),
+                          _ProfileCard(snapshot: snapshot),
+                          _AmountSimulator(
+                            controller: _amountController,
+                            amountText: _amountText,
+                            onAmountChanged: (value) =>
+                                setState(() => _amountText = value),
+                            onQuickAmount: (value) {
+                              HapticFeedback.selectionClick();
+                              _setAmountText('$value');
+                            },
+                          ),
+                          _CompareButton(
+                            onTap: () => _openCompareSheet(snapshot.strategies),
+                          ),
+                          VitPageSection(
+                            label: 'Chiến lược được Đề xuất',
+                            accentColor: AppColors.accent,
+                            children: [
+                              Column(
+                                key: SavingsRecommendationsPage.strategyListKey,
+                                children: [
+                                  for (final strategy in snapshot.strategies)
+                                    _StrategyCard(
+                                      key:
+                                          SavingsRecommendationsPage.strategyKey(
+                                            strategy.id,
+                                          ),
+                                      strategy: strategy,
+                                      amount: _amount,
+                                      onTap: () => _openStrategySheet(
+                                        strategy,
+                                        snapshot.savingsRoute,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Gợi ý Cá nhân hóa',
+                            accentColor: AppColors.buy,
+                            children: [
+                              Column(
+                                children: [
+                                  for (final insight in snapshot.insights)
+                                    _InsightCard(insight: insight),
+                                ],
+                              ),
+                            ],
+                          ),
+                          _QuickLinks(snapshot: snapshot),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

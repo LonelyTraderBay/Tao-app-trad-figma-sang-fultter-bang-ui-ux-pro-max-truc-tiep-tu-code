@@ -27,8 +27,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-299 mock repository exposes IDO bridge BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getIdoBridge('sample');
+  test('SC-299 mock repository exposes IDO bridge BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getIdoBridge('sample');
 
     expect(
       snapshot.endpoint,

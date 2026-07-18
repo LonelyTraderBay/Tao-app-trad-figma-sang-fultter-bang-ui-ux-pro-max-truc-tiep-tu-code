@@ -69,8 +69,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaScheduleConfigProvider);
-    _initialize(snapshot);
+    final dcaScheduleConfigAsync = ref.watch(dcaScheduleConfigProvider);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
@@ -89,112 +88,130 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
           showBack: true,
           onBack: _close,
         ),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: VitInsetScrollView(
-            key: DCAScheduleConfig.contentKey,
-            physics: const ClampingScrollPhysics(),
-            bottomInset: scrollEndPadding,
-            child: VitPageContent(
-              rhythm: VitPageRhythm.standard,
-              padding: VitContentPadding.compact,
-              density: VitDensity.compact,
-              children: [
-                const VitInfoCallout(
-                  title: 'Lịch trình thông minh',
-                  message:
-                      'Tự động điều chỉnh thời điểm DCA theo volatility, gas hoặc khối lượng — giữ kỷ luật mua định kỳ.',
-                  icon: Icons.auto_awesome_outlined,
-                  accentColor: AppColors.primary,
-                  padding: _dcaScheduleHeroPadding,
-                  radius: VitCardRadius.large,
-                ),
-                _StrategySection(
-                  strategies: snapshot.strategies,
-                  active: _strategy,
-                  onChanged: _setStrategy,
-                ),
-                _TimePreferenceSection(
-                  preferences: snapshot.timePreferences,
-                  active: _timePreference,
-                  activeAccent: _strategyAccent,
-                  onChanged: _setTimePreference,
-                ),
-                _LimitsCard(
-                  maxDelayHours: _maxDelayHours,
-                  maxAdvanceHours: _maxAdvanceHours,
-                  onDelayChanged: (value) {
-                    setState(() => _maxDelayHours = value.roundToDouble());
-                  },
-                  onAdvanceChanged: (value) {
-                    setState(() => _maxAdvanceHours = value.roundToDouble());
-                  },
-                ),
-                if (_strategy == DcaScheduleStrategy.volatility ||
-                    _strategy == DcaScheduleStrategy.hybrid)
-                  _ThresholdCard(
-                    key: DCAScheduleConfig.volatilityKey,
-                    title: 'Volatility Settings',
-                    icon: Icons.trending_down,
-                    accent: AppColors.accent,
-                    label: 'Ngưỡng volatility',
-                    valueLabel: '${_volatilityThreshold.toStringAsFixed(1)}%',
-                    min: 0.5,
-                    max: 10,
-                    divisions: 19,
-                    value: _volatilityThreshold,
-                    helper:
-                        'Ưu tiên thời điểm volatility < ${_volatilityThreshold.toStringAsFixed(1)}%',
-                    onChanged: (value) {
-                      setState(() => _volatilityThreshold = value);
-                    },
-                  ),
-                if (_strategy == DcaScheduleStrategy.gasOptimized ||
-                    _strategy == DcaScheduleStrategy.hybrid)
-                  _ThresholdCard(
-                    key: DCAScheduleConfig.gasKey,
-                    title: 'Gas Settings',
-                    icon: Icons.bolt_outlined,
-                    accent: AppColors.warn,
-                    label: 'Ngưỡng gas price',
-                    valueLabel: '${_gasPriceThreshold.round()} gwei',
-                    min: 5,
-                    max: 100,
-                    divisions: 19,
-                    value: _gasPriceThreshold,
-                    helper:
-                        'Ưu tiên thời điểm gas < ${_gasPriceThreshold.round()} gwei',
-                    onChanged: (value) {
-                      setState(
-                        () => _gasPriceThreshold = value.roundToDouble(),
-                      );
-                    },
-                  ),
-                _EnableCard(
-                  enabled: _enabled,
-                  onChanged: (value) {
-                    HapticFeedback.selectionClick();
-                    setState(() => _enabled = value);
-                  },
-                ),
-                if (_strategy == DcaScheduleStrategy.fixed)
-                  const _FixedWarningCard(),
-                const VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Xem lại lịch mua tự động',
-                  message:
-                      'Thay đổi chiến lược và khung giờ ảnh hưởng trực tiếp đến thời điểm thực thi DCA.',
-                  contractId: 'SC-172',
-                ),
-                VitCtaButton(
-                  key: DCAScheduleConfig.saveKey,
-                  onPressed: _save,
-                  leading: const Icon(Icons.save_outlined),
-                  child: const Text('Lưu cấu hình'),
-                ),
-              ],
-            ),
+        child: dcaScheduleConfigAsync.when(
+          loading: () => const VitSkeletonList(),
+          error: (error, stackTrace) => VitErrorState(
+            title: 'Không tải được lịch mua DCA',
+            message: 'Thử lại sau hoặc quay lại màn DCA.',
+            actionLabel: 'Thử lại',
+            onAction: () => ref.invalidate(dcaScheduleConfigProvider),
           ),
+          data: (snapshot) {
+            _initialize(snapshot);
+            return _buildBody(context, snapshot, scrollEndPadding);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(
+    BuildContext context,
+    DcaScheduleConfigSnapshot snapshot,
+    double scrollEndPadding,
+  ) {
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: VitInsetScrollView(
+        key: DCAScheduleConfig.contentKey,
+        physics: const ClampingScrollPhysics(),
+        bottomInset: scrollEndPadding,
+        child: VitPageContent(
+          rhythm: VitPageRhythm.standard,
+          padding: VitContentPadding.compact,
+          density: VitDensity.compact,
+          children: [
+            const VitInfoCallout(
+              title: 'Lịch trình thông minh',
+              message:
+                  'Tự động điều chỉnh thời điểm DCA theo volatility, gas hoặc khối lượng — giữ kỷ luật mua định kỳ.',
+              icon: Icons.auto_awesome_outlined,
+              accentColor: AppColors.primary,
+              padding: _dcaScheduleHeroPadding,
+              radius: VitCardRadius.large,
+            ),
+            _StrategySection(
+              strategies: snapshot.strategies,
+              active: _strategy,
+              onChanged: _setStrategy,
+            ),
+            _TimePreferenceSection(
+              preferences: snapshot.timePreferences,
+              active: _timePreference,
+              activeAccent: _strategyAccent,
+              onChanged: _setTimePreference,
+            ),
+            _LimitsCard(
+              maxDelayHours: _maxDelayHours,
+              maxAdvanceHours: _maxAdvanceHours,
+              onDelayChanged: (value) {
+                setState(() => _maxDelayHours = value.roundToDouble());
+              },
+              onAdvanceChanged: (value) {
+                setState(() => _maxAdvanceHours = value.roundToDouble());
+              },
+            ),
+            if (_strategy == DcaScheduleStrategy.volatility ||
+                _strategy == DcaScheduleStrategy.hybrid)
+              _ThresholdCard(
+                key: DCAScheduleConfig.volatilityKey,
+                title: 'Volatility Settings',
+                icon: Icons.trending_down,
+                accent: AppColors.accent,
+                label: 'Ngưỡng volatility',
+                valueLabel: '${_volatilityThreshold.toStringAsFixed(1)}%',
+                min: 0.5,
+                max: 10,
+                divisions: 19,
+                value: _volatilityThreshold,
+                helper:
+                    'Ưu tiên thời điểm volatility < ${_volatilityThreshold.toStringAsFixed(1)}%',
+                onChanged: (value) {
+                  setState(() => _volatilityThreshold = value);
+                },
+              ),
+            if (_strategy == DcaScheduleStrategy.gasOptimized ||
+                _strategy == DcaScheduleStrategy.hybrid)
+              _ThresholdCard(
+                key: DCAScheduleConfig.gasKey,
+                title: 'Gas Settings',
+                icon: Icons.bolt_outlined,
+                accent: AppColors.warn,
+                label: 'Ngưỡng gas price',
+                valueLabel: '${_gasPriceThreshold.round()} gwei',
+                min: 5,
+                max: 100,
+                divisions: 19,
+                value: _gasPriceThreshold,
+                helper:
+                    'Ưu tiên thời điểm gas < ${_gasPriceThreshold.round()} gwei',
+                onChanged: (value) {
+                  setState(() => _gasPriceThreshold = value.roundToDouble());
+                },
+              ),
+            _EnableCard(
+              enabled: _enabled,
+              onChanged: (value) {
+                HapticFeedback.selectionClick();
+                setState(() => _enabled = value);
+              },
+            ),
+            if (_strategy == DcaScheduleStrategy.fixed)
+              const _FixedWarningCard(),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Xem lại lịch mua tự động',
+              message:
+                  'Thay đổi chiến lược và khung giờ ảnh hưởng trực tiếp đến thời điểm thực thi DCA.',
+              contractId: 'SC-172',
+            ),
+            VitCtaButton(
+              key: DCAScheduleConfig.saveKey,
+              onPressed: _save,
+              leading: const Icon(Icons.save_outlined),
+              child: const Text('Lưu cấu hình'),
+            ),
+          ],
         ),
       ),
     );

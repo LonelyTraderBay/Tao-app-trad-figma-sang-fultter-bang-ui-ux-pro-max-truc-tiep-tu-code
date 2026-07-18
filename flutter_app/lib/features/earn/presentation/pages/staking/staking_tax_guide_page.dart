@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -19,6 +20,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class StakingTaxGuidePage extends ConsumerStatefulWidget {
   const StakingTaxGuidePage({super.key, this.shellRenderMode});
@@ -54,14 +57,7 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(stakingTaxGuideRepositoryProvider).getGuide();
-    final activeTab = _activeTab ?? snapshot.defaultTab;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingTaxGuideSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -69,61 +65,96 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
       semanticIdentifier: 'SC-356',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Tham khảo thuế — không phải tư vấn pháp lý',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      StakingTaxDisclaimerBanner(snapshot: snapshot),
-                      StakingTaxTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeTab = tab);
-                        },
-                      ),
-                      if (activeTab == 'overview')
-                        StakingTaxOverviewTab(snapshot: snapshot)
-                      else if (activeTab == 'jurisdictions')
-                        StakingTaxJurisdictionTab(
-                          snapshot: snapshot,
-                          selectedId: _selectedJurisdiction,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selectedJurisdiction = id);
-                          },
-                        )
-                      else
-                        StakingTaxCalculatorTab(
-                          snapshot: snapshot,
-                          rewardsController: _rewardsController,
-                          rateController: _rateController,
-                          onChanged: () => setState(() {}),
-                        ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingTaxGuideSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _activeTab ?? snapshot.defaultTab;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Tham khảo thuế — không phải tư vấn pháp lý',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          StakingTaxDisclaimerBanner(snapshot: snapshot),
+                          StakingTaxTabs(
+                            tabs: snapshot.tabs,
+                            active: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeTab = tab);
+                            },
+                          ),
+                          if (activeTab == 'overview')
+                            StakingTaxOverviewTab(snapshot: snapshot)
+                          else if (activeTab == 'jurisdictions')
+                            StakingTaxJurisdictionTab(
+                              snapshot: snapshot,
+                              selectedId: _selectedJurisdiction,
+                              onChanged: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _selectedJurisdiction = id);
+                              },
+                            )
+                          else
+                            StakingTaxCalculatorTab(
+                              snapshot: snapshot,
+                              rewardsController: _rewardsController,
+                              rateController: _rateController,
+                              onChanged: () => setState(() {}),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

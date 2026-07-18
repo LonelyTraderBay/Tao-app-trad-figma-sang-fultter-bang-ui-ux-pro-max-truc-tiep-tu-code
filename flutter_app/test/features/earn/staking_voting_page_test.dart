@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-390 mock repository exposes voting BE draft', () {
-    final snapshot = const MockStakingVotingRepository().getVoting(
+  test('SC-390 mock repository exposes voting BE draft', () async {
+    final snapshot = await const MockStakingVotingRepository().getVoting(
       proposalId: 'prop001',
     );
 
@@ -57,8 +57,8 @@ void main() {
     );
   });
 
-  test('SC-391 base voting route exposes base BE endpoint', () {
-    final snapshot = const MockStakingVotingRepository().getVoting();
+  test('SC-391 base voting route exposes base BE endpoint', () async {
+    final snapshot = await const MockStakingVotingRepository().getVoting();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-voting');
   });

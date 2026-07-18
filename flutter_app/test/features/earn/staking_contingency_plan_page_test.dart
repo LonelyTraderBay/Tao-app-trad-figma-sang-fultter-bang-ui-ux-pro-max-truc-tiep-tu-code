@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-386 mock repository exposes contingency plan BE draft', () {
-    final snapshot = const MockStakingContingencyPlanRepository()
+  test('SC-386 mock repository exposes contingency plan BE draft', () async {
+    final snapshot = await const MockStakingContingencyPlanRepository()
         .getContingencyPlan();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-contingency-plan');

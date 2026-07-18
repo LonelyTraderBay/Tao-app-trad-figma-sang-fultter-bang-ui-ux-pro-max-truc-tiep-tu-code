@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -36,8 +37,9 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(stakingEmergencyActionsControllerProvider);
-    final snapshot = controller.state.snapshot;
+    final controllerAsync = ref.watch(
+      stakingEmergencyActionsControllerProvider,
+    );
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -51,50 +53,81 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
       semanticIdentifier: 'SC-385',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Hành động khẩn cấp cần xác nhận',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: controllerAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _WarningBanner(snapshot: snapshot),
-                      _EmergencyActionsSection(
-                        actions: snapshot.actions,
-                        onTap: (action) =>
-                            _handleActionTap(context, controller, action),
-                      ),
-                      _UseCasesSection(useCases: snapshot.useCases),
-                      _CurrentStatusSection(statusCards: snapshot.statusCards),
-                      _FooterNote(note: snapshot.footerNote),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Xác nhận hành động khẩn cấp',
-                        message:
-                            'Tạm dừng, rút khẩn cấp, phí phạt, trạng thái hiện tại, giám sát và bước hỗ trợ được xem xét trước khi thực thi.',
-                        contractId: 'SC-385',
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingEmergencyActionsSnapshotProvider),
+            ),
+          ),
+          data: (controller) {
+            final snapshot = controller.state.snapshot;
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Hành động khẩn cấp cần xác nhận',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _WarningBanner(snapshot: snapshot),
+                          _EmergencyActionsSection(
+                            actions: snapshot.actions,
+                            onTap: (action) =>
+                                _handleActionTap(context, controller, action),
+                          ),
+                          _UseCasesSection(useCases: snapshot.useCases),
+                          _CurrentStatusSection(
+                            statusCards: snapshot.statusCards,
+                          ),
+                          _FooterNote(note: snapshot.footerNote),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Xác nhận hành động khẩn cấp',
+                            message:
+                                'Tạm dừng, rút khẩn cấp, phí phạt, trạng thái hiện tại, giám sát và bước hỗ trợ được xem xét trước khi thực thi.',
+                            contractId: 'SC-385',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

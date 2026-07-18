@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-304 mock repository exposes batch claim BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getBatchClaim();
+  test('SC-304 mock repository exposes batch claim BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getBatchClaim();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-batch-claim');
     expect(

@@ -1,52 +1,55 @@
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 
 /// Abstract data-access contract every Launchpad screen depends on; implemented by mock and remote repositories.
+///
+/// GD4-F4: every read returns `Future<T>` (ADR-001 read idiom). See
+/// docs/02_FLUTTER_MIGRATION/a-plus-roadmap/GD4-Async-Playbook.md.
 abstract interface class LaunchpadRepository {
-  LaunchpadHomeSnapshot getHome();
+  Future<LaunchpadHomeSnapshot> getHome();
 
-  LaunchpadDetailSnapshot getDetail(String projectId);
+  Future<LaunchpadDetailSnapshot> getDetail(String projectId);
 
-  LaunchpadPortfolioSnapshot getPortfolio();
+  Future<LaunchpadPortfolioSnapshot> getPortfolio();
 
-  LaunchpadReceiptSnapshot getReceipt(String subscriptionId);
+  Future<LaunchpadReceiptSnapshot> getReceipt(String subscriptionId);
 
-  LaunchpadPerformanceSnapshot getPerformance();
+  Future<LaunchpadPerformanceSnapshot> getPerformance();
 
-  LaunchpadStakingSnapshot getStaking();
+  Future<LaunchpadStakingSnapshot> getStaking();
 
-  LaunchpadBatchClaimSnapshot getBatchClaim();
+  Future<LaunchpadBatchClaimSnapshot> getBatchClaim();
 
-  LaunchpadClaimReceiptSnapshot getClaimReceipt(String positionId);
+  Future<LaunchpadClaimReceiptSnapshot> getClaimReceipt(String positionId);
 
-  LaunchpadIdoBridgeSnapshot getIdoBridge(String projectId);
+  Future<LaunchpadIdoBridgeSnapshot> getIdoBridge(String projectId);
 
-  LaunchpadBridgeCompareSnapshot getBridgeCompare();
+  Future<LaunchpadBridgeCompareSnapshot> getBridgeCompare();
 
-  LaunchpadNotifSoundSnapshot getNotifSound();
+  Future<LaunchpadNotifSoundSnapshot> getNotifSound();
 
-  LaunchpadEventLogSnapshot getEventLog();
+  Future<LaunchpadEventLogSnapshot> getEventLog();
 
-  LaunchpadAbiDiffSnapshot getAbiDiff(String contractId);
+  Future<LaunchpadAbiDiffSnapshot> getAbiDiff(String contractId);
 
-  LaunchpadAddressBookSnapshot getAddressBook();
+  Future<LaunchpadAddressBookSnapshot> getAddressBook();
 
-  LaunchpadWebhooksSnapshot getWebhooks();
+  Future<LaunchpadWebhooksSnapshot> getWebhooks();
 
-  LaunchpadGasTrackerSnapshot getGasTracker();
+  Future<LaunchpadGasTrackerSnapshot> getGasTracker();
 
-  LaunchpadRebalanceSnapshot getRebalance();
+  Future<LaunchpadRebalanceSnapshot> getRebalance();
 
-  LaunchpadMultisigSnapshot getMultisig();
+  Future<LaunchpadMultisigSnapshot> getMultisig();
 
-  LaunchpadSwapAggregatorSnapshot getSwapAggregator();
+  Future<LaunchpadSwapAggregatorSnapshot> getSwapAggregator();
 
-  LaunchpadLimitOrdersSnapshot getLimitOrders();
+  Future<LaunchpadLimitOrdersSnapshot> getLimitOrders();
 
-  LaunchpadDcaBuilderSnapshot getDcaBuilder();
+  Future<LaunchpadDcaBuilderSnapshot> getDcaBuilder();
 
-  LaunchpadRiskAnalyticsSnapshot getRiskAnalytics();
+  Future<LaunchpadRiskAnalyticsSnapshot> getRiskAnalytics();
 
-  LaunchpadBridgeOrderSnapshot getBridgeOrder(String txId);
+  Future<LaunchpadBridgeOrderSnapshot> getBridgeOrder(String txId);
 
-  LaunchpadContractSnapshot getContract(String projectId);
+  Future<LaunchpadContractSnapshot> getContract(String projectId);
 }

@@ -1,11 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsAutoPilotRepository
+final class MockSavingsAutoPilotRepository extends _MockEarnRepositoryBase
     implements SavingsAutoPilotRepository {
-  const MockSavingsAutoPilotRepository();
+  const MockSavingsAutoPilotRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsAutoPilotSnapshot getAutoPilot() {
+  Future<SavingsAutoPilotSnapshot> getAutoPilot() async {
+    await _simulateNetwork();
     return const SavingsAutoPilotSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-autopilot',
       actionDraft:
@@ -271,11 +272,13 @@ final class MockSavingsAutoPilotRepository
   }
 }
 
-final class MockSavingsLadderRepository implements SavingsLadderRepository {
-  const MockSavingsLadderRepository();
+final class MockSavingsLadderRepository extends _MockEarnRepositoryBase
+    implements SavingsLadderRepository {
+  const MockSavingsLadderRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsLadderSnapshot getLadder() {
+  Future<SavingsLadderSnapshot> getLadder() async {
+    await _simulateNetwork();
     return const SavingsLadderSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-ladder',
       actionDraft:

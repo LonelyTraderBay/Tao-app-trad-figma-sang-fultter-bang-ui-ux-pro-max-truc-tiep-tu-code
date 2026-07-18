@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -67,30 +68,16 @@ class StakingTransactionReportingPage extends ConsumerStatefulWidget {
 class _StakingTransactionReportingPageState
     extends ConsumerState<StakingTransactionReportingPage> {
   _ReportingTab _tab = _ReportingTab.summary;
-  late String _year;
-  late String _costBasis;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(stakingTransactionReportingRepositoryProvider)
-        .getReporting();
-    _year = snapshot.defaultYear;
-    _costBasis = snapshot.defaultCostBasis;
-  }
+  // Bẫy 14 (GD4 playbook): repo giờ đã async — seed 1 lần trong nhánh
+  // data: bên dưới thay vì initState.
+  String? _year;
+  String? _costBasis;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingTransactionReportingRepositoryProvider)
-        .getReporting();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(
+      stakingTransactionReportingSnapshotProvider,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -98,69 +85,109 @@ class _StakingTransactionReportingPageState
       semanticIdentifier: 'SC-378',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Báo cáo giao dịch — tham khảo thuế',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      VitInfoCallout(
-                        key: StakingTransactionReportingPage.infoKey,
-                        title: snapshot.infoTitle,
-                        message: snapshot.infoBody,
-                        icon: Icons.description_outlined,
-                        accentColor: AppColors.primarySoft,
-                        padding: _transactionReportingCardPadding,
-                      ),
-                      _Selectors(
-                        snapshot: snapshot,
-                        year: _year,
-                        costBasis: _costBasis,
-                        onYearChanged: (year) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _year = year);
-                        },
-                        onOpenCostBasis: () => _openMethodSheet(snapshot),
-                      ),
-                      _ReportingTabs(
-                        active: _tab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == _ReportingTab.summary)
-                        _SummaryTab(snapshot: snapshot, costBasis: _costBasis)
-                      else if (_tab == _ReportingTab.transactions)
-                        _TransactionsTab(snapshot: snapshot)
-                      else
-                        _ExportTab(
-                          snapshot: snapshot,
-                          onOpenExport: () => _openExportSheet(snapshot),
-                        ),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingTransactionReportingSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _year ??= snapshot.defaultYear;
+            _costBasis ??= snapshot.defaultCostBasis;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Báo cáo giao dịch — tham khảo thuế',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: [
+                          VitInfoCallout(
+                            key: StakingTransactionReportingPage.infoKey,
+                            title: snapshot.infoTitle,
+                            message: snapshot.infoBody,
+                            icon: Icons.description_outlined,
+                            accentColor: AppColors.primarySoft,
+                            padding: _transactionReportingCardPadding,
+                          ),
+                          _Selectors(
+                            snapshot: snapshot,
+                            year: _year!,
+                            costBasis: _costBasis!,
+                            onYearChanged: (year) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _year = year);
+                            },
+                            onOpenCostBasis: () => _openMethodSheet(snapshot),
+                          ),
+                          _ReportingTabs(
+                            active: _tab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (_tab == _ReportingTab.summary)
+                            _SummaryTab(
+                              snapshot: snapshot,
+                              costBasis: _costBasis!,
+                            )
+                          else if (_tab == _ReportingTab.transactions)
+                            _TransactionsTab(snapshot: snapshot)
+                          else
+                            _ExportTab(
+                              snapshot: snapshot,
+                              onOpenExport: () => _openExportSheet(snapshot),
+                            ),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -177,7 +204,7 @@ class _StakingTransactionReportingPageState
       builder: (context) => _SheetFrame(
         child: _MethodSheet(
           methods: snapshot.costBasisMethods,
-          selected: _costBasis,
+          selected: _costBasis!,
           onChanged: (method) {
             setState(() => _costBasis = method);
             Navigator.of(context).pop();

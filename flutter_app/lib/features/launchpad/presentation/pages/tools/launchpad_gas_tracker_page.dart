@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/tools/launchpad_gas_tracker_hero.dart';
@@ -75,29 +76,15 @@ class _LaunchpadGasTrackerPageState
     extends ConsumerState<LaunchpadGasTrackerPage> {
   // STATE-S23: alerts sống ở LaunchpadGasTrackerStateController (một nguồn
   // sự thật) — hết `late List` seed từ ref.read + setState.
+  // GD4-F4 bẫy 14: initState() không còn seed từ getter đồng bộ — hạt
+  // giống 1 lần trong nhánh `data:` qua `_selectedChain ??= ...`.
   var _activeTab = _GasTab.prices;
-  var _selectedChain = 'Ethereum';
+  String? _selectedChain;
   var _showAddAlert = false;
 
   @override
-  void initState() {
-    super.initState();
-    _selectedChain = ref
-        .read(launchpadControllerProvider)
-        .getGasTracker()
-        .prices
-        .first
-        .chain;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final viewState = ref.watch(launchpadGasTrackerStateControllerProvider);
-    final snapshot = viewState.snapshot;
-    final selectedGas = snapshot.prices.firstWhere(
-      (price) => price.chain == _selectedChain,
-      orElse: () => snapshot.prices.first,
-    );
+    final gasTrackerAsync = ref.watch(launchpadGasTrackerSnapshotProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
@@ -112,93 +99,145 @@ class _LaunchpadGasTrackerPageState
       semanticIdentifier: 'SC-311',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              bottomInset: scrollTailReserve,
-              semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
-              semanticIdentifier: 'SC-311',
-              header: VitHeader(
-                title: snapshot.title,
-                subtitle: 'Theo dõi phí gas · Lập kế hoạch giao dịch',
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+        child: gasTrackerAsync.when(
+          loading: () => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: scrollTailReserve,
+                semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
+                semanticIdentifier: 'SC-311',
+                header: VitHeader(
+                  title: 'Gas Tracker',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: LaunchpadSpacingTokens.launchpadHeaderStatsPadding,
-                    child: _FeaturedGasCard(price: selectedGas),
+            ],
+          ),
+          error: (error, stackTrace) => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: scrollTailReserve,
+                semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
+                semanticIdentifier: 'SC-311',
+                header: VitHeader(
+                  title: 'Gas Tracker',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(launchpadGasTrackerSnapshotProvider),
+                ),
+              ),
+            ],
+          ),
+          data: (_) {
+            final viewState = ref.watch(
+              launchpadGasTrackerStateControllerProvider,
+            );
+            final snapshot = viewState.snapshot;
+            final selectedChain = _selectedChain ??=
+                snapshot.prices.first.chain;
+            final selectedGas = snapshot.prices.firstWhere(
+              (price) => price.chain == selectedChain,
+              orElse: () => snapshot.prices.first,
+            );
+
+            return Stack(
+              children: [
+                VitAutoHideHeaderScaffold(
+                  bottomInset: scrollTailReserve,
+                  semanticLabel: 'Theo dõi phí gas trên nhiều chuỗi',
+                  semanticIdentifier: 'SC-311',
+                  header: VitHeader(
+                    title: snapshot.title,
+                    subtitle: 'Theo dõi phí gas · Lập kế hoạch giao dịch',
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
                   ),
-                  ColoredBox(
-                    key: LaunchpadGasTrackerPage.tabsKey,
-                    color: AppColors.surface,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Divider(height: AppSpacing.hairlineStroke),
-                        Padding(
-                          padding: LaunchpadSpacingTokens
-                              .launchpadHorizontalContentPadding,
-                          child: _GasTabs(
-                            activeTab: _activeTab,
-                            onChanged: (tab) =>
-                                setState(() => _activeTab = tab),
-                          ),
-                        ),
-                        const Divider(height: AppSpacing.hairlineStroke),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(
-                        context,
-                      ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
-                        key: LaunchpadGasTrackerPage.contentKey,
-                        physics: const ClampingScrollPhysics(),
-                        child: VitPageContent(
-                          rhythm: VitPageRhythm.standard,
-                          padding: VitContentPadding.compact,
-                          gap: VitContentGap.tight,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            LaunchpadSpacingTokens.launchpadHeaderStatsPadding,
+                        child: _FeaturedGasCard(price: selectedGas),
+                      ),
+                      ColoredBox(
+                        key: LaunchpadGasTrackerPage.tabsKey,
+                        color: AppColors.surface,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            switch (_activeTab) {
-                              _GasTab.prices => _PricesTab(
-                                prices: snapshot.prices,
-                                selectedGas: selectedGas,
-                                selectedChain: _selectedChain,
-                                onSelected: (chain) =>
-                                    setState(() => _selectedChain = chain),
+                            const Divider(height: AppSpacing.hairlineStroke),
+                            Padding(
+                              padding: LaunchpadSpacingTokens
+                                  .launchpadHorizontalContentPadding,
+                              child: _GasTabs(
+                                activeTab: _activeTab,
+                                onChanged: (tab) =>
+                                    setState(() => _activeTab = tab),
                               ),
-                              _GasTab.estimator => _EstimatorTab(
-                                estimates: snapshot.estimates,
-                              ),
-                              _GasTab.alerts => _AlertsTab(
-                                alerts: viewState.alerts,
-                                onAdd: () =>
-                                    setState(() => _showAddAlert = true),
-                                onToggle: _toggleAlert,
-                                onDelete: _deleteAlert,
-                              ),
-                            },
+                            ),
+                            const Divider(height: AppSpacing.hairlineStroke),
                           ],
                         ),
                       ),
+                      Expanded(
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(
+                            context,
+                          ).copyWith(scrollbars: false),
+                          child: SingleChildScrollView(
+                            key: LaunchpadGasTrackerPage.contentKey,
+                            physics: const ClampingScrollPhysics(),
+                            child: VitPageContent(
+                              rhythm: VitPageRhythm.standard,
+                              padding: VitContentPadding.compact,
+                              gap: VitContentGap.tight,
+                              children: [
+                                switch (_activeTab) {
+                                  _GasTab.prices => _PricesTab(
+                                    prices: snapshot.prices,
+                                    selectedGas: selectedGas,
+                                    selectedChain: selectedChain,
+                                    onSelected: (chain) =>
+                                        setState(() => _selectedChain = chain),
+                                  ),
+                                  _GasTab.estimator => _EstimatorTab(
+                                    estimates: snapshot.estimates,
+                                  ),
+                                  _GasTab.alerts => _AlertsTab(
+                                    alerts: viewState.alerts,
+                                    onAdd: () =>
+                                        setState(() => _showAddAlert = true),
+                                    onToggle: _toggleAlert,
+                                    onDelete: _deleteAlert,
+                                  ),
+                                },
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (_showAddAlert)
+                  Positioned.fill(
+                    child: _AddAlertSheet(
+                      prices: snapshot.prices,
+                      onClose: () => setState(() => _showAddAlert = false),
+                      onAdd: _addAlert,
                     ),
                   ),
-                ],
-              ),
-            ),
-            if (_showAddAlert)
-              Positioned.fill(
-                child: _AddAlertSheet(
-                  prices: snapshot.prices,
-                  onClose: () => setState(() => _showAddAlert = false),
-                  onAdd: _addAlert,
-                ),
-              ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

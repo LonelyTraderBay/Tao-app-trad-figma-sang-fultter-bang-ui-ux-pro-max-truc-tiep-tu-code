@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-375 mock repository exposes custody BE draft', () {
-    final snapshot = const MockStakingCustodyRepository().getCustody();
+  test('SC-375 mock repository exposes custody BE draft', () async {
+    final snapshot = await const MockStakingCustodyRepository().getCustody();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-custody');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

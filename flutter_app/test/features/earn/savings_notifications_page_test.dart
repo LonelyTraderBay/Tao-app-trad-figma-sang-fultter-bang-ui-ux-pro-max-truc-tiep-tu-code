@@ -27,31 +27,34 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-337 mock repository exposes savings notifications BE draft', () {
-    final snapshot = const MockSavingsNotificationsRepository()
-        .getNotifications();
+  test(
+    'SC-337 mock repository exposes savings notifications BE draft',
+    () async {
+      final snapshot = await const MockSavingsNotificationsRepository()
+          .getNotifications();
 
-    expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-notifications');
-    expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
-    expect(snapshot.settingsActionDraft, contains('PATCH /user/settings'));
-    expect(snapshot.clearActionDraft, contains('DELETE'));
-    expect(snapshot.title, 'Thông báo Tiết kiệm');
-    expect(snapshot.backRoute, AppRoutePaths.earnSavings);
-    expect(snapshot.history, hasLength(8));
-    expect(snapshot.history.where((item) => !item.read), hasLength(3));
-    expect(snapshot.settings, hasLength(8));
-    expect(snapshot.settings.where((item) => item.enabled), hasLength(7));
-    expect(snapshot.contractNotes, contains('module settings PATCH'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        EarnScreenState.loading,
-        EarnScreenState.empty,
-        EarnScreenState.error,
-        EarnScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-notifications');
+      expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
+      expect(snapshot.settingsActionDraft, contains('PATCH /user/settings'));
+      expect(snapshot.clearActionDraft, contains('DELETE'));
+      expect(snapshot.title, 'Thông báo Tiết kiệm');
+      expect(snapshot.backRoute, AppRoutePaths.earnSavings);
+      expect(snapshot.history, hasLength(8));
+      expect(snapshot.history.where((item) => !item.read), hasLength(3));
+      expect(snapshot.settings, hasLength(8));
+      expect(snapshot.settings.where((item) => item.enabled), hasLength(7));
+      expect(snapshot.contractNotes, contains('module settings PATCH'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          EarnScreenState.loading,
+          EarnScreenState.empty,
+          EarnScreenState.error,
+          EarnScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-337 renders notification history baseline', (tester) async {
     await pumpNotifications(tester);

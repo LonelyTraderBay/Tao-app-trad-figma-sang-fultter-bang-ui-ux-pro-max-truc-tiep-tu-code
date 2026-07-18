@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockSavingsBacktestRepository implements SavingsBacktestRepository {
-  const MockSavingsBacktestRepository();
+final class MockSavingsBacktestRepository extends _MockEarnRepositoryBase
+    implements SavingsBacktestRepository {
+  const MockSavingsBacktestRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsBacktestSnapshot getBacktest() {
+  Future<SavingsBacktestSnapshot> getBacktest() async {
+    await _simulateNetwork();
     return const SavingsBacktestSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-backtest',
       actionDraft:

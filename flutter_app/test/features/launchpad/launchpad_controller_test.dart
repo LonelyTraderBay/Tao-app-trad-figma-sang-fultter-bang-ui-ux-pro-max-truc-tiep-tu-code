@@ -4,27 +4,37 @@ import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.d
 
 void main() {
   group('LaunchpadController', () {
-    test('exposes core launchpad snapshots through repository contract', () {
-      final controller = const LaunchpadController(MockLaunchpadRepository());
+    test(
+      'exposes core launchpad snapshots through repository contract',
+      () async {
+        const controller = LaunchpadController(
+          MockLaunchpadRepository(loadDelay: Duration.zero),
+        );
 
-      final home = controller.getHome();
-      final detail = controller.getDetail('vitx');
-      final portfolio = controller.getPortfolio();
+        final home = await controller.getHome();
+        final detail = await controller.getDetail('vitx');
+        final portfolio = await controller.getPortfolio();
 
-      expect(home.endpoint, '/api/mobile/launchpad/launchpad');
-      expect(home.projects, isNotEmpty);
-      expect(detail.projectId, 'vitx');
-      expect(portfolio.subscriptions, isNotEmpty);
-      expect(home.supportedStates, contains(LaunchpadScreenState.offline));
-    });
+        expect(home.endpoint, '/api/mobile/launchpad/launchpad');
+        expect(home.projects, isNotEmpty);
+        expect(detail.projectId, 'vitx');
+        expect(portfolio.subscriptions, isNotEmpty);
+        expect(home.supportedStates, contains(LaunchpadScreenState.offline));
+      },
+    );
 
-    test('exposes advanced tool read models without data imports', () {
-      final controller = const LaunchpadController(MockLaunchpadRepository());
+    test('exposes advanced tool read models without data imports', () async {
+      const controller = LaunchpadController(
+        MockLaunchpadRepository(loadDelay: Duration.zero),
+      );
 
-      expect(controller.getBridgeCompare().comparison.routes, isNotEmpty);
-      expect(controller.getGasTracker().prices, isNotEmpty);
-      expect(controller.getLimitOrders().orders, isNotEmpty);
-      expect(controller.getRiskAnalytics().metrics, isNotEmpty);
+      expect(
+        (await controller.getBridgeCompare()).comparison.routes,
+        isNotEmpty,
+      );
+      expect((await controller.getGasTracker()).prices, isNotEmpty);
+      expect((await controller.getLimitOrders()).orders, isNotEmpty);
+      expect((await controller.getRiskAnalytics()).metrics, isNotEmpty);
     });
   });
 }

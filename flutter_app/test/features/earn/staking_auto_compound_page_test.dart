@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-363 mock repository exposes auto-compound BE draft', () {
-    final snapshot = const MockStakingAutoCompoundRepository()
+  test('SC-363 mock repository exposes auto-compound BE draft', () async {
+    final snapshot = await const MockStakingAutoCompoundRepository()
         .getAutoCompound();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-auto-compound');

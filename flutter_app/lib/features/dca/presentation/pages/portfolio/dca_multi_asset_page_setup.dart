@@ -6,19 +6,26 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
   _MultiAssetTab _activeTab = _MultiAssetTab.setup;
   DcaMultiAssetFrequency _frequency = DcaMultiAssetFrequency.monthly;
   bool _rebalanceEnabled = true;
+  bool _controllersInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(dcaMultiAssetProvider);
-    _budgetController = TextEditingController(
-      text: snapshot.totalBudgetUsd.toString(),
-    );
-    _thresholdController = TextEditingController(
-      text: snapshot.rebalanceThresholdPercent.toStringAsFixed(0),
-    );
+    _budgetController = TextEditingController();
+    _thresholdController = TextEditingController();
+  }
+
+  // GD4 bẫy 14: seed từ snapshot giờ đã async — không còn đọc trong
+  // initState(); dựng controller rỗng ở initState(), rồi seed một lần duy
+  // nhất trong nhánh data: của .when() (xem build()).
+  void _initializeFromSnapshot(DcaMultiAssetSnapshot snapshot) {
+    if (_controllersInitialized) return;
+    _budgetController.text = snapshot.totalBudgetUsd.toString();
+    _thresholdController.text = snapshot.rebalanceThresholdPercent
+        .toStringAsFixed(0);
     _frequency = snapshot.activeFrequency;
     _rebalanceEnabled = snapshot.rebalanceEnabled;
+    _controllersInitialized = true;
   }
 
   @override
@@ -30,7 +37,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaMultiAssetProvider);
+    final dcaMultiAssetAsync = ref.watch(dcaMultiAssetProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -57,28 +64,40 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
               onChanged: (tab) => setState(() => _activeTab = tab),
             ),
             Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: VitInsetScrollView(
-                  key: DCAMultiAssetPage.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  bottomInset: scrollEndPadding,
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      if (_activeTab == _MultiAssetTab.setup)
-                        ..._buildSetup(snapshot),
-                      if (_activeTab == _MultiAssetTab.assets)
-                        ..._buildAssets(snapshot),
-                      if (_activeTab == _MultiAssetTab.performance)
-                        ..._buildPerformance(snapshot),
-                    ],
-                  ),
+              child: dcaMultiAssetAsync.when(
+                loading: () => const VitSkeletonList(),
+                error: (error, stackTrace) => VitErrorState(
+                  title: 'Không tải được DCA đa tài sản',
+                  message: 'Thử lại sau hoặc quay lại màn DCA.',
+                  actionLabel: 'Thử lại',
+                  onAction: () => ref.invalidate(dcaMultiAssetProvider),
                 ),
+                data: (snapshot) {
+                  _initializeFromSnapshot(snapshot);
+                  return ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: VitInsetScrollView(
+                      key: DCAMultiAssetPage.contentKey,
+                      physics: const ClampingScrollPhysics(),
+                      bottomInset: scrollEndPadding,
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: [
+                          if (_activeTab == _MultiAssetTab.setup)
+                            ..._buildSetup(snapshot),
+                          if (_activeTab == _MultiAssetTab.assets)
+                            ..._buildAssets(snapshot),
+                          if (_activeTab == _MultiAssetTab.performance)
+                            ..._buildPerformance(snapshot),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],

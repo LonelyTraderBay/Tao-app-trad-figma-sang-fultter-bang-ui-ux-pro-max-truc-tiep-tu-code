@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -20,6 +21,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class SavingsSmartSuggestionsPage extends ConsumerStatefulWidget {
   const SavingsSmartSuggestionsPage({super.key, this.shellRenderMode});
@@ -52,16 +55,7 @@ class _SavingsSmartSuggestionsPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(savingsSmartSuggestionsRepositoryProvider)
-        .getSuggestions();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsSmartSuggestionsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -69,78 +63,112 @@ class _SavingsSmartSuggestionsPageState
       semanticIdentifier: 'SC-347',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ColoredBox(
-                color: AppColors.surface,
-                child: Padding(
-                  padding: EarnSpacingTokens.earnSurfaceTabsPadding,
-                  child: SavingsSmartTabs(
-                    tabs: snapshot.tabs,
-                    active: activeTab,
-                    onChanged: (tab) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _tab = tab);
-                    },
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(savingsSmartSuggestionsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-              const Divider(
-                height: AppSpacing.dividerHairline,
-                thickness: AppSpacing.dividerHairline,
-                color: AppColors.divider,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: SavingsSmartSummary(snapshot: snapshot),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ColoredBox(
+                    color: AppColors.surface,
+                    child: Padding(
+                      padding: EarnSpacingTokens.earnSurfaceTabsPadding,
+                      child: SavingsSmartTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
                       ),
-                      if (activeTab == 'suggestions') ...[
-                        SavingsSmartPriorityFilters(
-                          filters: snapshot.filters,
-                          active: _filter,
-                          onChanged: (filter) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filter = filter);
-                          },
-                        ),
-                        SavingsSmartSuggestionList(
-                          suggestions: _filteredSuggestions(snapshot),
-                          helpful: _helpful,
-                          onHelpful: _markHelpful,
-                          onDismiss: _dismissSuggestion,
-                        ),
-                      ] else if (activeTab == 'trends')
-                        SavingsSmartTrendList(trends: snapshot.trends)
-                      else
-                        SavingsSmartSignalList(signals: snapshot.signals),
-                      const SavingsToolsYieldFooter(),
-                    ],
+                    ),
                   ),
-                ),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          VitCard(
+                            variant: VitCardVariant.standard,
+                            radius: VitCardRadius.standard,
+                            padding: AppSpacing.zeroInsets,
+                            child: SavingsSmartSummary(snapshot: snapshot),
+                          ),
+                          if (activeTab == 'suggestions') ...[
+                            SavingsSmartPriorityFilters(
+                              filters: snapshot.filters,
+                              active: _filter,
+                              onChanged: (filter) {
+                                HapticFeedback.selectionClick();
+                                setState(() => _filter = filter);
+                              },
+                            ),
+                            SavingsSmartSuggestionList(
+                              suggestions: _filteredSuggestions(snapshot),
+                              helpful: _helpful,
+                              onHelpful: _markHelpful,
+                              onDismiss: _dismissSuggestion,
+                            ),
+                          ] else if (activeTab == 'trends')
+                            SavingsSmartTrendList(trends: snapshot.trends)
+                          else
+                            SavingsSmartSignalList(signals: snapshot.signals),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

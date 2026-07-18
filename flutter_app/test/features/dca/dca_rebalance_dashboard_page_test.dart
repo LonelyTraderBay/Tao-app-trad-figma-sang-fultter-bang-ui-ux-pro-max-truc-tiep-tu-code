@@ -29,10 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-171 mock repository exposes missing-config BE draft', () {
-    final snapshot = const MockDcaRepository().getRebalanceDashboard(
-      'config001',
-    );
+  test('SC-171 mock repository exposes missing-config BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getRebalanceDashboard('config001');
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-rebalance-config001');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

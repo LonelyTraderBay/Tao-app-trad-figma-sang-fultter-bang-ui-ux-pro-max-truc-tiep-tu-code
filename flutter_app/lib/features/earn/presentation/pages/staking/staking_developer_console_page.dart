@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -45,28 +46,13 @@ class StakingDeveloperConsolePage extends ConsumerStatefulWidget {
 
 class _StakingDeveloperConsolePageState
     extends ConsumerState<StakingDeveloperConsolePage> {
-  late String _tab;
-
-  @override
-  void initState() {
-    super.initState();
-    final snapshot = ref
-        .read(stakingDeveloperConsoleRepositoryProvider)
-        .getConsole();
-    _tab = snapshot.defaultTab;
-  }
+  // Bẫy 14 (GD4 playbook): repo giờ đã async — seed 1 lần trong nhánh
+  // data: bên dưới thay vì initState.
+  String? _tab;
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingDeveloperConsoleRepositoryProvider)
-        .getConsole();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingDeveloperConsoleSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -75,65 +61,101 @@ class _StakingDeveloperConsolePageState
       semanticIdentifier: 'SC-396',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Console API staking Earn',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _ConsoleHero(snapshot: snapshot),
-                      _StatsCard(stats: snapshot.stats),
-                      ColoredBox(
-                        key: StakingDeveloperConsolePage.tabsKey,
-                        color: AppColors.surface,
-                        child: Padding(
-                          padding: EarnSpacingTokens.earnSurfaceTabsPadding,
-                          child: VitTabBar(
-                            tabs: [
-                              for (final tab in snapshot.tabs)
-                                VitTabItem(key: tab.id, label: tab.label),
-                            ],
-                            activeKey: _tab,
-                            onChanged: (tab) => setState(() => _tab = tab),
-                            variant: VitTabBarVariant.underline,
-                          ),
-                        ),
-                      ),
-                      if (_tab == 'keys')
-                        _ApiKeysTab(snapshot: snapshot)
-                      else if (_tab == 'logs')
-                        _LogsTab(snapshot: snapshot)
-                      else
-                        _DocsTab(snapshot: snapshot),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Developer API access review',
-                        message:
-                            'API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.',
-                        contractId: 'SC-396',
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingDeveloperConsoleSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            _tab ??= snapshot.defaultTab;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Console API staking Earn',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.defaultPadding,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _ConsoleHero(snapshot: snapshot),
+                          _StatsCard(stats: snapshot.stats),
+                          ColoredBox(
+                            key: StakingDeveloperConsolePage.tabsKey,
+                            color: AppColors.surface,
+                            child: Padding(
+                              padding: EarnSpacingTokens.earnSurfaceTabsPadding,
+                              child: VitTabBar(
+                                tabs: [
+                                  for (final tab in snapshot.tabs)
+                                    VitTabItem(key: tab.id, label: tab.label),
+                                ],
+                                activeKey: _tab!,
+                                onChanged: (tab) => setState(() => _tab = tab),
+                                variant: VitTabBarVariant.underline,
+                              ),
+                            ),
+                          ),
+                          if (_tab == 'keys')
+                            _ApiKeysTab(snapshot: snapshot)
+                          else if (_tab == 'logs')
+                            _LogsTab(snapshot: snapshot)
+                          else
+                            _DocsTab(snapshot: snapshot),
+                          const VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Developer API access review',
+                            message:
+                                'API keys, production request volume, uptime, docs, audit logs, and create-key confirmation remain reviewed before Earn automation access changes.',
+                            contractId: 'SC-396',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

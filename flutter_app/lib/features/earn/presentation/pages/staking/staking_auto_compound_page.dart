@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -89,20 +90,7 @@ class _StakingAutoCompoundPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingAutoCompoundRepositoryProvider)
-        .getAutoCompound();
-    final positions = [
-      for (final position in snapshot.positions) _resolved(position),
-    ];
-    final threshold = _parseDouble(_thresholdController.text, 10);
-    final simulation = _buildSimulation();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingAutoCompoundSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -113,106 +101,147 @@ class _StakingAutoCompoundPageState
         color: AppColors.bg,
         child: Stack(
           children: [
-            VitAutoHideHeaderScaffold(
-              header: VitTopChrome(
-                type: VitTopChromeType.detail,
-                title: snapshot.title,
-                subtitle: snapshot.infoTitle,
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
+            snapshotAsync.when(
+              loading: () => VitAutoHideHeaderScaffold(
+                header: VitTopChrome(
+                  type: VitTopChromeType.detail,
+                  title: 'Đang tải…',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.earnStaking),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      padding: EarnSpacingTokens.earnBottomInsetPadding(
-                        bottomInset,
-                      ),
-                      child: VitPageContent(
-                        rhythm: VitPageRhythm.standard,
-                        padding: VitContentPadding.compact,
-                        gap: VitContentGap.defaultGap,
-                        children: [
-                          VitInfoCallout(
-                            key: StakingAutoCompoundPage.infoKey,
-                            message: snapshot.infoBody,
-                            icon: Icons.autorenew_rounded,
-                            accentColor: AppModuleAccents.earn,
-                            padding: EarnSpacingTokens.earnPaddingX4,
-                          ),
-                          _SummaryCard(
-                            positions: positions,
-                            frequency: _frequency,
-                            threshold: threshold,
-                          ),
-                          VitPageSection(
-                            label: 'Cai dat Auto-Compound',
-                            accentColor: AppModuleAccents.earn,
-                            children: [
-                              _SettingsCard(
-                                key: StakingAutoCompoundPage.settingsKey,
-                                snapshot: snapshot,
-                                frequency: _frequency,
-                                thresholdController: _thresholdController,
-                                gasOptimization: _gasOptimization,
-                                onFrequencyChanged: (frequency) {
-                                  HapticFeedback.selectionClick();
-                                  setState(() => _frequency = frequency);
-                                },
-                                onThresholdChanged: (_) => setState(() {}),
-                                onGasOptimizationChanged: () {
-                                  HapticFeedback.selectionClick();
-                                  setState(() {
-                                    _gasOptimization = !_gasOptimization;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          VitPageSection(
-                            label: 'Vi the Auto-Compound',
-                            accentColor: AppModuleAccents.earn,
-                            children: [
-                              for (final position in positions)
-                                _PositionCard(
-                                  position: position,
-                                  frequency: _frequency,
-                                  onToggle: () => _toggle(position),
-                                ),
-                            ],
-                          ),
-                          VitPageSection(
-                            label: 'Mo phong lai kep (uoc tinh)',
-                            accentColor: AppModuleAccents.earn,
-                            children: [
-                              _SimulationCard(
-                                controllerPrincipal: _principalController,
-                                controllerApy: _apyController,
-                                controllerMonths: _monthsController,
-                                simulation: simulation,
-                                onChanged: (_) => setState(() {}),
-                              ),
-                            ],
-                          ),
-                          VitCtaButton(
-                            key: StakingAutoCompoundPage.saveButtonKey,
-                            variant: VitCtaButtonVariant.primary,
-                            leading: const Icon(Icons.settings_outlined),
-                            onPressed: () {
-                              HapticFeedback.lightImpact();
-                              setState(() => _showSuccess = true);
-                            },
-                            child: const Text('Lưu cài đặt'),
-                          ),
-                          _FooterNote(snapshot: snapshot),
-                        ],
-                      ),
-                    ),
+              error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+                header: VitTopChrome(
+                  type: VitTopChromeType.detail,
+                  title: 'Không tải được',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.earnStaking),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được',
+                  message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(stakingAutoCompoundSnapshotProvider),
+                ),
+              ),
+              data: (snapshot) {
+                final positions = [
+                  for (final position in snapshot.positions)
+                    _resolved(position),
+                ];
+                final threshold = _parseDouble(_thresholdController.text, 10);
+                final simulation = _buildSimulation();
+                final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+                final bottomInset =
+                    (mode.usesVisualQaFrame
+                        ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                        : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                    MediaQuery.paddingOf(context).bottom;
+
+                return VitAutoHideHeaderScaffold(
+                  header: VitTopChrome(
+                    type: VitTopChromeType.detail,
+                    title: snapshot.title,
+                    subtitle: snapshot.infoTitle,
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
                   ),
-                ],
-              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const ClampingScrollPhysics(),
+                          padding: EarnSpacingTokens.earnBottomInsetPadding(
+                            bottomInset,
+                          ),
+                          child: VitPageContent(
+                            rhythm: VitPageRhythm.standard,
+                            padding: VitContentPadding.compact,
+                            gap: VitContentGap.defaultGap,
+                            children: [
+                              VitInfoCallout(
+                                key: StakingAutoCompoundPage.infoKey,
+                                message: snapshot.infoBody,
+                                icon: Icons.autorenew_rounded,
+                                accentColor: AppModuleAccents.earn,
+                                padding: EarnSpacingTokens.earnPaddingX4,
+                              ),
+                              _SummaryCard(
+                                positions: positions,
+                                frequency: _frequency,
+                                threshold: threshold,
+                              ),
+                              VitPageSection(
+                                label: 'Cai dat Auto-Compound',
+                                accentColor: AppModuleAccents.earn,
+                                children: [
+                                  _SettingsCard(
+                                    key: StakingAutoCompoundPage.settingsKey,
+                                    snapshot: snapshot,
+                                    frequency: _frequency,
+                                    thresholdController: _thresholdController,
+                                    gasOptimization: _gasOptimization,
+                                    onFrequencyChanged: (frequency) {
+                                      HapticFeedback.selectionClick();
+                                      setState(() => _frequency = frequency);
+                                    },
+                                    onThresholdChanged: (_) => setState(() {}),
+                                    onGasOptimizationChanged: () {
+                                      HapticFeedback.selectionClick();
+                                      setState(() {
+                                        _gasOptimization = !_gasOptimization;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                              VitPageSection(
+                                label: 'Vi the Auto-Compound',
+                                accentColor: AppModuleAccents.earn,
+                                children: [
+                                  for (final position in positions)
+                                    _PositionCard(
+                                      position: position,
+                                      frequency: _frequency,
+                                      onToggle: () => _toggle(position),
+                                    ),
+                                ],
+                              ),
+                              VitPageSection(
+                                label: 'Mo phong lai kep (uoc tinh)',
+                                accentColor: AppModuleAccents.earn,
+                                children: [
+                                  _SimulationCard(
+                                    controllerPrincipal: _principalController,
+                                    controllerApy: _apyController,
+                                    controllerMonths: _monthsController,
+                                    simulation: simulation,
+                                    onChanged: (_) => setState(() {}),
+                                  ),
+                                ],
+                              ),
+                              VitCtaButton(
+                                key: StakingAutoCompoundPage.saveButtonKey,
+                                variant: VitCtaButtonVariant.primary,
+                                leading: const Icon(Icons.settings_outlined),
+                                onPressed: () {
+                                  HapticFeedback.lightImpact();
+                                  setState(() => _showSuccess = true);
+                                },
+                                child: const Text('Lưu cài đặt'),
+                              ),
+                              _FooterNote(snapshot: snapshot),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
             if (_showSuccess)
               Positioned(

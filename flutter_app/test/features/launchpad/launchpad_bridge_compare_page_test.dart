@@ -31,8 +31,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-305 mock repository exposes bridge compare BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getBridgeCompare();
+  test('SC-305 mock repository exposes bridge compare BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getBridgeCompare();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-bridge-compare');
     expect(

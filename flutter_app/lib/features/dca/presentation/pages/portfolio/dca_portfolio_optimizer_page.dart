@@ -76,7 +76,7 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaPortfolioOptimizerProvider);
+    final dcaPortfolioOptimizerAsync = ref.watch(dcaPortfolioOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -111,44 +111,59 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: [
-                if (_showDriftBanner)
-                  _DriftBanner(
-                    snapshot: snapshot,
-                    onDismiss: () {
-                      setState(() => _showDriftBanner = false);
-                    },
-                    onSettings: _showDriftSettings,
-                  ),
-                _ComparisonHero(snapshot: snapshot),
-                _OptimizerTabs(
-                  activeTab: _activeTab,
-                  onChanged: (tab) {
-                    setState(() => _activeTab = tab);
-                  },
-                ),
-                _TabContent(
-                  activeTab: _activeTab,
-                  snapshot: snapshot,
-                  showSuggestions: _showSuggestions,
-                  showCompareHint: _showCompareHint,
-                  onToggleSuggestions: () {
-                    setState(() => _showSuggestions = !_showSuggestions);
-                  },
-                  onCompare: () {
-                    setState(() => _showCompareHint = true);
-                  },
-                ),
-                const VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Xem lại phân bổ đề xuất',
-                  message:
-                      'Tối ưu danh mục chỉ mang tính tham khảo; áp dụng phân bổ mới cần xem lại drift, phí và xác nhận trước khi tái cân bằng.',
-                  contractId: 'SC-174',
-                  density: VitDensity.compact,
-                ),
-                _OptimizerApplyAction(
-                  snapshot: snapshot,
-                  onApply: () => context.go(AppRoutePaths.dcaRebalanceConfig),
+                ...dcaPortfolioOptimizerAsync.when(
+                  loading: () => const [VitSkeletonList()],
+                  error: (error, stackTrace) => [
+                    VitErrorState(
+                      title: 'Không tải được tối ưu danh mục',
+                      message: 'Thử lại sau hoặc quay lại màn DCA.',
+                      actionLabel: 'Thử lại',
+                      onAction: () =>
+                          ref.invalidate(dcaPortfolioOptimizerProvider),
+                    ),
+                  ],
+                  data: (snapshot) => [
+                    if (_showDriftBanner)
+                      _DriftBanner(
+                        snapshot: snapshot,
+                        onDismiss: () {
+                          setState(() => _showDriftBanner = false);
+                        },
+                        onSettings: _showDriftSettings,
+                      ),
+                    _ComparisonHero(snapshot: snapshot),
+                    _OptimizerTabs(
+                      activeTab: _activeTab,
+                      onChanged: (tab) {
+                        setState(() => _activeTab = tab);
+                      },
+                    ),
+                    _TabContent(
+                      activeTab: _activeTab,
+                      snapshot: snapshot,
+                      showSuggestions: _showSuggestions,
+                      showCompareHint: _showCompareHint,
+                      onToggleSuggestions: () {
+                        setState(() => _showSuggestions = !_showSuggestions);
+                      },
+                      onCompare: () {
+                        setState(() => _showCompareHint = true);
+                      },
+                    ),
+                    const VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      title: 'Xem lại phân bổ đề xuất',
+                      message:
+                          'Tối ưu danh mục chỉ mang tính tham khảo; áp dụng phân bổ mới cần xem lại drift, phí và xác nhận trước khi tái cân bằng.',
+                      contractId: 'SC-174',
+                      density: VitDensity.compact,
+                    ),
+                    _OptimizerApplyAction(
+                      snapshot: snapshot,
+                      onApply: () =>
+                          context.go(AppRoutePaths.dcaRebalanceConfig),
+                    ),
+                  ],
                 ),
               ],
             ),

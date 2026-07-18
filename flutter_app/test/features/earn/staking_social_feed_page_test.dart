@@ -30,8 +30,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-387 mock repository exposes social feed BE draft', () {
-    final snapshot = const MockStakingSocialFeedRepository().getFeed();
+  test('SC-387 mock repository exposes social feed BE draft', () async {
+    final snapshot = await const MockStakingSocialFeedRepository().getFeed();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-social-feed');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -60,8 +61,9 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
   @override
   void initState() {
     super.initState();
-    final snapshot = ref.read(savingsBacktestRepositoryProvider).getBacktest();
-    _amountUsd = snapshot.defaultAmountUsd;
+    // Bẫy 14 (GD4 playbook): repo giờ đã async — không seed từ initState
+    // nữa; `_amountUsd` giữ literal default (khớp
+    // MockSavingsBacktestRepository.getBacktest().defaultAmountUsd).
     _amountController = TextEditingController(text: '$_amountUsd');
   }
 
@@ -73,19 +75,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsBacktestRepositoryProvider).getBacktest();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final selectedPreset = _preset ?? snapshot.defaultPreset;
-    final selectedPeriod = _period ?? snapshot.defaultPeriod;
-    final preset = backtest_fmt.presetById(snapshot, selectedPreset);
-    final period = backtest_fmt.periodById(snapshot, selectedPeriod);
-    final weightedApy = backtest_fmt.weightedApy(preset.slots);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsBacktestSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,73 +83,114 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
       semanticIdentifier: 'SC-349',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      BacktestHero(
-                        snapshot: snapshot,
-                        amountUsd: _amountUsd,
-                        preset: preset,
-                        period: period,
-                        weightedApy: weightedApy,
-                        hasRun: _hasRun,
-                        result: snapshot.result,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsBacktestSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final selectedPreset = _preset ?? snapshot.defaultPreset;
+            final selectedPeriod = _period ?? snapshot.defaultPeriod;
+            final preset = backtest_fmt.presetById(snapshot, selectedPreset);
+            final period = backtest_fmt.periodById(snapshot, selectedPeriod);
+            final weightedApy = backtest_fmt.weightedApy(preset.slots);
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
                       ),
-                      BacktestTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (activeTab == 'setup')
-                        ..._buildSetup(
-                          snapshot,
-                          preset,
-                          selectedPeriod,
-                          weightedApy,
-                        )
-                      else if (activeTab == 'results')
-                        if (_hasRun)
-                          ResultsTab(
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          BacktestHero(
                             snapshot: snapshot,
                             amountUsd: _amountUsd,
-                            period: period,
                             preset: preset,
-                            onReset: _reset,
-                            onApply: () =>
-                                context.go(snapshot.recommendationsRoute),
-                          )
-                        else
-                          NoResults(
-                            onSetup: () => setState(() => _tab = 'setup'),
-                          )
-                      else
-                        CompareTab(snapshot: snapshot, amountUsd: _amountUsd),
-                    ],
+                            period: period,
+                            weightedApy: weightedApy,
+                            hasRun: _hasRun,
+                            result: snapshot.result,
+                          ),
+                          BacktestTabs(
+                            tabs: snapshot.tabs,
+                            active: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                          ),
+                          if (activeTab == 'setup')
+                            ..._buildSetup(
+                              snapshot,
+                              preset,
+                              selectedPeriod,
+                              weightedApy,
+                            )
+                          else if (activeTab == 'results')
+                            if (_hasRun)
+                              ResultsTab(
+                                snapshot: snapshot,
+                                amountUsd: _amountUsd,
+                                period: period,
+                                preset: preset,
+                                onReset: _reset,
+                                onApply: () =>
+                                    context.go(snapshot.recommendationsRoute),
+                              )
+                            else
+                              NoResults(
+                                onSetup: () => setState(() => _tab = 'setup'),
+                              )
+                          else
+                            CompareTab(
+                              snapshot: snapshot,
+                              amountUsd: _amountUsd,
+                            ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

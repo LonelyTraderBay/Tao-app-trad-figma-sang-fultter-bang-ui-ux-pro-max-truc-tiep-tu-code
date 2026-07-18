@@ -50,7 +50,7 @@ class _DCAPerformanceComparePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaPerformanceCompareProvider);
+    final dcaPerformanceCompareAsync = ref.watch(dcaPerformanceCompareProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -89,12 +89,26 @@ class _DCAPerformanceComparePageState
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      if (_activeTab == _CompareTab.compare)
-                        ..._buildCompare(snapshot),
-                      if (_activeTab == _CompareTab.scenarios)
-                        ..._buildScenarios(snapshot),
-                      if (_activeTab == _CompareTab.analysis)
-                        ..._buildAnalysis(snapshot),
+                      ...dcaPerformanceCompareAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được so sánh hiệu suất',
+                            message: 'Thử lại sau hoặc quay lại màn DCA.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(dcaPerformanceCompareProvider),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          if (_activeTab == _CompareTab.compare)
+                            ..._buildCompare(snapshot),
+                          if (_activeTab == _CompareTab.scenarios)
+                            ..._buildScenarios(snapshot),
+                          if (_activeTab == _CompareTab.analysis)
+                            ..._buildAnalysis(snapshot),
+                        ],
+                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'So sánh chỉ mang tính tham khảo',

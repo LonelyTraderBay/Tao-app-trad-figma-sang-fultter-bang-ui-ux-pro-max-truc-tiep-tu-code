@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingTaxGuideRepository implements StakingTaxGuideRepository {
-  const MockStakingTaxGuideRepository();
+final class MockStakingTaxGuideRepository extends _MockEarnRepositoryBase
+    implements StakingTaxGuideRepository {
+  const MockStakingTaxGuideRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingTaxGuideSnapshot getGuide() {
+  Future<StakingTaxGuideSnapshot> getGuide() async {
+    await _simulateNetwork();
     return const StakingTaxGuideSnapshot(
       endpoint: '/api/mobile/earn/earn-staking-tax-guide',
       actionDraft:

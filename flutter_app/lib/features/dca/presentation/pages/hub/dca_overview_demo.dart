@@ -52,7 +52,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaOverviewDemoProvider);
+    final dcaOverviewDemoAsync = ref.watch(dcaOverviewDemoProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -60,6 +60,112 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
+    // GD4 (mục 5, biến thể 2): header phụ thuộc snapshot.title/subtitle/
+    // backRoute (không suy ra được từ tham số trang) — bọc toàn bộ scaffold,
+    // mỗi nhánh AsyncValue trả về đầy đủ với fallback title/subtitle/
+    // backRoute tĩnh khớp hằng số trong fixture cho loading/error.
+    return dcaOverviewDemoAsync.when(
+      loading: () => _scaffold(
+        title: 'DCA Overview Card Demo',
+        subtitle: 'Demo · DCA',
+        backRoute: '/home',
+        actions: const [],
+        body: const VitSkeletonList(),
+      ),
+      error: (error, stackTrace) => _scaffold(
+        title: 'DCA Overview Card Demo',
+        subtitle: 'Demo · DCA',
+        backRoute: '/home',
+        actions: const [],
+        body: VitErrorState(
+          title: 'Không tải được demo tổng quan DCA',
+          message: 'Thử lại sau.',
+          actionLabel: 'Thử lại',
+          onAction: () => ref.invalidate(dcaOverviewDemoProvider),
+        ),
+      ),
+      data: (snapshot) => _scaffold(
+        title: snapshot.title,
+        subtitle: snapshot.subtitle,
+        backRoute: snapshot.backRoute,
+        actions: [
+          VitHeaderActionItem(
+            key: DCAOverviewDemo.loadingToggleKey,
+            type: VitHeaderActionType.help,
+            tooltip: 'Loading demo',
+            active: _showLoading,
+            onPressed: () {
+              HapticFeedback.selectionClick();
+              setState(() => _showLoading = !_showLoading);
+            },
+          ),
+        ],
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                key: DCAOverviewDemo.contentKey,
+                physics: const ClampingScrollPhysics(),
+                padding: EdgeInsetsDirectional.only(bottom: scrollEndClearance),
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
+                  gap: VitContentGap.tight,
+                  children: [
+                    _DcaStateBar(
+                      key: DCAOverviewDemo.statesKey,
+                      supportedStates: snapshot.supportedStates,
+                      active: _uiMode,
+                      onChanged: (mode) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _uiMode = mode);
+                      },
+                    ),
+                    switch (_uiMode) {
+                      _DcaUiMode.loading => const _DcaOverviewLoading(),
+                      _DcaUiMode.empty => const VitEmptyState(
+                        title: 'No DCA scenarios',
+                        message:
+                            'Add overview card scenarios to preview profitable and loss states.',
+                      ),
+                      _DcaUiMode.error => VitErrorState(
+                        title: 'Overview demo unavailable',
+                        message:
+                            'Could not load DCA card scenarios. Retry when back online.',
+                        onAction: () =>
+                            setState(() => _uiMode = _DcaUiMode.live),
+                      ),
+                      _DcaUiMode.offline => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const VitOfflineBanner(
+                            detail: 'Showing cached scenario fixtures.',
+                          ),
+                          ..._liveSections(snapshot),
+                        ],
+                      ),
+                      _DcaUiMode.live => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: _liveSections(snapshot),
+                      ),
+                    },
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _scaffold({
+    required String title,
+    required String subtitle,
+    required String backRoute,
+    required List<VitHeaderActionItem> actions,
+    required Widget body,
+  }) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'Demo thẻ tổng quan DCA với các kịch bản lãi, lỗ và lỗi',
@@ -68,80 +174,13 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            title: title,
+            subtitle: subtitle,
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
-            actions: [
-              VitHeaderActionItem(
-                key: DCAOverviewDemo.loadingToggleKey,
-                type: VitHeaderActionType.help,
-                tooltip: 'Loading demo',
-                active: _showLoading,
-                onPressed: () {
-                  HapticFeedback.selectionClick();
-                  setState(() => _showLoading = !_showLoading);
-                },
-              ),
-            ],
+            onBack: () => context.go(backRoute),
+            actions: actions,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: DCAOverviewDemo.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _DcaStateBar(
-                        key: DCAOverviewDemo.statesKey,
-                        supportedStates: snapshot.supportedStates,
-                        active: _uiMode,
-                        onChanged: (mode) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _uiMode = mode);
-                        },
-                      ),
-                      switch (_uiMode) {
-                        _DcaUiMode.loading => const _DcaOverviewLoading(),
-                        _DcaUiMode.empty => const VitEmptyState(
-                          title: 'No DCA scenarios',
-                          message:
-                              'Add overview card scenarios to preview profitable and loss states.',
-                        ),
-                        _DcaUiMode.error => VitErrorState(
-                          title: 'Overview demo unavailable',
-                          message:
-                              'Could not load DCA card scenarios. Retry when back online.',
-                          onAction: () =>
-                              setState(() => _uiMode = _DcaUiMode.live),
-                        ),
-                        _DcaUiMode.offline => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const VitOfflineBanner(
-                              detail: 'Showing cached scenario fixtures.',
-                            ),
-                            ..._liveSections(snapshot),
-                          ],
-                        ),
-                        _DcaUiMode.live => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: _liveSections(snapshot),
-                        ),
-                      },
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: body,
         ),
       ),
     );

@@ -56,15 +56,13 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaDynamicAmountProvider);
+    final dcaDynamicAmountAsync = ref.watch(dcaDynamicAmountProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
         : SharedSpacingTokens.bottomNavNativeClearance;
     final scrollEndPadding =
         navClearance + MediaQuery.paddingOf(context).bottom;
-    final activeOption = _strategyOption(snapshot.strategies, _activeStrategy);
-    final adjustment = _adjustmentFor(_activeStrategy, snapshot.adjustment);
 
     return VitPageLayout(
       semanticLabel:
@@ -95,32 +93,55 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: [
-                _DynamicHero(
-                  option: activeOption,
-                  adjustment: adjustment,
-                  onChangeStrategy: _showStrategyNotice,
-                ),
-                _StrategyStrip(
-                  strategies: snapshot.strategies,
-                  activeStrategy: _activeStrategy,
-                  onChanged: (strategy) {
-                    setState(() => _activeStrategy = strategy);
+                ...dcaDynamicAmountAsync.when(
+                  loading: () => const [VitSkeletonList()],
+                  error: (error, stackTrace) => [
+                    VitErrorState(
+                      title: 'Không tải được số tiền linh hoạt',
+                      message: 'Thử lại sau hoặc quay lại màn DCA.',
+                      actionLabel: 'Thử lại',
+                      onAction: () => ref.invalidate(dcaDynamicAmountProvider),
+                    ),
+                  ],
+                  data: (snapshot) {
+                    final activeOption = _strategyOption(
+                      snapshot.strategies,
+                      _activeStrategy,
+                    );
+                    final adjustment = _adjustmentFor(
+                      _activeStrategy,
+                      snapshot.adjustment,
+                    );
+                    return [
+                      _DynamicHero(
+                        option: activeOption,
+                        adjustment: adjustment,
+                        onChangeStrategy: _showStrategyNotice,
+                      ),
+                      _StrategyStrip(
+                        strategies: snapshot.strategies,
+                        activeStrategy: _activeStrategy,
+                        onChanged: (strategy) {
+                          setState(() => _activeStrategy = strategy);
+                        },
+                      ),
+                      _StrategyVisualization(
+                        strategy: _activeStrategy,
+                        option: activeOption,
+                        volatilityHistory: snapshot.volatilityHistory,
+                      ),
+                      _AmountHistoryCard(entries: snapshot.amountHistory),
+                      _RecentDetailsCard(entries: snapshot.amountHistory),
+                      _ConfigSection(
+                        option: activeOption,
+                        items: _activeStrategy == DcaDynamicStrategy.volatility
+                            ? snapshot.configItems
+                            : _configItemsFor(_activeStrategy),
+                      ),
+                      _StrategyExplainer(option: activeOption),
+                    ];
                   },
                 ),
-                _StrategyVisualization(
-                  strategy: _activeStrategy,
-                  option: activeOption,
-                  volatilityHistory: snapshot.volatilityHistory,
-                ),
-                _AmountHistoryCard(entries: snapshot.amountHistory),
-                _RecentDetailsCard(entries: snapshot.amountHistory),
-                _ConfigSection(
-                  option: activeOption,
-                  items: _activeStrategy == DcaDynamicStrategy.volatility
-                      ? snapshot.configItems
-                      : _configItemsFor(_activeStrategy),
-                ),
-                _StrategyExplainer(option: activeOption),
                 const _DynamicDisclaimer(),
                 const VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,

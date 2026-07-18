@@ -2,7 +2,8 @@ part of '../repositories/mock_launchpad_repository.dart';
 
 mixin _MockLaunchpadRepositoryMethodsPart02 on _MockLaunchpadRepositoryBase {
   @override
-  LaunchpadBridgeOrderSnapshot getBridgeOrder(String txId) {
+  Future<LaunchpadBridgeOrderSnapshot> getBridgeOrder(String txId) async {
+    await _simulateNetwork();
     final normalizedId = txId.trim();
     return LaunchpadBridgeOrderSnapshot(
       endpoint: '/api/mobile/launchpad/launchpad-bridge-order-$normalizedId',
@@ -34,7 +35,8 @@ mixin _MockLaunchpadRepositoryMethodsPart02 on _MockLaunchpadRepositoryBase {
   }
 
   @override
-  LaunchpadContractSnapshot getContract(String projectId) {
+  Future<LaunchpadContractSnapshot> getContract(String projectId) async {
+    await _simulateNetwork();
     final normalizedId = projectId.trim();
     final matchingProjects = _launchpadProjects.where(
       (project) => project.id == normalizedId,

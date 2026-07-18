@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../../widgets/bridge/launchpad_bridge_compare_hero.dart';
@@ -67,20 +68,14 @@ class _LaunchpadBridgeComparePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(launchpadControllerProvider).getBridgeCompare();
+    final bridgeCompareAsync = ref.watch(
+      launchpadBridgeCompareSnapshotProvider,
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final footerHeight = _selectedRouteId == null ? 0.0 : 122.0;
-    final scrollTailReserve =
-        chromeReserve + safeBottom + AppSpacing.x3 + footerHeight;
-    final routes = _sortedRoutes(snapshot.comparison.routes);
-    final selectedRoutes = snapshot.comparison.routes
-        .where((route) => route.id == _selectedRouteId)
-        .toList();
-    final selectedRoute = selectedRoutes.isEmpty ? null : selectedRoutes.first;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -88,88 +83,141 @@ class _LaunchpadBridgeComparePageState
       semanticIdentifier: 'SC-305',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              bottomInset: scrollTailReserve,
-              semanticLabel: 'So sánh route bridge – vùng cuộn nội dung',
-              semanticIdentifier: 'SC-305',
-              header: VitHeader(
-                title: snapshot.title,
-                subtitle: 'So sánh route bridge · Xác nhận trước khi chuyển',
-                showBack: true,
-                onBack: () => context.go(snapshot.backRoute),
-                actions: [
-                  VitHeaderActionItem(
-                    type: VitHeaderActionType.refresh,
-                    onPressed: () {
-                      setState(() {
-                        _sortMode = 'recommended';
-                        _selectedRouteId = null;
-                        _expandedRouteId = null;
-                        _confirmVisible = false;
-                      });
-                    },
-                  ),
-                ],
+        child: bridgeCompareAsync.when(
+          loading: () => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: chromeReserve + safeBottom + AppSpacing.x3,
+                semanticLabel: 'So sánh route bridge – vùng cuộn nội dung',
+                semanticIdentifier: 'SC-305',
+                header: VitHeader(
+                  title: 'So sánh routes',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: const VitSkeletonList(),
               ),
-              child: SingleChildScrollView(
-                key: LaunchpadBridgeComparePage.contentKey,
-                physics: const ClampingScrollPhysics(),
-                child: VitPageContent(
-                  rhythm: VitPageRhythm.standard,
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.tight,
-                  children: [
-                    _InputSummaryHero(comparison: snapshot.comparison),
-                    _QuickComparisonCard(comparison: snapshot.comparison),
-                    _SortSelector(
-                      options: snapshot.sortOptions,
-                      activeValue: _sortMode,
-                      onChanged: (value) => setState(() => _sortMode = value),
-                    ),
-                    for (final route in routes)
-                      _RouteCard(
-                        route: route,
-                        rank: routes.indexOf(route) + 1,
-                        comparison: snapshot.comparison,
-                        selected: _selectedRouteId == route.id,
-                        expanded: _expandedRouteId == route.id,
-                        onSelect: () => setState(() {
-                          _selectedRouteId = _selectedRouteId == route.id
-                              ? null
-                              : route.id;
-                        }),
-                        onExpand: () => setState(() {
-                          _expandedRouteId = _expandedRouteId == route.id
-                              ? null
-                              : route.id;
-                        }),
+            ],
+          ),
+          error: (error, stackTrace) => Stack(
+            children: [
+              VitAutoHideHeaderScaffold(
+                bottomInset: chromeReserve + safeBottom + AppSpacing.x3,
+                semanticLabel: 'So sánh route bridge – vùng cuộn nội dung',
+                semanticIdentifier: 'SC-305',
+                header: VitHeader(
+                  title: 'So sánh routes',
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.launchpad),
+                ),
+                child: VitErrorState(
+                  title: 'Không tải được dữ liệu',
+                  message: 'Vui lòng kiểm tra kết nối và thử lại.',
+                  actionLabel: 'Thử lại',
+                  onAction: () =>
+                      ref.invalidate(launchpadBridgeCompareSnapshotProvider),
+                ),
+              ),
+            ],
+          ),
+          data: (snapshot) {
+            final footerHeight = _selectedRouteId == null ? 0.0 : 122.0;
+            final scrollTailReserve =
+                chromeReserve + safeBottom + AppSpacing.x3 + footerHeight;
+            final routes = _sortedRoutes(snapshot.comparison.routes);
+            final selectedRoutes = snapshot.comparison.routes
+                .where((route) => route.id == _selectedRouteId)
+                .toList();
+            final selectedRoute = selectedRoutes.isEmpty
+                ? null
+                : selectedRoutes.first;
+
+            return Stack(
+              children: [
+                VitAutoHideHeaderScaffold(
+                  bottomInset: scrollTailReserve,
+                  semanticLabel: 'So sánh route bridge – vùng cuộn nội dung',
+                  semanticIdentifier: 'SC-305',
+                  header: VitHeader(
+                    title: snapshot.title,
+                    subtitle:
+                        'So sánh route bridge · Xác nhận trước khi chuyển',
+                    showBack: true,
+                    onBack: () => context.go(snapshot.backRoute),
+                    actions: [
+                      VitHeaderActionItem(
+                        type: VitHeaderActionType.refresh,
+                        onPressed: () {
+                          setState(() {
+                            _sortMode = 'recommended';
+                            _selectedRouteId = null;
+                            _expandedRouteId = null;
+                            _confirmVisible = false;
+                          });
+                        },
                       ),
-                    const _RiskDisclosure(),
-                  ],
+                    ],
+                  ),
+                  child: SingleChildScrollView(
+                    key: LaunchpadBridgeComparePage.contentKey,
+                    physics: const ClampingScrollPhysics(),
+                    child: VitPageContent(
+                      rhythm: VitPageRhythm.standard,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
+                      children: [
+                        _InputSummaryHero(comparison: snapshot.comparison),
+                        _QuickComparisonCard(comparison: snapshot.comparison),
+                        _SortSelector(
+                          options: snapshot.sortOptions,
+                          activeValue: _sortMode,
+                          onChanged: (value) =>
+                              setState(() => _sortMode = value),
+                        ),
+                        for (final route in routes)
+                          _RouteCard(
+                            route: route,
+                            rank: routes.indexOf(route) + 1,
+                            comparison: snapshot.comparison,
+                            selected: _selectedRouteId == route.id,
+                            expanded: _expandedRouteId == route.id,
+                            onSelect: () => setState(() {
+                              _selectedRouteId = _selectedRouteId == route.id
+                                  ? null
+                                  : route.id;
+                            }),
+                            onExpand: () => setState(() {
+                              _expandedRouteId = _expandedRouteId == route.id
+                                  ? null
+                                  : route.id;
+                            }),
+                          ),
+                        const _RiskDisclosure(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            if (selectedRoute != null)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: chromeReserve + safeBottom,
-                child: _SelectedRouteFooter(
-                  route: selectedRoute,
-                  outputToken: snapshot.comparison.outputToken,
-                  onConfirm: () => setState(() => _confirmVisible = true),
-                ),
-              ),
-            if (_confirmVisible && selectedRoute != null)
-              _RouteConfirmOverlay(
-                route: selectedRoute,
-                comparison: snapshot.comparison,
-                onClose: () => setState(() => _confirmVisible = false),
-                onExecute: () => context.go(snapshot.bridgeOrderRoute),
-              ),
-          ],
+                if (selectedRoute != null)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: chromeReserve + safeBottom,
+                    child: _SelectedRouteFooter(
+                      route: selectedRoute,
+                      outputToken: snapshot.comparison.outputToken,
+                      onConfirm: () => setState(() => _confirmVisible = true),
+                    ),
+                  ),
+                if (_confirmVisible && selectedRoute != null)
+                  _RouteConfirmOverlay(
+                    route: selectedRoute,
+                    comparison: snapshot.comparison,
+                    onClose: () => setState(() => _confirmVisible = false),
+                    onExecute: () => context.go(snapshot.bridgeOrderRoute),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

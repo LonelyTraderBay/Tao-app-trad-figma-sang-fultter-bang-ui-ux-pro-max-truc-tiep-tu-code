@@ -30,8 +30,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-334 mock repository exposes savings history BE draft', () {
-    final snapshot = const MockSavingsHistoryRepository().getHistory();
+  test('SC-334 mock repository exposes savings history BE draft', () async {
+    final snapshot = await const MockSavingsHistoryRepository().getHistory();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-history');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

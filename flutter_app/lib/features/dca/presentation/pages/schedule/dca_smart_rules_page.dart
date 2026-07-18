@@ -46,7 +46,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaSmartRulesProvider);
+    final dcaSmartRulesAsync = ref.watch(dcaSmartRulesProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollBottom =
         (mode.usesVisualQaFrame
@@ -81,11 +81,25 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
                   children: [
-                    if (_activeTab == _RulesTab.mine) ..._buildMine(snapshot),
-                    if (_activeTab == _RulesTab.templates)
-                      ..._buildTemplates(snapshot),
-                    if (_activeTab == _RulesTab.history)
-                      ..._buildHistory(snapshot),
+                    ...dcaSmartRulesAsync.when(
+                      loading: () => const [VitSkeletonList()],
+                      error: (error, stackTrace) => [
+                        VitErrorState(
+                          title: 'Không tải được quy tắc DCA',
+                          message: 'Thử lại sau hoặc quay lại màn DCA.',
+                          actionLabel: 'Thử lại',
+                          onAction: () => ref.invalidate(dcaSmartRulesProvider),
+                        ),
+                      ],
+                      data: (snapshot) => [
+                        if (_activeTab == _RulesTab.mine)
+                          ..._buildMine(snapshot),
+                        if (_activeTab == _RulesTab.templates)
+                          ..._buildTemplates(snapshot),
+                        if (_activeTab == _RulesTab.history)
+                          ..._buildHistory(snapshot),
+                      ],
+                    ),
                     const VitHighRiskStatePanel(
                       state: VitHighRiskUiState.riskReview,
                       title: 'Smart DCA rule execution review',

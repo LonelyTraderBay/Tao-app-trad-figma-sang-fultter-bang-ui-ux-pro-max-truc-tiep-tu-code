@@ -27,8 +27,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-340 mock repository exposes comparison BE draft', () {
-    final snapshot = const MockSavingsComparisonRepository().getComparison();
+  test('SC-340 mock repository exposes comparison BE draft', () async {
+    final snapshot = await const MockSavingsComparisonRepository()
+        .getComparison();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-comparison');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

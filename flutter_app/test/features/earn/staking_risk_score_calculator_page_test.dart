@@ -30,8 +30,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-384 mock repository exposes risk calculator BE draft', () {
-    final snapshot = const MockStakingRiskScoreCalculatorRepository()
+  test('SC-384 mock repository exposes risk calculator BE draft', () async {
+    final snapshot = await const MockStakingRiskScoreCalculatorRepository()
         .getCalculator();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-risk-score-calculator');

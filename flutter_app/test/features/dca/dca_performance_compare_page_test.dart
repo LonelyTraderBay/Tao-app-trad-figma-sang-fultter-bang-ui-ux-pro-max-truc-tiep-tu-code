@@ -28,8 +28,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-178 mock repository exposes performance compare BE draft', () {
-    final snapshot = const MockDcaRepository().getPerformanceCompare();
+  test('SC-178 mock repository exposes performance compare BE draft', () async {
+    final snapshot = await const MockDcaRepository(
+      loadDelay: Duration.zero,
+    ).getPerformanceCompare();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-performance-compare');
     expect(

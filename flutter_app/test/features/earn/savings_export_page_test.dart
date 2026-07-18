@@ -27,8 +27,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-348 mock repository exposes savings export BE draft', () {
-    final snapshot = const MockSavingsExportRepository().getExport();
+  test('SC-348 mock repository exposes savings export BE draft', () async {
+    final snapshot = await const MockSavingsExportRepository().getExport();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-export');
     expect(snapshot.actionDraft, contains('POST /exports'));

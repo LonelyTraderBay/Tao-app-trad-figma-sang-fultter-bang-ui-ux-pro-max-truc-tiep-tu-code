@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -41,9 +42,9 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingVotingRepositoryProvider)
-        .getVoting(proposalId: widget.proposalId);
+    final snapshotAsync = ref.watch(
+      stakingVotingSnapshotProvider(widget.proposalId),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -57,56 +58,85 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
       semanticIdentifier: 'SC-390',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Bỏ phiếu đề xuất stake',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnProposals),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      VitPageContent(
-                        rhythm: VitPageRhythm.standard,
-                        padding: VitContentPadding.defaultPadding,
-                        gap: VitContentGap.defaultGap,
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnProposals),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(
+                stakingVotingSnapshotProvider(widget.proposalId),
+              ),
+            ),
+          ),
+          data: (snapshot) {
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Bỏ phiếu đề xuất stake',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      child: Column(
                         children: [
-                          _ProposalSummary(snapshot: snapshot),
-                          _ResultsSection(results: snapshot.results),
-                          _VoteSection(
-                            title: snapshot.voteTitle,
-                            options: snapshot.options,
-                            selectedVote: _selectedVote,
-                            onSelect: (id) =>
-                                setState(() => _selectedVote = id),
+                          VitPageContent(
+                            rhythm: VitPageRhythm.standard,
+                            padding: VitContentPadding.defaultPadding,
+                            gap: VitContentGap.defaultGap,
+                            children: [
+                              _ProposalSummary(snapshot: snapshot),
+                              _ResultsSection(results: snapshot.results),
+                              _VoteSection(
+                                title: snapshot.voteTitle,
+                                options: snapshot.options,
+                                selectedVote: _selectedVote,
+                                onSelect: (id) =>
+                                    setState(() => _selectedVote = id),
+                              ),
+                              _VotingPowerNote(snapshot: snapshot),
+                            ],
                           ),
-                          _VotingPowerNote(snapshot: snapshot),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardSectionGap,
+                          ),
+                          VitStickyFooter(
+                            child: VitCtaButton(
+                              key: StakingVotingPage.submitKey,
+                              onPressed: _selectedVote == null ? null : () {},
+                              child: Text(snapshot.submitLabel),
+                            ),
+                          ),
+                          SizedBox(height: bottomInset),
                         ],
                       ),
-                      const SizedBox(
-                        height: AppSpacing.pageRhythmStandardSectionGap,
-                      ),
-                      VitStickyFooter(
-                        child: VitCtaButton(
-                          key: StakingVotingPage.submitKey,
-                          onPressed: _selectedVote == null ? null : () {},
-                          child: Text(snapshot.submitLabel),
-                        ),
-                      ),
-                      SizedBox(height: bottomInset),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -28,37 +28,40 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-372 mock repository exposes staking recommendations BE draft', () {
-    final snapshot = const MockStakingRecommendationsRepository()
-        .getRecommendations();
+  test(
+    'SC-372 mock repository exposes staking recommendations BE draft',
+    () async {
+      final snapshot = await const MockStakingRecommendationsRepository()
+          .getRecommendations();
 
-    expect(snapshot.endpoint, '/api/mobile/earn/earn-recommendations');
-    expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
-    expect(snapshot.title, 'Gợi ý Staking');
-    expect(snapshot.backRoute, AppRoutePaths.earnStaking);
-    expect(
-      snapshot.riskAssessmentRoute,
-      AppRoutePaths.earnStakingRiskAssessment,
-    );
-    expect(snapshot.stakingRoute, AppRoutePaths.earnStaking);
-    expect(snapshot.profile.totalPortfolio, 10000);
-    expect(snapshot.strategies, hasLength(3));
-    expect(
-      snapshot.strategies.singleWhere((strategy) => strategy.recommended).id,
-      'balanced',
-    );
-    expect(snapshot.tips, hasLength(3));
-    expect(snapshot.contractNotes, contains('riskData'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        EarnScreenState.loading,
-        EarnScreenState.empty,
-        EarnScreenState.error,
-        EarnScreenState.offline,
-      ]),
-    );
-  });
+      expect(snapshot.endpoint, '/api/mobile/earn/earn-recommendations');
+      expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
+      expect(snapshot.title, 'Gợi ý Staking');
+      expect(snapshot.backRoute, AppRoutePaths.earnStaking);
+      expect(
+        snapshot.riskAssessmentRoute,
+        AppRoutePaths.earnStakingRiskAssessment,
+      );
+      expect(snapshot.stakingRoute, AppRoutePaths.earnStaking);
+      expect(snapshot.profile.totalPortfolio, 10000);
+      expect(snapshot.strategies, hasLength(3));
+      expect(
+        snapshot.strategies.singleWhere((strategy) => strategy.recommended).id,
+        'balanced',
+      );
+      expect(snapshot.tips, hasLength(3));
+      expect(snapshot.contractNotes, contains('riskData'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          EarnScreenState.loading,
+          EarnScreenState.empty,
+          EarnScreenState.error,
+          EarnScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-372 renders recommendations baseline', (tester) async {
     await pumpRecommendations(tester);

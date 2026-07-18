@@ -28,8 +28,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-343 mock repository exposes analytics BE draft', () {
-    final snapshot = const MockSavingsAnalyticsRepository().getAnalytics();
+  test('SC-343 mock repository exposes analytics BE draft', () async {
+    final snapshot = await const MockSavingsAnalyticsRepository()
+        .getAnalytics();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-analytics');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-336 mock repository exposes savings FAQ BE draft', () {
-    final snapshot = const MockSavingsFAQRepository().getFAQ();
+  test('SC-336 mock repository exposes savings FAQ BE draft', () async {
+    final snapshot = await const MockSavingsFAQRepository().getFAQ();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-faq');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -19,6 +20,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 class StakingDashboardPage extends ConsumerStatefulWidget {
   const StakingDashboardPage({super.key, this.shellRenderMode});
@@ -47,15 +50,7 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingDashboardRepositoryProvider)
-        .getDashboard();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingDashboardSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -64,85 +59,117 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
       semanticIdentifier: 'SC-358',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      StakingDashboardSummaryCard(
-                        key: StakingDashboardPage.summaryKey,
-                        snapshot: snapshot,
-                        isRefreshing: _isRefreshing,
-                        onRefresh: _refresh,
-                        onExport: _exportReport,
-                      ),
-                      VitPageSection(
-                        label: 'Biểu đồ Hiệu suất (6 tháng)',
-                        accentColor: AppColors.primary,
-                        children: [
-                          StakingPerformanceCard(
-                            key: StakingDashboardPage.performanceKey,
-                            points: snapshot.performance,
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Phân bổ Tài sản',
-                        accentColor: AppColors.primary,
-                        children: [
-                          StakingAllocationCard(
-                            key: StakingDashboardPage.allocationKey,
-                            allocations: snapshot.allocations,
-                            total: snapshot.totalStakedUsd,
-                          ),
-                        ],
-                      ),
-                      StakingPositionsSection(
-                        sectionKey: StakingDashboardPage.positionsKey,
-                        positionKey: StakingDashboardPage.positionKey,
-                        positions: snapshot.positions,
-                      ),
-                      StakingDashboardQuickActions(
-                        stakeMoreKey: StakingDashboardPage.stakeMoreKey,
-                        analyticsKey: StakingDashboardPage.analyticsKey,
-                        snapshot: snapshot,
-                      ),
-                      StakingDashboardNavigationCards(
-                        historyKey: StakingDashboardPage.historyKey,
-                        calendarKey: StakingDashboardPage.calendarKey,
-                        snapshot: snapshot,
-                      ),
-                      if (snapshot.maturingSoon > 0)
-                        StakingMaturityAlert(
-                          key: StakingDashboardPage.alertKey,
-                          snapshot: snapshot,
-                        ),
-                      const EarnDisclaimerBanner(
-                        text:
-                            'APY là ước tính tham khảo và có thể thay đổi. '
-                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
-                      ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingDashboardSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          StakingDashboardSummaryCard(
+                            key: StakingDashboardPage.summaryKey,
+                            snapshot: snapshot,
+                            isRefreshing: _isRefreshing,
+                            onRefresh: _refresh,
+                            onExport: _exportReport,
+                          ),
+                          VitPageSection(
+                            label: 'Biểu đồ Hiệu suất (6 tháng)',
+                            accentColor: AppColors.primary,
+                            children: [
+                              StakingPerformanceCard(
+                                key: StakingDashboardPage.performanceKey,
+                                points: snapshot.performance,
+                              ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Phân bổ Tài sản',
+                            accentColor: AppColors.primary,
+                            children: [
+                              StakingAllocationCard(
+                                key: StakingDashboardPage.allocationKey,
+                                allocations: snapshot.allocations,
+                                total: snapshot.totalStakedUsd,
+                              ),
+                            ],
+                          ),
+                          StakingPositionsSection(
+                            sectionKey: StakingDashboardPage.positionsKey,
+                            positionKey: StakingDashboardPage.positionKey,
+                            positions: snapshot.positions,
+                          ),
+                          StakingDashboardQuickActions(
+                            stakeMoreKey: StakingDashboardPage.stakeMoreKey,
+                            analyticsKey: StakingDashboardPage.analyticsKey,
+                            snapshot: snapshot,
+                          ),
+                          StakingDashboardNavigationCards(
+                            historyKey: StakingDashboardPage.historyKey,
+                            calendarKey: StakingDashboardPage.calendarKey,
+                            snapshot: snapshot,
+                          ),
+                          if (snapshot.maturingSoon > 0)
+                            StakingMaturityAlert(
+                              key: StakingDashboardPage.alertKey,
+                              snapshot: snapshot,
+                            ),
+                          const EarnDisclaimerBanner(
+                            text:
+                                'APY là ước tính tham khảo và có thể thay đổi. '
+                                'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

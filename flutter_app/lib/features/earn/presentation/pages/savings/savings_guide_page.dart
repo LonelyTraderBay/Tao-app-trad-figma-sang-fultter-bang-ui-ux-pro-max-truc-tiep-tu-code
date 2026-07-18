@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -46,15 +47,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsGuideRepositoryProvider).getGuide();
-    _activeTab ??= snapshot.defaultTab;
-
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsGuideSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -62,60 +55,96 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
       semanticIdentifier: 'SC-335',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SavingsGuideTabs(
-                tabs: snapshot.tabs,
-                active: _activeTab!,
-                onChanged: (tab) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _activeTab = tab);
-                },
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      if (_activeTab == 'tutorials')
-                        VitCard(
-                          variant: VitCardVariant.standard,
-                          radius: VitCardRadius.standard,
-                          padding: AppSpacing.zeroInsets,
-                          child: SavingsGuideTutorialsTab(
-                            snapshot: snapshot,
-                            completedTutorials: _completedTutorials,
-                            onTutorialTap: _openTutorialSheet,
-                          ),
-                        )
-                      else
-                        VitCard(
-                          variant: VitCardVariant.standard,
-                          radius: VitCardRadius.standard,
-                          padding: AppSpacing.zeroInsets,
-                          child: SavingsGuideGlossaryTab(snapshot: snapshot),
-                        ),
-                      const SavingsToolsYieldFooter(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsGuideSnapshotProvider),
+            ),
           ),
+          data: (snapshot) {
+            _activeTab ??= snapshot.defaultTab;
+
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SavingsGuideTabs(
+                    tabs: snapshot.tabs,
+                    active: _activeTab!,
+                    onChanged: (tab) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _activeTab = tab);
+                    },
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.defaultPadding,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          if (_activeTab == 'tutorials')
+                            VitCard(
+                              variant: VitCardVariant.standard,
+                              radius: VitCardRadius.standard,
+                              padding: AppSpacing.zeroInsets,
+                              child: SavingsGuideTutorialsTab(
+                                snapshot: snapshot,
+                                completedTutorials: _completedTutorials,
+                                onTutorialTap: _openTutorialSheet,
+                              ),
+                            )
+                          else
+                            VitCard(
+                              variant: VitCardVariant.standard,
+                              radius: VitCardRadius.standard,
+                              padding: AppSpacing.zeroInsets,
+                              child: SavingsGuideGlossaryTab(
+                                snapshot: snapshot,
+                              ),
+                            ),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

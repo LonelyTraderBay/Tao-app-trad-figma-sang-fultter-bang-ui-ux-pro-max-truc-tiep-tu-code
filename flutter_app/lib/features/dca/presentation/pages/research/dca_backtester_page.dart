@@ -45,7 +45,7 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(dcaBacktesterProvider);
+    final dcaBacktesterAsync = ref.watch(dcaBacktesterProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? SharedSpacingTokens.bottomNavVisualClearance
@@ -85,35 +85,49 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      if (_activeTab == DcaBacktesterTab.setup)
-                        DcaBacktesterSetup(
-                          snapshot: snapshot,
-                          asset: _asset,
-                          frequency: _frequency,
-                          strategy: _strategy,
-                          runKey: DCABacktesterPage.runKey,
-                          strategyKey: DCABacktesterPage.strategyKey,
-                          onAssetChanged: (asset) =>
-                              setState(() => _asset = asset),
-                          onFrequencyChanged: (frequency) =>
-                              setState(() => _frequency = frequency),
-                          onStrategyChanged: (strategy) =>
-                              setState(() => _strategy = strategy),
-                          onRun: _runBacktest,
-                        ),
-                      if (_activeTab == DcaBacktesterTab.results)
-                        if (_hasResults)
-                          DcaBacktesterResults(snapshot: snapshot)
-                        else
-                          const DcaNoResultsCard(),
-                      if (_activeTab == DcaBacktesterTab.analysis)
-                        if (_hasResults)
-                          DcaBacktesterAnalysis(
-                            snapshot: snapshot,
-                            onDownloadReport: _downloadReport,
-                          )
-                        else
-                          const DcaNoResultsCard(),
+                      ...dcaBacktesterAsync.when(
+                        loading: () => const [VitSkeletonList()],
+                        error: (error, stackTrace) => [
+                          VitErrorState(
+                            title: 'Không tải được backtester',
+                            message: 'Thử lại sau hoặc quay lại màn DCA.',
+                            actionLabel: 'Thử lại',
+                            onAction: () =>
+                                ref.invalidate(dcaBacktesterProvider),
+                          ),
+                        ],
+                        data: (snapshot) => [
+                          if (_activeTab == DcaBacktesterTab.setup)
+                            DcaBacktesterSetup(
+                              snapshot: snapshot,
+                              asset: _asset,
+                              frequency: _frequency,
+                              strategy: _strategy,
+                              runKey: DCABacktesterPage.runKey,
+                              strategyKey: DCABacktesterPage.strategyKey,
+                              onAssetChanged: (asset) =>
+                                  setState(() => _asset = asset),
+                              onFrequencyChanged: (frequency) =>
+                                  setState(() => _frequency = frequency),
+                              onStrategyChanged: (strategy) =>
+                                  setState(() => _strategy = strategy),
+                              onRun: _runBacktest,
+                            ),
+                          if (_activeTab == DcaBacktesterTab.results)
+                            if (_hasResults)
+                              DcaBacktesterResults(snapshot: snapshot)
+                            else
+                              const DcaNoResultsCard(),
+                          if (_activeTab == DcaBacktesterTab.analysis)
+                            if (_hasResults)
+                              DcaBacktesterAnalysis(
+                                snapshot: snapshot,
+                                onDownloadReport: _downloadReport,
+                              )
+                            else
+                              const DcaNoResultsCard(),
+                        ],
+                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Backtest chỉ mang tính tham khảo',

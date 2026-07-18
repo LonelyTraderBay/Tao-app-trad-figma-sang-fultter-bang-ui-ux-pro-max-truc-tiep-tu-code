@@ -31,8 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-355 mock repository exposes staking withdrawal BE draft', () {
-    final snapshot = const MockStakingWithdrawalPolicyRepository().getPolicy();
+  test('SC-355 mock repository exposes staking withdrawal BE draft', () async {
+    final snapshot = await const MockStakingWithdrawalPolicyRepository()
+        .getPolicy();
 
     expect(
       snapshot.endpoint,

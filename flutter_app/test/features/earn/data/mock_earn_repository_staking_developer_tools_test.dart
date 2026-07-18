@@ -18,8 +18,8 @@ void main() {
   const institutionalRepo = MockStakingInstitutionalRepository();
 
   group('Earn staking developer tools mocks smoke test', () {
-    test('getWebhooks returns a populated webhooks snapshot', () {
-      final snapshot = webhooksRepo.getWebhooks();
+    test('getWebhooks returns a populated webhooks snapshot', () async {
+      final snapshot = await webhooksRepo.getWebhooks();
 
       expect(snapshot, isA<StakingWebhooksSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -32,8 +32,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getDataExport returns a populated data export snapshot', () {
-      final snapshot = dataExportRepo.getDataExport();
+    test('getDataExport returns a populated data export snapshot', () async {
+      final snapshot = await dataExportRepo.getDataExport();
 
       expect(snapshot, isA<StakingDataExportSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -46,8 +46,8 @@ void main() {
     });
 
     test('getIntegrations returns a populated third-party integrations '
-        'snapshot', () {
-      final snapshot = integrationsRepo.getIntegrations();
+        'snapshot', () async {
+      final snapshot = await integrationsRepo.getIntegrations();
 
       expect(snapshot, isA<StakingThirdPartyIntegrationsSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -58,8 +58,8 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getConsole returns a populated developer console snapshot', () {
-      final snapshot = consoleRepo.getConsole();
+    test('getConsole returns a populated developer console snapshot', () async {
+      final snapshot = await consoleRepo.getConsole();
 
       expect(snapshot, isA<StakingDeveloperConsoleSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -75,25 +75,28 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getAdvancedOrders returns a populated advanced orders snapshot', () {
-      final snapshot = advancedOrdersRepo.getAdvancedOrders();
+    test(
+      'getAdvancedOrders returns a populated advanced orders snapshot',
+      () async {
+        final snapshot = await advancedOrdersRepo.getAdvancedOrders();
 
-      expect(snapshot, isA<StakingAdvancedOrdersSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, 'Advanced Orders');
-      expect(snapshot.activeOrders, hasLength(3));
-      expect(snapshot.orderHistory, hasLength(2));
-      expect(snapshot.statCards, hasLength(3));
-      expect(snapshot.orderTypeOptions, hasLength(3));
-      expect(snapshot.assetOptions, isNotEmpty);
-      expect(snapshot.orderTypeWarnings, hasLength(3));
-      expect(snapshot.howItWorks, hasLength(3));
-      expect(snapshot.riskTitle, isNotEmpty);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingAdvancedOrdersSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, 'Advanced Orders');
+        expect(snapshot.activeOrders, hasLength(3));
+        expect(snapshot.orderHistory, hasLength(2));
+        expect(snapshot.statCards, hasLength(3));
+        expect(snapshot.orderTypeOptions, hasLength(3));
+        expect(snapshot.assetOptions, isNotEmpty);
+        expect(snapshot.orderTypeWarnings, hasLength(3));
+        expect(snapshot.howItWorks, hasLength(3));
+        expect(snapshot.riskTitle, isNotEmpty);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
 
-    test('getMultiChain returns a populated multi-chain snapshot', () {
-      final snapshot = multiChainRepo.getMultiChain();
+    test('getMultiChain returns a populated multi-chain snapshot', () async {
+      final snapshot = await multiChainRepo.getMultiChain();
 
       expect(snapshot, isA<StakingMultiChainSnapshot>());
       expect(snapshot.endpoint, isNotEmpty);
@@ -108,21 +111,24 @@ void main() {
       expect(snapshot.supportedStates, isNotEmpty);
     });
 
-    test('getInstitutional returns a populated institutional snapshot', () {
-      final snapshot = institutionalRepo.getInstitutional();
+    test(
+      'getInstitutional returns a populated institutional snapshot',
+      () async {
+        final snapshot = await institutionalRepo.getInstitutional();
 
-      expect(snapshot, isA<StakingInstitutionalSnapshot>());
-      expect(snapshot.endpoint, isNotEmpty);
-      expect(snapshot.title, 'Institutional Dashboard');
-      expect(snapshot.stats, hasLength(3));
-      expect(snapshot.pendingBatches, hasLength(2));
-      expect(snapshot.executedBatches, hasLength(2));
-      expect(snapshot.signers, hasLength(3));
-      expect(snapshot.features, isNotEmpty);
-      expect(snapshot.complianceTitle, isNotEmpty);
-      expect(snapshot.operationTypes, isNotEmpty);
-      expect(snapshot.csvFormatNote, isNotEmpty);
-      expect(snapshot.supportedStates, isNotEmpty);
-    });
+        expect(snapshot, isA<StakingInstitutionalSnapshot>());
+        expect(snapshot.endpoint, isNotEmpty);
+        expect(snapshot.title, 'Institutional Dashboard');
+        expect(snapshot.stats, hasLength(3));
+        expect(snapshot.pendingBatches, hasLength(2));
+        expect(snapshot.executedBatches, hasLength(2));
+        expect(snapshot.signers, hasLength(3));
+        expect(snapshot.features, isNotEmpty);
+        expect(snapshot.complianceTitle, isNotEmpty);
+        expect(snapshot.operationTypes, isNotEmpty);
+        expect(snapshot.csvFormatNote, isNotEmpty);
+        expect(snapshot.supportedStates, isNotEmpty);
+      },
+    );
   });
 }

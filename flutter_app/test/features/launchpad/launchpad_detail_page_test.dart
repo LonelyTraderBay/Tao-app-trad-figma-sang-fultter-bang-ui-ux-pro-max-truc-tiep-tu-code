@@ -41,8 +41,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-318 mock repository exposes launchpad detail BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getDetail('sample');
+  test('SC-318 mock repository exposes launchpad detail BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getDetail('sample');
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-sample');
     expect(

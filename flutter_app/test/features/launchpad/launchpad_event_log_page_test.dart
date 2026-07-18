@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-307 mock repository exposes event log BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getEventLog();
+  test('SC-307 mock repository exposes event log BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getEventLog();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-event-log');
     expect(

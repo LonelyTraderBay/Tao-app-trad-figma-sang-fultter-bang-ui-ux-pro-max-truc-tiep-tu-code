@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -41,15 +42,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref
-        .watch(stakingRiskDashboardRepositoryProvider)
-        .getRiskDashboard();
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingRiskDashboardSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -57,68 +50,104 @@ class StakingRiskDashboardPage extends ConsumerWidget {
       semanticIdentifier: 'SC-381',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Tổng quan rủi ro earn — APY ước tính có thể thay đổi',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _OverallRiskCard(snapshot: snapshot),
-                      VitPageSection(
-                        key: metricsKey,
-                        label: 'Risk Breakdown',
-                        accentColor: AppModuleAccents.earn,
-                        children: [
-                          for (final metric in snapshot.riskMetrics)
-                            _RiskMetricCard(metric: metric),
-                        ],
-                      ),
-                      VitPageSection(
-                        key: exposureKey,
-                        label: 'Exposure by Asset',
-                        accentColor: AppModuleAccents.earn,
-                        children: [
-                          _ExposureCard(exposures: snapshot.exposures),
-                        ],
-                      ),
-                      VitPageSection(
-                        key: eventsKey,
-                        label: 'Recent Risk Events',
-                        accentColor: AppModuleAccents.earn,
-                        children: [
-                          for (final event in snapshot.events)
-                            _RiskEventCard(event: event),
-                        ],
-                      ),
-                      VitPageSection(
-                        key: actionsKey,
-                        label: 'Risk Management Actions',
-                        accentColor: AppModuleAccents.earn,
-                        children: [_ActionsGrid(actions: snapshot.actions)],
-                      ),
-                      _FooterNote(note: snapshot.footerNote),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingRiskDashboardSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle:
+                    'Tổng quan rủi ro earn — APY ước tính có thể thay đổi',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
+                        children: [
+                          _OverallRiskCard(snapshot: snapshot),
+                          VitPageSection(
+                            key: metricsKey,
+                            label: 'Risk Breakdown',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              for (final metric in snapshot.riskMetrics)
+                                _RiskMetricCard(metric: metric),
+                            ],
+                          ),
+                          VitPageSection(
+                            key: exposureKey,
+                            label: 'Exposure by Asset',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              _ExposureCard(exposures: snapshot.exposures),
+                            ],
+                          ),
+                          VitPageSection(
+                            key: eventsKey,
+                            label: 'Recent Risk Events',
+                            accentColor: AppModuleAccents.earn,
+                            children: [
+                              for (final event in snapshot.events)
+                                _RiskEventCard(event: event),
+                            ],
+                          ),
+                          VitPageSection(
+                            key: actionsKey,
+                            label: 'Risk Management Actions',
+                            accentColor: AppModuleAccents.earn,
+                            children: [_ActionsGrid(actions: snapshot.actions)],
+                          ),
+                          _FooterNote(note: snapshot.footerNote),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

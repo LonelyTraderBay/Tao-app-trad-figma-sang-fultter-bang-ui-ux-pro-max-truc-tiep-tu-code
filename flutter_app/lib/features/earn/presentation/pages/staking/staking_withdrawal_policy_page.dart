@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -88,16 +89,7 @@ class _StakingWithdrawalPolicyPageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingWithdrawalPolicyRepositoryProvider)
-        .getPolicy();
-    final activeTab = _activeTab ?? snapshot.defaultTab;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingWithdrawalPolicySnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -105,73 +97,109 @@ class _StakingWithdrawalPolicyPageState
       semanticIdentifier: 'SC-355',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Thời gian rút và phí phạt được liệt kê rõ',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.form,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      ConstrainedBox(
-                        key: StakingWithdrawalPolicyPage.infoKey,
-                        constraints: const BoxConstraints(
-                          minHeight: _stakingWithdrawalInfoMinHeight,
-                        ),
-                        child: VitInfoCallout(
-                          title: snapshot.infoTitle,
-                          message: snapshot.infoBody,
-                          icon: Icons.info_outline_rounded,
-                          accentColor: AppModuleAccents.earn,
-                          padding: EarnSpacingTokens.earnPaddingX4,
-                          radius: VitCardRadius.large,
-                        ),
-                      ),
-                      const VitHighRiskStatePanel(
-                        density: VitDensity.compact,
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Withdrawal policy review required',
-                        message:
-                            'Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.',
-                        contractId: 'staking-withdrawal-policy',
-                      ),
-                      _PolicyTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeTab = tab);
-                        },
-                      ),
-                      if (activeTab == 'timeline')
-                        _TimelineTab(snapshot: snapshot)
-                      else if (activeTab == 'penalties')
-                        _PenaltiesTab(
-                          snapshot: snapshot,
-                          onOpenCalculator: () => _openCalculator(snapshot),
-                        )
-                      else
-                        _EmergencyTab(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingWithdrawalPolicySnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _activeTab ?? snapshot.defaultTab;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Thời gian rút và phí phạt được liệt kê rõ',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.form,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: [
+                          ConstrainedBox(
+                            key: StakingWithdrawalPolicyPage.infoKey,
+                            constraints: const BoxConstraints(
+                              minHeight: _stakingWithdrawalInfoMinHeight,
+                            ),
+                            child: VitInfoCallout(
+                              title: snapshot.infoTitle,
+                              message: snapshot.infoBody,
+                              icon: Icons.info_outline_rounded,
+                              accentColor: AppModuleAccents.earn,
+                              padding: EarnSpacingTokens.earnPaddingX4,
+                              radius: VitCardRadius.large,
+                            ),
+                          ),
+                          const VitHighRiskStatePanel(
+                            density: VitDensity.compact,
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Withdrawal policy review required',
+                            message:
+                                'Timeline, early fee, emergency limits, preview, confirm and support next steps are reviewed before withdrawal.',
+                            contractId: 'staking-withdrawal-policy',
+                          ),
+                          _PolicyTabs(
+                            tabs: snapshot.tabs,
+                            active: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeTab = tab);
+                            },
+                          ),
+                          if (activeTab == 'timeline')
+                            _TimelineTab(snapshot: snapshot)
+                          else if (activeTab == 'penalties')
+                            _PenaltiesTab(
+                              snapshot: snapshot,
+                              onOpenCalculator: () => _openCalculator(snapshot),
+                            )
+                          else
+                            _EmergencyTab(snapshot: snapshot),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

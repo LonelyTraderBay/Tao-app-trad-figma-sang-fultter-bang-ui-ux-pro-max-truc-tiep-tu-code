@@ -29,35 +29,43 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-317 mock repository exposes launchpad risk analytics BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getRiskAnalytics();
+  test(
+    'SC-317 mock repository exposes launchpad risk analytics BE draft',
+    () async {
+      final snapshot = await const MockLaunchpadRepository(
+        loadDelay: Duration.zero,
+      ).getRiskAnalytics();
 
-    expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-risk-analytics');
-    expect(
-      snapshot.actionDraft,
-      'POST /launchpad/subscribe|claim|bridge where applicable',
-    );
-    expect(snapshot.title, 'Risk Analytics');
-    expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.tabs, ['Tong quan', 'Due Diligence', 'Bao cao']);
-    expect(snapshot.project.name, 'VitToken');
-    expect(snapshot.project.score.overall, 78);
-    expect(snapshot.project.level, LaunchpadRiskLevel.medium);
-    expect(snapshot.metrics, hasLength(6));
-    expect(snapshot.comparisonProjects, hasLength(4));
-    expect(snapshot.auditReports, hasLength(2));
-    expect(snapshot.resources, hasLength(4));
-    expect(snapshot.contractNotes, contains('realtime refresh'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        LaunchpadScreenState.loading,
-        LaunchpadScreenState.empty,
-        LaunchpadScreenState.error,
-        LaunchpadScreenState.offline,
-      ]),
-    );
-  });
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/launchpad/launchpad-risk-analytics',
+      );
+      expect(
+        snapshot.actionDraft,
+        'POST /launchpad/subscribe|claim|bridge where applicable',
+      );
+      expect(snapshot.title, 'Risk Analytics');
+      expect(snapshot.backRoute, AppRoutePaths.launchpad);
+      expect(snapshot.tabs, ['Tong quan', 'Due Diligence', 'Bao cao']);
+      expect(snapshot.project.name, 'VitToken');
+      expect(snapshot.project.score.overall, 78);
+      expect(snapshot.project.level, LaunchpadRiskLevel.medium);
+      expect(snapshot.metrics, hasLength(6));
+      expect(snapshot.comparisonProjects, hasLength(4));
+      expect(snapshot.auditReports, hasLength(2));
+      expect(snapshot.resources, hasLength(4));
+      expect(snapshot.contractNotes, contains('realtime refresh'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          LaunchpadScreenState.loading,
+          LaunchpadScreenState.empty,
+          LaunchpadScreenState.error,
+          LaunchpadScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-317 renders risk overview baseline', (tester) async {
     await pumpRiskAnalytics(tester);

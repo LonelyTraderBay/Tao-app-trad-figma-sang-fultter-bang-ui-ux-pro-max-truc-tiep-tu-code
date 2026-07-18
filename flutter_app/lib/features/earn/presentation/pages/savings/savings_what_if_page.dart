@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -67,26 +68,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(savingsWhatIfRepositoryProvider).getWhatIf();
-    final activeTab = _tab ?? snapshot.defaultTab;
-    final selectedId = _selectedScenario ?? snapshot.defaultScenario;
-    final scenario = _scenarioById(snapshot, selectedId);
-    final multiplier = _customMultiplier ?? snapshot.defaultCustomMultiplier;
-    final volatility = _customVolatility ?? snapshot.defaultCustomVolatility;
-    final result = _simulateScenario(
-      snapshot.portfolio,
-      scenario,
-      multiplier,
-      volatility,
-    );
-    final totalValue = _totalPortfolioValue(snapshot.portfolio);
-    final weightedApy = _weightedApy(snapshot.portfolio);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(savingsWhatIfSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -94,80 +76,127 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
       semanticIdentifier: 'SC-352',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            subtitle: kSavingsToolsHeaderSubtitle,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Material(
-                color: AppColors.surface,
-                child: Padding(
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.zero,
-                    bottom: AppSpacing.zero,
-                  ),
-                  child: _WhatIfTabs(
-                    tabs: snapshot.tabs,
-                    active: activeTab,
-                    onChanged: (tab) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _tab = tab);
-                    },
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitHeader(
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnSavings),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(savingsWhatIfSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _tab ?? snapshot.defaultTab;
+            final selectedId = _selectedScenario ?? snapshot.defaultScenario;
+            final scenario = _scenarioById(snapshot, selectedId);
+            final multiplier =
+                _customMultiplier ?? snapshot.defaultCustomMultiplier;
+            final volatility =
+                _customVolatility ?? snapshot.defaultCustomVolatility;
+            final result = _simulateScenario(
+              snapshot.portfolio,
+              scenario,
+              multiplier,
+              volatility,
+            );
+            final totalValue = _totalPortfolioValue(snapshot.portfolio);
+            final weightedApy = _weightedApy(snapshot.portfolio);
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-              const Divider(
-                height: AppSpacing.dividerHairline,
-                thickness: AppSpacing.dividerHairline,
-                color: AppColors.divider,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _WhatIfHero(
-                        snapshot: snapshot,
-                        totalValue: totalValue,
-                        weightedApy: weightedApy,
-                        selectedScenario: scenario,
-                        assetCount: snapshot.portfolio.length,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Material(
+                    color: AppColors.surface,
+                    child: Padding(
+                      padding: AppSpacing.contentInsets.copyWith(
+                        top: AppSpacing.zero,
+                        bottom: AppSpacing.zero,
                       ),
-                      if (activeTab == 'scenarios')
-                        ..._buildScenariosTab(
-                          snapshot,
-                          scenario,
-                          multiplier,
-                          volatility,
-                        )
-                      else if (activeTab == 'results')
-                        _ResultsTab(
-                          result: result,
-                          scenario: scenario,
-                          hasRun: _hasRun,
-                          onRun: () => _runScenario(snapshot),
-                          onReset: _resetScenario,
-                        )
-                      else
-                        _StressTab(snapshot: snapshot),
-                      const SavingsToolsYieldFooter(),
-                    ],
+                      child: _WhatIfTabs(
+                        tabs: snapshot.tabs,
+                        active: activeTab,
+                        onChanged: (tab) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _tab = tab);
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _WhatIfHero(
+                            snapshot: snapshot,
+                            totalValue: totalValue,
+                            weightedApy: weightedApy,
+                            selectedScenario: scenario,
+                            assetCount: snapshot.portfolio.length,
+                          ),
+                          if (activeTab == 'scenarios')
+                            ..._buildScenariosTab(
+                              snapshot,
+                              scenario,
+                              multiplier,
+                              volatility,
+                            )
+                          else if (activeTab == 'results')
+                            _ResultsTab(
+                              result: result,
+                              scenario: scenario,
+                              hasRun: _hasRun,
+                              onRun: () => _runScenario(snapshot),
+                              onReset: _resetScenario,
+                            )
+                          else
+                            _StressTab(snapshot: snapshot),
+                          const SavingsToolsYieldFooter(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

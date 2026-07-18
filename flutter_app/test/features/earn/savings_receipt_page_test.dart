@@ -28,8 +28,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-332 mock repository exposes savings receipt BE draft', () {
-    final snapshot = const MockSavingsReceiptRepository().getReceipt();
+  test('SC-332 mock repository exposes savings receipt BE draft', () async {
+    final snapshot = await const MockSavingsReceiptRepository().getReceipt();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-receipt');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));

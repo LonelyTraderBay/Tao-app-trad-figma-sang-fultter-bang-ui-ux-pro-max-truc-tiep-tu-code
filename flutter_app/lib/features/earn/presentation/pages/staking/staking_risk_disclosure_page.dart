@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -73,16 +74,7 @@ class _StakingRiskDisclosurePageState
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(stakingRiskDisclosureRepositoryProvider)
-        .getDisclosure();
-    final activeTab = _activeTab ?? snapshot.defaultTab;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingRiskDisclosureSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -90,61 +82,100 @@ class _StakingRiskDisclosurePageState
       semanticIdentifier: 'SC-354',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'APY ước tính có thể thay đổi',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _WarningBanner(snapshot: snapshot),
-                      _RiskTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _activeTab = tab);
-                        },
-                      ),
-                      if (activeTab == 'overview')
-                        _OverviewTab(snapshot: snapshot)
-                      else if (activeTab == 'categories')
-                        _CategoriesTab(
-                          snapshot: snapshot,
-                          expandedRisk: _expandedRisk,
-                          onToggle: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _expandedRisk = _expandedRisk == id ? null : id;
-                            });
-                          },
-                        )
-                      else
-                        _AssessmentTab(
-                          snapshot: snapshot,
-                          onStart: () => context.go(snapshot.assessmentRoute),
-                        ),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () =>
+                  ref.invalidate(stakingRiskDisclosureSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final activeTab = _activeTab ?? snapshot.defaultTab;
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'APY ước tính có thể thay đổi',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
+                        children: [
+                          _WarningBanner(snapshot: snapshot),
+                          _RiskTabs(
+                            tabs: snapshot.tabs,
+                            active: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _activeTab = tab);
+                            },
+                          ),
+                          if (activeTab == 'overview')
+                            _OverviewTab(snapshot: snapshot)
+                          else if (activeTab == 'categories')
+                            _CategoriesTab(
+                              snapshot: snapshot,
+                              expandedRisk: _expandedRisk,
+                              onToggle: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _expandedRisk = _expandedRisk == id
+                                      ? null
+                                      : id;
+                                });
+                              },
+                            )
+                          else
+                            _AssessmentTab(
+                              snapshot: snapshot,
+                              onStart: () =>
+                                  context.go(snapshot.assessmentRoute),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

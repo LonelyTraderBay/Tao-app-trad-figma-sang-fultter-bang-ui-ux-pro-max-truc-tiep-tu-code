@@ -31,8 +31,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-394 mock repository exposes data export BE draft', () {
-    final snapshot = const MockStakingDataExportRepository().getDataExport();
+  test('SC-394 mock repository exposes data export BE draft', () async {
+    final snapshot = await const MockStakingDataExportRepository()
+        .getDataExport();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-data-export');
     expect(snapshot.actionDraft, contains('POST /exports'));

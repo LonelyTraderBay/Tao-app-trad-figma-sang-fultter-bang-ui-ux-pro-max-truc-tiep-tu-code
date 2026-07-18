@@ -29,38 +29,44 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-338 mock repository exposes savings recommendations BE draft', () {
-    final snapshot = const MockSavingsRecommendationsRepository()
-        .getRecommendations();
+  test(
+    'SC-338 mock repository exposes savings recommendations BE draft',
+    () async {
+      final snapshot = await const MockSavingsRecommendationsRepository()
+          .getRecommendations();
 
-    expect(snapshot.endpoint, '/api/mobile/earn/earn-savings-recommendations');
-    expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
-    expect(snapshot.title, 'Gợi ý Tiết kiệm');
-    expect(snapshot.backRoute, AppRoutePaths.earnSavings);
-    expect(
-      snapshot.riskAssessmentRoute,
-      AppRoutePaths.earnSavingsRiskAssessment,
-    );
-    expect(snapshot.savingsRoute, AppRoutePaths.earnSavings);
-    expect(snapshot.profile.totalAvailable, 15000);
-    expect(snapshot.profile.preferredAssets, ['USDT', 'BTC', 'ETH']);
-    expect(snapshot.strategies, hasLength(3));
-    expect(
-      snapshot.strategies.singleWhere((strategy) => strategy.recommended).id,
-      'balanced-growth',
-    );
-    expect(snapshot.insights, hasLength(4));
-    expect(snapshot.contractNotes, contains('earnProducts'));
-    expect(
-      snapshot.supportedStates,
-      containsAll([
-        EarnScreenState.loading,
-        EarnScreenState.empty,
-        EarnScreenState.error,
-        EarnScreenState.offline,
-      ]),
-    );
-  });
+      expect(
+        snapshot.endpoint,
+        '/api/mobile/earn/earn-savings-recommendations',
+      );
+      expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
+      expect(snapshot.title, 'Gợi ý Tiết kiệm');
+      expect(snapshot.backRoute, AppRoutePaths.earnSavings);
+      expect(
+        snapshot.riskAssessmentRoute,
+        AppRoutePaths.earnSavingsRiskAssessment,
+      );
+      expect(snapshot.savingsRoute, AppRoutePaths.earnSavings);
+      expect(snapshot.profile.totalAvailable, 15000);
+      expect(snapshot.profile.preferredAssets, ['USDT', 'BTC', 'ETH']);
+      expect(snapshot.strategies, hasLength(3));
+      expect(
+        snapshot.strategies.singleWhere((strategy) => strategy.recommended).id,
+        'balanced-growth',
+      );
+      expect(snapshot.insights, hasLength(4));
+      expect(snapshot.contractNotes, contains('earnProducts'));
+      expect(
+        snapshot.supportedStates,
+        containsAll([
+          EarnScreenState.loading,
+          EarnScreenState.empty,
+          EarnScreenState.error,
+          EarnScreenState.offline,
+        ]),
+      );
+    },
+  );
 
   testWidgets('SC-338 renders recommendations baseline', (tester) async {
     await pumpRecommendations(tester);

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -43,13 +44,7 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(stakingTermsRepositoryProvider).getTerms();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final snapshotAsync = ref.watch(stakingTermsSnapshotProvider);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -57,60 +52,94 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
       semanticIdentifier: 'SC-353',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitTopChrome(
-            type: VitTopChromeType.detail,
-            title: snapshot.title,
-            subtitle: 'Minh bạch điều khoản — không cam kết lợi nhuận',
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+        child: snapshotAsync.when(
+          loading: () => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Đang tải…',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: const VitSkeletonList(),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: EarnSpacingTokens.earnBottomInsetPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    rhythm: VitPageRhythm.standard,
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _TermsHero(
-                        snapshot: snapshot,
-                        actionMessage: _actionMessage,
-                        onPrint: () => _setAction(
-                          'Đang chuẩn bị bản in trang điều khoản.',
-                        ),
-                        onDownload: () => _setAction(
-                          'Tải PDF sẽ sớm ra mắt. Bạn có thể dùng In trang để lưu PDF.',
-                        ),
-                      ),
-                      for (final section in snapshot.sections) ...[
-                        _TermsSectionCard(
-                          section: section,
-                          expanded: _expandedSections.contains(section.id),
-                          onTap: () => _toggleSection(section.id),
-                        ),
-                      ],
-                      _AcceptanceCard(
-                        accepted: _accepted,
-                        snapshot: snapshot,
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _accepted = !_accepted);
-                        },
-                      ),
-                      _FooterCard(text: snapshot.footer),
-                    ],
-                  ),
-                ),
+          error: (error, stackTrace) => VitAutoHideHeaderScaffold(
+            header: VitTopChrome(
+              type: VitTopChromeType.detail,
+              title: 'Không tải được',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.earnStaking),
+            ),
+            child: VitErrorState(
+              title: 'Không tải được',
+              message: 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+              actionLabel: 'Thử lại',
+              onAction: () => ref.invalidate(stakingTermsSnapshotProvider),
+            ),
+          ),
+          data: (snapshot) {
+            final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+            final bottomInset =
+                (mode.usesVisualQaFrame
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x7
+                    : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+                MediaQuery.paddingOf(context).bottom;
+
+            return VitAutoHideHeaderScaffold(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
+                title: snapshot.title,
+                subtitle: 'Minh bạch điều khoản — không cam kết lợi nhuận',
+                showBack: true,
+                onBack: () => context.go(snapshot.backRoute),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
+                      child: VitPageContent(
+                        rhythm: VitPageRhythm.standard,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.defaultGap,
+                        children: [
+                          _TermsHero(
+                            snapshot: snapshot,
+                            actionMessage: _actionMessage,
+                            onPrint: () => _setAction(
+                              'Đang chuẩn bị bản in trang điều khoản.',
+                            ),
+                            onDownload: () => _setAction(
+                              'Tải PDF sẽ sớm ra mắt. Bạn có thể dùng In trang để lưu PDF.',
+                            ),
+                          ),
+                          for (final section in snapshot.sections) ...[
+                            _TermsSectionCard(
+                              section: section,
+                              expanded: _expandedSections.contains(section.id),
+                              onTap: () => _toggleSection(section.id),
+                            ),
+                          ],
+                          _AcceptanceCard(
+                            accepted: _accepted,
+                            snapshot: snapshot,
+                            onTap: () {
+                              HapticFeedback.selectionClick();
+                              setState(() => _accepted = !_accepted);
+                            },
+                          ),
+                          _FooterCard(text: snapshot.footer),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

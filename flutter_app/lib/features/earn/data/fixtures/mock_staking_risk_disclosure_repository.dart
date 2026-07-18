@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingRiskDisclosureRepository
+final class MockStakingRiskDisclosureRepository extends _MockEarnRepositoryBase
     implements StakingRiskDisclosureRepository {
-  const MockStakingRiskDisclosureRepository();
+  const MockStakingRiskDisclosureRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingRiskDisclosureSnapshot getDisclosure() {
+  Future<StakingRiskDisclosureSnapshot> getDisclosure() async {
+    await _simulateNetwork();
     return const StakingRiskDisclosureSnapshot(
       endpoint: '/api/mobile/earn/earn-staking-risk-disclosure',
       actionDraft:
@@ -265,11 +269,16 @@ final class MockStakingRiskDisclosureRepository
 }
 
 final class MockStakingWithdrawalPolicyRepository
+    extends _MockEarnRepositoryBase
     implements StakingWithdrawalPolicyRepository {
-  const MockStakingWithdrawalPolicyRepository();
+  const MockStakingWithdrawalPolicyRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingWithdrawalPolicySnapshot getPolicy() {
+  Future<StakingWithdrawalPolicySnapshot> getPolicy() async {
+    await _simulateNetwork();
     return const StakingWithdrawalPolicySnapshot(
       endpoint: '/api/mobile/earn/earn-staking-withdrawal-policy',
       actionDraft:

@@ -28,8 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-347 mock repository exposes smart suggestions BE draft', () {
-    final snapshot = const MockSavingsSmartSuggestionsRepository()
+  test('SC-347 mock repository exposes smart suggestions BE draft', () async {
+    final snapshot = await const MockSavingsSmartSuggestionsRepository()
         .getSuggestions();
 
     expect(

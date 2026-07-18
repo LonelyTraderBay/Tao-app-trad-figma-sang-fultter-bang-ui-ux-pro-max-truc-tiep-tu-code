@@ -1,11 +1,15 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingRecommendationsRepository
+final class MockStakingRecommendationsRepository extends _MockEarnRepositoryBase
     implements StakingRecommendationsRepository {
-  const MockStakingRecommendationsRepository();
+  const MockStakingRecommendationsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingRecommendationsSnapshot getRecommendations() {
+  Future<StakingRecommendationsSnapshot> getRecommendations() async {
+    await _simulateNetwork();
     return const StakingRecommendationsSnapshot(
       endpoint: '/api/mobile/earn/earn-recommendations',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -205,11 +209,16 @@ final class MockStakingRecommendationsRepository
 }
 
 final class MockStakingRegulatoryFrameworkRepository
+    extends _MockEarnRepositoryBase
     implements StakingRegulatoryFrameworkRepository {
-  const MockStakingRegulatoryFrameworkRepository();
+  const MockStakingRegulatoryFrameworkRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingRegulatoryFrameworkSnapshot getFramework() {
+  Future<StakingRegulatoryFrameworkSnapshot> getFramework() async {
+    await _simulateNetwork();
     return const StakingRegulatoryFrameworkSnapshot(
       endpoint: '/api/mobile/earn/earn-regulatory-framework',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -352,12 +361,16 @@ final class MockStakingRegulatoryFrameworkRepository
   }
 }
 
-final class MockStakingAuditReportsRepository
+final class MockStakingAuditReportsRepository extends _MockEarnRepositoryBase
     implements StakingAuditReportsRepository {
-  const MockStakingAuditReportsRepository();
+  const MockStakingAuditReportsRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingAuditReportsSnapshot getAuditReports() {
+  Future<StakingAuditReportsSnapshot> getAuditReports() async {
+    await _simulateNetwork();
     return const StakingAuditReportsSnapshot(
       endpoint: '/api/mobile/earn/earn-audit-reports',
       actionDraft:

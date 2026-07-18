@@ -1,10 +1,12 @@
 part of '../repositories/mock_earn_repository.dart';
 
-final class MockStakingCustodyRepository implements StakingCustodyRepository {
-  const MockStakingCustodyRepository();
+final class MockStakingCustodyRepository extends _MockEarnRepositoryBase
+    implements StakingCustodyRepository {
+  const MockStakingCustodyRepository({super.simulateError, super.loadDelay});
 
   @override
-  StakingCustodySnapshot getCustody() {
+  Future<StakingCustodySnapshot> getCustody() async {
+    await _simulateNetwork();
     return const StakingCustodySnapshot(
       endpoint: '/api/mobile/earn/earn-custody',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -144,11 +146,16 @@ final class MockStakingCustodyRepository implements StakingCustodyRepository {
 }
 
 final class MockStakingSuitabilityAssessmentRepository
+    extends _MockEarnRepositoryBase
     implements StakingSuitabilityAssessmentRepository {
-  const MockStakingSuitabilityAssessmentRepository();
+  const MockStakingSuitabilityAssessmentRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingSuitabilityAssessmentSnapshot getAssessment() {
+  Future<StakingSuitabilityAssessmentSnapshot> getAssessment() async {
+    await _simulateNetwork();
     return const StakingSuitabilityAssessmentSnapshot(
       endpoint: '/api/mobile/earn/earn-suitability-assessment',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -376,13 +383,15 @@ final class MockStakingSuitabilityAssessmentRepository
   }
 }
 
-final class MockSavingsComparisonRepository
+final class MockSavingsComparisonRepository extends _MockEarnRepositoryBase
     implements SavingsComparisonRepository {
-  const MockSavingsComparisonRepository();
+  const MockSavingsComparisonRepository({super.simulateError, super.loadDelay});
 
   @override
-  SavingsComparisonSnapshot getComparison() {
-    final savings = const MockSavingsRepository().getSavings();
+  Future<SavingsComparisonSnapshot> getComparison() async {
+    // Bẫy 18: không simulate 2 lần — await lời gọi mock trong, bỏ
+    // _simulateNetwork() ở lớp ngoài (nó đã tự simulate delay/error).
+    final savings = await const MockSavingsRepository().getSavings();
 
     return SavingsComparisonSnapshot(
       endpoint: '/api/mobile/earn/earn-savings-comparison',

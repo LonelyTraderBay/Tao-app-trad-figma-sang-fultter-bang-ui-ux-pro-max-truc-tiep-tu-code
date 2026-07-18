@@ -52,8 +52,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  test('SC-327 mock repository exposes Earn BE draft', () {
-    final snapshot = const MockStakingEarnRepository().getStakingEarn();
+  test('SC-327 mock repository exposes Earn BE draft', () async {
+    final snapshot = await const MockStakingEarnRepository().getStakingEarn();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn');
     expect(snapshot.actionDraft, contains('POST /earn/subscribe'));
@@ -74,8 +74,8 @@ void main() {
     );
   });
 
-  test('SC-328 mock repository exposes staking route BE draft', () {
-    final snapshot = const MockStakingEarnRepository().getStakingEarn(
+  test('SC-328 mock repository exposes staking route BE draft', () async {
+    final snapshot = await const MockStakingEarnRepository().getStakingEarn(
       route: StakingEarnRoute.staking,
     );
 

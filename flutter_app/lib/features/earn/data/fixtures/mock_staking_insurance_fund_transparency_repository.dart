@@ -1,11 +1,16 @@
 part of '../repositories/mock_earn_repository.dart';
 
 final class MockStakingInsuranceFundTransparencyRepository
+    extends _MockEarnRepositoryBase
     implements StakingInsuranceFundTransparencyRepository {
-  const MockStakingInsuranceFundTransparencyRepository();
+  const MockStakingInsuranceFundTransparencyRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingInsuranceFundTransparencySnapshot getTransparency() {
+  Future<StakingInsuranceFundTransparencySnapshot> getTransparency() async {
+    await _simulateNetwork();
     return const StakingInsuranceFundTransparencySnapshot(
       endpoint: '/api/mobile/earn/earn-insurance-fund-transparency',
       actionDraft: 'POST /earn/subscribe|redeem|claim|vote where applicable',
@@ -167,11 +172,16 @@ final class MockStakingInsuranceFundTransparencyRepository
 }
 
 final class MockStakingTransactionReportingRepository
+    extends _MockEarnRepositoryBase
     implements StakingTransactionReportingRepository {
-  const MockStakingTransactionReportingRepository();
+  const MockStakingTransactionReportingRepository({
+    super.simulateError,
+    super.loadDelay,
+  });
 
   @override
-  StakingTransactionReportingSnapshot getReporting() {
+  Future<StakingTransactionReportingSnapshot> getReporting() async {
+    await _simulateNetwork();
     return const StakingTransactionReportingSnapshot(
       endpoint: '/api/mobile/earn/earn-transaction-reporting',
       actionDraft:

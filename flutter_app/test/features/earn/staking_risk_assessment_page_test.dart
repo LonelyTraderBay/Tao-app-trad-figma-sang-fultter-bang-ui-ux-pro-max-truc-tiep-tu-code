@@ -31,8 +31,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-357 mock repository exposes staking assessment BE draft', () {
-    final snapshot = const MockStakingRiskAssessmentRepository()
+  test('SC-357 mock repository exposes staking assessment BE draft', () async {
+    final snapshot = await const MockStakingRiskAssessmentRepository()
         .getRiskAssessment();
 
     expect(snapshot.endpoint, '/api/mobile/earn/earn-staking-risk-assessment');

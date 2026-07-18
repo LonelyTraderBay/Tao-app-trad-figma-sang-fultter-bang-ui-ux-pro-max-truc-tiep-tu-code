@@ -29,8 +29,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('SC-310 mock repository exposes launchpad webhooks BE draft', () {
-    final snapshot = const MockLaunchpadRepository().getWebhooks();
+  test('SC-310 mock repository exposes launchpad webhooks BE draft', () async {
+    final snapshot = await const MockLaunchpadRepository(
+      loadDelay: Duration.zero,
+    ).getWebhooks();
 
     expect(snapshot.endpoint, '/api/mobile/launchpad/launchpad-webhooks');
     expect(
