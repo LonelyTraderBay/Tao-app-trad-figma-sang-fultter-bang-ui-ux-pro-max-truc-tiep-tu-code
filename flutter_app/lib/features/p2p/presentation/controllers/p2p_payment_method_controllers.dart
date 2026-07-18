@@ -75,10 +75,10 @@ final class P2PPaymentMethodAddController {
       return 'Select a payment method before preview.';
     }
     if (account.trim().isEmpty) {
-      return 'Enter the account or wallet identifier before preview.';
+      return 'Nhập số tài khoản hoặc địa chỉ ví trước khi xem trước.';
     }
     if (ownerName.trim().isEmpty) {
-      return 'Enter the verified owner name before preview.';
+      return 'Nhập tên chủ sở hữu đã xác minh trước khi xem trước.';
     }
     return null;
   }
@@ -94,7 +94,7 @@ final class P2PPaymentMethodAddController {
       maskedAccount: _maskPaymentAccount(account.trim()),
       ownerName: ownerName.trim(),
       ownershipRiskMessage:
-          'Ownership review: account owner must match the verified P2P profile before activation.',
+          'Xem xét quyền sở hữu: chủ tài khoản phải khớp với hồ sơ P2P đã xác minh trước khi kích hoạt.',
       limitMessage:
           'Limits: new payment methods stay under security review before high-value orders.',
       confirmTitle: state.snapshot.confirmTitle,

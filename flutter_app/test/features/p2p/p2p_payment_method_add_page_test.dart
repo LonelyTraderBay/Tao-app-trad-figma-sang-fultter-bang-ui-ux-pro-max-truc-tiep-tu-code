@@ -111,7 +111,7 @@ void main() {
     expect(find.text('Tài khoản'), findsOneWidget);
     expect(find.text('Chủ tài khoản'), findsOneWidget);
     expect(find.text('007...3456'), findsOneWidget);
-    expect(find.textContaining('Ownership review'), findsOneWidget);
+    expect(find.textContaining('Xem xét quyền sở hữu'), findsOneWidget);
     expect(find.textContaining('Limits:'), findsOneWidget);
 
     await tester.ensureVisible(

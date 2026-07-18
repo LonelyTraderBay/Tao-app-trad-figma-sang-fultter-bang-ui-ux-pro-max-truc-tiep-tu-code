@@ -41,10 +41,10 @@ final class TradeRiskManagementController {
 
   String? ocoValidationMessage(TradeOcoOrderDraft draft) {
     if (state.status == TradeHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before previewing this OCO order.';
+      return 'Mất kết nối: kết nối lại trước khi xem trước lệnh OCO này.';
     }
     if (state.status.isBusy) {
-      return 'Risk order confirmation is already in progress.';
+      return 'Xác nhận lệnh quản trị rủi ro đang được xử lý.';
     }
     if (draft.symbol.trim().isEmpty) {
       return 'Select a symbol before OCO preview.';
@@ -53,15 +53,15 @@ final class TradeRiskManagementController {
         draft.limitPrice <= 0 ||
         draft.takeProfitPrice <= 0 ||
         draft.stopPrice <= 0) {
-      return 'Enter valid quantity, limit, take-profit, and stop prices.';
+      return 'Nhập khối lượng, giá giới hạn, giá chốt lời và giá dừng hợp lệ.';
     }
     if (draft.side == TradeOrderSide.buy &&
         draft.takeProfitPrice <= draft.limitPrice) {
-      return 'Take-profit must be above the buy limit price.';
+      return 'Giá chốt lời phải cao hơn giá mua giới hạn.';
     }
     if (draft.side == TradeOrderSide.sell &&
         draft.stopPrice >= draft.limitPrice) {
-      return 'Stop price must stay below the sell limit price.';
+      return 'Giá dừng phải thấp hơn giá bán giới hạn.';
     }
     return null;
   }
@@ -77,13 +77,13 @@ final class TradeRiskManagementController {
       return 'Offline: reconnect before calculating position size.';
     }
     if (request.accountBalance <= 0 || request.riskPct <= 0) {
-      return 'Enter valid balance and risk percent before calculation.';
+      return 'Nhập số dư và phần trăm rủi ro hợp lệ trước khi tính toán.';
     }
     if (request.entryPrice <= 0 || request.stopPrice <= 0) {
-      return 'Enter valid entry and stop prices before calculation.';
+      return 'Nhập giá vào lệnh và giá dừng hợp lệ trước khi tính toán.';
     }
     if (request.entryPrice == request.stopPrice) {
-      return 'Entry and stop prices must be different.';
+      return 'Giá vào lệnh và giá dừng phải khác nhau.';
     }
     return null;
   }

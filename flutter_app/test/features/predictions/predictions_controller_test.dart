@@ -129,7 +129,7 @@ void main() {
     expect(controller.cancelValidationMessage('oo-1'), isNull);
     expect(
       controller.cancelValidationMessage('missing'),
-      'Open order is no longer available.',
+      'Lệnh đang mở không còn khả dụng.',
     );
   });
 
@@ -159,7 +159,7 @@ void main() {
         currentPriceText: '0.52',
         portfolioBudgetText: '1000',
       ),
-      'Enter valid shares, entry price, and current price.',
+      'Nhập số cổ phần, giá vào lệnh và giá hiện tại hợp lệ.',
     );
 
     final receiptController = PredictionOrderReceiptController(

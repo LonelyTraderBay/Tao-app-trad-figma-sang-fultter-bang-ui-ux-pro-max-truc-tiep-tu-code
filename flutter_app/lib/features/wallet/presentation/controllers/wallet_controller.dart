@@ -117,16 +117,16 @@ final class WithdrawController {
     }
     final parsedAmount = double.tryParse(amount.trim().replaceAll(',', ''));
     if (parsedAmount == null || parsedAmount <= 0) {
-      return 'Enter a valid withdrawal amount before preview.';
+      return 'Nhập số tiền rút hợp lệ trước khi xem trước.';
     }
     if (parsedAmount < network.minWithdraw) {
-      return 'Amount is below the network minimum.';
+      return 'Số tiền thấp hơn mức tối thiểu của mạng lưới.';
     }
     if (parsedAmount > network.maxWithdraw) {
-      return 'Amount exceeds the network limit.';
+      return 'Số tiền vượt quá hạn mức của mạng lưới.';
     }
     if (parsedAmount > state.snapshot.available) {
-      return 'Amount exceeds the available balance.';
+      return 'Số tiền vượt quá số dư khả dụng.';
     }
     return null;
   }
@@ -293,10 +293,10 @@ final class TokenApprovalController {
     }
     if (approval != null &&
         !state.snapshot.approvals.any((item) => item.id == approval.id)) {
-      return 'Token approval is no longer available for review.';
+      return 'Ủy quyền token không còn khả dụng để xem xét.';
     }
     if (approval == null && state.riskSortedApprovals.isEmpty) {
-      return 'No token approvals are available for review.';
+      return 'Không có ủy quyền token nào để xem xét.';
     }
     return null;
   }
@@ -304,18 +304,18 @@ final class TokenApprovalController {
   TokenRevokePreview revokePreview(WalletTokenApproval? approval) {
     final bulk = approval == null;
     final body = bulk
-        ? 'Review the spender, token, allowance, gas estimate, and impacted permissions before confirming this revocation.\n'
+        ? 'Xem lại bên chi tiêu, token, hạn mức, ước tính gas và các quyền bị ảnh hưởng trước khi xác nhận thu hồi này.\n'
               'Spender: multiple high-risk contracts\n'
               'Token: multiple approved assets\n'
               'Allowance: high-risk or unlimited approvals\n'
-              'Gas estimate: one revoke transaction per approval; network fee must be reviewed before broadcast.\n'
+              'Ước tính gas: mỗi lượt thu hồi cần một giao dịch riêng; phải xem lại phí mạng trước khi phát sóng.\n'
               'Impact: removes the highlighted high-risk permissions only.'
-        : 'Review the spender, token, allowance, gas estimate, and impacted permissions before confirming this revocation.\n'
+        : 'Xem lại bên chi tiêu, token, hạn mức, ước tính gas và các quyền bị ảnh hưởng trước khi xác nhận thu hồi này.\n'
               'Spender: ${approval.spenderName} (${approval.maskedSpender})\n'
               'Token: ${approval.token}\n'
               'Allowance: ${approval.amountLabel}\n'
-              'Gas estimate: preview required before broadcast; network fee must be confirmed.\n'
-              'Impact: removes this token allowance for the selected spender.';
+              'Ước tính gas: cần xem trước trước khi phát sóng; phải xác nhận phí mạng.\n'
+              'Tác động: xóa hạn mức token này cho bên chi tiêu đã chọn.';
     return TokenRevokePreview(
       title: bulk
           ? 'Revoke all high-risk approvals'

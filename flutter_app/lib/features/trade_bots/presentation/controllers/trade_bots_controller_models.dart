@@ -51,7 +51,7 @@ final class TradeBotEmergencyStopController {
       return 'Select an emergency-stop reason before confirmation.';
     }
     if (!confirmed) {
-      return 'Confirm the emergency-stop acknowledgement first.';
+      return 'Xác nhận đã đọc cảnh báo dừng khẩn cấp trước.';
     }
     return null;
   }
@@ -93,7 +93,7 @@ final class TradeBotSecuritySettingsController {
       return 'Offline: reconnect before saving bot security settings.';
     }
     if (state.status.isBusy) {
-      return 'Bot security update is already in progress.';
+      return 'Cập nhật bảo mật bot đang được xử lý.';
     }
     return null;
   }

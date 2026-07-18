@@ -403,6 +403,42 @@ jobs:
       - name: Build debug APK (flavor dev)
         run: flutter build apk --debug --flavor dev
 
+  golden-windows:
+    # GĐ4 Cụm S: golden pixel-compare CHỈ chạy được trên Windows (baseline
+    # PNG sinh trên máy dev Windows, font Be Vietnam Pro rasterize khác AA
+    # trên Linux). Job nhỏ riêng trên windows-latest để gate merge thật sự
+    # so pixel — trước đây job guardrails (ubuntu) chạy các test này nhưng
+    # chúng tự skip (!Platform.isWindows).
+    name: Golden pixel compare (Windows)
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: flutter_app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.41.9'
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Golden tests (pixel compare)
+        run: >
+          flutter test
+          test/features/home/golden
+          test/features/trade/golden
+          test/features/wallet/golden
+          test/features/p2p/golden
+          test/features/earn/golden
+          --reporter=compact
+
   secret-scan:
     # CI-D4/SEC-S41: quét secret bằng gitleaks trên các commit của PR/push.
     # .gitleaks.toml (repo root) allowlist marker VI_DU_KHONG_THAT của fixture.
@@ -435,7 +471,7 @@ jobs:
     # được). Đồng thời hợp nhất lcov 3 shard và chạy sàn coverage (CI-D3).
     name: Enterprise Flutter Gates
     runs-on: ubuntu-latest
-    needs: [static, guardrails, tests, build-android, secret-scan]
+    needs: [static, guardrails, tests, build-android, secret-scan, golden-windows]
     if: always()
     defaults:
       run:
@@ -450,6 +486,7 @@ jobs:
           echo 'tests:         ${{ needs.tests.result }}'
           echo 'build-android: ${{ needs.build-android.result }}'
           echo 'secret-scan:   ${{ needs.secret-scan.result }}'
+          echo 'golden-win:    ${{ needs.golden-windows.result }}'
           if [ '${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}' = 'true' ]; then
             echo 'Co job thanh phan khong xanh — gate FAIL.'
             exit 1

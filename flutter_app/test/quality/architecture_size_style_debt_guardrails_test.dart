@@ -29,27 +29,10 @@ void main() {
       );
     });
 
-    test('presentation page part-file debt does not increase', () {
-      final pagePartFiles = Directory('lib/features')
-          .listSync(recursive: true)
-          .whereType<File>()
-          .map((file) => normalizePath(file.path))
-          .where(
-            (path) =>
-                path.contains('/presentation/pages/') &&
-                RegExp(r'_part_.*\.dart$').hasMatch(path),
-          )
-          .toList();
-
-      expect(
-        pagePartFiles.length,
-        lessThanOrEqualTo(218),
-        reason:
-            'Page part-files are tracked refactor debt. New reusable UI '
-            'should move into presentation/widgets/ instead of adding more '
-            'presentation/pages/*_part_*.dart files.',
-      );
-    });
+    // GĐ4 Cụm S (2026-07-18): test "presentation page part-file debt <= 218"
+    // đã GỠ — nợ thực = 0 từ ARCH-A4 và test `_part_NN isEmpty` phía trên
+    // (khóa cứng ở 0, phủ rộng hơn: toàn lib/) đã vượt mặt nó hoàn toàn;
+    // giữ lại chỉ tạo trần 218 slot cho phép tái lập nợ mà không ai hay.
 
     test('wallet uses presentation widgets for high-volume UI', () {
       final walletWidgetFiles =
@@ -103,8 +86,20 @@ void main() {
       final over600 = _dartFilesOver(root: 'lib/features', lineCount: 600);
       final over1200 = _dartFilesOver(root: 'lib/features', lineCount: 1200);
 
-      expect(over600.length, lessThanOrEqualTo(239));
-      expect(over1200.length, lessThanOrEqualTo(4));
+      // GĐ4 Cụm S (2026-07-18): siết baseline chùng về sát số thực (đánh giá
+      // enterprise chỉ ra trần 239 vs thực 35 = headroom 204 file, enforce
+      // danh nghĩa). Thực đo: over600 = 35, over1200 = 2 (2 file entity earn
+      // có chủ đích). Trần 40/2 = thực + đệm nhỏ; CHỈ ĐƯỢC GIẢM.
+      expect(
+        over600.length,
+        lessThanOrEqualTo(40),
+        reason: 'File >600 dòng mới trong lib/features: $over600',
+      );
+      expect(
+        over1200.length,
+        lessThanOrEqualTo(2),
+        reason: 'File >1200 dòng mới trong lib/features: $over1200',
+      );
     });
 
     test('non-delegating String _format* declarations do not increase', () {

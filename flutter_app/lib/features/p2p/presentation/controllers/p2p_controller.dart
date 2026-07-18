@@ -135,7 +135,7 @@ final class P2PCreateAdController {
       paymentSummary: paymentSummary,
       limitSummary: 'Min $minLimit / Max $maxLimit ${draft.currency}',
       feeReviewLabel:
-          'Fee review: no listing fee in mock; order fees must be checked before escrow.',
+          'Xem xét phí: bản mock không có phí đăng tin; phải kiểm tra phí đơn hàng trước khi vào ký quỹ.',
       riskReviewLabel: state.snapshot.warningNote,
       escrowReviewLabel: state.snapshot.escrowNote,
     );

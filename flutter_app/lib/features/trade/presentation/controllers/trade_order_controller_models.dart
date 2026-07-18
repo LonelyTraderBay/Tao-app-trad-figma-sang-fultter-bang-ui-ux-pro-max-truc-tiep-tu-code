@@ -68,13 +68,13 @@ final class TradeOrdersHistoryController {
 
   String? cancelValidationMessage(String orderId) {
     if (state.status == TradeHighRiskFlowStatus.offline) {
-      return 'Offline: reconnect before changing this order.';
+      return 'Mất kết nối: kết nối lại trước khi thay đổi lệnh này.';
     }
     if (state.status.isBusy) {
-      return 'Order action is already in progress.';
+      return 'Thao tác lệnh đang được xử lý.';
     }
     if (orderId.trim().isEmpty) {
-      return 'Select an open order before confirmation.';
+      return 'Chọn một lệnh đang mở trước khi xác nhận.';
     }
     return null;
   }

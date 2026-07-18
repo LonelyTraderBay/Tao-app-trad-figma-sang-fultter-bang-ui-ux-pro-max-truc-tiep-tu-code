@@ -1,18 +1,45 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'architecture_baseline_guardrails_test_utils.dart';
 
+/// GĐ4 Cụm S (2026-07-18): SỬA PHÉP ĐO. Đánh giá enterprise phát hiện 59/60
+/// match của phép đo cũ là DƯƠNG-TÍNH-GIẢ: sau lint `always_use_package_imports`
+/// (CI-D1), import CÙNG-FEATURE (provider của feature import mock_/fail_closed_
+/// của CHÍNH nó — kiến trúc đúng chuẩn AGENTS.md) đổi sang dạng package: nên
+/// lọt regex vốn chỉ định danh "cross-feature". Phép đo mới so sánh feature
+/// nguồn (từ path file) với feature đích (từ import) — chỉ đếm khi KHÁC nhau.
+/// Nợ cross-feature THẬT còn lại = 1 (xem allowlist bên dưới).
 void main() {
   group('architecture baseline guardrails - cross-feature import debt', () {
     test('non-controller direct feature data imports do not increase', () {
-      final imports = sourceMatches(
-        root: 'lib/features',
-        pattern: RegExp(r"^import 'package:vit_trade_flutter/features/.*/data"),
-        pathFilter: (path) => !path.contains('/presentation/controllers/'),
+      final importPattern = RegExp(
+        r"^import 'package:vit_trade_flutter/features/(\w+)/data",
       );
+      final crossFeature = <String>[];
+      final files =
+          Directory(
+            'lib/features',
+          ).listSync(recursive: true).whereType<File>().toList()..sort(
+            (a, b) => normalizePath(a.path).compareTo(normalizePath(b.path)),
+          );
+      for (final file in files) {
+        final path = normalizePath(file.path);
+        if (!path.endsWith('.dart')) continue;
+        if (path.contains('/presentation/controllers/')) continue;
+        final sourceFeature = path.split('/')[2];
+        for (final line in file.readAsLinesSync()) {
+          final match = importPattern.firstMatch(line);
+          if (match == null) continue;
+          final targetFeature = match.group(1)!;
+          if (targetFeature == sourceFeature) continue;
+          crossFeature.add('$path -> $targetFeature');
+        }
+      }
 
       expect(
-        imports.length,
+        crossFeature.length,
         // Baseline raised 27 -> 28: Phase 0 of the trade module split moved
         // the base `tradeRepositoryProvider` out of
         // `features/trade/data/providers/trade_repository_provider.dart`
@@ -244,10 +271,21 @@ void main() {
         // fail_closed_*.dart import each (+8). Closes the last of the 9
         // provider bypasses ERR-33 tracked (launchpad already had this from
         // an earlier phase).
-        lessThanOrEqualTo(60),
+        //
+        // GĐ4 Cụm S (2026-07-18): phép đo sửa lại chỉ đếm CROSS-feature thật
+        // (xem doc đầu file) — 59 match cũ là wiring cùng-feature hợp lệ.
+        // Ngưỡng 60 -> 1. Entry còn lại duy nhất và CÓ CHỦ ĐÍCH:
+        //   lib/features/trade/data/repositories/mock_trade_repository.dart
+        //     -> trade_terminal (delegation MockTradeTerminalRepository,
+        //        ADR-002 trade-family split — `trade` không có repo riêng).
+        // Gỡ nốt chỉ khi trade tự sở hữu repo (hoặc backend thật về);
+        // KHÔNG nâng ngưỡng cho import cross-feature mới.
+        lessThanOrEqualTo(1),
         reason:
-            'Non-controller feature data imports are a tracked architecture '
-            'debt metric.',
+            'Import data XUYÊN feature mới (ngoài delegation ADR-002 đã ghi '
+            'nhận) — dùng composition root app/providers hoặc kernel '
+            'trade_core thay vì với thẳng sang data của feature khác: '
+            '$crossFeature',
       );
     });
   });

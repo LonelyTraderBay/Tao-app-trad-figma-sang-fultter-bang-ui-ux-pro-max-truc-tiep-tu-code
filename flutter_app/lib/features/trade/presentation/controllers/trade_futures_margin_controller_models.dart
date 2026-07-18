@@ -92,7 +92,7 @@ final class TradeMarginController {
       return 'Leverage must stay between 1x and 100x.';
     }
     if (state.snapshot.account.availableMargin <= 0) {
-      return 'No available margin remains for this preview.';
+      return 'Không còn ký quỹ khả dụng cho lần xem trước này.';
     }
     return null;
   }
