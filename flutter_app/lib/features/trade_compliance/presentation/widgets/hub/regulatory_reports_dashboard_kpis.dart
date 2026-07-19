@@ -60,7 +60,8 @@ class _KpiCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _dashBorder.withValues(alpha: .68),
       constraints: const BoxConstraints(
         minHeight: AppSpacing.x7 + AppSpacing.x5,

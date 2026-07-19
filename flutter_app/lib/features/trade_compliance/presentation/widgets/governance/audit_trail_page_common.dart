@@ -9,6 +9,7 @@ class _AuditEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _styleForCategory(entry.category);
     return VitCard(
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
       padding: TradeSpacingTokens.tradeToolCardPadding,
       borderColor: _auditBorder.withValues(alpha: .76),
@@ -21,7 +22,7 @@ class _AuditEntryCard extends StatelessWidget {
             height: TradeSpacingTokens.tradeToolIconTileSm,
             alignment: Alignment.center,
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             borderColor: style.color.withValues(alpha: .28),
             child: Icon(style.icon, color: style.color, size: 19),
           ),

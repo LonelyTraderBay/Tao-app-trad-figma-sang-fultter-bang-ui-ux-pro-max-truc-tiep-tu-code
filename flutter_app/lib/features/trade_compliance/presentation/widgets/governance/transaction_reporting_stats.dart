@@ -73,7 +73,7 @@ class TransactionReportingStatsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.standard,
+          radius: VitCardRadius.tight,
           padding: TradeSpacingTokens.transactionReportingStatsPanelPadding,
           borderColor: transactionReportBorder.withValues(alpha: .7),
           child: Row(
@@ -137,7 +137,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       height: AppSpacing.buttonHero + AppSpacing.x2,
       padding: TradeSpacingTokens.transactionReportingStatCardPadding,
       borderColor: transactionReportBorder.withValues(alpha: .65),
@@ -186,7 +186,7 @@ class _StatCard extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             width: AppSpacing.iconLg,
             height: AppSpacing.iconLg,
             borderColor: color.withValues(alpha: .24),

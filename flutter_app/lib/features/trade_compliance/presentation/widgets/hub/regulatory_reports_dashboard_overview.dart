@@ -10,13 +10,14 @@ class _OverviewTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'Submission Trend (Last 7 Days)',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             VitCard(
+              radius: VitCardRadius.tight,
               padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
               borderColor: _dashBorder.withValues(alpha: .7),
               child: AspectRatio(
@@ -31,13 +32,14 @@ class _OverviewTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Report Distribution by Regulation',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: VitCard(
+                    radius: VitCardRadius.tight,
                     padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
                     borderColor: _dashBorder.withValues(alpha: .7),
                     child: AspectRatio(
@@ -61,7 +63,7 @@ class _OverviewTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'ARM Provider Performance',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final provider in snapshot.providers)
               _ProviderCard(provider: provider),
@@ -83,20 +85,22 @@ class _DistributionLegend extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final item in items)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             variant: VitCardVariant.inner,
             constraints: BoxConstraints(
-              minHeight: VitDensity.compact.controlHeight,
+              minHeight: VitDensity.tool.controlHeight,
             ),
             child: Row(
               children: [
                 // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.tight,
                   width: AppSpacing.x3,
                   height: AppSpacing.x3,
                   clip: true,
@@ -127,6 +131,7 @@ class _DistributionLegend extends StatelessWidget {
         VitCard(
           padding: TradeSpacingTokens.tradeBotCompactCardPadding,
           variant: VitCardVariant.ghost,
+          radius: VitCardRadius.tight,
           borderColor: _dashBorder,
           child: Row(
             children: [
@@ -167,6 +172,7 @@ class _ProviderCard extends StatelessWidget {
     final healthy = provider.status == 'healthy';
     final color = healthy ? _dashGreen : _dashAmber;
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
       borderColor: _dashBorder.withValues(alpha: .7),
       child: Column(
@@ -177,6 +183,7 @@ class _ProviderCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
+                radius: VitCardRadius.tight,
                 width: TradeSpacingTokens.tradeBotCorrelationLegendDot,
                 height: TradeSpacingTokens.tradeBotCorrelationLegendDot,
                 clip: true,

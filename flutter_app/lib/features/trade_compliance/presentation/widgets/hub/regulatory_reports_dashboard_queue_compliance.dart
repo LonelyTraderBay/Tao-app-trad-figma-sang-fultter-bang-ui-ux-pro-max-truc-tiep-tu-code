@@ -9,10 +9,11 @@ class _QueueTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Submission Queue Summary',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final stat in snapshot.dailyStats.take(4))
           VitCard(
+            radius: VitCardRadius.tight,
             padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
             borderColor: _dashBorder.withValues(alpha: .7),
             child: Row(
@@ -89,15 +90,16 @@ class _ComplianceTab extends StatelessWidget {
     ];
     return VitPageSection(
       label: 'Compliance Metrics',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitCard(
+          radius: VitCardRadius.tight,
           padding: TradeSpacingTokens.tradeBotCardPadding,
           borderColor: _dashBorder.withValues(alpha: .7),
           child: VitPageContent(
             rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               for (final item in items)
                 _ProgressMetric(
@@ -107,6 +109,7 @@ class _ComplianceTab extends StatelessWidget {
                   color: item.$4,
                 ),
               VitCard(
+                radius: VitCardRadius.tight,
                 padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
                 variant: VitCardVariant.inner,
                 borderColor: _dashGreen.withValues(alpha: .25),
@@ -176,6 +179,7 @@ class _ProgressMetric extends StatelessWidget {
         // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
           variant: VitCardVariant.ghost,
+          radius: VitCardRadius.tight,
           height: AppSpacing.x2,
           clip: true,
           background: const ColoredBox(color: _dashPanel2),

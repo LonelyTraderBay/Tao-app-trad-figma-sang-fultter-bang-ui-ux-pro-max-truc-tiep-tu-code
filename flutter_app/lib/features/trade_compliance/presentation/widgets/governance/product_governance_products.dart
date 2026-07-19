@@ -9,7 +9,7 @@ class _ProductsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Copy Trading Products',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final product in products) _ProductCard(product: product),
       ],
@@ -28,7 +28,8 @@ class _ProductCard extends StatelessWidget {
     final risk = _riskStyle(product.riskLevel);
     return VitCard(
       key: ProductGovernancePage.productKey(product.id),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _govBorder.withValues(alpha: .72),
       child: Column(
@@ -183,8 +184,8 @@ class _DateBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,6 +200,7 @@ class _DateBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

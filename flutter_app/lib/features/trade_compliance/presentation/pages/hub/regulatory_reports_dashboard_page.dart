@@ -105,6 +105,7 @@ class _RegulatoryReportsDashboardPageState
                   title: 'Review',
                   child: VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
+                    density: VitDensity.tool,
                     title: 'Regulatory report review',
                     message:
                         'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',

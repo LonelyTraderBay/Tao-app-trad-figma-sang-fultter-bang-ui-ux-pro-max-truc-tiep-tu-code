@@ -8,7 +8,8 @@ class _ComplianceScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
@@ -20,7 +21,7 @@ class _ComplianceScoreCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               const VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
                 borderColor: _inspectionGreen,
@@ -143,9 +144,9 @@ class _QuickStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _styleForStat(stat.icon);
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +159,10 @@ class _QuickStatCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             stat.value,
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
+            style: AppTextStyles.baseMedium.copyWith(
+              color: AppColors.text1,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
@@ -181,7 +185,8 @@ class _FrameworkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
@@ -202,6 +207,7 @@ class _FrameworkCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _inspectionGreen,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),

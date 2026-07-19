@@ -8,16 +8,16 @@ class _DocumentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Row(
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           const VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             width: AppSpacing.buttonCompact,
             height: AppSpacing.buttonCompact,
             borderColor: _inspectionGreen,
@@ -69,7 +69,8 @@ class _InspectorPortalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
@@ -80,7 +81,7 @@ class _InspectorPortalCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               const VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
                 borderColor: _inspectionPrimary,
@@ -124,7 +125,7 @@ class _InspectorPortalCard extends StatelessWidget {
               'Cổng thanh tra sẽ sớm ra mắt',
             ),
             variant: VitCtaButtonVariant.secondary,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             leading: const Icon(
               Icons.open_in_new_rounded,
               size: AppSpacing.inputPrefixIcon,
@@ -155,7 +156,7 @@ class _ReportButton extends StatelessWidget {
       onPressed: () =>
           _showComingSoon(context, 'Tải báo cáo', 'Tải báo cáo sẽ sớm ra mắt'),
       variant: VitCtaButtonVariant.success,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: const Icon(
         Icons.download_rounded,
         size: AppSpacing.inputPrefixIcon,

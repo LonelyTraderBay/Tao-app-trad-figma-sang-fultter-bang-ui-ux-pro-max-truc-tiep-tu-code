@@ -85,10 +85,11 @@ class _QuickAction extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       borderColor: _dashBorder,
-      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
+      constraints: BoxConstraints(minHeight: VitDensity.tool.controlHeight),
       onTap: onTap,
       child: Row(
         children: [
