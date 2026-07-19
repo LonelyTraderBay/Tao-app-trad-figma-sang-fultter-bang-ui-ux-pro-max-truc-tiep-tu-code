@@ -10,6 +10,7 @@ class _CheckBox extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       width: TradeSpacingTokens.tradeBotCheckbox,
       height: TradeSpacingTokens.tradeBotCheckbox,
       alignment: Alignment.center,
@@ -51,7 +52,11 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(density: VitDensity.compact, child: child);
+    return VitCard(
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
+      child: child,
+    );
   }
 }
 

@@ -9,7 +9,8 @@ class _HighRiskBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _botRiskRed.withValues(alpha: .58),
       child: Row(
@@ -58,7 +59,8 @@ class _PastPerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +109,8 @@ class _RiskCategoryCard extends StatelessWidget {
     final color = _colorForKind(category.kind);
     return VitCard(
       key: BotRiskDisclosurePage.categoryKey(category.id),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,9 +123,9 @@ class _RiskCategoryCard extends StatelessWidget {
                 width: _riskIconTile,
                 height: _riskIconTile,
                 variant: VitCardVariant.ghost,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 padding: AppSpacing.zeroInsets,
-                radius: VitCardRadius.large,
+                radius: VitCardRadius.tight,
                 borderColor: color.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: Icon(
@@ -173,7 +176,8 @@ class _RiskCategoryCard extends StatelessWidget {
           const SizedBox(height: _riskSpace),
           VitCard(
             width: double.infinity,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             padding: AppSpacing.cardPaddingCompact,
             variant: VitCardVariant.inner,
             child: Column(
@@ -211,7 +215,8 @@ class _AdditionalWarningsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
@@ -280,7 +285,8 @@ class _RegulatoryNoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

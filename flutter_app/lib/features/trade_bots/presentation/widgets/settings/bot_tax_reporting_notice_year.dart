@@ -7,7 +7,8 @@ class _TaxNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _taxAmber.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +67,7 @@ class _YearPicker extends StatelessWidget {
             child: VitCtaButton(
               key: BotTaxReportingPage.yearKey(years[i]),
               onPressed: () => onChanged(years[i]),
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               variant: selectedYear == years[i]
                   ? VitCtaButtonVariant.primary
                   : VitCtaButtonVariant.ghost,

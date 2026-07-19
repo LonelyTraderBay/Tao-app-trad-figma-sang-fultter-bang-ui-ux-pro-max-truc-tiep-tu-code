@@ -48,12 +48,13 @@ class _AuthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             children: [
@@ -91,7 +92,11 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(density: VitDensity.compact, child: child);
+    return VitCard(
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
+      child: child,
+    );
   }
 }
 
@@ -112,6 +117,7 @@ class _CodeBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: dark ? VitCardVariant.standard : VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       width: double.infinity,
       padding: compact
           ? TradeSpacingTokens.tradeBotCodeBlockCompactPadding
@@ -120,7 +126,7 @@ class _CodeBlock extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Text(
           text,
-          style: AppTextStyles.micro.copyWith(
+          style: AppTextStyles.monoCode.copyWith(
             color: compact ? _apiPrimary : AppColors.text2,
             fontWeight: FontWeight.w500,
           ),

@@ -12,9 +12,10 @@ class _TermsCard extends StatelessWidget {
     return VitCard(
       height: _termsCardExtent,
       borderColor: AppColors.cardBorder,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: ClipRRect(
-        borderRadius: AppRadii.cardRadius,
+        borderRadius: AppRadii.smRadius,
         child: SingleChildScrollView(
           key: BotTermsOfServicePage.termsScrollKey,
           controller: controller,
@@ -122,6 +123,8 @@ class _CriticalWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.tradeBotTermsWarningPadding,
       borderColor: _termsRed.withValues(alpha: .35),
       child: Row(
@@ -172,9 +175,10 @@ class _ScrollWarning extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: _termsWarningMinExtent),
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       borderColor: _termsAmber.withValues(alpha: .32),
       child: Row(
         children: [
@@ -220,9 +224,10 @@ class _AgreementCard extends StatelessWidget {
       child: VitCard(
         key: BotTermsOfServicePage.agreementKey,
         onTap: enabled ? onTap : null,
+        radius: VitCardRadius.tight,
         constraints: const BoxConstraints(minHeight: _termsAgreementMinExtent),
         padding: TradeSpacingTokens.tradeBotAgreementPadding,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         variant: enabled ? VitCardVariant.inner : VitCardVariant.standard,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

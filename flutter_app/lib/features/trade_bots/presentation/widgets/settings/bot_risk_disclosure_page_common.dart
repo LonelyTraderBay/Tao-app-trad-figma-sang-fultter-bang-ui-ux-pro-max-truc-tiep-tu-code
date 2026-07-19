@@ -17,7 +17,8 @@ class _AcknowledgmentCard extends StatelessWidget {
       key: BotRiskDisclosurePage.acknowledgmentKey,
       onTap: onTap,
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: acknowledged ? _botRiskRed : AppColors.borderSolid,
       child: Row(
@@ -75,6 +76,7 @@ class _RiskCta extends StatelessWidget {
     return VitCtaButton(
       key: BotRiskDisclosurePage.ctaKey,
       height: _riskActionHeight,
+      density: VitDensity.tool,
       variant: VitCtaButtonVariant.danger,
       onPressed: acknowledged ? onPressed : null,
       child: Text(acknowledged ? snapshot.enabledCta : snapshot.disabledCta),
@@ -91,7 +93,8 @@ class _HelpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

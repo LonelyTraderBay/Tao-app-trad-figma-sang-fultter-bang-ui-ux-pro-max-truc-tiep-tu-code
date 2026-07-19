@@ -6,7 +6,8 @@ class _IntroBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _guidePrimary.withValues(alpha: .35),
       child: Row(
