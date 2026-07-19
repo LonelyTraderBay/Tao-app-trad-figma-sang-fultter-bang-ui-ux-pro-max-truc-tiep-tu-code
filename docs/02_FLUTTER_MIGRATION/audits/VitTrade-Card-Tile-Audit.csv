@@ -759,7 +759,7 @@ trade,flutter_app/lib/features/trade/presentation/widgets/hub/position_dashboard
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_footer.dart,2,1,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,3,2,0,D,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,1,0,0,C,0,0,0,pass,-
-trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,1,0,0,D,0,0,0,pass,-
+trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_hub_cards.dart,4,1,0,C,0,0,0,pass,-

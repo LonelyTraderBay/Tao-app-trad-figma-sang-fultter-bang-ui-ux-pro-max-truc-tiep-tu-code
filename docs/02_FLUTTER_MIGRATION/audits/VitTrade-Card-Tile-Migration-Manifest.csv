@@ -352,7 +352,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_footer.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,D,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,C,-,done,0,-
-04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,D,-,done,0,-
+04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_hub_cards.dart,C,-,done,0,-
