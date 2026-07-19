@@ -9,7 +9,8 @@ class _AuditEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _eventColor(event);
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,7 +18,7 @@ class _AuditEventCard extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.large,
+            radius: VitCardRadius.tight,
             width: AppSpacing.buttonCompact,
             height: AppSpacing.buttonCompact,
             alignment: Alignment.center,
@@ -131,7 +132,7 @@ class _EventMetadataPanel extends StatelessWidget {
       // card-tile: allow-start — fixed surface, not horizontal strip tile
       return VitCard(
         variant: VitCardVariant.inner,
-        radius: VitCardRadius.standard,
+        radius: VitCardRadius.tight,
         height: AppSpacing.buttonCompact,
         width: double.infinity,
         alignment: Alignment.centerLeft,
@@ -148,7 +149,7 @@ class _EventMetadataPanel extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       width: double.infinity,
       padding: TradeSpacingTokens.copyAuditMetadataPanelPadding,
       child: Column(

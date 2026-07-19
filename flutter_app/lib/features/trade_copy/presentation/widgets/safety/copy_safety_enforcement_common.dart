@@ -44,7 +44,8 @@ class _EnforcementCard extends StatelessWidget {
       _ => AppColors.buy,
     };
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
@@ -134,8 +135,8 @@ class _IconTextRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.copySafetyIconTextPadding,
       child: Row(
         children: [
@@ -169,8 +170,8 @@ class _SimpleCard extends StatelessWidget {
     final accent = color ?? AppColors.text1;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       width: double.infinity,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: color,
@@ -239,6 +240,7 @@ class _EmergencyPanel extends StatelessWidget {
                     ),
                     VitCtaButton(
                       onPressed: onClose,
+                      density: VitDensity.tool,
                       height: AppSpacing.searchBarCompactHeight,
                       child: const Text('Done'),
                     ),

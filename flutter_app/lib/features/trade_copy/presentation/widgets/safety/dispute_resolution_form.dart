@@ -33,13 +33,13 @@ class _FileComplaintTab extends StatelessWidget {
       rhythm: VitPageRhythm.form,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _NoticeCard(title: snapshot.noticeTitle, body: snapshot.noticeBody),
         VitPageSection(
           key: DisputeResolutionPage.complaintTypeSectionKey,
           label: 'Complaint Type',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final type in snapshot.complaintTypes)
               _ComplaintTypeCard(
@@ -51,7 +51,7 @@ class _FileComplaintTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Provider',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             _ProviderSelect(
               providers: snapshot.providers,
@@ -62,7 +62,7 @@ class _FileComplaintTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Details',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             const _FieldLabel('Subject'),
             _TextFieldShell(
@@ -83,7 +83,7 @@ class _FileComplaintTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Evidence',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             _UploadEvidenceButton(
               attached: evidenceAttached,
@@ -106,7 +106,8 @@ class _NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _disputePrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,10 +160,11 @@ class _ComplaintTypeCard extends StatelessWidget {
     return VitCard(
       key: DisputeResolutionPage.complaintTypeKey(option.value),
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(
         minHeight: TradeSpacingTokens.tradeBotOptionMinHeight,
       ),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       borderColor: selected ? _disputePrimary : _disputeFieldBorder,
       onTap: onPressed,
       child: Column(
@@ -210,6 +212,7 @@ class _ProviderSelect extends StatelessWidget {
     return VitCard(
       key: DisputeResolutionPage.providerKey,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: _disputeFieldBorder,
       constraints: const BoxConstraints(
         minHeight: TradeSpacingTokens.tradeBotControlCompact,
@@ -315,7 +318,7 @@ class _UploadEvidenceButton extends StatelessWidget {
       variant: attached
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.secondary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: Icon(
         attached ? Icons.check_circle_outline_rounded : Icons.upload_rounded,
       ),
@@ -337,7 +340,7 @@ class _SubmitButton extends StatelessWidget {
     return VitCtaButton(
       key: DisputeResolutionPage.submitKey,
       onPressed: enabled ? onPressed : null,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: const Icon(Icons.send_outlined),
       child: const Text('Submit Complaint'),
     );

@@ -127,6 +127,7 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
                     ),
                     VitTradeComplianceSection(
                       title: 'Safety review',
+                      density: VitDensity.tool,
                       statusPill: VitStatusPill(
                         label: 'Reviewing: ${activeTab.label}',
                         status: VitStatusPillStatus.warning,

@@ -126,7 +126,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                   message:
                       'Search, filter, and export audit evidence with retention, risk, and config-change context preserved.',
                   contractId: 'Copy ID: ${snapshot.copyId}',
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                 ),
               ),
               VitTradeSection(
@@ -271,6 +271,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                   VitCtaButton(
                     onPressed: () => Navigator.of(sheetContext).pop(),
                     variant: VitCtaButtonVariant.secondary,
+                    density: VitDensity.tool,
                     height: AppSpacing.searchBarCompactHeight,
                     child: const Text('Hủy'),
                   ),

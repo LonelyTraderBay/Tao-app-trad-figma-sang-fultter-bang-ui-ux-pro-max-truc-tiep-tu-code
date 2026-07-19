@@ -8,7 +8,8 @@ class _WarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _safetyWarningBorder,
       child: Row(
@@ -85,7 +86,8 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: CopySafetyCenterPage.metricKey(metric.name),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: AppColors.cardBorder,
       onTap: onTap,
       child: Column(
@@ -171,8 +173,8 @@ class _MetricInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      radius: VitCardRadius.standard,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       width: double.infinity,
       padding: TradeSpacingTokens.copySafetyMetricInfoPadding,
       borderColor: color,
@@ -304,7 +306,8 @@ class _ToolButton extends StatelessWidget {
     return VitCard(
       key: CopySafetyCenterPage.toolKey(tool.id),
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       onTap: () {

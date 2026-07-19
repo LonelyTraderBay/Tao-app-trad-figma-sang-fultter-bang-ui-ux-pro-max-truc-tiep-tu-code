@@ -179,7 +179,7 @@ class _CopyModeTile extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(
         minHeight: TradeSpacingTokens.copyEducationModeMinHeight,
       ),

@@ -87,8 +87,8 @@ class _RefundPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Text(
         '\$5 refund issued to your account',
         style: AppTextStyles.micro.copyWith(color: AppColors.buy),

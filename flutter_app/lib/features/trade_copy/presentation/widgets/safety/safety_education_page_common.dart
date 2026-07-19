@@ -17,7 +17,7 @@ class _SeveritySection extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,9 +32,9 @@ class _SeveritySection extends StatelessWidget {
             const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             for (final flag in flags) ...[
               VitCard(
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 borderColor: color.withValues(alpha: .65),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +77,7 @@ class _VerificationTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const _InfoPanel(
           text:
@@ -106,7 +106,8 @@ class _TierCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(tier.colorHex);
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +155,7 @@ class _ReportTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _InfoPanel(
           text:
@@ -162,7 +163,8 @@ class _ReportTab extends StatelessWidget {
           color: AppColors.sell,
         ),
         VitCard(
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           borderColor: AppColors.cardBorder,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -183,7 +185,7 @@ class _ReportTab extends StatelessWidget {
               VitCtaButton(
                 onPressed: () => _submitReport(context),
                 variant: VitCtaButtonVariant.danger,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 child: Text(
                   'Submit Report',
                   style: AppTextStyles.body.copyWith(
@@ -252,7 +254,7 @@ class _InfoPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: 'Review safety guidance',
       message: text,
     );
