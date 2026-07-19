@@ -82,7 +82,8 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
   Widget build(BuildContext context) {
     final canSubmit = widget.amount != '0.00' && widget.amount.isNotEmpty;
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,7 +155,7 @@ class _MarginSimpleFormState extends State<_MarginSimpleForm> {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: MarginTradingPage.submitKey,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             onPressed: canSubmit ? () => _openConfirm(context) : null,
             variant: widget.side == 'long'
                 ? VitCtaButtonVariant.success

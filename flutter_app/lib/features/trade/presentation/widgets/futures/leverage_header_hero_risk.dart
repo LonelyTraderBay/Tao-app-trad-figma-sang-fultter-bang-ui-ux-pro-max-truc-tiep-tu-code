@@ -9,7 +9,8 @@ class _RiskMeter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.zeroInsets.copyWith(
         left: _leverageCardSpace,
         top: _leverageCardSpace,

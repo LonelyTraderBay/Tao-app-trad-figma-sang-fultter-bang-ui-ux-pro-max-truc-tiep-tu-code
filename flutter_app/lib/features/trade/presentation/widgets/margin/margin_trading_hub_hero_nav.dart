@@ -61,7 +61,8 @@ class _MenuItem extends StatelessWidget {
     return VitCard(
       key: MarginTradingHubPage.menuKey(item.id),
       onTap: () => context.go(item.targetPath),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: color.withValues(alpha: .28),
       child: Row(
@@ -69,9 +70,10 @@ class _MenuItem extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
+            radius: VitCardRadius.tight,
             width: _hubIconTile,
             height: _hubIconTile,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             padding: AppSpacing.zeroInsets,
             borderColor: color.withValues(alpha: .18),
             child: Icon(_menuIcon(item.id), color: color, size: AppSpacing.x5),

@@ -68,7 +68,7 @@ class _PreviewCard extends StatelessWidget {
     return VitFinancialSafetySummary(
       title: 'Futures order preview',
       contractId: 'SC-057 Futures preview',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       footer:
           'Review leverage, margin, liquidation, fee, TP/SL, and side before opening a futures position.',
       items: [

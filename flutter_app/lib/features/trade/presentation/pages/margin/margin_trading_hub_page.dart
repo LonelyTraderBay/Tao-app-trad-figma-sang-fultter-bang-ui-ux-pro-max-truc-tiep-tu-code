@@ -95,7 +95,7 @@ class MarginTradingHubPage extends ConsumerWidget {
             message:
                 'Kiểm tra hạn đòn bẩy, rủi ro thanh lý, phí và ký quỹ khả dụng trước khi mở bất kỳ luồng margin nào.',
             contractId: 'SC-090 margin hub review',
-            density: VitDensity.compact,
+            density: VitDensity.tool,
           ),
           VitTradeSection(
             title: 'Tính năng',

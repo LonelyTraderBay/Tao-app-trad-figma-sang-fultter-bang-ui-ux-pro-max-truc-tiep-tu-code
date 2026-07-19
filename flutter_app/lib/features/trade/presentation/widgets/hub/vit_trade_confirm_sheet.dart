@@ -79,13 +79,14 @@ class VitTradeConfirmSheet extends StatelessWidget {
             VitInfoRow(
               label: lines[i].label,
               value: lines[i].value,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               showDivider: i < lines.length - 1,
             ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             borderColor: AppColors.warn.withValues(alpha: .24),
             child: Text(
               riskMessage,
@@ -99,7 +100,7 @@ class VitTradeConfirmSheet extends StatelessWidget {
                 child: VitCtaButton(
                   key: cancelKey,
                   variant: VitCtaButtonVariant.secondary,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   onPressed: () => Navigator.of(context).pop(false),
                   child: const Text('Huỷ'),
                 ),
@@ -108,7 +109,7 @@ class VitTradeConfirmSheet extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   key: confirmKey,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   onPressed: () => Navigator.of(context).pop(true),
                   child: const Text('Xác nhận gửi'),
                 ),

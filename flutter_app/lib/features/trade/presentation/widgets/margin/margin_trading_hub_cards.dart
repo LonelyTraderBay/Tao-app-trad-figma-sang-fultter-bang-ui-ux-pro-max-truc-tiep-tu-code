@@ -18,9 +18,10 @@ class _FeatureCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.inner,
+                radius: VitCardRadius.tight,
                 width: _hubIconTile,
                 height: _hubIconTile,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 padding: AppSpacing.zeroInsets,
                 borderColor: color.withValues(alpha: .18),
                 child: Icon(
@@ -82,7 +83,8 @@ class _ComplianceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _hubGreen.withValues(alpha: .24),
       child: Column(
@@ -136,6 +138,7 @@ class _ComplianceCard extends StatelessWidget {
             itemBuilder: (context, index) {
               return VitCard(
                 variant: VitCardVariant.inner,
+                radius: VitCardRadius.tight,
                 alignment: Alignment.center,
                 borderColor: _hubGreen.withValues(alpha: .24),
                 child: Text(
@@ -163,7 +166,8 @@ class _HubCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _hubBorder.withValues(alpha: .68),
       child: child,
