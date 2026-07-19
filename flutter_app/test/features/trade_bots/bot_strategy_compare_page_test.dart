@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/trade_bots/data/trade_bots_repository.dart';
 import 'package:vit_trade_flutter/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart';
@@ -84,6 +85,35 @@ void main() {
       find.text('Lợi nhuận điều chỉnh theo rủi ro tốt nhất'),
       targetLabel: 'the best strategy summary',
     );
+  });
+
+  testWidgets('SC-126 marks signed max drawdown closest to zero as best', (
+    tester,
+  ) async {
+    final snapshot = await const MockTradeBotsRepository(
+      loadDelay: Duration.zero,
+    ).getBotStrategyCompare();
+    Color colorOf(String id) => Color(
+      snapshot.strategies.firstWhere((strategy) => strategy.id == id).colorHex,
+    );
+
+    await pumpBotStrategyCompare(tester);
+
+    Text textOf(String value) => tester.widget<Text>(find.text(value));
+
+    // Default selection Grid (-12.1%) vs Momentum (-15.3%): the drawdown
+    // closest to zero wins, not the numerically smallest one.
+    expect(textOf('-12.1%').style?.color, colorOf('grid'));
+    expect(textOf('-15.3%').style?.color, AppColors.text1);
+
+    // Adding DCA (-8.4%) hands best-in-group over to it.
+    await tester.tap(find.byKey(BotStrategyComparePage.strategyKey('dca')));
+    await tester.pumpAndSettle();
+
+    expect(textOf('-8.4%').style?.color, colorOf('dca'));
+    expect(textOf('-12.1%').style?.color, AppColors.text1);
+    // Volatility stays lowest-wins: DCA 12.4% is the best of the three.
+    expect(textOf('12.4%').style?.color, colorOf('dca'));
   });
 
   testWidgets('SC-126 lets users toggle strategy selection', (tester) async {
