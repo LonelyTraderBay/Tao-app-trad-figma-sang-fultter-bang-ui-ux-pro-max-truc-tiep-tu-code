@@ -91,7 +91,7 @@ class _PerformanceAttributionPageState
               title: 'Đánh giá rủi ro',
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 title: 'Xem lại phân bổ hiệu suất',
                 message:
                     'Xác nhận drawdown, mức phơi nhiễm, giới hạn và bước tiếp theo trước khi điều chỉnh phân bổ copy.',

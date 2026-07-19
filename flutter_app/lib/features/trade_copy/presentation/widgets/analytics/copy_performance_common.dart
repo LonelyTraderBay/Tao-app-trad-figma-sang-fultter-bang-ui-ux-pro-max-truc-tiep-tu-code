@@ -42,14 +42,24 @@ class _LineChartPainter extends CustomPainter {
       _axisPaint,
     );
 
-    _drawText(canvas, '886891767', Offset(0, chart.top + 2), AppColors.text3);
     _drawText(
       canvas,
-      '18128125',
+      max.round().toString(),
+      Offset(0, chart.top + 2),
+      AppColors.text3,
+    );
+    _drawText(
+      canvas,
+      ((min + max) / 2).round().toString(),
       Offset(0, chart.center.dy - 4),
       AppColors.text3,
     );
-    _drawText(canvas, '18128125', Offset(0, chart.bottom - 2), AppColors.text3);
+    _drawText(
+      canvas,
+      min.round().toString(),
+      Offset(0, chart.bottom - 2),
+      AppColors.text3,
+    );
 
     for (var day = 2; day <= 30; day += 2) {
       final x = chart.left + (day - 1) / 29 * chart.width;
@@ -221,7 +231,7 @@ class _TradeColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: color,
       child: Column(

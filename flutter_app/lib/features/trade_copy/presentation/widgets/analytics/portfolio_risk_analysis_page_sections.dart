@@ -73,6 +73,7 @@ class _RiskSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
+      radius: VitCardRadius.tight,
       height: _riskSummaryExtent,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
@@ -218,6 +219,7 @@ class _AssetExposureRow extends StatelessWidget {
     final color = Color(asset.colorHex);
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       height: _riskAssetRowExtent,
       padding: TradeSpacingTokens.tradeBotMetricBoxPadding,
       child: Row(
@@ -225,6 +227,7 @@ class _AssetExposureRow extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
+            radius: VitCardRadius.tight,
             width: _riskSwatchExtent,
             height: _riskSwatchExtent,
             clip: true,
@@ -277,6 +280,7 @@ class _DiversificationNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotDisputeNoticePadding,
       borderColor: _riskPrimary,
       child: Row(

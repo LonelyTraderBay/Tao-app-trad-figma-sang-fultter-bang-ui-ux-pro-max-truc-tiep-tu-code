@@ -13,12 +13,12 @@ class _MessagePanel extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: VitCard(
-            radius: VitCardRadius.large,
-            density: VitDensity.compact,
+            radius: VitCardRadius.standard,
+            density: VitDensity.tool,
             child: VitPageContent(
               rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               fullBleed: true,
               children: [
                 const Text(

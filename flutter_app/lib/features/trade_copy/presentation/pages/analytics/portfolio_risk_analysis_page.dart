@@ -96,7 +96,7 @@ class _PortfolioRiskAnalysisPageState
                     message:
                         'Xem lại mức phơi nhiễm, VaR, tương quan, kịch bản stress, giới hạn và bước tái cân bằng trước khi thay đổi phân bổ copy.',
                     contractId: 'SC-078 risk analysis review',
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                   ),
                   _RiskWarningPanel(alerts: snapshot.riskAlerts),
                   _RiskTabs(
@@ -121,6 +121,7 @@ class _PortfolioRiskAnalysisPageState
             ),
             VitTradeComplianceSection(
               title: 'Đánh giá rủi ro',
+              density: VitDensity.tool,
               statusPill: VitStatusPill(
                 label: '${snapshot.riskAlerts.length} cảnh báo',
                 status: VitStatusPillStatus.warning,

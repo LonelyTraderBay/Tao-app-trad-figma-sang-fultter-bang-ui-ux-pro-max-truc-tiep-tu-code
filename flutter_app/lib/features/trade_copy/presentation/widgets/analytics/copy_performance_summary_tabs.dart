@@ -8,7 +8,8 @@ class _PerformanceSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,7 +51,8 @@ class _PerformanceSummary extends StatelessWidget {
           const SizedBox(height: _performanceSpace),
           VitCard(
             variant: VitCardVariant.ghost,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             padding: AppSpacing.cardPaddingCompact,
             borderColor: _performanceGreen,
             child: Column(
@@ -120,6 +122,7 @@ class _ReturnCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       height: TradeSpacingTokens.copyPerformanceReturnCardHeight,
       padding: TradeSpacingTokens.copyPerformanceReturnCardPadding,
       borderColor: border,
@@ -167,6 +170,7 @@ class _PerformanceTabs extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       height: TradeSpacingTokens.copyPerformanceTabsHeight,
       padding: AppSpacing.zeroInsets,
       child: VitTabBar(

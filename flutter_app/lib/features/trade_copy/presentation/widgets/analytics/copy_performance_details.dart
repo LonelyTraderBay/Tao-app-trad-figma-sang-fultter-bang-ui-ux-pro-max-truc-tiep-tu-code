@@ -16,7 +16,8 @@ class _TradesTab extends StatelessWidget {
         const SizedBox(height: _performanceSpace),
         for (final trade in snapshot.tradeComparisons) ...[
           VitCard(
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             padding: TradeSpacingTokens.copyPerformanceTradeCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +107,8 @@ class _CostsTab extends StatelessWidget {
             padding: TradeSpacingTokens.copyPerformanceCostItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               padding: AppSpacing.cardPaddingCompact,
               child: Row(
                 children: [
@@ -162,7 +164,8 @@ class _MetricsTab extends StatelessWidget {
             padding: TradeSpacingTokens.copyPerformanceMetricItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               padding: TradeSpacingTokens.copyPerformanceTradeCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +222,7 @@ class _InfoBox extends StatelessWidget {
       titleStyle: AppTextStyles.micro.copyWith(color: AppColors.text3),
       headerGap: _performanceSpace,
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.copyPerformanceInfoBoxPadding,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +259,8 @@ class _SmallMetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

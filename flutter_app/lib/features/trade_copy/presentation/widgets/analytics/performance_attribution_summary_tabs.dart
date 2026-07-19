@@ -63,7 +63,8 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,6 +80,7 @@ class _MetricTile extends StatelessWidget {
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.extraBold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -132,7 +134,7 @@ class _AttributionTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Returns Decomposition',

@@ -9,7 +9,8 @@ class _ModificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final typeColor = _modificationColor(modification.type);
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -111,7 +112,7 @@ class _RequestButton extends StatelessWidget {
     return VitCtaButton(
       key: ProviderGovernancePage.requestActionKey,
       onPressed: onPressed,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: const Icon(Icons.edit_outlined),
       child: const Text('Request Strategy Modification'),
     );
@@ -129,7 +130,7 @@ class _CommunicationTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       fullBleed: true,
       children: [
         _RequestButton(onPressed: onBroadcast),
@@ -154,7 +155,7 @@ class _FeesTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       fullBleed: true,
       children: [
         _SimplePanel(
@@ -183,7 +184,7 @@ class _ComplianceTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       fullBleed: true,
       children: [
         for (final item in snapshot.complianceItems)
@@ -211,7 +212,8 @@ class _SimplePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         children: [
           if (leading != null) ...[

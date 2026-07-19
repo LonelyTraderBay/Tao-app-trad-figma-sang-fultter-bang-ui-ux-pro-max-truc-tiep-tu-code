@@ -14,7 +14,8 @@ class _GovernanceTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
@@ -44,7 +45,7 @@ class _ModificationsTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       fullBleed: true,
       children: [
         _Notice(text: snapshot.warning),
@@ -75,7 +76,8 @@ class _Notice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _governanceWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
