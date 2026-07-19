@@ -7,3 +7,7 @@
 # rồi `git restore docs/02_FLUTTER_MIGRATION/audits` để checkout lại dạng LF.
 docs/02_FLUTTER_MIGRATION/audits/**/*.csv text eol=lf
 docs/02_FLUTTER_MIGRATION/audits/**/*.md text eol=lf
+# Truth Table nằm NGOÀI audits/ nhưng cùng lớp: route_coverage_audit.dart
+# regen nó và `--check` so sánh chuỗi thô — thiếu dòng này, route audit fail
+# giả trên worktree Windows mới dù full suite xanh (phát hiện 2026-07-20).
+docs/02_FLUTTER_MIGRATION/Flutter-Route-Coverage-Truth-Table.md text eol=lf
