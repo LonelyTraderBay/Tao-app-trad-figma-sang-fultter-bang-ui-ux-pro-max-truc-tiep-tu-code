@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,6 +58,7 @@ class _LiveMarketDataAnalyticsPageState
         data: (snapshot) => [
           const VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
+            density: VitDensity.tool,
             title: 'Xem lại rủi ro dữ liệu trực tiếp',
             message:
                 'Luồng realtime có thể trễ hoặc ngắt khi biến động mạnh. Xác nhận thanh khoản, giới hạn và rủi ro khớp lệnh trước khi giao dịch.',

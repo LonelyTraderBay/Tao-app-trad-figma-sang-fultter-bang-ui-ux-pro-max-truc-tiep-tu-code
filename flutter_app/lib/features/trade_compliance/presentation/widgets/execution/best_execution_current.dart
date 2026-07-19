@@ -19,17 +19,17 @@ class _CurrentReport extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'Top 5 Execution Venues (By Volume)',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [for (final venue in venues) _VenueCard(venue: venue)],
         ),
         _AnalysisButton(onTap: onAnalysis),
         VitPageSection(
           label: 'Report Actions',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [_ReportActions(onExport: onExport, onPublish: onPublish)],
         ),
       ],
@@ -47,7 +47,8 @@ class _VenueCard extends StatelessWidget {
     final isWinner = venue.rank == 1;
     return VitCard(
       key: BestExecutionReportsPage.venueKey(venue.rank),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -208,8 +209,8 @@ class _VenueMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +249,7 @@ class _AnalysisButton extends StatelessWidget {
       key: BestExecutionReportsPage.analysisKey,
       onPressed: onTap,
       variant: VitCtaButtonVariant.secondary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: const Icon(Icons.bar_chart_rounded, color: AppColors.text1),
       trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.text1),
       child: Text(

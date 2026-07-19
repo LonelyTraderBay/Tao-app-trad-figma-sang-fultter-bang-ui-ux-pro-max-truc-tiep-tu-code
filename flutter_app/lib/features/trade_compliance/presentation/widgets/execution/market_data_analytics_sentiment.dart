@@ -11,13 +11,13 @@ class _SentimentTab extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _CardHeader(
                 icon: Icons.psychology_outlined,
@@ -65,7 +65,7 @@ class _SentimentTab extends StatelessWidget {
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               Text(
                 'How Sentiment is Calculated',
@@ -83,7 +83,7 @@ class _SentimentTab extends StatelessWidget {
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               Text(
                 'Trading Implications',
@@ -110,13 +110,14 @@ class _SentimentComponentRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             children: [
@@ -151,7 +152,8 @@ class _ImplicationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(implication.colorHex);
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

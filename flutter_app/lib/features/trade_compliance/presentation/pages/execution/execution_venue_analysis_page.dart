@@ -119,7 +119,7 @@ class _ExecutionVenueAnalysisPageState
                       children: [
                         const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
-                          density: VitDensity.compact,
+                          density: VitDensity.tool,
                           title: 'Execution venue review',
                           message:
                               'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
@@ -130,7 +130,8 @@ class _ExecutionVenueAnalysisPageState
                           onChanged: (id) => setState(() => _sort = id),
                         ),
                         VitCard(
-                          density: VitDensity.compact,
+                          density: VitDensity.tool,
+                          radius: VitCardRadius.tight,
                           child: VitTabBar(
                             activeKey: _tab,
                             onChanged: (id) => setState(() => _tab = id),

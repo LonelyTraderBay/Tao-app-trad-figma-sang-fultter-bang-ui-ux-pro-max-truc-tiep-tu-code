@@ -12,7 +12,7 @@ class _TopTradersCard extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           const _CardHeader(
             icon: Icons.visibility_rounded,
@@ -21,7 +21,8 @@ class _TopTradersCard extends StatelessWidget {
             badge: 'Long',
           ),
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             variant: VitCardVariant.inner,
             borderColor: _analyticsGreen.withValues(alpha: .2),
             child: Column(
@@ -48,7 +49,8 @@ class _TopTradersCard extends StatelessWidget {
           ),
           _RatioBar(longPct: data.longPct),
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
@@ -109,7 +111,7 @@ class _FundingRateCard extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           _CardHeader(
             icon: Icons.attach_money_rounded,
@@ -119,7 +121,8 @@ class _FundingRateCard extends StatelessWidget {
             badgeColor: _analyticsRed,
           ),
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
@@ -174,7 +177,8 @@ class _FundingRateCard extends StatelessWidget {
             ],
           ),
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             variant: VitCardVariant.inner,
             child: AspectRatio(
               aspectRatio: 4.4,

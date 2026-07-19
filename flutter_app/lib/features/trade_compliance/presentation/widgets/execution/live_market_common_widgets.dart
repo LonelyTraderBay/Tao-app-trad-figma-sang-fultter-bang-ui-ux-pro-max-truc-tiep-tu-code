@@ -89,7 +89,7 @@ class LiveMarketCard extends StatelessWidget {
     this.height,
     this.constraints,
     this.variant = VitCardVariant.standard,
-    this.radius = VitCardRadius.standard,
+    this.radius = VitCardRadius.tight,
     this.borderColor,
     this.background,
   });
@@ -141,6 +141,7 @@ class LiveMarketMetricBox extends StatelessWidget {
       variant: bg == liveMarketPanel2
           ? VitCardVariant.inner
           : VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(
         minHeight: MarketsSpacingTokens.liveMarketMetricMinHeight,
       ),

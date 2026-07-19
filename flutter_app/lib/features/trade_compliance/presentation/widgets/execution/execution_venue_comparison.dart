@@ -9,7 +9,7 @@ class _ComparisonTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Venue Comparison',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (var index = 0; index < venues.length; index++)
           _VenueCard(venue: venues[index], rank: index + 1),
@@ -29,7 +29,8 @@ class _VenueCard extends StatelessWidget {
     final isWinner = rank == 1;
     return VitCard(
       key: ExecutionVenueAnalysisPage.venueKey(venue.venue),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -41,6 +42,7 @@ class _VenueCard extends StatelessWidget {
                 height: AppSpacing.buttonCompact,
                 alignment: Alignment.center,
                 variant: VitCardVariant.inner,
+                radius: VitCardRadius.tight,
                 borderColor: isWinner
                     ? _venueAmber.withValues(alpha: .28)
                     : AppColors.transparent,
@@ -136,7 +138,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +177,7 @@ class _CostsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Cost Breakdown',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [for (final venue in venues) _CostCard(venue: venue)],
     );
   }
@@ -188,7 +191,8 @@ class _CostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
