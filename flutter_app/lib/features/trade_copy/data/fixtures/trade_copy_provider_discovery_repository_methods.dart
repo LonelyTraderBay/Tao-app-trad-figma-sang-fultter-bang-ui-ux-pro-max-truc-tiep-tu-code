@@ -8,7 +8,7 @@ mixin _MockTradeCopyTradingRepositoryProviderDiscoveryMethods
     return const TradeProviderComparisonSnapshot(
       selectedCount: 3,
       maxProviders: 5,
-      providers: [],
+      providers: _providerComparisonProviders,
       metrics: _providerComparisonMetrics,
       disclaimer:
           'So sánh dựa trên hiệu suất lịch sử. Hiệu suất quá khứ không đảm bảo kết quả tương lai.',

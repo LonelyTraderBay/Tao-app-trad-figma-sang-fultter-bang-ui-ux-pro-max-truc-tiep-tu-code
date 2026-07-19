@@ -47,84 +47,107 @@ const TradeScreenSnapshot _providerDiscoveryTradeSnapshot = TradeScreenSnapshot(
   ],
 );
 
+// The three providers currently selected for comparison. Ids/names/metrics
+// mirror `_copyTraders` ct001..ct003 so the leaderboard and the comparison
+// table never disagree about the same provider.
+const List<TradeProviderComparisonProvider> _providerComparisonProviders = [
+  TradeProviderComparisonProvider(
+    id: 'ct001',
+    name: 'AlphaHunter_VN',
+    avatar: 'A',
+  ),
+  TradeProviderComparisonProvider(
+    id: 'ct002',
+    name: 'SteadyGains_Pro',
+    avatar: 'S',
+  ),
+  TradeProviderComparisonProvider(
+    id: 'ct003',
+    name: 'RiskMaster_88',
+    avatar: 'R',
+  ),
+];
+
 const List<TradeProviderComparisonMetric> _providerComparisonMetrics = [
   TradeProviderComparisonMetric(
     label: 'Total ROI',
     category: TradeProviderComparisonCategory.performance,
     higherIsBetter: true,
-    values: {},
+    values: {'ct001': '+342.5%', 'ct002': '+187.2%', 'ct003': '+567.8%'},
   ),
   TradeProviderComparisonMetric(
     label: '30D Return',
     category: TradeProviderComparisonCategory.performance,
     higherIsBetter: true,
-    values: {},
+    values: {'ct001': '+18.4%', 'ct002': '+9.6%', 'ct003': '+32.1%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Win Rate',
     category: TradeProviderComparisonCategory.performance,
     higherIsBetter: true,
-    values: {},
+    values: {'ct001': '78.5%', 'ct002': '82.3%', 'ct003': '65.2%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Avg Trade',
     category: TradeProviderComparisonCategory.performance,
     higherIsBetter: true,
-    values: {},
+    values: {'ct001': '+1.2%', 'ct002': '+0.9%', 'ct003': '+2.6%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Sharpe Ratio',
     category: TradeProviderComparisonCategory.risk,
     higherIsBetter: true,
-    values: {},
+    values: {'ct001': '2.31', 'ct002': '3.12', 'ct003': '1.85'},
   ),
+  // Drawdown values are signed (app-wide display convention), so the value
+  // closest to zero is numerically the HIGHEST: -8.1% > -28.3%.
   TradeProviderComparisonMetric(
     label: 'Max Drawdown',
     category: TradeProviderComparisonCategory.risk,
-    higherIsBetter: false,
-    values: {},
+    higherIsBetter: true,
+    values: {'ct001': '-12.4%', 'ct002': '-8.1%', 'ct003': '-28.3%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Volatility',
     category: TradeProviderComparisonCategory.risk,
     higherIsBetter: false,
-    values: {},
+    values: {'ct001': '4.2%', 'ct002': '1.8%', 'ct003': '9.6%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Risk Score',
     category: TradeProviderComparisonCategory.risk,
     higherIsBetter: false,
-    values: {},
+    values: {'ct001': '6.5', 'ct002': '3.2', 'ct003': '8.7'},
   ),
   TradeProviderComparisonMetric(
     label: 'Avg Slippage',
     category: TradeProviderComparisonCategory.execution,
     higherIsBetter: false,
-    values: {},
+    values: {'ct001': '0.08%', 'ct002': '0.05%', 'ct003': '0.15%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Avg Delay',
     category: TradeProviderComparisonCategory.execution,
     higherIsBetter: false,
-    values: {},
+    values: {'ct001': '0.8s', 'ct002': '0.5s', 'ct003': '1.2s'},
   ),
   TradeProviderComparisonMetric(
     label: 'Fill Rate',
     category: TradeProviderComparisonCategory.execution,
     higherIsBetter: true,
-    values: {},
+    values: {'ct001': '98.2%', 'ct002': '99.1%', 'ct003': '96.5%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Performance Fee',
     category: TradeProviderComparisonCategory.cost,
     higherIsBetter: false,
-    values: {},
+    values: {'ct001': '10%', 'ct002': '8%', 'ct003': '15%'},
   ),
   TradeProviderComparisonMetric(
     label: 'Est. Monthly Cost',
     category: TradeProviderComparisonCategory.cost,
     higherIsBetter: false,
-    values: {},
+    values: {'ct001': '\$24.50', 'ct002': '\$18.20', 'ct003': '\$45.80'},
   ),
 ];
 

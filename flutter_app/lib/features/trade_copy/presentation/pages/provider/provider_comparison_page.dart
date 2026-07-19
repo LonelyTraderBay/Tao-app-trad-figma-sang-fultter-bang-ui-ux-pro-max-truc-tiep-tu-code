@@ -186,6 +186,8 @@ class _WarningBanner extends StatelessWidget {
   }
 }
 
+const int _metricLabelColumnFlex = 2;
+
 class _ComparisonTable extends StatelessWidget {
   const _ComparisonTable({required this.snapshot});
 
@@ -193,17 +195,38 @@ class _ComparisonTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providers = snapshot.providers;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: TradeSpacingTokens.providerComparisonMetricHeaderPadding,
-          child: Text(
-            'Metric',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.extraBold,
-            ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: _metricLabelColumnFlex,
+                child: Text(
+                  'Metric',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontWeight: AppTextStyles.extraBold,
+                  ),
+                ),
+              ),
+              for (final provider in providers)
+                Expanded(
+                  child: Text(
+                    provider.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.extraBold,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
         for (final group in TradeProviderComparisonCategory.values) ...[
@@ -212,27 +235,138 @@ class _ComparisonTable extends StatelessWidget {
           for (final metric in snapshot.metrics.where(
             (metric) => metric.category == group,
           )) ...[
-            Padding(
-              padding: TradeSpacingTokens.providerComparisonMetricLabelPadding,
-              child: SizedBox(
-                height: AppSpacing.x5 + AppSpacing.x2,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    metric.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            _MetricRow(metric: metric, providers: providers),
             const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
       ],
     );
   }
+}
+
+class _MetricRow extends StatelessWidget {
+  const _MetricRow({required this.metric, required this.providers});
+
+  final TradeProviderComparisonMetric metric;
+  final List<TradeProviderComparisonProvider> providers;
+
+  @override
+  Widget build(BuildContext context) {
+    final bestProviderId = _bestProviderId(metric, providers);
+    return Padding(
+      padding: TradeSpacingTokens.providerComparisonMetricLabelPadding,
+      child: SizedBox(
+        height: AppSpacing.x5 + AppSpacing.x2,
+        child: Row(
+          children: [
+            Expanded(
+              flex: _metricLabelColumnFlex,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  metric.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+              ),
+            ),
+            for (final provider in providers)
+              Expanded(
+                child: _MetricValueCell(
+                  value: metric.values[provider.id],
+                  isBest: provider.id == bestProviderId,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MetricValueCell extends StatelessWidget {
+  const _MetricValueCell({required this.value, required this.isBest});
+
+  final String? value;
+  final bool isBest;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = value;
+    if (text == null || text.isEmpty) {
+      return Text(
+        '—',
+        textAlign: TextAlign.center,
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      );
+    }
+    final color = isBest ? _comparisonGreen : AppColors.text1;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (isBest) ...[
+          const Icon(
+            Icons.circle,
+            color: _comparisonGreen,
+            size: AppSpacing.x2,
+          ),
+          const SizedBox(width: AppSpacing.x1),
+        ],
+        Flexible(
+          child: Text(
+            text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+final RegExp _metricNumberPattern = RegExp(r'-?\d+(?:\.\d+)?');
+
+/// Parses the numeric part of a formatted metric value ('+342.5%', '0.8s',
+/// '\$24.50'). Returns null when the value has no numeric component.
+double? _parseMetricNumber(String? raw) {
+  if (raw == null) {
+    return null;
+  }
+  final match = _metricNumberPattern.firstMatch(raw.replaceAll(',', ''));
+  if (match == null) {
+    return null;
+  }
+  return double.tryParse(match.group(0)!);
+}
+
+/// Id of the provider holding the best-in-group value for [metric] per its
+/// `higherIsBetter` direction (values are compared as signed numbers).
+String? _bestProviderId(
+  TradeProviderComparisonMetric metric,
+  List<TradeProviderComparisonProvider> providers,
+) {
+  String? bestId;
+  double? bestValue;
+  for (final provider in providers) {
+    final parsed = _parseMetricNumber(metric.values[provider.id]);
+    if (parsed == null) {
+      continue;
+    }
+    final isBetter =
+        bestValue == null ||
+        (metric.higherIsBetter ? parsed > bestValue : parsed < bestValue);
+    if (isBetter) {
+      bestValue = parsed;
+      bestId = provider.id;
+    }
+  }
+  return bestId;
 }
 
 class _CategoryRow extends StatelessWidget {
