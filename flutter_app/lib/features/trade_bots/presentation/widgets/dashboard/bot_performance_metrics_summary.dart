@@ -79,8 +79,9 @@ class _AdvancedMetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -95,6 +96,7 @@ class _AdvancedMetricCard extends StatelessWidget {
             item.value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: item.valueColor ?? AppColors.text1,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: _analyticsTinySpace),
@@ -116,8 +118,9 @@ class _DurationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: SizedBox(
         height: _analyticsDonutExtent,
         // PERF-HN5: isolate the heavy chart painter into its own compositor
@@ -140,9 +143,15 @@ class _PerformanceSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wins = (metrics.totalTrades * metrics.winRate / 100).round();
+    final losses = metrics.totalTrades - wins;
     final rows = [
       ('Total Trades', '${metrics.totalTrades}', 'trades'),
-      ('Win Rate', '${metrics.winRate.toStringAsFixed(1)}%', '(45W / 21L)'),
+      (
+        'Win Rate',
+        '${metrics.winRate.toStringAsFixed(1)}%',
+        '(${wins}W / ${losses}L)',
+      ),
       ('Sharpe Ratio', metrics.sharpeRatio.toStringAsFixed(2), '(Excellent)'),
       ('Profit Factor', metrics.profitFactor.toStringAsFixed(2), '(Good)'),
       ('Best Trade', '+\$${metrics.bestTrade.toStringAsFixed(1)}', ''),
@@ -150,8 +159,9 @@ class _PerformanceSummaryCard extends StatelessWidget {
     ];
 
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -189,9 +199,10 @@ class _SummaryRow extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: _analyticsMetricMinExtent),
       padding: TradeSpacingTokens.tradeBotControlPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Row(
         children: [
           Expanded(
@@ -209,6 +220,7 @@ class _SummaryRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
               if (suffix.isNotEmpty) ...[
@@ -233,8 +245,9 @@ class _RatingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       borderColor: _analyticsGreen.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

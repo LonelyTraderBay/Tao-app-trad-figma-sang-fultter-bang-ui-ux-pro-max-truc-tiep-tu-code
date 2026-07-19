@@ -10,7 +10,8 @@ class _TradeCard extends StatelessWidget {
     final isBuy = trade.side == TradeBotHistorySide.buy;
     final sideColor = isBuy ? _historyGreen : _historyRed;
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -64,6 +65,7 @@ class _TradeCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: trade.pnl >= 0 ? _historyGreen : _historyRed,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -136,6 +138,7 @@ class _DetailBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x2,
         vertical: AppSpacing.x2,
@@ -155,6 +158,7 @@ class _DetailBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -172,7 +176,8 @@ class _ExportNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -191,7 +196,7 @@ class _ExportNote extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             key: BotHistoryPage.exportAllKey,
-            height: VitDensity.compact.controlHeight,
+            height: VitDensity.tool.controlHeight,
             onPressed: onTap,
             leading: const Icon(Icons.download_rounded),
             child: const Text('Export All Trades'),

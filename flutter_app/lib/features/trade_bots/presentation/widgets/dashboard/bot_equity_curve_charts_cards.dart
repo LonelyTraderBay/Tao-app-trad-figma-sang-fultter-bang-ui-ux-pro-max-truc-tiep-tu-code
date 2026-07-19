@@ -57,6 +57,14 @@ class _SharpeCard extends StatelessWidget {
     final rolling = points
         .where((point) => point.rollingSharpe != null)
         .toList();
+    final sharpeValues = rolling.map((point) => point.rollingSharpe!).toList();
+    final currentSharpe = sharpeValues.isEmpty ? 0.0 : sharpeValues.last;
+    final averageSharpe = sharpeValues.isEmpty
+        ? 0.0
+        : sharpeValues.reduce((a, b) => a + b) / sharpeValues.length;
+    final minSharpe = sharpeValues.isEmpty
+        ? 0.0
+        : sharpeValues.reduce(math.min);
     return _Card(
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
@@ -73,26 +81,30 @@ class _SharpeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          const Row(
+          Row(
             children: [
               Expanded(
                 child: _MiniStat(
                   label: 'Current',
-                  value: '2.08',
-                  status: 'Excellent',
+                  value: currentSharpe.toStringAsFixed(2),
+                  status: _sharpeStatus(currentSharpe),
                 ),
               ),
-              SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MiniStat(
                   label: 'Average',
-                  value: '1.94',
-                  status: 'Good',
+                  value: averageSharpe.toStringAsFixed(2),
+                  status: _sharpeStatus(averageSharpe),
                 ),
               ),
-              SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
-                child: _MiniStat(label: 'Min', value: '1.52', status: 'Fair'),
+                child: _MiniStat(
+                  label: 'Min',
+                  value: minSharpe.toStringAsFixed(2),
+                  status: _sharpeStatus(minSharpe),
+                ),
               ),
             ],
           ),
@@ -100,6 +112,14 @@ class _SharpeCard extends StatelessWidget {
       ),
     );
   }
+}
+
+// Illustrative rolling-Sharpe quality bands (matches the page's original
+// design intent) — kept local since only this card classifies Sharpe values.
+String _sharpeStatus(double value) {
+  if (value >= 2.0) return 'Excellent';
+  if (value >= 1.7) return 'Good';
+  return 'Fair';
 }
 
 class _MiniStat extends StatelessWidget {
@@ -117,7 +137,7 @@ class _MiniStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Column(
         children: [
@@ -130,6 +150,7 @@ class _MiniStat extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           Text(
@@ -244,6 +265,7 @@ class _PerformanceTile extends StatelessWidget {
     };
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Row(
         children: [

@@ -14,7 +14,8 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         children: [
@@ -66,7 +67,13 @@ class _StatColumn extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.x1),
-        Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
+        Text(
+          value,
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
       ],
     );
   }

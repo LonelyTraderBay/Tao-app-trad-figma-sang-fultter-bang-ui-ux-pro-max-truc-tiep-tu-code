@@ -7,6 +7,7 @@ class _IntroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .22),
       child: Row(
@@ -56,6 +57,7 @@ class _TargetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
@@ -94,6 +96,7 @@ class _TargetTile extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
       padding: TradeSpacingTokens.tradeBotChipPadding,
       borderColor: selected ? _optimizationPrimary : AppColors.borderSolid,
@@ -154,6 +157,7 @@ class _RangeCard extends StatelessWidget {
     final rangePct = ranges.firstWhere((item) => item.id == 'gridRange');
 
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
@@ -207,6 +211,7 @@ class _RangeSliderRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ],
@@ -248,6 +253,7 @@ class _HowItWorksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,6 +304,7 @@ class _QueuedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .24),
       child: Text(

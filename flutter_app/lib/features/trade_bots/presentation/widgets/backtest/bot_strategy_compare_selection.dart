@@ -51,7 +51,8 @@ class _StrategyCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: selected ? color : AppColors.borderSolid,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -149,7 +150,8 @@ class _BestStrategyCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .30),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -8,8 +8,9 @@ class _KeyMetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         children: [
           Row(
@@ -40,6 +41,7 @@ class _KeyMetricsCard extends StatelessWidget {
           const SizedBox(height: _analyticsSpace),
           VitCard(
             variant: VitCardVariant.inner,
+            radius: VitCardRadius.tight,
             width: double.infinity,
             padding: TradeSpacingTokens.tradeBotControlPadding,
             borderColor: _analyticsGreen.withValues(alpha: .22),
@@ -91,7 +93,13 @@ class _MetricColumn extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: _analyticsTinySpace),
-        Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
+        Text(
+          value,
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
       ],
     );
   }
@@ -136,8 +144,9 @@ class _PnlChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: BotPerformanceAnalyticsPage.pnlChartKey,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: SizedBox(
         height: _analyticsChartExtent,
         // PERF-HN5: isolate the heavy chart painter into its own compositor
@@ -161,8 +170,9 @@ class _WinLossChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: SizedBox(
         height: _analyticsDistributionExtent,
         // PERF-HN5: isolate the heavy chart painter into its own compositor
@@ -190,8 +200,9 @@ class _StrategyPerformanceCard extends StatelessWidget {
         .fold<double>(0, math.max);
 
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         children: [
           for (final strategy in strategies) ...[
@@ -240,6 +251,7 @@ class _StrategyRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: isPositive ? _analyticsGreen : _analyticsRed,
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ],

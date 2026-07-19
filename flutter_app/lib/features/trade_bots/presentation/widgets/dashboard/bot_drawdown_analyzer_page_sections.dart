@@ -224,6 +224,7 @@ class _EventCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _drawdownRed,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -271,6 +272,7 @@ class _EventStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
