@@ -36,13 +36,13 @@ void main() {
       loadDelay: Duration.zero,
     ).getBotRiskDisclosure();
 
-    expect(snapshot.highRiskTitle, 'HIGH RISK WARNING');
+    expect(snapshot.highRiskTitle, 'CẢNH BÁO RỦI RO CAO');
     expect(snapshot.categories, hasLength(6));
-    expect(snapshot.categories.first.title, 'Market Volatility Risk');
+    expect(snapshot.categories.first.title, 'Rủi ro biến động thị trường');
     expect(snapshot.additionalWarnings, hasLength(5));
-    expect(snapshot.regulatoryTitle, 'MiFID II / ESMA / SEC Compliance');
-    expect(snapshot.disabledCta, 'Acknowledge Risks to Continue');
-    expect(snapshot.enabledCta, 'I Understand the Risks - Continue');
+    expect(snapshot.regulatoryTitle, 'Tuân thủ MiFID II / ESMA / SEC');
+    expect(snapshot.disabledCta, 'Xác nhận rủi ro để tiếp tục');
+    expect(snapshot.enabledCta, 'Tôi đã hiểu rủi ro - Tiếp tục');
     expect(snapshot.nextPath, AppRoutePaths.tradeBotSuitabilityAssessment);
     expect(snapshot.endpoint, '/api/mobile/trade/trade-bots-risk-disclosure');
     expect(snapshot.actionDraft, contains('POST /bots/create'));
@@ -68,12 +68,15 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Risk Disclosure'), findsOneWidget);
-    expect(find.text('HIGH RISK WARNING'), findsOneWidget);
-    expect(find.text('Past Performance Disclaimer'), findsOneWidget);
-    expect(find.text('Risk Categories'), findsOneWidget);
-    expect(find.text('Market Volatility Risk'), findsOneWidget);
-    expect(find.text('Acknowledge Risks to Continue'), findsOneWidget);
+    expect(find.text('Công bố rủi ro'), findsOneWidget);
+    expect(find.text('CẢNH BÁO RỦI RO CAO'), findsOneWidget);
+    expect(
+      find.text('Miễn trừ trách nhiệm về hiệu suất quá khứ'),
+      findsOneWidget,
+    );
+    expect(find.text('Các hạng mục rủi ro'), findsOneWidget);
+    expect(find.text('Rủi ro biến động thị trường'), findsOneWidget);
+    expect(find.text('Xác nhận rủi ro để tiếp tục'), findsOneWidget);
   });
 
   testWidgets('SC-118 first viewport reaches first risk category', (
@@ -110,11 +113,11 @@ void main() {
 
     await tester.tap(find.byKey(BotRiskDisclosurePage.acknowledgmentKey));
     await tester.pumpAndSettle();
-    expect(find.text('I Understand the Risks - Continue'), findsOneWidget);
+    expect(find.text('Tôi đã hiểu rủi ro - Tiếp tục'), findsOneWidget);
 
     await tester.tap(find.byKey(BotRiskDisclosurePage.ctaKey));
     await tester.pumpAndSettle();
     expect(find.byType(BotSuitabilityAssessmentPage), findsOneWidget);
-    expect(find.text('Suitability Assessment'), findsOneWidget);
+    expect(find.text('Đánh giá mức độ phù hợp'), findsOneWidget);
   });
 }

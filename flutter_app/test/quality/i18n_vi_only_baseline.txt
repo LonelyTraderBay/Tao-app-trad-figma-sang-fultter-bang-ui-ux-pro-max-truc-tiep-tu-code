@@ -199,42 +199,10 @@ lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Confirmation 
 lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Order defaults, confirmations, feedback, display, reset, and result states stay visible.
 lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Trade settings body reviewed
 lib/features/trade/presentation/pages/hub/trade_settings_page.dart|Trade settings safety review
-lib/features/trade/presentation/widgets/futures/futures_page_form_controls.dart|Confirm before submit
-lib/features/trade/presentation/widgets/hub/trade_page_state.dart|Preview fees, slippage, and available balance before submitting a market order.
 lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart|Settings are saved on this device and apply immediately. Other devices keep default settings until changed there.
-lib/features/trade/presentation/widgets/margin/margin_trading_order_summary.dart|Confirm leverage before submit
-lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart|Backtest output is framed as simulation, not guaranteed performance.
-lib/features/trade_bots/presentation/pages/backtest/bot_backtesting_page.dart|Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.
-lib/features/trade_bots/presentation/pages/backtest/bot_optimization_page.dart|Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.
-lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart|Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.
 lib/features/trade_bots/presentation/pages/backtest/bot_strategy_compare_page.dart|Which Strategy to Choose?
-lib/features/trade_bots/presentation/pages/dashboard/bot_drawdown_analyzer_page.dart|Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.
-lib/features/trade_bots/presentation/pages/dashboard/bot_equity_curve_page.dart|Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.
-lib/features/trade_bots/presentation/pages/dashboard/bot_equity_curve_page.dart|Performance is not guaranteed
 lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Search by bot name or pair...
-lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Trade History
-lib/features/trade_bots/presentation/pages/dashboard/bot_history_page.dart|Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.
-lib/features/trade_bots/presentation/pages/dashboard/bot_performance_analytics_page.dart|PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.
-lib/features/trade_bots/presentation/pages/dashboard/bot_portfolio_dashboard_page.dart|Equity curve, allocation concentration, correlation pressure and health next steps are reviewed before portfolio changes.
-lib/features/trade_bots/presentation/pages/dashboard/bot_risk_dashboard_page.dart|Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.
-lib/features/trade_bots/presentation/pages/settings/bot_api_documentation_page.dart|Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.
-lib/features/trade_bots/presentation/pages/settings/bot_emergency_stop_page.dart|Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.
-lib/features/trade_bots/presentation/pages/settings/bot_guide_page.dart|Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.
-lib/features/trade_bots/presentation/pages/settings/bot_risk_disclosure_page.dart|Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.
 lib/features/trade_bots/presentation/pages/settings/bot_security_settings_page.dart|Create New API Key
-lib/features/trade_bots/presentation/pages/settings/bot_suitability_assessment_page.dart|Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.
-lib/features/trade_bots/presentation/pages/settings/bot_tax_reporting_page.dart|Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.
-lib/features/trade_bots/presentation/pages/settings/bot_terms_of_service_page.dart|Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.
-lib/features/trade_bots/presentation/widgets/backtest/bot_backtesting_widgets.dart|Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.
-lib/features/trade_bots/presentation/widgets/backtest/bot_optimization_page_sections.dart|Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.
-lib/features/trade_bots/presentation/widgets/backtest/bot_strategy_compare_selection.dart| has the highest Sharpe ratio (${strategy.metrics.sharpeRatio.toStringAsFixed(2)}) among selected strategies, indicating superior risk-adjusted performance.
-lib/features/trade_bots/presentation/widgets/dashboard/bot_history_page_common.dart|Download your complete trade history for tax reporting, accounting, or analysis. Available formats: CSV, PDF, Excel.
-lib/features/trade_bots/presentation/widgets/dashboard/bot_performance_metrics_summary.dart|Your bots are performing above average. Sharpe ratio > 1.5, win rate > 65%, and profit factor > 2 indicate strong risk-adjusted returns. Keep monitoring and adjusting as market conditions change.
-lib/features/trade_bots/presentation/widgets/settings/bot_guide_practices_videos.dart|View All Tutorials
-lib/features/trade_bots/presentation/widgets/settings/bot_security_settings_cards.dart|Required for creating/deleting bots
-lib/features/trade_bots/presentation/widgets/settings/bot_security_settings_sheets.dart|Add IP to Whitelist
-lib/features/trade_bots/presentation/widgets/settings/bot_security_settings_sheets.dart|Save this key now - you will not be able to see it again.
-lib/features/trade_bots/presentation/widgets/settings/bot_tax_reporting_notice_year.dart|reports for convenience, but you should consult a tax 
 lib/features/trade_compliance/presentation/pages/client_money/arm_integration_status_page.dart|Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.
 lib/features/trade_compliance/presentation/pages/client_money/cass_reconciliation_page.dart|Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.
 lib/features/trade_compliance/presentation/pages/client_money/client_money_protection_page.dart|All client money is held in segregated bank accounts and 
@@ -242,7 +210,6 @@ lib/features/trade_compliance/presentation/pages/client_money/client_money_prote
 lib/features/trade_compliance/presentation/pages/client_money/investor_compensation_page.dart|Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.
 lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Brief summary of your complaint
 lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.
-lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Evidence and terms stay visible before the submit action.
 lib/features/trade_compliance/presentation/pages/complaints/complaint_submission_page.dart|Please provide full details of your complaint, including dates, amounts, and any relevant information
 lib/features/trade_compliance/presentation/pages/complaints/complaint_tracking_page.dart|Confirm evidence, response deadline, escalation limits, and next steps before adding information.
 lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.
@@ -250,7 +217,6 @@ lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_
 lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|and respond within 8 weeks. If dissatisfied, you can refer 
 lib/features/trade_compliance/presentation/pages/complaints/complaints_handling_page.dart|to the Financial Ombudsman Service.
 lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart|Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.
-lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart|Contact and process steps stay separated for regulated escalation.
 lib/features/trade_compliance/presentation/pages/complaints/ombudsman_referral_page.dart|When Can You Refer?
 lib/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart|Required by EU regulation for retail clients.
 lib/features/trade_compliance/presentation/pages/disclosures/ex_ante_costs_page.dart|Review fees, RIY impact, limits, and next-step documents before investing.
@@ -263,8 +229,6 @@ lib/features/trade_compliance/presentation/pages/disclosures/performance_scenari
 lib/features/trade_compliance/presentation/pages/disclosures/regulatory_disclosures_page.dart|Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.
 lib/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart|SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.
 lib/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart|What is the Summary Risk Indicator?
-lib/features/trade_compliance/presentation/pages/disclosures/riy_calculator_page.dart|Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.
-lib/features/trade_compliance/presentation/pages/disclosures/riy_calculator_page.dart|Without-cost and with-cost values stay comparable.
 lib/features/trade_compliance/presentation/pages/execution/execution_venue_analysis_page.dart|Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.
 lib/features/trade_compliance/presentation/pages/execution/market_data_analytics_page.dart|Market Data
 lib/features/trade_compliance/presentation/pages/execution/slippage_monitoring_page.dart|Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.
@@ -319,11 +283,7 @@ lib/features/trade_compliance/presentation/widgets/governance/transaction_report
 lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_reports.dart|Try a different search term
 lib/features/trade_compliance/presentation/widgets/hub/regulatory_reports_dashboard_kpis.dart|${(totals.failed / totals.total * 100).toStringAsFixed(1)}% failure rate
 lib/features/trade_copy/presentation/pages/hub/active_copies_page.dart|Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.
-lib/features/trade_copy/presentation/pages/hub/copy_notifications_page.dart|Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.
 lib/features/trade_copy/presentation/pages/hub/copy_settings_page.dart|Confirm stop-loss, take-profit, allocation limits, circuit breaker, and emergency contact before saving copy defaults.
-lib/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart|Add-provider actions remain gated by comparison limits and review copy.
-lib/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart|Disclaimer, selected providers, metrics, legend, add action, and review states stay visible.
-lib/features/trade_copy/presentation/pages/provider/provider_comparison_page.dart|Risk, execution, cost, and performance groups stay separated for scanning.
 lib/features/trade_copy/presentation/pages/provider/provider_governance_page.dart|Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.
 lib/features/trade_copy/presentation/pages/safety/copy_audit_log_page.dart|Search, filter, and export audit evidence with retention, risk, and config-change context preserved.
 lib/features/trade_copy/presentation/widgets/flow/copy_configuration_risk_summary.dart|Confirm copier limits before submit

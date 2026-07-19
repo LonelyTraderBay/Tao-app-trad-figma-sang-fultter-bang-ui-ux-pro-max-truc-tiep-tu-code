@@ -74,7 +74,7 @@ class _AnalysisPeriodCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Analysis Period',
+            'Giai đoạn phân tích',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,

@@ -46,7 +46,7 @@ class _BotStrategyComparePageState
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotStrategyCompareProvider);
     return VitTradeHubScaffold(
-      title: 'Strategy Compare',
+      title: 'So sánh chiến lược',
       subtitle: 'So sánh hiệu suất các chiến lược bot',
       semanticLabel: 'So sánh chiến lược bot giao dịch',
       semanticIdentifier: 'SC-126',
@@ -87,7 +87,7 @@ class _BotStrategyComparePageState
               secondaryColor: _compareGreen,
             ),
             VitTradeSection(
-              title: 'Select Strategies (2-4)',
+              title: 'Chọn chiến lược (2-4)',
               child: _StrategySelectionGrid(
                 strategies: snapshot.strategies,
                 selectedIds: _selected,
@@ -95,22 +95,22 @@ class _BotStrategyComparePageState
               ),
             ),
             VitTradeSection(
-              title: 'Best strategy',
+              title: 'Chiến lược tốt nhất',
               child: _BestStrategyCard(strategy: best),
             ),
             VitTradeSection(
-              title: 'Equity Curves Comparison',
+              title: 'So sánh đường cong vốn',
               child: _EquityChartCard(
                 points: snapshot.equityPoints,
                 strategies: selectedStrategies,
               ),
             ),
             VitTradeSection(
-              title: 'Performance Radar',
+              title: 'Biểu đồ radar hiệu suất',
               child: _RadarCard(strategies: selectedStrategies),
             ),
             VitTradeSection(
-              title: 'Detailed Metrics',
+              title: 'Chỉ số chi tiết',
               child: _MetricsTable(strategies: selectedStrategies),
             ),
             VitTradeSection(
@@ -129,13 +129,13 @@ class _BotStrategyComparePageState
               ),
             ),
             VitTradeSection(
-              title: 'Analysis period',
+              title: 'Khoảng thời gian phân tích',
               child: _AnalysisPeriodCard(text: snapshot.analysisPeriod),
             ),
             const VitBotRiskReviewFooter(
-              title: 'Strategy comparison review',
+              title: 'Xem lại so sánh chiến lược',
               message:
-                  'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
+                  'Chiến lược đã chọn, chênh lệch hiệu suất, chỉ số radar, lý do khuyến nghị và bước tiếp theo được xem lại trước khi thay đổi phân bổ vốn.',
               contractId: 'bot-strategy-compare-review',
             ),
           ];

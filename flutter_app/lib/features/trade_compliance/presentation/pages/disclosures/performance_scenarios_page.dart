@@ -134,16 +134,16 @@ class _PerformanceScenariosPageState
                   ),
                   const _InfoNote(),
                   const TradeBodyReviewSection(
-                    title: 'Scenario body review',
-                    message: 'Performance scenario body reviewed',
+                    title: 'Rà soát nội dung kịch bản',
+                    message: 'Đã rà soát nội dung kịch bản hiệu suất',
                     detail:
-                        'Holding period, modeled outcomes, warnings, assumptions, empty, and result states stay visible.',
+                        'Kỳ hạn nắm giữ, kết quả mô phỏng, cảnh báo, giả định, trạng thái rỗng và trạng thái kết quả luôn hiển thị.',
                     primary:
-                        'Risk warning and investment summary stay before modeled outcomes.',
+                        'Cảnh báo rủi ro và tổng quan khoản đầu tư luôn hiển thị trước các kết quả mô phỏng.',
                     secondary:
-                        'Scenario cards remain assumptions, not return promises.',
+                        'Các thẻ kịch bản vẫn là giả định, không phải cam kết lợi nhuận.',
                     tertiary:
-                        'Holding-period controls stay tied to visible outcome calculations.',
+                        'Bộ điều khiển kỳ hạn nắm giữ luôn gắn liền với các phép tính kết quả hiển thị.',
                   ),
                 ],
               ),

@@ -15,13 +15,13 @@ class _SummaryGrid extends StatelessWidget {
       _SummaryCardData(
         icon: Icons.account_balance_wallet_outlined,
         iconColor: _portfolioPrimary,
-        label: 'Total Equity',
+        label: 'Vốn danh mục',
         value: _formatUsd(summary.totalEquity),
       ),
       _SummaryCardData(
         icon: Icons.trending_up_rounded,
         iconColor: _portfolioGreen,
-        label: 'Total PnL',
+        label: 'Tổng lãi/lỗ',
         value: '+\$${summary.totalPnl.toStringAsFixed(0)}',
         valueColor: _portfolioGreen,
         caption: '+${summary.pnlPercent.toStringAsFixed(1)}%',
@@ -30,17 +30,17 @@ class _SummaryGrid extends StatelessWidget {
       _SummaryCardData(
         icon: Icons.show_chart_rounded,
         iconColor: _portfolioPrimary,
-        label: 'Portfolio Sharpe',
+        label: 'Sharpe danh mục',
         value: summary.portfolioSharpe.toStringAsFixed(2),
-        caption: 'Excellent',
+        caption: 'Xuất sắc',
         captionColor: _portfolioGreen,
       ),
       _SummaryCardData(
         icon: Icons.pie_chart_outline_rounded,
         iconColor: _portfolioAmber,
-        label: 'Diversification',
+        label: 'Đa dạng hóa',
         value: '${summary.diversificationScore}/100',
-        caption: 'Good',
+        caption: 'Tốt',
         captionColor: _portfolioAmber,
       ),
     ];
@@ -234,9 +234,7 @@ class _CorrelationCard extends StatelessWidget {
           Text.rich(
             const TextSpan(
               children: [
-                TextSpan(
-                  text: 'Low correlation (<0.2) = Good diversification ',
-                ),
+                TextSpan(text: 'Tương quan thấp (<0.2) = Đa dạng hóa tốt '),
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: Icon(

@@ -54,7 +54,7 @@ class _BotApiDocumentationPageState
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotApiDocumentationProvider);
     return VitTradeHubScaffold(
-      title: 'API Documentation',
+      title: 'Tài liệu API',
       subtitle: 'Tài liệu API bot cho nhà phát triển',
       semanticLabel: 'Tài liệu API bot dành cho nhà phát triển',
       semanticIdentifier: 'SC-134',
@@ -132,19 +132,19 @@ class _BotApiDocumentationPageState
                     ),
             ),
             VitTradeSection(
-              title: 'Rate Limits',
+              title: 'Giới hạn tần suất',
               child: _RateLimitsCard(items: snapshot.rateLimits),
             ),
             VitTradeSection(
-              title: 'Authentication',
+              title: 'Xác thực',
               child: _AuthCard(header: snapshot.authenticationHeader),
             ),
             const VitBotRiskReviewFooter(
-              title: 'Bot API operational review',
+              title: 'Xem lại vận hành API Bot',
               message:
-                  'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
+                  'Endpoint, xác thực, giới hạn tần suất, sự kiện websocket và kênh hỗ trợ được xem lại trước khi tích hợp bot.',
               contractId: 'bot-api-documentation-review',
-              statusLabel: 'Read-only documentation',
+              statusLabel: 'Tài liệu chỉ đọc',
             ),
           ];
         },

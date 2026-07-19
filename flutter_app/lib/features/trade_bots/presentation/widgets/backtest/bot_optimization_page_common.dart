@@ -19,7 +19,7 @@ class _StartFooter extends StatelessWidget {
           onPressed: onStart,
           height: TradeSpacingTokens.tradeBotSheetActionHeight,
           leading: const Icon(Icons.play_arrow_outlined),
-          child: const Text('Start Optimization'),
+          child: const Text('Bắt đầu tối ưu hóa'),
         ),
       ),
     );

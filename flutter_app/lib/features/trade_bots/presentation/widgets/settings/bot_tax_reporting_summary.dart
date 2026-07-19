@@ -14,14 +14,14 @@ class _SummaryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _SummaryStat(
-                  label: 'Total Trades',
+                  label: 'Tổng số giao dịch',
                   value: _formatInt(summary.totalTrades),
                   color: AppColors.text1,
                 ),
               ),
               Expanded(
                 child: _SummaryStat(
-                  label: 'Total Fees Paid',
+                  label: 'Tổng phí đã trả',
                   value: _formatUsd(summary.totalFees),
                   color: AppColors.text1,
                 ),
@@ -33,14 +33,14 @@ class _SummaryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _SummaryStat(
-                  label: 'Realized Gains',
+                  label: 'Lãi đã thực hiện',
                   value: '+${_formatUsd(summary.realizedGains)}',
                   color: _taxGreen,
                 ),
               ),
               Expanded(
                 child: _SummaryStat(
-                  label: 'Realized Losses',
+                  label: 'Lỗ đã thực hiện',
                   value: _formatSignedUsd(summary.realizedLosses),
                   color: _taxRed,
                 ),
@@ -58,7 +58,7 @@ class _SummaryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Net Gain/Loss:',
+                  'Lãi/Lỗ ròng:',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     fontWeight: FontWeight.w600,
@@ -127,8 +127,8 @@ class _CostBasisPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const methods = [
-      ('FIFO', 'First In, First Out (most common)'),
-      ('LIFO', 'Last In, First Out'),
+      ('FIFO', 'Nhập trước, xuất trước (phổ biến nhất)'),
+      ('LIFO', 'Nhập sau, xuất trước'),
     ];
     return Row(
       children: [

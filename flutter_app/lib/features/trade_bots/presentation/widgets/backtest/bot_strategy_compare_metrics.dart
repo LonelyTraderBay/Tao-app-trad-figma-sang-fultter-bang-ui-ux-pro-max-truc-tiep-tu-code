@@ -56,43 +56,43 @@ class _MetricsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final rows = [
       const _MetricRowData(
-        'Total Return',
+        'Tổng lợi nhuận',
         'totalReturn',
         '%',
         _BestMode.highest,
       ),
       const _MetricRowData(
-        'Sharpe Ratio',
+        'Tỷ lệ Sharpe',
         'sharpeRatio',
         '',
         _BestMode.highest,
       ),
       const _MetricRowData(
-        'Max Drawdown',
+        'Sụt giảm vốn tối đa',
         'maxDrawdown',
         '%',
         _BestMode.lowest,
       ),
-      const _MetricRowData('Win Rate', 'winRate', '%', _BestMode.highest),
+      const _MetricRowData('Tỷ lệ thắng', 'winRate', '%', _BestMode.highest),
       const _MetricRowData(
-        'Profit Factor',
+        'Hệ số lợi nhuận',
         'profitFactor',
         '',
         _BestMode.highest,
       ),
       const _MetricRowData(
-        'Total Trades',
+        'Tổng số lệnh',
         'totalTrades',
         '',
         _BestMode.neutral,
       ),
       const _MetricRowData(
-        'Avg Duration',
+        'Thời gian TB',
         'avgTradeDuration',
         '',
         _BestMode.neutral,
       ),
-      const _MetricRowData('Volatility', 'volatility', '%', _BestMode.lowest),
+      const _MetricRowData('Biến động', 'volatility', '%', _BestMode.lowest),
     ];
 
     return _Card(
@@ -140,7 +140,7 @@ class _TableHeader extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Text(
-                  'Metric',
+                  'Chỉ số',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
                     fontWeight: AppTextStyles.bold,

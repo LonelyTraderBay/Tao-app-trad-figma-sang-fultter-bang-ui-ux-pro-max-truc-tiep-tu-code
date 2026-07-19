@@ -61,7 +61,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
         stickyActionsHeight;
 
     return VitTradeDetailScaffold(
-      title: 'Emergency Stop',
+      title: 'Dừng khẩn cấp',
       subtitle: 'Dừng khẩn cấp tất cả bot đang chạy',
       semanticLabel: 'Dừng khẩn cấp toàn bộ bot giao dịch',
       semanticIdentifier: 'SC-121',
@@ -113,14 +113,14 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               child: _WarningBanner(snapshot: snapshot),
             ),
             VitTradeSection(
-              title: 'Bots to Stop (${snapshot.bots.length})',
+              title: 'Bot cần dừng (${snapshot.bots.length})',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [for (final bot in snapshot.bots) _BotCard(bot: bot)],
               ),
             ),
             VitTradeSection(
-              title: 'Reason for Emergency Stop',
+              title: 'Lý do dừng khẩn cấp',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -134,7 +134,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               ),
             ),
             VitTradeSection(
-              title: 'Additional Actions',
+              title: 'Hành động bổ sung',
               child: _CheckActionCard(
                 key: BotEmergencyStopPage.closePositionsKey,
                 selected: _closePositions,
@@ -147,7 +147,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               ),
             ),
             VitTradeSection(
-              title: 'Confirmation',
+              title: 'Xác nhận',
               child: _CheckActionCard(
                 key: BotEmergencyStopPage.confirmationKey,
                 selected: _confirmed,
@@ -162,9 +162,9 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               child: _SupportNotice(snapshot: snapshot),
             ),
             const VitBotRiskReviewFooter(
-              title: 'Emergency stop review',
+              title: 'Xem lại yêu cầu dừng khẩn cấp',
               message:
-                  'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
+                  'Bot đã chọn, lý do, lựa chọn đóng vị thế, xác nhận, tác động rủi ro và bước tiếp theo được xem lại trước khi gửi yêu cầu dừng.',
               contractId: 'bot-emergency-stop-review',
             ),
           ];

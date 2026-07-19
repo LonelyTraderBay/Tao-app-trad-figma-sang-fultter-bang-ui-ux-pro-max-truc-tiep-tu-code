@@ -68,11 +68,11 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Equity Curve'), findsWidgets);
-    expect(find.text('Bot Return'), findsOneWidget);
+    expect(find.text('Lợi nhuận Bot'), findsOneWidget);
     expect(find.text('+74.5%'), findsWidgets);
     expect(find.text('Equity Curve vs Buy & Hold'), findsOneWidget);
-    expect(find.text('Performance Statistics'), findsOneWidget);
-    expect(find.text('Strong Outperformance'), findsOneWidget);
+    expect(find.text('Thống kê hiệu suất'), findsOneWidget);
+    expect(find.text('Vượt trội mạnh mẽ'), findsOneWidget);
   });
 
   testWidgets('SC-130 first viewport reaches equity summary metrics', (
@@ -103,12 +103,15 @@ void main() {
 
     await tester.tap(find.byKey(BotEquityCurvePage.tabKey('sharpe')));
     await tester.pumpAndSettle();
-    expect(find.text('Rolling 30-Day Sharpe Ratio'), findsOneWidget);
-    expect(find.text('Current'), findsOneWidget);
+    expect(find.text('Tỷ lệ Sharpe trượt 30 ngày'), findsOneWidget);
+    expect(find.text('Hiện tại'), findsOneWidget);
 
     await tester.tap(find.byKey(BotEquityCurvePage.tabKey('alpha')));
     await tester.pumpAndSettle();
-    expect(find.text('Monthly Alpha (Bot vs Market)'), findsOneWidget);
+    expect(
+      find.text('Alpha hằng tháng (Bot so với thị trường)'),
+      findsOneWidget,
+    );
     expect(find.text('Sep 2025'), findsOneWidget);
   });
 }

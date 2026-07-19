@@ -37,7 +37,7 @@ void main() {
     ).getBotRiskDashboard();
 
     expect(snapshot.riskScore, 68);
-    expect(snapshot.riskLabel, 'Medium Risk');
+    expect(snapshot.riskLabel, 'Rủi ro trung bình');
     expect(snapshot.drawdownPoints, hasLength(7));
     expect(snapshot.exposures, hasLength(3));
     expect(snapshot.varHistory, hasLength(7));
@@ -67,12 +67,12 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Risk Dashboard'), findsOneWidget);
-    expect(find.text('Portfolio Risk Score'), findsOneWidget);
+    expect(find.text('Bảng điều khiển rủi ro'), findsOneWidget);
+    expect(find.text('Điểm rủi ro danh mục'), findsOneWidget);
     expect(find.text('68/100'), findsOneWidget);
-    expect(find.text('Medium Risk'), findsOneWidget);
-    expect(find.text('Critical Metrics'), findsOneWidget);
-    expect(find.text('Drawdown Trend (24h)'), findsOneWidget);
+    expect(find.text('Rủi ro trung bình'), findsOneWidget);
+    expect(find.text('Chỉ số quan trọng'), findsOneWidget);
+    expect(find.text('Xu hướng sụt giảm vốn (24h)'), findsOneWidget);
   });
 
   testWidgets('SC-120 first viewport reaches critical metrics', (tester) async {
@@ -80,7 +80,7 @@ void main() {
 
     expectFirstViewportVisible(
       tester,
-      find.text('Drawdown'),
+      find.text('Sụt giảm vốn'),
       targetLabel: 'the first critical risk metric',
     );
   });
@@ -94,6 +94,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(BotEmergencyStopPage), findsOneWidget);
-    expect(find.text('Emergency Stop'), findsOneWidget);
+    expect(find.text('Dừng khẩn cấp'), findsOneWidget);
   });
 }

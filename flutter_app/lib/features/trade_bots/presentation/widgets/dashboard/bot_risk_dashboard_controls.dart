@@ -21,7 +21,7 @@ class _SafetyControlsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Circuit Breaker',
+                      'Ngắt mạch tự động',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
@@ -29,7 +29,7 @@ class _SafetyControlsCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
-                      'Auto-stop at limit breach',
+                      'Tự động dừng khi vượt giới hạn',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),
@@ -38,7 +38,7 @@ class _SafetyControlsCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Active',
+                'Đang hoạt động',
                 style: AppTextStyles.caption.copyWith(
                   color: _riskGreen,
                   fontWeight: AppTextStyles.bold,
@@ -117,7 +117,7 @@ class _EmergencyActionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Emergency Stop All Bots',
+                  'Dừng khẩn cấp tất cả bot',
                   style: AppTextStyles.caption.copyWith(
                     color: _riskRed,
                     fontWeight: AppTextStyles.bold,
@@ -125,7 +125,7 @@ class _EmergencyActionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Stop all $runningBots running bots immediately',
+                  'Dừng ngay lập tức tất cả $runningBots bot đang chạy',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -145,11 +145,11 @@ class _RiskExplanationCard extends StatelessWidget {
   const _RiskExplanationCard();
 
   static const _items = [
-    'Current drawdown (30%)',
-    'Daily loss vs limit (25%)',
-    'Portfolio exposure (20%)',
-    'VaR trend (15%)',
-    'Diversification (10%)',
+    'Sụt giảm vốn hiện tại (30%)',
+    'Lỗ trong ngày so với giới hạn (25%)',
+    'Mức phơi nhiễm danh mục (20%)',
+    'Xu hướng VaR (15%)',
+    'Đa dạng hóa (10%)',
   ];
 
   @override
@@ -162,7 +162,7 @@ class _RiskExplanationCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'How Risk Score is Calculated',
+            'Cách tính điểm rủi ro',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,

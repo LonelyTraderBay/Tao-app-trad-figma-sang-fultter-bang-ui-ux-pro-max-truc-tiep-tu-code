@@ -36,7 +36,7 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshotAsync = ref.watch(tradeBotPortfolioDashboardProvider);
     return VitTradeHubScaffold(
-      title: 'Portfolio Dashboard',
+      title: 'Bảng điều khiển danh mục',
       subtitle: 'Tổng quan danh mục bot đang chạy',
       semanticLabel: 'Bảng điều khiển danh mục bot',
       semanticIdentifier: 'SC-128',
@@ -68,29 +68,29 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
             secondaryColor: _portfolioGreen,
           ),
           VitTradeSection(
-            title: 'Summary',
+            title: 'Tổng quan',
             child: _SummaryGrid(summary: snapshot.summary),
           ),
           VitTradeSection(
-            title: 'Portfolio Equity Curve',
+            title: 'Đường cong vốn danh mục',
             child: _EquityCard(points: snapshot.equityPoints),
           ),
           VitTradeSection(
-            title: 'Allocation Breakdown',
+            title: 'Chi tiết phân bổ',
             child: _AllocationCard(allocations: snapshot.allocations),
           ),
           VitTradeSection(
-            title: 'Bot Correlation Matrix',
+            title: 'Ma trận tương quan bot',
             child: _CorrelationCard(rows: snapshot.correlations),
           ),
           VitTradeSection(
-            title: 'Health',
+            title: 'Sức khoẻ danh mục',
             child: _HealthCard(items: snapshot.healthItems),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Portfolio risk review',
+            title: 'Xem lại rủi ro danh mục',
             message:
-                'Equity curve, allocation concentration, correlation pressure and health next steps are reviewed before portfolio changes.',
+                'Đường cong vốn, mức tập trung phân bổ, áp lực tương quan và bước xử lý sức khoẻ danh mục tiếp theo được xem lại trước khi thay đổi danh mục.',
             contractId: 'bot-portfolio-review',
           ),
         ],

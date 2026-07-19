@@ -53,13 +53,13 @@ class _ResultView extends StatelessWidget {
           color: color,
         ),
         const VitSectionHeader(
-          title: 'Category Breakdown',
+          title: 'Chi tiết theo hạng mục',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.plain,
         ),
         _CategoryBreakdown(snapshot: snapshot, answers: answers),
         const VitSectionHeader(
-          title: 'Recommendations',
+          title: 'Khuyến nghị',
           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.plain,
         ),
@@ -113,7 +113,7 @@ class _ScoreCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Your Score',
+                  'Điểm của bạn',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
@@ -139,7 +139,7 @@ class _ScoreCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
-            '${(percent * 100).toStringAsFixed(0)}% proficiency',
+            '${(percent * 100).toStringAsFixed(0)}% thành thạo',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
               fontFeatures: AppTextStyles.tabularFigures,

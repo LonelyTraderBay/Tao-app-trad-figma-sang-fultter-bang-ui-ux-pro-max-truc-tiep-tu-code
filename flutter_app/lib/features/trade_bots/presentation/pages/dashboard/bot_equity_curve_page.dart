@@ -50,7 +50,7 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotEquityCurveProvider);
     return VitTradeHubScaffold(
-      title: 'Equity Curve',
+      title: 'Đường cong vốn',
       subtitle: 'Đường cong vốn và so sánh thị trường',
       semanticLabel: 'Đường cong vốn bot và so sánh với thị trường',
       semanticIdentifier: 'SC-130',
@@ -83,11 +83,11 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
             secondaryColor: _equityPrimary,
           ),
           VitTradeSection(
-            title: 'Summary',
+            title: 'Tổng quan',
             child: _SummaryRow(summary: snapshot.summary),
           ),
           VitTradeSection(
-            title: 'View',
+            title: 'Chế độ xem',
             child: VitTabBar(
               tabs: [
                 VitTabItem(
@@ -118,28 +118,28 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
             )
           else if (_view == 'sharpe')
             VitTradeSection(
-              title: 'Rolling 30-Day Sharpe Ratio',
+              title: 'Tỷ lệ Sharpe trượt 30 ngày',
               child: _SharpeCard(points: snapshot.equityPoints),
             )
           else
             VitTradeSection(
-              title: 'Monthly Alpha (Bot vs Market)',
+              title: 'Alpha hằng tháng (Bot so với thị trường)',
               child: _MonthlyAlphaCard(months: snapshot.monthlyReturns),
             ),
           VitTradeSection(
-            title: 'Performance Statistics',
+            title: 'Thống kê hiệu suất',
             child: _PerformanceCard(stats: snapshot.performanceStats),
           ),
           VitTradeSection(
-            title: 'Analysis',
+            title: 'Phân tích',
             child: _AnalysisCard(items: snapshot.analysisItems),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Equity curve review',
+            title: 'Xem lại đường cong vốn',
             message:
-                'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
+                'Xu hướng vốn, alpha, sụt giảm vốn, bối cảnh Sharpe và bước xử lý rủi ro tiếp theo được xem lại trước khi thay đổi bot.',
             contractId: 'bot-equity-curve-review',
-            statusLabel: 'Performance is not guaranteed',
+            statusLabel: 'Hiệu suất không được đảm bảo',
             status: VitStatusPillStatus.warning,
           ),
         ],

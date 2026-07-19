@@ -108,9 +108,9 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
               title: 'Review',
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Review cost impact before proceeding',
+                title: 'Xem lại tác động chi phí trước khi tiếp tục',
                 message:
-                    'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
+                    'Xác nhận phí, giả định rủi ro, thời gian nắm giữ và các bước tiếp theo trước khi sử dụng dự phóng RIY cho sao chép giao dịch.',
                 density: VitDensity.tool,
               ),
             ),
@@ -187,16 +187,16 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                 children: [
                   _ChartCard(projections: projections),
                   const TradeBodyReviewSection(
-                    title: 'RIY body review',
-                    message: 'RIY calculator body reviewed',
+                    title: 'Rà soát nội dung RIY',
+                    message: 'Nội dung máy tính RIY đã được rà soát',
                     detail:
-                        'Investment, return, cost, holding period, chart, empty, and result states stay visible.',
+                        'Các trạng thái khoản đầu tư, lợi suất, chi phí, thời gian nắm giữ, biểu đồ, rỗng và kết quả luôn hiển thị.',
                     primary:
-                        'Input assumptions remain above cost-impact outputs.',
+                        'Giả định đầu vào luôn nằm phía trên kết quả tác động chi phí.',
                     secondary:
-                        'Without-cost and with-cost values stay comparable.',
+                        'Giá trị không tính chi phí và có tính chi phí luôn có thể so sánh với nhau.',
                     tertiary:
-                        'Projection copy remains cost analysis, not performance advice.',
+                        'Nội dung dự phóng chỉ là phân tích chi phí, không phải tư vấn hiệu suất đầu tư.',
                   ),
                 ],
               ),

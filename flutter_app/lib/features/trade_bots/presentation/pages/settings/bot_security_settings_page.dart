@@ -57,7 +57,7 @@ class _BotSecuritySettingsPageState
       tradeBotSecuritySettingsControllerProvider,
     );
     return VitTradeHubScaffold(
-      title: 'Security Settings',
+      title: 'Cài đặt bảo mật',
       subtitle: 'Bảo mật API key và quyền truy cập bot',
       semanticLabel: 'Cài đặt bảo mật bot giao dịch',
       semanticIdentifier: 'SC-122',
@@ -93,7 +93,7 @@ class _BotSecuritySettingsPageState
               secondaryValue: '${snapshot.apiKeys.length}',
             ),
             VitTradeSection(
-              title: 'Two-Factor Authentication',
+              title: 'Xác thực 2 lớp',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -105,7 +105,7 @@ class _BotSecuritySettingsPageState
               ),
             ),
             VitTradeSection(
-              title: 'API Keys',
+              title: 'API Key',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -120,7 +120,7 @@ class _BotSecuritySettingsPageState
               ),
             ),
             VitTradeSection(
-              title: 'IP Whitelist',
+              title: 'Danh sách IP cho phép',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -136,19 +136,19 @@ class _BotSecuritySettingsPageState
               ),
             ),
             VitTradeSection(
-              title: 'Recent Activity',
+              title: 'Hoạt động gần đây',
               child: _ActivityCard(activities: snapshot.recentActivity),
             ),
             VitTradeSection(
-              title: 'Security Tips',
+              title: 'Mẹo bảo mật',
               child: _SecurityTipsCard(tips: snapshot.securityTips),
             ),
             const VitBotRiskReviewFooter(
-              title: 'Bot security review required',
+              title: 'Cần xem lại bảo mật Bot',
               message:
-                  '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
+                  'Xác thực 2 lớp, tạo API key, danh sách IP cho phép, hoạt động gần đây và các thay đổi key không thể hoàn tác đều cần được xem lại rõ ràng.',
               contractId: 'bot-security-settings-review',
-              statusLabel: 'Sensitive settings',
+              statusLabel: 'Cài đặt nhạy cảm',
               status: VitStatusPillStatus.warning,
             ),
           ];

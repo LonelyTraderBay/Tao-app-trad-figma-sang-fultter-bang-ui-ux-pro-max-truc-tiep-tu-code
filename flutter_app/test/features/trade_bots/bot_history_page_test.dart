@@ -72,8 +72,8 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Trade History'), findsOneWidget);
-    expect(find.text('Total Trades'), findsOneWidget);
+    expect(find.text('Lịch sử giao dịch'), findsOneWidget);
+    expect(find.text('Tổng số giao dịch'), findsOneWidget);
     expect(find.text('+1.50'), findsOneWidget);
     expect(find.text('All (7)'), findsOneWidget);
     expect(find.text('Trades (7)'), findsOneWidget);

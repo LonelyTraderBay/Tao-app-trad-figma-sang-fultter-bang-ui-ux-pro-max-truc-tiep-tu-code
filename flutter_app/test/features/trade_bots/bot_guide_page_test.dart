@@ -65,14 +65,14 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Trading Bots Guide'), findsOneWidget);
-    expect(find.text('Complete Guide to Trading Bots'), findsOneWidget);
-    expect(find.text('Bot Strategies Explained'), findsOneWidget);
+    expect(find.text('Hướng dẫn Bot giao dịch'), findsOneWidget);
+    expect(find.text('Hướng dẫn đầy đủ về Bot giao dịch'), findsOneWidget);
+    expect(find.text('Giải thích các chiến lược Bot'), findsOneWidget);
     expect(find.text('DCA Bot (Dollar Cost Averaging)'), findsOneWidget);
     expect(find.text('Grid Bot'), findsOneWidget);
     expect(find.text('Momentum Bot'), findsOneWidget);
     expect(find.text('Martingale Bot'), findsOneWidget);
-    expect(find.text('Video Tutorials'), findsOneWidget);
+    expect(find.text('Video hướng dẫn'), findsNWidgets(2));
   });
 
   testWidgets('SC-131 first viewport reaches the first strategy card', (
@@ -93,13 +93,13 @@ void main() {
 
     await tester.tap(find.byKey(BotGuidePage.tabKey('best-practices')));
     await tester.pumpAndSettle();
-    expect(find.text('Best Practices'), findsOneWidget);
+    expect(find.text('Phương pháp tốt nhất'), findsOneWidget);
     expect(find.text('Start Small'), findsOneWidget);
     expect(find.text('Backtest First'), findsOneWidget);
 
     await tester.tap(find.byKey(BotGuidePage.tabKey('mistakes')));
     await tester.pumpAndSettle();
-    expect(find.text('Common Mistakes to Avoid'), findsOneWidget);
+    expect(find.text('Sai lầm thường gặp cần tránh'), findsOneWidget);
     expect(find.text('Over-optimizing parameters'), findsOneWidget);
   });
 
@@ -111,8 +111,8 @@ void main() {
     await tester.tap(find.byKey(BotGuidePage.strategyKey('dca')));
     await tester.pumpAndSettle();
 
-    expect(find.text('How It Works:'), findsOneWidget);
-    expect(find.text('Pros'), findsOneWidget);
+    expect(find.text('Cách hoạt động:'), findsOneWidget);
+    expect(find.text('Ưu điểm'), findsOneWidget);
     expect(find.text('Cons'), findsOneWidget);
     expect(find.text('Buy \$100 BTC every Monday'), findsOneWidget);
   });

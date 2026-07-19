@@ -28,22 +28,22 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Create API Key',
+            'Tạo API Key',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          const _SheetInput(label: 'Key Name', hint: 'e.g., Trading Bot Key'),
+          const _SheetInput(label: 'Tên Key', hint: 'VD: Key Bot giao dịch'),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
-            'Permissions',
+            'Quyền truy cập',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: AppSpacing.x1),
           const Row(
             children: [
-              Expanded(child: _PermissionChip('Read Only')),
+              Expanded(child: _PermissionChip('Chỉ đọc')),
               SizedBox(width: AppSpacing.x2),
-              Expanded(child: _PermissionChip('Trade + Read')),
+              Expanded(child: _PermissionChip('Giao dịch + Đọc')),
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -57,7 +57,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'API Key Generated',
+                    'Đã khởi tạo API Key',
                     style: AppTextStyles.caption.copyWith(
                       color: _securityGreen,
                       fontWeight: AppTextStyles.bold,
@@ -85,7 +85,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                           icon: _visible
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          tooltip: _visible ? 'Hide API key' : 'Show API key',
+                          tooltip: _visible ? 'Ẩn API key' : 'Hiện API key',
                           size: VitIconButtonSize.sm,
                           variant: VitIconButtonVariant.transparent,
                           onPressed: () => setState(() => _visible = !_visible),
@@ -100,7 +100,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                   ),
                   const SizedBox(height: AppSpacing.x1),
                   Text(
-                    'Save this key now - you will not be able to see it again.',
+                    'Lưu key này ngay - bạn sẽ không thể xem lại được nữa.',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
@@ -111,7 +111,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
               onPressed: () => setState(() => _generated = true),
               density: VitDensity.tool,
               variant: VitCtaButtonVariant.primary,
-              child: const Text('Generate API Key'),
+              child: const Text('Khởi tạo API Key'),
             ),
         ],
       ),
@@ -136,22 +136,19 @@ class _IpSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Add IP to Whitelist',
+            'Thêm IP vào danh sách cho phép',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          const _SheetInput(label: 'IP Address', hint: 'e.g., 192.168.1.100'),
+          const _SheetInput(label: 'Địa chỉ IP', hint: 'VD: 192.168.1.100'),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-          const _SheetInput(
-            label: 'Label (Optional)',
-            hint: 'e.g., Home Network',
-          ),
+          const _SheetInput(label: 'Nhãn (Tùy chọn)', hint: 'VD: Mạng tại nhà'),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             density: VitDensity.tool,
             variant: VitCtaButtonVariant.primary,
-            child: const Text('Add IP Address'),
+            child: const Text('Thêm địa chỉ IP'),
           ),
         ],
       ),

@@ -40,9 +40,9 @@ void main() {
     expect(snapshot.questions.first.id, 'q1');
     expect(snapshot.questions.first.options, hasLength(4));
     expect(snapshot.maxScore, 24);
-    expect(snapshot.pass.title, 'Suitable for Trading Bots');
-    expect(snapshot.warning.title, 'Proceed with Caution');
-    expect(snapshot.fail.title, 'Not Recommended');
+    expect(snapshot.pass.title, 'Phù hợp để dùng Bot giao dịch');
+    expect(snapshot.warning.title, 'Nên thận trọng');
+    expect(snapshot.fail.title, 'Không khuyến nghị');
     expect(snapshot.completionPath, AppRoutePaths.tradeBots);
     expect(
       snapshot.endpoint,
@@ -71,17 +71,14 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Suitability Assessment'), findsOneWidget);
+    expect(find.text('Đánh giá mức độ phù hợp'), findsOneWidget);
     expect(find.text('Question 1 of 8'), findsOneWidget);
     expect(find.text('0% Complete'), findsOneWidget);
     expect(
-      find.text('How long have you been trading cryptocurrencies?'),
+      find.text('Bạn đã giao dịch tiền mã hoá được bao lâu?'),
       findsOneWidget,
     );
-    expect(
-      find.text('Never traded before / Less than 3 months'),
-      findsOneWidget,
-    );
+    expect(find.text('Chưa từng giao dịch / Dưới 3 tháng'), findsOneWidget);
     expect(find.byKey(BotSuitabilityAssessmentPage.infoKey), findsOneWidget);
   });
 
@@ -108,8 +105,8 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    expect(find.text('Assessment Result'), findsOneWidget);
-    expect(find.text('Suitable for Trading Bots'), findsOneWidget);
+    expect(find.text('Kết quả đánh giá'), findsOneWidget);
+    expect(find.text('Phù hợp để dùng Bot giao dịch'), findsOneWidget);
     expect(find.text('24 / 24'), findsOneWidget);
 
     await tester.ensureVisible(

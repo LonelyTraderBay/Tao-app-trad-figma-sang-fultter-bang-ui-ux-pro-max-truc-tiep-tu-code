@@ -69,13 +69,13 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Portfolio Dashboard'), findsOneWidget);
-    expect(find.text('Total Equity'), findsOneWidget);
+    expect(find.text('Bảng điều khiển danh mục'), findsOneWidget);
+    expect(find.text('Vốn danh mục'), findsOneWidget);
     expect(find.text(r'$3,245'), findsOneWidget);
     expect(find.text('+29.8%'), findsOneWidget);
-    expect(find.text('Portfolio Equity Curve'), findsOneWidget);
-    expect(find.text('Allocation Breakdown'), findsOneWidget);
-    expect(find.text('Bot Correlation Matrix'), findsOneWidget);
+    expect(find.text('Đường cong vốn danh mục'), findsOneWidget);
+    expect(find.text('Chi tiết phân bổ'), findsOneWidget);
+    expect(find.text('Ma trận tương quan bot'), findsOneWidget);
     expect(find.text('Portfolio Health: Excellent'), findsOneWidget);
   });
 
@@ -91,7 +91,7 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.text('Portfolio Equity Curve'),
+      find.text('Đường cong vốn danh mục'),
       targetLabel: 'the portfolio equity curve section',
       minVisibleHeight: 12,
     );

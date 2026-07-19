@@ -85,14 +85,14 @@ class _StrategyCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _MiniMetric(
-                  label: 'Return',
+                  label: 'Lợi nhuận',
                   value: '+${strategy.metrics.totalReturn.toStringAsFixed(1)}%',
                   color: _compareGreen,
                 ),
               ),
               Expanded(
                 child: _MiniMetric(
-                  label: 'Sharpe',
+                  label: 'Tỷ lệ Sharpe',
                   value: strategy.metrics.sharpeRatio.toStringAsFixed(2),
                   color: AppColors.text1,
                 ),
@@ -166,7 +166,7 @@ class _BestStrategyCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Best Risk-Adjusted Returns',
+                  'Lợi nhuận điều chỉnh theo rủi ro tốt nhất',
                   style: AppTextStyles.baseMedium.copyWith(color: color),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -181,7 +181,7 @@ class _BestStrategyCard extends StatelessWidget {
                       ),
                       TextSpan(
                         text:
-                            ' has the highest Sharpe ratio (${strategy.metrics.sharpeRatio.toStringAsFixed(2)}) among selected strategies, indicating superior risk-adjusted performance.',
+                            ' có tỷ lệ Sharpe cao nhất (${strategy.metrics.sharpeRatio.toStringAsFixed(2)}) trong số các chiến lược đã chọn, cho thấy hiệu suất điều chỉnh theo rủi ro vượt trội.',
                       ),
                     ],
                   ),

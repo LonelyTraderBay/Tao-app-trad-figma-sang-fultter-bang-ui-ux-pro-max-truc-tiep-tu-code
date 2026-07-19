@@ -46,7 +46,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotHistoryProvider);
     return VitTradeHubScaffold(
-      title: 'Trade History',
+      title: 'Lịch sử giao dịch',
       subtitle: 'Lịch sử giao dịch và lãi/lỗ bot',
       semanticLabel: 'Lịch sử giao dịch của bot',
       semanticIdentifier: 'SC-123',
@@ -94,7 +94,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
               secondaryColor: totalPnL >= 0 ? _historyGreen : _historyRed,
             ),
             VitTradeSection(
-              title: 'Summary',
+              title: 'Tổng quan',
               child: _StatsCard(
                 totalTrades: filteredTrades.length,
                 totalPnL: totalPnL,
@@ -102,14 +102,14 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
               ),
             ),
             const VitTradeSection(
-              title: 'Search',
+              title: 'Tìm kiếm',
               child: VitSearchBar(
                 enabled: false,
                 placeholder: 'Search by bot name or pair...',
               ),
             ),
             VitTradeSection(
-              title: 'Filter',
+              title: 'Bộ lọc',
               child: VitTabBar(
                 tabs: [
                   VitTabItem(
@@ -158,13 +158,13 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
                     ),
             ),
             VitTradeSection(
-              title: 'Export',
+              title: 'Xuất dữ liệu',
               child: _ExportNote(onTap: _handleExport),
             ),
             const VitBotRiskReviewFooter(
-              title: 'History export review',
+              title: 'Xem lại xuất lịch sử',
               message:
-                  'Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.',
+                  'Bộ lọc giao dịch, lãi/lỗ đã thực hiện, tổng phí, phạm vi xuất và bước nhận biên nhận tiếp theo được xem lại trước khi tạo hồ sơ.',
               contractId: 'bot-history-export-review',
             ),
           ];

@@ -64,11 +64,14 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Strategy Compare'), findsOneWidget);
-    expect(find.text('Select Strategies (2-4)'), findsOneWidget);
-    expect(find.text('Best Risk-Adjusted Returns'), findsOneWidget);
-    expect(find.text('Equity Curves Comparison'), findsOneWidget);
-    expect(find.text('Performance Radar'), findsOneWidget);
+    expect(find.text('So sánh chiến lược'), findsOneWidget);
+    expect(find.text('Chọn chiến lược (2-4)'), findsOneWidget);
+    expect(
+      find.text('Lợi nhuận điều chỉnh theo rủi ro tốt nhất'),
+      findsOneWidget,
+    );
+    expect(find.text('So sánh đường cong vốn'), findsOneWidget);
+    expect(find.text('Biểu đồ radar hiệu suất'), findsOneWidget);
   });
 
   testWidgets('SC-126 first viewport reaches best strategy card', (
@@ -78,7 +81,7 @@ void main() {
 
     expectFirstViewportVisible(
       tester,
-      find.text('Best Risk-Adjusted Returns'),
+      find.text('Lợi nhuận điều chỉnh theo rủi ro tốt nhất'),
       targetLabel: 'the best strategy summary',
     );
   });

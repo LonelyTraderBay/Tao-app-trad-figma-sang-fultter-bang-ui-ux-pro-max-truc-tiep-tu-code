@@ -1655,7 +1655,6 @@ feature_widget,flutter_app/lib/features/trade_compliance/presentation/pages/gove
 feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_filters.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_notice.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_reports.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_stats.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/trade_compliance/presentation/widgets/hub/regulatory_reports_dashboard_controls.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-

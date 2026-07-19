@@ -132,15 +132,16 @@ class ProviderComparisonPage extends ConsumerWidget {
               ],
             ),
             const TradeBodyReviewSection(
-              title: 'Provider comparison body review',
-              message: 'Provider comparison body reviewed',
+              title: 'Rà soát nội dung so sánh provider',
+              message: 'Nội dung so sánh provider đã được rà soát',
               detail:
-                  'Disclaimer, selected providers, metrics, legend, add action, and review states stay visible.',
-              primary: 'Disclaimer remains before provider comparison metrics.',
+                  'Miễn trừ trách nhiệm, provider đã chọn, chỉ số, chú thích, thao tác thêm và các trạng thái rà soát luôn hiển thị.',
+              primary:
+                  'Miễn trừ trách nhiệm luôn hiển thị trước các chỉ số so sánh provider.',
               secondary:
-                  'Risk, execution, cost, and performance groups stay separated for scanning.',
+                  'Các nhóm rủi ro, thực thi, chi phí và hiệu suất được tách riêng để dễ theo dõi.',
               tertiary:
-                  'Add-provider actions remain gated by comparison limits and review copy.',
+                  'Thao tác thêm provider vẫn bị giới hạn bởi mức so sánh tối đa và nội dung rà soát.',
             ),
           ],
         ),

@@ -135,17 +135,17 @@ void main() {
     await tester.tap(find.byKey(FuturesPage.sideKey('short')));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.byKey(FuturesPage.pctKey(10)),
+      find.byKey(FuturesPage.pctKey(25)),
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.byKey(FuturesPage.pctKey(10)));
+    await tester.tap(find.byKey(FuturesPage.pctKey(25)));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Futures order preview'));
+    await tester.ensureVisible(find.text('Xem trước lệnh Futures'));
     await tester.pumpAndSettle();
-    expect(find.text('Futures order preview'), findsOneWidget);
-    expect(find.text('Liquidation estimate'), findsOneWidget);
-    expect(find.text('Risk check'), findsOneWidget);
+    expect(find.text('Xem trước lệnh Futures'), findsOneWidget);
+    expect(find.text('Ước tính giá thanh lý'), findsOneWidget);
+    expect(find.text('Kiểm tra rủi ro'), findsOneWidget);
     await tester.ensureVisible(find.byKey(FuturesPage.submitKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(FuturesPage.submitKey));

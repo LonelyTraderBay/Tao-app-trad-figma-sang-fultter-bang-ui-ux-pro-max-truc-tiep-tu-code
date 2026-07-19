@@ -54,7 +54,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
     return Stack(
       children: [
         VitTradeDetailScaffold(
-          title: 'Parameter Optimization',
+          title: 'Tối ưu tham số',
           subtitle: 'Tối ưu tham số chiến lược bot',
           semanticLabel: 'Tối ưu hóa tham số chiến lược bot',
           semanticIdentifier: 'SC-127',
@@ -88,9 +88,9 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                     ? AppColors.text3
                     : _optimizationPrimary,
               ),
-              const VitTradeSection(title: 'Overview', child: _IntroCard()),
+              const VitTradeSection(title: 'Tổng quan', child: _IntroCard()),
               VitTradeSection(
-                title: 'Optimization Target',
+                title: 'Mục tiêu tối ưu',
                 child: _TargetCard(
                   targets: snapshot.targets,
                   selectedId: _selectedTarget,
@@ -98,7 +98,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                 ),
               ),
               VitTradeSection(
-                title: 'Parameter Ranges',
+                title: 'Khoảng tham số',
                 child: _RangeCard(
                   ranges: snapshot.parameterRanges,
                   gridCount: _gridCount,
@@ -110,15 +110,15 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                 ),
               ),
               VitTradeSection(
-                title: 'How it works',
+                title: 'Cách hoạt động',
                 child: _HowItWorksCard(steps: snapshot.steps),
               ),
               const VitBotRiskReviewFooter(
-                title: 'Optimization review required',
+                title: 'Cần xem lại tối ưu hoá',
                 message:
-                    'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
+                    'Chỉ số mục tiêu, khoảng tham số, trạng thái hàng chờ, xem trước kết quả và bước hoàn tác tiếp theo được xem lại trước khi thay đổi bot.',
                 contractId: 'bot-optimization-review',
-                statusLabel: 'Queued before apply',
+                statusLabel: 'Xếp hàng chờ trước khi áp dụng',
               ),
             ],
           ),

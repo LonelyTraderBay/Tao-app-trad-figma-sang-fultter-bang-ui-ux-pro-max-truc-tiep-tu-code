@@ -15,7 +15,7 @@ class _WebSocketView extends StatelessWidget {
       density: VitDensity.tool,
       children: [
         VitPageSection(
-          label: 'WebSocket Connection',
+          label: 'Kết nối WebSocket',
           density: VitDensity.tool,
           children: [
             _InfoCard(
@@ -26,7 +26,7 @@ class _WebSocketView extends StatelessWidget {
                 density: VitDensity.tool,
                 children: [
                   Text(
-                    'Connect to real-time bot events:',
+                    'Kết nối để nhận sự kiện bot theo thời gian thực:',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                     ),
@@ -38,7 +38,7 @@ class _WebSocketView extends StatelessWidget {
           ],
         ),
         VitPageSection(
-          label: 'Event Types',
+          label: 'Loại sự kiện',
           density: VitDensity.tool,
           children: [
             VitPageContent(
@@ -145,7 +145,7 @@ class _ExamplesView extends StatelessWidget {
           ],
         ),
         VitPageSection(
-          label: 'Quick Start',
+          label: 'Bắt đầu nhanh',
           density: VitDensity.tool,
           children: [
             _InfoCard(
@@ -175,8 +175,10 @@ class _ExamplesView extends StatelessWidget {
                         icon: copied
                             ? Icons.check_circle_outline_rounded
                             : Icons.content_copy_rounded,
-                        tooltip: copied ? 'Copied source' : 'Copy source',
-                        label: copied ? 'Copied!' : 'Copy',
+                        tooltip: copied
+                            ? 'Đã sao chép mã nguồn'
+                            : 'Sao chép mã nguồn',
+                        label: copied ? 'Đã sao chép!' : 'Sao chép',
                         size: VitIconButtonSize.sm,
                         variant: copied
                             ? VitIconButtonVariant.success

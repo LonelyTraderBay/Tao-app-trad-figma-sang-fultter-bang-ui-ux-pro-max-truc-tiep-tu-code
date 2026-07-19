@@ -24,7 +24,7 @@ class _IntroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bot API Documentation',
+                  'Tài liệu API bot',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,

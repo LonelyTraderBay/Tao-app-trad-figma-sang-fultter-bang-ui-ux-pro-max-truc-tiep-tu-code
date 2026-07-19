@@ -24,7 +24,7 @@ class _IntroBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Complete Guide to Trading Bots',
+                  'Hướng dẫn đầy đủ về Bot giao dịch',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,

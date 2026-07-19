@@ -35,12 +35,12 @@ void main() {
       loadDelay: Duration.zero,
     ).getBotTermsOfService();
 
-    expect(snapshot.infoTitle, 'Legal Agreement Required');
-    expect(snapshot.title, 'Trading Bots Terms of Service');
-    expect(snapshot.sections.first.title, '1. Acceptance of Terms');
-    expect(snapshot.sections[1].warningTitle, 'CRITICAL WARNING:');
-    expect(snapshot.disabledCta, 'Read Terms to Continue');
-    expect(snapshot.enabledCta, 'Accept & Continue');
+    expect(snapshot.infoTitle, 'Yêu cầu đồng ý điều khoản');
+    expect(snapshot.title, 'Điều khoản dịch vụ Bot giao dịch');
+    expect(snapshot.sections.first.title, '1. Chấp nhận điều khoản');
+    expect(snapshot.sections[1].warningTitle, 'CẢNH BÁO QUAN TRỌNG:');
+    expect(snapshot.disabledCta, 'Đọc điều khoản để tiếp tục');
+    expect(snapshot.enabledCta, 'Chấp nhận & Tiếp tục');
     expect(snapshot.endpoint, '/api/mobile/trade/trade-bots-terms-of-service');
     expect(snapshot.actionDraft, contains('POST /bots/create'));
     expect(
@@ -65,13 +65,13 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Trading Bots Terms'), findsOneWidget);
-    expect(find.text('Legal Agreement Required'), findsOneWidget);
-    expect(find.text('Trading Bots Terms of Service'), findsOneWidget);
-    expect(find.text('1. Acceptance of Terms'), findsOneWidget);
-    expect(find.text('2. No Profit Guarantee'), findsOneWidget);
-    expect(find.text('Accept Terms'), findsOneWidget);
-    expect(find.text('Read Terms to Continue'), findsOneWidget);
+    expect(find.text('Điều khoản Bot giao dịch'), findsOneWidget);
+    expect(find.text('Yêu cầu đồng ý điều khoản'), findsOneWidget);
+    expect(find.text('Điều khoản dịch vụ Bot giao dịch'), findsOneWidget);
+    expect(find.text('1. Chấp nhận điều khoản'), findsOneWidget);
+    expect(find.text('2. Không đảm bảo lợi nhuận'), findsOneWidget);
+    expect(find.text('Chấp nhận điều khoản'), findsOneWidget);
+    expect(find.text('Đọc điều khoản để tiếp tục'), findsOneWidget);
   });
 
   testWidgets('SC-117 first viewport previews agreement card', (tester) async {
@@ -104,7 +104,7 @@ void main() {
     await tester.tap(find.byKey(BotTermsOfServicePage.agreementKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Read Terms to Continue'), findsOneWidget);
-    expect(find.text('Accept & Continue'), findsNothing);
+    expect(find.text('Đọc điều khoản để tiếp tục'), findsOneWidget);
+    expect(find.text('Chấp nhận & Tiếp tục'), findsNothing);
   });
 }

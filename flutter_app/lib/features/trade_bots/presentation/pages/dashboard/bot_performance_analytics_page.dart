@@ -65,7 +65,7 @@ class _BotPerformanceAnalyticsPageState
   Widget build(BuildContext context) {
     final snapshotAsync = ref.watch(tradeBotPerformanceAnalyticsProvider);
     return VitTradeHubScaffold(
-      title: 'Performance Analytics',
+      title: 'Phân tích hiệu suất',
       subtitle: 'Phân tích hiệu suất bot theo thời gian',
       semanticLabel: 'Phân tích hiệu suất bot theo khung thời gian',
       semanticIdentifier: 'SC-124',
@@ -101,18 +101,18 @@ class _BotPerformanceAnalyticsPageState
             secondaryColor: _analyticsGreen,
           ),
           VitTradeSection(
-            title: 'Key metrics',
+            title: 'Chỉ số chính',
             child: _KeyMetricsCard(metrics: snapshot.metrics),
           ),
           VitTradeSection(
-            title: 'Timeframe',
+            title: 'Khung thời gian',
             child: _TimeframeTabs(
               active: _timeframe,
               onChanged: (timeframe) => setState(() => _timeframe = timeframe),
             ),
           ),
           VitTradeSection(
-            title: 'Cumulative PnL',
+            title: 'Lãi/lỗ luỹ kế',
             child: _PnlChartCard(points: snapshot.pnlPoints),
           ),
           VitTradeSection(
@@ -120,30 +120,30 @@ class _BotPerformanceAnalyticsPageState
             child: _WinLossChartCard(points: snapshot.winLossPoints),
           ),
           VitTradeSection(
-            title: 'Performance by Strategy',
+            title: 'Hiệu suất theo chiến lược',
             child: _StrategyPerformanceCard(
               strategies: snapshot.strategyPerformance,
             ),
           ),
           VitTradeSection(
-            title: 'Advanced Metrics',
+            title: 'Chỉ số nâng cao',
             child: _AdvancedMetricsGrid(metrics: snapshot.metrics),
           ),
           VitTradeSection(
-            title: 'Trade Duration Distribution',
+            title: 'Phân bố thời gian giữ lệnh',
             child: _DurationCard(distribution: snapshot.durationDistribution),
           ),
           VitTradeSection(
-            title: 'Summary',
+            title: 'Tổng quan',
             child: _PerformanceSummaryCard(metrics: snapshot.metrics),
           ),
-          const VitTradeSection(title: 'Rating', child: _RatingCard()),
+          const VitTradeSection(title: 'Xếp hạng', child: _RatingCard()),
           const VitBotRiskReviewFooter(
-            title: 'Bot analytics review',
+            title: 'Xem lại phân tích hiệu suất Bot',
             message:
-                'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
+                'Lãi/lỗ, phân bố thắng/thua, tỷ trọng chiến lược, thời lượng và xếp hạng rủi ro được xem lại trước khi thay đổi bot.',
             contractId: 'bot-performance-analytics-review',
-            statusLabel: 'Risk-aware analytics',
+            statusLabel: 'Phân tích có tính đến rủi ro',
           ),
         ],
       ),

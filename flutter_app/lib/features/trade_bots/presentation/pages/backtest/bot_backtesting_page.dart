@@ -68,7 +68,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
         runFooterHeight;
 
     return VitTradeDetailScaffold(
-      title: 'Backtest Strategy',
+      title: 'Kiểm thử chiến lược',
       subtitle: 'Mô phỏng chiến lược trên dữ liệu lịch sử',
       semanticLabel: 'Kiểm thử chiến lược bot trên dữ liệu lịch sử',
       semanticIdentifier: 'SC-125',
@@ -104,7 +104,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
               secondaryValue: '${snapshot.pairs.length}',
             ),
             VitTradeSection(
-              title: 'Strategy Selection',
+              title: 'Chọn chiến lược',
               child: _StrategyGrid(
                 strategies: snapshot.strategies,
                 selectedId: _selectedStrategy,
@@ -112,7 +112,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
               ),
             ),
             VitTradeSection(
-              title: 'Trading Pair',
+              title: 'Cặp giao dịch',
               child: _PairGrid(
                 pairs: snapshot.pairs,
                 selectedPair: _selectedPair,
@@ -120,7 +120,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
               ),
             ),
             VitTradeSection(
-              title: 'Date Range',
+              title: 'Khoảng thời gian',
               child: _DateRangeGrid(
                 ranges: snapshot.dateRanges,
                 selectedId: _selectedRange,
@@ -128,11 +128,11 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
               ),
             ),
             VitTradeSection(
-              title: 'Initial Capital',
+              title: 'Vốn ban đầu',
               child: _CapitalInput(controller: _capitalController),
             ),
             VitTradeSection(
-              title: 'Backtest period',
+              title: 'Khoảng thời gian kiểm thử',
               child: _BacktestPeriodCard(
                 strategyId: _selectedStrategy,
                 pair: _selectedPair,
@@ -142,21 +142,21 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
             ),
             _RunFooter(onRun: () => _handleRun(snapshot)),
             const TradeBodyReviewSection(
-              title: 'Backtest body review',
-              message: 'Bot backtesting body reviewed',
+              title: 'Xem lại nội dung kiểm thử chiến lược',
+              message: 'Đã xem lại nội dung kiểm thử bot',
               detail:
-                  'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
+                  'Chiến lược, cặp giao dịch, khoảng thời gian, vốn, giai đoạn mô phỏng, trạng thái đang gửi và kết quả luôn hiển thị.',
               primary:
-                  'Assumption review remains above strategy and capital controls.',
+                  'Phần xem lại giả định luôn nằm trên cùng, trước các ô điều khiển chiến lược và vốn.',
               secondary:
-                  'Selected strategy, pair, and range stay visible before running.',
+                  'Chiến lược, cặp giao dịch và khoảng thời gian đã chọn luôn hiển thị trước khi chạy.',
               tertiary:
-                  'Backtest output is framed as simulation, not guaranteed performance.',
+                  'Kết quả kiểm thử chiến lược chỉ là mô phỏng, không đảm bảo hiệu suất thực tế.',
             ),
             const VitBotRiskReviewFooter(
-              title: 'Review backtest assumptions',
+              title: 'Xem lại giả định kiểm thử chiến lược',
               message:
-                  'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
+                  'Kết quả kiểm thử chiến lược chỉ là mô phỏng. Xác nhận chiến lược, cặp giao dịch, khoảng thời gian, vốn và giới hạn rủi ro trước khi chạy.',
             ),
           ];
         },

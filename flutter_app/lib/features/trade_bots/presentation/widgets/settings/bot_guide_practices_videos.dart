@@ -8,7 +8,7 @@ class _BestPracticesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'Best Practices',
+      label: 'Phương pháp tốt nhất',
       density: VitDensity.tool,
       children: [
         for (final item in items)
@@ -31,7 +31,7 @@ class _MistakesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      label: 'Common Mistakes to Avoid',
+      label: 'Sai lầm thường gặp cần tránh',
       density: VitDensity.tool,
       children: [for (final item in items) _MistakeCard(item: item)],
     );
@@ -134,7 +134,7 @@ class _MistakeCard extends StatelessWidget {
                   density: VitDensity.tool,
                   children: [
                     Text(
-                      "WHY IT'S BAD:",
+                      'TẠI SAO SAI:',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -156,7 +156,7 @@ class _MistakeCard extends StatelessWidget {
                         density: VitDensity.tool,
                         children: [
                           Text(
-                            'HOW TO FIX:',
+                            'CÁCH KHẮC PHỤC:',
                             style: AppTextStyles.micro.copyWith(
                               color: _guideGreen,
                               fontWeight: AppTextStyles.bold,
@@ -205,7 +205,7 @@ class _VideoTutorialsCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
-                'Video Tutorials',
+                'Video hướng dẫn',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
@@ -214,13 +214,13 @@ class _VideoTutorialsCard extends StatelessWidget {
             ],
           ),
           Text(
-            'Watch our step-by-step video guides to master each bot strategy.',
+            'Xem video hướng dẫn từng bước để nắm vững từng chiến lược bot.',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           VitCtaButton(
             density: VitDensity.tool,
             onPressed: () => _showComingSoon(context),
-            child: const Text('View All Tutorials'),
+            child: const Text('Xem tất cả hướng dẫn'),
           ),
         ],
       ),
@@ -232,7 +232,7 @@ class _VideoTutorialsCard extends StatelessWidget {
     unawaited(
       showVitNoticeSheet(
         context: context,
-        title: 'Video Tutorials',
+        title: 'Video hướng dẫn',
         message: 'Danh sách hướng dẫn đầy đủ sẽ sớm ra mắt',
       ),
     );

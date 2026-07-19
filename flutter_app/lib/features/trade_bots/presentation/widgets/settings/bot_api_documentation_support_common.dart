@@ -65,7 +65,7 @@ class _AuthCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
-                'Authentication',
+                'Xác thực',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
@@ -74,8 +74,8 @@ class _AuthCard extends StatelessWidget {
             ],
           ),
           Text(
-            'All API requests require an API key. Generate yours in Security '
-            'Settings. Include in header:',
+            'Tất cả yêu cầu API đều cần API key. Tạo API key của bạn trong '
+            'Cài đặt bảo mật. Thêm vào header:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           _CodeBlock(text: header, compact: true, dark: true),

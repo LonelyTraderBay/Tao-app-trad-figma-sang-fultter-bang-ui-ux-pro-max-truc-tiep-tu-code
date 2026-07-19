@@ -157,25 +157,25 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                   padding: AppSpacing.cardPaddingCompact,
                   child: VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
-                    title: 'Notification risk review',
+                    title: 'Đánh giá rủi ro thông báo',
                     message:
-                        'Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.',
+                        'Cảnh báo rủi ro chưa đọc, đường dẫn hành động, cập nhật Copy Trading và bước tiếp theo được xem xét trước khi điều hướng hoặc thay đổi trạng thái đã đọc hàng loạt.',
                     contractId: 'copy-notifications-review',
                     density: VitDensity.tool,
                   ),
                 ),
               ),
               const TradeBodyReviewSection(
-                title: 'Notification body review',
-                message: 'Copy notification body reviewed',
+                title: 'Đánh giá nội dung thông báo',
+                message: 'Nội dung thông báo Copy Trading đã được xem xét',
                 detail:
-                    'Unread summary, filters, cards, empty, bulk read, and navigation states stay visible.',
+                    'Tổng quan chưa đọc, bộ lọc, thẻ thông báo, trạng thái trống, đánh dấu đã đọc hàng loạt và điều hướng luôn hiển thị rõ ràng.',
                 primary:
-                    'Unread risk alerts remain separated from general copy updates.',
+                    'Cảnh báo rủi ro chưa đọc luôn được tách riêng khỏi các cập nhật Copy Trading thông thường.',
                 secondary:
-                    'Filter state stays visible before notification actions.',
+                    'Trạng thái bộ lọc luôn hiển thị trước khi thực hiện hành động với thông báo.',
                 tertiary:
-                    'Navigation stays scoped to copy-trading review screens.',
+                    'Điều hướng chỉ giới hạn trong phạm vi các màn hình xem xét Copy Trading.',
               ),
             ];
           },

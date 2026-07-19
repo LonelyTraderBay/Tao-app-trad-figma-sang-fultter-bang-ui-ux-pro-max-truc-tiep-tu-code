@@ -40,7 +40,7 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshotAsync = ref.watch(tradeBotDrawdownAnalyzerProvider);
     return VitTradeHubScaffold(
-      title: 'Drawdown Analyzer',
+      title: 'Phân tích sụt giảm vốn',
       subtitle: 'Phân tích độ sụt giảm vốn bot',
       semanticLabel: 'Phân tích mức sụt giảm vốn của bot',
       semanticIdentifier: 'SC-129',
@@ -73,29 +73,29 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
             secondaryColor: _drawdownAmber,
           ),
           VitTradeSection(
-            title: 'Metrics',
+            title: 'Chỉ số',
             child: _MetricGrid(summary: snapshot.summary),
           ),
           VitTradeSection(
-            title: 'Underwater Equity',
+            title: 'Vốn trong giai đoạn sụt giảm',
             child: _UnderwaterCard(points: snapshot.underwaterPoints),
           ),
           VitTradeSection(
-            title: 'Drawdown Duration Distribution',
+            title: 'Phân bố thời gian sụt giảm vốn',
             child: _DurationCard(buckets: snapshot.durationBuckets),
           ),
           VitTradeSection(
-            title: 'Major Drawdown Events',
+            title: 'Các đợt sụt giảm vốn lớn',
             child: _EventsList(events: snapshot.events),
           ),
           VitTradeSection(
-            title: 'Analysis',
+            title: 'Phân tích',
             child: _AnalysisCard(insights: snapshot.insights),
           ),
           const VitBotRiskReviewFooter(
-            title: 'Drawdown review state',
+            title: 'Xem lại mức sụt giảm vốn',
             message:
-                'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
+                'Chỉ số đỉnh-đáy, phân bố thời lượng, bằng chứng sự kiện và bước giảm thiểu tiếp theo được xem lại trước khi thay đổi chiến lược.',
             contractId: 'bot-drawdown-review',
           ),
         ],

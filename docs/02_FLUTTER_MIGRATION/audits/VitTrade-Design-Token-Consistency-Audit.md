@@ -16,7 +16,7 @@ generated=2026-06-12
 status_fail=0
 status_warn=54
 status_exception=259
-rows=2881
+rows=2880
 ```
 
 ## CI Baseline Gates
@@ -129,7 +129,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/savings/savings_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/support/presentation/pages/support_page.dart` | `5 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking/staking_earn_hero_tabs.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_express_form_cards.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_express_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/hub/p2p_express_form_cards.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_summary_timeline.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/arena/presentation/pages/governance/arena_report_case_page.dart` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_summary_timeline.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/arena/presentation/widgets/governance/arena_report_case_system_appeal.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -1855,7 +1855,6 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_filters.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_notice.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_reports.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_stats.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/trade_compliance/presentation/widgets/hub/regulatory_reports_dashboard_controls.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |

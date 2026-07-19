@@ -17,21 +17,21 @@ class _KeyMetricsCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _MetricColumn(
-                  label: 'Total PnL',
+                  label: 'Tổng lãi/lỗ',
                   value: '+\$${metrics.totalPnl.toStringAsFixed(2)}',
                   color: _analyticsGreen,
                 ),
               ),
               Expanded(
                 child: _MetricColumn(
-                  label: 'Win Rate',
+                  label: 'Tỷ lệ thắng',
                   value: '${metrics.winRate.toStringAsFixed(1)}%',
                   color: AppColors.text1,
                 ),
               ),
               Expanded(
                 child: _MetricColumn(
-                  label: 'Sharpe Ratio',
+                  label: 'Tỷ lệ Sharpe',
                   value: metrics.sharpeRatio.toStringAsFixed(2),
                   color: AppColors.text1,
                 ),
@@ -57,7 +57,7 @@ class _KeyMetricsCard extends StatelessWidget {
                 const SizedBox(width: _analyticsSpace),
                 Flexible(
                   child: Text(
-                    'Excellent performance - Sharpe > 1.5 indicates strong risk-adjusted returns',
+                    'Hiệu suất xuất sắc - Sharpe > 1.5 cho thấy lợi nhuận đã điều chỉnh theo rủi ro ở mức mạnh',
                     textAlign: TextAlign.center,
                     style: AppTextStyles.caption.copyWith(
                       color: _analyticsGreen,
@@ -114,9 +114,9 @@ class _TimeframeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tabs = [
-      (_AnalyticsTimeframe.sevenDays, '7d', '7 Days'),
-      (_AnalyticsTimeframe.thirtyDays, '30d', '30 Days'),
-      (_AnalyticsTimeframe.allTime, 'all', 'All Time'),
+      (_AnalyticsTimeframe.sevenDays, '7d', '7 ngày'),
+      (_AnalyticsTimeframe.thirtyDays, '30d', '30 ngày'),
+      (_AnalyticsTimeframe.allTime, 'all', 'Toàn thời gian'),
     ];
 
     return VitSegmentedTabBar(
