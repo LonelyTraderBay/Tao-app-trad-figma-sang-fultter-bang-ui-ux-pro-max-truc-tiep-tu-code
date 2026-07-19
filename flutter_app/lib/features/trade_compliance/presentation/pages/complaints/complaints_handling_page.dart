@@ -81,7 +81,7 @@ class _ComplaintsHandlingPageState
             title: 'Review',
             child: VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               title: 'Complaint process review',
               message:
                   'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
@@ -127,7 +127,8 @@ class _ComplaintsHandlingPageState
                 const _SubmitComplaintButton(),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
+                  radius: VitCardRadius.tight,
                   child: VitTabBar(
                     variant: VitTabBarVariant.underline,
                     activeKey: _tab.name,
@@ -160,7 +161,7 @@ class _ComplaintsHandlingPageState
                   ),
                 ),
                 VitPageSection(
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   children: [
                     if (_tab == _ComplaintsTab.overview)
                       _OverviewContent(snapshot: snapshot),

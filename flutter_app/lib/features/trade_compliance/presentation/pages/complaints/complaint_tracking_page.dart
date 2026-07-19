@@ -84,7 +84,7 @@ class ComplaintTrackingPage extends ConsumerWidget {
               title: 'Review complaint case status',
               message:
                   'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
             ),
           ),
           VitTradeComplianceSection(
@@ -135,7 +135,8 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _trackingBorder.withValues(alpha: .76),
       child: Row(
@@ -246,7 +247,7 @@ class _DeadlineNotice extends StatelessWidget {
       state: VitHighRiskUiState.riskReview,
       title: '${snapshot.daysRemaining} Days Remaining',
       message: snapshot.deadlineNotice,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
     );
   }
 }
@@ -349,6 +350,7 @@ class _TimelineStepRow extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
                     height: _trackingLineTight,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
@@ -411,6 +413,7 @@ class _TrackingActionButton extends StatelessWidget {
         unawaited(context.push(routePath));
       },
       variant: VitCtaButtonVariant.secondary,
+      density: VitDensity.tool,
       height: _trackingActionHeight,
       leading: Icon(icon, color: accent, size: AppSpacing.x4),
       trailing: const Icon(Icons.chevron_right_rounded, size: AppSpacing.x4),

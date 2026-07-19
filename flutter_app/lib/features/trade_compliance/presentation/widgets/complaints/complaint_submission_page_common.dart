@@ -11,13 +11,14 @@ class _SubmissionFooter extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _submissionFooterHeight,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.complaintSubmissionFooterPadding,
       borderColor: _submissionBorder.withValues(alpha: .35),
       child: VitCtaButton(
         key: ComplaintSubmissionPage.submitKey,
         onPressed: enabled ? onSubmit : null,
         variant: VitCtaButtonVariant.primary,
+        density: VitDensity.tool,
         leading: const Icon(Icons.chat_bubble_outline_rounded),
         child: const Text('Submit Complaint'),
       ),
@@ -43,6 +44,6 @@ class _FieldLabel extends StatelessWidget {
 }
 
 final OutlineInputBorder _inputBorder = OutlineInputBorder(
-  borderRadius: AppRadii.cardRadius,
+  borderRadius: AppRadii.smRadius,
   borderSide: BorderSide(color: _submissionBorder.withValues(alpha: .76)),
 );

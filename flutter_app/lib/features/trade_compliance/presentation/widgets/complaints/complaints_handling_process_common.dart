@@ -11,7 +11,7 @@ class _ProcessContent extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'How We Handle Complaints',
@@ -20,7 +20,8 @@ class _ProcessContent extends StatelessWidget {
           accentColor: _complaintsPrimary,
         ),
         VitCard(
-          density: VitDensity.compact,
+          density: VitDensity.tool,
+          radius: VitCardRadius.tight,
           borderColor: _complaintsBorder.withValues(alpha: .76),
           child: Column(
             children: [
@@ -92,7 +93,8 @@ class _OmbudsmanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _complaintsBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -104,7 +106,8 @@ class _OmbudsmanCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -130,7 +133,7 @@ class _OmbudsmanCard extends StatelessWidget {
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyOmbudsmanReferral),
             variant: VitCtaButtonVariant.secondary,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             leading: const Icon(Icons.info_outline_rounded),
             child: const Text('Learn About Ombudsman Referral'),
           ),

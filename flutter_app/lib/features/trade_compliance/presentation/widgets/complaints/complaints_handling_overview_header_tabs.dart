@@ -13,7 +13,7 @@ class _StatsRow extends StatelessWidget {
           child: VitMetricCard(
             label: 'Active',
             value: '${snapshot.activeCount}',
-            density: VitDensity.compact,
+            density: VitDensity.tool,
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -22,7 +22,7 @@ class _StatsRow extends StatelessWidget {
             label: 'Resolved',
             value: '${snapshot.resolvedCount}',
             accentColor: _complaintsGreen,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -30,7 +30,7 @@ class _StatsRow extends StatelessWidget {
           child: VitMetricCard(
             label: 'Avg. Days',
             value: '${snapshot.averageResolutionDays}',
-            density: VitDensity.compact,
+            density: VitDensity.tool,
           ),
         ),
       ],
