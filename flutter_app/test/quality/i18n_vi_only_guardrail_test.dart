@@ -1,3 +1,5 @@
+// Origin: bc10382c (2026-07-17) - feat(i18n+format): chinh sach vi-VN-only + locale vi + facade VitFormat — dong Cum 5
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

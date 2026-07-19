@@ -1,3 +1,5 @@
+// Origin: f9576027 (2026-06-20) - feat(ui): chuẩn hóa density và shared UI toàn app
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';

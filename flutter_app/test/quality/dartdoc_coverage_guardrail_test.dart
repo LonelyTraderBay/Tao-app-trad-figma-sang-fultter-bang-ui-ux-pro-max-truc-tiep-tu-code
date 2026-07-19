@@ -1,3 +1,5 @@
+// Origin: 15eaea03 (2026-07-18) - feat(gd3-f): api_client interceptors + dartdoc 2066 symbol + coverage ratchet 92 — A-PLUS GATE PASS GD3
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

@@ -1,3 +1,5 @@
+// Origin: 4d442bc6 (2026-07-18) - feat(gd4-f1): nen mong runtime — persistence 2 tang + auth session + ops seam + kill-switch gate
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

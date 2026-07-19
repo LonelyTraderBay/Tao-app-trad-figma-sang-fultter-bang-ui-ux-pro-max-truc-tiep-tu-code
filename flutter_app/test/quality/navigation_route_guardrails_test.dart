@@ -1,3 +1,5 @@
+// Origin: 3a76a6e8 (2026-06-02) - feat: chuẩn hoá điều hướng và audit route enterprise
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

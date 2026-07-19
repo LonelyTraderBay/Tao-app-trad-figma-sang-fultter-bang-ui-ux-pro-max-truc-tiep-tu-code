@@ -1,3 +1,5 @@
+// Origin: 3b6ecd0c (2026-07-07) - feat(flutter): bổ sung Home Reference Consistency Audit và tách spacing token theo từng module
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

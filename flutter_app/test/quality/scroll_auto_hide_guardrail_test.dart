@@ -1,3 +1,5 @@
+// Origin: 1ed62fcf (2026-07-10) - feat(flutter): chuẩn hóa design system toàn app — tiêu chuẩn UI, spacing token, guardrail và audit
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

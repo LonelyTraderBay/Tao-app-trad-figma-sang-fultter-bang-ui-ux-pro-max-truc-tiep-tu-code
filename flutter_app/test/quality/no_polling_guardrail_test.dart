@@ -1,3 +1,5 @@
+// Origin: a7cadd94 (2026-07-18) - feat(gd4-f7): realtime — 3 Stream surface loi (ticker/depth/candles) + no-polling guardrail + ADR-009
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

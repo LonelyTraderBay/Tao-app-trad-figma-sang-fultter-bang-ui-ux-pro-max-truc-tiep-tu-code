@@ -1,3 +1,5 @@
+// Origin: 9d896e0b (2026-07-18) - feat(gd3-c): painter hoist + RepaintBoundary dau tien + predictions cap 8 — dong Cum C GD3
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

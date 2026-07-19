@@ -1,3 +1,5 @@
+// Origin: 3baadda1 (2026-07-18) - feat(gd4-f2): pilot async contract — wallet 19 + notifications 1 method Future<T> + PLAYBOOK + ratchet 390
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

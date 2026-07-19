@@ -1,3 +1,5 @@
+// Origin: 119e15e2 (2026-07-18) - feat(gd3-e): he ADR + governance + part-file convention + WCAG contrast — dong Cum E GD3
+// Guardrail này có lý do tồn tại riêng - đọc commit gốc ở trên trước khi nới lỏng hoặc xóa.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
