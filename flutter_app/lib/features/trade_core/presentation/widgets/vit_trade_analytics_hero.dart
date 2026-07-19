@@ -43,7 +43,7 @@ class VitTradeAnalyticsHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       borderColor: AppColors.onAccent.withValues(alpha: .10),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         spacing: AppSpacing.pageRhythmCompactInnerGap,
         children: [
@@ -149,8 +149,9 @@ class VitTradeAnalyticsStatChip extends StatelessWidget {
     );
 
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       child: Column(
         mainAxisAlignment: isCenter
             ? MainAxisAlignment.center

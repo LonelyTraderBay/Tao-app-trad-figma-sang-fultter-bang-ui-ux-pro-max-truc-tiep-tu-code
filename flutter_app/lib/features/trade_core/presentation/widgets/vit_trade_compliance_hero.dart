@@ -36,7 +36,7 @@ class VitTradeComplianceHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       borderColor: accentColor,
       child: Row(
         children: [

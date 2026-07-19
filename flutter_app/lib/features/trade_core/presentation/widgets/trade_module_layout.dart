@@ -234,7 +234,7 @@ class VitTradeDetailScaffold extends StatelessWidget {
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   children: tradeShellWithProductTabs(
                     context: context,
                     children: children,
@@ -335,7 +335,7 @@ class VitTradeHubScaffold extends StatelessWidget {
             child: VitPageContent(
               rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               children: tradeShellWithProductTabs(
                 context: context,
                 children: children,
@@ -390,7 +390,7 @@ class VitTradeWorkspaceScaffold extends StatelessWidget {
           child: VitPageContent(
             rhythm: VitPageRhythm.compact,
             padding: VitContentPadding.compact,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: children,
           ),
         ),
@@ -462,7 +462,7 @@ class VitBotRiskReviewFooter extends StatelessWidget {
           title: title,
           message: message,
           contractId: contractId,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
         ),
         if (statusLabel != null) ...[
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),

@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_hero_glow.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_metric_delta_pill.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 
 /// Sizing density of a [VitTradeInstrumentHero]: full hero surface or a
@@ -14,13 +15,15 @@ import 'package:vit_trade_flutter/app/theme/spacing/shared_spacing_tokens.dart';
 enum VitTradeInstrumentHeroDensity { standard, compact }
 
 /// Hero card for a trade instrument: symbol, large price, change-delta
-/// pill, and optional high/low/volume metric cells.
+/// pill, optional trend [sparklineValues], and optional high/low/volume
+/// metric cells.
 class VitTradeInstrumentHero extends StatelessWidget {
   const VitTradeInstrumentHero({
     super.key,
     required this.symbol,
     required this.priceLabel,
     required this.changePct,
+    this.sparklineValues,
     this.highLabel,
     this.lowLabel,
     this.volumeLabel,
@@ -30,6 +33,10 @@ class VitTradeInstrumentHero extends StatelessWidget {
   final String symbol;
   final String priceLabel;
   final double changePct;
+
+  /// Recent price series for the mini trend chart. Renders nothing when
+  /// null or shorter than 2 points.
+  final List<double>? sparklineValues;
   final String? highLabel;
   final String? lowLabel;
   final String? volumeLabel;
@@ -56,9 +63,9 @@ class VitTradeInstrumentHero extends StatelessWidget {
 
     return VitCard(
       variant: _compact ? VitCardVariant.standard : VitCardVariant.hero,
-      radius: _compact ? VitCardRadius.standard : VitCardRadius.large,
+      radius: _compact ? VitCardRadius.tight : VitCardRadius.standard,
       clip: true,
-      density: _compact ? VitDensity.compact : VitDensity.standard,
+      density: VitDensity.tool,
       padding: _compact
           ? AppSpacing.cardPaddingCompact
           : SharedSpacingTokens.tradeInstrumentHeroPadding,
@@ -94,6 +101,14 @@ class VitTradeInstrumentHero extends StatelessWidget {
               VitMetricDeltaPill(label: deltaLabel, tone: _deltaTone),
             ],
           ),
+          if (sparklineValues != null && sparklineValues!.length >= 2) ...[
+            SizedBox(height: _compact ? AppSpacing.x2 : AppSpacing.x3),
+            SizedBox(
+              height: SharedSpacingTokens.tradeInstrumentHeroSparklineHeight,
+              width: double.infinity,
+              child: VitSparkline(values: sparklineValues!, color: _priceColor),
+            ),
+          ],
           if (highLabel != null || lowLabel != null || volumeLabel != null) ...[
             SizedBox(
               height: _compact

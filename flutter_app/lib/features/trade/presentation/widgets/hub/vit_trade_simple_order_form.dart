@@ -182,7 +182,7 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
               ? () => _openConfirm(context)
               : null,
           loading: submitting,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           variant: side == TradeOrderSide.buy
               ? VitCtaButtonVariant.success
               : VitCtaButtonVariant.danger,
