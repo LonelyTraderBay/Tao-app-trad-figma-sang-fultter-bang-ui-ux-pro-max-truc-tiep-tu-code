@@ -23,6 +23,7 @@ final class SharedSpacingTokens {
     AppSpacing.x4,
   );
   static const double tradeInstrumentHeroMetricGap = AppSpacing.x3;
+  static const double tradeInstrumentHeroSparklineHeight = 32;
   static const EdgeInsets tradeOrderRowPadding = EdgeInsets.symmetric(
     horizontal: AppSpacing.x3,
     vertical: AppSpacing.x2,

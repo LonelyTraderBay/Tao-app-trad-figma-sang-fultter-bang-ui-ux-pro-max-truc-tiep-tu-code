@@ -16,6 +16,9 @@ enum VitCardRadius {
 
   /// 24px — hero/large card surface.
   large,
+
+  /// 8px — tight/dense card or control surface (Trade Command Center v2).
+  tight,
 }
 
 /// Vertical alignment of [VitCard] content inside a fixed-height surface.
@@ -85,6 +88,8 @@ class VitCard extends StatelessWidget {
         return AppRadii.cardRadius;
       case VitCardRadius.large:
         return AppRadii.cardLargeRadius;
+      case VitCardRadius.tight:
+        return AppRadii.smRadius;
     }
   }
 

@@ -3,11 +3,11 @@ part of 'client_categorization_page.dart';
 class ClientOptUpRequestPage extends ConsumerStatefulWidget {
   const ClientOptUpRequestPage({super.key, this.shellRenderMode});
 
-  static const contentKey = Key('sc099_client_opt_up_content');
-  static const criteriaKey = Key('sc099_client_opt_up_criteria');
-  static const waiverKey = Key('sc099_client_opt_up_waiver');
-  static const submitKey = Key('sc099_client_opt_up_submit');
-  static const successKey = Key('sc099_client_opt_up_success');
+  static const contentKey = Key('sc411_client_opt_up_content');
+  static const criteriaKey = Key('sc411_client_opt_up_criteria');
+  static const waiverKey = Key('sc411_client_opt_up_waiver');
+  static const submitKey = Key('sc411_client_opt_up_submit');
+  static const successKey = Key('sc411_client_opt_up_success');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -32,7 +32,7 @@ class _ClientOptUpRequestPageState
       subtitle: 'MiFID II Classification',
       semanticLabel:
           'Yêu cầu nâng hạng lên khách hàng chuyên nghiệp (MiFID II)',
-      semanticIdentifier: 'SC-099',
+      semanticIdentifier: 'SC-411',
       contentKey: ClientOptUpRequestPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => goBackOrFallback(

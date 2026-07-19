@@ -5,13 +5,15 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_trade_instrument_hero.dart';
 
-/// Beginner hero — pair price, 24h change, and available balance (Home rhythm).
+/// Beginner hero — pair price, 24h change, trend sparkline, and available
+/// balance (Home rhythm).
 class VitTradeSimpleHero extends StatelessWidget {
   const VitTradeSimpleHero({
     super.key,
     required this.symbol,
     required this.priceLabel,
     required this.changePct,
+    this.sparklineValues,
     this.availableBalanceLabel,
     this.highLabel,
     this.lowLabel,
@@ -21,6 +23,7 @@ class VitTradeSimpleHero extends StatelessWidget {
   final String symbol;
   final String priceLabel;
   final double changePct;
+  final List<double>? sparklineValues;
   final String? availableBalanceLabel;
   final String? highLabel;
   final String? lowLabel;
@@ -35,6 +38,7 @@ class VitTradeSimpleHero extends StatelessWidget {
           symbol: symbol,
           priceLabel: priceLabel,
           changePct: changePct,
+          sparklineValues: sparklineValues,
           highLabel: highLabel,
           lowLabel: lowLabel,
           volumeLabel: volumeLabel,
