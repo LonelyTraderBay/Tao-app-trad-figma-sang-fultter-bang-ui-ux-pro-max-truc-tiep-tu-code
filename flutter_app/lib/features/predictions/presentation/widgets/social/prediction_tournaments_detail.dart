@@ -7,8 +7,8 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
     this.shellRenderMode,
   });
 
-  static const contentKey = Key('sc042_tournament_detail_content');
-  static const missingKey = Key('sc042_tournament_detail_missing');
+  static const contentKey = Key('sc414_tournament_detail_content');
+  static const missingKey = Key('sc414_tournament_detail_missing');
 
   final String tournamentId;
   final ShellRenderMode? shellRenderMode;
@@ -89,7 +89,7 @@ class _TournamentDetailScaffold extends StatelessWidget {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'Chi tiết giải đấu dự đoán',
-      semanticIdentifier: 'SC-042',
+      semanticIdentifier: 'SC-414',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

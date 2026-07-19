@@ -126,7 +126,7 @@ void main() {
     );
   });
 
-  testWidgets('SC-099 opt-up first viewport reaches criteria review', (
+  testWidgets('SC-411 opt-up first viewport reaches criteria review', (
     tester,
   ) async {
     await pumpClientOptUp(tester);
@@ -187,7 +187,7 @@ void main() {
     expect(find.text('Opt-Up Requested'), findsOneWidget);
   });
 
-  testWidgets('SC-099 opt-up edge uses scoped request route', (tester) async {
+  testWidgets('SC-411 opt-up edge uses scoped request route', (tester) async {
     await pumpClientCategorization(tester);
 
     await tester.ensureVisible(find.byKey(ClientCategorizationPage.optUpKey));

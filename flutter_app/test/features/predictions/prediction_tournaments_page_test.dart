@@ -133,7 +133,7 @@ void main() {
     expect(find.text('Crypto Masters Q1 2026'), findsWidgets);
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-042 PredictionTournamentDetailPage',
+      routeName: 'SC-414 PredictionTournamentDetailPage',
       semanticLabel: 'Chi tiết giải đấu dự đoán',
     );
     expectFirstViewportVisible(
