@@ -87,7 +87,7 @@ class _InvestorCompensationPageState
               children: [
                 const VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   title: 'Compensation coverage review',
                   message:
                       'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',
@@ -96,7 +96,8 @@ class _InvestorCompensationPageState
                 _InfoNotice(snapshot: snapshot),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
+                  radius: VitCardRadius.tight,
                   child: VitTabBar(
                     variant: VitTabBarVariant.underline,
                     activeKey: _tab,

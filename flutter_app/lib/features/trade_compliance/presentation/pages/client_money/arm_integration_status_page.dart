@@ -93,7 +93,7 @@ class _ArmIntegrationStatusPageState
             title: 'Review',
             child: VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               title: 'Review ARM integration health',
               message:
                   'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',

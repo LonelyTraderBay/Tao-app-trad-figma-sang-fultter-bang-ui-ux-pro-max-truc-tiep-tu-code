@@ -15,11 +15,11 @@ class _OverviewTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'Client Categories',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final category in categories)
               _CategoryCard(
@@ -30,7 +30,7 @@ class _OverviewTab extends StatelessWidget {
         ),
         const VitPageSection(
           label: 'Want Professional Status?',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [_OptUpCard()],
         ),
       ],
@@ -49,12 +49,13 @@ class _CategoryCard extends StatelessWidget {
     final style = _categoryStyle(category.id);
     return VitCard(
       key: ClientCategorizationPage.categoryKey(category.id),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,12 +136,13 @@ class _OptUpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +160,7 @@ class _OptUpCard extends StatelessWidget {
                 child: VitPageContent(
                   padding: VitContentPadding.none,
                   fullBleed: true,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   children: [
                     Text(
                       'Request Professional Client Status',
@@ -180,7 +182,8 @@ class _OptUpCard extends StatelessWidget {
           ),
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             borderColor: _clientAmber.withValues(alpha: .24),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +219,7 @@ class _OptUpCard extends StatelessWidget {
           ),
           VitCtaButton(
             key: ClientCategorizationPage.optUpKey,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             leading: const Icon(Icons.description_outlined),
             trailing: const Icon(Icons.chevron_right_rounded),
             onPressed: () =>
@@ -239,7 +242,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -8,7 +8,8 @@ class _LatencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _armBorder.withValues(alpha: .72),
       child: Column(
@@ -50,7 +51,8 @@ class _SlaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _armBorder.withValues(alpha: .72),
       child: Column(
@@ -185,7 +187,7 @@ class _QuickAction extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: VitCtaButtonVariant.secondary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: Icon(icon, color: color, size: AppSpacing.iconSm),
       trailing: const Icon(
         Icons.chevron_right_rounded,

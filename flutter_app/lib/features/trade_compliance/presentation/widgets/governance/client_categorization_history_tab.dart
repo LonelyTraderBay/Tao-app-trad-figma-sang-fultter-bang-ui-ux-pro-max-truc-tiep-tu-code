@@ -12,11 +12,12 @@ class _HistoryTab extends StatelessWidget {
         categories.firstWhere((item) => item.id == id).label;
     return VitPageSection(
       label: 'Category History',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final entry in history)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,7 +35,7 @@ class _HistoryTab extends StatelessWidget {
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     children: [
                       Text(
                         _historyActionLabel(entry.action),

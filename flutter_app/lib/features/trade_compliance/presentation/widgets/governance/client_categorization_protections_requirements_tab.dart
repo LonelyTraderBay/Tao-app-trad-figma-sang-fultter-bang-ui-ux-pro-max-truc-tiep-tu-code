@@ -9,7 +9,7 @@ class _ProtectionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Protection Comparison',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final category in categories)
           _ListCard(category: category, values: category.protections),
@@ -27,7 +27,7 @@ class _RequirementsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Qualification Requirements',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final category in categories)
           _ListCard(
@@ -55,12 +55,13 @@ class _ListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             children: [

@@ -10,7 +10,8 @@ class _RecordCard extends StatelessWidget {
     final tone = _toneFor(record.status);
     return VitCard(
       key: CassReconciliationPage.recordKey(record.id),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
@@ -23,7 +24,8 @@ class _RecordCard extends StatelessWidget {
                 width: _recordIconTile,
                 height: _recordIconTile,
                 variant: VitCardVariant.inner,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
+                radius: VitCardRadius.tight,
                 padding: AppSpacing.zeroInsets,
                 borderColor: tone.color.withValues(alpha: .24),
                 alignment: Alignment.center,
@@ -123,7 +125,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: background.withValues(alpha: .24),
       background: ColoredBox(color: background),
@@ -148,6 +151,7 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -163,6 +167,7 @@ class _ExportButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: CassReconciliationPage.exportKey,
+      density: VitDensity.tool,
       onPressed: () {
         unawaited(HapticFeedback.selectionClick());
         unawaited(
