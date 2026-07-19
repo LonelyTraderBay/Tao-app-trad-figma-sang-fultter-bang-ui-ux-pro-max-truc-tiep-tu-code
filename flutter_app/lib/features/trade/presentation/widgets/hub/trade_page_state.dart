@@ -121,6 +121,7 @@ class _TradePageState extends ConsumerState<TradePage> {
     final showBack =
         widget.chartVariant == TradeChartVariant.pairRoute || context.canPop();
     final marketPrice = formatTradePrice(pair.price);
+    final daySnapshot = tradeSyntheticDaySnapshot(pair.price, pair.changePct);
     final nextAction = _resolveNextAction(snapshot);
     final availableBalanceLabel = _side == TradeOrderSide.buy
         ? '${formatTradeMoney(snapshot.balances.usdtAvailable)} USDT'
@@ -150,6 +151,10 @@ class _TradePageState extends ConsumerState<TradePage> {
           symbol: pair.symbol,
           priceLabel: marketPrice,
           changePct: pair.changePct,
+          sparklineValues: daySnapshot.sparkline,
+          highLabel: daySnapshot.highLabel,
+          lowLabel: daySnapshot.lowLabel,
+          volumeLabel: daySnapshot.volumeLabel,
           availableBalanceLabel: availableBalanceLabel,
         ),
         VitTradeSimpleOrderForm(
@@ -202,7 +207,7 @@ class _TradePageState extends ConsumerState<TradePage> {
                   'Preview fees, slippage, and available balance before submitting a market order.',
               },
               contractId: snapshot.highRiskContractId,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
             ),
           ),
         VitTradeSection(

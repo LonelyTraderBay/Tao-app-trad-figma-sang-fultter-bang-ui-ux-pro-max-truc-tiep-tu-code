@@ -9,6 +9,7 @@ class _HealthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: _portfolioGreen.withValues(alpha: .30),
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       child: Column(

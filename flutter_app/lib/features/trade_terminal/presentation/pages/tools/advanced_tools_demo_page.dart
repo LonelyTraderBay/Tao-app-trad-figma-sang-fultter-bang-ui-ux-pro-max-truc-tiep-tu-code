@@ -93,7 +93,8 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                 const _IntroCard(),
                 const VitCard(
                   variant: VitCardVariant.inner,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
+                  radius: VitCardRadius.tight,
                   padding: AppSpacing.cardPaddingCompact,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +105,7 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                         message:
                             'Thang giá, hủy hàng loạt và phím tắt giữ xem trước lệnh, xác nhận, số lệnh bị ảnh hưởng và bước tiếp theo trước khi thực thi.',
                         contractId: 'advanced-tools-review',
-                        density: VitDensity.compact,
+                        density: VitDensity.tool,
                       ),
                       SizedBox(height: _toolsSpace),
                       VitStatusPill(

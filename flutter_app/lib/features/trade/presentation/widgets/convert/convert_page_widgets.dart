@@ -36,7 +36,7 @@ class ConvertHistoryRow extends StatelessWidget {
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
                   variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.large,
+                  radius: VitCardRadius.tight,
                   alignment: Alignment.center,
                   borderColor: AppColors.buy20,
                   child: Icon(

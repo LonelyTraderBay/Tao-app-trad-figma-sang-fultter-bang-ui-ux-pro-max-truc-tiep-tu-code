@@ -12,18 +12,18 @@ class _WebSocketView extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'WebSocket Connection',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             _InfoCard(
               child: VitPageContent(
                 rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 children: [
                   Text(
                     'Connect to real-time bot events:',
@@ -39,19 +39,19 @@ class _WebSocketView extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Event Types',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             VitPageContent(
               padding: VitContentPadding.none,
               fullBleed: true,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               children: [
                 for (final event in events)
                   _InfoCard(
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      density: VitDensity.compact,
+                      density: VitDensity.tool,
                       children: [
                         Row(
                           children: [
@@ -113,7 +113,7 @@ class _ExamplesView extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         Row(
           children: [
@@ -122,7 +122,7 @@ class _ExamplesView extends StatelessWidget {
                 key: BotApiDocumentationPage.languageKey(example.language),
                 onPressed: () => onLanguageChanged(example.language),
                 fullWidth: false,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 variant: selected.language == example.language
                     ? VitCtaButtonVariant.secondary
                     : VitCtaButtonVariant.ghost,
@@ -146,13 +146,13 @@ class _ExamplesView extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Quick Start',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             _InfoCard(
               child: VitPageContent(
                 padding: VitContentPadding.none,
                 fullBleed: true,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 children: [
                   Row(
                     children: [

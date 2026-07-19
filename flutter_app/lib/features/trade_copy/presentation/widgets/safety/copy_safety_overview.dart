@@ -16,7 +16,7 @@ class _SafetyTabs extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       height: AppSpacing.buttonStandard,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
@@ -119,7 +119,7 @@ class _VerificationTierCard extends StatelessWidget {
         height: _safetyHeroLineHeight,
       ),
       headerGap: _safetySpace,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       constraints: BoxConstraints(
         minHeight: switch (tier.tier) {
           'Basic' => TradeSpacingTokens.copySafetyTierBasicMinHeight,

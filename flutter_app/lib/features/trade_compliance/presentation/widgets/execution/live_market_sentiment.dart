@@ -77,7 +77,7 @@ class _SourceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return LiveMarketCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       borderColor: AppColors.transparent,
       padding: MarketsSpacingTokens.liveMarketRowPadding,
       child: Row(

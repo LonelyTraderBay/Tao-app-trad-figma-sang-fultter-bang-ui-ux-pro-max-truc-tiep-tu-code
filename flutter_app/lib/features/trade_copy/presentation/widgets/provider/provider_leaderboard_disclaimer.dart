@@ -9,8 +9,9 @@ class _Disclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerLeaderboardDisclaimerPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Text(
         text,
         textAlign: TextAlign.center,

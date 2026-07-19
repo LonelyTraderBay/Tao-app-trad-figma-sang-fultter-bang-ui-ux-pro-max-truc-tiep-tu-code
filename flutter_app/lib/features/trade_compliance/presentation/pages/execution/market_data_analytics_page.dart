@@ -78,27 +78,42 @@ class _MarketDataAnalyticsPageState
             onAction: () => ref.invalidate(tradeMarketDataAnalyticsProvider),
           ),
         ],
-        data: (snapshot) => [
-          VitTradeInstrumentHero(
-            symbol: snapshot.selectedPair,
-            priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
-            changePct: snapshot.fundingRate.currentRatePct,
-            highLabel: _formatCompactUsd(snapshot.openInterest.high24h),
-            lowLabel: _formatCompactUsd(snapshot.openInterest.low24h),
-            volumeLabel: _formatCompactUsd(snapshot.openInterest.current),
-          ),
-          _MarketAnalyticsRiskPanel(snapshot: snapshot),
-          _UnderlineTabs(
-            activeId: _tab,
-            onChanged: (id) => setState(() => _tab = id),
-          ),
-          if (_tab == 'market')
-            _MarketDataTab(snapshot: snapshot)
-          else if (_tab == 'liquidations')
-            _LiquidationsTab(snapshot: snapshot)
-          else
-            _SentimentTab(snapshot: snapshot),
-        ],
+        data: (snapshot) {
+          // Domain has no real 24h price-change/series for markPrice (only
+          // open-interest and funding-rate metrics, both a different unit
+          // than price) — openInterest.high24h/low24h/current were
+          // previously wired into the hero's price high/low/volume slots,
+          // a T01-style mislabel (open-interest notional shown as price
+          // stats). Derive a deterministic, price-scaled day snapshot
+          // instead so Cao/Thấp/KL 24h stay consistent with the displayed
+          // price (Trade Redesign V2 §3 sparkline mandate).
+          final daySnapshot = tradeSyntheticDaySnapshot(
+            snapshot.markPrice,
+            snapshot.fundingRate.currentRatePct,
+          );
+          return [
+            VitTradeInstrumentHero(
+              symbol: snapshot.selectedPair,
+              priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
+              changePct: snapshot.fundingRate.currentRatePct,
+              sparklineValues: daySnapshot.sparkline,
+              highLabel: daySnapshot.highLabel,
+              lowLabel: daySnapshot.lowLabel,
+              volumeLabel: daySnapshot.volumeLabel,
+            ),
+            _MarketAnalyticsRiskPanel(snapshot: snapshot),
+            _UnderlineTabs(
+              activeId: _tab,
+              onChanged: (id) => setState(() => _tab = id),
+            ),
+            if (_tab == 'market')
+              _MarketDataTab(snapshot: snapshot)
+            else if (_tab == 'liquidations')
+              _LiquidationsTab(snapshot: snapshot)
+            else
+              _SentimentTab(snapshot: snapshot),
+          ];
+        },
       ),
     );
   }
@@ -113,7 +128,7 @@ class _MarketAnalyticsRiskPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: 'Xem lại dữ liệu thị trường',
       message:
           'Phân tích ${snapshot.selectedPair} chỉ mang tính tham khảo. Xác nhận ký quỹ, rủi ro thanh lý, phí funding và giới hạn vị thế trước khi đặt lệnh.',

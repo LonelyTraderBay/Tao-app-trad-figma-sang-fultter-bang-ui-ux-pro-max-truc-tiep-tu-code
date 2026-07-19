@@ -10,7 +10,7 @@ class _MarketDataTab extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _OpenInterestCard(
           pair: snapshot.selectedPair,
@@ -37,7 +37,7 @@ class _OpenInterestCard extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           _CardHeader(
             icon: Icons.show_chart_rounded,
@@ -120,7 +120,7 @@ class _LongShortRatioCard extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           const _CardHeader(
             icon: Icons.groups_2_outlined,

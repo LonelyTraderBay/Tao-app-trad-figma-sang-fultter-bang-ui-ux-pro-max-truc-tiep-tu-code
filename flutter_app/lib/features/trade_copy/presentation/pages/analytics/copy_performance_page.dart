@@ -89,7 +89,7 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
                 message:
                     'PnL, phí, drawdown, lịch sử lệnh và chỉ số rủi ro được xem lại trước khi thay đổi phân bổ copy.',
                 contractId: 'copy-performance-${widget.copyId}',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
             ),
             VitTradeSection(

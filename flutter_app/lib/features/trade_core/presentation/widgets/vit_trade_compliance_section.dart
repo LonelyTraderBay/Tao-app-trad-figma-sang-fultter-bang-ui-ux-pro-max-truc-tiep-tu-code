@@ -34,7 +34,7 @@ class VitTradeComplianceSection extends StatelessWidget {
     this.statusPill,
     this.actionLabel,
     this.onAction,
-    this.density = VitDensity.compact,
+    this.density = VitDensity.tool,
   });
 
   final String title;
@@ -56,6 +56,7 @@ class VitTradeComplianceSection extends StatelessWidget {
       child: VitCard(
         clip: true,
         density: density,
+        radius: VitCardRadius.tight,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

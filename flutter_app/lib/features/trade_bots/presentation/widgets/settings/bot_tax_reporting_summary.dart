@@ -70,6 +70,7 @@ class _SummaryCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _taxGreen,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -106,6 +107,7 @@ class _SummaryStat extends StatelessWidget {
           style: AppTextStyles.baseMedium.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],
@@ -135,7 +137,8 @@ class _CostBasisPicker extends StatelessWidget {
             child: VitCard(
               key: BotTaxReportingPage.methodKey(methods[i].$1),
               onTap: () => onChanged(methods[i].$1),
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               borderColor: selectedMethod == methods[i].$1
                   ? _taxPrimary
                   : _taxOptionBorder,

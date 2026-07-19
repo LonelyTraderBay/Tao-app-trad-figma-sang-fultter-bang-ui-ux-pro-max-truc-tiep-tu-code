@@ -81,7 +81,7 @@ class TransactionReportingTabs extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       height: AppSpacing.x7 + AppSpacing.x2,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -113,6 +114,7 @@ class ProviderComparisonPage extends ConsumerWidget {
             ),
             const VitTradeComplianceSection(
               title: 'Compliance review',
+              density: VitDensity.tool,
               statusPill: VitStatusPill(
                 label: 'Review required',
                 status: VitStatusPillStatus.info,
@@ -156,6 +158,7 @@ class _WarningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       borderColor: AppColors.warningBorder,
       padding: TradeSpacingTokens.providerComparisonPanelPadding,
       child: Row(
@@ -288,6 +291,7 @@ class _LegendPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerComparisonPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

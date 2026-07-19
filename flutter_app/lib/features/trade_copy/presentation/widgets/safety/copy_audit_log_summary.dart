@@ -88,7 +88,7 @@ class _SummaryCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       height: TradeSpacingTokens.copyAuditSummaryCardHeight,
       alignment: Alignment.center,
       child: Column(
@@ -129,6 +129,7 @@ class _ExportFormatButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.copyAuditExportButtonPadding,
       borderColor: AppColors.cardBorder,
       onTap: onTap,

@@ -39,7 +39,7 @@ class _ConvertHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.large,
+      radius: VitCardRadius.standard,
       clip: true,
       padding: AppSpacing.cardPadding,
       background: const VitHeroGlow(),
@@ -243,6 +243,7 @@ class _AmountSection extends StatelessWidget {
                 'Min: \$10',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent.withValues(alpha: .5),
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -250,6 +251,7 @@ class _AmountSection extends StatelessWidget {
                 'Max: \$500,000',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.onAccent.withValues(alpha: .5),
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -273,8 +275,9 @@ class _AssetButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       height: TradeSpacingTokens.convertControlHeight,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowGapRegular,
         right: AppSpacing.rowGapRegular,

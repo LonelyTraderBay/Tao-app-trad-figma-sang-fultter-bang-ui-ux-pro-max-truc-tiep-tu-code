@@ -43,3 +43,53 @@ String formatTradeCompactNumber(int value) {
   if (value >= 1000) return '${(value / 1000).toStringAsFixed(0)}K';
   return '$value';
 }
+
+/// Deterministic 24h snapshot (mini trend line + high/low/volume) derived
+/// from a pair's current [price] and [changePct] — feeds the Simple-mode
+/// price hero's sparkline + 24h stat row (Trade Redesign V2 §3) when the
+/// repository has no live tick history yet. Values are a pure function of
+/// the inputs so goldens/tests stay stable.
+final class TradeSyntheticDaySnapshot {
+  const TradeSyntheticDaySnapshot({
+    required this.sparkline,
+    required this.highLabel,
+    required this.lowLabel,
+    required this.volumeLabel,
+  });
+
+  /// Recent price series, oldest first, ending exactly at [price].
+  final List<double> sparkline;
+  final String highLabel;
+  final String lowLabel;
+  final String volumeLabel;
+}
+
+TradeSyntheticDaySnapshot tradeSyntheticDaySnapshot(
+  double price,
+  double changePct,
+) {
+  const points = 12;
+  final divisor = 1 + (changePct.clamp(-90, 900) / 100);
+  final startPrice = divisor == 0 ? price : price / divisor;
+
+  final sparkline = <double>[
+    for (var i = 0; i < points; i++)
+      startPrice +
+          (price - startPrice) * (i / (points - 1)) +
+          (i.isEven ? 1 : -1) * price * 0.003,
+  ];
+  sparkline[points - 1] = price;
+
+  final high = sparkline.reduce((a, b) => a > b ? a : b);
+  final low = sparkline.reduce((a, b) => a < b ? a : b);
+  // Arbitrary but deterministic 24h notional-volume multiplier for mock
+  // data — not a real market figure.
+  final volumeBillions = ((price * 18500) / 1e9).clamp(0.1, 999.9);
+
+  return TradeSyntheticDaySnapshot(
+    sparkline: sparkline,
+    highLabel: formatTradePrice(high),
+    lowLabel: formatTradePrice(low),
+    volumeLabel: '${volumeBillions.toStringAsFixed(1)}B',
+  );
+}

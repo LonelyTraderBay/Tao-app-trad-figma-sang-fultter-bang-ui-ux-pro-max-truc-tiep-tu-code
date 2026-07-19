@@ -9,7 +9,7 @@ class _BestPracticesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Best Practices',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final item in items)
           _InfoCard(
@@ -32,7 +32,7 @@ class _MistakesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Common Mistakes to Avoid',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [for (final item in items) _MistakeCard(item: item)],
     );
   }
@@ -54,7 +54,8 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,12 +95,13 @@ class _MistakeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +131,7 @@ class _MistakeCard extends StatelessWidget {
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.none,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   children: [
                     Text(
                       "WHY IT'S BAD:",
@@ -144,12 +146,14 @@ class _MistakeCard extends StatelessWidget {
                       ),
                     ),
                     VitCard(
+                      radius: VitCardRadius.tight,
+                      density: VitDensity.tool,
                       padding: AppSpacing.cardPaddingCompact,
                       variant: VitCardVariant.inner,
                       borderColor: _guideGreen.withValues(alpha: .24),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        density: VitDensity.compact,
+                        density: VitDensity.tool,
                         children: [
                           Text(
                             'HOW TO FIX:',
@@ -184,12 +188,13 @@ class _VideoTutorialsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             children: [
@@ -213,7 +218,7 @@ class _VideoTutorialsCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           VitCtaButton(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             onPressed: () => _showComingSoon(context),
             child: const Text('View All Tutorials'),
           ),

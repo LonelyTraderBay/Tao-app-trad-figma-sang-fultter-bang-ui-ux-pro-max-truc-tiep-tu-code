@@ -16,7 +16,8 @@ class _ReportTypeCard extends StatelessWidget {
     return VitCard(
       key: BotTaxReportingPage.reportKey(report.id),
       onTap: onTap,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: selected ? _taxPrimary : _taxOptionBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,6 +137,7 @@ class _BreakdownRow extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: _taxGreen,
             fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],
@@ -152,7 +154,8 @@ class _TaxNotesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -212,6 +215,8 @@ class _GenerateFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final child = VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.contentPad,
         AppSpacing.x2,
@@ -223,7 +228,7 @@ class _GenerateFooter extends StatelessWidget {
         key: BotTaxReportingPage.generateKey,
         onPressed: disabled ? null : onPressed,
         loading: generating,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         leading: generating ? null : const Icon(Icons.download_rounded),
         child: Text(
           generating

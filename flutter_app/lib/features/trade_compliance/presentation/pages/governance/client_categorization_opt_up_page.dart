@@ -60,7 +60,8 @@ class _ClientOptUpRequestPageState
                 title: 'Status',
                 child: VitCard(
                   key: ClientOptUpRequestPage.successKey,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
+                  radius: VitCardRadius.tight,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -121,10 +122,11 @@ class _ClientOptUpRequestPageState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   VitCard(
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
+                    radius: VitCardRadius.tight,
                     child: VitPageSection(
                       label: 'Professional Status Criteria',
-                      density: VitDensity.compact,
+                      density: VitDensity.tool,
                       children: [
                         for (final requirement in professional.requirements)
                           Row(
@@ -150,7 +152,7 @@ class _ClientOptUpRequestPageState
                     ),
                   ),
                   VitPageSection(
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     children: [
                       _OptUpChecklistTile(
                         key: ClientOptUpRequestPage.criteriaKey,
@@ -177,11 +179,12 @@ class _ClientOptUpRequestPageState
                     onPressed: _canSubmit
                         ? () => setState(() => _submitted = true)
                         : null,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     child: const Text('Submit for Review'),
                   ),
                   const VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
+                    density: VitDensity.tool,
                     title: 'Opt-up request review',
                     message:
                         'Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.',
@@ -214,7 +217,8 @@ class _OptUpChecklistTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: SwitchListTile(
         value: value,
         onChanged: onChanged,

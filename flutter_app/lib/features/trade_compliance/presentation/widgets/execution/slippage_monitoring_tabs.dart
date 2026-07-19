@@ -10,7 +10,7 @@ class _ProvidersTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Provider Performance',
@@ -20,7 +20,8 @@ class _ProvidersTab extends StatelessWidget {
         ),
         for (final provider in providers)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             padding: AppSpacing.cardPaddingCompact,
             borderColor: _slipBorder.withValues(alpha: .72),
             child: Column(
@@ -43,6 +44,7 @@ class _ProvidersTab extends StatelessWidget {
                             ? _slipRed
                             : _slipGreen,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -89,7 +91,7 @@ class _HistoryTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Slippage Trends (Last 7 Days)',
@@ -98,7 +100,8 @@ class _HistoryTab extends StatelessWidget {
           accentColor: _slipPrimary,
         ),
         VitCard(
-          density: VitDensity.compact,
+          density: VitDensity.tool,
+          radius: VitCardRadius.tight,
           padding: AppSpacing.cardPaddingCompact,
           borderColor: _slipBorder.withValues(alpha: .72),
           child: Column(
@@ -129,6 +132,7 @@ class _HistoryTab extends StatelessWidget {
                       '${point.max.toStringAsFixed(1)} bps',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -152,7 +156,7 @@ class _AlertsTab extends StatelessWidget {
     return const VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitSectionHeader(
           title: 'Alert Configuration',
@@ -199,7 +203,8 @@ class _AlertSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: Column(
@@ -234,7 +239,8 @@ class _AlertSetting extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             padding: const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.x3,
               vertical: AppSpacing.x2,

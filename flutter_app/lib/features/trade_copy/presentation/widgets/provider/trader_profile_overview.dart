@@ -226,6 +226,7 @@ class _DetailRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.medium,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],

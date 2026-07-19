@@ -80,7 +80,8 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -108,6 +109,7 @@ class _MetricCard extends StatelessWidget {
                       metric.label == 'VaR (95%)'
                   ? AppColors.text1
                   : metric.color,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -142,7 +144,8 @@ class _ExposureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           for (final exposure in exposures) ...[
@@ -158,7 +161,10 @@ class _ExposureCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x2),
                 Text(
                   '${exposure.percentage}%',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
                 Expanded(
                   child: Align(
@@ -168,6 +174,7 @@ class _ExposureCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ),
@@ -204,6 +211,7 @@ class _ExposureCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: _riskGreen,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],

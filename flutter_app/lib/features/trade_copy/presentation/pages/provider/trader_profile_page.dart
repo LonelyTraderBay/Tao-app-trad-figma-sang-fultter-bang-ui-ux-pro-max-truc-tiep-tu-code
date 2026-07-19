@@ -167,7 +167,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
           children: [
             VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               title: 'Xem lại hồ sơ trader',
               message:
                   'Hiệu suất, giao dịch gần đây, thống kê, lịch sử rủi ro và mức phù hợp copy được xem lại trước khi theo dõi.',
@@ -192,7 +192,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
         onChanged: (id) => setState(() => _tab = id),
       ),
       VitPageSection(
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           if (_tab == 'overview')
             _OverviewTab(snapshot: snapshot)

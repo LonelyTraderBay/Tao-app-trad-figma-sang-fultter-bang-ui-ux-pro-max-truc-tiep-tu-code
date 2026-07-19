@@ -11,7 +11,7 @@ class _OverviewContent extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Complaint Categories',
@@ -55,7 +55,8 @@ class _CategoryGrid extends StatelessWidget {
               SizedBox(
                 width: tileWidth,
                 child: VitCard(
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
+                  radius: VitCardRadius.tight,
                   borderColor: _complaintsBorder.withValues(alpha: .76),
                   child: Row(
                     children: [
@@ -95,7 +96,8 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _complaintsBorder.withValues(alpha: .76),
       child: Column(
         children: [
@@ -110,6 +112,7 @@ class _TimelineCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: _complaintsPrimary,
                       fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                 ),
@@ -157,7 +160,7 @@ class _MyComplaintsContent extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Your Complaints',
@@ -184,7 +187,8 @@ class _ComplaintCard extends StatelessWidget {
       key: ComplaintsHandlingPage.complaintKey(complaint.id),
       onTap: () =>
           context.go(AppRoutePaths.tradeCopyComplaintTracking(complaint.id)),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _complaintsBorder.withValues(alpha: .76),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,8 +212,7 @@ class _ComplaintCard extends StatelessWidget {
                   children: [
                     Text(
                       complaint.id,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
+                      style: AppTextStyles.monoCode.copyWith(
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -227,7 +230,10 @@ class _ComplaintCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${complaint.category} - Submitted ${complaint.submittedDate}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ],
             ),

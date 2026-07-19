@@ -27,7 +27,10 @@ class _TrendPainter extends CustomPainter {
       );
       textPainter.text = TextSpan(
         text: '$label',
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          fontFeatures: AppTextStyles.tabularFigures,
+        ),
       );
       textPainter.layout();
       textPainter.paint(
@@ -75,7 +78,10 @@ class _TrendPainter extends CustomPainter {
       final x = chartRect.left + chartRect.width * i / (stats.length - 1);
       textPainter.text = TextSpan(
         text: stats[i].date,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          fontFeatures: AppTextStyles.tabularFigures,
+        ),
       );
       textPainter.layout();
       textPainter.paint(
@@ -179,6 +185,7 @@ class _DonutPainter extends CustomPainter {
         style: AppTextStyles.sectionTitle.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
+          fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),
     )..layout();

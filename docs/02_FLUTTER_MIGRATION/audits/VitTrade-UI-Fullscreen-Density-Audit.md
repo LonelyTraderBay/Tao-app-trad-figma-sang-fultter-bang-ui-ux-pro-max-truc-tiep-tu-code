@@ -3,12 +3,12 @@
 Generated from `flutter_app/tool/ui_fullscreen_density_audit.dart`.
 
 ```text
-total_routed_screens=413
+total_routed_screens=415
 P1_density_refactor=0
 P1_fullscreen_tool_visual_qa=5
-P2_visual_density_review=26
-P3_followup_review=52
-Pass_or_low_signal=330
+P2_visual_density_review=29
+P3_followup_review=44
+Pass_or_low_signal=337
 ```
 
 ## Priority Counts
@@ -17,9 +17,9 @@ Pass_or_low_signal=330
 | --- | ---: |
 | `P1_density_refactor` | 0 |
 | `P1_fullscreen_tool_visual_qa` | 5 |
-| `P2_visual_density_review` | 26 |
-| `P3_followup_review` | 52 |
-| `Pass_or_low_signal` | 330 |
+| `P2_visual_density_review` | 29 |
+| `P3_followup_review` | 44 |
+| `Pass_or_low_signal` | 337 |
 
 ## Flagged Routes
 
@@ -30,8 +30,6 @@ Pass_or_low_signal=330
 | P1_fullscreen_tool_visual_qa | 14 | p2p | P2PChatPage | `'/p2p/chat/:orderId'` | body Tool; few dense sections/cards=2 | `flutter_app/lib/features/p2p/presentation/pages/orders/p2p_chat_page.dart` |
 | P2_visual_density_review | 13 | arena | ArenaBlockedUsersPage | `AppRoutePaths.arenaBlocked` | body B; few dense sections/cards=2 | `flutter_app/lib/features/arena/presentation/pages/governance/arena_blocked_users_page.dart` |
 | P2_visual_density_review | 13 | arena | VerifiedChallengesPage | `AppRoutePaths.arenaVerified` | body B; few dense sections/cards=1 | `flutter_app/lib/features/arena/presentation/pages/challenge/verified_challenges_page.dart` |
-| P2_visual_density_review | 13 | predictions | PredictionsSearchPage | `AppRoutePaths.marketsPredictionsSearch` | body B; custom>12 by 1; few dense sections/cards=1 | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart` |
-| P2_visual_density_review | 13 | trade_copy | TraderProfilePage | `'/trade/trader/:traderId'` | body B; custom>10 by 1; few dense sections/cards=1 | `flutter_app/lib/features/trade_copy/presentation/pages/provider/trader_profile_page.dart` |
 | P1_fullscreen_tool_visual_qa | 13 | trade_terminal | AdvancedChartPage | `'/trade/advanced-chart/:pairId'` | body Tool | `flutter_app/lib/features/trade_terminal/presentation/pages/tools/advanced_chart_page.dart` |
 | P2_visual_density_review | 12 | arena | ArenaResolutionCenterPage | `AppRoutePaths.arenaResolution` | body B; few dense sections/cards=1 | `flutter_app/lib/features/arena/presentation/pages/governance/arena_resolution_center_page.dart` |
 | P2_visual_density_review | 12 | auth | ForgotPasswordPage | `AppRoutePaths.authForgotPassword` | body B; few dense sections/cards=0 | `flutter_app/lib/features/auth/presentation/pages/forgot_password_page.dart` |
@@ -41,23 +39,27 @@ Pass_or_low_signal=330
 | P2_visual_density_review | 12 | dca | DCARebalanceDashboard | `'/dca/rebalance/:configId/history'` | body B; few dense sections/cards=2 | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart` |
 | P2_visual_density_review | 12 | dca | DCARebalanceDashboard | `AppRoutePaths.dcaRebalanceDashboard` | body B; few dense sections/cards=2 | `flutter_app/lib/features/dca/presentation/pages/portfolio/dca_rebalance_dashboard_page.dart` |
 | P2_visual_density_review | 12 | dca | DCAScheduleAnalytics | `AppRoutePaths.dcaScheduleAnalytics` | body B; few dense sections/cards=2 | `flutter_app/lib/features/dca/presentation/pages/schedule/dca_schedule_analytics_page.dart` |
+| P2_visual_density_review | 12 | enterprise_states | ForceUpdateGatePage | `AppRoutePaths.forceUpdateGate` | body B; few dense sections/cards=0 | `flutter_app/lib/features/enterprise_states/presentation/pages/force_update_gate_page.dart` |
+| P2_visual_density_review | 12 | enterprise_states | MaintenanceGatePage | `AppRoutePaths.maintenanceGate` | body B; few dense sections/cards=0 | `flutter_app/lib/features/enterprise_states/presentation/pages/maintenance_gate_page.dart` |
 | P2_visual_density_review | 12 | markets | PriceAlertsPage | `AppRoutePaths.marketsAlerts` | body B; few dense sections/cards=1 | `flutter_app/lib/features/markets/presentation/pages/portfolio/price_alerts_page.dart` |
 | P2_visual_density_review | 12 | p2p | P2PComplianceOverviewPage | `AppRoutePaths.p2pComplianceOverview` | body B; few dense sections/cards=1 | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_compliance_overview_page.dart` |
 | P2_visual_density_review | 12 | p2p | P2PDisputeResolutionPage | `'/p2p/dispute/resolution/:disputeId'` | body B; few dense sections/cards=1 | `flutter_app/lib/features/p2p/presentation/pages/dispute/p2p_dispute_resolution_page.dart` |
 | P2_visual_density_review | 12 | p2p | P2PNotificationsSettingsPage | `AppRoutePaths.p2pSettingsNotifications` | body B; few dense sections/cards=1 | `flutter_app/lib/features/p2p/presentation/pages/hub/p2p_notifications_settings_page.dart` |
 | P2_visual_density_review | 12 | p2p | P2POrderTimelinePage | `'/p2p/order/timeline/:orderId'` | body B; few dense sections/cards=2 | `flutter_app/lib/features/p2p/presentation/pages/orders/p2p_order_timeline_page.dart` |
 | P2_visual_density_review | 12 | p2p | P2PRiskAssessmentPage | `AppRoutePaths.p2pComplianceRiskAssessment` | body B; few dense sections/cards=1 | `flutter_app/lib/features/p2p/presentation/pages/security/p2p_risk_assessment_page.dart` |
+| P2_visual_density_review | 12 | predictions | PredictionsSearchPage | `AppRoutePaths.marketsPredictionsSearch` | body B; few dense sections/cards=1 | `flutter_app/lib/features/predictions/presentation/pages/hub/predictions_search_page.dart` |
 | P2_visual_density_review | 12 | profile | EditProfilePage | `AppRoutePaths.profileEdit` | body B; few dense sections/cards=2 | `flutter_app/lib/features/profile/presentation/pages/edit_profile_page.dart` |
 | P2_visual_density_review | 12 | referral | ReferralFriendDetailPage | `'/referral/friend/:friendId'` | body B; few dense sections/cards=0 | `flutter_app/lib/features/referral/presentation/pages/referral_friend_detail_page.dart` |
 | P2_visual_density_review | 12 | referral | ReferralHistoryPage | `AppRoutePaths.referralHistory` | body B; few dense sections/cards=2 | `flutter_app/lib/features/referral/presentation/pages/referral_history_page.dart` |
 | P2_visual_density_review | 12 | support | AnnouncementsPage | `AppRoutePaths.supportAnnouncements` | body B; few dense sections/cards=1 | `flutter_app/lib/features/support/presentation/pages/announcements_page.dart` |
 | P1_fullscreen_tool_visual_qa | 12 | trade_bots | TradingBotsPage | `AppRoutePaths.tradeBots` | body Tool | `flutter_app/lib/features/trade_bots/presentation/pages/hub/trading_bots_page.dart` |
+| P2_visual_density_review | 12 | trade_copy | TraderProfilePage | `'/trade/trader/:traderId'` | body B; few dense sections/cards=1 | `flutter_app/lib/features/trade_copy/presentation/pages/provider/trader_profile_page.dart` |
+| P2_visual_density_review | 12 | wallet | AddressAddPage | `AppRoutePaths.walletAddressBookAdd` | body B; few dense sections/cards=0 | `flutter_app/lib/features/wallet/presentation/pages/address/address_add_page.dart` |
 | P2_visual_density_review | 12 | wallet | WalletMultiManagerPage | `AppRoutePaths.walletMultiManager` | body B; few dense sections/cards=0 | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_multi_manager_page.dart` |
 | P2_visual_density_review | 11 | profile | ProfilePage | `AppRoutePaths.profile` | body B | `flutter_app/lib/features/profile/presentation/pages/profile_page.dart` |
 | P2_visual_density_review | 10 | profile | SettingsPage | `AppRoutePaths.profileSettings` | body B | `flutter_app/lib/features/profile/presentation/pages/settings_page.dart` |
 | P2_visual_density_review | 10 | profile | SubAccountPage | `AppRoutePaths.profileSubAccounts` | body B | `flutter_app/lib/features/profile/presentation/pages/sub_account_page.dart` |
 | P3_followup_review | 9 | auth | LoginPage | `AppRoutePaths.authLogin` | body B; few dense sections/cards=0 | `flutter_app/lib/features/auth/presentation/pages/login_page.dart` |
-| P3_followup_review | 9 | profile | ActivityLogPage | `AppRoutePaths.profileActivity` | body B; custom>6 by 1 | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.settingsSecurityChangePassword` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.settingsSecurityBiometric` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
 | P3_followup_review | 9 | profile | SecurityPage | `AppRoutePaths.settingsSecurity` | body B | `flutter_app/lib/features/profile/presentation/pages/security_page.dart` |
@@ -70,9 +72,8 @@ Pass_or_low_signal=330
 | P3_followup_review | 8 | admin | AnalyticsDashboard | `AppRoutePaths.adminAnalytics` | body B | `flutter_app/lib/features/admin/presentation/pages/analytics_dashboard.dart` |
 | P3_followup_review | 8 | admin | FunnelDashboard | `AppRoutePaths.adminFunnels` | body B | `flutter_app/lib/features/admin/presentation/pages/funnel_dashboard.dart` |
 | P3_followup_review | 8 | home | HomePage | `AppRoutePaths.home` | body B | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
-| P3_followup_review | 8 | launchpad | LaunchpadContractPage | `AppRoutePaths.launchpadContractSample` | body B | `flutter_app/lib/features/launchpad/presentation/pages/hub/launchpad_contract_page.dart` |
-| P3_followup_review | 8 | markets | DerivativesOverviewPage | `AppRoutePaths.marketsDerivatives` | body B | `flutter_app/lib/features/markets/presentation/pages/tools/derivatives_overview_page.dart` |
 | P3_followup_review | 8 | predictions | PredictionEventDetailPage | `'/markets/predictions/event/:eventId'` | body B | `flutter_app/lib/features/predictions/presentation/pages/event/prediction_event_detail_page.dart` |
+| P3_followup_review | 8 | profile | ActivityLogPage | `AppRoutePaths.profileActivity` | body B | `flutter_app/lib/features/profile/presentation/pages/activity_log_page.dart` |
 | P3_followup_review | 8 | trade_bots | BotApiDocumentationPage | `AppRoutePaths.tradeBotApiDocumentation` | body B | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_api_documentation_page.dart` |
 | P3_followup_review | 8 | trade_bots | BotGuidePage | `AppRoutePaths.tradeBotGuide` | body B | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_guide_page.dart` |
 | P3_followup_review | 8 | trade_bots | BotSuitabilityAssessmentPage | `AppRoutePaths.tradeBotSuitabilityAssessment` | body B | `flutter_app/lib/features/trade_bots/presentation/pages/settings/bot_suitability_assessment_page.dart` |
@@ -92,19 +93,13 @@ Pass_or_low_signal=330
 | P3_followup_review | 8 | trade_compliance | RiskIndicatorExplainerPage | `AppRoutePaths.tradeCopyRiskIndicatorExplainer` | body B | `flutter_app/lib/features/trade_compliance/presentation/pages/disclosures/risk_indicator_explainer_page.dart` |
 | P3_followup_review | 8 | trade_compliance | SlippageMonitoringPage | `AppRoutePaths.tradeCopySlippageMonitoring` | body B | `flutter_app/lib/features/trade_compliance/presentation/pages/execution/slippage_monitoring_page.dart` |
 | P3_followup_review | 8 | trade_copy | ActiveCopiesPage | `AppRoutePaths.tradeCopyActive` | body B | `flutter_app/lib/features/trade_copy/presentation/pages/hub/active_copies_page.dart` |
-| P3_followup_review | 8 | trade_copy | CopyEducationPage | `AppRoutePaths.tradeCopyEducation` | body C; custom>8 by 4; few dense sections/cards=2 | `flutter_app/lib/features/trade_copy/presentation/pages/safety/copy_education_page.dart` |
 | P3_followup_review | 8 | trade_copy | DisputeResolutionPage | `AppRoutePaths.tradeCopyDisputeResolution` | body B | `flutter_app/lib/features/trade_copy/presentation/pages/safety/dispute_resolution_page.dart` |
 | P3_followup_review | 8 | trade_copy | PerformanceAttributionPage | `'/trade/copy-performance/:copyId/attribution'` | body B | `flutter_app/lib/features/trade_copy/presentation/pages/analytics/performance_attribution_page.dart` |
 | P3_followup_review | 8 | trade_copy | ProviderGovernancePage | `AppRoutePaths.tradeCopyProviderGovernance` | body B | `flutter_app/lib/features/trade_copy/presentation/pages/provider/provider_governance_page.dart` |
 | P3_followup_review | 8 | trade_copy | SafetyEducationPage | `AppRoutePaths.tradeCopySafety` | body B | `flutter_app/lib/features/trade_copy/presentation/pages/safety/safety_education_page.dart` |
 | P3_followup_review | 8 | trade_terminal | AdvancedAnalyticsPage | `AppRoutePaths.tradeMarginAdvancedAnalytics` | body B | `flutter_app/lib/features/trade_terminal/presentation/pages/tools/advanced_analytics_page.dart` |
-| P3_followup_review | 8 | trade_terminal | AdvancedTradingDemoPage | `AppRoutePaths.tradeMarginAdvancedDemo` | body C; custom>10 by 8 | `flutter_app/lib/features/trade_terminal/presentation/pages/tools/advanced_trading_demo_page.dart` |
 | P3_followup_review | 8 | trade_terminal | RiskManagementDemoPage | `AppRoutePaths.tradeRiskManagement` | body B | `flutter_app/lib/features/trade_terminal/presentation/pages/tools/risk_management_demo_page.dart` |
 | P3_followup_review | 8 | wallet | AddressBookPage | `AppRoutePaths.walletAddressBook` | body B | `flutter_app/lib/features/wallet/presentation/pages/address/address_book_page.dart` |
 | P3_followup_review | 8 | wallet | AssetDetailPage | `'/wallet/asset/:assetId'` | body B | `flutter_app/lib/features/wallet/presentation/pages/assets/asset_detail_page.dart` |
-| P3_followup_review | 8 | wallet | DepositPage | `AppRoutePaths.walletDeposit` | body B | `flutter_app/lib/features/wallet/presentation/pages/transfer/deposit_page.dart` |
-| P3_followup_review | 8 | wallet | DepositPage | `'${AppRoutePaths.walletDeposit}/:asset'` | body B | `flutter_app/lib/features/wallet/presentation/pages/transfer/deposit_page.dart` |
 | P3_followup_review | 8 | wallet | NetworkStatusPage | `AppRoutePaths.walletNetworkStatus` | body B | `flutter_app/lib/features/wallet/presentation/pages/tools/network_status_page.dart` |
 | P3_followup_review | 8 | wallet | PortfolioAnalyticsPage | `AppRoutePaths.walletPortfolioAnalytics` | body B | `flutter_app/lib/features/wallet/presentation/pages/tools/portfolio_analytics_page.dart` |
-| P3_followup_review | 8 | wallet | WalletGasOptimizerPage | `AppRoutePaths.walletGasOptimizer` | body B | `flutter_app/lib/features/wallet/presentation/pages/tools/wallet_gas_optimizer_page.dart` |
-| P3_followup_review | 8 | wallet | WithdrawLimitsPage | `AppRoutePaths.walletLimits` | body B | `flutter_app/lib/features/wallet/presentation/pages/transfer/withdraw_limits_page.dart` |

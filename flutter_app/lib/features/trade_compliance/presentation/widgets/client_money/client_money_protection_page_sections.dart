@@ -8,7 +8,8 @@ class _BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.standard,
       borderColor: _moneyBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -20,6 +21,7 @@ class _BalanceCard extends StatelessWidget {
                 width: TradeSpacingTokens.tradeBotClientMoneyBalanceIcon,
                 height: TradeSpacingTokens.tradeBotClientMoneyBalanceIcon,
                 variant: VitCardVariant.inner,
+                radius: VitCardRadius.tight,
                 alignment: Alignment.center,
                 borderColor: _moneyGreen.withValues(alpha: .35),
                 child: const Icon(
@@ -92,21 +94,22 @@ class _Overview extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           key: ClientMoneyProtectionPage.overviewSectionKey,
           label: 'How Your Money Is Protected',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             VitCard(
-              density: VitDensity.compact,
+              density: VitDensity.tool,
+              radius: VitCardRadius.tight,
               borderColor: _moneyBorder.withValues(alpha: .72),
               child: VitPageContent(
                 rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 children: [
                   for (final item in snapshot.protections)
                     _ProtectionItem(item: item),
@@ -117,10 +120,11 @@ class _Overview extends StatelessWidget {
         ),
         VitPageSection(
           label: 'In Case of Insolvency',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             VitCard(
-              density: VitDensity.compact,
+              density: VitDensity.tool,
+              radius: VitCardRadius.tight,
               borderColor: _moneyBorder.withValues(alpha: .72),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

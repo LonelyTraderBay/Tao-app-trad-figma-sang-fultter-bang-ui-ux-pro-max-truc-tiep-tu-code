@@ -9,6 +9,7 @@ class _PlaceholderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,6 +63,7 @@ class _StressScenarioPanel extends StatelessWidget {
         for (final scenario in scenarios) ...[
           VitCard(
             variant: VitCardVariant.inner,
+            radius: VitCardRadius.tight,
             padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
             child: Row(
               children: [

@@ -60,6 +60,7 @@ class _StrategyButton extends StatelessWidget {
       width: width,
       onTap: onTap,
       variant: selected ? VitCardVariant.ghost : VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: selected ? color : AppColors.borderSolid,
       padding: TradeSpacingTokens.tradeBotChipPadding,
       child: Row(
@@ -183,6 +184,7 @@ class _BacktestPeriodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: _backtestPrimary.withValues(alpha: .22),
       child: Row(
@@ -229,6 +231,7 @@ class _RunFooter extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: TradeSpacingTokens.tradeBotControlTall,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotFooterPadding,
       child: VitCtaButton(
         key: BotBacktestingPage.runKey,

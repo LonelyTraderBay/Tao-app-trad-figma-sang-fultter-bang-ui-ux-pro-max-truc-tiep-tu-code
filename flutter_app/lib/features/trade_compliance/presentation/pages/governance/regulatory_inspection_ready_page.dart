@@ -71,7 +71,7 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
             title: 'Review',
             child: VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               title: 'Review inspection readiness evidence',
               message:
                   'Confirm report scope, access limits, retained records, and next steps before sharing compliance material.',

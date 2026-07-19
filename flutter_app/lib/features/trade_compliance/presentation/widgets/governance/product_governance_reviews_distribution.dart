@@ -9,9 +9,11 @@ class _ReviewsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Review Schedule',
+      density: VitDensity.tool,
       children: [
         VitCard(
-          density: VitDensity.compact,
+          density: VitDensity.tool,
+          radius: VitCardRadius.tight,
           padding: AppSpacing.cardPaddingCompact,
           borderColor: _govBorder.withValues(alpha: .72),
           child: Column(
@@ -39,8 +41,8 @@ class _ReviewRow extends StatelessWidget {
     final urgent = product.id == 'prod-3';
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
@@ -98,11 +100,12 @@ class _DistributionTab extends StatelessWidget {
     const channels = ['App', 'Web Platform', 'API'];
     return VitPageSection(
       label: 'Distribution Channels',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final channel in channels)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             padding: AppSpacing.cardPaddingCompact,
             borderColor: _govBorder.withValues(alpha: .72),
             child: Row(
@@ -112,6 +115,7 @@ class _DistributionTab extends StatelessWidget {
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
                   variant: VitCardVariant.inner,
+                  radius: VitCardRadius.tight,
                   alignment: Alignment.center,
                   borderColor: _govPrimary.withValues(alpha: .35),
                   child: const Icon(

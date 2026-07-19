@@ -8,7 +8,8 @@ class _ProtectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.standard,
       borderColor: _compBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -20,6 +21,7 @@ class _ProtectionCard extends StatelessWidget {
                 width: AppSpacing.x7 + AppSpacing.x1,
                 height: AppSpacing.x7 + AppSpacing.x1,
                 variant: VitCardVariant.ghost,
+                radius: VitCardRadius.tight,
                 borderColor: _compGreen.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: const Icon(
@@ -40,6 +42,7 @@ class _ProtectionCard extends StatelessWidget {
                         'Protected up to ${snapshot.coverageLimit}',
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.text1,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
@@ -91,7 +94,8 @@ class _InfoNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,14 +145,15 @@ class _Overview extends StatelessWidget {
       key: InvestorCompensationPage.overviewKey,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'What Is FSCS?',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             VitCard(
-              density: VitDensity.compact,
+              density: VitDensity.tool,
+              radius: VitCardRadius.tight,
               borderColor: _compBorder.withValues(alpha: .72),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +179,7 @@ class _Overview extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Coverage Limits',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [_CoverageCard(snapshot: snapshot)],
         ),
       ],
@@ -230,7 +235,8 @@ class _CoverageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _compBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -256,8 +262,8 @@ class _CoverageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -273,6 +279,7 @@ class _CoverageBox extends StatelessWidget {
                 coverage.amount,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: coverage.emphasized ? _compGreen : AppColors.text1,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],

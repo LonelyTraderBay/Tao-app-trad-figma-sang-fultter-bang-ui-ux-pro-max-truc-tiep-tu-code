@@ -71,7 +71,7 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
               message:
                   'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
               contractId: 'risk-indicator-review',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
             ),
           ),
           VitTradeComplianceSection(
@@ -105,7 +105,7 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
           VitTradeSection(
             title: 'Understanding the 1-7 Scale',
             child: VitPageSection(
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               children: [
                 for (final level in snapshot.levels)
                   _RiskLevelCard(

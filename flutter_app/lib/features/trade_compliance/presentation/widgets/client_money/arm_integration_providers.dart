@@ -7,7 +7,7 @@ class _OperationalAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.success,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: 'All Systems Operational',
       message:
           '3/3 ARM providers online. Failover ready. Average uptime: 99.5%.',
@@ -31,7 +31,8 @@ class _ArmProviderCard extends StatelessWidget {
     final style = _statusStyle(connection.status);
     return VitCard(
       key: ArmIntegrationStatusPage.connectionKey(connection.id),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _armBorder.withValues(alpha: .72),
       child: Column(
@@ -42,7 +43,7 @@ class _ArmProviderCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 width: AppSpacing.inputHeight - AppSpacing.x3,
                 height: AppSpacing.inputHeight - AppSpacing.x3,
                 borderColor: style.color.withValues(alpha: .28),
@@ -166,7 +167,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -207,7 +209,8 @@ class _ConnectionDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
@@ -252,10 +255,9 @@ class _DetailRow extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text2,
-              fontFeatures: mono ? AppTextStyles.tabularFigures : null,
-            ),
+            style: mono
+                ? AppTextStyles.monoCode.copyWith(color: AppColors.text2)
+                : AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -280,7 +282,7 @@ class _TestButton extends StatelessWidget {
       key: ArmIntegrationStatusPage.testKey(connectionId),
       onPressed: isTesting ? null : onTap,
       variant: VitCtaButtonVariant.secondary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: Icon(
         isTesting ? Icons.sync_rounded : Icons.bolt_rounded,
         color: isTesting ? AppColors.text3 : _armPrimary,
@@ -306,7 +308,7 @@ class _LogsButton extends StatelessWidget {
       onPressed: () => _showComingSoon(context),
       variant: VitCtaButtonVariant.secondary,
       fullWidth: false,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: const Icon(
         Icons.open_in_new_rounded,
         color: AppColors.text2,

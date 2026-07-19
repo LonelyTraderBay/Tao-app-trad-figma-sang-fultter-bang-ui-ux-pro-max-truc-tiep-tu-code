@@ -131,7 +131,7 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
                   ),
                 VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   title: 'Rủi ro giao dịch tự động',
                   message:
                       'Bot không đảm bảo lợi nhuận. Hiệu suất quá khứ không đại diện kết quả tương lai.',

@@ -20,6 +20,7 @@ class _GradientButton extends StatelessWidget {
       onPressed: onTap,
       variant: variant,
       height: _riskControlExtent,
+      density: VitDensity.tool,
       leading: Icon(icon),
       child: Text(label),
     );
@@ -45,6 +46,7 @@ class _IconTile extends StatelessWidget {
       width: size,
       height: size,
       alignment: Alignment.center,
+      radius: VitCardRadius.tight,
       borderColor: color.withValues(alpha: .24),
       child: Icon(icon, color: color, size: size * .5),
     );
@@ -129,7 +131,10 @@ Widget _riskSheetRow({required String label, required String value}) {
     label: label,
     value: value,
     padding: TradeSpacingTokens.tradeToolSheetRowPadding,
-    valueStyle: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
+    valueStyle: AppTextStyles.caption.copyWith(
+      fontWeight: AppTextStyles.bold,
+      fontFeatures: AppTextStyles.tabularFigures,
+    ),
   );
 }
 

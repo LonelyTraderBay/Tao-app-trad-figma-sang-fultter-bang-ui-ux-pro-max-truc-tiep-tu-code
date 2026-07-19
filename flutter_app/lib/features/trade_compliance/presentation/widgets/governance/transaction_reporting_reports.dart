@@ -79,7 +79,7 @@ class _ReportCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.transactionReportingReportCardPadding,
       borderColor: transactionReportBorder.withValues(alpha: .7),
       child: Row(
@@ -88,7 +88,7 @@ class _ReportCard extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             width: AppSpacing.searchBarCompactHeight,
             height: AppSpacing.searchBarCompactHeight,
             borderColor: status.color.withValues(alpha: .24),
@@ -206,7 +206,7 @@ class _ReportCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.rowGapRegular),
                   VitCard(
                     variant: VitCardVariant.inner,
-                    radius: VitCardRadius.standard,
+                    radius: VitCardRadius.tight,
                     padding:
                         TradeSpacingTokens.transactionReportingErrorPadding,
                     borderColor: transactionReportRed.withValues(alpha: .28),
@@ -356,7 +356,7 @@ class _EmptyReports extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       child: VitEmptyState(
         icon: Icons.storage_outlined,
         title: 'No reports found',

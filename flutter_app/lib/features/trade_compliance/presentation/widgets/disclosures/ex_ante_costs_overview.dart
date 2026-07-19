@@ -8,7 +8,8 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _costBorder.withValues(alpha: .72),
       child: Row(
@@ -28,6 +29,7 @@ class _InvestmentCard extends StatelessWidget {
                   _formatEur(snapshot.investmentAmount),
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.text1,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
                 const SizedBox(height: _costTinySpace),

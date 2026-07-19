@@ -73,7 +73,7 @@ class _LiquidationRow extends StatelessWidget {
     final color = liquidation.side == 'long' ? liveMarketGreen : liveMarketRed;
     return LiveMarketCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       borderColor: AppColors.transparent,
       padding: MarketsSpacingTokens.liveMarketRowPadding,
       child: Row(

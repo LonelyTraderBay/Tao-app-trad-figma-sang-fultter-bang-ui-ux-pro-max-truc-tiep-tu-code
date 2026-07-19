@@ -63,7 +63,7 @@ class _VitToggle extends StatelessWidget {
       child: VitCard(
         onTap: onToggle,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.large,
+        radius: VitCardRadius.tight,
         padding: AppSpacing.zeroInsets,
         child: VitTogglePill(
           enabled: on,
@@ -91,6 +91,7 @@ class _ResetButton extends StatelessWidget {
       key: TradeSettingsPage.resetKey,
       onPressed: onReset,
       variant: VitCtaButtonVariant.danger,
+      density: VitDensity.tool,
       height: _settingsButtonHeight,
       leading: const Icon(Icons.restart_alt_rounded),
       child: const Text('Đặt lại mặc định'),
@@ -109,7 +110,7 @@ class _InfoNote extends StatelessWidget {
       message:
           'Settings are saved on this device and apply immediately. Other devices keep default settings until changed there.',
       contractId: 'SC-052 local settings result',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
     );
   }
 }

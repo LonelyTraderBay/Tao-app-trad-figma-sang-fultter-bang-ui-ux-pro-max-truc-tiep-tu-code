@@ -18,7 +18,8 @@ class _SignalCard extends StatelessWidget {
     final rrColor = signal.riskReward >= 3 ? _advancedGreen : _advancedPrimary;
 
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: tone.withValues(alpha: .28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,7 +189,8 @@ class _ConfidenceBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,6 +220,7 @@ class _ConfidenceBox extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],

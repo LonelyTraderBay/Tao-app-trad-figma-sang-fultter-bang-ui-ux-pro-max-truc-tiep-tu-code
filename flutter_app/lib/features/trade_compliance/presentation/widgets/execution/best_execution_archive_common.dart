@@ -9,7 +9,8 @@ class _ReportActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -92,11 +93,12 @@ class _ArchiveReport extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Historical Reports',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final report in reports)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             borderColor: _bestBorder.withValues(alpha: .72),
             child: Row(
               children: [
@@ -192,7 +194,7 @@ class _ActionButton extends StatelessWidget {
       variant: bordered
           ? VitCtaButtonVariant.secondary
           : VitCtaButtonVariant.primary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: Icon(icon, color: foreground, size: 15),
       child: Text(
         label,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -85,6 +86,7 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
               title: 'Đánh giá rủi ro',
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
+                density: VitDensity.tool,
                 title: 'Review copy trading education',
                 message:
                     'Understand fees, drawdown, slippage, provider risk, and copy modes before copying a provider.',

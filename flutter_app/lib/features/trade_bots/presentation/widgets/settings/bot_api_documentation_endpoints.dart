@@ -9,13 +9,13 @@ class _EndpointsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'REST API Endpoints',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageContent(
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.none,
           fullBleed: true,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final endpoint in endpoints) _EndpointCard(endpoint: endpoint),
           ],
@@ -34,12 +34,13 @@ class _EndpointCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: BotApiDocumentationPage.endpointKey(endpoint.method, endpoint.path),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             children: [
@@ -50,7 +51,7 @@ class _EndpointCard extends StatelessWidget {
                   endpoint.path,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.monoCode.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),

@@ -15,7 +15,8 @@ class _DashedActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       alignment: Alignment.center,
       borderColor: _securityPrimary.withValues(alpha: .72),
       onTap: onTap,
@@ -51,7 +52,7 @@ class _Switch extends StatelessWidget {
       child: VitCard(
         key: key,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.large,
+        radius: VitCardRadius.tight,
         onTap: onTap,
         child: VitTogglePill(
           enabled: enabled,
@@ -70,6 +71,10 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(density: VitDensity.compact, child: child);
+    return VitCard(
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
+      child: child,
+    );
   }
 }

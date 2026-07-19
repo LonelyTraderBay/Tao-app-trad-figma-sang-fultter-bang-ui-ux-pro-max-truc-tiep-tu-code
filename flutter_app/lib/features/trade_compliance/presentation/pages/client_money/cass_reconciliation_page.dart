@@ -109,7 +109,7 @@ class _CassReconciliationPageState
                   title: 'Review CASS reconciliation evidence',
                   message:
                       'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                 ),
                 _SummaryGrid(snapshot: snapshot),
                 VitSegmentedTabBar(

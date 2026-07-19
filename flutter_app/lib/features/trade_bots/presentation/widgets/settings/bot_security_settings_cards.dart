@@ -128,8 +128,7 @@ class _IpCard extends StatelessWidget {
               children: [
                 Text(
                   entry.ip,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
+                  style: AppTextStyles.monoCode.copyWith(
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -164,7 +163,7 @@ class _ActivityCard extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           for (final activity in activities) ...[
             Row(
@@ -221,13 +220,14 @@ class _SecurityTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Text(
             'Security Best Practices',

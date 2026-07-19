@@ -20,7 +20,8 @@ class _DisclosureCard extends StatelessWidget {
     final accent = color ?? AppColors.text1;
     return VitCard(
       width: double.infinity,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       variant: tint == null ? VitCardVariant.standard : VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +95,8 @@ class _CommitmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _legalPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +132,8 @@ class _WarningList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,7 +185,8 @@ class _LeverageRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

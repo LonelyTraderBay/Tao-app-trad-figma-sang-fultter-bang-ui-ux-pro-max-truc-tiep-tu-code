@@ -68,7 +68,7 @@ class CopyTradingRiskWarningCard extends StatelessWidget {
       title: title,
       message: body,
       contractId: contractId,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
     );
 
     if (!v2PreviewCopy) {
@@ -76,7 +76,8 @@ class CopyTradingRiskWarningCard extends StatelessWidget {
     }
 
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.zeroInsets.copyWith(
         left: TradeSpacingTokens.tradePageContentGap,
         top: AppSpacing.x2,
@@ -175,7 +176,8 @@ class CopyTradingTraderList extends StatelessWidget {
 
     return VitCard(
       clip: true,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           for (var i = 0; i < traders.length; i++) ...[
@@ -286,7 +288,8 @@ class _CopyTraderCard extends StatelessWidget {
     if (skin == CopyTradingListSkin.classic) {
       return VitCard(
         key: keys.traderKey(trader.id),
-        density: VitDensity.compact,
+        radius: VitCardRadius.tight,
+        density: VitDensity.tool,
         padding: AppSpacing.cardPaddingCompact,
         borderColor: AppColors.cardBorder,
         child: content,
@@ -296,7 +299,8 @@ class _CopyTraderCard extends StatelessWidget {
     if (skin == CopyTradingListSkin.v2) {
       return VitCard(
         key: keys.traderKey(trader.id),
-        density: VitDensity.compact,
+        radius: VitCardRadius.tight,
+        density: VitDensity.tool,
         padding: AppSpacing.zeroInsets.copyWith(
           left: cardSpace,
           top: cardSpace,
@@ -310,7 +314,8 @@ class _CopyTraderCard extends StatelessWidget {
 
     return VitCard(
       key: keys.traderKey(trader.id),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.cardBorder,
       child: content,
@@ -426,7 +431,7 @@ class _CopyAvatarBadge extends StatelessWidget {
             width: TradeSpacingTokens.copyTradingV2TraderAvatarSize,
             height: TradeSpacingTokens.copyTradingV2TraderAvatarSize,
             alignment: Alignment.center,
-            radius: VitCardRadius.large,
+            radius: VitCardRadius.tight,
             variant: VitCardVariant.ghost,
             borderColor: AppColors.primary.withValues(alpha: .27),
             background: ColoredBox(
@@ -449,7 +454,7 @@ class _CopyAvatarBadge extends StatelessWidget {
               width: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
               height: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
               alignment: Alignment.center,
-              radius: VitCardRadius.large,
+              radius: VitCardRadius.tight,
               borderColor: tier.color,
               child: Icon(
                 tier.icon,
@@ -502,6 +507,7 @@ class _CopyRoiBlock extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.sell,
                           fontWeight: AppTextStyles.bold,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                     ],
@@ -607,6 +613,7 @@ class _CopyDetailsButton extends StatelessWidget {
         key: keys.detailKey(traderId),
         onPressed: onOpen,
         variant: VitCtaButtonVariant.secondary,
+        density: VitDensity.tool,
         height: SharedSpacingTokens.homeHeroActionHeight,
         trailing: const Icon(Icons.chevron_right_rounded),
         child: const Text('Xem chi tiết'),

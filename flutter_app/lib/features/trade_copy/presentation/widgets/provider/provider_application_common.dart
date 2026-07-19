@@ -47,6 +47,7 @@ class _TogglePanel extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
           VitCtaButton(
             height: AppSpacing.buttonCompact,
+            density: VitDensity.tool,
             variant: active
                 ? VitCtaButtonVariant.success
                 : VitCtaButtonVariant.primary,
@@ -138,6 +139,7 @@ class _Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerApplicationPanelPadding,
       onTap: onTap,
       child: child,

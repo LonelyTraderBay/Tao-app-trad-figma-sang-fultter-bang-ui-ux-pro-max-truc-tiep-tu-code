@@ -86,6 +86,7 @@ class _ClientCategorizationPageState
               title: 'Review',
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
+                density: VitDensity.tool,
                 title: 'Client classification review',
                 message:
                     'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',

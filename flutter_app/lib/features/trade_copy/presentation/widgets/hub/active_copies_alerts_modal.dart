@@ -9,7 +9,7 @@ class _RiskAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: 'Cảnh báo rủi ro',
       message:
           'Một copy đang lỗ >5%. Xem xét dừng copy hoặc điều chỉnh stop-loss.',
@@ -27,7 +27,7 @@ class _ActionStatusBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.success,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: 'Copy action recorded',
       message: text,
       contractId: 'Active copy action',
@@ -103,7 +103,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                       dimension: AppSpacing.searchBarCompactHeight,
                       child: VitCard(
                         variant: VitCardVariant.inner,
-                        radius: VitCardRadius.standard,
+                        radius: VitCardRadius.tight,
                         borderColor: AppColors.sell20,
                         alignment: Alignment.center,
                         child: Icon(Icons.stop_rounded, color: AppColors.sell),
@@ -134,7 +134,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                 const SizedBox(height: AppSpacing.rowPy),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.standard,
+                  radius: VitCardRadius.tight,
                   padding: AppSpacing.cardPaddingCompact,
                   borderColor: AppColors.sell20,
                   child: Text(
@@ -199,7 +199,7 @@ class _SheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: onTap,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       variant: danger
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.secondary,

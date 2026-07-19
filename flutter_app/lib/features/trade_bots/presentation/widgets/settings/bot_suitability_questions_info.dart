@@ -23,7 +23,7 @@ class _QuestionView extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitProgressBar(
           label: 'Question ${currentQuestion + 1} of $totalQuestions',
@@ -62,6 +62,7 @@ class _QuestionHeader extends StatelessWidget {
       children: [
         // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
+          radius: VitCardRadius.tight,
           width: AppSpacing.buttonCompact,
           height: AppSpacing.buttonCompact,
           alignment: Alignment.center,
@@ -114,7 +115,8 @@ class _OptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: BotSuitabilityAssessmentPage.optionKey(questionId, option.id),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: selected ? _assessmentPrimary : _assessmentOptionBorder,
       onTap: onTap,
@@ -154,7 +156,7 @@ class _InfoCard extends StatelessWidget {
     return VitHighRiskStatePanel(
       key: BotSuitabilityAssessmentPage.infoKey,
       state: VitHighRiskUiState.riskReview,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: snapshot.infoTitle,
       message: snapshot.infoDescription,
     );

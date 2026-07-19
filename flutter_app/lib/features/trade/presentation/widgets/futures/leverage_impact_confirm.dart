@@ -37,7 +37,8 @@ class _ImpactCard extends StatelessWidget {
     ];
 
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.zeroInsets.copyWith(
         left: _leverageCardSpace,
         top: _leverageCardSpace,
@@ -68,7 +69,10 @@ class _ImpactCard extends StatelessWidget {
           const SizedBox(height: _leverageSpace),
           Text(
             'Với ký quỹ \$${_formatWholeNumber(margin)} USDT',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text3,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
           const SizedBox(height: _leverageSpace),
           for (final row in rows)
@@ -161,7 +165,7 @@ class _WarningCard extends StatelessWidget {
         _ => preview.warningText,
       },
       contractId: 'SC-058 ${preview.leverage}x',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
     );
   }
 }
@@ -178,7 +182,8 @@ class _RiskTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.sell.withValues(alpha: .22),
       child: Column(
@@ -252,6 +257,7 @@ class _ConfirmButton extends StatelessWidget {
       key: LeveragePage.confirmKey,
       onPressed: submitting ? null : onPressed,
       loading: submitting,
+      density: VitDensity.tool,
       height: AppSpacing.searchBarCompactHeight,
       variant: leverage > 20
           ? VitCtaButtonVariant.danger

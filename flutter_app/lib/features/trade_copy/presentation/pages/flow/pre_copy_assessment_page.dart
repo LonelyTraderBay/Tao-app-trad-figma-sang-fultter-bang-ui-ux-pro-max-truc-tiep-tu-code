@@ -157,6 +157,7 @@ class _WelcomeAssessment extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
+          radius: VitCardRadius.tight,
           padding: TradeSpacingTokens.preCopyAssessmentCardPadding,
           child: Row(
             children: [
@@ -213,6 +214,7 @@ class _WelcomeAssessment extends StatelessWidget {
         VitCtaButton(
           key: PreCopyAssessmentPage.startKey,
           onPressed: onStart,
+          density: VitDensity.tool,
           trailing: const Icon(Icons.chevron_right_rounded, size: 18),
           child: Text(
             'Bắt đầu đánh giá',
@@ -242,11 +244,12 @@ class _QuestionsSummary extends StatelessWidget {
           title: 'Xác nhận kết quả phù hợp',
           message:
               'Xác nhận rủi ro, giới hạn vốn, thời gian chờ và bước tiếp theo trước khi cấu hình copy trading.',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final question in snapshot.questions) ...[
           VitCard(
+            radius: VitCardRadius.tight,
             padding: TradeSpacingTokens.preCopyAssessmentCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,6 +287,7 @@ class _QuestionsSummary extends StatelessWidget {
             AppRoutePaths.tradeCopyProviderConfiguration(snapshot.providerId),
           ),
           variant: VitCtaButtonVariant.success,
+          density: VitDensity.tool,
           trailing: const Icon(Icons.chevron_right_rounded, size: 18),
           child: Text(
             'Tiếp tục cấu hình',
@@ -310,6 +314,7 @@ class _NoticeCard extends StatelessWidget {
       state: VitHighRiskUiState.riskReview,
       title: title,
       message: text,
+      density: VitDensity.tool,
     );
   }
 }

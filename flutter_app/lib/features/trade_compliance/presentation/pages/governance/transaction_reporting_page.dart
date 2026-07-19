@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/trade_compliance_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart';
 import 'package:vit_trade_flutter/features/trade_compliance/presentation/widgets/governance/transaction_reporting_common.dart';
@@ -84,6 +85,7 @@ class _TransactionReportingPageState
                     title: 'Review',
                     child: VitHighRiskStatePanel(
                       state: VitHighRiskUiState.riskReview,
+                      density: VitDensity.tool,
                       title: 'Review regulatory reporting queue',
                       message:
                           'Confirm report status, retry impact, and next steps before resubmitting transaction records.',

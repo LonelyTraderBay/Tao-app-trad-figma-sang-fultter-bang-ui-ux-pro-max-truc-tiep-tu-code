@@ -30,6 +30,7 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       clip: true,
       padding: TradeSpacingTokens.marginTradingHubComplianceInfoPadding,
       background: ColoredBox(color: AppColors.accent.withValues(alpha: .10)),

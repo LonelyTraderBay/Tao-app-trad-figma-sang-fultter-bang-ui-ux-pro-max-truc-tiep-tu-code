@@ -87,7 +87,7 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                 message:
                     'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
                 contractId: 'SC-107 ${report.year} report',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
             ),
             VitTradeComplianceSection(

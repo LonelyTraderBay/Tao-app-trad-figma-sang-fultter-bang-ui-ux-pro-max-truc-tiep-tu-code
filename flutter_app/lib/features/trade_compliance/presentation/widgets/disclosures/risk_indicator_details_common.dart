@@ -8,7 +8,8 @@ class _SriExplanationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _riskBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,15 +61,16 @@ class _RiskLevelCard extends StatelessWidget {
     final color = _colorForTier(level.tier);
     return VitCard(
       key: RiskIndicatorExplainerPage.levelKey(level.level),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _riskBorder.withValues(alpha: .76),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             alignment: Alignment.center,
             clip: true,
             borderColor: color.withValues(alpha: .18),
@@ -78,6 +80,7 @@ class _RiskLevelCard extends StatelessWidget {
               style: AppTextStyles.baseMedium.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),
@@ -139,12 +142,13 @@ class _AdditionalRisksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _riskBorder.withValues(alpha: .76),
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         fullBleed: true,
         children: [for (final risk in risks) _AdditionalRiskRow(risk: risk)],
       ),

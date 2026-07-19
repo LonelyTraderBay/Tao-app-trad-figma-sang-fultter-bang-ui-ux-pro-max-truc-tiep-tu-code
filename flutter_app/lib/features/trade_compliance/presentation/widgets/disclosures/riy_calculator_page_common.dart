@@ -112,7 +112,10 @@ class _RiyChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          fontFeatures: AppTextStyles.tabularFigures,
+        ),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -132,7 +135,7 @@ class _RiyChartPainter extends CustomPainter {
 
 OutlineInputBorder _fieldBorder(Color color) {
   return OutlineInputBorder(
-    borderRadius: AppRadii.cardRadius,
+    borderRadius: AppRadii.smRadius,
     borderSide: BorderSide(color: color.withValues(alpha: .72)),
   );
 }

@@ -12,13 +12,13 @@ class _LiquidationsTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _CardHeader(
                 icon: Icons.flash_on_rounded,
@@ -67,7 +67,7 @@ class _LiquidationsTab extends StatelessWidget {
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _CardHeader(
                 icon: Icons.grid_view_rounded,
@@ -83,7 +83,7 @@ class _LiquidationsTab extends StatelessWidget {
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _CardHeader(
                 icon: Icons.history_rounded,
@@ -193,7 +193,8 @@ class _LiquidationRow extends StatelessWidget {
     final isLong = liquidation.side == 'long';
     final color = isLong ? _analyticsGreen : _analyticsRed;
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       child: Row(
         children: [

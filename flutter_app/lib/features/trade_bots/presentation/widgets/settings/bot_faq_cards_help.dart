@@ -6,6 +6,8 @@ class _HelpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: _faqPrimary.withValues(alpha: .25),
       child: Column(
@@ -57,6 +59,7 @@ class _HelpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       height: AppSpacing.buttonCompact,
+      density: VitDensity.tool,
       variant: variant,
       onPressed: () => _showComingSoon(context),
       padding: TradeSpacingTokens.tradeBotChipPadding,

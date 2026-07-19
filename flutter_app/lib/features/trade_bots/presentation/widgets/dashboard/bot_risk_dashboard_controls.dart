@@ -8,7 +8,8 @@ class _SafetyControlsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           Row(
@@ -49,7 +50,8 @@ class _SafetyControlsCard extends StatelessWidget {
           for (final control in controls) ...[
             VitCard(
               variant: VitCardVariant.inner,
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               child: Row(
                 children: [
                   Expanded(
@@ -65,6 +67,7 @@ class _SafetyControlsCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x2),
@@ -97,7 +100,8 @@ class _EmergencyActionCard extends StatelessWidget {
       key: BotRiskDashboardPage.emergencyButtonKey,
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _riskRed.withValues(alpha: .48),
       child: Row(
         children: [
@@ -152,7 +156,8 @@ class _RiskExplanationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

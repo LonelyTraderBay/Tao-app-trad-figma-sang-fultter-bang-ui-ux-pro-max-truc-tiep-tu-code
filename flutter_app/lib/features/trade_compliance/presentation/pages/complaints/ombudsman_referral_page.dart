@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -66,6 +67,7 @@ class OmbudsmanReferralPage extends ConsumerWidget {
             title: 'Review',
             child: VitHighRiskStatePanel(
               state: VitHighRiskUiState.riskReview,
+              density: VitDensity.tool,
               title: 'Review ombudsman referral route',
               message:
                   'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
@@ -144,6 +146,7 @@ class _EligibilityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: TradeSpacingTokens.ombudsmanEligibilityPadding,
+      radius: VitCardRadius.tight,
       borderColor: _ombudsmanBorder.withValues(alpha: .76),
       child: Column(
         children: [
@@ -208,6 +211,7 @@ class _ContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: TradeSpacingTokens.complaintCaseCardPadding,
+      radius: VitCardRadius.tight,
       borderColor: _ombudsmanBorder.withValues(alpha: .76),
       child: Column(
         children: [
@@ -248,6 +252,7 @@ class _ContactRow extends StatelessWidget {
           width: _ombudsmanContactIconExtent,
           height: _ombudsmanContactIconExtent,
           variant: VitCardVariant.ghost,
+          radius: VitCardRadius.tight,
           borderColor: color.withValues(alpha: .24),
           alignment: Alignment.center,
           child: Icon(icon, color: color, size: AppSpacing.inputPrefixIcon),
@@ -297,6 +302,7 @@ class _ProcessStepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: TradeSpacingTokens.ombudsmanProcessPadding,
+      radius: VitCardRadius.tight,
       borderColor: _ombudsmanBorder.withValues(alpha: .76),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,13 +312,14 @@ class _ProcessStepCard extends StatelessWidget {
             width: _ombudsmanStepMarkerExtent,
             height: _ombudsmanStepMarkerExtent,
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             alignment: Alignment.center,
             child: Text(
               '${step.step}',
               style: AppTextStyles.caption.copyWith(
                 color: _ombudsmanPrimary,
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),
@@ -353,6 +360,7 @@ class _VisitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: OmbudsmanReferralPage.ctaKey,
+      density: VitDensity.tool,
       onPressed: () {
         unawaited(HapticFeedback.selectionClick());
         unawaited(

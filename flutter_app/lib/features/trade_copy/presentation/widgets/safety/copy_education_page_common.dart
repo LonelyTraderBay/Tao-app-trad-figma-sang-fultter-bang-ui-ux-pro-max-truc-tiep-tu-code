@@ -101,6 +101,7 @@ class _ProviderCta extends StatelessWidget {
     return VitCtaButton(
       key: CopyEducationPage.providerCtaKey,
       onPressed: onTap,
+      density: VitDensity.tool,
       leading: const Icon(Icons.visibility_outlined),
       height: AppSpacing.buttonCompact,
       child: const Text('Xem danh sách providers'),
@@ -146,6 +147,7 @@ class _CardShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: padding,
       borderColor: AppColors.cardBorder,
       child: child,

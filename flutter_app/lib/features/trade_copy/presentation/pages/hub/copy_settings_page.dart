@@ -102,7 +102,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
         title: 'Đánh giá rủi ro',
         child: VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           title: 'Review copy trading defaults',
           message:
               'Confirm stop-loss, take-profit, allocation limits, circuit breaker, and emergency contact before saving copy defaults.',

@@ -93,6 +93,7 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
                 else
                   VitCard(
                     clip: true,
+                    radius: VitCardRadius.tight,
                     child: Column(
                       children: [
                         for (var i = 0; i < orders.length; i++) ...[

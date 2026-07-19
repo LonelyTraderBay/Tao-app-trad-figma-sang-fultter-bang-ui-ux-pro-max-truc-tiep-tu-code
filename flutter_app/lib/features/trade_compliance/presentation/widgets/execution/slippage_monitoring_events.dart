@@ -10,7 +10,7 @@ class _RealtimeTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Recent Slippage Events',
@@ -34,7 +34,8 @@ class _SlippageEventCard extends StatelessWidget {
     final style = _severityStyle(event.severity);
     return VitCard(
       key: SlippageMonitoringPage.eventKey(event.id),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: Row(
@@ -43,6 +44,7 @@ class _SlippageEventCard extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
+            radius: VitCardRadius.tight,
             width: AppSpacing.inputHeight - AppSpacing.x4,
             height: AppSpacing.inputHeight - AppSpacing.x4,
             alignment: Alignment.center,
@@ -120,7 +122,8 @@ class _SlippageEventCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
+                  radius: VitCardRadius.tight,
                   padding: const EdgeInsetsDirectional.symmetric(
                     horizontal: AppSpacing.x3,
                     vertical: AppSpacing.x2,
@@ -169,7 +172,8 @@ class _EventMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,

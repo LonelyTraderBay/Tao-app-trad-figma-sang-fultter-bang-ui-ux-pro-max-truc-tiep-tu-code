@@ -145,6 +145,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
             if (_activeTabId != 'file')
               VitTradeComplianceSection(
                 title: 'Dispute process',
+                density: VitDensity.tool,
                 statusPill: const VitStatusPill(
                   label: 'Regulated intake',
                   status: VitStatusPillStatus.info,

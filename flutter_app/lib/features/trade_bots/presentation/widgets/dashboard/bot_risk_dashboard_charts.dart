@@ -8,7 +8,8 @@ class _DrawdownChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: AspectRatio(
         aspectRatio: 2.2,
         child: CustomPaint(
@@ -28,7 +29,8 @@ class _VarChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: AspectRatio(
         aspectRatio: 2.4,
         child: CustomPaint(

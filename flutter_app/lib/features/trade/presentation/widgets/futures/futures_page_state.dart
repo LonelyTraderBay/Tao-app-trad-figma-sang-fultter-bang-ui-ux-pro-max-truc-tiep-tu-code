@@ -83,6 +83,7 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       tradeFuturesOrderControllerProvider(orderRequest).notifier,
     );
     final pair = snapshot.pair;
+    final daySnapshot = tradeSyntheticDaySnapshot(pair.price, pair.changePct);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     return Stack(
@@ -109,9 +110,10 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
               symbol: pair.symbol,
               priceLabel: formatTradePrice(pair.price),
               changePct: pair.changePct,
-              highLabel: formatTradePrice(pair.price * 1.02),
-              lowLabel: formatTradePrice(pair.price * 0.98),
-              volumeLabel: '1.2B',
+              sparklineValues: daySnapshot.sparkline,
+              highLabel: daySnapshot.highLabel,
+              lowLabel: daySnapshot.lowLabel,
+              volumeLabel: daySnapshot.volumeLabel,
             ),
             VitTradeSection(
               title: 'Giao dịch',
@@ -120,7 +122,7 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
                 children: [
                   VitHighRiskStatePanel(
                     state: orderState.status.uiState,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     title: switch (orderState.status.uiState) {
                       VitHighRiskUiState.submitting => 'Đang gửi lệnh',
                       VitHighRiskUiState.success => 'Đã gửi lệnh',
@@ -253,7 +255,8 @@ class _FuturesSimpleForm extends StatelessWidget {
     final margin = double.tryParse(marginController.text) ?? 0;
 
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -308,7 +311,7 @@ class _FuturesSimpleForm extends StatelessWidget {
                 ? () => _openConfirm(context, preview)
                 : null,
             loading: submitting,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             variant: side == TradeFuturesSide.long
                 ? VitCtaButtonVariant.success
                 : VitCtaButtonVariant.danger,

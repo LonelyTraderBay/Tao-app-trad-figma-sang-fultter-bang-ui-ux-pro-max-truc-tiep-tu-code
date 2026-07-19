@@ -87,7 +87,7 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
               title: 'Review',
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 title: 'Product governance review',
                 message:
                     'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
@@ -129,7 +129,8 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
                 children: [
                   _Stats(products: snapshot.products),
                   VitCard(
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
+                    radius: VitCardRadius.tight,
                     padding: AppSpacing.zeroInsets,
                     child: VitTabBar(
                       variant: VitTabBarVariant.underline,

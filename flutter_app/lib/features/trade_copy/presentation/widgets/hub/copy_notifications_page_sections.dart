@@ -14,6 +14,7 @@ class _UnreadSummary extends StatelessWidget {
     // card-tile: allow-start — fixed summary row, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       height: TradeSpacingTokens.tradeBotSheetActionHeight,
       padding: TradeSpacingTokens.tradeBotChipPadding,
       borderColor: _notificationPrimary,
@@ -41,6 +42,7 @@ class _UnreadSummary extends StatelessWidget {
               key: CopyNotificationsPage.markAllReadKey,
               onPressed: onMarkAllRead,
               variant: VitCtaButtonVariant.ghost,
+              density: VitDensity.tool,
               height: AppSpacing.buttonCompact,
               fullWidth: false,
               padding: const EdgeInsetsDirectional.symmetric(
@@ -79,6 +81,7 @@ class _NotificationCard extends StatelessWidget {
     final read = notification.read;
     return VitCard(
       variant: read ? VitCardVariant.standard : VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: read ? AppColors.cardBorder : color,
       onTap: onTap,
@@ -160,6 +163,7 @@ class _NotificationCard extends StatelessWidget {
                                 ? AppColors.buy
                                 : AppColors.sell,
                             fontWeight: AppTextStyles.extraBold,
+                            fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
                     ],

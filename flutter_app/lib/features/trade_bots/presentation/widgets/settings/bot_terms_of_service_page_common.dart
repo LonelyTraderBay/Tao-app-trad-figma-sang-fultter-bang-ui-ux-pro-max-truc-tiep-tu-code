@@ -16,6 +16,7 @@ class _TermsCta extends StatelessWidget {
     return VitCtaButton(
       key: BotTermsOfServicePage.ctaKey,
       height: TradeSpacingTokens.tradeBotControlCompact,
+      density: VitDensity.tool,
       onPressed: agreed ? onPressed : null,
       child: Text(
         agreed ? snapshot.enabledCta : snapshot.disabledCta,
@@ -38,9 +39,10 @@ class _ComplianceNote extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: _termsComplianceMinExtent),
       padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

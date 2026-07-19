@@ -9,7 +9,7 @@ class _ExportsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Export Reports',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _ExportCard(
           title: 'ISO 20022 XML Export',
@@ -55,6 +55,7 @@ class _ExportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
       borderColor: _dashBorder.withValues(alpha: .7),
       onTap: onTap,
@@ -63,6 +64,7 @@ class _ExportCard extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
+            radius: VitCardRadius.tight,
             width: TradeSpacingTokens.tradeBotQuestionIconBox,
             height: TradeSpacingTokens.tradeBotQuestionIconBox,
             alignment: Alignment.center,
@@ -78,7 +80,7 @@ class _ExportCard extends StatelessWidget {
             child: VitPageContent(
               rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               children: [
                 Text(
                   title,

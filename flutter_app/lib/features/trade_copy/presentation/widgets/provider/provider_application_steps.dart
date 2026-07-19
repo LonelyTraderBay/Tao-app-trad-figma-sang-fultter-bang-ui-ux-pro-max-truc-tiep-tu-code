@@ -160,6 +160,7 @@ class _ReviewStep extends StatelessWidget {
           message:
               'Preview fee, disclosure, copier impact, limits, and next step before submitting this provider application.',
           contractId: 'SC-069 provider review',
+          density: VitDensity.tool,
         ),
         const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
         _InfoPanel(
@@ -213,6 +214,7 @@ class _FooterButton extends StatelessWidget {
       variant: submit
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.primary,
+      density: VitDensity.tool,
       height: AppSpacing.buttonCompact,
       leading: Icon(
         submit ? Icons.workspace_premium_outlined : Icons.chevron_right,

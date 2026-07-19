@@ -12,6 +12,7 @@ class _PositionTile extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.zeroInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -184,7 +185,7 @@ class _EmptyPositions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitEmptyState(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       icon: Icons.bar_chart_rounded,
       title: 'Không có vị thế nào',
     );

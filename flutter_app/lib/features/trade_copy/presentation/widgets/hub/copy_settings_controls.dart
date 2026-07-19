@@ -55,6 +55,7 @@ class _CircuitBreakerCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.sell,
                     fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ],
@@ -186,7 +187,7 @@ class _ToggleSwitch extends StatelessWidget {
       child: VitCard(
         onTap: () => onChanged(!value),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.large,
+        radius: VitCardRadius.tight,
         padding: AppSpacing.zeroInsets,
         child: VitTogglePill(
           enabled: value,
@@ -233,7 +234,7 @@ class _ChannelButton extends StatelessWidget {
       selected: active,
       onTap: onTap,
       fullWidth: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: Icon(icon),
       semanticLabel: 'Kênh thông báo $label',
     );

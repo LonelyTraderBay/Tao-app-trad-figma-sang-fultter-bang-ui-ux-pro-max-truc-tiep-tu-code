@@ -17,6 +17,7 @@ class _EmergencyContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.warn15,
       child: Column(
@@ -174,7 +175,7 @@ class _SaveButton extends StatelessWidget {
       variant: saved
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.primary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       leading: Icon(saved ? Icons.shield_rounded : Icons.settings_rounded),
       child: Text(saved ? 'Đã lưu!' : 'Lưu cài đặt'),
     );
@@ -190,7 +191,8 @@ class _SettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: child,
     );

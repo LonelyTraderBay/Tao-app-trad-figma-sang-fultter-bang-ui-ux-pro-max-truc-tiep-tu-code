@@ -10,6 +10,7 @@ class _WarningBox extends StatelessWidget {
     return VitCard(
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       borderColor: _compAmber.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,20 +47,21 @@ class _Eligibility extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'Who Is Eligible?',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             VitCard(
-              density: VitDensity.compact,
+              density: VitDensity.tool,
+              radius: VitCardRadius.tight,
               borderColor: _compBorder.withValues(alpha: .72),
               child: VitPageContent(
                 rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 children: [
                   const _EligibilityHeading('Eligible Customers:'),
                   for (final item in snapshot.eligibleCustomers)
@@ -87,17 +89,17 @@ class _ClaimGuide extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitPageSection(
           label: 'How to Make a Claim',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final step in snapshot.claimSteps) _ClaimStep(step: step),
           ],
         ),
         VitCtaButton(
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           onPressed: () =>
               _showComingSoon(context, 'Mở trang FSCS sẽ sớm ra mắt'),
           leading: const Icon(Icons.open_in_new_rounded),
@@ -116,7 +118,8 @@ class _ClaimStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _compBorder.withValues(alpha: .72),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +129,7 @@ class _ClaimStep extends StatelessWidget {
             width: AppSpacing.x6,
             height: AppSpacing.x6,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             borderColor: _compPrimary.withValues(alpha: .24),
             alignment: Alignment.center,
             child: Text(
@@ -214,7 +217,7 @@ class _FaqButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: InvestorCompensationPage.faqKey,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       variant: VitCtaButtonVariant.secondary,
       onPressed: () =>
           _showComingSoon(context, 'Câu hỏi thường gặp FSCS sẽ sớm ra mắt'),

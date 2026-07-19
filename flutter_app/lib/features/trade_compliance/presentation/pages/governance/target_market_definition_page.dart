@@ -89,7 +89,7 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
               message:
                   'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
               contractId: 'target-market-review',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
             ),
           ),
           VitTradeComplianceSection(
@@ -146,7 +146,8 @@ class _DimensionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: TargetMarketDefinitionPage.dimensionKey(dimension.id),
-      padding: VitDensity.compact.cardPadding,
+      padding: VitDensity.tool.cardPadding,
+      radius: VitCardRadius.tight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

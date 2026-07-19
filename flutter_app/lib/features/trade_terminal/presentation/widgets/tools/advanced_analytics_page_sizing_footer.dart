@@ -13,14 +13,14 @@ class _PositionSizingTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _Card(
           child: VitPageContent(
             rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _SectionHeader(
                 icon: Icons.calculate_outlined,
@@ -102,7 +102,7 @@ class _FeaturesCard extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Text(
             'Features Included',
@@ -125,7 +125,8 @@ class _FeaturesCard extends StatelessWidget {
             itemBuilder: (context, index) {
               return VitCard(
                 variant: VitCardVariant.inner,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
+                radius: VitCardRadius.tight,
                 child: Row(
                   children: [
                     const Icon(

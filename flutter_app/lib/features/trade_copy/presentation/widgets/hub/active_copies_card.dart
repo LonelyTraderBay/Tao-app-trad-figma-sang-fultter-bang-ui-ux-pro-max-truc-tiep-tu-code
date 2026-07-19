@@ -188,8 +188,8 @@ class _MiniValueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -229,8 +229,8 @@ class _ReturnBar extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           Row(

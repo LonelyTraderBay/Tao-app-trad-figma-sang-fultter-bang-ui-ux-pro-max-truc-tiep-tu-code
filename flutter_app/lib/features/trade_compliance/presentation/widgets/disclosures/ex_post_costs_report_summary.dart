@@ -14,6 +14,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -57,8 +58,9 @@ class _YearTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: AppSpacing.zeroInsets,
-      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
+      constraints: BoxConstraints(minHeight: VitDensity.tool.controlHeight),
       child: VitTabBar(
         activeKey: '$activeYear',
         onChanged: (year) => onChanged(int.parse(year)),
@@ -92,7 +94,8 @@ class _CostBreakdownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: _reportBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -115,12 +118,16 @@ class _CostBreakdownCard extends StatelessWidget {
                     _formatEur(actual),
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x1),
                   Text(
                     'Est: ${_formatEur(estimate)}',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                 ],
               ),

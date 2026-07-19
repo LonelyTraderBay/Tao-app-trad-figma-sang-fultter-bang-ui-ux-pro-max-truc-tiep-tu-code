@@ -352,7 +352,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_footer.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,D,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,C,-,done,0,-
-04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,D,-,done,0,-
+04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,C,-,done,0,-
 04_financial,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_hub_cards.dart,C,-,done,0,-
@@ -965,7 +965,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/active_copies_overview.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_notifications_page_sections.dart,D,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_settings_contacts_privacy.dart,C,-,done,0,-
-06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_settings_controls.dart,D,-,done,0,-
+06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_settings_controls.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_common.dart,D,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_primitives.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_sections.dart,D,-,done,0,-
@@ -973,7 +973,7 @@ cluster,file,suggested_tier,violation_type,status,batch,notes
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_list.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_application_common.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_application_progress_intro.dart,C,-,done,0,-
-06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_common.dart,D,-,done,0,-
+06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_common.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_details.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_overview.dart,C,-,done,0,-
 06_other,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_leaderboard_cards.dart,D,-,done,0,-

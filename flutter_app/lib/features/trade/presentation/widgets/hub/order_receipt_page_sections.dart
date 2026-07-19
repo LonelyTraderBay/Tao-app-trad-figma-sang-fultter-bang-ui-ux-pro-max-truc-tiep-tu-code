@@ -19,12 +19,13 @@ class _ReceiptCard extends StatelessWidget {
       ),
       child: VitCard(
         clip: true,
-        density: VitDensity.compact,
+        radius: VitCardRadius.tight,
+        density: VitDensity.tool,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: VitDensity.compact.cardPadding,
+              padding: VitDensity.tool.cardPadding,
               child: Row(
                 children: [
                   _SideBadge(label: isBuy ? 'MUA' : 'BÁN', color: sideColor),
@@ -45,57 +46,57 @@ class _ReceiptCard extends StatelessWidget {
               label: 'Mã lệnh',
               value: receipt.orderId,
               trailing: _CopyOrderIdButton(orderId: receipt.orderId),
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.receiptTextMuted,
             ),
             VitInfoRow(
               label: 'Loại lệnh',
               value: receipt.orderType,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.receiptTextMuted,
             ),
             VitInfoRow(
               label: 'Giá',
               value: '\$${_formatMoney(receipt.price)}',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.receiptTextMuted,
             ),
             VitInfoRow(
               label: 'Khối lượng',
               value: '${_formatAmount(receipt.amount)} ${receipt.baseAsset}',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.receiptTextMuted,
             ),
             const Divider(height: 1, color: AppColors.divider),
             VitInfoRow(
               label: 'Thành tiền',
               value: '\$${_formatMoney(receipt.total)}',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.text1,
             ),
             VitInfoRow(
               label: 'Phí giao dịch',
               value: '\$${receipt.fee.toStringAsFixed(4)} (${receipt.feeRate})',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.receiptTextMuted,
             ),
             if (receipt.estimatedFill != null)
               VitInfoRow(
                 label: 'Thời gian ước tính',
                 value: receipt.estimatedFill!,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
                 valueColor: AppColors.receiptTextMuted,
               ),
             VitInfoRow(
               label: 'Thời gian đặt',
               value: receipt.timestamp,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               valueColor: AppColors.receiptTextMuted,
             ),
             if (receipt.tpPrice != null || receipt.slPrice != null) ...[
               const Divider(height: 1, color: AppColors.divider),
               Padding(
-                padding: VitDensity.compact.cardPadding,
+                padding: VitDensity.tool.cardPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

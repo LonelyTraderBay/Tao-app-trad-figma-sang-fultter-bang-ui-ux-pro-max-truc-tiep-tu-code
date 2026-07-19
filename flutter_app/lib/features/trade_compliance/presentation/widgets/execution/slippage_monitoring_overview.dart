@@ -21,7 +21,7 @@ class _StatsGrid extends StatelessWidget {
         _slipGreen,
         'Avg\nSlippage',
         '${summary.avgSlippage.toStringAsFixed(1)}\nbps',
-        '0.405%',
+        '${(summary.avgSlippage / 100).toStringAsFixed(3)}%',
         AppColors.text3,
       ),
       (
@@ -29,7 +29,7 @@ class _StatsGrid extends StatelessWidget {
         _slipAmber,
         'Max\nSlippage',
         '${summary.maxSlippage.toStringAsFixed(1)}\nbps',
-        '1.18%',
+        '${(summary.maxSlippage / 100).toStringAsFixed(2)}%',
         _slipRed,
       ),
       (
@@ -61,7 +61,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: Column(
@@ -96,7 +97,13 @@ class _StatCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
-          Text(card.$5, style: AppTextStyles.micro.copyWith(color: card.$6)),
+          Text(
+            card.$5,
+            style: AppTextStyles.micro.copyWith(
+              color: card.$6,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
         ],
       ),
     );

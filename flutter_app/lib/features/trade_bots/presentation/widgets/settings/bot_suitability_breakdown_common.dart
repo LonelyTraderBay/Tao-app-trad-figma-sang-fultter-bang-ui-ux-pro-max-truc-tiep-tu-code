@@ -80,6 +80,7 @@ class _CategoryScoreCard extends StatelessWidget {
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -161,13 +162,14 @@ class _RegulatoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Text(
             snapshot.regulatoryTitle,
@@ -198,7 +200,8 @@ class _ResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: padding,
       borderColor: AppColors.cardBorder,
       child: child,

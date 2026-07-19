@@ -212,7 +212,7 @@ class _ChartToolbar extends StatelessWidget {
                         key: AdvancedChartPage.indicatorButtonKey,
                         onTap: onIndicators,
                         variant: VitCardVariant.ghost,
-                        radius: VitCardRadius.standard,
+                        radius: VitCardRadius.tight,
                         padding: AppSpacing.zeroInsets,
                         child: VitStatusPill(
                           label: 'Chỉ báo',
@@ -258,6 +258,7 @@ class _TimeframeButton extends StatelessWidget {
       width: AppSpacing.buttonCompact + AppSpacing.x2,
       height: AppSpacing.buttonCompact - AppSpacing.hairlineStroke,
       alignment: Alignment.center,
+      radius: VitCardRadius.tight,
       variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
       borderColor: active ? _tradePrimary : AppColors.transparent,
       background: ColoredBox(

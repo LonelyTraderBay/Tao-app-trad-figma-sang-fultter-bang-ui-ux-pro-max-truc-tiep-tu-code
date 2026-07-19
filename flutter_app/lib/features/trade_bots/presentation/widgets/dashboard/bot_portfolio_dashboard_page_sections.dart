@@ -85,6 +85,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,6 +125,7 @@ class _EquityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       child: SizedBox(
         height: _portfolioEquityChartExtent,
@@ -144,6 +146,7 @@ class _AllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       child: Column(
         children: [
@@ -188,6 +191,7 @@ class _CorrelationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final headers = rows.map((row) => row.bot).toList();
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       child: Column(
         children: [

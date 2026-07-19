@@ -90,6 +90,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
                     VitCtaButton(
                       key: ActiveCopiesPage.detailsKey(copy.id),
                       onPressed: onViewDetails,
+                      density: VitDensity.tool,
                       variant: VitCtaButtonVariant.ghost,
                       height: AppSpacing.buttonCompact,
                       fullWidth: false,
@@ -163,8 +164,8 @@ class _MiniPerformanceStrip extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: SizedBox(
         height: AppSpacing.x6,
         child: VitSparkline(
@@ -188,7 +189,7 @@ class _DetailStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.activeCopiesSmallCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,6 +208,7 @@ class _DetailStat extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -228,7 +230,7 @@ class _RecentTradeRow extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.activeCopiesSmallCardPadding,
       child: Row(
         children: [
@@ -251,6 +253,7 @@ class _RecentTradeRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: trade.pnl >= 0 ? AppColors.buy : AppColors.sell,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -277,7 +280,7 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: onTap,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       variant: danger
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.secondary,

@@ -19,7 +19,8 @@ class _ScenarioCard extends StatelessWidget {
 
     return VitCard(
       key: PerformanceScenariosPage.scenarioKey(scenario.label),
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _scenarioBorder.withValues(alpha: .76),
       child: Row(
@@ -28,7 +29,7 @@ class _ScenarioCard extends StatelessWidget {
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
+            radius: VitCardRadius.tight,
             width: _scenarioIconTile,
             height: _scenarioIconTile,
             alignment: Alignment.center,
@@ -113,7 +114,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +154,8 @@ class _InfoNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.borderSolid.withValues(alpha: .5),
       child: Row(

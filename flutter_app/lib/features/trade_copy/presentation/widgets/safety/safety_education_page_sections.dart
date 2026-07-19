@@ -45,7 +45,7 @@ class _ScamsTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         Text(
           '${scams.length} loại scam phổ biến trong copy trading. Tap để xem chi tiết.',
@@ -76,8 +76,9 @@ class _ScamCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       borderColor: AppColors.cardBorder,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
@@ -85,10 +86,11 @@ class _ScamCard extends StatelessWidget {
             key: SafetyEducationPage.scamKey(scam.id),
             onTap: onTap,
             variant: VitCardVariant.ghost,
+            radius: VitCardRadius.tight,
             constraints: const BoxConstraints(
               minHeight: TradeSpacingTokens.tradeBotControlTall,
             ),
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             child: Row(
               children: [
                 const Icon(
@@ -160,8 +162,9 @@ class _ScamExpandedContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       width: double.infinity,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -232,7 +235,7 @@ class _RedFlagsTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         Text(
           'Checklist để đánh giá provider trước khi copy. Nếu có ≥2 red flags nghiêm trọng, KHÔNG nên copy.',

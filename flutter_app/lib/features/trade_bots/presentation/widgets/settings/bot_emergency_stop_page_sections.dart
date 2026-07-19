@@ -10,6 +10,7 @@ class _WarningBanner extends StatelessWidget {
     return VitCard(
       key: const Key('sc121_bot_emergency_stop_warning'),
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
       padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: _stopRed.withValues(alpha: .62),
@@ -22,7 +23,7 @@ class _WarningBanner extends StatelessWidget {
             height: AppSpacing.x6,
             alignment: Alignment.center,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
+            radius: VitCardRadius.tight,
             borderColor: _stopRed,
             child: Icon(Icons.priority_high_rounded, color: _stopRed),
           ),
@@ -66,6 +67,7 @@ class _BotCard extends StatelessWidget {
     final profitColor = bot.profit >= 0 ? _stopGreen : _stopRed;
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: AppColors.cardBorder,
@@ -111,6 +113,7 @@ class _BotCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: profitColor,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -137,6 +140,7 @@ class _ReasonOption extends StatelessWidget {
       key: BotEmergencyStopPage.reasonKey(reason.id),
       onTap: onTap,
       variant: selected ? VitCardVariant.ghost : VitCardVariant.standard,
+      radius: VitCardRadius.tight,
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: selected ? _stopRed : _stopOptionBorder,
@@ -191,6 +195,7 @@ class _CheckActionCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: danger
           ? _stopRed.withValues(alpha: .48)
@@ -237,6 +242,7 @@ class _SupportNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

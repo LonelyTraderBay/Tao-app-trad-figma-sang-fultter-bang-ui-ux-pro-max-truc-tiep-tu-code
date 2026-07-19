@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/utils/vit_format.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -42,6 +43,7 @@ class ExecutionQualityPanel extends StatelessWidget {
     return VitCard(
       padding: padding,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: borderColor,
       child: child,
     );
@@ -68,7 +70,7 @@ class ExecutionQualityIconTile extends StatelessWidget {
       height: size,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       borderColor: color.withValues(alpha: .28),
       child: Icon(icon, color: color, size: size * .5),
     );
@@ -94,6 +96,7 @@ class ExecutionQualityGradientButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: _executionCtaVariantFor(colors),
+      density: VitDensity.tool,
       leading: Icon(icon),
       child: Text(
         label,
@@ -143,6 +146,7 @@ class ExecutionQualitySuccessToast extends StatelessWidget {
       child: VitCard(
         padding: TradeSpacingTokens.tradeToolToastPadding,
         variant: VitCardVariant.inner,
+        radius: VitCardRadius.tight,
         borderColor: AppColors.buy.withValues(alpha: .38),
         child: Row(
           children: [

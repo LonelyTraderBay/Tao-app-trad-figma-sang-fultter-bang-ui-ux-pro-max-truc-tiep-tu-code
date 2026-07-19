@@ -15,7 +15,7 @@ class _StrategiesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Bot Strategies Explained',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final strategy in strategies)
           _StrategyCard(
@@ -45,7 +45,8 @@ class _StrategyCard extends StatelessWidget {
     return VitCard(
       key: BotGuidePage.strategyKey(strategy.id),
       onTap: onTap,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           Padding(
@@ -56,6 +57,7 @@ class _StrategyCard extends StatelessWidget {
                 // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   variant: VitCardVariant.inner,
+                  radius: VitCardRadius.tight,
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
                   alignment: Alignment.center,
@@ -156,7 +158,7 @@ class _StrategyDetails extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _StepsBlock(color: color, steps: strategy.howItWorks),
         Row(

@@ -81,7 +81,7 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
                 title: 'Đánh giá rủi ro',
                 child: VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   title: 'Xem lại tín hiệu an toàn copy trading',
                   message:
                       'Xác nhận dấu hiệu lừa đảo, xác minh provider, giới hạn báo cáo và bước tiếp theo trước khi copy.',
@@ -89,6 +89,7 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
               ),
               VitTradeComplianceSection(
                 title: 'An toàn copy trading',
+                density: VitDensity.tool,
                 statusPill: const VitStatusPill(
                   label: 'Đọc trước khi copy',
                   status: VitStatusPillStatus.warning,

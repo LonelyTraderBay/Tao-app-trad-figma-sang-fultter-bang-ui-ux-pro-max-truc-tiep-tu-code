@@ -37,7 +37,7 @@ class _Summary extends StatelessWidget {
         VitPageSection(
           label: 'Cost Summary',
           accentColor: _costPrimary,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final item in categories)
               _CategoryCard(
@@ -51,7 +51,7 @@ class _Summary extends StatelessWidget {
         VitPageSection(
           label: 'Impact on Returns',
           accentColor: _costPrimary,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             _RiyCard(snapshot: snapshot),
             _FullWidthButton(
@@ -83,7 +83,8 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _costBorder.withValues(alpha: .72),
       child: Column(
@@ -93,7 +94,7 @@ class _CategoryCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 width: _costSwatchExtent,
                 height: _costSwatchExtent,
                 clip: true,
@@ -114,6 +115,7 @@ class _CategoryCard extends StatelessWidget {
                 amount,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -143,7 +145,8 @@ class _RiyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _costBorder.withValues(alpha: .72),
       child: Column(
@@ -154,7 +157,7 @@ class _RiyCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 width: _costIconTile,
                 height: _costIconTile,
                 clip: true,
@@ -187,7 +190,10 @@ class _RiyCard extends StatelessWidget {
               ),
               Text(
                 '${snapshot.reductionInYield.toStringAsFixed(2)}%',
-                style: AppTextStyles.sectionTitle.copyWith(color: _costRed),
+                style: AppTextStyles.sectionTitle.copyWith(
+                  color: _costRed,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ],
           ),
@@ -217,7 +223,7 @@ class _Breakdown extends StatelessWidget {
         VitPageSection(
           label: 'Detailed Cost Breakdown',
           accentColor: _costPrimary,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             for (final cost in snapshot.costs) _CostItemCard(cost: cost),
           ],
@@ -235,7 +241,8 @@ class _CostItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _costBorder.withValues(alpha: .72),
       child: Column(

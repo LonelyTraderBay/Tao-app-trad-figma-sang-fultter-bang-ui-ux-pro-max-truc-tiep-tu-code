@@ -10,7 +10,7 @@ class _DrawdownTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Underwater Chart',
@@ -68,7 +68,7 @@ class _ProjectionTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Monte Carlo Simulation (30 ngày)',
@@ -132,7 +132,7 @@ class _CorrelationTab extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Daily Returns Correlation',
@@ -149,7 +149,8 @@ class _CorrelationTab extends StatelessWidget {
           ),
         ),
         VitCard(
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           padding: AppSpacing.cardPaddingCompact,
           child: Column(
             children: [
@@ -185,8 +186,8 @@ class _InfoPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _attributionPrimary,
       background: ColoredBox(color: _attributionPrimary.withValues(alpha: .10)),
@@ -249,7 +250,8 @@ class _ContributionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
@@ -269,13 +271,14 @@ class _ContributionBar extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.heavy,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ClipRRect(
-            borderRadius: AppRadii.xsRadius,
+            borderRadius: AppRadii.smRadius,
             child: LinearProgressIndicator(
               value: ratio.clamp(0, 1),
               minHeight: AppSpacing.x1,
@@ -304,7 +307,8 @@ class _ProjectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: color.withValues(alpha: .24),
       child: Column(
@@ -322,6 +326,7 @@ class _ProjectionTile extends StatelessWidget {
             style: AppTextStyles.baseMedium.copyWith(
               color: color,
               fontWeight: AppTextStyles.heavy,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -350,6 +355,7 @@ class _KeyValueRow extends StatelessWidget {
           value,
           style: AppTextStyles.sectionTitle.copyWith(
             fontWeight: AppTextStyles.heavy,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],

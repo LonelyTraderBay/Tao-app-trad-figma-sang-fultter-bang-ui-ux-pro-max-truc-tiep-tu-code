@@ -11,7 +11,7 @@ class _StepsBlock extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         Text(
           'How It Works:',
@@ -78,13 +78,14 @@ class _BulletsBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Text(
             title,
@@ -125,12 +126,13 @@ class _BestForBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Text(
             'BEST FOR:',
@@ -164,13 +166,14 @@ class _ExampleBlock extends StatelessWidget {
       ('Profit:', example.profit, _guideGreen),
     ];
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .30),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Text(
             'Example',

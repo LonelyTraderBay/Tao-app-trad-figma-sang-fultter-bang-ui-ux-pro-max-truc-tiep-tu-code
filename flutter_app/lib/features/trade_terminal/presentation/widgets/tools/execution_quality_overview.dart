@@ -44,6 +44,7 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
       onTap: onTap,
       padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       child: Row(
         children: [
           ExecutionQualityIconTile(

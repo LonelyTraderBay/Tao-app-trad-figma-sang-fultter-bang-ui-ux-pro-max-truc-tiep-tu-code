@@ -10,7 +10,8 @@ class _CoolingOffCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: _confirmationPrimary,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,7 +49,8 @@ class _NextStepsCard extends StatelessWidget {
       'Theo dõi real-time P/L và dừng copy bất cứ lúc nào',
     ];
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

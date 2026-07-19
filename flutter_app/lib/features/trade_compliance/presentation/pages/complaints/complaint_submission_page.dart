@@ -116,7 +116,7 @@ class _ComplaintSubmissionPageState
                 title: 'Review complaint submission',
                 message:
                     'Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
             ),
             VitTradeSection(

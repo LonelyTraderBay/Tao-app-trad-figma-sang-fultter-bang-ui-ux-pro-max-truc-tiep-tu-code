@@ -66,6 +66,10 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
     required List<TradeMarginPosition> modePositions,
     required double totalPnl,
   }) {
+    final daySnapshot = tradeSyntheticDaySnapshot(
+      snapshot.referencePrices.lastPrice,
+      pair.changePct,
+    );
     return VitTradeSimpleShell(
       title: pair.symbol,
       subtitle: 'Giao dịch ký quỹ',
@@ -89,14 +93,16 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
               symbol: pair.symbol,
               priceLabel: formatTradePrice(snapshot.referencePrices.lastPrice),
               changePct: pair.changePct,
-              highLabel: formatTradePrice(snapshot.referencePrices.markPrice),
-              lowLabel: formatTradePrice(snapshot.referencePrices.indexPrice),
-              volumeLabel: snapshot.trade.pair.symbol,
+              sparklineValues: daySnapshot.sparkline,
+              highLabel: daySnapshot.highLabel,
+              lowLabel: daySnapshot.lowLabel,
+              volumeLabel: daySnapshot.volumeLabel,
             ),
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCard(
               variant: VitCardVariant.inner,
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               padding: AppSpacing.cardPaddingCompact,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +133,7 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
         ),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           title: 'Rủi ro ký quỹ',
           message:
               'Đòn bẩy có thể làm bạn mất vốn nhanh hơn. Chỉ dùng số tiền bạn chấp nhận mất.',

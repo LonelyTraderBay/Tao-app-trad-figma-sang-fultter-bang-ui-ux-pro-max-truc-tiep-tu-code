@@ -21,7 +21,8 @@ class _ActiveCopyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       clip: true,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           for (var i = 0; i < copies.length; i++) ...[
@@ -61,13 +62,14 @@ class _PortfolioOverview extends StatelessWidget {
     final labelColor = positive ? AppColors.buy20 : AppColors.sellDeep;
 
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: AppColors.cardBorder,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             children: [
@@ -100,8 +102,8 @@ class _PortfolioOverview extends StatelessWidget {
           ),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             borderColor: color,
             child: Row(
               children: [

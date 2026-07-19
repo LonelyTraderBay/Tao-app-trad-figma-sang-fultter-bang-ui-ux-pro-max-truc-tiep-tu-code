@@ -129,7 +129,7 @@ class _SlippageMonitoringPageState
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
+                        density: VitDensity.tool,
                         title: 'Slippage risk review',
                         message:
                             'Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.',

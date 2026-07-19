@@ -18,7 +18,8 @@ class _RecommendationCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             borderColor: color.withValues(alpha: .24),
             alignment: Alignment.center,
             child: Icon(
@@ -67,7 +68,8 @@ class _AnalysisPeriodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -96,6 +98,10 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(density: VitDensity.compact, child: child);
+    return VitCard(
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
+      child: child,
+    );
   }
 }

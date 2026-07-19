@@ -759,7 +759,7 @@ trade,flutter_app/lib/features/trade/presentation/widgets/hub/position_dashboard
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_footer.dart,2,1,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_selectors_includes.dart,3,2,0,D,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_history_export_summary_sections.dart,1,0,0,C,0,0,0,pass,-
-trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,1,0,0,D,0,0,0,pass,-
+trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_common.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/trade_settings_page_sections.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/hub/vit_trade_confirm_sheet.dart,1,0,0,C,0,0,0,pass,-
 trade,flutter_app/lib/features/trade/presentation/widgets/margin/margin_trading_hub_cards.dart,4,1,0,C,0,0,0,pass,-
@@ -900,7 +900,7 @@ trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/active_c
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/active_copies_overview.dart,3,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_notifications_page_sections.dart,2,1,0,D,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_settings_contacts_privacy.dart,2,0,0,C,0,0,0,pass,-
-trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_settings_controls.dart,1,0,0,D,0,0,0,pass,-
+trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_settings_controls.dart,1,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_common.dart,2,0,0,D,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_primitives.dart,1,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_card_demo_sections.dart,4,0,0,D,0,0,0,pass,-
@@ -908,7 +908,7 @@ trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_tra
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/hub/copy_trading_list.dart,8,3,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_application_common.dart,1,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_application_progress_intro.dart,3,1,0,C,0,0,0,pass,-
-trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_common.dart,1,0,0,D,0,0,0,pass,-
+trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_common.dart,1,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_details.dart,2,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_governance_page_overview.dart,2,0,0,C,0,0,0,pass,-
 trade_copy,flutter_app/lib/features/trade_copy/presentation/widgets/provider/provider_leaderboard_cards.dart,1,1,0,D,0,0,0,pass,-

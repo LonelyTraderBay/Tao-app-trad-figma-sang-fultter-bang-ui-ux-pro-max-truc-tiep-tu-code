@@ -19,7 +19,7 @@ class _StickyActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotFooterPadding.copyWith(
         bottom: bottomPadding,
       ),
@@ -28,6 +28,7 @@ class _StickyActions extends StatelessWidget {
           Expanded(
             child: VitCtaButton(
               key: BotEmergencyStopPage.cancelKey,
+              density: VitDensity.tool,
               height: TradeSpacingTokens.tradeBotFooterButtonHeight,
               variant: VitCtaButtonVariant.secondary,
               onPressed: onCancel,
@@ -43,6 +44,7 @@ class _StickyActions extends StatelessWidget {
           Expanded(
             child: VitCtaButton(
               key: BotEmergencyStopPage.submitKey,
+              density: VitDensity.tool,
               height: TradeSpacingTokens.tradeBotFooterButtonHeight,
               variant: VitCtaButtonVariant.destructive,
               loading: stopping,

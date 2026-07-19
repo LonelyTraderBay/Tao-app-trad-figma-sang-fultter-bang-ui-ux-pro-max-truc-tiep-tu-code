@@ -97,6 +97,7 @@ class _ProviderLeaderboardPageState
               ),
               const VitTradeComplianceSection(
                 title: 'Compliance review',
+                density: VitDensity.tool,
                 statusPill: VitStatusPill(
                   label: 'Review required',
                   status: VitStatusPillStatus.info,

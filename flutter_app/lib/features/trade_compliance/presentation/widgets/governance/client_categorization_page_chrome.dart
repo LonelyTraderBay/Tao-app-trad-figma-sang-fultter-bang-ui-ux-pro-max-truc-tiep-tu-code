@@ -9,12 +9,13 @@ class _CurrentCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.standard,
       child: VitPageContent(
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +79,8 @@ class _CurrentCategoryCard extends StatelessWidget {
           ),
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             child: Row(
               children: [
                 const Icon(
@@ -92,7 +94,7 @@ class _CurrentCategoryCard extends StatelessWidget {
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     children: [
                       Text(
                         'Maximum Protection Active',
@@ -127,7 +129,8 @@ class _InfoNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,7 +144,7 @@ class _InfoNotice extends StatelessWidget {
             child: VitPageContent(
               padding: VitContentPadding.none,
               fullBleed: true,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               children: [
                 Text(
                   'MiFID II Categorization',
@@ -216,10 +219,11 @@ class _QuickLinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       borderColor: _clientBorder.withValues(alpha: .72),
-      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
+      constraints: BoxConstraints(minHeight: VitDensity.tool.controlHeight),
       onTap: onTap,
       child: Row(
         children: [
@@ -268,9 +272,7 @@ class _CategoryIcon extends StatelessWidget {
     return VitCard(
       width: size,
       height: size,
-      radius: size >= TradeSpacingTokens.tradeBotClientCategoryHeroIcon
-          ? VitCardRadius.large
-          : VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       borderColor: style.color.withValues(alpha: .24),
       alignment: Alignment.center,

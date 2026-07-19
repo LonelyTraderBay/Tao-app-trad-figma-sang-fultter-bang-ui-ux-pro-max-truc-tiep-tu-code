@@ -133,7 +133,7 @@ class _RegulatoryDisclosuresPageState
                   ],
                   const VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     title: 'Disclosure review state',
                     message:
                         'Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.',

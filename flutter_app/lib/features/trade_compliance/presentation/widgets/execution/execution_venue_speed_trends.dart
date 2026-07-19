@@ -9,11 +9,12 @@ class _SpeedTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Speed Metrics',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final venue in venues)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             borderColor: _venueBorder.withValues(alpha: .72),
             child: Column(
               children: [
@@ -43,6 +44,7 @@ class _SpeedTab extends StatelessWidget {
                             ? _venueGreen
                             : _venueAmber,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -82,10 +84,11 @@ class _TrendsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Cost Trends (Last 3 Months)',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitCard(
-          density: VitDensity.compact,
+          density: VitDensity.tool,
+          radius: VitCardRadius.tight,
           borderColor: _venueBorder.withValues(alpha: .72),
           child: Column(
             children: [
@@ -113,6 +116,7 @@ class _TrendsTab extends StatelessWidget {
                       '${trend.binance.toStringAsFixed(2)} bps',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -123,7 +127,8 @@ class _TrendsTab extends StatelessWidget {
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitCard(
                 variant: VitCardVariant.inner,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
+                radius: VitCardRadius.tight,
                 borderColor: _venueGreen.withValues(alpha: .28),
                 child: Text(
                   'Overall costs trending down 5% over last 3 months',

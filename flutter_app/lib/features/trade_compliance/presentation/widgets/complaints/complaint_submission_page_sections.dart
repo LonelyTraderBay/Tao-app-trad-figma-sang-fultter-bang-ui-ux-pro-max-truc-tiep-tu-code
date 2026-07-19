@@ -24,9 +24,7 @@ class _CategoryField extends StatelessWidget {
           onSelected: onChanged,
           padding: AppSpacing.zeroInsets,
           position: PopupMenuPosition.under,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
           itemBuilder: (_) => [
             for (final category in categories)
               PopupMenuItem(
@@ -45,8 +43,9 @@ class _CategoryField extends StatelessWidget {
             key: ComplaintSubmissionPage.categoryKey,
             height: _submissionCategoryHeight,
             variant: VitCardVariant.inner,
+            radius: VitCardRadius.tight,
             padding: TradeSpacingTokens.complaintSubmissionCategoryPadding,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             borderColor: _submissionBorder.withValues(alpha: .76),
             child: Row(
               children: [
@@ -156,6 +155,7 @@ class _TextInputBlock extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             height: _submissionLineTight,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],
@@ -169,7 +169,8 @@ class _EvidenceUploadCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.complaintSubmissionEvidencePadding,
       borderColor: _submissionBorder.withValues(alpha: .76),
       child: SizedBox(
@@ -182,7 +183,7 @@ class _EvidenceUploadCard extends StatelessWidget {
               width: _submissionEvidenceIconSize,
               height: _submissionEvidenceIconSize,
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.standard,
+              radius: VitCardRadius.tight,
               alignment: Alignment.center,
               child: Icon(
                 Icons.upload_rounded,
@@ -237,7 +238,8 @@ class _TermsCard extends StatelessWidget {
     return VitCard(
       key: ComplaintSubmissionPage.acceptKey,
       onTap: () => onChanged(!accepted),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.complaintSubmissionTermsPadding,
       borderColor: _submissionBorder.withValues(alpha: .76),
       child: Row(

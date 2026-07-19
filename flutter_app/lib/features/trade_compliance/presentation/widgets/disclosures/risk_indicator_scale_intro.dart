@@ -8,7 +8,8 @@ class _ProductSriCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.standard,
+      density: VitDensity.tool,
       borderColor: _riskBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,8 +83,8 @@ class _ScaleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       alignment: Alignment.center,
       clip: true,
       borderColor: color.withValues(alpha: active ? .18 : .08),
@@ -93,6 +94,7 @@ class _ScaleTile extends StatelessWidget {
         style: AppTextStyles.baseMedium.copyWith(
           color: active ? AppColors.onAccent : AppColors.text3,
           fontWeight: AppTextStyles.bold,
+          fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),
     );
@@ -106,7 +108,8 @@ class _SriWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: _riskAmber.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

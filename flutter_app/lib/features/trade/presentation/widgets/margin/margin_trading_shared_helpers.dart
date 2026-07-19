@@ -9,8 +9,9 @@ class _Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: padding,
-      density: padding == null ? VitDensity.compact : null,
+      density: padding == null ? VitDensity.tool : null,
       child: child,
     );
   }
@@ -60,6 +61,7 @@ class _ValueText extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],

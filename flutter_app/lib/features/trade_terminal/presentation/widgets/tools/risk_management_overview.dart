@@ -31,6 +31,7 @@ class _FeatureCard extends StatelessWidget {
       key: RiskManagementDemoPage.featureKey(feature.id),
       onTap: onTap,
       padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
+      radius: VitCardRadius.tight,
       child: Row(
         children: [
           _IconTile(
@@ -107,6 +108,7 @@ class _BenefitsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
+      radius: VitCardRadius.tight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -186,6 +188,7 @@ class _StatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
+      radius: VitCardRadius.tight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

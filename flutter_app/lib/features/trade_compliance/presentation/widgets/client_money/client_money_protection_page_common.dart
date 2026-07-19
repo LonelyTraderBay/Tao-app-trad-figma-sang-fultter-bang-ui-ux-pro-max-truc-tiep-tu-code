@@ -7,10 +7,11 @@ class _Reconciliation extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Daily Reconciliation',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitCard(
-          density: VitDensity.compact,
+          density: VitDensity.tool,
+          radius: VitCardRadius.tight,
           borderColor: _moneyBorder.withValues(alpha: .72),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,7 +59,7 @@ class _Reconciliation extends StatelessWidget {
           onPressed: () =>
               context.go(AppRoutePaths.tradeCopyCassReconciliation),
           variant: VitCtaButtonVariant.secondary,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           leading: const Icon(
             Icons.visibility_outlined,
             size: TradeSpacingTokens.tradeBotCheckboxIcon,
@@ -98,11 +99,12 @@ class _Documents extends StatelessWidget {
     ];
     return VitPageSection(
       label: 'CASS Documents',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final document in documents)
           VitCard(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
+            radius: VitCardRadius.tight,
             borderColor: _moneyBorder.withValues(alpha: .72),
             child: Row(
               children: [
@@ -111,6 +113,7 @@ class _Documents extends StatelessWidget {
                   width: TradeSpacingTokens.tradeBotClientMoneyDocumentIcon,
                   height: TradeSpacingTokens.tradeBotClientMoneyDocumentIcon,
                   variant: VitCardVariant.inner,
+                  radius: VitCardRadius.tight,
                   alignment: Alignment.center,
                   borderColor: document.$3.withValues(alpha: .35),
                   child: Icon(
@@ -184,7 +187,7 @@ class _ReconciliationRow extends StatelessWidget {
     final color = success ? _moneyGreen : AppColors.text1;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       borderColor: success ? _moneyGreen.withValues(alpha: .35) : null,
       padding: TradeSpacingTokens.tradeBotClientMoneyRowPadding,
       child: Row(
@@ -203,6 +206,7 @@ class _ReconciliationRow extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

@@ -8,7 +8,8 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       child: Column(
         children: [
           Row(

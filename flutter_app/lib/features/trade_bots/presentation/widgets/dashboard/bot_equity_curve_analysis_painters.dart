@@ -9,6 +9,7 @@ class _AnalysisCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: _equityGreen.withValues(alpha: .30),
       padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
@@ -70,7 +71,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
+    return VitCard(radius: VitCardRadius.tight, padding: padding, child: child);
   }
 }
 

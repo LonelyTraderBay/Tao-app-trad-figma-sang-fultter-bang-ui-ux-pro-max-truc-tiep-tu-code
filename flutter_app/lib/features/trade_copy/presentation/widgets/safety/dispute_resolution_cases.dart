@@ -15,8 +15,8 @@ class _DisputeTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -25,7 +25,7 @@ class _DisputeTabs extends StatelessWidget {
                 key: DisputeResolutionPage.tabKey(tab.id),
                 onTap: () => onChanged(tab.id),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
+                radius: VitCardRadius.tight,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -65,7 +65,7 @@ class _DisputeTabs extends StatelessWidget {
                           : 0,
                       height: AppSpacing.dividerHairline,
                       variant: VitCardVariant.inner,
-                      radius: VitCardRadius.standard,
+                      radius: VitCardRadius.tight,
                       borderColor: _disputePrimary,
                       background: const ColoredBox(color: _disputePrimary),
                       child: const SizedBox.shrink(),
@@ -115,7 +115,7 @@ class _CasesTab extends StatelessWidget {
       rhythm: VitPageRhythm.form,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         if (lastResult != null && activeTabId == 'active')
           _ResultBanner(result: lastResult!),
@@ -138,7 +138,7 @@ class _ResultBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.success,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: '${result.message}: ${result.caseId}',
       message: 'Case is now available in Active Cases.',
       contractId: result.caseId,
@@ -155,7 +155,8 @@ class _DisputeCaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolved = disputeCase.status == 'resolved';
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -218,7 +219,7 @@ class _DisputeCaseCard extends StatelessWidget {
             VitCtaButton(
               onPressed: () => _escalate(context),
               variant: VitCtaButtonVariant.danger,
-              density: VitDensity.compact,
+              density: VitDensity.tool,
               child: const Text('Escalate to Senior Support'),
             ),
           ],

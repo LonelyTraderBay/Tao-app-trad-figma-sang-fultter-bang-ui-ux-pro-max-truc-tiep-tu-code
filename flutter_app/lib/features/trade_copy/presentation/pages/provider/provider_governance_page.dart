@@ -120,11 +120,12 @@ class _ProviderGovernancePageState
                         message:
                             'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
                         contractId: 'SC-081 provider governance review',
-                        density: VitDensity.compact,
+                        density: VitDensity.tool,
                       ),
                     ),
                     VitTradeComplianceSection(
                       title: 'Governance status',
+                      density: VitDensity.tool,
                       statusPill: VitStatusPill(
                         label: 'Score ${snapshot.stats.complianceScore}',
                         status: VitStatusPillStatus.info,

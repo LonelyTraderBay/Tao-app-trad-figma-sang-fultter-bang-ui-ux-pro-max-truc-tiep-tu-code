@@ -15,7 +15,8 @@ class _LegalTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeId,
