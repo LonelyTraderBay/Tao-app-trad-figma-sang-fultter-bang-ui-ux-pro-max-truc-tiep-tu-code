@@ -4,9 +4,11 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'home_reference_consistency_guardrail_test_utils.dart';
+
 void main() {
   test('home reference consistency artifacts are current for all modules', () {
-    final result = Process.runSync(_dartExecutable(), [
+    final result = Process.runSync(dartExecutable(), [
       'run',
       'tool/home_reference_consistency_audit.dart',
       '--check',
@@ -128,10 +130,10 @@ void main() {
       for (final line in content.split('\n')) {
         final trimmed = line.trim();
         if (trimmed.isEmpty || trimmed.startsWith('//')) continue;
-        if (_containerPattern.hasMatch(trimmed) ||
-            _boxDecorationPattern.hasMatch(trimmed) ||
-            _borderRadiusPattern.hasMatch(trimmed) ||
-            _radiusPattern.hasMatch(trimmed)) {
+        if (containerPattern.hasMatch(trimmed) ||
+            boxDecorationPattern.hasMatch(trimmed) ||
+            borderRadiusPattern.hasMatch(trimmed) ||
+            radiusPattern.hasMatch(trimmed)) {
           violations.add('$path: new raw markup -> $trimmed');
         }
       }
@@ -247,7 +249,7 @@ void main() {
         for (final line in entity.readAsStringSync().split('\n')) {
           final trimmed = line.trim();
           if (trimmed.isEmpty || trimmed.startsWith('//')) continue;
-          if (_cardTileInnerGapWidthPattern.hasMatch(trimmed)) {
+          if (cardTileInnerGapWidthPattern.hasMatch(trimmed)) {
             violations.add('$path: $trimmed');
           }
         }
@@ -257,17 +259,17 @@ void main() {
   );
 
   test('changed app files do not introduce new home-reference divergence', () {
-    final changedFiles = _collectChangedLibFiles();
+    final changedFiles = collectChangedLibFiles();
     final violations = <String>[];
 
     for (final path in changedFiles) {
       final lower = path.toLowerCase();
-      if (_isPathException(lower)) continue;
+      if (isPathException(lower)) continue;
 
-      final isUntracked = !_isTracked(path);
-      final lines = _collectAddedLines(path, isUntracked);
+      final isUntracked = !isTracked(path);
+      final lines = collectAddedLines(path, isUntracked);
       for (final line in lines) {
-        final reason = _lineDivergenceReason(line);
+        final reason = lineDivergenceReason(line);
         if (reason != null) {
           violations.add('$path: $reason -> $line');
         }
@@ -277,143 +279,3 @@ void main() {
     expect(violations, isEmpty, reason: violations.join('\n'));
   });
 }
-
-String _dartExecutable() {
-  final executable = Platform.resolvedExecutable;
-  final normalized = executable.replaceAll('\\', '/');
-  if (normalized.endsWith('/dart.exe') || normalized.endsWith('/dart')) {
-    return executable;
-  }
-
-  const cacheMarker = '/flutter/bin/cache/';
-  final cacheIndex = normalized.indexOf(cacheMarker);
-  if (cacheIndex >= 0) {
-    final cacheRoot = normalized.substring(0, cacheIndex + cacheMarker.length);
-    return '${cacheRoot}dart-sdk/bin/'
-        '${Platform.isWindows ? 'dart.exe' : 'dart'}';
-  }
-
-  final flutterRoot = Platform.environment['FLUTTER_ROOT'];
-  if (flutterRoot != null && flutterRoot.isNotEmpty) {
-    return '$flutterRoot/bin/cache/dart-sdk/bin/dart';
-  }
-  return 'dart';
-}
-
-// `git status`/`git diff` sometimes print paths relative to the repo root
-// (e.g. `flutter_app/lib/...`) even when both invoked with, and expecting,
-// cwd-relative pathspecs — a local git-version/config quirk observed on this
-// machine (tests always run with cwd == flutter_app/). Re-feeding such a
-// root-relative path back into git as a pathspec, or into File(), silently
-// resolves to nothing. Normalize once at collection time so every downstream
-// consumer works consistently regardless of which convention this git build
-// prints.
-String _toCwdRelative(String gitPath) {
-  const prefix = 'flutter_app/';
-  return gitPath.startsWith(prefix)
-      ? gitPath.substring(prefix.length)
-      : gitPath;
-}
-
-List<String> _collectChangedLibFiles() {
-  final changed = <String>{};
-  final diffResult = Process.runSync('git', [
-    'diff',
-    '--name-only',
-    'HEAD',
-    '--',
-    'lib',
-  ]);
-  if (diffResult.exitCode == 0) {
-    for (final line in diffResult.stdout.toString().split('\n')) {
-      final path = _toCwdRelative(line.trim());
-      if (path.isNotEmpty && path.endsWith('.dart')) changed.add(path);
-    }
-  }
-
-  final statusResult = Process.runSync('git', [
-    'status',
-    '--porcelain',
-    '--',
-    'lib',
-  ]);
-  if (statusResult.exitCode == 0) {
-    for (final line in statusResult.stdout.toString().split('\n')) {
-      if (line.length < 3) continue;
-      final status = line.substring(0, 2);
-      final path = _toCwdRelative(line.substring(3).trim());
-      if (status.trim().isEmpty) continue;
-      if (path.endsWith('.dart')) changed.add(path);
-    }
-  }
-
-  return changed.toList()..sort();
-}
-
-bool _isTracked(String path) {
-  final result = Process.runSync('git', ['ls-files', '--error-unmatch', path]);
-  return result.exitCode == 0;
-}
-
-List<String> _collectAddedLines(String path, bool isUntracked) {
-  if (isUntracked) {
-    final file = File(path);
-    if (!file.existsSync()) return const [];
-    return file.readAsLinesSync();
-  }
-
-  final result = Process.runSync('git', ['diff', 'HEAD', '--', path]);
-  if (result.exitCode != 0) return const [];
-
-  final added = <String>[];
-  for (final line in result.stdout.toString().split('\n')) {
-    if (!line.startsWith('+')) continue;
-    if (line.startsWith('+++')) continue;
-    added.add(line.substring(1));
-  }
-  return added;
-}
-
-String? _lineDivergenceReason(String line) {
-  final trimmed = line.trim();
-  if (trimmed.isEmpty || trimmed.startsWith('//')) return null;
-
-  if (_containerPattern.hasMatch(trimmed)) {
-    return 'raw Container( instead of VitCard';
-  }
-  if (_boxDecorationPattern.hasMatch(trimmed)) {
-    return 'raw BoxDecoration( instead of VitCard';
-  }
-  if (_borderRadiusPattern.hasMatch(trimmed)) {
-    return 'BorderRadius.circular( instead of AppRadii.*';
-  }
-  if (_radiusPattern.hasMatch(trimmed)) {
-    return 'Radius.circular( instead of AppRadii.*';
-  }
-  return null;
-}
-
-bool _isPathException(String path) {
-  return _exceptionPathPatterns.any((exception) => path.contains(exception));
-}
-
-final RegExp _containerPattern = RegExp(r'Container\(');
-final RegExp _boxDecorationPattern = RegExp(r'BoxDecoration\(');
-final RegExp _borderRadiusPattern = RegExp(r'BorderRadius\.circular\(');
-final RegExp _radiusPattern = RegExp(r'Radius\.circular\(');
-final RegExp _cardTileInnerGapWidthPattern = RegExp(
-  r'width:\s*AppSpacing\.cardTileInnerGap',
-);
-
-const List<String> _exceptionPathPatterns = <String>[
-  '/dev/',
-  '/internal/',
-  '/visual',
-  '/chart',
-  '/charts',
-  '/canvas',
-  'custom_painter',
-  'custompainter',
-  '/order_book',
-  '/orderbook',
-];
