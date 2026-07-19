@@ -85,7 +85,7 @@ class _PerformanceScenariosPageState
                 title: 'Review performance scenario risk',
                 message:
                     'Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
             ),
             VitTradeComplianceSection(
@@ -122,7 +122,7 @@ class _PerformanceScenariosPageState
                   VitPageSection(
                     label: 'Potential Outcomes',
                     accentColor: _scenarioPrimary,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     children: [
                       for (final scenario in snapshot.scenarios)
                         _ScenarioCard(

@@ -35,6 +35,7 @@ class _VarianceNoteView extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       width: double.infinity,
       padding: EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x2,
@@ -83,7 +84,8 @@ class _VarianceCard extends StatelessWidget {
         : 'Actual costs matched estimates exactly.';
 
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: _reportBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -114,6 +116,7 @@ class _VarianceCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
+            radius: VitCardRadius.tight,
             width: double.infinity,
             padding: const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.x3,

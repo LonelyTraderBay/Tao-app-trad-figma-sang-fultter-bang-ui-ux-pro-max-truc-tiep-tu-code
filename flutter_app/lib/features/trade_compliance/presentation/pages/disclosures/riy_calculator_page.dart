@@ -111,7 +111,7 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                 title: 'Review cost impact before proceeding',
                 message:
                     'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
             ),
             VitTradeComplianceSection(

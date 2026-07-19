@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -86,6 +87,7 @@ class KIDGeneratorPage extends ConsumerWidget {
               message:
                   'Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.',
               contractId: 'kid-generator-review',
+              density: VitDensity.tool,
             ),
           ),
           VitTradeComplianceSection(
@@ -153,6 +155,7 @@ class _KidPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: _kidPreviewPadding,
       borderColor: _kidBorder.withValues(alpha: .72),
       child: Column(
@@ -165,6 +168,7 @@ class _KidPreviewCard extends StatelessWidget {
                 width: _kidPreviewIconBox,
                 height: _kidPreviewIconBox,
                 variant: VitCardVariant.ghost,
+                radius: VitCardRadius.tight,
                 borderColor: _kidPrimary.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: const Icon(
@@ -193,6 +197,7 @@ class _KidPreviewCard extends StatelessWidget {
                       'Version ${document.version}',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -236,7 +241,7 @@ class _DocumentMetric extends StatelessWidget {
     return VitCard(
       height: _kidMetricHeight,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
+      radius: VitCardRadius.tight,
       padding: _kidMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,6 +256,7 @@ class _DocumentMetric extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -268,6 +274,7 @@ class _KidSectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: KIDGeneratorPage.sectionKey(section.title),
+      radius: VitCardRadius.tight,
       padding: _kidSectionCardPadding,
       borderColor: _kidBorder.withValues(alpha: .72),
       child: SizedBox(
@@ -370,6 +377,7 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       height: AppSpacing.searchBarCompactHeight,
+      density: VitDensity.tool,
       variant: filled
           ? VitCtaButtonVariant.primary
           : VitCtaButtonVariant.secondary,

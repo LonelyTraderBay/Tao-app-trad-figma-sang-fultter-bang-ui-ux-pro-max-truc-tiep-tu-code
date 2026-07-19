@@ -92,7 +92,7 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
               message:
                   'Review fees, RIY impact, limits, and next-step documents before investing.',
               contractId: 'SC-105 ex-ante costs review',
-              density: VitDensity.compact,
+              density: VitDensity.tool,
             ),
           ),
           VitTradeComplianceSection(
@@ -133,7 +133,8 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
                 // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
                   height: _costTabExtent,
-                  density: VitDensity.compact,
+                  radius: VitCardRadius.tight,
+                  density: VitDensity.tool,
                   padding: AppSpacing.zeroInsets,
                   child: VitTabBar(
                     activeKey: _tab,

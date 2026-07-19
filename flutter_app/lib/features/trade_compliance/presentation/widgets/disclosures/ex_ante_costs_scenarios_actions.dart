@@ -23,7 +23,7 @@ class _Scenarios extends StatelessWidget {
         VitPageSection(
           label: 'Cost Scenarios by Holding Period',
           accentColor: _costPrimary,
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           children: [
             Row(
               children: [
@@ -40,7 +40,8 @@ class _Scenarios extends StatelessWidget {
               ],
             ),
             VitCard(
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               padding: AppSpacing.cardPaddingCompact,
               borderColor: _costBorder.withValues(alpha: .72),
               child: Column(
@@ -69,6 +70,7 @@ class _Scenarios extends StatelessWidget {
                   ),
                   VitCard(
                     variant: VitCardVariant.inner,
+                    radius: VitCardRadius.tight,
                     margin: AppSpacing.zeroInsets.copyWith(top: _costTinySpace),
                     padding: AppSpacing.cardPaddingCompact,
                     borderColor: _costRed.withValues(alpha: .28),
@@ -87,6 +89,7 @@ class _Scenarios extends StatelessWidget {
                           _formatEur(total),
                           style: AppTextStyles.baseMedium.copyWith(
                             color: _costRed,
+                            fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
                       ],
@@ -154,6 +157,7 @@ class _QuickLinkButton extends StatelessWidget {
       onPressed: onPressed,
       variant: VitCtaButtonVariant.secondary,
       height: _costButtonExtent,
+      density: VitDensity.tool,
       leading: Icon(icon, color: color, size: AppSpacing.x4),
       trailing: const Icon(Icons.chevron_right_rounded),
       child: Text(label),
@@ -179,6 +183,7 @@ class _FullWidthButton extends StatelessWidget {
       onPressed: onPressed,
       variant: VitCtaButtonVariant.secondary,
       height: _costButtonExtent,
+      density: VitDensity.tool,
       leading: Icon(icon, size: AppSpacing.x4),
       child: Text(label),
     );
@@ -200,7 +205,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,6 +224,7 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -235,6 +242,7 @@ class _WarningBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _costAmber.withValues(alpha: .28),
       child: Row(
@@ -295,8 +303,9 @@ class _ScenarioRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       margin: AppSpacing.zeroInsets.copyWith(bottom: _costTinySpace),
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
@@ -311,6 +320,7 @@ class _ScenarioRow extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],

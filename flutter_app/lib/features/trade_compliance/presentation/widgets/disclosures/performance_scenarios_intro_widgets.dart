@@ -7,7 +7,8 @@ class _WarningNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _scenarioAmber.withValues(alpha: .38),
       child: Row(
@@ -58,7 +59,8 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.standard,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _scenarioBorder.withValues(alpha: .76),
       child: Row(
@@ -81,7 +83,10 @@ class _InvestmentCard extends StatelessWidget {
           ),
           Text(
             _formatEur(investment),
-            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: AppColors.text1,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
         ],
       ),

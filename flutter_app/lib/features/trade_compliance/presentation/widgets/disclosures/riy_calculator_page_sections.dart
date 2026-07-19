@@ -24,7 +24,8 @@ class _InputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: _riyBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -101,7 +102,7 @@ class _NumberField extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x1),
         SizedBox(
-          height: VitDensity.compact.controlHeight,
+          height: VitDensity.tool.controlHeight,
           child: TextFormField(
             initialValue: initialValue,
             keyboardType: TextInputType.numberWithOptions(decimal: decimals),
@@ -145,7 +146,8 @@ class _ResultMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: _riyBorder.withValues(alpha: .72),
       child: SizedBox(
         height: _riyMetricExtent,
@@ -179,7 +181,8 @@ class _CostImpactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: _riyBorder.withValues(alpha: .72),
       child: SizedBox(
         height: _riyCostImpactExtent,
@@ -206,6 +209,7 @@ class _CostImpactCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             VitCard(
               variant: VitCardVariant.ghost,
+              radius: VitCardRadius.tight,
               padding: const EdgeInsetsDirectional.symmetric(
                 horizontal: AppSpacing.x3,
                 vertical: AppSpacing.x2,
@@ -236,7 +240,8 @@ class _ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       borderColor: _riyBorder.withValues(alpha: .72),
       child: SizedBox(
         height: _riyChartExtent,

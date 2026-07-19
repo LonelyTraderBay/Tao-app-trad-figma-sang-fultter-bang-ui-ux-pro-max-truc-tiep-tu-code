@@ -11,7 +11,7 @@ class _MifidTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitSectionHeader(
           title: snapshot.mifidTitle,
@@ -39,7 +39,7 @@ class _ProtectionTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Investor Protection Scheme',
@@ -77,7 +77,7 @@ class _RestrictionsTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Jurisdictional Restrictions',
@@ -107,7 +107,7 @@ class _LiabilityTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Liability Limitations',
@@ -147,7 +147,7 @@ class _ContactTab extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         const VitSectionHeader(
           title: 'Regulatory Contact Information',

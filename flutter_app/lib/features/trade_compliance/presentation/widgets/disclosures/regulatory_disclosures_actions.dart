@@ -18,7 +18,8 @@ class _ActionTile extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: color,
       child: Row(
         children: [
@@ -59,7 +60,8 @@ class _ContactTile extends StatelessWidget {
     return VitCard(
       key: RegulatoryDisclosuresPage.contactKey(contact.title),
       onTap: onTap,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         children: [
           Icon(
@@ -108,7 +110,8 @@ class _DocumentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         children: [
           Icon(
@@ -146,8 +149,8 @@ class _RegulatoryNoticePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.large,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,7 +163,7 @@ class _RegulatoryNoticePanel extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCtaButton(
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             onPressed: onClose,
             child: const Text('Done'),
           ),
