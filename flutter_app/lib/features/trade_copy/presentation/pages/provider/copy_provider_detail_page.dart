@@ -162,7 +162,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
                 message:
                     'So sánh drawdown tối đa, giới hạn copier, phí và đánh giá phù hợp trước khi copy provider này.',
                 contractId: 'copy-provider-detail-review',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               VitCtaButton(
@@ -170,7 +170,8 @@ class CopyProviderDetailPage extends ConsumerWidget {
                 onPressed: () => context.push(
                   AppRoutePaths.tradeCopyProviderAssessment(providerId),
                 ),
-                height: VitDensity.compact.controlHeight,
+                density: VitDensity.tool,
+                height: VitDensity.tool.controlHeight,
                 leading: const Icon(Icons.fact_check_outlined),
                 trailing: const Icon(Icons.chevron_right_rounded),
                 child: Text(
@@ -218,7 +219,8 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       child: Row(
         children: [
           VitAssetAvatar(

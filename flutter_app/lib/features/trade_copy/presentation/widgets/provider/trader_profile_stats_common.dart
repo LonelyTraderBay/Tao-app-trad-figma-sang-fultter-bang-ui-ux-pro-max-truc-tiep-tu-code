@@ -40,7 +40,7 @@ class _StatsTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _Panel(
           child: Column(
@@ -75,6 +75,7 @@ class _StatsTab extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ),
@@ -202,7 +203,11 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(density: VitDensity.compact, child: child);
+    return VitCard(
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
+      child: child,
+    );
   }
 }
 

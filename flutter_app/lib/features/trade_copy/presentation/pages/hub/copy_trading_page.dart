@@ -94,10 +94,11 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                 message:
                     'So sánh drawdown tối đa, mức tập trung copier, phí và quy tắc dừng lỗ trước khi sao chép bất kỳ chiến lược nào.',
                 contractId: snapshot.highRiskContractId,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
               VitCtaButton(
                 onPressed: () => context.push(AppRoutePaths.tradeCopyEducation),
+                density: VitDensity.tool,
                 height: AppSpacing.inputHeight,
                 leading: const Icon(Icons.menu_book_outlined),
                 child: const Text('Tìm hiểu rủi ro copy trading'),

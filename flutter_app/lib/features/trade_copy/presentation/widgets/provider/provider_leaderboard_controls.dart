@@ -9,8 +9,9 @@ class _SurvivorshipWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerLeaderboardWarningPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       borderColor: _leaderWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,8 +164,9 @@ class _VerifiedToggle extends StatelessWidget {
     return VitCard(
       key: ProviderLeaderboardPage.verifiedToggleKey,
       height: AppSpacing.searchBarCompactHeight,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerLeaderboardVerifiedPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       variant: VitCardVariant.inner,
       borderColor: AppColors.cardBorder,
       onTap: () => onChanged(!checked),

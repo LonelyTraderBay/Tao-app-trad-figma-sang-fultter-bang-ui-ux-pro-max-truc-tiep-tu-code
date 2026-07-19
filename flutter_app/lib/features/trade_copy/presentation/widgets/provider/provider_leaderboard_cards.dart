@@ -21,8 +21,9 @@ class _ProviderRankCard extends StatelessWidget {
       height: redFlags.isEmpty
           ? AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x4
           : AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x6,
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerLeaderboardCardPadding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       borderColor: AppColors.cardBorder,
       onTap: onOpen,
       child: Row(

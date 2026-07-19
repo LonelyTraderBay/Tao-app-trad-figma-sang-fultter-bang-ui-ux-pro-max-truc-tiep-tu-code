@@ -11,7 +11,7 @@ class _TradesTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [for (final trade in trades) _TradeCard(trade: trade)],
     );
   }
@@ -64,6 +64,7 @@ class _TradeCard extends StatelessWidget {
                         '${trade.pnlPct >= 0 ? '+' : ''}${trade.pnlPct.toStringAsFixed(2)}%',
                         style: AppTextStyles.micro.copyWith(
                           color: isProfit ? _profileGreen : _profileRed,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
                     ],

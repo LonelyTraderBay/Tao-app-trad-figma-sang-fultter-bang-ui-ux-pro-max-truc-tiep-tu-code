@@ -126,7 +126,7 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                   title: 'Đánh giá rủi ro',
                   child: VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
-                    density: VitDensity.compact,
+                    density: VitDensity.tool,
                     title: 'Review active copy exposure',
                     message:
                         'Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.',
