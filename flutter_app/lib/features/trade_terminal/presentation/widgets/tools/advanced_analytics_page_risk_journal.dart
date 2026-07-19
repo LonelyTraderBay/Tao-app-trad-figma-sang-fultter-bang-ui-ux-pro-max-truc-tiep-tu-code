@@ -12,14 +12,14 @@ class _RiskAnalysisTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _Card(
           child: VitPageContent(
             rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _SectionHeader(
                 icon: Icons.shield_outlined,
@@ -29,7 +29,8 @@ class _RiskAnalysisTab extends StatelessWidget {
               ),
               VitCard(
                 variant: VitCardVariant.inner,
-                density: VitDensity.compact,
+                density: VitDensity.tool,
+                radius: VitCardRadius.tight,
                 child: Row(
                   children: [
                     const Icon(
@@ -69,6 +70,7 @@ class _RiskAnalysisTab extends StatelessWidget {
                       '/100',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -128,13 +130,13 @@ class _TradeJournalTab extends StatelessWidget {
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _Card(
           child: VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             children: [
               const _SectionHeader(
                 icon: Icons.menu_book_rounded,

@@ -98,6 +98,7 @@ class _RiskManagementDemoPageState
                 const _IntroCard(),
                 const VitCard(
                   variant: VitCardVariant.inner,
+                  radius: VitCardRadius.tight,
                   padding: TradeSpacingTokens.tradeToolRiskReviewPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +109,7 @@ class _RiskManagementDemoPageState
                         message:
                             'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
                         contractId: 'risk-management-demo-review',
-                        density: VitDensity.compact,
+                        density: VitDensity.tool,
                       ),
                       SizedBox(height: _riskSpace),
                       VitStatusPill(
@@ -132,7 +133,7 @@ class _RiskManagementDemoPageState
                   onChanged: (tab) => setState(() => _tab = tab),
                 ),
                 VitPageSection(
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                   children: [
                     if (_tab == _RiskTab.oco)
                       _OcoTab(onOpen: _openOcoSheet)

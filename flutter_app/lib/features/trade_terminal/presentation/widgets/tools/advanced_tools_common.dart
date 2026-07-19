@@ -20,6 +20,7 @@ class _GradientButton extends StatelessWidget {
       onPressed: onTap,
       variant: _ctaVariantFor(colors),
       height: AppSpacing.searchBarCompactHeight,
+      density: VitDensity.tool,
       leading: Icon(icon),
       child: Text(
         label,
@@ -53,8 +54,8 @@ class _IconTile extends StatelessWidget {
       height: size,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       borderColor: color.withValues(alpha: .28),
       child: Icon(icon, color: color, size: size * .5),
     );
@@ -76,7 +77,8 @@ class _Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       borderColor: borderColor,

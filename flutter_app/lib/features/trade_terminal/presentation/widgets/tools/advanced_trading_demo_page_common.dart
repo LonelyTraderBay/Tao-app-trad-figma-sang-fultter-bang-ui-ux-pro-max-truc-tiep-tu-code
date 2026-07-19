@@ -67,6 +67,7 @@ class _ChoiceChip extends StatelessWidget {
     return VitCard(
       padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: active ? VitCardVariant.standard : VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: active ? AppColors.primary : null,
       child: Text(
         label,
@@ -105,7 +106,8 @@ class _Panel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: padding,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: AppColors.cardBorder,
       child: child,
     );
@@ -151,6 +153,7 @@ class _DemoSheet extends StatelessWidget {
                     VitCtaButton(
                       onPressed: onClose,
                       height: _advancedSheetActionExtent,
+                      density: VitDensity.tool,
                       child: Text(
                         'Đóng',
                         style: AppTextStyles.body.copyWith(

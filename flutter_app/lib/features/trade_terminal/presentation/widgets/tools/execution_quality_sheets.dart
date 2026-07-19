@@ -181,6 +181,7 @@ class _ToleranceChip extends StatelessWidget {
       key: executionQualityToleranceKey(value),
       height: TradeSpacingTokens.tradeToolRiskTabHeight,
       alignment: Alignment.center,
+      radius: VitCardRadius.tight,
       onTap: onTap,
       variant: active ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: active ? AppColors.buy : AppColors.cardBorder,
@@ -205,6 +206,7 @@ class _FillTile extends StatelessWidget {
     return VitCard(
       padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       child: Row(
         children: [
           Expanded(

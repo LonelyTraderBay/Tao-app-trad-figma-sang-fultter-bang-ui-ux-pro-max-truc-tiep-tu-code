@@ -106,7 +106,7 @@ class _AdvancedTradingDemoPageState
                 message:
                     'Điều khiển lệnh nâng cao chỉ hiển thị ở chế độ demo. Thực thi thật cần xem trước, ký quỹ, phí và rủi ro thanh lý.',
                 contractId: 'SC-088',
-                density: VitDensity.compact,
+                density: VitDensity.tool,
               ),
             ],
           ),

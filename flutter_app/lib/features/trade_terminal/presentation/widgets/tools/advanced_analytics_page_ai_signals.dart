@@ -33,7 +33,7 @@ class _AiSignalsTab extends StatelessWidget {
         rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         children: [
           const _SectionHeader(
             icon: Icons.psychology_rounded,
@@ -106,7 +106,8 @@ class _MiniStatBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +140,7 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       title: 'AI Prediction Disclaimer',
       message:
           'Signals are predictions, not guarantees. Always conduct your own research and risk management. Past accuracy does not guarantee future results.',

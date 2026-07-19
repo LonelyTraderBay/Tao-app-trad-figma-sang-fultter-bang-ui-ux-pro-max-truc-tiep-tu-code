@@ -98,6 +98,7 @@ class _ActionBar extends StatelessWidget {
                     child: VitCtaButton(
                       key: AdvancedChartPage.buyKey,
                       height: TradeSpacingTokens.tradeBotControlCompact,
+                      density: VitDensity.tool,
                       variant: VitCtaButtonVariant.success,
                       onPressed: () =>
                           context.go(AppRoutePaths.tradePair(pairId)),
@@ -109,6 +110,7 @@ class _ActionBar extends StatelessWidget {
                     child: VitCtaButton(
                       key: AdvancedChartPage.sellKey,
                       height: TradeSpacingTokens.tradeBotControlCompact,
+                      density: VitDensity.tool,
                       variant: VitCtaButtonVariant.danger,
                       onPressed: () => context.go(
                         '${AppRoutePaths.tradePair(pairId)}?side=sell',
@@ -242,6 +244,7 @@ class _IndicatorOption extends StatelessWidget {
       height: AppSpacing.inputHeight,
       padding: TradeSpacingTokens.tradeReceiptSupportPadding,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: indicator.enabled
           ? color.withValues(alpha: .34)
           : AppColors.borderSolid,
@@ -258,7 +261,7 @@ class _IndicatorOption extends StatelessWidget {
             height: TradeSpacingTokens.tradeReceiptStatusIcon,
             padding: AppSpacing.zeroInsets,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             clip: true,
             background: ColoredBox(color: color),
             child: const SizedBox.shrink(),
@@ -283,7 +286,7 @@ class _IndicatorOption extends StatelessWidget {
             padding: AppSpacing.zeroInsets,
             variant: VitCardVariant.ghost,
             borderColor: indicator.enabled ? color : AppColors.borderSolid,
-            radius: VitCardRadius.standard,
+            radius: VitCardRadius.tight,
             clip: true,
             background: ColoredBox(
               color: indicator.enabled ? color : AppColors.transparent,

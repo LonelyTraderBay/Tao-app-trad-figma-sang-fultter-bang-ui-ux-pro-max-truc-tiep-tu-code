@@ -103,6 +103,7 @@ class _PositionsTab extends StatelessWidget {
       children: [
         VitCard(
           padding: TradeSpacingTokens.tradeToolCardPadding,
+          radius: VitCardRadius.tight,
           child: Row(
             children: [
               Expanded(
@@ -160,6 +161,7 @@ class _MiniMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],
@@ -178,6 +180,7 @@ class _PositionTile extends StatelessWidget {
     final pnlColor = position.pnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       padding: TradeSpacingTokens.tradeToolCardPadding,
+      radius: VitCardRadius.tight,
       child: Row(
         children: [
           _IconTile(
@@ -207,6 +210,7 @@ class _PositionTile extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: pnlColor,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],

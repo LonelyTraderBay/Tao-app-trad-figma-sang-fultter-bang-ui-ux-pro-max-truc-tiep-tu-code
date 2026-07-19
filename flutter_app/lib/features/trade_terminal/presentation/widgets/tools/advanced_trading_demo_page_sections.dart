@@ -163,6 +163,7 @@ class _ActionButton extends StatelessWidget {
       alignment: Alignment.center,
       padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       borderColor: AppColors.borderSolid,
       child: Text(
         action.label,

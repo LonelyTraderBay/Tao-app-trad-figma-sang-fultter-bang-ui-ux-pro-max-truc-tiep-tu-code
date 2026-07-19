@@ -98,7 +98,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
           ),
           const VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             title: 'Xem lại phân tích nâng cao',
             message:
                 'Tín hiệu AI, sizing và nhật ký chỉ hỗ trợ quyết định. Xác nhận giới hạn rủi ro trước khi dùng cho lệnh thật.',

@@ -92,7 +92,7 @@ class _ExecutionQualityDemoPageState
                   message:
                       'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
                   contractId: 'execution-quality-demo-review',
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                 ),
                 for (final feature in snapshot.features)
                   ExecutionQualityFeatureCard(

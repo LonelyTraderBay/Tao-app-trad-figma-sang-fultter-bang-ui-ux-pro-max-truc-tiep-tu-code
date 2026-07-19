@@ -39,7 +39,8 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       borderColor: _advancedBorder.withValues(alpha: .7),
       child: child,
     );
@@ -115,7 +116,8 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
+      radius: VitCardRadius.tight,
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .22),
       child: Row(
@@ -168,6 +170,7 @@ class _MetricBox extends StatelessWidget {
       value: value,
       valueColor: valueColor,
       alignLeft: alignLeft,
+      radius: VitCardRadius.tight,
     );
   }
 }
