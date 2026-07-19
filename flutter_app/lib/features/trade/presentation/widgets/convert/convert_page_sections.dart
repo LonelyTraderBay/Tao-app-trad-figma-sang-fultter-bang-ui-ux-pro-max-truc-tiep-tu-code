@@ -18,7 +18,7 @@ class _ConvertRiskReviewPanel extends StatelessWidget {
     return VitFinancialSafetySummary(
       title: 'Xem lại báo giá',
       contractId: 'SC-056 Convert preview',
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       footer: quote.canSubmit
           ? 'Xác nhận tỷ giá, phí, giới hạn trượt giá và đường nhận biên lai trước khi gửi.'
           : 'Nhập số lượng để mở xem lại báo giá trước khi gửi.',
@@ -80,6 +80,7 @@ class _SubmitButton extends StatelessWidget {
       variant: receipt == null
           ? VitCtaButtonVariant.primary
           : VitCtaButtonVariant.success,
+      density: VitDensity.tool,
       height: TradeSpacingTokens.convertSubmitHeight,
       leading: Icon(
         receipt == null
@@ -99,6 +100,7 @@ class _HistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(

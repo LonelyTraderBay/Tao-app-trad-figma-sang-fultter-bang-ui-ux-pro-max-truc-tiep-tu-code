@@ -91,8 +91,8 @@ class _OrderHistoryTile extends StatelessWidget {
             child: content,
           )
         : VitCard(
-            radius: VitCardRadius.standard,
-            padding: VitDensity.compact.cardPadding,
+            radius: VitCardRadius.tight,
+            padding: VitDensity.tool.cardPadding,
             borderColor: AppColors.divider,
             child: content,
           );
@@ -222,7 +222,8 @@ class _OrderHistoryTile extends StatelessWidget {
             key: actionKey,
             onPressed: onCancel,
             variant: VitCtaButtonVariant.danger,
-            height: VitDensity.compact.controlHeight,
+            density: VitDensity.tool,
+            height: VitDensity.tool.controlHeight,
             child: const Text('Hủy lệnh'),
           ),
         ],

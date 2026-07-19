@@ -7,6 +7,7 @@ class _TaxNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -69,7 +70,8 @@ class _ExportFooter extends StatelessWidget {
                   // card-tile: allow-start — fixed surface, not horizontal strip tile
                   VitCard(
                     variant: VitCardVariant.inner,
-                    height: VitDensity.compact.controlHeight,
+                    radius: VitCardRadius.tight,
+                    height: VitDensity.tool.controlHeight,
                     alignment: Alignment.center,
                     borderColor: AppColors.buy.withValues(alpha: .2),
                     child: Row(
@@ -102,6 +104,7 @@ class _ExportFooter extends StatelessWidget {
                         child: VitCtaButton(
                           key: TradeHistoryExportPage.newExportKey,
                           variant: VitCtaButtonVariant.secondary,
+                          density: VitDensity.tool,
                           onPressed: onNewExport,
                           child: const Text('Tạo mới'),
                         ),
@@ -112,6 +115,7 @@ class _ExportFooter extends StatelessWidget {
                         child: VitCtaButton(
                           key: TradeHistoryExportPage.downloadKey,
                           variant: VitCtaButtonVariant.success,
+                          density: VitDensity.tool,
                           onPressed: () => _showComingSoon(context),
                           leading: const Icon(Icons.file_download_outlined),
                           child: Text('Tải ${format.toUpperCase()}'),
@@ -124,6 +128,7 @@ class _ExportFooter extends StatelessWidget {
             : VitCtaButton(
                 key: TradeHistoryExportPage.exportKey,
                 variant: VitCtaButtonVariant.primary,
+                density: VitDensity.tool,
                 loading: isExporting,
                 onPressed: isExporting ? null : onExport,
                 leading: Icon(

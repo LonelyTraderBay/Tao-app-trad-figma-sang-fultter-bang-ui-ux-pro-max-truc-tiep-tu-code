@@ -75,9 +75,11 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
               title: 'Đánh giá rủi ro',
               child: VitCard(
                 variant: VitCardVariant.inner,
+                radius: VitCardRadius.tight,
                 padding: AppSpacing.cardPaddingCompact,
                 child: VitHighRiskStatePanel(
                   state: VitHighRiskUiState.riskReview,
+                  density: VitDensity.tool,
                   title: 'Open position risk review',
                   message:
                       'PnL, notional exposure, margin risk, close path, fees and next steps are reviewed before position actions.',

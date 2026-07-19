@@ -104,6 +104,7 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
         title: 'An toàn giao dịch',
         child: VitCard(
           variant: VitCardVariant.inner,
+          radius: VitCardRadius.tight,
           padding: AppSpacing.cardPaddingCompact,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
@@ -111,7 +112,7 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
             message:
                 'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
             contractId: 'SC-052 settings review',
-            density: VitDensity.compact,
+            density: VitDensity.tool,
           ),
         ),
       ),

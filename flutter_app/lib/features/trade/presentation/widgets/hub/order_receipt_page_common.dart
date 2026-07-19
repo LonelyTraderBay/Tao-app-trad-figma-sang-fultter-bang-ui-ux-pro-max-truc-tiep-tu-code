@@ -14,6 +14,7 @@ class _RiskBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -50,6 +51,7 @@ class _WarningNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -90,6 +92,7 @@ class _OrderSupportLink extends StatelessWidget {
     return VitCard(
       key: OrderReceiptPage.supportKey,
       onTap: () => context.go(supportRoute),
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -169,7 +172,8 @@ class _ReceiptFooter extends StatelessWidget {
                 Expanded(
                   child: VitCtaButton(
                     variant: VitCtaButtonVariant.ghost,
-                    height: VitDensity.compact.controlHeight,
+                    density: VitDensity.tool,
+                    height: VitDensity.tool.controlHeight,
                     key: OrderReceiptPage.shareKey,
                     onPressed: onShare,
                     leading: Icon(
@@ -195,7 +199,8 @@ class _ReceiptFooter extends StatelessWidget {
                   flex: 2,
                   child: VitCtaButton(
                     variant: VitCtaButtonVariant.success,
-                    height: VitDensity.compact.controlHeight,
+                    density: VitDensity.tool,
+                    height: VitDensity.tool.controlHeight,
                     key: OrderReceiptPage.continueTradingKey,
                     onPressed: onContinue,
                     child: Text(

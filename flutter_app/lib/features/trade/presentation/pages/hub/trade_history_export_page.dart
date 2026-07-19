@@ -143,6 +143,7 @@ class _TradeHistoryExportPageState
               title: 'Đánh giá xuất',
               child: VitCard(
                 variant: VitCardVariant.inner,
+                radius: VitCardRadius.tight,
                 padding: EdgeInsetsDirectional.symmetric(
                   horizontal: AppSpacing.x3,
                   vertical: AppSpacing.x2,
@@ -153,7 +154,7 @@ class _TradeHistoryExportPageState
                   message:
                       'Format, period, included records, tax note, generated result and download next step are reviewed before export.',
                   contractId: 'trade-history-export-review',
-                  density: VitDensity.compact,
+                  density: VitDensity.tool,
                 ),
               ),
             ),

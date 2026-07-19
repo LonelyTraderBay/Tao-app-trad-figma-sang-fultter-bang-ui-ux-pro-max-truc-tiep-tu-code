@@ -9,12 +9,13 @@ class _PositionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       clip: true,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           for (var i = 0; i < positions.length; i++) ...[
             Padding(
-              padding: VitDensity.compact.cardPadding,
+              padding: VitDensity.tool.cardPadding,
               child: _PositionTile(position: positions[i]),
             ),
             if (i < positions.length - 1)
@@ -49,7 +50,8 @@ class _SummaryCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: VitDensity.compact.cardPadding,
+      radius: VitCardRadius.tight,
+      padding: VitDensity.tool.cardPadding,
       child: Row(
         children: [
           Expanded(

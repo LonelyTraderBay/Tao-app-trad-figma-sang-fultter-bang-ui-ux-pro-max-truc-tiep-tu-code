@@ -53,8 +53,9 @@ class _FormatCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       onTap: onTap,
+      radius: VitCardRadius.tight,
       height: _exportFormatExtent,
-      padding: VitDensity.compact.cardPadding,
+      padding: VitDensity.tool.cardPadding,
       borderColor: active
           ? _tradePrimary.withValues(alpha: .7)
           : AppColors.cardBorder,
@@ -145,6 +146,7 @@ class _IncludeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x1,
@@ -178,8 +180,8 @@ class _IncludeRow extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      height: VitDensity.compact.controlHeight,
+      radius: VitCardRadius.tight,
+      height: VitDensity.tool.controlHeight,
       child: Row(
         children: [
           Expanded(

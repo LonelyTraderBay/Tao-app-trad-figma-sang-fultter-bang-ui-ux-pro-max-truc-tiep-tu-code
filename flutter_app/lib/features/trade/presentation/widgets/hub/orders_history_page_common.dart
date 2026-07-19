@@ -57,6 +57,7 @@ class _InfoColumn extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: valueColor,
             fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
       ],
@@ -72,7 +73,7 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitEmptyState(
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       icon: Icons.access_time_rounded,
       title: activeTab == 'open'
           ? 'Không có lệnh đang mở'
