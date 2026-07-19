@@ -33,6 +33,9 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Golden test failure artifacts (written by golden_toolkit on test failure)
+**/golden/failures/
+
 # Symbolication related
 app.*.symbols
 
