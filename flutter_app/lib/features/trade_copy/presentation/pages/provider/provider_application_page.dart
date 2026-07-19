@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
@@ -191,6 +192,7 @@ class _ProviderApplicationPageState
               VitFinancialSafetySummary(
                 title: 'Xem lại đơn đăng ký provider',
                 contractId: 'SC-069 Provider application',
+                density: VitDensity.tool,
                 footer:
                     'Xác nhận KYC, công bố thông tin, nghĩa vụ ủy thác, giới hạn phí và điều khoản trước khi gửi đơn.',
                 items: [

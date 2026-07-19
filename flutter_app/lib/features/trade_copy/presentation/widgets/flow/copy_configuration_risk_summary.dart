@@ -11,7 +11,7 @@ class _RiskSection extends StatelessWidget {
     return VitPageSection(
       label: 'Giới hạn rủi ro',
       accentColor: _configurationRed,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         _RiskToggle(
           title: 'Stop-Loss riêng',
@@ -46,12 +46,12 @@ class _FeeSection extends StatelessWidget {
     return VitPageSection(
       label: 'Dự kiến chi phí',
       accentColor: AppColors.warn,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitFinancialSafetySummary(
           title: 'Copy fee preview',
           contractId: 'SC-072 Copy configuration',
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           footer:
               'Review platform fee, trading fee estimate, performance fee, and copy risk before confirmation.',
           items: [
@@ -120,7 +120,8 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -142,6 +143,7 @@ class _SummaryCard extends StatelessWidget {
             valueStyle: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: FontWeight.w700,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           VitKeyValueRow(
@@ -168,6 +170,7 @@ class _SummaryCard extends StatelessWidget {
             valueStyle: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: FontWeight.w700,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           VitKeyValueRow(
@@ -182,6 +185,7 @@ class _SummaryCard extends StatelessWidget {
             valueStyle: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: FontWeight.w700,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           VitKeyValueRow(
@@ -196,6 +200,7 @@ class _SummaryCard extends StatelessWidget {
             valueStyle: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: FontWeight.w700,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         ],
@@ -221,7 +226,8 @@ class _ModeTile extends StatelessWidget {
       key: CopyConfigurationPage.modeKey(mode),
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: selected ? _configurationPrimary : null,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       onTap: onTap,
       child: Row(

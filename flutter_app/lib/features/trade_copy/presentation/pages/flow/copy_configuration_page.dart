@@ -169,7 +169,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
         availableCapital: snapshot.availableCapital,
         totalPortfolio: snapshot.totalPortfolio,
         onChanged: _updateCapital,
-        onPreset: _setCapitalPercent,
+        onPreset: (percent) =>
+            _setCapitalPercent(percent, snapshot.totalPortfolio),
       ),
       VitTradeSection(
         title: 'Provider',
@@ -192,7 +193,7 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
         message:
             'Tóm tắt provider, phân bổ vốn, chế độ copy, kiểm soát rủi ro, phí dự kiến và thông báo xác thực hiển thị trước khi xác nhận.',
         contractId: 'SC-072',
-        density: VitDensity.compact,
+        density: VitDensity.tool,
       ),
       VitCtaButton(
         key: CopyConfigurationPage.confirmKey,
@@ -202,6 +203,7 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                 AppRoutePaths.tradeCopyProviderConfirmation(widget.providerId),
               ),
         variant: VitCtaButtonVariant.auth,
+        density: VitDensity.tool,
         height: _configurationButtonHeight,
         trailing: const Icon(Icons.chevron_right_rounded),
         child: const Text('Xem xác nhận'),
@@ -228,8 +230,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
     _setDraft(_draft!.copyWith(copyCapital: value));
   }
 
-  void _setCapitalPercent(double percent) {
-    final capital = 25000 * percent / 100;
+  void _setCapitalPercent(double percent, double totalPortfolio) {
+    final capital = totalPortfolio * percent / 100;
     _capitalController.text = capital.toStringAsFixed(0);
     _setDraft(_draft!.copyWith(copyCapital: capital));
   }

@@ -94,7 +94,7 @@ class _ModeButton extends StatelessWidget {
       selected: active,
       onTap: onTap,
       fullWidth: true,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       semanticLabel: 'Chọn chế độ copy ${_modeLabel(mode)}',
     );
   }

@@ -103,6 +103,7 @@ class _BenefitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       constraints: TradeSpacingTokens.providerApplicationBenefitCardConstraints,
       padding: TradeSpacingTokens.providerApplicationBenefitCardPadding,
       child: Row(
@@ -150,6 +151,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.providerApplicationPanelPadding,
       borderColor: _providerWarning.withValues(alpha: .55),
       child: Row(
@@ -204,6 +206,7 @@ class _RequirementPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
+      radius: VitCardRadius.tight,
       height:
           AppSpacing.buttonCompact - AppSpacing.x1 + AppSpacing.hairlineStroke,
       padding: TradeSpacingTokens.providerApplicationRequirementPreviewPadding,

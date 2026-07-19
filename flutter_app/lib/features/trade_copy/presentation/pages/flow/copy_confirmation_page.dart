@@ -151,7 +151,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
       VitFinancialSafetySummary(
         title: 'Xem lại trước khi copy',
         contractId: 'SC-073 Copy confirmation',
-        density: VitDensity.compact,
+        density: VitDensity.tool,
         footer:
             'Xác nhận vốn có thể mất, phí, mất vốn tối đa, đồng ý bắt buộc và thời gian chờ trước khi bắt đầu copy trading.',
         items: [
@@ -206,7 +206,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
         message:
             'Cảnh báo quan trọng, đánh giá phù hợp, phí, kịch bản, mất vốn tối đa, đồng ý bắt buộc, thời gian chờ và bước tiếp theo hiển thị trước khi bắt đầu copy trading.',
         contractId: 'SC-073',
-        density: VitDensity.compact,
+        density: VitDensity.tool,
       ),
       Column(
         children: [
@@ -217,7 +217,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                 : null,
             loading: _submitting,
             variant: VitCtaButtonVariant.danger,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             leading: const Icon(Icons.shield_outlined),
             child: const Text('Xác nhận & Bắt đầu Copy'),
           ),

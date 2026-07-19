@@ -8,7 +8,8 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
@@ -92,7 +93,7 @@ class _CapitalSection extends StatelessWidget {
     return VitPageSection(
       label: 'Vốn copy',
       accentColor: _configurationPrimary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitInput(
           fieldKey: CopyConfigurationPage.capitalFieldKey,
@@ -104,7 +105,8 @@ class _CapitalSection extends StatelessWidget {
         ),
         VitCard(
           variant: VitCardVariant.inner,
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           padding: AppSpacing.cardPaddingCompact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -142,11 +144,17 @@ class _CapitalSection extends StatelessWidget {
                 children: [
                   Text(
                     'Khả dụng \$${availableCapital.toStringAsFixed(0)}',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                   Text(
                     'Portfolio \$${totalPortfolio.toStringAsFixed(0)}',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                 ],
               ),
@@ -191,7 +199,7 @@ class _ModeSection extends StatelessWidget {
     return VitPageSection(
       label: 'Chế độ copy',
       accentColor: _configurationPrimary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final mode in TradeCopyConfigurationMode.values)
           _ModeTile(
@@ -202,7 +210,8 @@ class _ModeSection extends StatelessWidget {
         if (selected == TradeCopyConfigurationMode.fixed)
           VitCard(
             variant: VitCardVariant.inner,
-            density: VitDensity.compact,
+            radius: VitCardRadius.tight,
+            density: VitDensity.tool,
             padding: AppSpacing.cardPaddingCompact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

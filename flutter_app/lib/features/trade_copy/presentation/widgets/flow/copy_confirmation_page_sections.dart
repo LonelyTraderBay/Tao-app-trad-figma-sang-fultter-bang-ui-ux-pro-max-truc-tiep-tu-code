@@ -8,7 +8,8 @@ class _ProviderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Row(
         children: [
           CircleAvatar(
@@ -41,7 +42,10 @@ class _ProviderSummary extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ],
             ),
@@ -63,11 +67,12 @@ class _ConfigurationSummary extends StatelessWidget {
     return VitPageSection(
       label: 'Cấu hình',
       accentColor: _confirmationPrimary,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           child: Column(
             children: [
               VitKeyValueRow(
@@ -117,11 +122,12 @@ class _SuitabilityReviewCard extends StatelessWidget {
       key: CopyConfirmationPage.suitabilityKey,
       label: 'Suitability & limits review',
       accentColor: AppColors.warn,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -164,10 +170,11 @@ class _FeeBreakdown extends StatelessWidget {
     return VitPageSection(
       label: 'Chi phí & Phí',
       accentColor: AppColors.warn,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         VitCard(
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           child: Column(
             children: [
               VitKeyValueRow(
@@ -209,7 +216,7 @@ class _ScenarioSection extends StatelessWidget {
     return VitPageSection(
       label: 'Kịch bản dự kiến (30 ngày)',
       accentColor: _confirmationGreen,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final scenario in scenarios) _ScenarioCard(scenario: scenario),
       ],
@@ -231,7 +238,8 @@ class _ScenarioCard extends StatelessWidget {
     };
     return VitCard(
       variant: VitCardVariant.inner,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           VitKeyValueRow(
@@ -263,7 +271,8 @@ class _MaxLossCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: _confirmationRed,
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -301,7 +310,7 @@ class _ConsentSection extends StatelessWidget {
     return VitPageSection(
       label: 'Xác nhận & Đồng ý',
       accentColor: _confirmationRed,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         for (final item in items)
           TradeCopyConsentCard(
