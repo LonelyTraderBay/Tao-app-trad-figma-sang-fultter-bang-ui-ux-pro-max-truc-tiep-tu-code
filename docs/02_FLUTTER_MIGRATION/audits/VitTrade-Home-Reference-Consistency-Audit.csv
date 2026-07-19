@@ -1371,6 +1371,7 @@ trade_compliance,root_page,flutter_app/lib/features/trade_compliance/presentatio
 trade_compliance,feature_widget,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart,0,0,0,0,0,0,0,0,no,-
 trade_compliance,feature_widget,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_common.dart,0,0,0,0,0,0,0,0,no,-
 trade_compliance,feature_widget,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_filters.dart,0,0,0,0,0,0,0,0,no,-
+trade_compliance,feature_widget,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_notice.dart,0,0,0,0,0,0,0,0,no,-
 trade_compliance,feature_widget,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_reports.dart,0,0,0,0,0,0,0,0,no,-
 trade_compliance,feature_widget,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_stats.dart,0,0,0,0,0,0,0,0,no,-
 trade_compliance,root_page,flutter_app/lib/features/trade_compliance/presentation/widgets/hub/regulatory_reports_dashboard_controls.dart,0,0,0,0,0,0,0,0,no,-

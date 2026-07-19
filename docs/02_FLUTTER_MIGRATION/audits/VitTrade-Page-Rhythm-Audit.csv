@@ -1243,6 +1243,7 @@ trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_actions.dart,standard,,0,,0,,0,0,pass
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_common.dart,standard,,0,,0,,0,0,pass
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_filters.dart,standard,,0,,0,,0,0,pass
+trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_notice.dart,standard,,0,,0,,0,0,pass
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_reports.dart,standard,,0,,0,,0,0,pass
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/governance/transaction_reporting_stats.dart,standard,,0,,0,,0,0,pass
 trade_compliance,flutter_app/lib/features/trade_compliance/presentation/widgets/hub/regulatory_reports_dashboard_controls.dart,standard,,0,,0,,0,0,pass
