@@ -50,7 +50,8 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
           if (_generated)
             VitCard(
               variant: VitCardVariant.inner,
-              density: VitDensity.compact,
+              radius: VitCardRadius.tight,
+              density: VitDensity.tool,
               borderColor: _securityGreen.withValues(alpha: .2),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -65,7 +66,8 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   VitCard(
                     variant: VitCardVariant.ghost,
-                    density: VitDensity.compact,
+                    radius: VitCardRadius.tight,
+                    density: VitDensity.tool,
                     borderColor: AppColors.borderSolid,
                     child: Row(
                       children: [
@@ -74,7 +76,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                             _visible ? keyText : '********************',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
+                            style: AppTextStyles.monoCode.copyWith(
                               color: AppColors.text1,
                             ),
                           ),
@@ -107,6 +109,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
           else
             VitCtaButton(
               onPressed: () => setState(() => _generated = true),
+              density: VitDensity.tool,
               variant: VitCtaButtonVariant.primary,
               child: const Text('Generate API Key'),
             ),
@@ -146,6 +149,7 @@ class _IpSheet extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
+            density: VitDensity.tool,
             variant: VitCtaButtonVariant.primary,
             child: const Text('Add IP Address'),
           ),
@@ -172,7 +176,8 @@ class _SheetInput extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x1),
         VitCard(
-          density: VitDensity.compact,
+          radius: VitCardRadius.tight,
+          density: VitDensity.tool,
           alignment: Alignment.centerLeft,
           variant: VitCardVariant.inner,
           borderColor: AppColors.borderSolid,
@@ -194,7 +199,8 @@ class _PermissionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,

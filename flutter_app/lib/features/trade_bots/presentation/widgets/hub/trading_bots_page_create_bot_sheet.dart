@@ -10,6 +10,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,6 +80,7 @@ class _StrategyCard extends StatelessWidget {
           VitCtaButton(
             key: TradingBotsPage.strategyCreateKey(strategy.id),
             onPressed: onCreate,
+            density: VitDensity.tool,
             height: AppSpacing.inputHeight,
             leading: const Icon(Icons.add_rounded),
             child: const Text('Tạo bot'),
@@ -152,6 +154,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
             ),
             const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
+              radius: VitCardRadius.tight,
               padding: TradeSpacingTokens.tradeBotCardPadding,
               variant: VitCardVariant.inner,
               borderColor: color.withValues(alpha: .22),
@@ -194,6 +197,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
             VitCtaButton(
               key: TradingBotsPage.sheetCreateKey,
               onPressed: _agreed ? () => Navigator.pop(context, true) : null,
+              density: VitDensity.tool,
               height: AppSpacing.inputHeight,
               variant: _agreed
                   ? VitCtaButtonVariant.primary
@@ -227,6 +231,7 @@ class _ParamPreview extends StatelessWidget {
         const SizedBox(height: AppSpacing.formFieldLabelGap),
         // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
+          radius: VitCardRadius.tight,
           constraints: const BoxConstraints(
             minHeight: AppSpacing.inputHeight - AppSpacing.formFieldLabelGap,
           ),

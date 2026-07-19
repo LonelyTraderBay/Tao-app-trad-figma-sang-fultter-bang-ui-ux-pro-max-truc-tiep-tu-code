@@ -23,7 +23,7 @@ class _ResultView extends StatelessWidget {
     return VitPageContent(
       rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
-      density: VitDensity.compact,
+      density: VitDensity.tool,
       children: [
         Center(
           child: CircleAvatar(
@@ -68,7 +68,7 @@ class _ResultView extends StatelessWidget {
         VitCtaButton(
           key: BotSuitabilityAssessmentPage.resultCtaKey,
           onPressed: () => onComplete(result),
-          density: VitDensity.compact,
+          density: VitDensity.tool,
           variant: result.outcome == TradeBotSuitabilityOutcome.fail
               ? VitCtaButtonVariant.danger
               : VitCtaButtonVariant.success,
@@ -122,6 +122,7 @@ class _ScoreCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
@@ -139,7 +140,10 @@ class _ScoreCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
             '${(percent * 100).toStringAsFixed(0)}% proficiency',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text3,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
         ],
       ),

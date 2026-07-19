@@ -9,7 +9,8 @@ class _RiskScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _riskColor(snapshot.riskScore);
     return VitCard(
-      density: VitDensity.compact,
+      radius: VitCardRadius.tight,
+      density: VitDensity.tool,
       child: Column(
         children: [
           Row(
@@ -71,8 +72,9 @@ class _RiskScoreCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.ghost,
+            radius: VitCardRadius.tight,
             width: double.infinity,
-            density: VitDensity.compact,
+            density: VitDensity.tool,
             borderColor: color.withValues(alpha: .28),
             child: Text(
               snapshot.riskMessage,

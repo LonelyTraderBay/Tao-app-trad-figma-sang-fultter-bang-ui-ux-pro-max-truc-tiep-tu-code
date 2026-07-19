@@ -18,6 +18,7 @@ class _BotCard extends StatelessWidget {
     final profitColor = bot.profit >= 0 ? AppColors.buy : AppColors.sell;
 
     return VitCard(
+      radius: VitCardRadius.tight,
       padding: TradeSpacingTokens.tradeBotCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,6 +76,7 @@ class _BotCard extends StatelessWidget {
                 child: VitCtaButton(
                   key: TradingBotsPage.botToggleKey(bot.id),
                   onPressed: () => onToggle(bot.id),
+                  density: VitDensity.tool,
                   height: AppSpacing.buttonCompact + AppSpacing.x3,
                   variant: running
                       ? VitCtaButtonVariant.warning
